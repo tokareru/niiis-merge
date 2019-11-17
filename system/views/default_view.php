@@ -146,18 +146,7 @@ $IS = $_SESSION['abitprof']['is'];
                     <h4 class="list-group-item-heading">Результаты</h4>
                     <p class="list-group-item-text">
                       <ul class="nav nav-pills nav-stacked">
-        <?php
-//                                    echo '<li '.(($CURRENT_PAGE_HARD == 'results?konk_categ_id=1')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'results?konk_categ_id=1" style="padding-left: 5px;">Олимпиады</a></li>';
-//                                    echo '<li '.(($CURRENT_PAGE_HARD == 'results?konk_categ_id=3')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'results?konk_categ_id=8" style="padding-left: 5px;">Технические конкурсы</a></li>';
-//                                    echo '<li '.(($CURRENT_PAGE_HARD == 'results?konk_categ_id=4')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'results?konk_categ_id=4" style="padding-left: 5px;">НОУ</a></li>';
-//                                    echo '<li '.(($CURRENT_PAGE_HARD == 'results?konk_categ_id=7')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'results?konk_categ_id=7" style="padding-left: 5px;">Подготовительные курсы</a></li>';
-////                                    if(sys::user_in_group('admin')){
-//                                      echo '<li class="bg-danger"><a href="'.conf::$SITE_URL.'individual_achievements" style="padding-left: 5px;">Индивидуальные достижения (ИД)</a></li>';
-//                                      echo '<li class="bg-success"><a href="'.conf::$SITE_URL.'individual_achievements_new" style="padding-left: 5px;">ИД - Новая версия <span class="badge pull-right" id="count_abits_ind"></span></a></li>';
-//                                      
-////                                    }
-//                                    echo '<li '.(($CURRENT_PAGE_HARD == 'import_results')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'import_results" style="padding-left: 5px;">Импорт из олимпиад в абитпроф</a></li>';
-        ?>
+
                       </ul>
                     </p>
                   </li>

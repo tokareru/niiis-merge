@@ -26,7 +26,7 @@ class conf{
 
 conf::$VERSION = 2;  // Устанавливается в system.php вызовом sys::version()
 
-conf::$SITE_NAME = 'Мотивированный абитуриент';
+conf::$SITE_NAME = 'НИИИС';
 conf::$PROJECT_NAME = 'niiis';
 conf::$SITE_URL_SHORT = $_SERVER['SERVER_NAME'];
 conf::$SITE_PATH = dirname(__FILE__).DIRECTORY_SEPARATOR.'../';
