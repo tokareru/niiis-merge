@@ -88,44 +88,46 @@ $IS = $_SESSION['abitprof']['is'];
         <script src="system/js/main.js"></script>
     </head>
     <body>
-<?php
+        <?php
 //      if (sys::is_super_admin()){
 //        require_once 'system/views/menu_admin.php';
 //      }
-?>
-        <div id="all">
-
-            <!--"Шапка"-->
+        ?>
+        <!--        <div id="all">-->
+        <div>
+            <?php
+            echo '<a class="medium red awesome" href="' . conf::$SITE_URL . 'logout">Выйти</a>';
+            echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
+            ?>
+        </div>
+        <!--"Шапка"-->
 <!--            <table class="heder">
-                <tbody>
-                    <tr>
-                        <td class="hedtdl">
+            <tbody>
+                <tr>
+                    <td class="hedtdl">
 
-                            <a href="<?= conf::$SITE_URL ?>" title=""><img style="height: 160px;" src="<?= conf::$SITE_URL ?>/img/logo.jpg" alt="НГТУ" title="НГТУ" /></a>
-                        </td>
-                        <td>
-                            <div class="main_name">
-                              <div class="page-header" style="color: #337ab7;">
-                                <h1>ИС «<?php echo conf::$SITE_NAME; ?>» <small></small></h1>
-                              </div>
-                            </div>
-                        </td>
-                        <td class="hedtdr">
-<?php
-echo '<a class="medium red awesome" href="' . conf::$SITE_URL . 'logout">Выйти</a>';
-echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
-?>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>-->
+                        <a href="<?= conf::$SITE_URL ?>" title=""><img style="height: 160px;" src="<?= conf::$SITE_URL ?>/img/logo.jpg" alt="НГТУ" title="НГТУ" /></a>
+                    </td>
+                    <td>
+                        <div class="main_name">
+                          <div class="page-header" style="color: #337ab7;">
+                            <h1>ИС «<?php echo conf::$SITE_NAME; ?>» <small></small></h1>
+                          </div>
+                        </div>
+                    </td>
+                    <td class="hedtdr">
+
+                    </td>
+                </tr>
+            </tbody>
+        </table>-->
 
 <!--            <table class="total">
     <tr>
         <td class="menu_td">
-<?php
+        <?php
 //if($IS=='abitprof'){
-?>
+        ?>
               <nav class="main_menu">
 
                 <ul class="list-group">
@@ -133,9 +135,9 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
                     <h4 class="list-group-item-heading">Школьники</h4>
                     <p class="list-group-item-text">
                       <ul class="nav nav-pills nav-stacked">
-                        <li //<?php //echo ($CURRENT_PAGE == 'abits')?('class="active"'):"";  ?>><a href="<?php //echo conf::$SITE_URL; ?>abits" style="padding-right: 0px;padding-left: 5px;">Список школьников<span class="badge pull-right" id="count_abits"></span></a></li>
-                        <li //<?php //echo ($CURRENT_PAGE == 'konkurs_categ')?('class="active"'):"";  ?>><a href="<?php //echo conf::$SITE_URL; ?>konkurs_categ" style="padding-left: 5px;">Виды мероприятий</a></li>
-                        <li //<?php //echo ($CURRENT_PAGE == 'konkurs')?('class="active"'):"";  ?>><a href="<?php //echo conf::$SITE_URL; ?>konkurs" style="padding-right: 0px;padding-left: 5px;">Мероприятия<span class="badge pull-right" id="count_events"></span></a></li>
+                        <li //<?php //echo ($CURRENT_PAGE == 'abits')?('class="active"'):"";   ?>><a href="<?php //echo conf::$SITE_URL;  ?>abits" style="padding-right: 0px;padding-left: 5px;">Список школьников<span class="badge pull-right" id="count_abits"></span></a></li>
+                        <li //<?php //echo ($CURRENT_PAGE == 'konkurs_categ')?('class="active"'):"";   ?>><a href="<?php //echo conf::$SITE_URL;  ?>konkurs_categ" style="padding-left: 5px;">Виды мероприятий</a></li>
+                        <li //<?php //echo ($CURRENT_PAGE == 'konkurs')?('class="active"'):"";   ?>><a href="<?php //echo conf::$SITE_URL;  ?>konkurs" style="padding-right: 0px;padding-left: 5px;">Мероприятия<span class="badge pull-right" id="count_events"></span></a></li>
                       </ul>
                     </p>
                   </li>
@@ -143,7 +145,7 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
                     <h4 class="list-group-item-heading">Результаты</h4>
                     <p class="list-group-item-text">
                       <ul class="nav nav-pills nav-stacked">
-<?php
+        <?php
 //                                    echo '<li '.(($CURRENT_PAGE_HARD == 'results?konk_categ_id=1')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'results?konk_categ_id=1" style="padding-left: 5px;">Олимпиады</a></li>';
 //                                    echo '<li '.(($CURRENT_PAGE_HARD == 'results?konk_categ_id=3')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'results?konk_categ_id=8" style="padding-left: 5px;">Технические конкурсы</a></li>';
 //                                    echo '<li '.(($CURRENT_PAGE_HARD == 'results?konk_categ_id=4')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'results?konk_categ_id=4" style="padding-left: 5px;">НОУ</a></li>';
@@ -154,7 +156,7 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
 //                                      
 ////                                    }
 //                                    echo '<li '.(($CURRENT_PAGE_HARD == 'import_results')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'import_results" style="padding-left: 5px;">Импорт из олимпиад в абитпроф</a></li>';
-?>
+        ?>
                       </ul>
                     </p>
                   </li>
@@ -163,13 +165,13 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
                     <h4 class="list-group-item-heading">Отчеты</h4>
                     <p class="list-group-item-text">
                       <ul class="nav nav-pills nav-stacked">
-<?php
+        <?php
 //                                    echo '<li '.(($CURRENT_PAGE == 'report_members')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_members" style="padding-left: 5px;">Участники олимпиад</a></li>';
 //                                    echo '<li '.(($CURRENT_PAGE == 'report_testprof')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_testprof" style="padding-right: 0px;padding-left: 5px;">Тестирование "Профориентатор"<span class="badge pull-right" id="count_testprof"></span></a></li>';
 //                                    echo '<li '.(($CURRENT_PAGE == 'report_abits')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_abits" style="padding-left: 5px;">Список мотивированных абитуриентов<span class="badge pull-right" id="count_abit_res"></span></a></li>';
 //                                    echo '<li '.(($CURRENT_PAGE == 'report_abit_professii')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_abit_professii" style="padding-left: 5px;">Профессии</a></li>';
 //                                    echo '<li '.(($CURRENT_PAGE == 'report_for_company')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_for_company" style="padding-left: 5px;">Для предприятий</a></li>';
-?>
+        ?>
                       </ul>
                     </p>
                   </li>
@@ -178,10 +180,10 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
                 </ul>
 
               </nav>
-<?php
+        <?php
 //}
 //if($IS=='nastavniki'){
-?>
+        ?>
               <nav class="main_menu">
               class="active"
               <ul class="list-group">
@@ -189,9 +191,9 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
                   <h5 class="list-group-item-heading">Наставники</h5>
                   <p class="list-group-item-text">
                     <ul class="nav nav-pills nav-stacked">
-                      <li <?php //echo ($CURRENT_PAGE == 'nastavniki')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>nastavniki" style="padding-right: 0px;padding-left: 5px;">Список наставников<span class="badge pull-right" id="count_nastav"></span></a></li>
-                      <li <?php //echo ($CURRENT_PAGE == 'category')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>category" style="padding-left: 5px;">Категории</a></li>
-                      <li <?php //echo ($CURRENT_PAGE == 'dolzhnosti')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>dolzhnosti" style="padding-left: 5px;">Должности</a></li>
+                      <li <?php //echo ($CURRENT_PAGE == 'nastavniki')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>nastavniki" style="padding-right: 0px;padding-left: 5px;">Список наставников<span class="badge pull-right" id="count_nastav"></span></a></li>
+                      <li <?php //echo ($CURRENT_PAGE == 'category')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>category" style="padding-left: 5px;">Категории</a></li>
+                      <li <?php //echo ($CURRENT_PAGE == 'dolzhnosti')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>dolzhnosti" style="padding-left: 5px;">Должности</a></li>
                     </ul>
                   </p>
                 </li>
@@ -199,10 +201,10 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
                   <h5 class="list-group-item-heading">Программы занятий</h5>
                   <p class="list-group-item-text">
                     <ul class="nav nav-pills nav-stacked">
-                      <li <?php //echo ($CURRENT_PAGE == 'prog_list')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>prog_list" style="padding-right: 0px;padding-left: 5px;">Список программ<span class="badge pull-right" id="count_programs"></span></a></li>
+                      <li <?php //echo ($CURRENT_PAGE == 'prog_list')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>prog_list" style="padding-right: 0px;padding-left: 5px;">Список программ<span class="badge pull-right" id="count_programs"></span></a></li>
                       общий список тем по всем программам
-                      <li <?php //echo ($CURRENT_PAGE == 'prog_subj')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>prog_subj">Темы программ</a></li>
-                      <li <?php // echo ($CURRENT_PAGE == 'groups')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>groups" style="padding-right: 0px;padding-left: 5px;">Группы<span class="badge pull-right" id="count_groups"></span></a></li>
+                      <li <?php //echo ($CURRENT_PAGE == 'prog_subj')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>prog_subj">Темы программ</a></li>
+                      <li <?php // echo ($CURRENT_PAGE == 'groups')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>groups" style="padding-right: 0px;padding-left: 5px;">Группы<span class="badge pull-right" id="count_groups"></span></a></li>
                     </ul>
                   </p>
                 </li>
@@ -210,8 +212,8 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
                   <h5 class="list-group-item-heading">Организации</h5>
                   <p class="list-group-item-text">
                     <ul class="nav nav-pills nav-stacked">
-                        <li <?php //echo ($CURRENT_PAGE == 'org_list')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>org_list" style="padding-right: 0px;padding-left: 5px;">Список организаций<span class="badge pull-right" id="count_orgs"></span></a></li>
-                        <li <?php //echo ($CURRENT_PAGE == 'org_type')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>org_type" style="padding-left: 5px;">Типы организаций</a></li>
+                        <li <?php //echo ($CURRENT_PAGE == 'org_list')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>org_list" style="padding-right: 0px;padding-left: 5px;">Список организаций<span class="badge pull-right" id="count_orgs"></span></a></li>
+                        <li <?php //echo ($CURRENT_PAGE == 'org_type')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>org_type" style="padding-left: 5px;">Типы организаций</a></li>
                     </ul>
                   </p>
                 </li>
@@ -219,7 +221,7 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
                   <h5 class="list-group-item-heading">Школьники</h5>
                   <p class="list-group-item-text">
                     <ul class="nav nav-pills nav-stacked">
-                      <li <?php //echo ($CURRENT_PAGE == 'abits')?('class="active"'):"" ?>><a href="<?php //echo conf::$SITE_URL; ?>abits" style="padding-right: 0px;padding-left: 5px;">Список школьников<span class="badge pull-right" id="count_abits"></span></a></li>
+                      <li <?php //echo ($CURRENT_PAGE == 'abits')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>abits" style="padding-right: 0px;padding-left: 5px;">Список школьников<span class="badge pull-right" id="count_abits"></span></a></li>
                     
                       
                     </ul>
@@ -229,28 +231,28 @@ echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
               </ul>
               
             </nav>
-<?php
+        <?php
 //}
-?>
+        ?>
 
         </td>
        
         <td class="content">
           
-            <?php
+        <?php
 //                      if ($content_view <> '') {
 //                        include 'system/views/' . $content_view;
 //                      }
 //                      else
 //                      {
-            ?>
-            <h3>ИС <?php //echo conf::$SITE_NAME;?></h3>
+        ?>
+            <h3>ИС <?php //echo conf::$SITE_NAME; ?></h3>
             <br>
             index-content
             
-            <?php
-            //}
-            ?>
+        <?php
+        //}
+        ?>
             
         </td>
     </tr>	
@@ -263,85 +265,85 @@ footer
 </div>
 a id="move_up" href="#">Наверх</a-->
 
-            <div id="shell" class="container-fluid myContainer">
-                <div class="row myRow">
-                    <!--Левая сторона-->
-                    <div class="col-md-2">
-                        <div class="left-side">
-                            <div id="left-accordion">
-                                <p> Идёт загрузка...</p>
-                            </div>
+        <div id="shell" class="container-fluid myContainer">
+            <div class="row myRow">
+                <!--Левая сторона-->
+                <div class="col-md-2">
+                    <div class="left-side">
+                        <div id="left-accordion">
+                            <p> Идёт загрузка...</p>
                         </div>
                     </div>
+                </div>
 
-                    <!--Центральная сторона-->
-                    <div class="col-md-7">
-                        <div id="tabs">
-                            <ul style="list-style-type: none">
-                                <li><a href="#empty-tab-1"></a></li>
-                            </ul>
-                            <div id="empty-tab-1">
-                                <p>
-                                    Подождите пока страница загружается...
-                                </p>
-                            </div>
+                <!--Центральная сторона-->
+                <div class="col-md-7">
+                    <div id="tabs">
+                        <ul style="list-style-type: none">
+                            <li><a href="#empty-tab-1"></a></li>
+                        </ul>
+                        <div id="empty-tab-1">
+                            <p>
+                                Подождите пока страница загружается...
+                            </p>
                         </div>
                     </div>
+                </div>
 
-                    <!--Правая сторона-->
-                    <div class="col-md-3">
-                        <h4>ЭСИ</h4>
-                        <p>
-                            Нанесение размеров отрезков прямых. При нанесении раз­меров формы, изображенной на чертеже отрезками
-                            прямых, предпочтительно проставлять размеры следующим образом. От концов отрезка проводят две
-                            параллельные между собой сплош­ные тонкие линии, которые называются выносными линиями (рис. 129, а).
-                            На расстоянии 10 мм от отрезка и параллельно ему проводят сплошную тонкую линию, называемую размерной
-                            линией. Размерная линия своими концами упирается в выносные линии и заканчивается стрелками. Начертание
-                            стрелок показа­но на рисунке 129, б. Выносные линии выходят за размерные на 1—3 мм. Над размерной линией
-                            проставляют размерное число, которое всегда указывает истинный размер элемента формы (ребра, грани и
-                            т.д.).
-                        </p>
-                    </div>
+                <!--Правая сторона-->
+                <div class="col-md-3">
+                    <h4>ЭСИ</h4>
+                    <p>
+                        Нанесение размеров отрезков прямых. При нанесении раз­меров формы, изображенной на чертеже отрезками
+                        прямых, предпочтительно проставлять размеры следующим образом. От концов отрезка проводят две
+                        параллельные между собой сплош­ные тонкие линии, которые называются выносными линиями (рис. 129, а).
+                        На расстоянии 10 мм от отрезка и параллельно ему проводят сплошную тонкую линию, называемую размерной
+                        линией. Размерная линия своими концами упирается в выносные линии и заканчивается стрелками. Начертание
+                        стрелок показа­но на рисунке 129, б. Выносные линии выходят за размерные на 1—3 мм. Над размерной линией
+                        проставляют размерное число, которое всегда указывает истинный размер элемента формы (ребра, грани и
+                        т.д.).
+                    </p>
                 </div>
             </div>
+        </div>
 
-            <!--Чат-->
-            <div id="chat_main">
-                <div id="but">
-                    <div id="span_icon_left" class="icon_default"></div>
-                </div>
-                <div id="chat_window">
-                    <ul id="chat_all_DM">
-                        <li>
-                            <div><a href="#chat_window_chat">Общие сообщения</a></div>
-                        </li>
-                        <li>
-                            <div><a href="#chat_dm">Личные сообщения</a></div>
-                        </li>
+        <!--Чат-->
+        <div id="chat_main">
+            <div id="but">
+                <div id="span_icon_left" class="icon_default"></div>
+            </div>
+            <div id="chat_window">
+                <ul id="chat_all_DM">
+                    <li>
+                        <div><a href="#chat_window_chat">Общие сообщения</a></div>
+                    </li>
+                    <li>
+                        <div><a href="#chat_dm">Личные сообщения</a></div>
+                    </li>
+                </ul>
+                <div id="chat_window_chat">
+                    <ul>
+
                     </ul>
-                    <div id="chat_window_chat">
-                        <ul>
+                </div>
+                <div id="chat_dm">
+                    <ul class="chat_dm_ul">
 
-                        </ul>
-                    </div>
-                    <div id="chat_dm">
-                        <ul class="chat_dm_ul">
+                    </ul>
 
-                        </ul>
-
-                    </div>
+                </div>
 
 
-                    <div id="chat_text_button">
-                        <textarea placeholder="пиши сюда" id="chat_window_text" class="form-control-sm"></textarea>
-                        <input id="chat_window_button" role="button" type="button" class="btn-sm btn-primary">
-                    </div>
+                <div id="chat_text_button">
+                    <textarea placeholder="пиши сюда" id="chat_window_text" class="form-control-sm"></textarea>
+                    <input id="chat_window_button" role="button" type="button" class="btn-sm btn-primary">
                 </div>
             </div>
+        </div>
 
 
-            <div>
-            </div>
+        <div>
+        </div>
 
 
     </body>
