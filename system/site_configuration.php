@@ -17,10 +17,6 @@ class conf{
   static $SITE_SUBDIR_INDEX;  // вложенность сайта - количество дополнительных поддиректорий
   static $DB_NAME_ABIT;  // БД Абитуриент.Бак - для импорта
   static $YEAR_SMALL_ABIT;  // Год для импорта лицевого счета
-  static $DB_NAME_ABIT_MAG;  // БД Абитуриент.Маг - для импорта
-  static $YEAR_SMALL_ABIT_MAG;  // Год для импорта лицевого счета
-  static $DB_NAME_DECANAT;  // БД Деканат.Бак - для импорта
-  static $DB_NAME_DECANAT_MAG;  // БД Деканат.Маг - для импорта
   static $VERSION; // Версия - используется для принудительного предотвращения кэширования js,css
 }
 
