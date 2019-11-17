@@ -24,13 +24,13 @@ if(isset($_POST['login']) && isset($_POST['password'])){
         
     </head>
     <body> 
-        <div class="header">
+<!--        <div class="header">
             <div class="container header-text">
                 <a href="/"><img src="<?php echo conf::$SITE_URL ?>img/logo4.png" alt="НГТУ"></a>
                 <h1>НГТУ им. Р.&nbsp;Е.&nbsp;Алексеева</h1>
-                <!--<p>ИС «<?php echo conf::$SITE_NAME;?>»</p>-->
+                <p>ИС «<?php echo conf::$SITE_NAME;?>»</p>
             </div>
-        </div>
+        </div>-->
             
             <!--вкладка с логином-->
             <div role="tabpanel" class="tab-pane" id="tab-login">
