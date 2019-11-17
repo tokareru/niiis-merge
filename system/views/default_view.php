@@ -1,4 +1,5 @@
 <?php
+// test commit makss56
 require_once conf::$ROOT . 'system/etc/functions.php';
 // получаем адрес страницы без учета параметров
 $CURRENT_PAGE = basename($_SERVER['REQUEST_URI']); // получаем адрес
