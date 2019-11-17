@@ -16,7 +16,6 @@ class conf{
   static $DB_PASSWORD;
   static $SITE_LOCAL;
   static $SITE_SUBDIR_INDEX;  // вложенность сайта - количество дополнительных поддиректорий
-  static $DB_NAME_ABIT;  // БД Абитуриент.Бак - для импорта
   static $YEAR_SMALL_ABIT;  // Год для импорта лицевого счета
   static $VERSION; // Версия - используется для принудительного предотвращения кэширования js,css
 }
