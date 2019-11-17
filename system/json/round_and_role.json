@@ -1,0 +1,53 @@
+{
+  "current_round": 3,
+  "current_role": "engineer",
+  "tabs": [
+    {
+      "name": "Чертёж",
+      "URL": "pages/scheme.html#schemeBlock",
+      "ID": "scheme",
+      "notify": "PdmOrStdHandler",
+      "message": "none",
+      "init": "none"
+    },
+    {
+      "name": "3D",
+      "URL": "pages/3D.html",
+      "ID": "fieldBlock",
+      "notify": "",
+      "message": "none",
+      "init": "trigger3dInit"
+    },
+    {
+      "name": "Спецификации",
+      "URL": "pages/specification.html#specificationBlock",
+      "ID": "specification",
+      "notify": "",
+      "message": "",
+      "init": "createSpecificationTable"
+    }
+  ],
+  "left_accordion": [
+    {
+      "name": "Изделия PDM",
+      "ID": "pdm_field",
+      "init": "createPDM",
+      "notify": "",
+      "fieldID": "#pdm_field"
+    },
+    {
+      "name": "Стандартные изделия",
+      "ID": "std_field",
+      "init": "createSTD",
+      "notify": "",
+      "fieldID": "#std_field"
+    },
+    {
+      "name": "Справочник технолога",
+      "ID": "technologist_guide_field",
+      "init": "",
+      "notify": "",
+      "fieldID": "#technologist_guide_field"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+.left-side{
+    height: 95%;
+    max-height: 1100px;
+}
+
+#left-accordion {
+    box-shadow: 0px 0px 2px 1px #b7b7b7;
+}
+
+.my_ui-accordion {
+    padding: 0.1%;
+}
+
+.my_ui-accordion-header {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    margin: 2px 0 0 0;
+    padding: .5em .5em .5em .7em;
+    font-size: 0.7em;
+}
+
+.my_accordion-header-active {
+    border: #ffffff solid 1px;
+    background-color: #eeefea;
+    border-top: 0;
+    overflow: auto;
+}
+
+.my_ui-accordion-header-collapsed {
+    background-color: #eeefea;
+   //font-size: 0.7em;
+}
+
+.my_ui-accordion-content {
+    /*margin: 5px;*/
+    background-color: rgba(255, 255, 255, 0.41);
+    overflow: auto;
+}
+
+.my_ui-accordion-content-active {
+    background-color: #79ddce;
+    //font-size: 0.7em;
+}
+
+#left-accordion div{
+    background-color: #d7e0df;
+    padding: 1.5% 0% 0% 2.5%;
+    border: 0px;
+}
+
+#pdm_field.label {
+    border: 0px;
+}
+
+/*настройка checkbox*/
+
+.check_active{
+    background-color: transparent;
+}
+
+.check_non-active{
+    background-color: transparent;
+}
+
+
+/*значение стиля checkbox по умолчанию*/
+.check_std{
+    margin: 5px;
+    display: inline-block;
+    padding: 0.2%;
+    user-select: none;
+}
+
+.check_icon-non{
+}
+
+.check_icon-checked{
+}
+
+.check_icon{
+    float: right;
+}
+
+/*цвет иконок*/
+.material-icons.col{
+    color: #421709;
+}
+
+fieldset p label span{
+    position: relative;
+    top: 20px;
+    margin-left: 0.5%;
+}
+
+fieldset p{
+    margin-top: 5%;
+    margin-left: 3%;
+    display: grid;
+    font-size: 1.1em;
+    font-weight: bolder;
+    text-shadow: black;
+    width: 93%;
+    max-width: 163px;
+    background: rgb(239,239,239);
+    background: linear-gradient(261deg, rgba(239,239,239,1) 0%, rgba(242,242,242,1) 100%);
+    padding: 0.1% 0.1% 3% 2%;
+}
+
+fieldset p:hover{
+    box-shadow: 0px 0px 4px 0px #fb1771;
+}
+
+fieldset p label img{
+    width: 85%;
+    max-height: 152px;
+    max-width: 163px;
+    margin-bottom: 2%;
+    padding-right: 2%;
+}
+
+#left-accordion fieldset p input{
+   display: none;
+}
+
+.myAccordionActive{
+    background-color: #f7aec2;
+}

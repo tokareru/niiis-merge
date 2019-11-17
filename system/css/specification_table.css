@@ -1,0 +1,85 @@
+#specificationBlock {
+}
+
+#specification_edit{
+    width: 100% !important;
+}
+
+.table_edit {
+    background-color: white;
+    width: 100%;
+    height: 20%;
+}
+
+.table_edit thead {
+    background-color: #709fdc;
+}
+
+
+.table_edit td {
+    max-width: 200px;
+}
+
+.edit_cell_div_hide {
+    display: none;
+}
+
+.edit_cell_div {
+    padding: 3px;
+    height: 100%;
+    word-wrap: break-word;
+    display: block;
+}
+
+.edit_cell_input_hide {
+    display: none;
+}
+
+.edit_cell_input {
+    background-color: inherit;
+    //height: 100%;
+    min-width: 40px;
+    width: 100%;
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+    border-width: 0 !important;
+    padding: 1px !important;
+    display: block;
+}
+
+#spec_header {
+    font-size: 30px;
+}
+
+.button_edit_mode {
+/ / padding: 10 px !important;
+}
+
+#edit_div_toggle {
+    //display: grid;
+    display: flex;
+}
+
+.check_div {
+    display: block !important;
+}
+
+.input_text {
+}
+
+.edit_cell_readonly {
+}
+
+#edit_div_toggle input {
+    width: 100%;
+}
+
+.edit_cell{
+    padding: 0 !important;
+}
+
+.firstCol{
+    max-width: 10px;
+    color: #b5a998;
+    text-align: left;
+}

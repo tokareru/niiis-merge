@@ -1,0 +1,12 @@
+.balls_id_div>div>div>input{
+  padding-left: 4px;
+  padding-right: 4px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+}
+
+.fix_view_balls{
+  padding-left: 2px;
+    width: 97px;
+}
+    

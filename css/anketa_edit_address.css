@@ -1,0 +1,33 @@
+.address_container .addr_text{
+  margin-bottom: 15px;
+}
+.address_container .addr_text .addr_text_text{
+  width: 380px;
+  line-height: 1.5;
+  display: inline-block;
+  vertical-align: middle;
+}
+.address_container .address_city:after{
+  content: ""; display: block; clear: both; visibility: hidden; line-height: 0; height: 0; margin: 0; padding: 0;
+}
+.address_container .address_txt,.address_input{
+  display:inline-block;
+  vertical-align: middle;
+}
+.address_container .address_txt{
+  width:240px;
+  line-height: 2;
+}
+.address_container .button_edit{
+  display:inline-block;
+  width:34px;
+  vertical-align: middle;
+  float: right;
+}
+.address_container .address-error{
+  background-color: #F35C5C;
+  border: 1px solid #f00;
+}
+.address_container table td.td_label{
+  width: 80px;
+}

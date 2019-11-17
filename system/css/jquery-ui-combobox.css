@@ -1,0 +1,30 @@
+.custom-combobox {
+	position: relative;
+	display: inline-block;
+	margin: 1px;
+}
+.custom-combobox-toggle {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin-left: -1px;
+        margin-top: -2px;
+	padding: 0;
+        height: 23px;
+	*height: 25px;	/* IE 6/7 */
+	*top: 0.4em;	/* IE 6/7 */
+	height: 25px\9; /* IE 8*/
+	top: 0.3em\9;	/* IE 8*/
+}
+.custom-combobox-input {
+	margin: 0;
+	padding: 4px;
+	width:140px;
+        font-size: 12px !important;
+}
+.ui-autocomplete { max-height: 200px;  overflow-y: scroll; overflow-x: hidden;}
+.ui-menu-item{
+    min-height: 18px !important;
+    padding-top: 5px !important;
+    vertical-align: central;
+}

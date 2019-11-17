@@ -1,0 +1,136 @@
+#chat_dm {
+    background-color: #e6e6e6;
+    border: #43A0A4 solid 2px;
+    border-radius: 2%;
+    margin: 1%;
+    height: 67%;
+    width: 98%;
+    padding: 1% !important;
+    word-wrap: break-word;
+}
+
+.dm_window {
+    height: 100%;
+    width: 70% !important;
+    top: 0 !important;
+    min-height: 20%;
+    float: left;
+    background-color: #d8f3e9 !important;
+    border: #43A0A4 solid 2px!important;
+    border-radius: 2%;
+    overflow-y: scroll;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    word-wrap: break-word;
+}
+
+.dm_window ul {
+    padding: 5px;
+    list-style-type: none;
+}
+
+.dm_ul {
+    height: 100%;
+    width: 100%;
+    min-width: 100%;
+    list-style-type: none;
+    padding: 0;
+}
+
+
+.dm_tabs_links {
+}
+
+.dm_tabs_links_li{
+    overflow-x: hidden;
+    cursor: pointer;
+    clear: left;
+    width: 100%;
+    margin-top: 5px !important;
+    background-color: #d8f3e9;
+    border-radius: 3px / 3px;
+    border: #f7aec2 solid 1px !important;
+}
+
+.chat_dm_ul {
+    overflow-y: auto;
+    height: 100%;
+    padding: 0 3px 0 0 !important;
+}
+
+
+.chat_unread_messages {
+    border: #eb737c solid 1px !important;
+    background-color: #dcdcdc;
+}
+.chat_unread_messages_user_name{
+    float: left;
+    max-width: 70%;
+    width: 70%;
+    margin-right: 2px;
+}
+
+.chat_unread_messages_span{
+    float: right;
+    max-width: 28%;
+    height: 100%;
+    text-align: center;
+    color: #fb1771;
+    background-color: #fdb2c6;
+    border-radius: 10px;
+    padding-right: 3% !important;
+    padding-left: 3% !important;
+}
+
+.chat_dm_ul::-webkit-scrollbar {
+    width: 3px;
+}
+
+.chat_dm_ul::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.chat_dm_ul::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
+}
+
+
+.ui-tabs-vertical .ui-tabs-nav {
+    float: left;
+    width: 28%;
+    margin: 0;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li {
+   /* cursor: pointer;
+    clear: left;
+    width: 100%;*/
+   /* margin-top: 5px !important;
+    background-color: #91caef;
+    border-radius: 3px / 3px;
+    border: #5989b2 solid 1px;*/
+}
+
+.ui-tabs-vertical .ui-tabs-nav li a {
+    width: 100%;
+    padding-right: 0 !important;
+    color: black !important;
+    cursor: pointer !important;
+    display: block;
+}
+
+.ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
+    cursor: pointer;
+    clear: left;
+    width: 100%;
+    margin-top: 5px !important;
+    border: #d8f3e9 solid 1px!important;
+    background-color: #f7aec2;
+    border-radius: 3px / 3px;
+}
+
+.ui-tabs-vertical .ui-tabs-panel {
+    float: right;
+}

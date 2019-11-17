@@ -1,0 +1,156 @@
+#but {
+    background-color: #efeaea;
+    border-radius: 25% 0 0 25%;
+    box-shadow: 0 0 30px 6px #66a8bd;
+    width: 7%;
+    height: 20%;
+    float: left;
+    font-size: 100%;
+    border-left:#5997ac solid 2px;
+    border-top: #5997ac solid 2px;
+    border-bottom: #5997ac solid 2px;
+}
+
+#chat_main {
+    position: fixed;
+    width: 550px;
+    max-height: 450px;
+    height: 450px;
+    right: -513.5px;
+    top: 20%;
+}
+
+#chat_window {
+    background-color: #efeaea;
+    box-shadow: 0 0 30px 6px  #66a8bd;
+    padding-right: 2%;
+    padding-left: 2%;
+    border-left: #5997ac solid 2px;
+    border-bottom: #5997ac solid 2px;
+    border-top: #5997ac solid 2px;
+    height: 100%;
+    width: 93%;
+    border-radius: 0 0 0 5%;
+    float: right;
+}
+
+#chat_name {
+    text-align: center;
+    max-height: 5%;
+    height: 10%;
+    width: 100%;
+
+}
+
+#chat_window_text {
+    margin-left: 3%;
+    width: 85%;
+    text-align: left;
+    /*height: 20%;*/
+    max-width: 85%;
+    max-height: 90%;
+    min-height: 90%;
+    height: 90%;
+}
+
+
+#chat_window_button {
+    height: 90%;
+    width: 10%;
+    max-width: 20%;
+    border: #0f6674 solid 2px;
+    border-radius: 0 25% 25% 0;
+    background-color: #0F898E;
+    /*background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url('icons/send-24px.svg');*/
+}
+
+#chat_window_button:active {
+
+}
+
+#chat_text_button {
+    padding: 5px;
+    border-radius: 5px;
+    border: #43A0A4 solid 2px;
+    height: 15%;
+    display: flex;
+    flex-direction: row;
+}
+
+#chat_window_chat {
+    background-color: #e6e6e6;
+    border: #43A0A4 solid 2px;
+    border-radius: 2%;
+    margin: 1%;
+    height: 67%;
+    overflow-y: scroll;
+    padding-top: 5px;
+    padding-bottom: 1px;
+    word-wrap: break-word;
+}
+
+#chat_window_chat ul {
+    padding: 5px;
+    list-style-type: none;
+}
+
+.icon_default {
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
+
+#span_icon_right {
+    background-image: url('../icons/keyboard_arrow_right-24px.svg');
+
+}
+
+#span_icon_left {
+    background-image: url('../icons/keyboard_arrow_left-24px.svg');
+}
+
+.icon_but {
+    height: 10%;
+    width: 10%;
+    float: right;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-image: url('../icons/send-24px.svg');
+}
+
+.spanTextLogin {
+    font-weight: bold;
+    color: #1b1e21;
+}
+
+.spanTextDate {
+    font-style: italic;
+    font-weight: lighter;
+    color: #1b1e21;
+}
+
+.my_ui-tabs-tab{
+    width: 48%;
+    padding: 5px !important;
+    margin: 1% !important;
+    background-color: #EEEDE9;
+    border: #f7aec2 solid 1px;
+    border-radius: 5px;
+}
+
+.my_ui-tabs-tab a{
+    color: black !important;
+    cursor: pointer !important;
+    width: 100%;
+}
+
+.my_ui-tabs-active{
+    border: #f7aec2 solid 2px;
+    background-color: #f7aec2 ;// #aa9ded;
+}

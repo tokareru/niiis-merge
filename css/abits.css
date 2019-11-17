@@ -1,0 +1,41 @@
+table.ank_edit{
+  width: 100%;
+}
+table.ank_edit>tbody>tr>td{
+  width: 50%;
+  vertical-align: top;
+  padding: 5px;
+}
+.paragraf {
+	height: 17px;
+	display: block;
+	background-color: #ECECEC;
+	font-weight: bold;
+	padding: 10px;
+	-moz-border-radius: 10px 10px 0 0;
+	-webkit-border-radius: 10px 10px 0 0;
+	border-radius: 10px 10px 0 0;
+	color: #305086;
+  margin: 0;
+
+}
+.primary_bg {
+  -moz-border-radius: 0 0 10px 10px;
+  -webkit-border-radius: 0 0 10px 10px;
+  border-radius: 0 0 10px 10px;
+  background: #E6E6FA;
+  padding: 7px 20px;
+}
+
+.duplicate {
+  background: #ce8483;
+}
+
+input.is-success {
+  border-color: #3c763d;
+  background-color: #f0faeb;
+}
+input.is-error {
+  border-color: #a94442;
+  background-color: #f5e1d7;
+}
