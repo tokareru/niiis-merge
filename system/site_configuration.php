@@ -1,5 +1,6 @@
 <?php
 // config some dir
+// 
 //
 class conf{
   static $ROOT;
