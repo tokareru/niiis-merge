@@ -25,8 +25,8 @@ if(isset($_POST['login']) && isset($_POST['password'])){
     </head>
     <body> 
         <div class="header">
-            <div class="container header-text">
-                <h1><?php echo conf::$SITE_NAME?></h1>
+            <div class="container header-text" style="text-align: center">
+                <p><?php echo conf::$SITE_NAME?></p>
             </div>
         </div>
             
