@@ -126,7 +126,7 @@ function tableData(readonly) {
             let $col = $("#cell_to_readonly_col");
             let col = Number($col.val());
 
-            if (col > 0 && col < ($(".table_made th").length - 1) && row > 0 && row < $(".table_made tr").length) {
+            if (col > 0 && col < ($(".table_made th").length - 1) && row >= 0 && row < $(".table_made tr").length) {
                 cellToReadOnly(row, col);
             } else {
                 $row.attr("placeholder", "ошибка!");
