@@ -15,9 +15,16 @@
     background-color: #709fdc;
 }
 
+.table_edit th {
+    border-width: 1px;
+}
+
+.table_edit th div {
+    padding: 3px;
+}
 
 .table_edit td {
-    max-width: 200px;
+    max-width: 80px;
 }
 
 .edit_cell_div_hide {
@@ -25,6 +32,7 @@
 }
 
 .edit_cell_div {
+    color: #7b9c98;
     padding: 3px;
     height: 100%;
     word-wrap: break-word;
@@ -38,7 +46,7 @@
 .edit_cell_input {
     background-color: inherit;
     //height: 100%;
-    min-width: 40px;
+    min-width: 80px;
     width: 100%;
     margin-top: 0 !important;
     margin-bottom: 0 !important;
@@ -68,6 +76,7 @@
 }
 
 .edit_cell_readonly {
+    color: #000000;
 }
 
 #edit_div_toggle input {

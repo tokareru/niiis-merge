@@ -13,7 +13,7 @@ function generateTable(json) {
             '</table>');
     $table_made.find('.table_edit').append('<thead style="background-color: #0a78bf"></thead>');
     $table_made.find('thead').append('<tr></tr>');
-    $table_made.find('thead tr').append('<th class="p-0"><div>' + "\№" + '</div></th>');
+    $table_made.find('thead tr').append('<th class="p-0"><div class="edit_cell_readonly">' + "\№" + '</div></th>');
     json.thead.forEach(function (elem) {
         $table_made.find('thead tr').append('<th class="p-0"><div>' + elem.text + '</div></th>');
     });
@@ -38,7 +38,7 @@ function generateTable(json) {
     });
 
     setRowsNumber();
-    colToReadOnly(0,'readonly');
+    colToReadOnly(0, 'readonly');
 }
 
 function addInputs() {
@@ -97,6 +97,46 @@ function tableData(readonly) {
         $edit_mode_div.on('click', '#del_col_btn', function () {
             delCol();
         });
+
+        $edit_mode_div.on('keyup', 'input', function () {
+            let $this = $(this);
+            if ($this.attr("col") === "col") {
+                unhighlightCol();
+                highlightCol($this.val());
+            }
+            if ($this.attr("row") === "row") {
+                unhighlightRow();
+                highlightRow($this.val());
+            }
+        });
+
+        $edit_mode_div.on('click', 'button', function () {
+            unhighlightRow();
+            unhighlightCol();
+        });
+
+        $edit_mode_div.on('click', 'input[type=button]', function () {
+            unhighlightRow();
+            unhighlightCol();
+        });
+
+        $edit_mode_div.on('click', '#cell_to_readonly_but', function () {
+            let $row = $("#cell_to_readonly_row");
+            let row = Number($row.val());
+            let $col = $("#cell_to_readonly_col");
+            let col = Number($col.val());
+
+            if (col > 0 && col < ($(".table_made th").length - 1) && row > 0 && row < $(".table_made tr").length) {
+                cellToReadOnly(row, col);
+            } else {
+                $row.attr("placeholder", "ошибка!");
+                $col.attr("placeholder", "ошибка!");
+            }
+           $row.val("");
+           $col.val("");
+        });
+
+
 
         $table_edit.on('keydown', '.input_text', function (event) {
             modeOnTableBySomeKey(event, $(this));
@@ -449,6 +489,7 @@ function cellToReadOnly(row, col) {
             let $this = $(this);
             $this.find("div").attr("readonly", "readonly");
             $this.removeClass('edit_cell');
+            $this.find("div").removeClass("edit_cell_div").addClass("edit_cell_readonly");
             $this.find('.input_text').remove();
         }
     })
@@ -499,8 +540,93 @@ function setRowsNumber() {
         $this.find("td").first().find("div").text(index + 1);
         $this.find("div").first().addClass("firstCol");
         $this.find("td").first().css({
-            "width": "1vw",
-            "padding": "0"
+            "width": "1vw"
         })
     })
+}
+
+function highlightCol(col) {
+    let $table = $(".table_made");
+    /*$table.find("thead th").each(function (index) {
+        console.log(index);
+        if (index === Number(col) && index !== 0) {
+            $(this).css({
+                "background-color": "red"
+            })
+        }
+    });*/
+
+    $table.find("tbody tr").each(function (rows) {
+        $(this).find("td").each(function (cols) {
+            if (cols === Number(col) && cols !== 0) {
+                $(this).css({
+                    "background-color": "rgb(255, 247, 189)"
+                })
+            }
+        });
+    });
+}
+
+function highlightRow(row) {
+    let $table = $(".table_made");
+    /*$table.find("thead tr").each(function (index) {
+        if (index === Number(row)) {
+            $(this).find("th").each(function (index) {
+                if (index >0)
+                    $(this).css({
+                    "background-color": "red"
+                })
+            })
+        }
+    });*/
+
+    if (row > 0) {
+        $table.find("tbody tr").each(function (rows) {
+            if ((rows) === (Number(row) - 1))
+                $(this).find("td").each(function (cols) {
+                    if (cols > 0)
+                        $(this).css({
+                            "background-color": "rgb(255, 247, 189)"
+                        })
+                })
+        })
+    }
+
+}
+
+function unhighlightRow() {
+    let $table = $(".table_made");
+    $table.find("tbody tr").each(function (rows) {
+        $(this).find("td").each(function (cols) {
+            if ($(this).css("background-color") === "rgb(255, 247, 189)")
+                $(this).css({
+                    "background-color": "unset"
+                })
+        })
+    })
+
+}
+
+function unhighlightCol() {
+    let $table = $(".table_made");
+    $table.find("thead th").each(function (index) {
+        if (index !== 0) {
+            if ($(this).css("background-color") === "rgb(255, 247, 189)")
+                $(this).css({
+                    "background-color": "unset"
+                })
+        }
+    });
+
+    $table.find("tbody tr").each(function (rows) {
+        $(this).find("td").each(function (cols) {
+            if (cols !== 0) {
+                console.log($(this).css("background-color"))
+                if ($(this).css("background-color") === "rgb(255, 247, 189)")
+                    $(this).css({
+                    "background-color": "unset"
+                })
+            }
+        });
+    });
 }
