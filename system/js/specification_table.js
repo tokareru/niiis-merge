@@ -1,14 +1,6 @@
 function createSpecificationTable() {
-    serializeTable();
-    //getRoleAndRound("json/spec_table.json", generateTable);
-    //generateTable(5, 4, "");
-    tableData(false);
-    //$( "#specification1" ).dialog();
-    
-
-    colToReadOnly(0, 'readonly');
-    colToReadOnly(2, 'readonly');
-    setRowsNumber();
+    //serializeTable();
+    getJsonByURL("json/spec_table.json", generateTable, {});
 }
 
 function generateTable(json) {
@@ -21,16 +13,32 @@ function generateTable(json) {
             '</table>');
     $table_made.find('.table_edit').append('<thead style="background-color: #0a78bf"></thead>');
     $table_made.find('thead').append('<tr></tr>');
-    for (let cols = 0; cols < count_cols; cols++) {
-        $table_made.find('thead tr').append('<th><div></div></th>');
-    }
+    $table_made.find('thead tr').append('<th class="p-0"><div>' + "\№" + '</div></th>');
+    json.thead.forEach(function (elem) {
+        $table_made.find('thead tr').append('<th class="p-0"><div>' + elem.text + '</div></th>');
+    });
+
     $table_made.find('.table_edit').append('<tbody></tbody>');
-    for (let rows = 0; rows < count_rows - 1; rows++) {
+    json.tbody.forEach(function (curr_row, rows) {
         $table_made.find('tbody').append('<tr></tr>');
-        for (let cols = 0; cols < count_cols; cols++) {
-            $table_made.find('tbody').children('tr').eq(rows).append('<td><div></div></td>');
-        }
-    }
+        $table_made.find('tbody tr').last().append('<td class="p-0"><div>' + (rows + 1) + '</div></td>');
+        curr_row.row.forEach(function (curr_col, cols) {
+            $table_made.find('tbody').find('tr').last().append('<td class="p-0"><div>' + curr_col.text + '</div></td>');
+        })
+    });
+
+    tableData(false);
+    json.thead.forEach(function (elem, i) {
+        if (elem.readonly) cellToReadOnly(0, i + 1);
+    });
+    json.tbody.forEach(function (curr_row, rows) {
+        curr_row.row.forEach(function (curr_col, cols) {
+            if (curr_col.readonly) cellToReadOnly(rows + 1, cols + 1);
+        })
+    });
+
+    setRowsNumber();
+    colToReadOnly(0,'readonly');
 }
 
 function addInputs() {
@@ -160,16 +168,21 @@ function addRow() {
     //alert($('.table_edit').find('tbody').children().first().children().eq(3).html());
     $tbody.append('<tr></tr>');
     for (let i = 0; i < $td_count; i++) {
-        if ($('.table_edit').find('thead').children().first().children().eq(i)
+        /*if ($('.table_edit').find('tbody').children().first().children().eq(i)
             .find('div').attr('disabled')) {
             $tbody.children().last().append('<td>' +
                 '<div disabled="disabled"></div></td>');
             continue;
         }
-        if ($('.table_edit').find('thead').children().first().children().eq(i)
+        if ($('.table_edit').find('tbody').children().first().children().eq(i)
             .find('div').attr('readonly')) {
             $tbody.children().last().append('<td class="p-0">' +
                 '<div class="edit_cell_div" style="display: block; padding: 3px" readonly="readonly">' + '</div></td>');
+            continue;
+        }*/
+        if (i === 0) {
+            $tbody.children().last().append('<td class="p-0">' +
+                '<div class="edit_cell_div" style="display: block; padding: 3px" readonly="readonly"></div></td>');
             continue;
         }
         $tbody.children().last().append('<td class="edit_cell p-0">' +
@@ -186,7 +199,7 @@ function addRow() {
             .removeClass('edit_cell_input_hide').addClass('edit_cell_input').focus();
         //alert( $('.table_edit tbody').find('tr:last').find('input:first').html());
     });
-    setRowsNumber();
+    setRowsNumber()
 }
 
 function delRow() {
@@ -313,12 +326,29 @@ function moveOnTableByEnter(event, $this) {
             $next.find('.input_text').focus();
         } else {
             let count_cols = $('.table_edit tr').find('th').length;
+
+
             let $new_tr = $this.parent().parent().next().children().first();
-            for (let i = 0; i < count_cols; i++) {
-                $new_tr = $this.parent().parent().next().children().eq(i);
-                if ($new_tr.find('div').attr('disabled') !== 'disabled' &&
-                    $new_tr.find('div').attr('readonly') !== 'readonly') {
-                    break;
+            let $arr_td = $this.parent().parent(); //$this.parent().parent().next().html()
+            //alert($arr_td.next().html());
+            let td_loop_end = true;
+            while (($arr_td.next().html() !== '' && $arr_td.next().html() !== undefined) && td_loop_end) {
+                for (let i = 0; i < count_cols; i++) {
+                    $new_tr = $arr_td.next().children().eq(i);
+                    //alert($new_tr.html());
+                    if ($new_tr.html() === undefined || (i + 1 === count_cols)) {
+                        $arr_td = $arr_td.next();
+                        break;
+                    }
+                    if ($new_tr.find('div').attr('disabled') !== 'disabled' &&
+                        $new_tr.find('div').attr('readonly') !== 'readonly') {
+                        td_loop_end = false;
+                        break;
+                    }
+                }
+                if ($new_tr.next().html() === undefined) {
+                    $this.blur();
+                    return;
                 }
             }
             let $tbody_tr = $new_tr.parent();
@@ -398,16 +428,37 @@ function colToReadOnly($number, $attr) {
 }
 
 function cellToReadOnly(row, col) {
-    let $tableRow;
-    // row = 0 -- заголовок
-    if (row === 0){
-        $tableRow = $('.table_edit').find('thead th');
-        console.log($tableRow)
-    }else {
-        $tableRow = $('.table_edit').find('tbody td');
-        console.log($tableRow)
+    //заголовок - 0 строка для пользователя
+    let $tableCols;
+    //важно помнить, что заголовок и тело таблицы находятся в разных тегах,
+    //поэтому хотя и визуально 0-я строка идет после заголовка, она будет иметь 0-й индекс
+    //а также, что пользователь вводит номер строки на 1 больше
+    //нужно учитывать, что нулевой столбец занят номерами строк,
+    //однако, учитывая, что пользователь вводит номер столбца на 1 больше, то это нивилируется
+    if (row > 0) {
+        row--;
+        let $tr = $('.table_made').find('tbody tr').each(function (index) {
+            if (index === row) $tableCols = $(this).find("td");
+        });
+    } else {
+        $tableCols = $('.table_made').find("thead th");
     }
 
+    $tableCols.each(function (current_col) {
+        if (current_col === col) {
+            let $this = $(this);
+            $this.find("div").attr("readonly", "readonly");
+            $this.removeClass('edit_cell');
+            $this.find('.input_text').remove();
+        }
+    })
+
+}
+
+function rowToReadOnly(row) {
+    let $tr = $('.table_made').find('tbody td').each(function (index) {
+        if (index > 0) cellToReadOnly(row, index);
+    });
 }
 
 function serializeTable() {

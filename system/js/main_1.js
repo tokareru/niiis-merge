@@ -1,13 +1,13 @@
 $(document).ready(function () {
     shellInit();
-    createTabs();
-    createAccordion();
+    createTabs("json/round_and_role.json", "#tabs");
+    createAccordion("#left-accordion");
 
     //forbidPressRightMouseButton();
 });
 
 // получаем информацию о доступных вкладках и передаем информацию в функцию setTabs
-function getRoleAndRound(url ,callback) {
+function getJsonByURL(url ,callback, add_data) {
     // получаем сведения о роле и раунде
     $.ajax({
         type: "POST",
@@ -15,7 +15,7 @@ function getRoleAndRound(url ,callback) {
         dataType: "json",
         success: function (json) {
             //console.log("Data loaded");
-            callback(json);
+            callback(json, add_data);
         },
         error: function (message) {
             //console.log("Can't load the data");
@@ -35,6 +35,5 @@ function forbidPressRightMouseButton() {
         return true;
     });
 }
-
 
 

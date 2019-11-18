@@ -270,9 +270,9 @@ a id="move_up" href="#">Наверх</a-->
                 <div class="col-md-7">
                     <div id="tabs">
                         <ul style="list-style-type: none">
-                            <li><a href="#empty-tab-1"></a></li>
+                            <li><a href="#tabs-empty"></a></li>
                         </ul>
-                        <div id="empty-tab-1">
+                        <div id="tabs-empty">
                             <p>
                                 Подождите пока страница загружается...
                             </p>

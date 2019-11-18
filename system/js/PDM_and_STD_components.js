@@ -125,25 +125,3 @@ function PdmOrStdHandler(event, data) {
         else $("#availableSTD").text(" Пока что ничего не выбрано")
     }
 }
-
-
-/*
-Кнопка добавления компонента
-
-Вставить в html:
-
-<button id="mytestButton">here</button>
-
-<script>
-    let i = 3;
-    $("#mytestButton").click(function () {
-        addNewComponent({
-            "name": "Деталь 3_" + i,
-            "IMG: "картинка в base64",
-            "ID": "component_3_" + i
-        }, "#left-accordion", "#pdm_field");
-        i++;
-    })
-</script>
-
-*/

@@ -1,33 +1,163 @@
 {
-  "cols": 3,
-  "rows": 4,
-  "data": [
+  "cols": 4,
+  "rows": 7,
+  "thead": [
+    {
+      "text": "Поз.",
+      "readonly": true
+    },
+    {
+      "text": "Обозначение",
+      "readonly": true
+    },
+    {
+      "text": "Наименование",
+      "readonly": true
+    },
+    {
+      "text": "Кол.",
+      "readonly": true
+    }
+  ],
+  "tbody": [
     {
       "row": [
-        "11",
-        "12",
-        "13"
+        {
+          "text": "",
+          "readonly": true
+        },
+        {
+          "text": "",
+          "readonly": false
+        },
+        {
+          "text": "Сборочные единицы",
+          "readonly": true
+        },
+        {
+          "text": "",
+          "readonly": true
+        }
       ]
     },
     {
       "row": [
-        "21",
-        "22",
-        "23"
+        {
+          "text": "1",
+          "readonly": false
+        },
+        {
+          "text": "АБВ.10.2030.001",
+          "readonly": true
+        },
+        {
+          "text": "Модуль",
+          "readonly": true
+        },
+        {
+          "text": "1",
+          "readonly": true
+        }
       ]
     },
     {
       "row": [
-        "31",
-        "32",
-        "33"
+        {
+          "text": "",
+          "readonly": true
+        },
+        {
+          "text": "",
+          "readonly": false
+        },
+        {
+          "text": "Детали",
+          "readonly": false
+        },
+        {
+          "text": "",
+          "readonly": false
+        }
       ]
     },
     {
       "row": [
-        "41",
-        "42",
-        "43"
+        {
+          "text": "2",
+          "readonly": false
+        },
+        {
+          "text": "АБВ.10.2030.010",
+          "readonly": false
+        },
+        {
+          "text": "Экран Н",
+          "readonly": false
+        },
+        {
+          "text": "1",
+          "readonly": false
+        }
+      ]
+    },
+    {
+      "row": [
+        {
+          "text": "2",
+          "readonly": false
+        },
+        {
+          "text": "АБВ.10.2030.010",
+          "readonly": false
+        },
+        {
+          "text": "Экран В",
+          "readonly": false
+        },
+        {
+          "text": "1",
+          "readonly": false
+        }
+      ]
+    },
+    {
+      "row": [
+        {
+          "text": "",
+          "readonly": false
+        },
+        {
+          "text": "",
+          "readonly": false
+        },
+        {
+          "text": "Стандартные изделия",
+          "readonly": false
+        },
+        {
+          "text": "",
+          "readonly": false
+        }
+      ]
+    },
+    {
+      "row": [
+        {
+          "text": "4",
+          "readonly": false
+        },
+        {
+          "text": "",
+          "readonly": false
+        },
+        {
+          "text": "Винт ГОСТ Р ИСО 1200-М2 * 10",
+          "readonly": false
+        },
+        {
+          "text": "4",
+          "readonly": false
+        }
       ]
     }
   ]

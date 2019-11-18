@@ -1,19 +1,22 @@
-function createTabs() {
-    getRoleAndRound("json/round_and_role.json", setTabs);
+function createTabs(url, id) {
+    getJsonByURL(url, setTabs, {
+        tabs_id: id,
+    });
 }
 
 // устанавливаем доступные области
-function setTabs(json) {
+function setTabs(json, add_data) {
     // очищаем пустышку
-    $("#tabs ul").empty();
-    $("#tabs #empty-tab-1").remove();
+    let tabs_id = add_data.tabs_id;
+    $(tabs_id + " ul").empty();
+    $(tabs_id + "-empty").remove();
 
     // получаем доступные области исходя из раунда
     let availableTabs = chooseTabsByRoleAndRound(json);
     // добавляем области в #tabs и обновляем tabs
-    addAvailableTabs(availableTabs, "#tabs");
+    addAvailableTabs(availableTabs, tabs_id);
 
-    $("#tabs").tabs({
+    $(tabs_id).tabs({
         classes:
             {
                 "ui-tabs": "myTabs",
@@ -37,7 +40,7 @@ function setTabs(json) {
             $(ui.panel).trigger("initialization");
         }
     });
-    //$("#tabs").tabs("refresh");
+    //$(tabs_id).tabs("refresh");
 }
 
 function chooseTabsByRoleAndRound(json) {
