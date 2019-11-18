@@ -204,42 +204,43 @@ function addToStrHTMLTags(str_div) {
 function addRow() {
     let $tbody = $('.table_edit tbody');
     let $td_count = $('.table_edit thead').find('th').length;
-    //let $td_ro = 0;
-    //alert($('.table_edit').find('tbody').children().first().children().eq(3).html());
-    $tbody.append('<tr></tr>');
-    for (let i = 0; i < $td_count; i++) {
-        /*if ($('.table_edit').find('tbody').children().first().children().eq(i)
-            .find('div').attr('disabled')) {
-            $tbody.children().last().append('<td>' +
-                '<div disabled="disabled"></div></td>');
-            continue;
-        }
-        if ($('.table_edit').find('tbody').children().first().children().eq(i)
-            .find('div').attr('readonly')) {
-            $tbody.children().last().append('<td class="p-0">' +
-                '<div class="edit_cell_div" style="display: block; padding: 3px" readonly="readonly">' + '</div></td>');
-            continue;
-        }*/
-        if (i === 0) {
-            $tbody.children().last().append('<td class="p-0">' +
-                '<div class="edit_cell_div" style="display: block; padding: 3px" readonly="readonly"></div></td>');
-            continue;
-        }
-        $tbody.children().last().append('<td class="edit_cell p-0">' +
-            '<div></div><input type="text" class="input_text edit_cell_input_hide" value=""></td>');
+    let $len_tr = $('.table_edit tbody').find('tr').length;
+    let $text_add_row = $('#add_row_text');
+    let $index = Number($text_add_row.val()) - 1;
+    $text_add_row.val('');
+    $text_add_row.attr('placeholder','номер строки');
+    if($index >= $len_tr + 1   || $index < 0) {
+        $text_add_row.attr('placeholder','ошибка!');
+        return;
     }
-    let $table_edit = $('.table_edit');
-    $table_edit.find('tr:last .edit_cell:first').each(function (index, elem) {
-        $(this).addClass("p-0");
-        $(this).find('.input_text').attr('value', $(this).find('div').text())
-            .addClass('edit_cell_input_hide');
-        $tbody.find('tr:last').find('div:first')
+    let $new_tr = '<tr>';
+    for (let i = 0; i < $td_count; i++) {
+        $new_tr +='<td class="edit_cell p-0">' +
+            '<div class="edit_cell_div"></div><input type="text"' +
+            'class="input_text edit_cell_input_hide" value=""></td>';
+    }
+    $new_tr += '</tr>';
+    if($index < $len_tr && $index >= 0)
+    {
+        let neighbourElem = $tbody.find('tr').eq($index);
+        $($new_tr).insertBefore(neighbourElem);
+        let $edit_div = neighbourElem.prev().find('.edit_cell').eq(1);
+        $edit_div.find('div')
             .removeClass('edit_cell_div').addClass('edit_cell_div_hide');
-        $tbody.find('tr:last').find('.input_text:first')
+        $edit_div.find('input')
             .removeClass('edit_cell_input_hide').addClass('edit_cell_input').focus();
-        //alert( $('.table_edit tbody').find('tr:last').find('input:first').html());
-    });
-    setRowsNumber()
+    }
+    else if($index === $len_tr)
+    {
+        let neighbourElem = $tbody.find('tr').eq($index - 1);
+        $($new_tr).insertAfter(neighbourElem);
+        let $edit_div = neighbourElem.next().find('.edit_cell').eq(1);
+        $edit_div.find('div')
+            .removeClass('edit_cell_div').addClass('edit_cell_div_hide');
+        $edit_div.find('input')
+            .removeClass('edit_cell_input_hide').addClass('edit_cell_input').focus();
+    }
+    setRowsNumber();
 }
 
 function delRow() {
