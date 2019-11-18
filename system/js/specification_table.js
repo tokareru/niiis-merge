@@ -136,6 +136,22 @@ function tableData(readonly) {
             $col.val("");
         });
 
+        $edit_mode_div.on('click', '#cell_to_edit_but', function () {
+            let $row = $("#cell_to_edit_but_row");
+            let row = Number($row.val());
+            let $col = $("#cell_to_edit_but_col");
+            let col = Number($col.val());
+
+            if (col > 0 && col < ($(".table_made th").length - 1) && row >= 0 && row < $(".table_made tr").length) {
+                cellToEdit(row, col);
+            } else {
+                $row.attr("placeholder", "ошибка!");
+                $col.attr("placeholder", "ошибка!");
+            }
+            $row.val("");
+            $col.val("");
+        });
+
 
         $table_edit.on('keydown', '.input_text', function (event) {
             modeOnTableBySomeKey(event, $(this));
@@ -502,6 +518,33 @@ function cellToReadOnly(row, col) {
         }
     })
 
+}
+
+function cellToEdit(row, col) {
+    if (row > 0) {
+        row--;
+        let $tr = $('.table_made').find('tbody tr').each(function (index) {
+            if (index === row) $tableCols = $(this).find("td");
+        });
+    } else {
+        $tableCols = $('.table_made').find("thead th");
+    }
+
+    $tableCols.each(function (current_col) {
+        if (current_col === col) {
+            let $this = $(this);
+            $this.addClass('edit_cell');
+            $this.find("div")
+                .addClass("edit_cell_div")
+                .removeClass("edit_cell_readonly")
+                .attr("readonly", "");
+            let value = $this.find("div").text();
+            $this.append("<input type='text' value='" + value + "\'>");
+            $this.find("input")
+                .addClass("input_text")
+                .addClass("edit_cell_input_hide");
+        }
+    })
 }
 
 function rowToReadOnly(row) {
