@@ -59,16 +59,16 @@
         }
       }
     });
-    shellInit();
-    createTabs();
-    createAccordion();
+      shellInit();
+      createTabs("json/round_and_role.json", "#tabs");
+      createAccordion("#left-accordion");
   });
 
   /**
-   * Выводится сообщение на несколько секунд в правом верхнем углу окна, 
+   * Выводится сообщение на несколько секунд в правом верхнем углу окна,
    * затем исчезает
    * @param {string} text Текст сообщения
-   * @param {string} type Тип сообщения - цвет фона. 
+   * @param {string} type Тип сообщения - цвет фона.
    * success - зелёный (по умолчанию)
    * danger - красный
    * @returns {undefined}
@@ -96,23 +96,23 @@
     });
 
   }
-  
+
   // получаем информацию о доступных вкладках и передаем информацию в функцию setTabs
-function getRoleAndRound(url ,callback) {
-    // получаем сведения о роле и раунде
-    $.ajax({
-        type: "POST",
-        url: url,
-        dataType: "json",
-        success: function (json) {
-            //console.log("Data loaded");
-            callback(json);
-        },
-        error: function (message) {
-            //console.log("Can't load the data");
-        },
-    })
-}
+  function getJsonByURL(url ,callback, add_data) {
+      // получаем сведения о роле и раунде
+      $.ajax({
+          type: "POST",
+          url: url,
+          dataType: "json",
+          success: function (json) {
+              //console.log("Data loaded");
+              callback(json, add_data);
+          },
+          error: function (message) {
+              //console.log("Can't load the data");
+          },
+      })
+  }
 
 
 //блокировка нажатия правой кнопки мыши
