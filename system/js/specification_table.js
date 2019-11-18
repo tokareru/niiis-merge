@@ -132,10 +132,9 @@ function tableData(readonly) {
                 $row.attr("placeholder", "ошибка!");
                 $col.attr("placeholder", "ошибка!");
             }
-           $row.val("");
-           $col.val("");
+            $row.val("");
+            $col.val("");
         });
-
 
 
         $table_edit.on('keydown', '.input_text', function (event) {
@@ -208,28 +207,27 @@ function addRow() {
     let $text_add_row = $('#add_row_text');
     let $index = Number($text_add_row.val()) - 1;
     $text_add_row.val('');
-    $text_add_row.attr('placeholder','номер строки');
+    $text_add_row.attr('placeholder', 'номер строки');
     let isZeroRows = false;
-    if($len_tr === 0) {
+    if ($len_tr === 0) {
         $tbody.append('<tr></tr>');
         isZeroRows = true;
         $len_tr = 1;
         $index = 1;
     }
 
-    if($index >= $len_tr + 1   || $index < 0) {
-        $text_add_row.attr('placeholder','ошибка!');
+    if ($index >= $len_tr + 1 || $index < 0) {
+        $text_add_row.attr('placeholder', 'ошибка!');
         return;
     }
     let $new_tr = '<tr>';
     for (let i = 0; i < $td_count; i++) {
-        $new_tr +='<td class="edit_cell p-0">' +
+        $new_tr += '<td class="edit_cell p-0">' +
             '<div class="edit_cell_div"></div><input type="text"' +
             'class="input_text edit_cell_input_hide" value=""></td>';
     }
     $new_tr += '</tr>';
-    if($index < $len_tr && $index >= 0)
-    {
+    if ($index < $len_tr && $index >= 0) {
         let neighbourElem = $tbody.find('tr').eq($index);
         $($new_tr).insertBefore(neighbourElem);
         let $edit_div = neighbourElem.prev().find('.edit_cell').eq(1);
@@ -237,9 +235,7 @@ function addRow() {
             .removeClass('edit_cell_div').addClass('edit_cell_div_hide');
         $edit_div.find('input')
             .removeClass('edit_cell_input_hide').addClass('edit_cell_input').focus();
-    }
-    else if($index === $len_tr)
-    {
+    } else if ($index === $len_tr) {
         let neighbourElem = $tbody.find('tr').eq($index - 1);
         $($new_tr).insertAfter(neighbourElem);
         let $edit_div = neighbourElem.next().find('.edit_cell').eq(1);
@@ -248,8 +244,7 @@ function addRow() {
         $edit_div.find('input')
             .removeClass('edit_cell_input_hide').addClass('edit_cell_input').focus();
     }
-    if(isZeroRows)
-    {
+    if (isZeroRows) {
         $tbody.find('tr:first').remove();
     }
     setRowsNumber();
@@ -550,11 +545,18 @@ function setRowsNumber() {
     let $tbody = $("#spec_main tbody");
     $tbody.find("tr").each(function (index) {
         let $this = $(this);
-        $this.find("td").first().find("div").text(index + 1);
-        $this.find("div").first().addClass("firstCol");
-        $this.find("td").first().css({
+        let $first_div = $this.find("td").first().find("div")
+        $first_div.text(index + 1);
+        $first_div
+            .addClass("firstCol")
+            .attr("readonly", "readonly");
+        let $td_first = $this.find("td").first();
+        $td_first.find("input").remove();
+        $td_first.css({
             "width": "1vw"
         })
+            .attr("readonly", "readonly")
+            .removeClass("edit_cell");
     })
 }
 
@@ -637,8 +639,8 @@ function unhighlightCol() {
                 console.log($(this).css("background-color"))
                 if ($(this).css("background-color") === "rgb(255, 247, 189)")
                     $(this).css({
-                    "background-color": "unset"
-                })
+                        "background-color": "unset"
+                    })
             }
         });
     });
