@@ -209,6 +209,14 @@ function addRow() {
     let $index = Number($text_add_row.val()) - 1;
     $text_add_row.val('');
     $text_add_row.attr('placeholder','номер строки');
+    let isZeroRows = false;
+    if($len_tr === 0) {
+        $tbody.append('<tr></tr>');
+        isZeroRows = true;
+        $len_tr = 1;
+        $index = 1;
+    }
+
     if($index >= $len_tr + 1   || $index < 0) {
         $text_add_row.attr('placeholder','ошибка!');
         return;
@@ -239,6 +247,10 @@ function addRow() {
             .removeClass('edit_cell_div').addClass('edit_cell_div_hide');
         $edit_div.find('input')
             .removeClass('edit_cell_input_hide').addClass('edit_cell_input').focus();
+    }
+    if(isZeroRows)
+    {
+        $tbody.find('tr:first').remove();
     }
     setRowsNumber();
 }
