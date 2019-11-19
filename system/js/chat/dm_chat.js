@@ -1,5 +1,5 @@
 $(function () {
-    initDMChat(countUsers());
+    initDMChat(5 /*countUsers()*/);
 });
 
 function initDMChat(count_users) {
