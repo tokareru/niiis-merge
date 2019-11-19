@@ -1,5 +1,5 @@
 $(function () {
-    initDMChat(countUsers());
+    initDMChat( 5 /*countUsers()*/);
 });
 
 function initDMChat(count_users) {
@@ -98,10 +98,10 @@ function generateDMChat(count_users) {
             '">' + 'user_' + i  + '</a></div>');
     }
     for (let i = 0; i < count_users; i++) {
-        console.log(loginUsers[i]);
+        console.log("login user: "+loginUsers[i]);
         $chat_dm.append('<div id="dm_user_' + i + '" class="dm_window"><ul></ul></div>');
         $chat_dm.find('#dm_user_' + i).data({
-            'login_user_chat_with': loginUsers[i],
+            'login_user_chat_with': 'user_' + i ,//loginUsers[i],
             'count_messages': 0,
             'unread_messages': 0
         });
