@@ -23,16 +23,24 @@ function initAllUsersChat() {
         printComments($chat_window_chat,
             {
                 type: 'ALL',
-                count_messages: countCommentsNeedToAdd($chat_window_chat, {
+                    count_messages: countCommentsNeedToAdd($chat_window_chat, {
                     type: 'ALL',
-                    function: 'count_comment'
+                    function: 'count_comments'
                 }),
-                function: 'add_comment'
+                function: 'print_comment'
             }, false);
     }, 100);
 
     $('#but').on('click', function () {
         chatClick();
+    });
+
+    $("#shell").click(function () {
+
+        if($('#but').children().attr('id') === 'span_icon_right')
+        {
+            $('#but').trigger("click");
+        }
     });
 
     $('#chat_window_text').on('keypress', function (event) {
@@ -52,10 +60,10 @@ function initAllUsersChat() {
 //функция считывания сообщения из textarea (без валидации)
 function chatMessages($chat) {
     let $text = $('#chat_window_text').val();
-    $('#chat_window_text').val('');
     if ($text === '') {
         return;
     }
+    $('#chat_window_text').val('');
     let count = $chat.data('count_messages') + 1;
     $chat.data({'count_messages': count});
 
@@ -151,7 +159,8 @@ function currentCountMessagesOnServer($chat, dataToAjax) {
         type: 'POST',
         data: dataToAjax, //тип чата (и с кем чат)
         success: function (data) {
-            count = JSON.parse(data);
+            let obj_count = JSON.parse(data);
+            count = obj_count.count;
         }
     });
     return count;
