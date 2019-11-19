@@ -1,5 +1,5 @@
 $(function () {
-    initDMChat(5);
+    initDMChat(countUsers());
 });
 
 function initDMChat(count_users) {
@@ -31,7 +31,7 @@ function initDMChat(count_users) {
                     current_login: login,
                     login_user_chat_with: $(this).data('login_user_chat_with'),
                     count_messages: count_mes,
-                    function: 'add_comment'
+                    function: 'print_comment'
                 }, false);
             $('#chat_dm').find('a').each(function () {
                 if ($(this).attr('href') === ('#' + $this.attr('id'))) {
@@ -115,7 +115,11 @@ function getLoginNames() {
         type: 'POST',
         data: {current_login: login, function: 'login_users'},
         success: function (data) {
-            loginUsers = JSON.parse(data);
+            let dataLoginUsers = JSON.parse(data);
+            for (let login in dataLoginUsers)
+            {
+                loginUsers.push(login);
+            }
         }
     });
     return loginUsers;
@@ -128,7 +132,21 @@ function initDMChats() {
             current_login: login,
             login_user_chat_with: $(this).data('login_user_chat_with'),
             count_messages: 100,
-            function: 'add_comment'
+            function: 'print_comment'
         });
     });
+}
+
+function countUsers() {
+    let count = 0;
+    $.ajax({
+        type: 'POST',
+        url: '',
+        data: {function: 'count_users'},
+        success: function (data) {
+            let JSONcount = JSON.parse(data);
+            count = JSONcount.count;
+        }
+    });
+    return count;
 }
