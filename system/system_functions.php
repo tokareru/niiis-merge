@@ -7,7 +7,7 @@ class sys {
   
   static function db_connect($db_host, $user, $password, $db) {
 
-    sys::$mssql_link = $dbconn3 = pg_connect("host=http://82.146.41.218 port=5432 dbname=niiis user=dmitry password=ubvyfpbz50");
+    sys::$mssql_link = $dbconn3 = pg_connect("host=82.146.41.218 port=5432 dbname=niiis user=dmitry password=ubvyfpbz50");
     if (!sys::$mssql_link) {
       throw new Exception("Failed to connect to database");
     }
