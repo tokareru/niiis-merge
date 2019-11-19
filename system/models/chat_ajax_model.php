@@ -69,13 +69,20 @@ class chat_ajax_model extends model
                       WHERE LOGIN <> :login";
                     $q = sys::$PDO->prepare($sql);
                     $q->execute(array("login" => $_POST["current_login"]));
-                    return $q->fetchAll();
+                    $Q = $q->fetchAll();
+                    $result;
+                    $i = 1;
+                    foreach($Q as $row){
+                        $result["login".$i++] = $row["login"];
+                    }
+                    return $result;
                 case "count_users":
                     $sql = "SELECT COUNT(*) as COUNT
                       FROM USERS";
                     $q = sys::$PDO->prepare($sql);
                     $q->execute();
-                    return $q->fetchAll();
+                    $Q = $q->fetchAll();
+                    return array("count"=>$Q[0]["count"]);
             }
         }
         else {
