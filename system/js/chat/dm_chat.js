@@ -1,5 +1,5 @@
 $(function () {
-    initDMChat(5 /*countUsers()*/);
+    initDMChat(countUsers());
 });
 
 function initDMChat(count_users) {
@@ -98,9 +98,10 @@ function generateDMChat(count_users) {
             '">' + 'user_' + i  + '</a></div>');
     }
     for (let i = 0; i < count_users; i++) {
+        console.log(loginUsers[i]);
         $chat_dm.append('<div id="dm_user_' + i + '" class="dm_window"><ul></ul></div>');
         $chat_dm.find('#dm_user_' + i).data({
-            'login_user_chat_with': 'user_' + i  /*loginUsers[i]*/,
+            'login_user_chat_with': loginUsers[i],
             'count_messages': 0,
             'unread_messages': 0
         });
@@ -111,9 +112,9 @@ function generateDMChat(count_users) {
 function getLoginNames() {
     let loginUsers = [];
     $.ajax({
-        url: '',
+        url: 'chat_ajax',
         type: 'POST',
-        data: {current_login: login, function: 'login_users'},
+        data: JSON.stringify({current_login: login, function: 'login_users'}),
         success: function (data) {
             let dataLoginUsers = JSON.parse(data);
             for (let login in dataLoginUsers)
@@ -141,11 +142,12 @@ function countUsers() {
     let count = 0;
     $.ajax({
         type: 'POST',
-        url: '',
-        data: {function: 'count_users'},
+        url: 'chat_ajax',
+        data:  JSON.stringify( {function: 'count_users'}),
         success: function (data) {
             let JSONcount = JSON.parse(data);
             count = JSONcount.count;
+            console.log(count);
         }
     });
     return count;

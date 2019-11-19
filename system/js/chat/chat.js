@@ -92,7 +92,7 @@ function chatMessages($chat) {
     $.ajax({
         url: '',
         type: 'POST',
-        data: objData,
+        data: JSON.stringify(objData),
         error: function () {
             $('#chat_window_text').val('Ошибка загрузки');
         }
@@ -157,7 +157,7 @@ function currentCountMessagesOnServer($chat, dataToAjax) {
     $.ajax({
         url: '',
         type: 'POST',
-        data: dataToAjax, //тип чата (и с кем чат)
+        data: JSON.stringify(dataToAjax), //тип чата (и с кем чат)
         success: function (data) {
             let obj_count = JSON.parse(data);
             count = obj_count.count;
