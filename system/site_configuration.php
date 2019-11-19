@@ -32,7 +32,7 @@ ini_set("memory_limit", "200M");  // для экспорта надо много
 if(trim($_SERVER['SERVER_NAME'],'/') === 'abitprof.nntu.ru'){
   conf::$ROOT = rtrim($_SERVER['DOCUMENT_ROOT'],'/').'/';
   conf::$SITE_URL = 'https://'.$_SERVER['SERVER_NAME'].'/';
-  conf::$DB_SERVER_NAME='http://82.146.41.218';
+  conf::$DB_SERVER_NAME='127.0.0.1';
   conf::$DB_NAME='niiis';
   conf::$DB_USER_NAME='dmitry';
   conf::$DB_PASSWORD='ubvyfpbz50';
@@ -42,7 +42,7 @@ if(trim($_SERVER['SERVER_NAME'],'/') === 'abitprof.nntu.ru'){
 }else{
   conf::$ROOT = rtrim($_SERVER['DOCUMENT_ROOT'],'/').'/';
   conf::$SITE_URL = 'http://'.$_SERVER['SERVER_NAME'].'/';
-  conf::$DB_SERVER_NAME='http://82.146.41.218';
+  conf::$DB_SERVER_NAME='127.0.0.1';
   conf::$DB_NAME='niiis';
   conf::$DB_USER_NAME='dmitry';
   conf::$DB_PASSWORD='ubvyfpbz50';
