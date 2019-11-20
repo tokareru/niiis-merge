@@ -395,7 +395,7 @@
       "name": "Чат",
       "URL": "pages/chat",
       "ID": "chat-side",
-      "init": "initChat",
+      "init": "",
       "parent": "body"
     }
   ],
