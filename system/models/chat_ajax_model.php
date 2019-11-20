@@ -8,7 +8,7 @@ class chat_ajax_model extends model
                 case "print_comment":
                     switch ($_POST["type"]) {
                         case "ALL":
-                            $sql = "SELECT u.login, c.time, c.comment 
+                            $sql = "SELECT u.login, date_trunc('minute',c.time) as time, c.comment 
                                     FROM CHAT c LEFT JOIN
                                          USERS u on c.cur_user = u.id
                                     WHERE ALL_CHAT='1'
@@ -18,6 +18,7 @@ class chat_ajax_model extends model
                             $q->execute(array("limit" => $_POST["count_messages"]));
                             $Q = $q->fetchAll();
                             $result;
+                            
                             $result["response"] = 200;
                             $i = count($Q);
                             foreach($Q as $row){
