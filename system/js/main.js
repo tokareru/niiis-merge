@@ -64,6 +64,18 @@
           role: "test",
           round: 3
       });
+      $("#test_button").click(function (){
+          $(".myRow").empty();
+          $("#chat_main").remove();
+          setTimeout(function () {
+              let round = $("#test_round").val();
+              let role = $("#test_role").val();
+              prepareShell({
+                  role: role.toString(),
+                  round: Number(round)
+              });
+          }, 50)
+      });
   });
 
   /**
