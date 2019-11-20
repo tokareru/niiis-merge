@@ -1,6 +1,6 @@
 function createSpecificationTable() {
     //serializeTable();
-    getJsonByURL("json/spec_table.json", generateTable, {});
+    getJsonByURL("spec_table_ajax", generateTable, {});
 }
 
 function generateTable(json) {
@@ -679,7 +679,6 @@ function unhighlightCol() {
     $table.find("tbody tr").each(function (rows) {
         $(this).find("td").each(function (cols) {
             if (cols !== 0) {
-                console.log($(this).css("background-color"))
                 if ($(this).css("background-color") === "rgb(255, 247, 189)")
                     $(this).css({
                         "background-color": "unset"
@@ -687,4 +686,8 @@ function unhighlightCol() {
             }
         });
     });
+}
+
+function emptyCells() {
+
 }

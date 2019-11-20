@@ -1,53 +1,516 @@
 {
-  "current_round": 3,
-  "current_role": "engineer",
-  "tabs": [
+  "fields": [
     {
-      "name": "Чертёж",
-      "URL": "pages/scheme.html#schemeBlock",
-      "ID": "scheme",
-      "notify": "PdmOrStdHandler",
-      "message": "none",
-      "init": "none"
+      "role": "designer",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "left-side",
+              "tabs": [
+                "pdm_field",
+                "std_field"
+              ]
+            },
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification",
+                "fieldBlock"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      "name": "3D",
-      "URL": "pages/3D.html",
-      "ID": "fieldBlock",
-      "notify": "",
-      "message": "none",
-      "init": "trigger3dInit"
+      "role": "technologist",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": []
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "left-side",
+              "tabs": [
+                "technologist_guide_field",
+                "std_field"
+              ]
+            },
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "fieldBlock",
+                "specification"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            }
+          ]
+        }
+      ]
     },
     {
-      "name": "Спецификации",
-      "URL": "pages/specification.html#specificationBlock",
-      "ID": "specification",
-      "notify": "",
-      "message": "",
-      "init": "createSpecificationTable"
+      "role": "approver",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "fieldBlock",
+                "specification"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "production_master",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": []
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "fieldBlock"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "worker",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": []
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "fieldBlock"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "administrator",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "left-side",
+              "tabs": [
+                "pdm_field",
+                "std_field"
+              ]
+            },
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification",
+                "fieldBlock"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "test",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "left-side",
+              "tabs": [
+                "pdm_field",
+                "std_field"
+              ]
+            },
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification",
+                "fieldBlock"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
-  "left_accordion": [
+  "sides":  [
+    {
+      "name": "Левый аккордеон",
+      "URL": "pages/left_side",
+      "ID": "left-side",
+      "init": "setAccordionPanels",
+      "parent": ".myRow"
+    },
+    {
+      "name": "Главные вкладки",
+      "URL": "pages/main_tabs",
+      "ID": "main-tabs",
+      "init": "setTabs",
+      "parent": ".myRow"
+    },
+    {
+      "name": "Правая сторона",
+      "URL": "pages/right_side",
+      "ID": "right-side",
+      "init": "setRightSide",
+      "parent": ".myRow"
+    },
+    {
+      "name": "Чат",
+      "URL": "pages/chat",
+      "ID": "chat-side",
+      "init": "",
+      "parent": "body"
+    }
+  ],
+  "available_tabs": [
     {
       "name": "Изделия PDM",
+      "URL": "pages/pdm",
       "ID": "pdm_field",
-      "init": "createPDM",
+      "location": "left-side",
       "notify": "",
-      "fieldID": "#pdm_field"
+      "init": "createPDM"
     },
     {
       "name": "Стандартные изделия",
+      "URL": "pages/std",
       "ID": "std_field",
-      "init": "createSTD",
+      "location": "left-side",
       "notify": "",
-      "fieldID": "#std_field"
+      "init": "createSTD"
+    },
+    {
+      "name": "Рабочий стол. 3D",
+      "URL": "pages/_3D",
+      "ID": "fieldBlock",
+      "location": "main-tabs",
+      "notify": "",
+      "init": "trigger3dInit"
+    },
+    {
+      "name": "Рабочий стол. Чертеж",
+      "URL": "pages/scheme_field",
+      "ID": "scheme",
+      "location": "main-tabs",
+      "notify": "PdmOrStdHandler",
+      "init": "none"
+    },
+    {
+      "name": "ЭСИ",
+      "URL": "pages/esi",
+      "ID": "esi_field",
+      "location": "right-side",
+      "notify": "",
+      "init": "setEMI"
+    },
+    {
+      "name": "Спецификация",
+      "URL": "pages/specification_field",
+      "ID": "specification",
+      "location": "main-tabs",
+      "notify": "",
+      "init": "createSpecificationTable"
+    },
+    {
+      "name": "Создание маршрута согласования/утверждения",
+      "URL": "",
+      "ID": "",
+      "location": "",
+      "notify": "",
+      "init": ""
+    },
+    {
+      "name": "Маршрут согласования/утверждения",
+      "URL": "",
+      "ID": "",
+      "location": "",
+      "notify": "",
+      "init": ""
     },
     {
       "name": "Справочник технолога",
-      "ID": "technologist_guide_field",
-      "init": "",
+      "URL": "",
+      "ID": "",
+      "location": "left-accordion",
       "notify": "",
-      "fieldID": "#technologist_guide_field"
+      "init": ""
+    },
+    {
+      "name": "Техпроцесс",
+      "URL": "",
+      "ID": "",
+      "location": "",
+      "notify": "",
+      "init": ""
+    },
+    {
+      "name": "Маршрутная карта",
+      "URL": "",
+      "ID": "",
+      "location": "",
+      "notify": "",
+      "init": ""
+    },
+    {
+      "name": "Создание маршрута заданий",
+      "URL": "",
+      "ID": "",
+      "location": "",
+      "notify": "",
+      "init": ""
+    },
+    {
+      "name": "Маршруты заданий",
+      "URL": "",
+      "ID": "",
+      "location": "",
+      "notify": "",
+      "init": ""
+    },
+    {
+      "name": "Задание",
+      "URL": "pages/html",
+      "ID": "",
+      "location": "",
+      "notify": "",
+      "init": "none"
     }
   ]
 }
