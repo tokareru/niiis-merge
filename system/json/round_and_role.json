@@ -12,7 +12,7 @@
     },
     {
       "name": "3D",
-      "URL": "pages/3D.html",
+      "URL": "pages/_3D",
       "ID": "fieldBlock",
       "notify": "",
       "message": "none",
