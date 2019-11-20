@@ -13,7 +13,7 @@ $CURRENT_PAGE_HARD = $CURRENT_PAGE; // сохраняем для жестких 
 $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
 //var_dump($arr);
 // ------------- получаем адрес страницы без учета параметров
-
+echo sys::is_super_admin();
 $IS = $_SESSION['niiis']['is'];
 ?><!DOCTYPE html>
 <html lang="ru">
