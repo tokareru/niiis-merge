@@ -22,7 +22,7 @@ class sys {
 
   //Проверка авторизации пользователя
   static function is_autorised() {
-    if (isset($_SESSION['abitprof']['user_id'])){
+    if (isset($_SESSION['niiis']['user_id'])){
       return true;
     }else{
       return false;
@@ -54,9 +54,12 @@ class sys {
       // нашли юзера с заданным логином, паролем
 
       $row = $result[0];
-      $_SESSION['abitprof']['user_id'] = (int) $row['id'];
-      $_SESSION['abitprof']['user_status'] = $row['user_status'];
-      $_SESSION['abitprof']['is'] = $is;
+      $_SESSION['niiis']['user_id'] = (int) $row['id'];
+      $_SESSION['niiis']['user_status'] = $row['user_status'];
+      $_SESSION['niiis']['is'] = $is;
+      $_SESSION['niiis']['round'] = 1;
+      $_SESSION['niiis']['role'] = 1;
+      
       
       // если admin, можем менять пользователей не делая relogin
       // В остальных случаях не использовать $_SESSION['hostel']['is_super_admin'] !
@@ -141,18 +144,19 @@ class sys {
   * @return string
   */
   static function user_login() {
-    $R = '';
-    if (isset($_SESSION['abitprof']['user_id'])) {
-      $id = (int) $_SESSION['abitprof']['user_id'];
-
-      $sql="select LOGIN from USERS where ID=$id";
-      $result=mssql_query($sql);
-      if(mssql_num_rows($result)>0){
-        $row=mssql_fetch_array($result);
-        $R=$row['LOGIN'];
-      }
+  $R = '';
+  if (isset($_SESSION['niiis']['user_id'])) {
+    $id = (int) $_SESSION['niiis']['user_id'];
+    $sql="select LOGIN from USERS where ID=:id";
+    $q = sys::$PDO->prepare($sql);
+    $q->execute(array('id' => $id));
+    $result=$q->fetchAll();
+    if($result){
+      $row=$result[0];
+      $R=$row['login'];
     }
-    return $R;
+  }
+  return $R;
   }
 
   /**
@@ -374,6 +378,7 @@ class sys {
     
     return $version;
   }
+  
   
 }
 

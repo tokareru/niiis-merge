@@ -14,7 +14,7 @@ $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
 //var_dump($arr);
 // ------------- получаем адрес страницы без учета параметров
 
-$IS = $_SESSION['abitprof']['is'];
+$IS = $_SESSION['niiis']['is'];
 ?><!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -98,7 +98,7 @@ $IS = $_SESSION['abitprof']['is'];
         <div>
             <?php
             echo '<a class="medium red awesome" href="' . conf::$SITE_URL . 'logout">Выйти</a>';
-            echo '<p>Вы вошли как:</small> ' . user_login() . '</p>';
+            echo '<p>Вы вошли как:</small> ' . sys::user_login() . '</p>';
             ?>
         </div>
         <!--"Шапка"-->
