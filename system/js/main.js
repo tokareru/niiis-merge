@@ -60,8 +60,10 @@
       }
     });
       shellInit();
-      createTabs("json/round_and_role.json", "#tabs");
-      createAccordion("#left-accordion");
+      prepareShell({
+          role: "test",
+          round: 1
+      });
   });
 
   /**

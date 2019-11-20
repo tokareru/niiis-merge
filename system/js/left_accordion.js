@@ -1,24 +1,25 @@
-function createAccordion(id) {
+/*function createAccordion() {
     getJsonByURL("json/round_and_role.json", setAccordionPanels, {
-        accord_id: id
+        accord_id: "#left-accordion"
     });
-}
+}*/
 
 function setAccordionPanels(json, add_data) {
-    let accordion = $(add_data.accord_id);
+    let accord_id = "#left-accordion";
+    let accordion = $(accord_id);
     accordion.empty();
-    let availablePanels = chooseAvailablePanels(json);
+    let availablePanels = json;
     let shell =  $("#shell");
     let availableSubscribers = shell.data("shellInterconnection").availableSubscribers;
     availablePanels.forEach(function (elem) {
-        accordion.append("<p>" + elem.name + "</p><div id='" + elem.fieldID.replace(/#/, "") + "'></div>");
+        accordion.append("<p>" + elem.name + "</p><div id='" + elem.ID + "'></div>");
         setNotifyAndInitHandlers(elem);
         $("#"+ elem.ID).trigger("initialization");
         availableSubscribers.push(elem.ID);
     });
     shell.data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 
-    $(add_data.accord_id).accordion({
+    $(accord_id).accordion({
         classes:
             {
                 'ui-accordion': 'my_ui-accordion',
