@@ -223,10 +223,6 @@ function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
     console.log($chat.data('login_user_chat_with') + ' cur count: ' + $chat.data('count_messages'));
     let count = 0;
     let curCount = $chat.data('count_messages');
-    if(curCount === Max_count_messages)
-    {
-        return;
-    }
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
