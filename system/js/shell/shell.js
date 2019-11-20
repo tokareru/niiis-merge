@@ -50,7 +50,7 @@ function setMessageHandler() {
     });
 }
 
-async function prepareShell(json_role_and_round) {
+async function prepareShell(json_role_and_round, add_data) {
     let role = json_role_and_round.role;
     let round = json_role_and_round.round;
 

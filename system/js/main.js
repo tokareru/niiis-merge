@@ -60,10 +60,7 @@
       }
     });
       shellInit();
-      prepareShell({
-          role: "test",
-          round: 3
-      });
+      getJsonByURL("start_ajax", prepareShell, {})
       $("#test_button").click(function (){
           $(".myRow").empty();
           $("#chat_main").remove();
@@ -115,7 +112,7 @@
   function getJsonByURL(url ,callback, add_data) {
       // получаем сведения о роле и раунде
       $.ajax({
-          type: "POST",
+          type: "GET",
           url: url,
           dataType: "json",
           success: function (json) {
