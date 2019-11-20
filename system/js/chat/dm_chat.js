@@ -1,5 +1,5 @@
 $(function () {
-    initDMChat( 5 /*countUsers()*/);
+    initDMChat( countUsers());
 });
 
 function initDMChat(count_users) {
@@ -95,13 +95,12 @@ function generateDMChat(count_users) {
     for (let i = 0; i < count_users; i++) {
         $dm_li.append('<li class="dm_tabs_links_li"></li>');
         $dm_li.find('li').eq(i).append('<div class="dm_tabs_links"><a href="#dm_user_' + i +
-            '">' + 'user_' + i  + '</a></div>');
+            '">' + loginUsers[i]  + '</a></div>');
     }
     for (let i = 0; i < count_users; i++) {
-        console.log("login user: "+loginUsers[i]);
         $chat_dm.append('<div id="dm_user_' + i + '" class="dm_window"><ul></ul></div>');
         $chat_dm.find('#dm_user_' + i).data({
-            'login_user_chat_with': 'user_' + i ,//loginUsers[i],
+            'login_user_chat_with': loginUsers[i],
             'count_messages': 0,
             'unread_messages': 0
         });
@@ -114,13 +113,16 @@ function getLoginNames() {
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
-        data: JSON.stringify({current_login: login, function: 'login_users'}),
+        async: false,
+        data: {current_login: login, function: 'login_users'},
         success: function (data) {
-            let dataLoginUsers = JSON.parse(data);
-            for (let login in dataLoginUsers)
+            for (let login in data)
             {
-                loginUsers.push(login);
+                loginUsers.push(data[login]);
             }
+        },
+        error: function (data) {
+            console.log('error');
         }
     });
     return loginUsers;
@@ -143,11 +145,13 @@ function countUsers() {
     $.ajax({
         type: 'POST',
         url: 'chat_ajax',
-        data:  JSON.stringify( {function: 'count_users'}),
+        async: false,
+        data:  {function: 'count_users'},
         success: function (data) {
-            let JSONcount = JSON.parse(data);
-            count = JSONcount.count;
-            console.log(count);
+            count = data.count;
+        },
+        error: function (data) {
+            console.log('error');
         }
     });
     return count;

@@ -90,9 +90,12 @@ function chatMessages($chat) {
         };
     }
     $.ajax({
-        url: '',
+        url: 'chat_ajax',
         type: 'POST',
-        data: JSON.stringify(objData),
+        data: objData,
+        complete: function(){
+            console.log('message added');
+        },
         error: function () {
             $('#chat_window_text').val('Ошибка загрузки');
         }
@@ -131,12 +134,11 @@ function printComments($chat, dataToAjax, scrollDown = true) {
         return;
 
     $.ajax({
-        url: '',
-        data: JSON.stringify(dataToAjax),
+        url: 'chat_ajax',
+        data: dataToAjax,
         type: 'POST',
         success: function (data) {
             addCommentsByData(data, $chat);
-
         },
         complete: function () {
             if (scrollDown)
@@ -155,12 +157,12 @@ function countCommentsNeedToAdd($chat, dataToAjax) {
 function currentCountMessagesOnServer($chat, dataToAjax) {
     let count = 0;
     $.ajax({
-        url: '',
+        url: 'chat_ajax',
         type: 'POST',
-        data: JSON.stringify(dataToAjax), //тип чата (и с кем чат)
+        data: dataToAjax, //тип чата (и с кем чат)
         success: function (data) {
-            let obj_count = JSON.parse(data);
-            count = obj_count.count;
+            count = data.count;
+            console.log('currentCountMessagesOnServer: ' + data.count);
         }
     });
     return count;
@@ -199,18 +201,17 @@ function addNewComments() {
 
 //добавляет комменты на страничку
 function addCommentsByData(data, $chat) {
-    let $comms = JSON.parse(data);
     let $chat_ul = $chat.find('ul');
-    for (let time in $comms) {
+    for (let time in data) {
         let date = new Date();
         date.setTime(Number(time));
         let date_str = getCurDate(date);
-        let $text_wUserDate = '<span class="spanTextLogin">' + $comms[time].login + '</span>' +
+        let $text_wUserDate = '<span class="spanTextLogin">' + data[time].login + '</span>' +
             '<span class="spanTextDate"> '
             + date_str + ':</span>';
         $chat_ul.append('<li>' + $text_wUserDate + '</li>');
         $chat_ul.append('<li></li>');
-        $chat.find('li:last-child').text($comms[time].comment);
+        $chat.find('li:last-child').text(data[time].comment);
     }
     let count = $chat.data('count_messages') + data.length;
     $chat.data({'count_messages': count});
