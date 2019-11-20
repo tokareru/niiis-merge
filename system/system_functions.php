@@ -382,7 +382,7 @@ class sys {
     return $version;
   }
   static function strtodatetime($str){
-      return gmdate("d.m.Y\ H:i", strtotime($str."GMT-8"));
+      return date('d.m.Y H:m', strtotime($str));
   }
   
   
