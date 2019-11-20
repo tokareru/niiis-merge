@@ -90,9 +90,9 @@ $IS = $_SESSION['niiis']['is'];
     </head>
     <body>
         <?php
-//      if (sys::is_super_admin()){
-//        require_once 'system/views/menu_admin.php';
-//      }
+      if (sys::is_super_admin()){
+        require_once 'system/views/menu_admin.php';
+      }
         ?>
         <!--        <div id="all">-->
         <div>
