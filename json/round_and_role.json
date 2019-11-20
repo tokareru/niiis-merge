@@ -430,7 +430,7 @@
       "ID": "scheme",
       "location": "main-tabs",
       "notify": "PdmOrStdHandler",
-      "init": "none"
+      "init": "initScheme"
     },
     {
       "name": "ЭСИ",

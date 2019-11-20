@@ -69,6 +69,7 @@ $IS = $_SESSION['niiis']['is'];
         <link rel="stylesheet" href="system/css/chat/dm_chat.css">
         <link rel="stylesheet" href="system/css/center_side.css">
         <link rel="stylesheet" href="system/css/specification_table.css">
+        <link rel="stylesheet" href="system/css/scheme.css">
         <script src="system/js/libraries/jquery-3.4.1.js"></script>
         <script src="system/js/libraries/popper.min.js"></script>
         <script src="system/js/libraries/bootstrap.min.js"></script>
@@ -82,8 +83,8 @@ $IS = $_SESSION['niiis']['is'];
 
         <script src="system/js/3D/three.min.js"></script>
         <script src="system/js/3D/dat.gui.min.js"></script>
-
         <script src="system/js/3D/3D.js"></script>
+        <script src="system/js/scheme.js"></script>
 
         <script src="system/js/shell/shell.js"></script>
         <script src="system/js/main.js"></script>
@@ -254,10 +255,6 @@ footer
 <br>НГТУ, <?= date('Y') ?> г 
 </div>
 a id="move_up" href="#">Наверх</a-->
-
-<button style="position: fixed; z-index: 2; left: 300px" id="test_button">Обновить</button>
-<input style="position: fixed; left: 400px; z-index: 2" type="text" placeholder="№ раунда" id="test_round">
-<input value="administrator" style="position: fixed; left: 593px; z-index: 2" type="text" placeholder="Роль" id="test_role">
 
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">

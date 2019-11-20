@@ -1,0 +1,182 @@
+.canvimg {
+    height: 15vw;
+    margin: 2vw;
+    z-index: 1;
+}
+
+.canvimgdone {
+    height: 15vw;
+    margin: 2vw;
+    filter: brightness(1);
+    z-index: 1;
+}
+
+#bolthideimg1 {
+    position: absolute;
+    height: 6vw;
+    margin-left: 5.2vw;
+    z-index: 2;
+    transform: rotate(180deg);
+    margin-top: 2.5vw;
+}
+
+#bolthideimg2 {
+    position: absolute;
+    height: 6vw;
+    margin-left: 27.5vw;
+    z-index: 2;
+    transform: rotate(180deg);
+    margin-top: 2.5vw;
+}
+
+#bolthideimg3 {
+    position: absolute;
+    height: 6vw;
+    margin-left: 9.5vw;
+    z-index: 2;
+    transform: rotate(180deg);
+    margin-top: 2.5vw;
+}
+
+#bolthideimg4 {
+    position: absolute;
+    height: 2vw;
+    margin-left: -29.7vw;
+    z-index: 2;
+    transform: rotate(180deg);
+    margin-top: 9.5vw;
+}
+
+#bolthideimg5 {
+    position: absolute;
+    height: 2vw;
+    margin-left: -7.5vw;
+    z-index: 2;
+    transform: rotate(180deg);
+    margin-top: 9.5vw;
+}
+
+#bolthideimg11 {
+    position: absolute;
+    height: 2.6vw;
+    margin-left: 16.05vw;
+    z-index: 2;
+    margin-top: 5vw;
+}
+
+#bolthideimg22 {
+    position: absolute;
+    height: 1.5vw;
+    margin-left: 2.7vw;
+    z-index: 2;
+    margin-top: 5.5vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg33 {
+    position: absolute;
+    height: 1.5vw;
+    margin-left: 15.4vw;
+    z-index: 2;
+    margin-top: 5.5vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg44 {
+    position: absolute;
+    height: 1.5vw;
+    margin-left: -18.8vw;
+    z-index: 2;
+    margin-top: 3.6vw;
+}
+
+#bolthideimg55 {
+    position: absolute;
+    height: 1.5vw;
+    margin-left: -18.8vw;
+    z-index: 2;
+    margin-top: 15.6vw;
+}
+
+canvas:hover {
+    cursor: url(../img/pen1.png) 0 3, auto;
+}
+
+section {
+    width: 74vw;
+    margin:auto;
+}
+
+#canv1 {
+    position:absolute;
+    height: 15vw;
+    margin: 1.5vw;
+    z-index: 3;
+    padding: 0.5vw;
+    border: 1px dashed black;
+}
+
+#canv2 {
+    position:absolute;
+    height: 15vw;
+    margin: 1.5vw;
+    z-index: 3;
+    padding: 0.5vw;
+    border: 1px dashed black;
+}
+
+#canv3 {
+    position:absolute;
+    height: 28.3vw;
+    margin: 1.5vw;
+    z-index: 3;
+    padding: 0.5vw;
+    border: 1px dashed black;
+}
+
+section div {
+    float:left;
+
+}
+
+#ready {
+    width: 100%;
+    margin: auto;
+}
+
+/*for example*/
+
+#standarts {
+    position:absolute;
+    width: 14vw;
+    text-align: center;
+}
+
+#default1{
+    width: 80%;
+    cursor: pointer;
+}
+
+#default2{
+    width: 80%;
+    background: gainsboro;
+    cursor: pointer;
+}
+
+aside h1 {
+    font-size:1.7vw;
+}
+
+aside div {
+
+}
+
+#check1 {
+    position: absolute;
+    cursor: pointer;
+}
+
+#check2 {
+    position: absolute;
+    cursor: pointer;
+}

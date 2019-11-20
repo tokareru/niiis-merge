@@ -4,9 +4,6 @@ function createSpecificationTable() {
 }
 
 function generateTable(json) {
-    let count_cols = json.cols;
-    let count_rows = json.rows;
-    let table = '';
     let $table_made = $('.table_made');
     $table_made
         .append('<table style="width: 100%" class="table_edit table table-striped table-bordered table-hover">' +
