@@ -64,11 +64,12 @@ class sys {
       // если admin, можем менять пользователей не делая relogin
       // В остальных случаях не использовать $_SESSION['hostel']['is_super_admin'] !
       // для проверки принадлежности к админу, а использовать sys::user_group()
-      if($row['user_status']==='administartor'){
+      if($row['user_status']==='administrator'){
         sys::session_set('is_super_admin', 1, false);
       }else{
         sys::session_set('is_super_admin', 0, false);
       }
+     
       // --если admin, можем менять пользователей не делая relogin
       
       $R = array('result' => '1');
@@ -344,10 +345,12 @@ class sys {
   
   //Проверка на супер админа
   static function is_super_admin(){
-    if (!empty(sys::session('is_super_admin')))
+    if (!empty(sys::session('is_super_admin'))){
       return true;
-    else
+    }
+    else{
       return false;
+    }
   }
   
   /**
