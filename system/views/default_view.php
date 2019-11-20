@@ -13,7 +13,6 @@ $CURRENT_PAGE_HARD = $CURRENT_PAGE; // сохраняем для жестких 
 $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
 //var_dump($arr);
 // ------------- получаем адрес страницы без учета параметров
-echo sys::is_super_admin();
 $IS = $_SESSION['niiis']['is'];
 ?><!DOCTYPE html>
 <html lang="ru">
@@ -90,9 +89,9 @@ $IS = $_SESSION['niiis']['is'];
     </head>
     <body>
         <?php
-      if (sys::is_super_admin()){
-        require_once 'system/views/menu_admin.php';
-      }
+//      if (sys::is_super_admin()){
+//        require_once 'system/views/menu_admin.php';
+//      }
         ?>
         <!--        <div id="all">-->
         <div>

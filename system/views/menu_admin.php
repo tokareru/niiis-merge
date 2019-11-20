@@ -45,7 +45,6 @@ $user_id = sys::session('user_id');
               $q = sys::$PDO->prepare($sql);
               $q->execute();
               $Q = $q->fetchAll();
-              
               foreach ($Q as $row) {
                 echo '<option value="' . $row['user_id'] . '" ' . ($user_id == $row['user_id'] ? 'selected' : '') . '>' . $row['user_status'] . ' | ' . $row['login'] . '</option>';
               }
