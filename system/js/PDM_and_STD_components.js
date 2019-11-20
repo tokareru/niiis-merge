@@ -90,7 +90,6 @@ function makeCheckbox(fieldID) {
 
 //функция сбора данных checkbox, возвращает массив имен отмеченных input'ов
 function collectDataLabels(id_div) {
-    alert(id_div);
     let $ser = $(id_div).find("fieldset").serializeArray();
     let arr = [];
     $ser.forEach(function (val) {
