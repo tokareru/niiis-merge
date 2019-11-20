@@ -51,6 +51,7 @@ function setMessageHandler() {
 }
 
 async function prepareShell(json_role_and_round, add_data) {
+    login = json_role_and_round.login;
     let role = json_role_and_round.role;
     let round = json_role_and_round.round;
 
