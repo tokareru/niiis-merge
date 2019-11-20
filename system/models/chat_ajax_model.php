@@ -12,24 +12,27 @@ class chat_ajax_model extends model
                                     FROM CHAT c LEFT JOIN
                                          USERS u on c.cur_user = u.id
                                     WHERE ALL_CHAT='1'
+                                    Order BY c.time DESC
                                     limit :limit";
                             $q = sys::$PDO->prepare($sql);
                             $q->execute(array("limit" => $_POST["count_messages"]));
                             $Q = $q->fetchAll();
                             $result;
                             $result["response"] = 200;
-                            $i = 0;
+                            $i = count($Q);
                             foreach($Q as $row){
                                 $result[$i]["login"] = $row["login"];
                                 $result[$i]["comment"] = $row["comment"];
                                 $result[$i]["time"] = $row["time"];
-                                $i++;
+                                $i--;
                             }
+                            asort($result);
                             return $result;
                         case "DM":
                             $sql = "SELECT time, comment
                                     FROM CHAT
                                     WHERE CUR_USER = (select id from USERS WHERE LOGIN = :cur_user) and USER_CHAT_WITH = (select id from USERS WHERE LOGIN = :user_chat_with)
+                                    Order BY c.time DESC
                                     limit :limit";
                             $q = sys::$PDO->prepare($sql);
                             $q->execute(array("limit" => $_POST["count_messages"],
@@ -44,6 +47,7 @@ class chat_ajax_model extends model
                                 $result[$i]["time"] = $row["time"];
                                 $i++;
                             }
+                            asort($result);
                             return $result;
                         default:
                             return array("response"=>"TYPE '".$_POST["type"]."' NOT FOUND");
