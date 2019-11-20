@@ -1,4 +1,6 @@
-let login = 'Vasya';
+let login = prompt('login');
+let Max_count_messages = 20;
+let Server_count = initServerCount();
 $(function () {
     initAllUsersChat();
 });
@@ -7,7 +9,7 @@ function initAllUsersChat() {
     let $chat_window_chat = $('#chat_window_chat');
     $('#chat_window').data({'name': '#chat_window_chat'});
 
-    $chat_window_chat.data({'count_messages': 0});
+    $chat_window_chat.data({'count_messages': 0, login_user_chat_with: '#chat_window_chat'});
     $('#chat_window').tabs({
         classes:
             {
@@ -17,19 +19,21 @@ function initAllUsersChat() {
     });
 
     //начальная инициализация общего чата, грузятся последние 100 сообщения
-    printComments($chat_window_chat, {type: 'ALL', count_messages: 100});
+    printComments($chat_window_chat, {
+        type: 'ALL', count_messages: Max_count_messages, function: 'print_comment'
+    }, true);
 
     setInterval(function () {
-        printComments($chat_window_chat,
+        addNewComments($chat_window_chat,
             {
                 type: 'ALL',
-                    count_messages: countCommentsNeedToAdd($chat_window_chat, {
-                    type: 'ALL',
-                    function: 'count_comments'
-                }),
-                function: 'print_comment'
-            }, false);
-    }, 100);
+                function: 'count_comments'
+            },
+            {
+                type: 'ALL', count_messages: 0, function: 'print_comment'
+            })
+
+    }, 5000);
 
     $('#but').on('click', function () {
         chatClick();
@@ -37,17 +41,16 @@ function initAllUsersChat() {
 
     $("#shell").click(function () {
 
-        if($('#but').children().attr('id') === 'span_icon_right')
-        {
+        if ($('#but').children().attr('id') === 'span_icon_right') {
             $('#but').trigger("click");
         }
     });
 
     $('#chat_window_text').on('keypress', function (event) {
-       if(event.which === 13) {
-           event.preventDefault();
-           $('#chat_window_button').click();
-       }
+        if (event.which === 13) {
+            event.preventDefault();
+            $('#chat_window_button').click();
+        }
 
     });
 
@@ -57,6 +60,47 @@ function initAllUsersChat() {
     });
 }
 
+function initServerCount() {
+    let count = 0;
+    let arrOfServerCount = {'#chat_window_chat': 0};
+
+        $.ajax({
+            url: 'chat_ajax',
+            type: 'POST',
+            async: false,
+            data: {current_login: login, function: 'login_users'},
+            success: function (data) {
+                for (let login in data) {
+                    arrOfServerCount[data[login]] = 0;
+                }
+            },
+        });
+    for (let key in arrOfServerCount)
+    {
+        let dataObj = {};
+        if (key === '#chat_window_chat')
+            dataObj = {type: 'ALL',
+                function: 'count_comments'};
+        else {
+           dataObj = {type: 'DM',
+                current_login: login,
+                login_user_chat_with: key,
+                function: 'count_comments'};
+        }
+        $.ajax({
+            url: 'chat_ajax',
+            type: 'POST',
+            async: true,
+            data: dataObj,
+            success: function (data) {
+                arrOfServerCount[key] = data.count;
+            }
+        });
+    }
+    /*for (let key in arrOfServerCount)
+        console.log('key: ' + key + ' val: ' + arrOfServerCount[key]);*/
+    return arrOfServerCount;
+}
 //функция считывания сообщения из textarea (без валидации)
 function chatMessages($chat) {
     let $text = $('#chat_window_text').val();
@@ -64,8 +108,12 @@ function chatMessages($chat) {
         return;
     }
     $('#chat_window_text').val('');
+    console.log('old count: ' + $chat.data('count_messages'));
     let count = $chat.data('count_messages') + 1;
     $chat.data({'count_messages': count});
+    Server_count[$chat.data('login_user_chat_with')] += 1;
+    console.log('new count: ' + $chat.data('count_messages'));
+    console.log('message added');
 
     let date_str = getCurDate(new Date());
     let $text_wUserDate = '<span class="spanTextLogin">' + login + '</span>' +
@@ -93,8 +141,8 @@ function chatMessages($chat) {
         url: 'chat_ajax',
         type: 'POST',
         data: objData,
-        complete: function(){
-            console.log('message added');
+        complete: function () {
+
         },
         error: function () {
             $('#chat_window_text').val('Ошибка загрузки');
@@ -129,16 +177,17 @@ function chatClick() {
 }
 
 //печать комментов из базы-данных
-function printComments($chat, dataToAjax, scrollDown = true) {
-    if (dataToAjax.count_messages <= 0)
+function printComments($chat, dataToAjax, init_count = false, scrollDown = true) {
+    if (dataToAjax.count_messages <= 0) {
         return;
+    }
 
     $.ajax({
         url: 'chat_ajax',
         data: dataToAjax,
         type: 'POST',
         success: function (data) {
-            addCommentsByData(data, $chat);
+            addCommentsByData(data, $chat, init_count);
         },
         complete: function () {
             if (scrollDown)
@@ -159,62 +208,80 @@ function currentCountMessagesOnServer($chat, dataToAjax) {
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
+        async: true,
         data: dataToAjax, //тип чата (и с кем чат)
         success: function (data) {
             count = data.count;
+            console.log(data);
             console.log('currentCountMessagesOnServer: ' + data.count);
         }
     });
     return count;
 }
 
-//Будет заменена модернизированной printComments
-//добавление недостающих комментов на текущей странице
-function addNewComments() {
-    let $count = 0;
+function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
+    console.log($chat.data('login_user_chat_with') + ' cur count: ' + $chat.data('count_messages'));
+    let count = 0;
+    let curCount = $chat.data('count_messages');
+    if(curCount === Max_count_messages)
+    {
+        return;
+    }
     $.ajax({
-        url: 'comments.php',
+        url: 'chat_ajax',
         type: 'POST',
-        data: {function: 'count'},
+        async: true,
+        data: dataToAjaxCount, //тип чата (и с кем чат)
         success: function (data) {
-            $count = Number(data);
-            if (count_comments < $count) {
-
-                $count -= count_comments;
-                $.ajax({
-                    url: 'comments.php',
-                    type: 'POST',
-                    data: {function: 'add_some_comments', count: $count},
-                    success: function (data) {
-                        addCommentsByData(data);
-                    },
-                    complete: function () {
-                        let $chat_w_chat = $('#chat_window_chat');
-                        $chat_w_chat.scrollTop($chat_w_chat[0].scrollHeight);
-                    }
-                });
-                count_comments = Number(data);
+            count = data.count;
+            let login_other_user =  $chat.data('login_user_chat_with');
+            console.log('count: ' + count+ ' Server_count[login_other_user]' +Server_count[login_other_user] );
+            if (count > Server_count[login_other_user]) {
+                let count_to_ajax = count - Server_count[login_other_user];
+                Server_count[login_other_user] = count;
+                dataToAjaxPrint.count_messages += count_to_ajax;
+                console.log(dataToAjaxPrint);
+                console.log($chat.data('login_user_chat_with') + ' new count: ' + (count_to_ajax));
+                printComments($chat, dataToAjaxPrint);
+                $chat.data({'count_messages': count_to_ajax});
+                //console.log('$chat.data("unread_messages: ' + $chat.data("unread_messages"));
+                if ($chat.data("unread_messages") !== undefined)
+                    $chat.data({"unread_messages": count_to_ajax});
             }
         }
     });
+
 }
 
 //добавляет комменты на страничку
-function addCommentsByData(data, $chat) {
+function addCommentsByData(data, $chat, init_count) {
     let $chat_ul = $chat.find('ul');
-    for (let time in data) {
-        let date = new Date();
-        date.setTime(Number(time));
-        let date_str = getCurDate(date);
-        let $text_wUserDate = '<span class="spanTextLogin">' + data[time].login + '</span>' +
-            '<span class="spanTextDate"> '
-            + date_str + ':</span>';
-        $chat_ul.append('<li>' + $text_wUserDate + '</li>');
-        $chat_ul.append('<li></li>');
-        $chat.find('li:last-child').text(data[time].comment);
+    /*for (let time in data) {
+        //console.log('key: ' + time + ' login & comment:' + data[time].login + " " + data[time].comment);
+        console.log('key: '+ time);
+        for (let key in data[time])
+            console.log('val: '+ data[time][key]+ ' key: '+ key);
+    }*/
+    let countMes = 0;
+    for (let key in data) {
+        if (key !== 'response') {
+            countMes++;
+            //let date = new Date();
+            //date.setTime(Number(data[key].time));
+            let date_str = data[key].time;
+            let $text_wUserDate = '<span class="spanTextLogin">' + data[key].login + '</span>' +
+                '<span class="spanTextDate"> '
+                + date_str + ':</span>';
+            $chat_ul.append('<li>' + $text_wUserDate + '</li>');
+            $chat_ul.append('<li></li>');
+            $chat.find('li:last-child').text(data[key].comment);
+        }
     }
-    let count = $chat.data('count_messages') + data.length;
-    $chat.data({'count_messages': count});
+    if (init_count) {
+        let count = $chat.data('count_messages') + countMes;
+        $chat.data({'count_messages': count});
+    }
+
 }
 
 //следующие функции преобразовывают дату. Проблема в том, что дата
