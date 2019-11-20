@@ -19,12 +19,12 @@ class chat_ajax_model extends model
                             $Q = $q->fetchAll();
                             $result;
                             $result["response"] = 200;
-                            
                             $i = count($Q);
                             foreach($Q as $row){
                                 $result[$i]["login"] = $row["login"];
                                 $result[$i]["comment"] = $row["comment"];
-                                $result[$i]["time"] = $row["time"];
+                                $result[$i]["time"] = sys::strtodatetime($row["time"]);
+                                
                                 $i--;
                             }
                             ksort($result);
@@ -45,7 +45,7 @@ class chat_ajax_model extends model
                             foreach($Q as $row){
                                 $result[$i]["login"] = $row["login"];
                                 $result[$i]["comment"] = $row["comment"];
-                                $result[$i]["time"] = $row["time"];
+                                $result[$i]["time"] = sys::strtodatetime($row["time"]);
                                 $i--;
                             }
                             ksort($result);
