@@ -7,7 +7,7 @@ class spec_table_ajax_model extends model
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $Q = $q->fetchAll();
-    $result;
+    $result["thead"] = array(array('text'=>"Поз.",'readonly'=>true),array('text'=>"Обозначение",'readonly'=>true),array('text'=>"Наименование",'readonly'=>true),array('text'=>"Кол.",'readonly'=>true));
     $i = 0;
     foreach($Q as $row){
         $j = 0;
@@ -19,7 +19,7 @@ class spec_table_ajax_model extends model
 //                if($is_readonly[$j++] == 'f'){
 //                    $readonly = false;
 //                }  
-                $result[$i]["row"][$j] = array('text' => $row[$j],'readonly'=>$readonly);
+                $result['tbody'][$i]["row"][$j] = array('text' => $row[$j],'readonly'=>$readonly);
                 $j++;
             }
         }
