@@ -465,14 +465,6 @@
       "init": ""
     },
     {
-      "name": "Обмен сообщениями",
-      "URL": "pages/chat",
-      "ID": "",
-      "location": "chat-side",
-      "notify": "",
-      "init": ""
-    },
-    {
       "name": "Справочник технолога",
       "URL": "",
       "ID": "",
