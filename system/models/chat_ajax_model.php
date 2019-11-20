@@ -65,7 +65,7 @@ class chat_ajax_model extends model
                             return array("response"=>200);
                         case "DM":
                              case "ALL":
-                            if($_POST["current_login"] == $_POST["login_user_chat_with"]){
+                            if($_POST["current_login"] != $_POST["login_user_chat_with"]){
                                 $sql = "INSERT INTO CHAT(USER_CHAT_WITH,CUR_USER,COMMENT)
                                         VALUES((select ID from USERS WHERE LOGIN=:user_chat_with),(select ID from USERS WHERE LOGIN=:cur_user),:comment)";
                                 $q = sys::$PDO->prepare($sql);
