@@ -87,6 +87,7 @@ async function prepareShell(json_role_and_round) {
     let i = 0;
     for (const elem of available_sides) {
         let html = await downloadHTML(elem.URL);
+        //console.log(html);
         $(elem.parent).append(html);
         // находим области по id
         let available_tabs = [];
@@ -124,7 +125,7 @@ async function prepareShell(json_role_and_round) {
 async function getJsonByURLWithoutCallback(url) {
     let $json;
     await $.ajax({
-        type: "POST",
+        type: "GET",
         url: url,
         dataType: "json",
         success: function (json) {
@@ -141,7 +142,7 @@ async function getJsonByURLWithoutCallback(url) {
 async function downloadHTML(url) {
     let $html;
     await $.ajax({
-        type: "POST",
+        type: "GET",
         url: url,
         dataType: "html",
         success: function (html) {
@@ -157,7 +158,7 @@ async function downloadHTML(url) {
 
 
 function setRightSide(json, add_data) {
-    console.log(json);
+    //console.log(json);
     let availableSubscribers = $("#shell").data("shellInterconnection").availableSubscribers;
     for (const elem of json) {
         $("#right-side").append("<div id='" + elem.ID + "'></div>");

@@ -19,7 +19,7 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
             json.images.forEach(function (elem, i) {
                 addNewComponent(elem, accordID, fieldID)
             });
-            //$("#left-accordion").accordion("refresh");
+            $("#left-accordion").accordion("refresh");
         },
         error: function (message) {
             //console.log("Error");

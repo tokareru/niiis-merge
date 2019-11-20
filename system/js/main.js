@@ -62,7 +62,7 @@
       shellInit();
       prepareShell({
           role: "test",
-          round: 1
+          round: 3
       });
   });
 

@@ -13,15 +13,19 @@ class pages_controller extends Controller{
         }
 
         function left_side(){
-            $this->view->render('', 'shell/left_side_view.php', '');
+            $this->view->render('', 'left_side_view.php', '');
         }
 
         function main_tabs(){
-           $this->view->render('', 'shell/main_tabs_side_view.php', '');
+           $this->view->render('', 'main_tabs_view.php', '');
         }
 
         function right_side(){
-             $this->view->render('', 'shell/right_side_view.php', '');
+             $this->view->render('', 'right_side_view.php', '');
+        }
+
+        function scheme_field(){
+            $this->view->render('', 'scheme_field_view.php', '');
         }
 
         function pdm(){
@@ -40,8 +44,8 @@ class pages_controller extends Controller{
             $this->view->render('', 'chat_view.php', '');
         }
 
-        function specification(){
-            $this->view->render('', 'specification_view.php', '');
+        function specification_field(){
+            $this->view->render('', 'specification_field_view.php', '');
         }
 
 

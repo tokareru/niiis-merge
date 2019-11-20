@@ -241,23 +241,6 @@
       "rounds": [
         {
           "round": 1,
-          "available_sides": []
-        },
-        {
-          "round": 2,
-          "available_sides": []
-        },
-        {
-          "round": 3,
-          "available_sides": []
-        }
-      ]
-    },
-    {
-      "role": "test",
-      "rounds": [
-        {
-          "round": 1,
           "available_sides": [
             {
               "ID": "main-tabs",
@@ -320,26 +303,90 @@
           ]
         }
       ]
+    },
+    {
+      "role": "test",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "left-side",
+              "tabs": [
+                "pdm_field",
+                "std_field"
+              ]
+            },
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification",
+                "fieldBlock"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            }
+          ]
+        }
+      ]
     }
   ],
   "sides":  [
     {
       "name": "Левый аккордеон",
-      "URL": "pages/shell/left_side",
+      "URL": "pages/left_side",
       "ID": "left-side",
       "init": "setAccordionPanels",
       "parent": ".myRow"
     },
     {
       "name": "Главные вкладки",
-      "URL": "pages/shell/main_tabs",
+      "URL": "pages/main_tabs",
       "ID": "main-tabs",
       "init": "setTabs",
       "parent": ".myRow"
     },
     {
       "name": "Правая сторона",
-      "URL": "pages/shell/right_side",
+      "URL": "pages/right_side",
       "ID": "right-side",
       "init": "setRightSide",
       "parent": ".myRow"
@@ -379,7 +426,7 @@
     },
     {
       "name": "Рабочий стол. Чертеж",
-      "URL": "pages/scheme",
+      "URL": "pages/scheme_field",
       "ID": "scheme",
       "location": "main-tabs",
       "notify": "PdmOrStdHandler",
@@ -395,7 +442,7 @@
     },
     {
       "name": "Спецификация",
-      "URL": "pages/specification",
+      "URL": "pages/specification_field",
       "ID": "specification",
       "location": "main-tabs",
       "notify": "",

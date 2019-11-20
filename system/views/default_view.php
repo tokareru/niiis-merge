@@ -255,10 +255,17 @@ footer
 </div>
 a id="move_up" href="#">Наверх</a-->
 
+<button style="position: fixed; z-index: 2; left: 300px" id="test_button">Обновить</button>
+<input style="position: fixed; left: 400px; z-index: 2" type="text" placeholder="№ раунда" id="test_round">
+<input value="test" style="position: fixed; left: 593px; z-index: 2" type="text" placeholder="Роль" id="test_role">
+
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">
-
             </div>
         </div>
+        <div>
+        </div>
+
+
     </body>
 </html>
