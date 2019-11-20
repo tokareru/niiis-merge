@@ -1,18 +1,20 @@
-function createTabs(url, id) {
-    getJsonByURL(url, setTabs, {
-        tabs_id: id,
+/*
+function createTabs() {
+    getJsonByURL("json/round_and_role.json", setTabs, {
+        tabs_id: "#tabs",
     });
 }
+*/
 
 // устанавливаем доступные области
 function setTabs(json, add_data) {
     // очищаем пустышку
-    let tabs_id = add_data.tabs_id;
+    let tabs_id = "#tabs";
     $(tabs_id + " ul").empty();
     $(tabs_id + "-empty").remove();
 
     // получаем доступные области исходя из раунда
-    let availableTabs = chooseTabsByRoleAndRound(json);
+    let availableTabs = json;
     // добавляем области в #tabs и обновляем tabs
     addAvailableTabs(availableTabs, tabs_id);
 
@@ -45,10 +47,10 @@ function setTabs(json, add_data) {
 
 function chooseTabsByRoleAndRound(json) {
     // место для логики выбора доступных областей
-    let current_round = json.current_round;
-    let current_role = json.current_role;
+    let current_round = 2;
+    let current_role = "designer";
     //console.log("Round: " + current_round + ", Role: " + current_role);
-    let test = json.tabs;
+    let test = json;
     return test;
 }
 

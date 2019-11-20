@@ -60,8 +60,19 @@
       }
     });
       shellInit();
-      createTabs("json/round_and_role.json", "#tabs");
-      createAccordion("#left-accordion");
+      getJsonByURL("start_ajax", prepareShell, {})
+      $("#test_button").click(function (){
+          $(".myRow").empty();
+          $("#chat_main").remove();
+          setTimeout(function () {
+              let round = $("#test_round").val();
+              let role = $("#test_role").val();
+              prepareShell({
+                  role: role.toString(),
+                  round: Number(round)
+              });
+          }, 50)
+      });
   });
 
   /**
@@ -101,7 +112,7 @@
   function getJsonByURL(url ,callback, add_data) {
       // получаем сведения о роле и раунде
       $.ajax({
-          type: "POST",
+          type: "GET",
           url: url,
           dataType: "json",
           success: function (json) {
