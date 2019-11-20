@@ -1,4 +1,4 @@
-let login = prompt('login');
+let login = "";
 let Max_count_messages = 20;
 let Server_count = initServerCount();
 $(function () {
