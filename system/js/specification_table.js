@@ -1,6 +1,6 @@
 function createSpecificationTable() {
     //serializeTable();
-    getJsonByURL("json/spec_table.json", generateTable, {});
+    getJsonByURL("spec_table_ajax", generateTable, {});
 }
 
 function generateTable(json) {
