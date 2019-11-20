@@ -1,9 +1,7 @@
 let login = "";
 let Max_count_messages = 20;
 let Server_count = initServerCount();
-$(function () {
-    initAllUsersChat();
-});
+
 
 function initAllUsersChat() {
     let $chat_window_chat = $('#chat_window_chat');
@@ -61,6 +59,7 @@ function initAllUsersChat() {
 }
 
 function initServerCount() {
+    console.log('cur login: ' + login);
     let count = 0;
     let arrOfServerCount = {'#chat_window_chat': 0};
 

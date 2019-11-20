@@ -1,6 +1,9 @@
-$(function () {
+
+function initChats()
+{
+    initAllUsersChat();
     initDMChat(countUsers());
-});
+}
 
 function initDMChat(count_users) {
     $('#chat_dm').data({'currentDM': '#dm_user_0'});
@@ -112,6 +115,7 @@ function generateDMChat(count_users) {
 
 function getLoginNames() {
     let loginUsers = [];
+    console.log('cur login: ' + login);
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
