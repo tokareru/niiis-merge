@@ -23,7 +23,7 @@ class chat_ajax_model extends model
                             foreach($Q as $row){
                                 $result[$i]["login"] = $row["login"];
                                 $result[$i]["comment"] = $row["comment"];
-                                $result[$i]["time"] = gmdate("d.m.Y\ H:i", strtotime($Q[0]['time']."GMT"));
+                                $result[$i]["time"] = sys::strtodatetime($row["time"]);
                                 
                                 $i--;
                             }
@@ -45,7 +45,7 @@ class chat_ajax_model extends model
                             foreach($Q as $row){
                                 $result[$i]["login"] = $row["login"];
                                 $result[$i]["comment"] = $row["comment"];
-                                $result[$i]["time"] = gmdate("d.m.Y\ H:i", strtotime($Q[0]['time']."GMT"));
+                                $result[$i]["time"] = sys::strtodatetime($row["time"]);
                                 $i--;
                             }
                             ksort($result);

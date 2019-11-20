@@ -381,6 +381,9 @@ class sys {
     
     return $version;
   }
+  static function strtodatetime($str){
+      return gmdate("d.m.Y\ H:i", strtotime($str."GMT"));
+  }
   
   
 }
