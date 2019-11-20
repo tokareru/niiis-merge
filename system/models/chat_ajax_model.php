@@ -19,6 +19,7 @@ class chat_ajax_model extends model
                             $Q = $q->fetchAll();
                             $result;
                             $result["response"] = 200;
+                            
                             $i = count($Q);
                             foreach($Q as $row){
                                 $result[$i]["login"] = $row["login"];
@@ -26,7 +27,7 @@ class chat_ajax_model extends model
                                 $result[$i]["time"] = $row["time"];
                                 $i--;
                             }
-                            asort($result);
+                            ksort($result);
                             return $result;
                         case "DM":
                             $sql = "SELECT time, comment
@@ -47,7 +48,7 @@ class chat_ajax_model extends model
                                 $result[$i]["time"] = $row["time"];
                                 $i++;
                             }
-                            asort($result);
+                            ksort($result);
                             return $result;
                         default:
                             return array("response"=>"TYPE '".$_POST["type"]."' NOT FOUND");
