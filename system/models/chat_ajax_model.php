@@ -30,9 +30,9 @@ class chat_ajax_model extends model
                             ksort($result);
                             return $result;
                         case "DM":
-                            $sql = "SELECT time, comment
-                                    FROM CHAT
-                                    WHERE CUR_USER = (select id from USERS WHERE LOGIN = :cur_user) and USER_CHAT_WITH = (select id from USERS WHERE LOGIN = :user_chat_with)
+                            $sql = "SELECT c.time, c.comment, u.LOGIN
+                                    FROM CHAT c left join USERS u on c.cur_user=u.id
+                                    WHERE CUR_USER in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with) and USER_CHAT_WITH in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with)
                                     Order BY c.time DESC
                                     limit :limit";
                             $q = sys::$PDO->prepare($sql);
@@ -41,12 +41,12 @@ class chat_ajax_model extends model
                             $Q = $q->fetchAll();
                             $result;
                             $result["response"] = 200;
-                            $i = 0;
+                            $i = count($Q);
                             foreach($Q as $row){
-                                $result[$i]["login"] = $_POST["current_login"];
+                                $result[$i]["login"] = $row["login"];
                                 $result[$i]["comment"] = $row["comment"];
                                 $result[$i]["time"] = $row["time"];
-                                $i++;
+                                $i--;
                             }
                             ksort($result);
                             return $result;
