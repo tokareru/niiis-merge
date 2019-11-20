@@ -248,6 +248,10 @@
                 "scheme",
                 "specification"
               ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         },
@@ -395,7 +399,7 @@
       "name": "Чат",
       "URL": "pages/chat",
       "ID": "chat-side",
-      "init": "",
+      "init": "initChats",
       "parent": "body"
     }
   ],
