@@ -1,6 +1,6 @@
 .left-side{
-    height: 95%;
-    min-height: 470px;
+    height: 95vh;
+    min-height: 500px;
     max-height: 1100px;
 }
 

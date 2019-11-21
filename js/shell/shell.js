@@ -1,10 +1,17 @@
 // область вызывает событие createdNewMessage после создания сообщения,
 // а остальные вкладки получают уведомление о новом сообщении с помощью события newMessage
+let current_round;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
     setMessageHandler();
-    getJsonByURL("start_ajax", prepareShell, {});
+    let current_round;
+    //getJsonByURL("start_ajax", prepareShell, {});
+    setInterval(function () {
+         getJsonByURL("start_ajax", prepareShell, {});
+    }, 30000);
+
+
     /*$("#test_button").click(function (){
         $(".myRow").empty();
         $("#chat_main").remove();
@@ -67,7 +74,8 @@ async function prepareShell(json_role_and_round, add_data) {
     login = json_role_and_round.login;
     let role = json_role_and_round.role;
     let round = json_role_and_round.round;
-
+    if (round === current_round) return;
+    current_round = round;
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
 
     // находим id сторон и id областей, присутстующих в данном кабинете
