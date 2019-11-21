@@ -69,7 +69,7 @@ function initDMChat(count_users) {
             });*/
 
         })
-    }, 500);
+    }, 10000);
 
     $('#chat_all_DM').on('click', 'li', function () {
         let $attr = $(this).find('a').attr('href');
