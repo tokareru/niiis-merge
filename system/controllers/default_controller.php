@@ -19,5 +19,9 @@ class default_controller extends Controller{
       session_destroy();
         header("location:".conf::$SITE_URL);
   }
+  function change_role(){
+       $_SESSION["niiis"]["round"] = $_POST['role']; 
+       header("location:".conf::$SITE_URL);
+  }
 }
 ?>

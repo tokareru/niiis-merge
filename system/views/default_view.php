@@ -88,175 +88,40 @@ $IS = $_SESSION['niiis']['is'];
         <script src="system/js/main.js"></script>
     </head>
     <body>
-        <?php
-//      if (sys::is_super_admin()){
-//        require_once 'system/views/menu_admin.php';
-//      }
-        ?>
-        <!--        <div id="all">-->
+
         <div>
             <?php
             echo '<a class="medium red awesome" href="' . conf::$SITE_URL . 'logout">Выйти</a>';
             echo '<p>Вы вошли как:</small> ' . sys::user_login() . '</p>';
             ?>
         </div>
-        <!--"Шапка"-->
-<!--            <table class="heder">
-            <tbody>
-                <tr>
-                    <td class="hedtdl">
-
-                        <a href="<?= conf::$SITE_URL ?>" title=""><img style="height: 160px;" src="<?= conf::$SITE_URL ?>/img/logo.jpg" alt="НГТУ" title="НГТУ" /></a>
-                    </td>
-                    <td>
-                        <div class="main_name">
-                          <div class="page-header" style="color: #337ab7;">
-                            <h1>ИС «<?php echo conf::$SITE_NAME; ?>» <small></small></h1>
-                          </div>
-                        </div>
-                    </td>
-                    <td class="hedtdr">
-
-                    </td>
-                </tr>
-            </tbody>
-        </table>-->
-
-<!--            <table class="total">
-    <tr>
-        <td class="menu_td">
-        <?php
-//if($IS=='abitprof'){
-        ?>
-              <nav class="main_menu">
-
-                <ul class="list-group">
-                  <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Школьники</h4>
-                    <p class="list-group-item-text">
-                      <ul class="nav nav-pills nav-stacked">
-                        <li //<?php //echo ($CURRENT_PAGE == 'abits')?('class="active"'):"";   ?>><a href="<?php //echo conf::$SITE_URL;  ?>abits" style="padding-right: 0px;padding-left: 5px;">Список школьников<span class="badge pull-right" id="count_abits"></span></a></li>
-                        <li //<?php //echo ($CURRENT_PAGE == 'konkurs_categ')?('class="active"'):"";   ?>><a href="<?php //echo conf::$SITE_URL;  ?>konkurs_categ" style="padding-left: 5px;">Виды мероприятий</a></li>
-                        <li //<?php //echo ($CURRENT_PAGE == 'konkurs')?('class="active"'):"";   ?>><a href="<?php //echo conf::$SITE_URL;  ?>konkurs" style="padding-right: 0px;padding-left: 5px;">Мероприятия<span class="badge pull-right" id="count_events"></span></a></li>
-                      </ul>
-                    </p>
-                  </li>
-                  <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Результаты</h4>
-                    <p class="list-group-item-text">
-                      <ul class="nav nav-pills nav-stacked">
-
-                      </ul>
-                    </p>
-                  </li>
-                  
-                  <li class="list-group-item">
-                    <h4 class="list-group-item-heading">Отчеты</h4>
-                    <p class="list-group-item-text">
-                      <ul class="nav nav-pills nav-stacked">
-        <?php
-//                                    echo '<li '.(($CURRENT_PAGE == 'report_members')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_members" style="padding-left: 5px;">Участники олимпиад</a></li>';
-//                                    echo '<li '.(($CURRENT_PAGE == 'report_testprof')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_testprof" style="padding-right: 0px;padding-left: 5px;">Тестирование "Профориентатор"<span class="badge pull-right" id="count_testprof"></span></a></li>';
-//                                    echo '<li '.(($CURRENT_PAGE == 'report_abits')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_abits" style="padding-left: 5px;">Список мотивированных абитуриентов<span class="badge pull-right" id="count_abit_res"></span></a></li>';
-//                                    echo '<li '.(($CURRENT_PAGE == 'report_abit_professii')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_abit_professii" style="padding-left: 5px;">Профессии</a></li>';
-//                                    echo '<li '.(($CURRENT_PAGE == 'report_for_company')?('class="active"'):"").'><a href="'.conf::$SITE_URL.'report_for_company" style="padding-left: 5px;">Для предприятий</a></li>';
-        ?>
-                      </ul>
-                    </p>
-                  </li>
-
-                  <li class="list-group-item">Отчеты</li>
-                </ul>
-
-              </nav>
-        <?php
-//}
-//if($IS=='nastavniki'){
-        ?>
-              <nav class="main_menu">
-              class="active"
-              <ul class="list-group">
-                <li class="list-group-item">
-                  <h5 class="list-group-item-heading">Наставники</h5>
-                  <p class="list-group-item-text">
-                    <ul class="nav nav-pills nav-stacked">
-                      <li <?php //echo ($CURRENT_PAGE == 'nastavniki')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>nastavniki" style="padding-right: 0px;padding-left: 5px;">Список наставников<span class="badge pull-right" id="count_nastav"></span></a></li>
-                      <li <?php //echo ($CURRENT_PAGE == 'category')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>category" style="padding-left: 5px;">Категории</a></li>
-                      <li <?php //echo ($CURRENT_PAGE == 'dolzhnosti')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>dolzhnosti" style="padding-left: 5px;">Должности</a></li>
-                    </ul>
-                  </p>
-                </li>
-                <li class="list-group-item">
-                  <h5 class="list-group-item-heading">Программы занятий</h5>
-                  <p class="list-group-item-text">
-                    <ul class="nav nav-pills nav-stacked">
-                      <li <?php //echo ($CURRENT_PAGE == 'prog_list')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>prog_list" style="padding-right: 0px;padding-left: 5px;">Список программ<span class="badge pull-right" id="count_programs"></span></a></li>
-                      общий список тем по всем программам
-                      <li <?php //echo ($CURRENT_PAGE == 'prog_subj')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>prog_subj">Темы программ</a></li>
-                      <li <?php // echo ($CURRENT_PAGE == 'groups')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>groups" style="padding-right: 0px;padding-left: 5px;">Группы<span class="badge pull-right" id="count_groups"></span></a></li>
-                    </ul>
-                  </p>
-                </li>
-                <li class="list-group-item">
-                  <h5 class="list-group-item-heading">Организации</h5>
-                  <p class="list-group-item-text">
-                    <ul class="nav nav-pills nav-stacked">
-                        <li <?php //echo ($CURRENT_PAGE == 'org_list')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>org_list" style="padding-right: 0px;padding-left: 5px;">Список организаций<span class="badge pull-right" id="count_orgs"></span></a></li>
-                        <li <?php //echo ($CURRENT_PAGE == 'org_type')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>org_type" style="padding-left: 5px;">Типы организаций</a></li>
-                    </ul>
-                  </p>
-                </li>
-                <li class="list-group-item">
-                  <h5 class="list-group-item-heading">Школьники</h5>
-                  <p class="list-group-item-text">
-                    <ul class="nav nav-pills nav-stacked">
-                      <li <?php //echo ($CURRENT_PAGE == 'abits')?('class="active"'):""  ?>><a href="<?php //echo conf::$SITE_URL;  ?>abits" style="padding-right: 0px;padding-left: 5px;">Список школьников<span class="badge pull-right" id="count_abits"></span></a></li>
-                    
-                      
-                    </ul>
-                  </p>
-                </li>
-                <li class="list-group-item">Отчеты</li>
-              </ul>
-              
-            </nav>
-        <?php
-//}
-        ?>
-
-        </td>
-       
-        <td class="content">
-          
-        <?php
-//                      if ($content_view <> '') {
-//                        include 'system/views/' . $content_view;
-//                      }
-//                      else
-//                      {
-        ?>
-            <h3>ИС <?php //echo conf::$SITE_NAME; ?></h3>
-            <br>
-            index-content
-            
-        <?php
-        //}
-        ?>
-            
-        </td>
-    </tr>	
-</table>
-footer
-<div id="footer_guarantor">&nbsp;</div>
-</div>
-<div class="text-center" id="footer1">
-<br>НГТУ, <?= date('Y') ?> г 
-</div>
-a id="move_up" href="#">Наверх</a-->
-
+        
+<?php if (sys::is_super_admin()){?>
+        <div>
+        <form name="change_role_form" action="default/change_role" method="post">
+            <div class="row">
+                <div class="col-1">
+                    <select id="change_role" name="role" class="form-control">
+                        <option value="1" <?php if($_SESSION["niiis"]["round"] == 1) echo "selected"; ?>>1 round</option>
+                        <option value="2" <?php if($_SESSION["niiis"]["round"] == 2) echo "selected"; ?>>2 round<option>
+                        <option value="3" <?php if($_SESSION["niiis"]["round"] == 3) echo "selected"; ?>>3 round<option>
+                    </select>
+                </div>
+                <div class="col-2">
+                <input type="submit" name="done" value="обновить" style="margin-top: 5px;">
+                </div>
+            </div>
+</form>
+        </div>
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">
             </div>
         </div>
+<?php } else{?>
+        <div id="shell" class="container-fluid myContainer">
+            <div class="row myRow">
+            </div>
+        </div>
+<?php }?>
     </body>
 </html>
