@@ -105,7 +105,7 @@ function tableData(readonly) {
     if (!readonly) {
         addInputs();
         let $edit_mode_div = $('#specification_edit');
-        $edit_mode_div.load('pages/edit.html', function () {
+        $edit_mode_div.load('pages/edit_field', function () {
             $('#edit_div_toggle').hide();
         });
         let $table_edit = $('.table_edit');

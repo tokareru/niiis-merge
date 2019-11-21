@@ -48,6 +48,10 @@ class pages_controller extends Controller{
             $this->view->render('', 'specification_field_view.php', '');
         }
 
+        function edit_field(){
+            $this->view->render('', 'edit_field_view.php', '');
+        }
+
 
   // счетчики для менюшки, использовать можно на всех страницах
 }
