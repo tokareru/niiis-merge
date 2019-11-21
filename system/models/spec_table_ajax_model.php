@@ -17,9 +17,9 @@ class spec_table_ajax_model extends model {
 
                 if ($row["is_read_only"] != $row[$j]) {
                     $readonly = true;
-                if($is_readonly[$j] == 'f'){
-                    $readonly = false;
-                }  
+                    if ($is_readonly[$j] == 'f') {
+                        $readonly = false;
+                    }
                     $result['tbody'][$i]["row"][$j] = array('text' => $row[$j], 'readonly' => $readonly);
 
                     $j++;
@@ -33,15 +33,15 @@ class spec_table_ajax_model extends model {
     function save() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "DELETE FROM SPEC_TABLE";
-                $q = sys::$PDO->prepare($sql);
-                $q->execute();
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
             $Q = $_POST['tbody'];
-            foreach($Q as $row){
+            foreach ($Q as $row) {
                 $readonly_str = "";
-                for($i = 0; $i<4;$i++){
-                    if($row["row"][$i]["readonly"]){
-                        $readonly_str .= "t"; 
-                    }else{
+                for ($i = 0; $i < 4; $i++) {
+                    if ($row["row"][$i]["readonly"]) {
+                        $readonly_str .= "t";
+                    } else {
                         $readonly_str .= "f";
                     }
                 }
@@ -50,9 +50,8 @@ class spec_table_ajax_model extends model {
                         VALUES(:position, :name_short, :name_long, :count, :readonly)";
                 $q = sys::$PDO->prepare($sql);
                 $i = 0;
-                $q->execute(array("position"=>$row["row"][$i++]["text"],"name_short"=>$row["row"][$i++]["text"],"name_long"=>$row["row"][$i++]["text"],
-                    "count"=>$row["row"][$i++]["text"],"readonly"=>$readonly_str));
-                
+                $q->execute(array("position" => $row["row"][$i++]["text"], "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
+                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str));
             }
             return array("response" => 200);
         } else {
