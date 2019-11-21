@@ -19,7 +19,7 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
             json.images.forEach(function (elem, i) {
                 addNewComponent(elem, accordID, fieldID)
             });
-            $("#left-accordion").accordion("refresh");
+            //$("#left-accordion").accordion("refresh");
         },
         error: function (message) {
             //console.log("Error");
@@ -81,7 +81,7 @@ function makeCheckbox(fieldID) {
     });
 
     $checkboxid.find("input").click(function (e) {
-        collectDataLabels(fieldID);
+		showhideimage(collectDataLabels(fieldID), $(this));
     });
 
     $checkboxid.find('img').on('dragstart', function (event) {
@@ -111,7 +111,6 @@ function collectDataLabels(id_div) {
             "data": arr
         });
     }
-
     return arr;
 }
 
@@ -126,3 +125,46 @@ function PdmOrStdHandler(event, data) {
         else $("#availableSTD").text(" Пока что ничего не выбрано")
     }
 }
+
+function showhideimage(arrayComp, obj) 
+{
+	if (isEnded) 
+	{
+		arr = $('img');
+		if (obj[0].checked) 
+		{
+            for (i=0;i<arr.length;i++)
+			{
+                if (arr[i].id != '') 
+		        {
+		        	for (j=1;j<4;j++)
+		        	{
+		        		if (arr[i].id.substr(0, 12) == "bolthideimg"+j && arrayComp.indexOf('std_component_'+j) != -1) {arr[i].style.display = '';}
+		        	}
+		        }
+            }
+	    }
+		else
+		{
+            for (i=0;i<arr.length;i++)
+			{
+                if (arr[i].id != '') 
+		        {
+		        	for (j=1;j<4;j++)
+		        	{
+		        		if (arr[i].id.substr(0, 12) == "bolthideimg"+j && arrayComp.indexOf('std_component_'+j) == -1) {arr[i].style.display = 'none';}
+		        	}
+		        }
+            }
+		}
+	}
+	else
+	{
+		obj[0].checked = false;
+		obj[0].labels[0].className = "check_std check_non-active";
+		obj[0].labels[0].children[0].className = "check_icon-non check_icon fa fa-circle-thin material-icons";
+		//console.log(obj[0].labels[0].className);
+		alert('Необходимо закончить рисование и нажать "Готово"');
+	}
+}
+

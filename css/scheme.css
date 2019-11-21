@@ -11,40 +11,90 @@
     z-index: 1;
 }
 
-#bolthideimg1 {
-    position: absolute;
-    height: 6vw;
-    margin-left: 5.2vw;
-    z-index: 2;
-    transform: rotate(180deg);
-    margin-top: 2.5vw;
+.holst {
+	width: 30vw;
+    height: 30vw;
+    background: white;
+	margin: 1.5vw;
 }
 
-#bolthideimg2 {
-    position: absolute;
-    height: 6vw;
-    margin-left: 27.5vw;
-    z-index: 2;
-    transform: rotate(180deg);
-    margin-top: 2.5vw;
+.typeproj {
+	display:block;
+	margin-left:1.5vw;
+	margin-top:2vw;
+	font-size:2vw;
 }
 
-#bolthideimg3 {
-    position: absolute;
-    height: 6vw;
-    margin-left: 9.5vw;
-    z-index: 2;
-    transform: rotate(180deg);
-    margin-top: 2.5vw;
-}
-
-#bolthideimg4 {
+#bolthideimg111 {
     position: absolute;
     height: 2vw;
-    margin-left: -29.7vw;
+    margin-left: 3.35vw;
     z-index: 2;
-    transform: rotate(180deg);
-    margin-top: 9.5vw;
+    transform: rotate(-90deg);
+    margin-top: 14.4vw;
+}
+
+#bolthideimg112 {
+    position: absolute;
+    height: 2vw;
+    margin-left: 31.35vw;
+    z-index: 2;
+    transform: rotate(-90deg);
+    margin-top: 14.4vw;
+}
+
+#bolthideimg121 {
+    position: absolute;
+    height: 2vw;
+    margin-left: 0.5vw;
+    z-index: 2;
+    transform: rotate(-90deg);
+    margin-top: 38.1vw;
+}
+
+#bolthideimg122 {
+    position: absolute;
+    height: 2vw;
+    margin-left: 23.7vw;
+    z-index: 2;
+    transform: rotate(-90deg);
+    margin-top: 38.1vw;
+}
+
+#bolthideimg131 {
+    position: absolute;
+    height: 2.5vw;
+    margin-left: 5.5vw;
+    z-index: 2;
+    transform: rotate(-90deg);
+    margin-top: 80vw;
+}
+
+#bolthideimg132 {
+    position: absolute;
+    height: 2.5vw;
+    margin-left: 5.5vw;
+    z-index: 2;
+    transform: rotate(-90deg);
+    margin-top: 55.2vw;
+}
+
+#bolthideimg133 {
+    position: absolute;
+    height: 2.5vw;
+    margin-left: 35.5vw;
+    z-index: 2;
+    transform: rotate(-90deg);
+    margin-top: 55.2vw;
+}
+
+#bolthideimg134 {
+    position: absolute;
+    height: 2.5vw;
+    margin-left: 35.5vw;
+    z-index: 2;
+    transform: rotate(-90deg);
+    margin-top: 80vw;
 }
 
 #bolthideimg5 {
@@ -56,20 +106,173 @@
     margin-top: 9.5vw;
 }
 
-#bolthideimg11 {
+#bolthideimg211 {
     position: absolute;
-    height: 2.6vw;
-    margin-left: 16.05vw;
+    height: 2vw;
+    margin-left: 11vw;
     z-index: 2;
-    margin-top: 5vw;
+    margin-top: 19.4vw;
+    transform: rotate(-90deg);
 }
 
-#bolthideimg22 {
+#bolthideimg212 {
+    position: absolute;
+    height: 2vw;
+    margin-left: 35.6vw;
+    z-index: 2;
+    margin-top: 19.4vw;
+    transform: rotate(-90deg);
+}
+
+#bolthideimg221 {
+    position: absolute;
+    height: 2vw;
+    margin-left: 22.15vw;
+    z-index: 2;
+    margin-top: 43.2vw;
+    transform: rotate(-90deg);
+}
+
+#bolthideimg222 {
+    position: absolute;
+    height: 2vw;
+    margin-left: 5.6vw;
+    z-index: 2;
+    margin-top: 43.2vw;
+    transform: rotate(-90deg);
+}
+
+#bolthideimg231 {
+    position: absolute;
+    height: 2.5vw;
+    margin-left: 12vw;
+    z-index: 2;
+    margin-top: 77vw;
+    transform: rotate(-90deg);
+}
+
+#bolthideimg232 {
+    position: absolute;
+    height: 2.5vw;
+    margin-left: 38.4vw;
+    z-index: 2;
+    margin-top: 77vw;
+    transform: rotate(-90deg);
+}
+
+#bolthideimg233 {
+    position: absolute;
+    height: 2.5vw;
+    margin-left: 38.4vw;
+    z-index: 2;
+    margin-top: 59vw;
+    transform: rotate(-90deg);
+}
+
+#bolthideimg234 {
+    position: absolute;
+    height: 2.5vw;
+    margin-left: 12.2vw;
+    z-index: 2;
+    margin-top: 59vw;
+    transform: rotate(-90deg);
+}
+
+#bolthideimg321{
     position: absolute;
     height: 1.5vw;
-    margin-left: 2.7vw;
+    margin-left: -0.1vw;
     z-index: 2;
-    margin-top: 5.5vw;
+    margin-top: 36.5vw;
+}
+
+#bolthideimg331{
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 6.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg332{
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 8.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg333 {
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 10.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg334 {
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 12.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg335 {
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 14.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg336 {
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 22.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg337 {
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 24.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg338 {
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 26.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg339{
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 28.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
+    transform: rotate(90deg);
+}
+
+#bolthideimg330 {
+    position: absolute;
+    height: 1.7vw;
+    margin-left: 30.5vw;
+    z-index: 2;
+    margin-top: 54.6vw;
     transform: rotate(90deg);
 }
 
@@ -98,18 +301,101 @@
     margin-top: 15.6vw;
 }
 
+#bolthideimg311 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 8.8vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg312 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 10.8vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg313 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 12.8vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg314 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 14.8vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg315 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 16.8vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg316 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 22.5vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg317 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 24.5vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg318 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 26.5vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg319 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 28.5vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
+#bolthideimg310 {
+    position: absolute;
+    height: 1.6vw;
+    margin-left: 30.5vw;
+    z-index: 2;
+    margin-top: 12.6vw;
+}
+
 canvas:hover {
-    cursor: url(../img/pen1.png) 0 3, auto;
+    cursor: url(../images/scheme/pen1.png) 0 3, auto;
 }
 
 section {
-    width: 74vw;
+    /*width: 74vw;*/
+	width: 40vw;
     margin:auto;
+	position: relative;
 }
 
 #canv1 {
     position:absolute;
-    height: 15vw;
+    height: 16vw;
+	width: 37.5vw;
     margin: 1.5vw;
     z-index: 3;
     padding: 0.5vw;
@@ -118,7 +404,8 @@ section {
 
 #canv2 {
     position:absolute;
-    height: 15vw;
+    height: 16vw;
+	width: 27vw;
     margin: 1.5vw;
     z-index: 3;
     padding: 0.5vw;
@@ -127,7 +414,8 @@ section {
 
 #canv3 {
     position:absolute;
-    height: 28.3vw;
+    height: 29.3vw;
+	width: 40.4vw;
     margin: 1.5vw;
     z-index: 3;
     padding: 0.5vw;
