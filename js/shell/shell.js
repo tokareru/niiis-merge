@@ -7,23 +7,15 @@ function shellInit() {
     setMessageHandler();
     let current_round;
     getJsonByURL("start_ajax", prepareShell, {});
-    /*setTimeout(function () {
+
+    $("#change_role").change(function () {
+        //console.log($(this).val())
+        getJsonByURL("start_ajax", prepareShell, {});
+    })
+
+    /*setInterval(function () {
          getJsonByURL("start_ajax", prepareShell, {});
     }, 10000);*/
-
-
-    /*$("#test_button").click(function (){
-        $(".myRow").empty();
-        $("#chat_main").remove();
-        setTimeout(function () {
-            let round = $("#test_round").val();
-            let role = $("#test_role").val();
-            prepareShell({
-                role: role.toString(),
-                round: Number(round)
-            });
-        }, 50)
-    });*/
 }
 
 function interShellMessage(event, data) {
@@ -172,6 +164,7 @@ async function downloadHTML(url) {
         dataType: "html",
         success: function (html) {
             //console.log("Data loaded");
+            //console.log(html)
             $html = html;
         },
         error: function (message) {

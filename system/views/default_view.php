@@ -131,7 +131,7 @@ $IS = $_SESSION['niiis']['is'];
 //            echo '<p>Вы вошли как:</small> ' . sys::user_login() . '</p>';
             ?>
         </div>-->
-        
+
 
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">

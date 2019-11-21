@@ -258,6 +258,12 @@
               ]
             },
             {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
+            },
+            {
               "ID": "chat-side",
               "tabs": []
             }
@@ -268,7 +274,10 @@
           "available_sides": [
             {
               "ID": "main-tabs",
-              "tabs": []
+              "tabs": [
+                "scheme",
+                "fieldBlock"
+              ]
             },
             {
               "ID": "right-side",
