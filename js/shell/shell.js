@@ -6,7 +6,7 @@ function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
     setMessageHandler();
     let current_round;
-    //getJsonByURL("start_ajax", prepareShell, {});
+    getJsonByURL("start_ajax", prepareShell, {});
     setInterval(function () {
          getJsonByURL("start_ajax", prepareShell, {});
     }, 30000);
