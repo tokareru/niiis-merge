@@ -45,7 +45,7 @@ class spec_table_ajax_model extends model {
                         $readonly_str .= "f";
                     }
                 }
-                print_r($row);
+//                print_r($row);
                 $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY)
                         VALUES(:position, :name_short, :name_long, :count, :readonly)";
                 $q = sys::$PDO->prepare($sql);
