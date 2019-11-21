@@ -166,6 +166,8 @@ function tableData(readonly) {
 
             if (col > 0 && col < ($(".table_made th").length - 1) && row >= 0 && row < $(".table_made tr").length) {
                 cellToReadOnly(row, col);
+                $row.attr("placeholder", "номер строки");
+                $col.attr("placeholder", "номер столбца");
             } else {
                 $row.attr("placeholder", "ошибка!");
                 $col.attr("placeholder", "ошибка!");
@@ -186,6 +188,8 @@ function tableData(readonly) {
 
             if (col > 0 && col < ($(".table_made th").length) && row >= 0 && row < $(".table_made tr").length) {
                 cellToEdit(row, col);
+                $row.attr("placeholder", "номер строки");
+                $col.attr("placeholder", "номер столбца");
             } else {
                 $row.attr("placeholder", "ошибка!");
                 $col.attr("placeholder", "ошибка!");
