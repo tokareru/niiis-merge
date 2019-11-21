@@ -245,8 +245,8 @@
             {
               "ID": "left-side",
               "tabs": [
-                "pdm_field",
-                "std_field"
+                "std_field",
+                "pdm_field"
               ]
             },
             {

@@ -12,6 +12,7 @@
 }
 
 #chat_main {
+    z-index: 999;
     position: fixed;
     width: 550px;
     max-height: 450px;
