@@ -97,9 +97,6 @@ $IS = $_SESSION['niiis']['is'];
         </div>
         
 <?php if (sys::is_super_admin()){?>
-        <div>
-        <form name="change_role_form" action="default/change_role" method="post">
-            <div class="row">
                 <div class="col-1">
                     <select id="change_role" name="role" class="form-control">
                         <option value="1" <?php if($_SESSION["niiis"]["round"] == 1) echo "selected"; ?>>1 round</option>
@@ -107,12 +104,6 @@ $IS = $_SESSION['niiis']['is'];
                         <option value="3" <?php if($_SESSION["niiis"]["round"] == 3) echo "selected"; ?>>3 round<option>
                     </select>
                 </div>
-                <div class="col-2">
-                <input type="submit" name="done" value="обновить" style="margin-top: 5px;">
-                </div>
-            </div>
-</form>
-        </div>
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">
             </div>

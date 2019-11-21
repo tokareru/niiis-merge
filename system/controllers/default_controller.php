@@ -20,8 +20,7 @@ class default_controller extends Controller{
         header("location:".conf::$SITE_URL);
   }
   function change_role(){
-       $_SESSION["niiis"]["round"] = $_POST['role']; 
-       header("location:".conf::$SITE_URL);
+       $_SESSION["niiis"]["round"] = $_GET['role'];
   }
 }
 ?>
