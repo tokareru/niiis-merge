@@ -36,8 +36,8 @@ class pages_controller extends Controller{
             $this->view->render('', 'std_view.php', '');
         }
 
-        function esi(){
-            $this->view->render('', 'esi_view.php', '');
+        function esi_field(){
+            $this->view->render('', 'esi_field_view.php', '');
         }
 
         function chat(){
