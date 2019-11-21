@@ -39,19 +39,19 @@ class spec_table_ajax_model extends model {
             foreach ($Q as $row) {
                 $readonly_str = "";
                 for ($i = 0; $i < 4; $i++) {
-                    if ($row["row"][$i]["readonly"]) {
+                    if (!$row["row"][$i]["readonly"]) {
                         $readonly_str .= "t";
                     } else {
                         $readonly_str .= "f";
                     }
                 }
-                print_r($row);
+//                print_r($row);
                 $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY)
                         VALUES(:position, :name_short, :name_long, :count, :readonly)";
                 $q = sys::$PDO->prepare($sql);
                 $i = 0;
                 $q->execute(array("position" => $row["row"][$i++]["text"], "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
-                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str));
+                    "count" => $row["row"][$i++]["text"], "readonly" => "ffff"));
             }
             return array("response" => 200);
         } else {
