@@ -1,15 +1,15 @@
 // область вызывает событие createdNewMessage после создания сообщения,
 // а остальные вкладки получают уведомление о новом сообщении с помощью события newMessage
-let current_round;
+//let current_round_glob;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
     setMessageHandler();
     let current_round;
     getJsonByURL("start_ajax", prepareShell, {});
-    setInterval(function () {
+    /*setTimeout(function () {
          getJsonByURL("start_ajax", prepareShell, {});
-    }, 30000);
+    }, 10000);*/
 
 
     /*$("#test_button").click(function (){
@@ -71,11 +71,14 @@ function setMessageHandler() {
 }
 
 async function prepareShell(json_role_and_round, add_data) {
+    //console.log(json_role_and_round);
     login = json_role_and_round.login;
     let role = json_role_and_round.role;
     let round = json_role_and_round.round;
-    if (round === current_round) return;
-    current_round = round;
+    //console.log(current_round_glob)
+    //console.log(round)
+    //if (round === current_round_glob) return;
+    //current_round_glob = round;
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
 
     // находим id сторон и id областей, присутстующих в данном кабинете
@@ -180,7 +183,7 @@ async function downloadHTML(url) {
 
 
 function setRightSide(json, add_data) {
-    //console.log(json);
+    console.log(json);
     let availableSubscribers = $("#shell").data("shellInterconnection").availableSubscribers;
     for (const elem of json) {
         $("#right-side").append("<div id='" + elem.ID + "'></div>");
