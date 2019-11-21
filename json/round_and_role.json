@@ -253,7 +253,8 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification"
+                "specification",
+                "fieldBlock"
               ]
             },
             {
