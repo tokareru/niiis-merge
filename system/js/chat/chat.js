@@ -1,5 +1,5 @@
 let login = "";
-let Max_count_messages = 20;
+let Max_count_messages = 100;
 let Server_count = initServerCount();
 
 

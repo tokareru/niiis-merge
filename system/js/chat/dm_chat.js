@@ -69,17 +69,28 @@ function initDMChat(count_users) {
             });*/
 
         })
-    }, 3000);
+    }, 500);
 
     $('#chat_all_DM').on('click', 'li', function () {
         let $attr = $(this).find('a').attr('href');
         if ($attr !== '#chat_window_chat') {
-            $('#chat_window').data({'name': $('#chat_dm').data('currentDM')});
+            let $chat_dm = $('#chat_dm');
+
+            let attr = $('.chat_dm_ul').find('li').eq(0).find('a').attr('href');
+            if ($chat_dm.data('currentDM') ===
+                $('.chat_dm_ul').find('li').eq(0).find('a').attr('href') &&
+                $chat_dm.find(attr).data('scroll') === true)
+            {
+                $chat_dm.find(attr).data({'scroll': false});
+                $chat_dm.find(attr).scrollTop($chat_dm.find(attr)[0].scrollHeight);
+            }
+
+            $('#chat_window').data({'name': $chat_dm.data('currentDM')});
             $('.chat_dm_ul').find('a').each(function () {
-                if ($(this).attr('href') === $('#chat_dm').data('currentDM')) {
-                    $(this).html($('#chat_dm').find($(this).attr('href'))
+                if ($(this).attr('href') === $chat_dm.data('currentDM')) {
+                    $(this).html($chat_dm.find($(this).attr('href'))
                         .data('login_user_chat_with'));
-                    $('#chat_dm').find($(this).attr('href'))
+                    $chat_dm.find($(this).attr('href'))
                         .data({'unread_messages': 0});
                     $(this).removeClass('chat_unread_messages');
                 }
@@ -88,6 +99,15 @@ function initDMChat(count_users) {
     });
 
     $('.chat_dm_ul').on('click', 'li', function () {
+
+        let $attr = $(this).find('a').attr('href');
+        if($('#chat_dm').find($attr).data('scroll') === true)
+        {
+            $('#chat_dm').find($attr).data({'scroll': false});
+            $('#chat_dm').find($attr).scrollTop($('#chat_dm').find($attr)[0].scrollHeight);
+        }
+
+
         $('#chat_window').data({'name': $(this).find('a').attr('href')});
         $('#chat_dm').data({'currentDM': $(this).find('a').attr('href')});
         $(this).find('a').html($('#chat_dm').find($(this).find('a').attr('href'))
@@ -114,7 +134,8 @@ function generateDMChat(count_users) {
         $chat_dm.find('#dm_user_' + i).data({
             'login_user_chat_with': loginUsers[i],
             'count_messages': 0,
-            'unread_messages': 0
+            'unread_messages': 0,
+            'scroll': true
         });
     }
 
