@@ -73,7 +73,7 @@ function postDataFromTable() {
 
     $.ajax({
         type: "POST",
-        url: "",
+        url: "spec_table/save",
         data: json,
         dataType: "json"
     })
