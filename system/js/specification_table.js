@@ -39,7 +39,8 @@ function generateTable(json) {
 }
 
 function postDataFromTable() {
-    let json = [];
+    let json = {};
+    let tbody = [];
     $(".table_made").find("tbody tr").each(function (rows) {
         let row_arr = [];
         $(this).find("td").each(function (cols) {
@@ -63,7 +64,11 @@ function postDataFromTable() {
             row: row_arr,
             priority: rows
         };
-        json.push(obj);
+        tbody.push(obj);
+    });
+
+    json.push({
+        tbody: tbody
     });
     console.log(json);
 

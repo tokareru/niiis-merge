@@ -114,3 +114,15 @@ function collectDataLabels(id_div) {
 
     return arr;
 }
+
+function PdmOrStdHandler(event, data) {
+    if (data.message_id === "checkedPdmComponents") {
+        let text = data.data.join(", ");
+        if (text.length) $("#availablePDM").text(text);
+        else $("#availablePDM").text(" Пока что ничего не выбрано")
+    } else if (data.message_id === "checkedStdComponents") {
+        let text = data.data.join(", ");
+        if (text.length) $("#availableSTD").text(text)
+        else $("#availableSTD").text(" Пока что ничего не выбрано")
+    }
+}
