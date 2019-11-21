@@ -312,6 +312,13 @@
           "round": 1,
           "available_sides": [
             {
+              "ID": "left-side",
+              "tabs": [
+                "pdm_field",
+                "std_field"
+              ]
+            },
+            {
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
