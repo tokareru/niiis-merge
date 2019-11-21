@@ -252,6 +252,7 @@
             {
               "ID": "main-tabs",
               "tabs": [
+                "scheme",
                 "specification"
               ]
             },

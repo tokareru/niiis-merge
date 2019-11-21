@@ -204,11 +204,16 @@ function initScheme() {
 
     });
 
-    $("body").mousedown(function (e) {
+
+
+
+
+
+    /*$("body").mousedown(function (e) {
         e.preventDefault();
     }).mousemove(function (e) {
         e.preventDefault();
-    });
+    });*/
 
 }
 
