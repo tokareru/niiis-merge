@@ -382,7 +382,13 @@ class sys {
     return $version;
   }
   static function strtodatetime($str){
-      return date('d.m.Y H:m', strtotime($str));
+//      return date('d.m.Y H:m', strtotime($str));
+       $date = explode("-", $str);
+       $time = explode(' ',$date[2])[1];
+       $date[2] =  explode(' ',$date[2])[0];
+       $time = explode(':',$time);
+       $datetime = $date[2].'.'.$date[1].'.'.$date[0].' '.$time[0].':'.$time[1];
+       return $datetime;
   }
   
   

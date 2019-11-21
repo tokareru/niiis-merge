@@ -31,7 +31,7 @@ class chat_ajax_model extends model
                             ksort($result);
                             return $result;
                         case "DM":
-                            $sql = "SELECT c.time, c.comment, u.LOGIN
+                            $sql = "SELECT date_trunc('seconds',c.time) as time, c.comment, u.LOGIN
                                     FROM CHAT c left join USERS u on c.cur_user=u.id
                                     WHERE CUR_USER in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with) and USER_CHAT_WITH in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with)
                                     Order BY c.time DESC
