@@ -88,31 +88,51 @@ $IS = $_SESSION['niiis']['is'];
         <script src="js/main.js"></script>
     </head>
     <body>
-
-        <div>
-            <?php
-            echo '<a class="medium red awesome" href="' . conf::$SITE_URL . 'logout">Выйти</a>';
-            echo '<p>Вы вошли как:</small> ' . sys::user_login() . '</p>';
-            ?>
-        </div>
-        
-<?php if (sys::is_super_admin()){?>
-                <div class="col-1">
+        <div class="row">
+            <div class="col-1"><a class="medium red awesome" href="<?php echo conf::$SITE_URL.'logout' ?>">Выйти</a></div>
+            <div class="col-1">
+                <div class="row">
+                    <div class="col-3">User:</div>
+                    <div class="col-3"><?php echo sys::user_login() ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="row">
+                    <div class="col-3">Role:</div>
+                    <div class="col-6"><?php echo $_SESSION['niiis']['role'] ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <div class="row">
+                    <div class="col-4">Round:</div>
+                    <div class="col-6"><?php echo $_SESSION['niiis']['round'] ?>
+                    </div>
+                </div>
+            </div>
+            <div class="col-1">
+                <?php if (sys::is_super_admin()){?>
                     <select id="change_role" name="role" class="form-control">
                         <option value="1" <?php if($_SESSION["niiis"]["round"] == 1) echo "selected"; ?>>1 round</option>
                         <option value="2" <?php if($_SESSION["niiis"]["round"] == 2) echo "selected"; ?>>2 round<option>
                         <option value="3" <?php if($_SESSION["niiis"]["round"] == 3) echo "selected"; ?>>3 round<option>
                     </select>
-                </div>
+                <?php } ?>
+            </div>
+        </div>
+        
+<!--        <div>
+            <?php
+//            echo '<a class="medium red awesome" href="' . conf::$SITE_URL . 'logout">Выйти</a>';
+//            echo '<p>Вы вошли как:</small> ' . sys::user_login() . '</p>';
+            ?>
+        </div>-->
+        
+
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">
             </div>
         </div>
-<?php } else{?>
-        <div id="shell" class="container-fluid myContainer">
-            <div class="row myRow">
-            </div>
-        </div>
-<?php }?>
     </body>
 </html>
