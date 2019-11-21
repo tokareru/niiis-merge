@@ -67,9 +67,9 @@ function postDataFromTable() {
         tbody.push(obj);
     });
 
-    json.push({
+    json = {
         tbody: tbody
-    });
+    };
     console.log(json);
 
     $.ajax({
