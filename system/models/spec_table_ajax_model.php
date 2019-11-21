@@ -37,7 +37,7 @@ class spec_table_ajax_model extends model {
 //                $q->execute();
             
 //              return json_decode($Q);
-            return $_POST;
+            return json_decode($_POST);
 //            foreach($Q as $row){
 //                
 //                $readonly_str = "";
