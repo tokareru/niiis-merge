@@ -43,15 +43,15 @@ function postDataFromTable() {
     $(".table_made").find("tbody tr").each(function (rows) {
         let row_arr = [];
         $(this).find("td").each(function (cols) {
-            if (cols > 0){
+            if (cols > 0) {
                 let $div = $(this).find("div");
                 let r_o = $div.attr("readonly");
-                if ( r_o !== undefined){
+                if (r_o !== undefined) {
                     row_arr.push({
                         "text": $div.text(),
                         "readonly": r_o
                     });
-                }else {
+                } else {
                     row_arr.push({
                         "text": $div.text(),
                         "readonly": ""
@@ -66,10 +66,12 @@ function postDataFromTable() {
         json.push(obj);
     });
     console.log(json);
+
     $.ajax({
         type: "POST",
         url: "",
-        data: json
+        data: json,
+        dataType: "json"
     })
 }
 

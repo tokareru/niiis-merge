@@ -64,11 +64,12 @@ class sys {
       // если admin, можем менять пользователей не делая relogin
       // В остальных случаях не использовать $_SESSION['hostel']['is_super_admin'] !
       // для проверки принадлежности к админу, а использовать sys::user_group()
-      if($row['user_status']==='admin'){
+      if($row['user_status']==='administrator'){
         sys::session_set('is_super_admin', 1, false);
       }else{
         sys::session_set('is_super_admin', 0, false);
       }
+     
       // --если admin, можем менять пользователей не делая relogin
       
       $R = array('result' => '1');
@@ -273,7 +274,7 @@ class sys {
    * @param type $cookie_set
    */
   static function session_set($var,$val,$cookie_set=true){
-    $_SESSION['abitprof'][$var]=$val;
+    $_SESSION['niiis'][$var]=$val;
 
     if($cookie_set && isset($_COOKIE['n_token'])){
       // Установим куки
@@ -292,7 +293,7 @@ class sys {
 
       $session='';
       $i=0;
-      foreach($_SESSION['abitprof'] as $k=>$v){
+      foreach($_SESSION['niiis'] as $k=>$v){
         if($i++ !== 0){$session.=",";}
         $session.="$k=$v";
       }
@@ -314,8 +315,8 @@ class sys {
   }
   
   static function session($var){
-    if(isset($_SESSION['abitprof'][$var])){
-      return $_SESSION['abitprof'][$var];
+    if(isset($_SESSION['niiis'][$var])){
+      return $_SESSION['niiis'][$var];
     }else{
       return FALSE;
     }
@@ -344,10 +345,12 @@ class sys {
   
   //Проверка на супер админа
   static function is_super_admin(){
-    if (!empty(sys::session('is_super_admin')))
+    if (!empty(sys::session('is_super_admin'))){
       return true;
-    else
+    }
+    else{
       return false;
+    }
   }
   
   /**
@@ -377,6 +380,15 @@ class sys {
     }
     
     return $version;
+  }
+  static function strtodatetime($str){
+//      return date('d.m.Y H:m', strtotime($str));
+       $date = explode("-", $str);
+       $time = explode(' ',$date[2])[1];
+       $date[2] =  explode(' ',$date[2])[0];
+       $time = explode(':',$time);
+       $datetime = $date[2].'.'.$date[1].'.'.$date[0].' '.$time[0].':'.$time[1];
+       return $datetime;
   }
   
   

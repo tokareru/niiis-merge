@@ -1,5 +1,15 @@
   $(function () {
-
+       $("#change_role").on('change', function(){
+        var role = $("#change_role").val();
+        $.ajax	({
+      url: "default/change_role",
+      type: "GET",
+      data:{role:role},
+      success:	function (answer)
+      {
+      }
+    });
+    });
     // Смена пользователя
     $('.select_user').on('change', function () {
       var id = $(this).val();
