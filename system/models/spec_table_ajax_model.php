@@ -39,7 +39,7 @@ class spec_table_ajax_model extends model {
             foreach ($Q as $row) {
                 $readonly_str = "";
                 for ($i = 0; $i < 4; $i++) {
-                    if (!$row["row"][$i]["readonly"]) {
+                    if ($row["row"][$i]["readonly"]) {
                         $readonly_str .= "t";
                     } else {
                         $readonly_str .= "f";
