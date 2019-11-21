@@ -252,8 +252,8 @@
             {
               "ID": "main-tabs",
               "tabs": [
-                "scheme",
                 "specification",
+                "scheme",
                 "fieldBlock"
               ]
             },
