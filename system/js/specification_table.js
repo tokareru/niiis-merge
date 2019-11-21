@@ -38,6 +38,41 @@ function generateTable(json) {
     colToReadOnly(0, 'readonly');
 }
 
+function postDataFromTable() {
+    let json = [];
+    $(".table_made").find("tbody tr").each(function (rows) {
+        let row_arr = [];
+        $(this).find("td").each(function (cols) {
+            if (cols > 0){
+                let $div = $(this).find("div");
+                let r_o = $div.attr("readonly");
+                if ( r_o !== undefined){
+                    row_arr.push({
+                        "text": $div.text(),
+                        "readonly": r_o
+                    });
+                }else {
+                    row_arr.push({
+                        "text": $div.text(),
+                        "readonly": ""
+                    });
+                }
+            }
+        });
+        let obj = {
+            row: row_arr,
+            priority: rows
+        };
+        json.push(obj);
+    });
+    console.log(json);
+    $.ajax({
+        type: "POST",
+        url: "",
+        data: json
+    })
+}
+
 function addInputs() {
     let $table_edit = $('.table_edit');
     $table_edit.find('tbody').find('td').addClass('edit_cell');
@@ -131,6 +166,10 @@ function tableData(readonly) {
             }
             $row.val("");
             $col.val("");
+        });
+
+        $edit_mode_div.on('click', '#post_data_button', function () {
+            postDataFromTable();
         });
 
         $edit_mode_div.on('click', '#cell_to_edit_but', function () {

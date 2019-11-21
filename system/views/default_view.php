@@ -258,84 +258,8 @@ a id="move_up" href="#">Наверх</a-->
 
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">
-                <!--Левая сторона-->
-                <div class="col-md-2">
-                    <div class="left-side">
-                        <div id="left-accordion">
-                            <p> Идёт загрузка...</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Центральная сторона-->
-                <div class="col-md-7">
-                    <div id="tabs">
-                        <ul style="list-style-type: none">
-                            <li><a href="#tabs-empty"></a></li>
-                        </ul>
-                        <div id="tabs-empty">
-                            <p>
-                                Подождите пока страница загружается...
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!--Правая сторона-->
-                <div class="col-md-3">
-                    <h4>ЭСИ</h4>
-                    <p>
-                        Нанесение размеров отрезков прямых. При нанесении раз­меров формы, изображенной на чертеже отрезками
-                        прямых, предпочтительно проставлять размеры следующим образом. От концов отрезка проводят две
-                        параллельные между собой сплош­ные тонкие линии, которые называются выносными линиями (рис. 129, а).
-                        На расстоянии 10 мм от отрезка и параллельно ему проводят сплошную тонкую линию, называемую размерной
-                        линией. Размерная линия своими концами упирается в выносные линии и заканчивается стрелками. Начертание
-                        стрелок показа­но на рисунке 129, б. Выносные линии выходят за размерные на 1—3 мм. Над размерной линией
-                        проставляют размерное число, которое всегда указывает истинный размер элемента формы (ребра, грани и
-                        т.д.).
-                    </p>
-                </div>
             </div>
         </div>
-
-        <!--Чат-->
-        <div id="chat_main">
-            <div id="but">
-                <div id="span_icon_left" class="icon_default"></div>
-            </div>
-            <div id="chat_window">
-                <ul id="chat_all_DM">
-                    <li>
-                        <div><a href="#chat_window_chat">Общие сообщения</a></div>
-                    </li>
-                    <li>
-                        <div><a href="#chat_dm">Личные сообщения</a></div>
-                    </li>
-                </ul>
-                <div id="chat_window_chat">
-                    <ul>
-
-                    </ul>
-                </div>
-                <div id="chat_dm">
-                    <ul class="chat_dm_ul">
-
-                    </ul>
-
-                </div>
-
-
-                <div id="chat_text_button">
-                    <textarea placeholder="пиши сюда" id="chat_window_text" class="form-control-sm"></textarea>
-                    <input id="chat_window_button" role="button" type="button" class="btn-sm btn-primary">
-                </div>
-            </div>
-        </div>
-
-
-        <div>
-        </div>
-
 
     </body>
 </html>

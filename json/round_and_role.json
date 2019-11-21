@@ -245,9 +245,12 @@
             {
               "ID": "main-tabs",
               "tabs": [
-                "scheme",
                 "specification"
               ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         },
@@ -256,9 +259,7 @@
           "available_sides": [
             {
               "ID": "main-tabs",
-              "tabs": [
-                "scheme"
-              ]
+              "tabs": []
             },
             {
               "ID": "right-side",
@@ -369,7 +370,7 @@
       ]
     }
   ],
-  "sides":  [
+  "sides": [
     {
       "name": "Левый аккордеон",
       "URL": "pages/left_side",

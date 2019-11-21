@@ -80,7 +80,7 @@ async function prepareShell(json_role_and_round, add_data) {
         })
     });
 
-    console.log(available_sides);
+    //console.log(available_sides);
 
     // расставляем стороны
     let destination;
