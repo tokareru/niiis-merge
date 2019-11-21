@@ -164,7 +164,7 @@ function tableData(readonly) {
             let $col = $("#cell_to_readonly_col");
             let col = Number($col.val());
 
-            if (col > 0 && col < ($(".table_made th").length - 1) && row >= 0 && row < $(".table_made tr").length) {
+            if (col > 0 && col < ($(".table_made th").length) && row >= 0 && row < $(".table_made tr").length) {
                 cellToReadOnly(row, col);
                 $row.attr("placeholder", "номер строки");
                 $col.attr("placeholder", "номер столбца");
@@ -580,15 +580,17 @@ function cellToEdit(row, col) {
         if (current_col === col) {
             let $this = $(this);
             $this.addClass('edit_cell');
-            $this.find("div")
-                .addClass("edit_cell_div")
-                .removeClass("edit_cell_readonly")
-                .attr("readonly", "");
-            let value = $this.find("div").text();
-            $this.append("<input type='text' value='" + value + "\'>");
-            $this.find("input")
-                .addClass("input_text")
-                .addClass("edit_cell_input_hide");
+            let div = $this.find("div");
+            if (div.attr("readonly")) {
+                div.addClass("edit_cell_div")
+                    .removeClass("edit_cell_readonly")
+                    .removeAttr("readonly");
+                let value = $this.find("div").text();
+                $this.append("<input type='text' value='" + value + "\'>");
+                $this.find("input")
+                    .addClass("input_text")
+                    .addClass("edit_cell_input_hide");
+            }
         }
     })
 }
