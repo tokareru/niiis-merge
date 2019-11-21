@@ -50,12 +50,12 @@ function postDataFromTable() {
                 if (r_o !== undefined) {
                     row_arr.push({
                         "text": $div.text(),
-                        "readonly": r_o
+                        "readonly": "true"
                     });
                 } else {
                     row_arr.push({
                         "text": $div.text(),
-                        "readonly": ""
+                        "readonly": "false"
                     });
                 }
             }
