@@ -92,7 +92,7 @@ class chat_ajax_model extends model
                         case "DM":
                             $sql = "SELECT COUNT(*) as COUNT
                                     FROM CHAT
-                                    WHERE CUR_USER = (select id from USERS WHERE LOGIN = :cur_user) and USER_CHAT_WITH = (select id from USERS WHERE LOGIN = :user_chat_with)";
+                                    WHERE CUR_USER in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with) and USER_CHAT_WITH in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with)";
                             $q = sys::$PDO->prepare($sql);
                             $q->execute(array("cur_user" => $_POST["current_login"], 
                                 "user_chat_with" => $_POST["login_user_chat_with"]));
