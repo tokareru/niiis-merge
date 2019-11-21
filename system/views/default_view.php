@@ -58,34 +58,34 @@ $IS = $_SESSION['niiis']['is'];
         <title>Demo</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <link rel="stylesheet" href="system/css/bootstrap.css">
-        <link rel="stylesheet" href="system/css/styles.css">
-        <link rel="stylesheet" href="system/css/3D.css">
-        <link rel="stylesheet" href="system/css/jquery-ui.structure.css">
-        <link rel="stylesheet" href="system/css/left_accordion.css">
-        <link rel="stylesheet" href="system/css/font-awesome.css">
-        <link rel="stylesheet" href="system/css/chat/chat.css">
-        <link rel="stylesheet" href="system/css/chat/dm_chat.css">
-        <link rel="stylesheet" href="system/css/center_side.css">
-        <link rel="stylesheet" href="system/css/specification_table.css">
-        <script src="system/js/libraries/jquery-3.4.1.js"></script>
-        <script src="system/js/libraries/popper.min.js"></script>
-        <script src="system/js/libraries/bootstrap.min.js"></script>
-        <script src="system/js/libraries/jquery-ui.js"></script>
-        <script src="system/js/mainTabs.js"></script>
-        <script src="system/js/left_accordion.js"></script>
-        <script src="system/js/PDM_and_STD_components.js"></script>
-        <script src="system/js/specification_table.js"></script>
-        <script src="system/js/chat/chat.js"></script>
-        <script src="system/js/chat/dm_chat.js"></script>
+        <link rel="stylesheet" href="css/bootstrap.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="css/3D.css">
+        <link rel="stylesheet" href="css/jquery-ui.structure.css">
+        <link rel="stylesheet" href="css/left_accordion.css">
+        <link rel="stylesheet" href="css/font-awesome.css">
+        <link rel="stylesheet" href="css/chat/chat.css">
+        <link rel="stylesheet" href="css/chat/dm_chat.css">
+        <link rel="stylesheet" href="css/center_side.css">
+        <link rel="stylesheet" href="css/specification_table.css">
+        <script src="js/libraries/jquery-3.4.1.js"></script>
+        <script src="js/libraries/popper.min.js"></script>
+        <script src="js/libraries/bootstrap.min.js"></script>
+        <script src="js/libraries/jquery-ui.js"></script>
+        <script src="js/mainTabs.js"></script>
+        <script src="js/left_accordion.js"></script>
+        <script src="js/PDM_and_STD_components.js"></script>
+        <script src="js/specification_table.js"></script>
+        <script src="js/chat/chat.js"></script>
+        <script src="js/chat/dm_chat.js"></script>
 
-        <script src="system/js/3D/three.min.js"></script>
-        <script src="system/js/3D/dat.gui.min.js"></script>
+        <script src="js/3D/three.min.js"></script>
+        <script src="js/3D/dat.gui.min.js"></script>
 
-        <script src="system/js/3D/3D.js"></script>
+        <script src="js/3D/3D.js"></script>
 
-        <script src="system/js/shell/shell.js"></script>
-        <script src="system/js/main.js"></script>
+        <script src="js/shell/shell.js"></script>
+        <script src="js/main.js"></script>
     </head>
     <body>
 

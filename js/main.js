@@ -1,5 +1,15 @@
   $(function () {
-
+       $("#change_role").on('change', function(){
+        var role = $("#change_role").val();
+        $.ajax	({
+      url: "default/change_role",
+      type: "GET",
+      data:{role:role},
+      success:	function (answer)
+      {
+      }
+    });
+    });
     // Смена пользователя
     $('.select_user').on('change', function () {
       var id = $(this).val();
@@ -59,13 +69,27 @@
         }
       }
     });
+      shellInit();
+      getJsonByURL("start_ajax", prepareShell, {})
+      $("#test_button").click(function (){
+          $(".myRow").empty();
+          $("#chat_main").remove();
+          setTimeout(function () {
+              let round = $("#test_round").val();
+              let role = $("#test_role").val();
+              prepareShell({
+                  role: role.toString(),
+                  round: Number(round)
+              });
+          }, 50)
+      });
   });
 
   /**
-   * Выводится сообщение на несколько секунд в правом верхнем углу окна, 
+   * Выводится сообщение на несколько секунд в правом верхнем углу окна,
    * затем исчезает
    * @param {string} text Текст сообщения
-   * @param {string} type Тип сообщения - цвет фона. 
+   * @param {string} type Тип сообщения - цвет фона.
    * success - зелёный (по умолчанию)
    * danger - красный
    * @returns {undefined}
@@ -93,3 +117,33 @@
     });
 
   }
+
+  // получаем информацию о доступных вкладках и передаем информацию в функцию setTabs
+  function getJsonByURL(url ,callback, add_data) {
+      // получаем сведения о роле и раунде
+      $.ajax({
+          type: "GET",
+          url: url,
+          dataType: "json",
+          success: function (json) {
+              //console.log("Data loaded");
+              callback(json, add_data);
+          },
+          error: function (message) {
+              //console.log("Can't load the data");
+          },
+      })
+  }
+
+
+//блокировка нажатия правой кнопки мыши
+function forbidPressRightMouseButton() {
+    document.oncontextmenu = function() {return false;};
+    $(document).mousedown(function(e){
+        if( e.button == 2 ) {
+            //alert('Right mouse button!');
+            return false;
+        }
+        return true;
+    });
+}
