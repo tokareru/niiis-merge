@@ -4,6 +4,19 @@
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
     setMessageHandler();
+    getJsonByURL("start_ajax", prepareShell, {});
+    /*$("#test_button").click(function (){
+        $(".myRow").empty();
+        $("#chat_main").remove();
+        setTimeout(function () {
+            let round = $("#test_round").val();
+            let role = $("#test_role").val();
+            prepareShell({
+                role: role.toString(),
+                round: Number(round)
+            });
+        }, 50)
+    });*/
 }
 
 function interShellMessage(event, data) {
@@ -182,4 +195,34 @@ function setEMI() {
         "    проставляют размерное число, которое всегда указывает истинный размер элемента формы (ребра, грани и\n" +
         "    т.д.).\n" +
         "</p>");
+}
+
+// получаем информацию о доступных вкладках и передаем информацию в функцию setTabs
+function getJsonByURL(url ,callback, add_data) {
+    // получаем сведения о роле и раунде
+    $.ajax({
+        type: "GET",
+        url: url,
+        dataType: "json",
+        success: function (json) {
+            //console.log("Data loaded");
+            callback(json, add_data);
+        },
+        error: function (message) {
+            //console.log("Can't load the data");
+        },
+    })
+}
+
+
+//блокировка нажатия правой кнопки мыши
+function forbidPressRightMouseButton() {
+    document.oncontextmenu = function() {return false;};
+    $(document).mousedown(function(e){
+        if( e.button == 2 ) {
+            //alert('Right mouse button!');
+            return false;
+        }
+        return true;
+    });
 }
