@@ -73,7 +73,7 @@ function postDataFromTable() {
 
     $.ajax({
         type: "POST",
-        url: "spec_table/save",
+        url: "spec_table_ajax/save",
         data: json,
         dataType: "json"
     })
@@ -184,7 +184,7 @@ function tableData(readonly) {
             let $col = $("#cell_to_edit_but_col");
             let col = Number($col.val());
 
-            if (col > 0 && col < ($(".table_made th").length - 1) && row >= 0 && row < $(".table_made tr").length) {
+            if (col > 0 && col < ($(".table_made th").length) && row >= 0 && row < $(".table_made tr").length) {
                 cellToEdit(row, col);
             } else {
                 $row.attr("placeholder", "ошибка!");
