@@ -1,6 +1,4 @@
-
-function initChats()
-{
+function initChats() {
     initAllUsersChat();
     initDMChat(countUsers());
 }
@@ -13,11 +11,20 @@ function initDMChat(count_users) {
     $('#chat_dm .chat_dm_ul').find('li').removeClass("ui-corner-top").addClass("ui-corner-left");
 
     //initDMChats();
-    /*setInterval(function () {
+
+    setInterval(function () {
+        let $chat_window_chat = $('#chat_window_chat');
+        addNewComments($chat_window_chat,
+            {
+                type: 'ALL',
+                function: 'count_comments'
+            },
+            {
+                type: 'ALL', count_messages: 0, function: 'print_comment'
+            });
+
         $('#chat_dm').find('div').has('ul').each(function () {
             let $this = $(this);
-
-
             addNewComments($(this),
                 {
                     type: 'DM',
@@ -34,17 +41,17 @@ function initDMChat(count_users) {
             );
 
             let count_mes = $(this).data('unread_messages');
-            if (count_mes === 0) {
-                return;
-            }
+            /* console.log('count_mes ' + count_mes);
+             if (count_mes === 0) {
+                 return;
+             }*/
 
-            $('#chat_dm').find('a').each(function () {
+            /*$('#chat_dm').find('a').each(function () {
                 if ($(this).attr('href') === ('#' + $this.attr('id'))) {
                     let $chat_dm = $('#chat_dm');
                     if ($(this).attr('href') !== $chat_dm.data('currentDM')) {
                         $(this).parent().parent().addClass('chat_unread_messages');
-                        let temp_count = $chat_dm.find($(this).attr('href'))
-                            .data('unread_messages') + count_mes;
+                        let temp_count = count_mes;
                         if (temp_count >= 1000 || $chat_dm.find($(this).attr('href'))
                             .data('unread_messages') === '999+')
                             $chat_dm.find($(this).attr('href'))
@@ -59,10 +66,10 @@ function initDMChat(count_users) {
                                 .data('unread_messages') + '</div>');
                     }
                 }
-            });
+            });*/
 
         })
-    }, 3000);*/
+    }, 3000);
 
     $('#chat_all_DM').on('click', 'li', function () {
         let $attr = $(this).find('a').attr('href');
@@ -115,7 +122,6 @@ function generateDMChat(count_users) {
 
 function getLoginNames() {
     let loginUsers = [];
-    console.log('cur login: ' + login);
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
@@ -124,7 +130,6 @@ function getLoginNames() {
         success: function (data) {
             for (let login in data) {
                 loginUsers.push(data[login]);
-                console.log("logins: "+ data[login]);
             }
         },
         error: function (data) {
@@ -136,13 +141,14 @@ function getLoginNames() {
 
 function initDMChats() {
     $('#chat_dm').find('div').has('ul').each(function (index) {
+        console.log('load dm');
         printComments($(this), {
             type: 'DM',
             current_login: login,
             login_user_chat_with: $(this).data('login_user_chat_with'),
-            count_messages: 100,
+            count_messages: Max_count_messages,
             function: 'print_comment'
-        });
+        }, true);
     });
 }
 
