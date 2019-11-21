@@ -61,8 +61,7 @@ function postDataFromTable() {
             }
         });
         let obj = {
-            row: row_arr,
-            priority: rows
+            row: row_arr
         };
         tbody.push(obj);
     });
