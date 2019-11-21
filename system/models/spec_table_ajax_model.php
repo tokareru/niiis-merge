@@ -32,30 +32,28 @@ class spec_table_ajax_model extends model {
 
     function save() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//            $sql = "DELETE * FROM SPEC_TABLE";
-//                $q = sys::$PDO->prepare($sql);
-//                $q->execute();
+            $sql = "DELETE * FROM SPEC_TABLE";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute();
             
-//              return json_decode($Q);
-            return json_decode($_POST);
-//            foreach($Q as $row){
-//                
-//                $readonly_str = "";
-//                for($i = 0; $i<4;$i++){
-//                    if($row[$i++]["readonly"]){
-//                        $readonly_str .= "t"; 
-//                    }else{
-//                        $readonly_str .= "f";
-//                    }
-//                }
-//                print_r($row);
-////                $sql = "INSERT SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY)
-////                        VALUES(:position, :name_short, :name_long, :count, :readonly)";
-////                $q = sys::$PDO->prepare($sql);
-////                $i = 0;
-////                $q->execute(array("position"=>$row[$i++]["text"],"name_short"=>$row[$i++]["text"],"name_long"=>$row[$i++]["text"],
-////                    "count"=>$row[$i++]["text"],"readonly"=>$readonly_str));
-//            }
+            foreach($Q as $row){
+                
+                $readonly_str = "";
+                for($i = 0; $i<4;$i++){
+                    if($row[$i++]["readonly"]){
+                        $readonly_str .= "t"; 
+                    }else{
+                        $readonly_str .= "f";
+                    }
+                }
+                print_r($row);
+                $sql = "INSERT SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY)
+                        VALUES(:position, :name_short, :name_long, :count, :readonly)";
+                $q = sys::$PDO->prepare($sql);
+                $i = 0;
+                $q->execute(array("position"=>$row[$i++]["text"],"name_short"=>$row[$i++]["text"],"name_long"=>$row[$i++]["text"],
+                    "count"=>$row[$i++]["text"],"readonly"=>$readonly_str));
+            }
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
         }
