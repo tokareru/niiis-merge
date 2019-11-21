@@ -4,7 +4,7 @@
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
     setMessageHandler();
-    getJsonByURL("start_ajax", prepareShell, {};
+    getJsonByURL("start_ajax", prepareShell, {});
     /*$("#test_button").click(function (){
         $(".myRow").empty();
         $("#chat_main").remove();
