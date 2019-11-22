@@ -16,7 +16,57 @@
 <body>
 <!--Правая сторона-->
 <div class="col-md-3">
-    <div id="right-side"></div>
+    <div id="right-side">
+ <div id='esi_field'>
+        <h3>ЭСИ</h3>
+        <div class="row">
+            <div class="col-md-12 table-responsive">
+                <table class='esi_table table table-striped table-bordered table-hover'>
+                    <thead>
+                        <tr>
+                          <th></th>
+                          <th></th>
+                          <th></th>
+                        </tr>
+                    </thead>
+                  <tbody>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+
+                    </tbody>
+            </table>
+            </div>
+        </div>
+        </div>
+    </div>
 </div>
 </div>
 </body>
