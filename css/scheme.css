@@ -381,10 +381,6 @@
     margin-top: 12.6vw;
 }
 
-canvas:hover {
-    cursor: url(../images/scheme/pen1.png) 0 3, auto;
-}
-
 section {
     /*width: 74vw;*/
 	width: 40vw;
@@ -400,6 +396,18 @@ section {
     z-index: 3;
     padding: 0.5vw;
     border: 1px dashed black;
+}
+
+#canv1:hover {
+    cursor: url(../images/scheme/pen1.png) 0 3, auto;
+}
+
+#canv2:hover {
+    cursor: url(../images/scheme/pen1.png) 0 3, auto;
+}
+
+#canv3:hover {
+    cursor: url(../images/scheme/pen1.png) 0 3, auto;
 }
 
 #canv2 {
