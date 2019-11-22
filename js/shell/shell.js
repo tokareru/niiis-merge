@@ -75,10 +75,11 @@ async function prepareShell(json_role_and_round, add_data) {
 
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];
-    data.fields.forEach(function (tabByRole) {
+
+    await data.fields.forEach(function (tabByRole) {
         if (tabByRole.role === role) {
             tabByRole.rounds.forEach(function (tabByRound) {
-                if (tabByRound.round === round) {
+                if (Number(tabByRound.round) === Number(round)) {
                     available_sides_id = tabByRound.available_sides;
                 }
             })
@@ -88,6 +89,7 @@ async function prepareShell(json_role_and_round, add_data) {
     //console.log(available_sides_id);
     // находим стороны, соответсвующие id-сторон кабинета
     let available_sides = [];
+
     available_sides_id.forEach(function (elem) {
         data.sides.forEach(function (side) {
             if (side.ID === elem.ID) {
@@ -101,6 +103,7 @@ async function prepareShell(json_role_and_round, add_data) {
     // расставляем стороны
     let destination;
     $(".myRow").empty();
+    $("#chat_main").remove();
     let i = 0;
     for (const elem of available_sides) {
         let html = await downloadHTML(elem.URL);
@@ -176,7 +179,7 @@ async function downloadHTML(url) {
 
 
 function setRightSide(json, add_data) {
-    console.log(json);
+    //console.log(json);
     let availableSubscribers = $("#shell").data("shellInterconnection").availableSubscribers;
     for (const elem of json) {
         $("#right-side").append("<div id='" + elem.ID + "'></div>");
