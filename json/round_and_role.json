@@ -444,10 +444,10 @@
     {
       "name": "ЭСИ",
       "URL": "pages/esi",
-      "ID": "",
+      "ID": "esi_field",
       "location": "right-side",
       "notify": "",
-      "init": ""
+      "init": "setEMI"
     },
     {
       "name": "Спецификация",
