@@ -18,6 +18,5 @@
 <div class="col-md-3">
     <div id="right-side"></div>
 </div>
-</div>
 </body>
 </html>

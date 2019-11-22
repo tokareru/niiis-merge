@@ -69,6 +69,7 @@ $IS = $_SESSION['niiis']['is'];
         <link rel="stylesheet" href="css/center_side.css">
         <link rel="stylesheet" href="css/specification_table.css">
         <link rel="stylesheet" href="css/scheme.css">
+        <link rel="stylesheet" href="css/esi_field.css">
         <script src="js/libraries/jquery-3.4.1.js"></script>
         <script src="js/libraries/popper.min.js"></script>
         <script src="js/libraries/bootstrap.min.js"></script>
