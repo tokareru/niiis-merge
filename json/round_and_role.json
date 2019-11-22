@@ -243,29 +243,12 @@
           "round": 1,
           "available_sides": [
             {
-              "ID": "left-side",
-              "tabs": [
-                "std_field",
-                "pdm_field"
-              ]
-            },
-            {
               "ID": "main-tabs",
               "tabs": [
                 "specification",
                 "scheme",
                 "fieldBlock"
               ]
-            },
-            {
-              "ID": "right-side",
-              "tabs": [
-                "esi_field"
-              ]
-            },
-            {
-              "ID": "chat-side",
-              "tabs": []
             }
           ]
         },
@@ -297,8 +280,8 @@
             {
               "ID": "left-side",
               "tabs": [
-                "pdm_field",
-                "std_field"
+                "std_field",
+                "pdm_field"
               ]
             },
             {
