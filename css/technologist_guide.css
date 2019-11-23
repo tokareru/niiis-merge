@@ -1,0 +1,34 @@
+#technologist_guide_field {
+}
+
+#technologist_guide_accordion {
+    padding: 2% 4% 6% 2% !important;
+}
+
+.tg_header {
+    background-color: #737373;
+    color: white;
+    margin: 2% 0% 1% 0% !important;
+}
+
+.tg_div {
+    background-color: #e8fff6 !important;
+    overflow-y: hidden !important;
+    padding-bottom: 5% !important;
+}
+
+#technologist_guide_accordion div {
+    overflow-y: hidden !important;
+}
+
+.tg_elem_header {
+    background-color: #bfbfbf;
+    font-weight: 500;
+    color: black;
+    margin-left: -1% !important;
+}
+
+.tg_elem_div {
+    background-color: #e8fff8 !important;
+    padding: 8% 1% 8% 1%!important;
+}

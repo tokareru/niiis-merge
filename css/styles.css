@@ -29,5 +29,5 @@ h4{
 .ui-accordion .ui-accordion-content {
     padding: 0.7em 0.5em;
     border-top: 0;
-    overflow-y: scroll !important;
+    /*overflow-y: scroll !important;*/
 }

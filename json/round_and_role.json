@@ -281,7 +281,8 @@
               "ID": "left-side",
               "tabs": [
                 "std_field",
-                "pdm_field"
+                "pdm_field",
+                "technologist_guide_field"
               ]
             },
             {
@@ -301,77 +302,6 @@
             {
               "ID": "chat-side",
               "tabs": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "role": "test",
-      "rounds": [
-        {
-          "round": 1,
-          "available_sides": [
-            {
-              "ID": "left-side",
-              "tabs": [
-                "pdm_field",
-                "std_field"
-              ]
-            },
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "scheme",
-                "specification"
-              ]
-            }
-          ]
-        },
-        {
-          "round": 2,
-          "available_sides": [
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "scheme"
-              ]
-            },
-            {
-              "ID": "right-side",
-              "tabs": [
-                "esi_field"
-              ]
-            },
-            {
-              "ID": "chat-side",
-              "tabs": []
-            }
-          ]
-        },
-        {
-          "round": 3,
-          "available_sides": [
-            {
-              "ID": "left-side",
-              "tabs": [
-                "pdm_field",
-                "std_field"
-              ]
-            },
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "scheme",
-                "specification",
-                "fieldBlock"
-              ]
-            },
-            {
-              "ID": "right-side",
-              "tabs": [
-                "esi_field"
-              ]
             }
           ]
         }
@@ -476,10 +406,10 @@
     {
       "name": "Справочник технолога",
       "URL": "",
-      "ID": "",
-      "location": "left-accordion",
+      "ID": "technologist_guide_field",
+      "location": "left-side",
       "notify": "",
-      "init": ""
+      "init": "initTechnologistGuide"
     },
     {
       "name": "Техпроцесс",

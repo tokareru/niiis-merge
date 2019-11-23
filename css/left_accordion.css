@@ -127,3 +127,7 @@ fieldset p label img{
 .myAccordionActive{
     background-color: #f7aec2;
 }
+
+.left_accord_div{
+    overflow-y: scroll !important;
+}

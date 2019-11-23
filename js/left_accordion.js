@@ -12,7 +12,7 @@ function setAccordionPanels(json, add_data) {
     let shell =  $("#shell");
     let availableSubscribers = shell.data("shellInterconnection").availableSubscribers;
     availablePanels.forEach(function (elem) {
-        accordion.append("<p>" + elem.name + "</p><div id='" + elem.ID + "'></div>");
+        accordion.append("<p>" + elem.name + "</p><div class='left_accord_div' id='" + elem.ID + "'></div>");
         setNotifyAndInitHandlers(elem);
         $("#"+ elem.ID).trigger("initialization");
         availableSubscribers.push(elem.ID);
@@ -29,6 +29,7 @@ function setAccordionPanels(json, add_data) {
                 'ui-accordion-header-active': 'myAccordionActive'
             },
         icons: false,
+        animate: 50,
         heightStyle: "fill",
     });
 }
