@@ -29,7 +29,7 @@ function setAccordionPanels(json, add_data) {
                 'ui-accordion-header-active': 'myAccordionActive'
             },
         icons: false,
-        animate: 50,
+        animate: 200,
         heightStyle: "fill",
     });
 }
