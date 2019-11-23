@@ -1,6 +1,6 @@
 // область вызывает событие createdNewMessage после создания сообщения,
 // а остальные вкладки получают уведомление о новом сообщении с помощью события newMessage
-//let current_round_glob;
+let current_round_glob;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
@@ -8,14 +8,9 @@ function shellInit() {
     let current_round;
     getJsonByURL("start_ajax", prepareShell, {});
 
-    $("#change_role").change(function () {
-        //console.log($(this).val())
-        getJsonByURL("start_ajax", prepareShell, {});
-    })
-
-    /*setInterval(function () {
+    setInterval(function () {
          getJsonByURL("start_ajax", prepareShell, {});
-    }, 10000);*/
+    }, 2000);
 }
 
 function interShellMessage(event, data) {
@@ -65,19 +60,20 @@ function setMessageHandler() {
 async function prepareShell(json_role_and_round, add_data) {
     //console.log(json_role_and_round);
     login = json_role_and_round.login;
-    let role = json_role_and_round.role;
-    let round = json_role_and_round.round;
+    let role = json_role_and_round.role.toString();
+    let round = Number(json_role_and_round.round);
     //console.log(current_round_glob)
     //console.log(round)
-    //if (round === current_round_glob) return;
-    //current_round_glob = round;
+    if (round === Number(current_round_glob)) return;
+    $("#change_role").attr("disabled", "disabled");
+    current_round_glob = round;
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
 
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];
 
     await data.fields.forEach(function (tabByRole) {
-        if (tabByRole.role === role) {
+        if (tabByRole.role.toString() === role.toString()) {
             tabByRole.rounds.forEach(function (tabByRound) {
                 if (Number(tabByRound.round) === Number(round)) {
                     available_sides_id = tabByRound.available_sides;
@@ -92,7 +88,7 @@ async function prepareShell(json_role_and_round, add_data) {
 
     available_sides_id.forEach(function (elem) {
         data.sides.forEach(function (side) {
-            if (side.ID === elem.ID) {
+            if (side.ID.toString() === elem.ID.toString()) {
                 available_sides.push(side);
             }
         })
@@ -137,7 +133,7 @@ async function prepareShell(json_role_and_round, add_data) {
         }
     }
 
-
+    $("#change_role").removeAttr("disabled");
     /*console.log(available_sides);
     console.log(available_tabs);*/
 }
