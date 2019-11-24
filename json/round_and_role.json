@@ -295,6 +295,49 @@
             },
             {
               "ID": "right-side",
+              "tabs": []
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "test",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "left-side",
+              "tabs": [
+                "pdm_field",
+                "std_field"
+              ]
+            },
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme"
+              ]
+            },
+            {
+              "ID": "right-side",
               "tabs": [
                 "esi_field"
               ]
@@ -302,6 +345,32 @@
             {
               "ID": "chat-side",
               "tabs": []
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "left-side",
+              "tabs": [
+                "pdm_field",
+                "std_field"
+              ]
+            },
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification",
+                "fieldBlock"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+                "esi_field"
+              ]
             }
           ]
         }
@@ -327,7 +396,7 @@
       "name": "Правая сторона",
       "URL": "pages/right_side",
       "ID": "right-side",
-      "init": "setRightSide",
+      "init": "initESI",
       "parent": ".myRow"
     },
     {
@@ -372,11 +441,12 @@
       "init": "initScheme"
     },
     {
-      "name": "Правая сторона",
-      "URL": "pages/right_side",
-      "ID": "right-side",
-      "init": "initESI",
-      "parent": ".myRow"
+      "name": "ЭСИ",
+      "URL": "pages/esi",
+      "ID": "esi_field",
+      "location": "right-side",
+      "notify": "",
+      "init": "setEMI"
     },
     {
       "name": "Спецификация",
@@ -405,10 +475,10 @@
     {
       "name": "Справочник технолога",
       "URL": "",
-      "ID": "technologist_guide_field",
-      "location": "left-side",
+      "ID": "",
+      "location": "left-accordion",
       "notify": "",
-      "init": "initTechnologistGuide"
+      "init": ""
     },
     {
       "name": "Техпроцесс",
