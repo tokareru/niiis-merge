@@ -281,8 +281,7 @@
               "ID": "left-side",
               "tabs": [
                 "std_field",
-                "pdm_field",
-                "technologist_guide_field"
+                "pdm_field"
               ]
             },
             {
