@@ -8,18 +8,16 @@
 
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>Спецификация</title>
 </head>
 <body>
-<div id="specificationBlock">
-    <!--<script src="js/specification_table.js"></script>-->
+
+<div id="routeMapBlock">
     <div class="col-md-12 spec_main">
         <div class="row">
             <div class="col-md-12 spec_header">
-                Спецификация
+                Маршрутная карта
             </div>
         </div>
 
@@ -28,11 +26,11 @@
             </div>
         </div>
         <div class="row">
-            <div id="specification_edit"></div>
+            <div id="routeMap_edit"></div>
         </div>
 
     </div>
 </div>
+
 </body>
 </html>
-

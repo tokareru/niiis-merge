@@ -48,6 +48,10 @@ class pages_controller extends Controller{
             $this->view->render('', 'specification_field_view.php', '');
         }
 
+        function route_map(){
+            $this->view->render('', 'route_map.php', '');
+        }
+
         function edit_field(){
             $this->view->render('', 'edit_field_view.php', '');
         }

@@ -128,7 +128,8 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification"
+                "specification",
+                "technologist_guide_field"
               ]
             }
           ]
@@ -173,7 +174,8 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification"
+                "specification",
+                "technologist_guide_field"
               ]
             }
           ]
@@ -185,7 +187,8 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "fieldBlock"
+                "fieldBlock",
+                "technologist_guide_field"
               ]
             },
             {
@@ -223,7 +226,8 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "fieldBlock"
+                "fieldBlock",
+                "technologist_guide_field"
               ]
             },
             {
@@ -290,7 +294,8 @@
               "tabs": [
                 "specification",
                 "scheme",
-                "fieldBlock"
+                "fieldBlock",
+                "route_map_field"
               ]
             },
             {
@@ -421,11 +426,11 @@
     },
     {
       "name": "Маршрутная карта",
-      "URL": "",
-      "ID": "",
-      "location": "",
+      "URL": "pages/route_map",
+      "ID": "route_map_field",
+      "location": "main-tabs",
       "notify": "",
-      "init": ""
+      "init": "initRouteMap"
     },
     {
       "name": "Создание маршрута заданий",

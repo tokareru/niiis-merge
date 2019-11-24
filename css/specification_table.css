@@ -5,6 +5,10 @@
     width: 100% !important;
 }
 
+#routeMapBlock{
+    width: 100% !important;
+}
+
 .table_edit {
     background-color: white;
     width: 100%;
@@ -55,7 +59,7 @@
     display: block;
 }
 
-#spec_header {
+.spec_header {
     font-size: 30px;
 }
 
@@ -63,7 +67,7 @@
 / / padding: 10 px !important;
 }
 
-#edit_div_toggle {
+.edit_div_toggle {
     //display: grid;
     display: flex;
 }
@@ -79,7 +83,7 @@
     color: #000000;
 }
 
-#edit_div_toggle input {
+.edit_div_toggle input {
     width: 100%;
 }
 

@@ -1,0 +1,82 @@
+{
+  "thead": [
+    {
+      "text": "Поз.",
+      "readonly": true
+    },
+    {
+      "text": "Обозначение",
+      "readonly": true
+    },
+    {
+      "text": "Наименование",
+      "readonly": true
+    },
+    {
+      "text": "Кол.",
+      "readonly": true
+    }
+  ],
+  "tbody": [
+    {
+      "row": [
+        {
+          "text": 1,
+          "readonly": true
+        },
+        {
+          "text": "АБВ.10.2030.001",
+          "readonly": true
+        },
+        {
+          "text": "Модуль",
+          "readonly": true
+        },
+        {
+          "text": 1,
+          "readonly": true
+        }
+      ]
+    },
+    {
+      "row": [
+        {
+          "text": 2,
+          "readonly": true
+        },
+        {
+          "text": "АБВ.10.2030.001",
+          "readonly": true
+        },
+        {
+          "text": "Экран Н",
+          "readonly": true
+        },
+        {
+          "text": 2,
+          "readonly": true
+        }
+      ]
+    },
+    {
+      "row": [
+        {
+          "text": 4,
+          "readonly": true
+        },
+        {
+          "text": "",
+          "readonly": true
+        },
+        {
+          "text": "Винт ГОСТ Р ИСО 1200-М2 * 10",
+          "readonly": true
+        },
+        {
+          "text": 4,
+          "readonly": true
+        }
+      ]
+    }
+  ]
+}

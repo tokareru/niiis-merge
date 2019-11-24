@@ -155,10 +155,11 @@ async function getJsonByURLWithoutCallback(url) {
     return $json;
 }
 
-async function downloadHTML(url) {
+function downloadHTML(url) {
     let $html;
-    await $.ajax({
+    $.ajax({
         type: "GET",
+        async: false,
         url: url,
         dataType: "html",
         success: function (html) {

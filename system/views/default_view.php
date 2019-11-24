@@ -82,6 +82,7 @@ $IS = $_SESSION['niiis']['is'];
         <script src="js/chat/chat.js"></script>
         <script src="js/chat/dm_chat.js"></script>
         <script src="js/technologist_guide.js"></script>
+        <script src="js/route_map.js"></script>
 
         <script src="js/scheme.js"></script>
         <script src="js/3D/three.min.js"></script>

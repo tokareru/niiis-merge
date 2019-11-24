@@ -1,10 +1,13 @@
 function createSpecificationTable() {
     //serializeTable();
-    getJsonByURL("spec_table_ajax", generateTable, {});
+    getJsonByURL("spec_table_ajax", generateTable,
+        {table_block : "#specificationBlock", edit_mode_div: "#specification_edit"});
 }
 
-function generateTable(json) {
-    let $table_made = $('.table_made');
+function generateTable(json, add_data) {
+    let table_block = add_data.table_block + " ";
+    let edit_mode_div = add_data.edit_mode_div + " ";
+    let $table_made = $(table_block + '.table_made');
     $table_made
         .append('<table style="width: 100%" class="table_edit table table-striped table-bordered table-hover">' +
             '</table>');
@@ -24,24 +27,24 @@ function generateTable(json) {
         })
     });
 
-    tableData(false);
+    tableData(false, table_block, edit_mode_div);
     json.thead.forEach(function (elem, i) {
-        if (elem.readonly) cellToReadOnly(0, i + 1);
+        if (elem.readonly) cellToReadOnly(0, i + 1, table_block);
     });
     json.tbody.forEach(function (curr_row, rows) {
         curr_row.row.forEach(function (curr_col, cols) {
-            if (curr_col.readonly) cellToReadOnly(rows + 1, cols + 1);
+            if (curr_col.readonly) cellToReadOnly(rows + 1, cols + 1, table_block);
         })
     });
 
-    setRowsNumber();
-    colToReadOnly(0, 'readonly');
+    setRowsNumber(table_block);
+    colToReadOnly(0, 'readonly', table_block);
 }
 
-function postDataFromTable() {
+function postDataFromTable(table_block) {
     let json = {};
     let tbody = [];
-    $(".table_made").find("tbody tr").each(function (rows) {
+    $(table_block + ".table_made").find("tbody tr").each(function (rows) {
         let row_arr = [];
         $(this).find("td").each(function (cols) {
             if (cols > 0) {
@@ -79,12 +82,12 @@ function postDataFromTable() {
         success:function(answer){
             console.log(answer);
         }
-        
+
     })
 }
 
-function addInputs() {
-    let $table_edit = $('.table_edit');
+function addInputs(table_block) {
+    let $table_edit = $(table_block + '.table_edit');
     $table_edit.find('tbody').find('td').addClass('edit_cell');
     $table_edit.find('.edit_cell').append('<input class="input_text" type="text">');
     $table_edit.find('.edit_cell').each(function (index, elem) {
@@ -99,7 +102,7 @@ function addInputs() {
     });
 }
 
-function tableData(readonly) {
+function tableData(readonly, table_block, edit_mode_div) {
 
     let $table_edit = $('.table_edit');
     $table_edit.find('div').each(function () {
@@ -107,69 +110,72 @@ function tableData(readonly) {
     });
 
     if (!readonly) {
-        addInputs();
-        let $edit_mode_div = $('#specification_edit');
-        $edit_mode_div.load('pages/edit_field', function () {
-            $('#edit_div_toggle').hide();
-        });
+        addInputs(table_block);
+        let $edit_mode_div = $(edit_mode_div);
+        /*$edit_mode_div.load('pages/edit_field', function () {
+            $('.edit_div_toggle').hide();
+        });*/
+        let html = downloadHTML('pages/edit_field');
+        $edit_mode_div.append(html);
+        $(table_block).find('.edit_div_toggle').hide();
+
         let $table_edit = $('.table_edit');
         $table_edit.on('keypress', '.input_text', function (event) {
-            moveOnTableByEnter(event, $(this));
+            moveOnTableByEnter(event, $(this), table_block);
         });
 
-
-        $edit_mode_div.on('click', '#edit_mode_onoff', function () {
-            $('#edit_div_toggle').toggle(300);
+        $edit_mode_div.on('click', '.edit_mode_onoff', function () {
+            $(table_block).find('.edit_div_toggle').toggle(300);
         });
 
-        $edit_mode_div.on('click', '#add_row', function () {
-            addRow();
+        $edit_mode_div.on('click', '.add_row', function () {
+            addRow(table_block);
         });
 
-        $edit_mode_div.on('click', '#del_row', function () {
-            delRow();
+        $edit_mode_div.on('click', '.del_row', function () {
+            delRow(table_block);
         });
 
-        $edit_mode_div.on('click', '#add_col_btn', function () {
-            let $text = $('#add_col_text');
+        $edit_mode_div.on('click', '.add_col_btn', function () {
+            let $text = $(table_block + '.add_col_text');
             let number = Number($text.val());
-            addToTableCol($text, number);
+            addToTableCol($text, number, table_block);
         });
 
-        $edit_mode_div.on('click', '#del_col_btn', function () {
-            delCol();
+        $edit_mode_div.on('click', '.del_col_btn', function () {
+            delCol(table_block);
         });
 
         $edit_mode_div.on('keyup', 'input', function () {
             let $this = $(this);
             if ($this.attr("col") === "col") {
-                unhighlightCol();
-                highlightCol($this.val());
+                unhighlightCol(table_block);
+                highlightCol($this.val(), table_block);
             }
             if ($this.attr("row") === "row") {
-                unhighlightRow();
-                highlightRow($this.val());
+                unhighlightRow(table_block);
+                highlightRow($this.val(), table_block);
             }
         });
 
         $edit_mode_div.on('click', 'button', function () {
-            unhighlightRow();
-            unhighlightCol();
+            unhighlightRow(table_block);
+            unhighlightCol(table_block);
         });
 
         $edit_mode_div.on('click', 'input[type=button]', function () {
-            unhighlightRow();
-            unhighlightCol();
+            unhighlightRow(table_block);
+            unhighlightCol(table_block);
         });
 
-        $edit_mode_div.on('click', '#cell_to_readonly_but', function () {
-            let $row = $("#cell_to_readonly_row");
+        $edit_mode_div.on('click', '.cell_to_readonly_but', function () {
+            let $row = $(table_block + ".cell_to_readonly_row");
             let row = Number($row.val());
-            let $col = $("#cell_to_readonly_col");
+            let $col = $(table_block + ".cell_to_readonly_col");
             let col = Number($col.val());
 
-            if (col > 0 && col < ($(".table_made th").length) && row >= 0 && row < $(".table_made tr").length) {
-                cellToReadOnly(row, col);
+            if (col > 0 && col < ($(table_block + ".table_made th").length) && row >= 0 && row < $(table_block + ".table_made tr").length) {
+                cellToReadOnly(row, col, table_block);
                 $row.attr("placeholder", "номер строки");
                 $col.attr("placeholder", "номер столбца");
             } else {
@@ -180,18 +186,18 @@ function tableData(readonly) {
             $col.val("");
         });
 
-        $edit_mode_div.on('click', '#post_data_button', function () {
-            postDataFromTable();
+        $edit_mode_div.on('click', '.post_data_button', function () {
+            postDataFromTable(table_block);
         });
 
-        $edit_mode_div.on('click', '#cell_to_edit_but', function () {
-            let $row = $("#cell_to_edit_but_row");
+        $edit_mode_div.on('click', '.cell_to_edit_but', function () {
+            let $row = $(table_block + ".cell_to_edit_but_row");
             let row = Number($row.val());
-            let $col = $("#cell_to_edit_but_col");
+            let $col = $(table_block + ".cell_to_edit_but_col");
             let col = Number($col.val());
 
-            if (col > 0 && col < ($(".table_made th").length) && row >= 0 && row < $(".table_made tr").length) {
-                cellToEdit(row, col);
+            if (col > 0 && col < ($(table_block + ".table_made th").length) && row >= 0 && row < $(table_block + ".table_made tr").length) {
+                cellToEdit(row, col, table_block);
                 $row.attr("placeholder", "номер строки");
                 $col.attr("placeholder", "номер столбца");
             } else {
@@ -204,7 +210,7 @@ function tableData(readonly) {
 
 
         $table_edit.on('keydown', '.input_text', function (event) {
-            modeOnTableBySomeKey(event, $(this));
+            modeOnTableBySomeKey(event, $(this), table_block);
         });
 
         $table_edit.on('click', '.edit_cell', function () {
@@ -224,8 +230,8 @@ function tableData(readonly) {
             let $parent = $input.parent();
             let $div = $parent.find('div').removeClass('edit_cell_div_hide')
                 .addClass('edit_cell_div');
-            $div.html(addToStrHTMLTags($input.val()));
-            $input.val(addToStrHTMLTags($input.val()));
+            $div.html(addToStrHTMLTags($input.val(), table_block));
+            $input.val(addToStrHTMLTags($input.val(), table_block));
         });
     }
 }
@@ -250,7 +256,7 @@ function validateDiv(str_div) {
     return new_str;
 }
 
-function addToStrHTMLTags(str_div) {
+function addToStrHTMLTags(str_div, table_block) {
 
     let str_left = '';
     let str_right = '';
@@ -266,11 +272,11 @@ function addToStrHTMLTags(str_div) {
     return str_new;
 }
 
-function addRow() {
-    let $tbody = $('.table_edit tbody');
-    let $td_count = $('.table_edit thead').find('th').length;
-    let $len_tr = $('.table_edit tbody').find('tr').length;
-    let $text_add_row = $('#add_row_text');
+function addRow(table_block) {
+    let $tbody = $(table_block + '.table_edit tbody');
+    let $td_count = $(table_block + '.table_edit thead').find('th').length;
+    let $len_tr = $(table_block + '.table_edit tbody').find('tr').length;
+    let $text_add_row = $(table_block +'.add_row_text');
     let $index = Number($text_add_row.val()) - 1;
     $text_add_row.val('');
     $text_add_row.attr('placeholder', 'номер строки');
@@ -313,30 +319,30 @@ function addRow() {
     if (isZeroRows) {
         $tbody.find('tr:first').remove();
     }
-    setRowsNumber();
+    setRowsNumber(table_block);
 }
 
-function delRow() {
-    let $del_row_text = $('#del_row_text');
+function delRow(table_block) {
+    let $del_row_text = $(table_block + '.del_row_text');
     let number = Number($del_row_text.val()) - 1;
     $del_row_text.val('');
-    let $len_tr = $('.table_edit tbody').find('tr').length;
+    let $len_tr = $(table_block + '.table_edit tbody').find('tr').length;
     if (number < 0 || number >= $len_tr) {
         $del_row_text.attr('placeholder', 'ошибка!');
         return;
     }
-    $('.table_edit tbody').find('tr').eq(number).remove();
+    $(table_block + '.table_edit tbody').find('tr').eq(number).remove();
     $del_row_text.attr('placeholder', 'номер строки: ');
-    setRowsNumber()
+    setRowsNumber(table_block)
 }
 
-function addToTableCol($text, number) {
+function addToTableCol($text, number, table_block) {
     /* let $text = $('#add_col_text');
      let number = Number($text.val());*/
-    let count_cols = $('.table_edit thead').find('th').length;
+    let count_cols = $(table_block + '.table_edit thead').find('th').length;
     $text.val('');
     //alert(number + ' ' + count_cols);
-    let $tbody = $('.table_edit tbody');
+    let $tbody = $(table_block + '.table_edit tbody');
     if (number <= 0 || number > count_cols) {
         $text.attr('placeholder', 'ошибка!');
         return;
@@ -365,7 +371,7 @@ function addToTableCol($text, number) {
             });
         });
     }
-    let $table_thead = $('.table_edit thead');
+    let $table_thead = $(table_block + '.table_edit thead');
     if (number === count_cols) {
         $('<th class="edit_cell p-0"><div class="edit_cell_div"></div>' +
             '<input type="text" class="input_text edit_cell_input_hide"></th>')
@@ -382,16 +388,16 @@ function addToTableCol($text, number) {
         .removeClass('edit_cell_input').addClass('edit_cell_input').focus();
 }
 
-function delCol() {
-    let $text = $('#del_col_text');
+function delCol(table_block) {
+    let $text = $(table_block + '.del_col_text');
     let $number = Number($text.val());
-    let count_cols = $('.table_edit tr').find('th').length - 1;
+    let count_cols = $(table_block + '.table_edit tr').find('th').length - 1;
     $text.val('');
     if ($number <= 0 || $number > count_cols) {
         $text.attr('placeholder', 'ошибка!');
         return;
     }
-    let $tbody = $('.table_edit tbody');
+    let $tbody = $(table_block + '.table_edit tbody');
     $tbody.find('tr').each(function () {
         $(this).children().each(function (index, elem) {
             //alert($(this).html());
@@ -403,22 +409,22 @@ function delCol() {
             $(this).remove();
         }
     });
-    let $thead = $('.table_edit thead');
+    let $thead = $(table_block + '.table_edit thead');
     $thead.find('th').eq($number).remove();
     if ($thead.find('th').length <= 0) {
         $thead.children().remove();
     }
-    if ($('.table_edit tr').find('th').length === 0) {
+    if ($(table_block + '.table_edit tr').find('th').length === 0) {
         $thead.append('<tr><th class="edit_cell"><div class="edit_cell_div"></div>' +
             '<input type="text" class="input_text edit_cell_input_hide"></th></tr>');
     }
     $text.attr('placeholder', 'номер столбца');
     if (count_cols === 1) {
-        addToTableCol($('#add_col_text'), 1);
+        addToTableCol($(table_block + '.add_col_text'), 1, table_block);
     }
 }
 
-function moveOnTableByEnter(event, $this) {
+function moveOnTableByEnter(event, $this, table_block) {
     if (event.which === 13) {
         let $next = $this.parent().next();
         $next.addClass("p-0");
@@ -439,7 +445,7 @@ function moveOnTableByEnter(event, $this) {
             //$this.blur();
             $next.find('.input_text').focus();
         } else {
-            let count_cols = $('.table_edit tr').find('th').length;
+            let count_cols = $(table_block + '.table_edit tr').find('th').length;
 
 
             let $new_tr = $this.parent().parent().next().children().first();
@@ -481,10 +487,10 @@ function moveOnTableByEnter(event, $this) {
     }
 }
 
-function modeOnTableBySomeKey(event, $this) {
+function modeOnTableBySomeKey(event, $this, table_block) {
     if (event.which === 20) {
         let $index = 0;
-        if ($this.parent().parent().html() === $('.table_edit thead').find('tr').html()) {
+        if ($this.parent().parent().html() === $(table_block + '.table_edit thead').find('tr').html()) {
             $this.addClass('temp_tab_input');
             $this.parent().parent().find('th').each(function (index) {
                 if ($(this).find('.input_text').hasClass('temp_tab_input')) {
@@ -493,7 +499,7 @@ function modeOnTableBySomeKey(event, $this) {
             });
             $this.removeClass('temp_tab_input');
             //alert($index);
-            let $next = $('.table_edit tbody').find('tr').find('td').eq($index);
+            let $next = $(table_block + '.table_edit tbody').find('tr').find('td').eq($index);
             //alert($next.html());
             $next.find('.input_text').removeClass('edit_cell_input_hide')
                 .addClass('edit_cell_input');
@@ -526,14 +532,14 @@ function modeOnTableBySomeKey(event, $this) {
 }
 
 
-function colToReadOnly($number, $attr) {
-    $('.table_edit').find('tbody').children().each(function () {
+function colToReadOnly($number, $attr, table_block) {
+    $(table_block +'.table_edit').find('tbody').children().each(function () {
         let $this_children = $(this).children().eq($number);
         $this_children.removeClass('edit_cell');//.addClass(class_name);
         $this_children.find('.input_text').remove();
         $this_children.find('div').attr($attr, true);
     });
-    $('.table_edit').find('thead').children().each(function () {
+    $(table_block + '.table_edit').find('thead').children().each(function () {
         let $this_children = $(this).children().eq($number);
         $this_children.removeClass('edit_cell');//.addClass(class_name);
         $this_children.find('.input_text').remove();
@@ -541,7 +547,7 @@ function colToReadOnly($number, $attr) {
     });
 }
 
-function cellToReadOnly(row, col) {
+function cellToReadOnly(row, col, table_block) {
     //заголовок - 0 строка для пользователя
     let $tableCols;
     //важно помнить, что заголовок и тело таблицы находятся в разных тегах,
@@ -551,11 +557,11 @@ function cellToReadOnly(row, col) {
     //однако, учитывая, что пользователь вводит номер столбца на 1 больше, то это нивилируется
     if (row > 0) {
         row--;
-        let $tr = $('.table_made').find('tbody tr').each(function (index) {
+        let $tr = $(table_block + '.table_made').find('tbody tr').each(function (index) {
             if (index === row) $tableCols = $(this).find("td");
         });
     } else {
-        $tableCols = $('.table_made').find("thead th");
+        $tableCols = $(table_block + '.table_made').find("thead th");
     }
 
     $tableCols.each(function (current_col) {
@@ -570,14 +576,14 @@ function cellToReadOnly(row, col) {
 
 }
 
-function cellToEdit(row, col) {
+function cellToEdit(row, col, table_block) {
     if (row > 0) {
         row--;
-        let $tr = $('.table_made').find('tbody tr').each(function (index) {
+        let $tr = $(table_block + '.table_made').find('tbody tr').each(function (index) {
             if (index === row) $tableCols = $(this).find("td");
         });
     } else {
-        $tableCols = $('.table_made').find("thead th");
+        $tableCols = $(table_block + '.table_made').find("thead th");
     }
 
     $tableCols.each(function (current_col) {
@@ -599,16 +605,16 @@ function cellToEdit(row, col) {
     })
 }
 
-function rowToReadOnly(row) {
-    let $tr = $('.table_made').find('tbody td').each(function (index) {
-        if (index > 0) cellToReadOnly(row, index);
+function rowToReadOnly(row, table_block) {
+    let $tr = $(table_block + '.table_made').find('tbody td').each(function (index) {
+        if (index > 0) cellToReadOnly(row, index, table_block);
     });
 }
 
-function serializeTable() {
+function serializeTable(table_block) {
     let array_table = Array();
-    let $table_made = $('.table_made');
-    let count_cols = $('.table_edit tr').find('th').length;
+    let $table_made = $(table_block + '.table_made');
+    let count_cols = $(table_block + '.table_edit tr').find('th').length;
     let count_rows = $table_made.find('tbody').find('tr').length;
     //alert(count_rows + ' ' + count_cols);
     let temp = Array();
@@ -636,8 +642,8 @@ function serializeTable() {
     return array_table;
 }
 
-function setRowsNumber() {
-    let $tbody = $("#spec_main tbody");
+function setRowsNumber(table_block) {
+    let $tbody = $(table_block + "tbody");
     $tbody.find("tr").each(function (index) {
         let $this = $(this);
         let $first_div = $this.find("td").first().find("div")
@@ -655,8 +661,8 @@ function setRowsNumber() {
     })
 }
 
-function highlightCol(col) {
-    let $table = $(".table_made");
+function highlightCol(col, table_block) {
+    let $table = $(table_block + ".table_made");
     /*$table.find("thead th").each(function (index) {
         console.log(index);
         if (index === Number(col) && index !== 0) {
@@ -677,8 +683,8 @@ function highlightCol(col) {
     });
 }
 
-function highlightRow(row) {
-    let $table = $(".table_made");
+function highlightRow(row, table_block) {
+    let $table = $(table_block + ".table_made");
     /*$table.find("thead tr").each(function (index) {
         if (index === Number(row)) {
             $(this).find("th").each(function (index) {
@@ -704,8 +710,8 @@ function highlightRow(row) {
 
 }
 
-function unhighlightRow() {
-    let $table = $(".table_made");
+function unhighlightRow(table_block) {
+    let $table = $(table_block + ".table_made");
     $table.find("tbody tr").each(function (rows) {
         $(this).find("td").each(function (cols) {
             if ($(this).css("background-color") === "rgb(255, 247, 189)")
@@ -717,8 +723,8 @@ function unhighlightRow() {
 
 }
 
-function unhighlightCol() {
-    let $table = $(".table_made");
+function unhighlightCol(table_block) {
+    let $table = $(table_block + ".table_made");
     $table.find("thead th").each(function (index) {
         if (index !== 0) {
             if ($(this).css("background-color") === "rgb(255, 247, 189)")
