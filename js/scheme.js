@@ -18,7 +18,7 @@ function initScheme() {
 
     inter = setInterval(function ()
     {
-        if ($('.canvimg')[0].width != 0)
+        if ($('.canvimg')[0].width != 0 && $('.canvimg')[2].width != 0)
         {
             resizecanv();
             clearInterval(inter);
