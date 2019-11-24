@@ -45,20 +45,15 @@ function InitBranches() {
 
 function initBranchesInside() {
 
-    let countRows = $('.table_edit').find('tbody').find('tr').length;
-    let countCols = $('.table_edit').find('thead').find('tr').find('th').length;
-
-    let info = serializeTable("#specificationBlock ");
-    info.forEach(function (value) {
-        console.log(value);
-    });
-
+    let info = serializeTable();
+    let countRows = info.length;
+    let countCols = info[0].length;
     for (let i = 0; i < countRows; i++) {
         if (i % 2 === 0)
             addBranch(1, [[0]], 'esi_cont_inside1',
-                'esi_header_alt1', [info[i+1][3], '']);
+                'esi_header_alt1', [info[i][3], '']);
         else addBranch(1, [[0]], 'esi_cont_inside1', '',
-            [info[i+1][3], '']);
+            [info[i][3], '']);
     }
     $('#esi_field').find('.esi_branches').find('.esi_branch')
         .find('.esi_branches').children().each(function (index) {
