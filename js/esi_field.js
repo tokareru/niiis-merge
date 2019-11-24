@@ -45,10 +45,11 @@ function InitBranches() {
 
 function initBranchesInside() {
 
-    let info = serializeTable();
+    let info = serializeTable('#specificationBlock ');
     let countRows = info.length;
     let countCols = info[0].length;
-    for (let i = 0; i < countRows; i++) {
+    for (let i = 1; i < countRows; i++) {
+        console.log(info[i][3]);
         if (i % 2 === 0)
             addBranch(1, [[0]], 'esi_cont_inside1',
                 'esi_header_alt1', [info[i][3], '']);
