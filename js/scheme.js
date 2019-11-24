@@ -9,25 +9,41 @@ function initScheme() {
     window.r = 10;
     window.inCircle;
     window.clickedCircles;
-	//window.imageid = {"std_component_1": "bolthideimg1", "std_component_2": "bolthideimg2", "std_component_3": "bolthideimg3"};
+    window.ctxs = [];
+    //window.imageid = {"std_component_1": "bolthideimg1", "std_component_2": "bolthideimg2", "std_component_3": "bolthideimg3"};
 
     window.isEnded = false;
 
     $('.canvimg')[2].style = "height: 28.3vw;";
 
-     for (i = 0; i < 3; i++) {
-        $('canvas')[i].width = $(".canvimg")[i].width;
-        $('canvas')[i].height = $(".canvimg")[i].height;
-        //document.getElementsByTagName("canvas")[i].style.padding="10px";
-    } 
+    inter = setInterval(function ()
+    {
+        if ($('.canvimg')[0].width != 0 && $('.canvimg')[2].width != 0)
+        {
+            resizecanv();
+            clearInterval(inter);
+        }
+    }, 10);
+
+    function resizecanv()
+    {
+        for (i = 0; i < 3; i++)
+        {
+            $('canvas')[i].width = $(".canvimg")[i].width;
+            $('canvas')[i].height = $(".canvimg")[i].height;
+            window.ctxs[i].lineWidth = 3;
+        }
+    }
+
+    $(window).resize(function() {
+        resizecanv();
+    });
 
     canvas = document.getElementsByTagName("canvas");
-    window.ctxs = [];
     for (i = 0; i < 3; i++) {
         window.ctxs[i] = canvas[i].getContext("2d");
         window.ctxs[i].fillStyle = "white";
-        window.ctxs[i].lineWidth = 2;
-        //window.ctxs[i].strokeStyle = "#fff";
+        window.ctxs[i].lineWidth = 5;
     }
 
     $("#ready").click(function () {
@@ -57,15 +73,15 @@ function initScheme() {
                     window.gx = x;
                     window.gy = y;
 
-                   /*  ctxs[i].beginPath();
-                    ctxs[i].arc(areas1[0].x, areas1[0].y, r, 0, 2 * Math.PI, 0);
-                    ctxs[i].stroke();
-                    ctxs[i].beginPath();
-                    ctxs[i].arc(areas1[1].x, areas1[1].y, r, 0, 2 * Math.PI, 0); //рисуем два круга по координатам в массиве радиуса r
-                    ctxs[i].stroke();
-                    ctxs[i].beginPath();
-                    ctxs[i].arc(areas1[2].x, areas1[2].y, r, 0, 2 * Math.PI, 0);
-                    ctxs[i].stroke(); */
+                    /*  ctxs[i].beginPath();
+                     ctxs[i].arc(areas1[0].x, areas1[0].y, r, 0, 2 * Math.PI, 0);
+                     ctxs[i].stroke();
+                     ctxs[i].beginPath();
+                     ctxs[i].arc(areas1[1].x, areas1[1].y, r, 0, 2 * Math.PI, 0); //рисуем два круга по координатам в массиве радиуса r
+                     ctxs[i].stroke();
+                     ctxs[i].beginPath();
+                     ctxs[i].arc(areas1[2].x, areas1[2].y, r, 0, 2 * Math.PI, 0);
+                     ctxs[i].stroke(); */
 
                     for (j = 0; j < areas1.length; j++) {
                         dx = x - areas1[j].x;
@@ -204,16 +220,11 @@ function initScheme() {
 
     });
 
-
-
-
-
-
-    /*$("body").mousedown(function (e) {
+    $("body").mousedown(function (e) {
         e.preventDefault();
     }).mousemove(function (e) {
         e.preventDefault();
-    });*/
+    });
 
 }
 

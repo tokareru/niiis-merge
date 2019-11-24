@@ -48,7 +48,6 @@
             {
               "ID": "right-side",
               "tabs": [
-                "esi_field"
               ]
             }
           ]
@@ -99,7 +98,7 @@
             {
               "ID": "right-side",
               "tabs": [
-                "esi_field"
+
               ]
             }
           ]
@@ -148,7 +147,7 @@
             {
               "ID": "right-side",
               "tabs": [
-                "esi_field"
+
               ]
             }
           ]
@@ -194,7 +193,7 @@
             {
               "ID": "right-side",
               "tabs": [
-                "esi_field"
+
               ]
             }
           ]
@@ -233,7 +232,7 @@
             {
               "ID": "right-side",
               "tabs": [
-                "esi_field"
+
               ]
             }
           ]
@@ -269,7 +268,7 @@
             {
               "ID": "right-side",
               "tabs": [
-                "esi_field"
+
               ]
             },
             {
@@ -301,7 +300,7 @@
             {
               "ID": "right-side",
               "tabs": [
-                "esi_field"
+
               ]
             },
             {
@@ -332,7 +331,7 @@
       "name": "Правая сторона",
       "URL": "pages/right_side",
       "ID": "right-side",
-      "init": "setRightSide",
+      "init": "initESI",
       "parent": ".myRow"
     },
     {

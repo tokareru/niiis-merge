@@ -16,7 +16,13 @@
 <body>
 <!--Правая сторона-->
 <div class="col-md-3">
-    <div id="right-side"></div>
+    <div id="right-side">
+    <div id="esi_field">
+            <div class="esi_header">ЭСИ</div>
+            <div class='esi_branches_div'></div>
+        </div>
+    </div>
+
 </div>
 </body>
 </html>

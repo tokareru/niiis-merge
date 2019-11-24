@@ -12,17 +12,17 @@
 }
 
 .holst {
-	width: 30vw;
+    width: 30vw;
     height: 30vw;
     background: white;
-	margin: 1.5vw;
+    margin: 1.5vw;
 }
 
 .typeproj {
-	display:block;
-	margin-left:1.5vw;
-	margin-top:2vw;
-	font-size:2vw;
+    display:block;
+    margin-left:1.5vw;
+    margin-top:2vw;
+    font-size:2vw;
 }
 
 #bolthideimg111 {
@@ -381,39 +381,31 @@
     margin-top: 12.6vw;
 }
 
+canvas:hover {
+    cursor: url(../images/scheme/pen1.png) 0 3, auto;
+}
+
 section {
     /*width: 74vw;*/
-	width: 40vw;
+    width: 40vw;
     margin:auto;
-	position: relative;
+    position: relative;
 }
 
 #canv1 {
     position:absolute;
-    height: 16vw;
-	width: 37.5vw;
+    /*height: 16.3vw;
+    width: 37.5vw;*/
     margin: 1.5vw;
     z-index: 3;
     padding: 0.5vw;
     border: 1px dashed black;
 }
 
-#canv1:hover {
-    cursor: url(../images/scheme/pen1.png) 0 3, auto;
-}
-
-#canv2:hover {
-    cursor: url(../images/scheme/pen1.png) 0 3, auto;
-}
-
-#canv3:hover {
-    cursor: url(../images/scheme/pen1.png) 0 3, auto;
-}
-
 #canv2 {
     position:absolute;
-    height: 16vw;
-	width: 27vw;
+    /*height: 16vw;
+    width: 27vw;*/
     margin: 1.5vw;
     z-index: 3;
     padding: 0.5vw;
@@ -422,8 +414,8 @@ section {
 
 #canv3 {
     position:absolute;
-    height: 29.3vw;
-	width: 40.4vw;
+    /*height: 29.3vw;
+    width: 40.4vw;*/
     margin: 1.5vw;
     z-index: 3;
     padding: 0.5vw;
