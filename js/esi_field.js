@@ -13,10 +13,6 @@
     hideBranchContent();
 });*/
 
-$(function () {
-
-});
-
 function initESI() {
     $('#esi_field').append('<button id=\'esi_branch_btn\' class="btn btn-primary btn-block">' +
         'Обновить данные</button>');

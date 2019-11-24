@@ -186,7 +186,7 @@ function setRightSide(json, add_data) {
     $("#shell").data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 }
 
-function setEMI() {
+/*function setEMI() {
     $("#esi_field").append('<h3>ЭСИ</h3>\n' +
         '<div class="row">\n' +
         '    <div class="col-md-12 table-responsive">\n' +
@@ -234,7 +234,7 @@ function setEMI() {
         '        </table>\n' +
         '    </div>\n' +
         '</div>');
-}
+}*/
 
 // получаем информацию о доступных вкладках и передаем информацию в функцию setTabs
 function getJsonByURL(url ,callback, add_data) {
