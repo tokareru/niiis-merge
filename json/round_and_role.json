@@ -377,7 +377,7 @@
       "ID": "esi_field",
       "location": "right-side",
       "notify": "",
-      "init": "setEMI"
+      "init": "initESI"
     },
     {
       "name": "Спецификация",
