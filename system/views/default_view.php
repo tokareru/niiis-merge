@@ -70,6 +70,7 @@ $IS = $_SESSION['niiis']['is'];
         <link rel="stylesheet" href="css/specification_table.css">
         <link rel="stylesheet" href="css/scheme.css">
         <link rel="stylesheet" href="css/esi_field.css">
+        <link rel="stylesheet" href="css/esi_field/esi_field.css">
         <link rel="stylesheet" href="css/technologist_guide.css">
         <script src="js/libraries/jquery-3.4.1.js"></script>
         <script src="js/libraries/popper.min.js"></script>
@@ -81,6 +82,8 @@ $IS = $_SESSION['niiis']['is'];
         <script src="js/specification_table.js"></script>
         <script src="js/chat/chat.js"></script>
         <script src="js/chat/dm_chat.js"></script>
+        <script src="js/esi_field.js"></script>
+
         <script src="js/technologist_guide.js"></script>
 
         <script src="js/scheme.js"></script>

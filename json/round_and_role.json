@@ -372,12 +372,11 @@
       "init": "initScheme"
     },
     {
-      "name": "ЭСИ",
-      "URL": "pages/esi",
-      "ID": "esi_field",
-      "location": "right-side",
-      "notify": "",
-      "init": "setEMI"
+      "name": "Правая сторона",
+      "URL": "pages/right_side",
+      "ID": "right-side",
+      "init": "initESI",
+      "parent": ".myRow"
     },
     {
       "name": "Спецификация",
