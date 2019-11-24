@@ -48,7 +48,7 @@ function initBranchesInside() {
     let countRows = $('.table_edit').find('tbody').find('tr').length;
     let countCols = $('.table_edit').find('thead').find('tr').find('th').length;
 
-    let info = serializeTable();
+    let info = serializeTable("#specificationBlock ");
     info.forEach(function (value) {
         console.log(value);
     });
