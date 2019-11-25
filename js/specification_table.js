@@ -12,7 +12,7 @@ function generateTable(json, add_data) {
     $table_made
         .append('<table style="width: 100%" class="table_edit table table-striped table-bordered table-hover">' +
             '</table>');
-    $table_made.find('.table_edit').append('<thead style="background-color: #0a78bf"></thead>');
+    $table_made.find('.table_edit').append('<thead style="background-color: #80cbc4 !important"></thead>');
     $table_made.find('thead').append('<tr></tr>');
     $table_made.find('thead tr').append('<th class="p-0"><div class="edit_cell_readonly">' + "\№" + '</div></th>');
     json.thead.forEach(function (elem) {
@@ -129,7 +129,7 @@ function tableData(readonly, table_block, edit_mode_div, url) {
         });
 
         $edit_mode_div.on('click', '.edit_mode_onoff', function () {
-            $(table_block).find('.edit_div_toggle').toggle(300);
+            $(table_block).find('.edit_div_toggle').slideToggle(50);
         });
 
         $edit_mode_div.on('click', '.add_row', function () {
