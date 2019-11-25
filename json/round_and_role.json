@@ -294,7 +294,8 @@
                 "specification",
                 "scheme",
                 "fieldBlock",
-                "route_map_field"
+                "route_map_field",
+                "tasks_routes_field"
               ]
             },
             {
@@ -441,11 +442,11 @@
     },
     {
       "name": "Маршруты заданий",
-      "URL": "",
-      "ID": "",
-      "location": "",
+      "URL": "pages/tasks_routes",
+      "ID": "tasks_routes_field",
+      "location": "main-tabs",
       "notify": "",
-      "init": ""
+      "init": "initTasksRoutes"
     },
     {
       "name": "Задание",

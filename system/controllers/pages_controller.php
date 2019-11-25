@@ -56,6 +56,13 @@ class pages_controller extends Controller{
             $this->view->render('', 'edit_field_view.php', '');
         }
 
+        function tasks_routes(){
+            $this->view->render('', 'tasks_routes.php', '');
+        }
+
+        function tasks_routes_table(){
+            $this->view->render('', 'tasks_routes_table.php', '');
+        }
 
   // счетчики для менюшки, использовать можно на всех страницах
 }

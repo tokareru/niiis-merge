@@ -187,56 +187,6 @@ function setRightSide(json, add_data) {
     $("#shell").data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 }
 
-/*function setEMI() {
-    $("#esi_field").append('<h3>ЭСИ</h3>\n' +
-        '<div class="row">\n' +
-        '    <div class="col-md-12 table-responsive">\n' +
-        '        <table class=\'esi_table table table-striped table-bordered table-hover\'>\n' +
-        '            <thead>\n' +
-        '            <tr>\n' +
-        '                <th></th>\n' +
-        '                <th></th>\n' +
-        '                <th></th>\n' +
-        '            </tr>\n' +
-        '            </thead>\n' +
-        '            <tbody>\n' +
-        '            <tr>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '            </tr>\n' +
-        '            <tr>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '            </tr>\n' +
-        '            <tr>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '            </tr>\n' +
-        '            <tr>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '            </tr>\n' +
-        '            <tr>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '            </tr>\n' +
-        '            <tr>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '                <td></td>\n' +
-        '            </tr>\n' +
-        '\n' +
-        '            </tbody>\n' +
-        '        </table>\n' +
-        '    </div>\n' +
-        '</div>');
-}*/
-
 // получаем информацию о доступных вкладках и передаем информацию в функцию setTabs
 function getJsonByURL(url ,callback, add_data) {
     // получаем сведения о роле и раунде

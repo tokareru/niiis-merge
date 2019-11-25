@@ -1,0 +1,46 @@
+.tasks_routes_main{
+    padding: 1% 4% 2% 2%;
+    background-color: #ffffff;
+    min-height: 350px;
+    max-height: 1200px;
+    height: 67vh;
+}
+
+.tasks_routes_header{
+    text-align: center;
+    font-weight: 700;
+    width: 100%;
+}
+
+.tasks_routes_inner_header{
+    border-style: solid;
+    border-width: 1px;
+    border-color: #cccccc;
+    background-color: #9c9393;
+    color: white;
+    margin-bottom: 3%;
+}
+
+.tasks_routes_inner_div{
+    background-color: #ffffff;
+    margin-bottom: 6%;
+}
+
+.tasks_routes_button_h{
+    background-color: #dadada;
+}
+
+.tasks_routes_button{
+    text-align: left;
+    padding: 0 !important;
+}
+
+.tasks_routes_span_h{
+    display: inline-block;
+    font-weight: bold;
+    margin-right: 3%;
+}
+
+.tasks_routes_span_t{
+    font-style: italic;
+}

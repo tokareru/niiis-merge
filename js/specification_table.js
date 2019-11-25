@@ -1,12 +1,13 @@
 function createSpecificationTable() {
     //serializeTable();
     getJsonByURL("spec_table_ajax", generateTable,
-        {table_block : "#specificationBlock", edit_mode_div: "#specification_edit"});
+        {table_block : "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field"});
 }
 
 function generateTable(json, add_data) {
     let table_block = add_data.table_block + " ";
     let edit_mode_div = add_data.edit_mode_div + " ";
+    let url = add_data.url;
     let $table_made = $(table_block + '.table_made');
     $table_made
         .append('<table style="width: 100%" class="table_edit table table-striped table-bordered table-hover">' +
@@ -27,7 +28,7 @@ function generateTable(json, add_data) {
         })
     });
 
-    tableData(false, table_block, edit_mode_div);
+    tableData(false, table_block, edit_mode_div, url);
     json.thead.forEach(function (elem, i) {
         if (elem.readonly) cellToReadOnly(0, i + 1, table_block);
     });
@@ -102,7 +103,7 @@ function addInputs(table_block) {
     });
 }
 
-function tableData(readonly, table_block, edit_mode_div) {
+function tableData(readonly, table_block, edit_mode_div, url) {
 
     let $table_edit = $('.table_edit');
     $table_edit.find('div').each(function () {
@@ -115,9 +116,12 @@ function tableData(readonly, table_block, edit_mode_div) {
         /*$edit_mode_div.load('pages/edit_field', function () {
             $('.edit_div_toggle').hide();
         });*/
-        let html = downloadHTML('pages/edit_field');
-        $edit_mode_div.append(html);
-        $(table_block).find('.edit_div_toggle').hide();
+
+        if (url !== ""){
+            let html = downloadHTML(url);
+            $edit_mode_div.append(html);
+            $(table_block).find('.edit_div_toggle').hide();
+        }
 
         let $table_edit = $('.table_edit');
         $table_edit.on('keypress', '.input_text', function (event) {

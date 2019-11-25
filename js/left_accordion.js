@@ -30,7 +30,7 @@ function setAccordionPanels(json, add_data) {
             },
         icons: false,
         animate: 200,
-        heightStyle: "fill",
+        heightStyle: "fill"
     });
 }
 
