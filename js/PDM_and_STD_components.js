@@ -164,7 +164,7 @@ function showhideimage(arrayComp, obj)
 		obj[0].labels[0].className = "check_std check_non-active";
 		obj[0].labels[0].children[0].className = "check_icon-non check_icon fa fa-circle-thin material-icons";
 		//console.log(obj[0].labels[0].className);
-		alert('Необходимо закончить рисование и нажать "Готово"');
+		//alert('Необходимо закончить рисование и нажать "Готово"');
 	}
 }
 

@@ -1,23 +1,28 @@
 #chat_dm {
-    background-color: #e6e6e6;
-    border: #43A0A4 solid 2px;
-    border-radius: 2%;
-    margin: 1%;
-    height: 67%;
-    width: 98%;
-    padding: 1% !important;
+    height: 100%;
+    width: 100%;
     word-wrap: break-word;
 }
 
+.chats_div{
+    height: 80%;
+}
+
+.chats_header{
+    height: 10%;
+    width: 72%;
+    color: #343a40 !important;
+    padding: 10px;
+    float: right;
+    margin-bottom: 2%;
+}
+
 .dm_window {
-    height: 100%;
-    width: 70% !important;
+    height: 85%;
+    width: 72% !important;
     top: 0 !important;
     min-height: 20%;
     float: left;
-    background-color: #d8f3e9 !important;
-    border: #43A0A4 solid 2px!important;
-    border-radius: 2%;
     overflow-y: scroll;
     padding-top: 1%;
     padding-bottom: 1%;
@@ -46,18 +51,23 @@
     cursor: pointer;
     clear: left;
     width: 100%;
-    margin-top: 5px !important;
-    background-color: #d8f3e9;
-    border-radius: 3px / 3px;
-    border: #f7aec2 solid 1px !important;
+    height: 50px;
+    padding: 0;
+    margin: 0;
 }
 
 .chat_dm_ul {
     overflow-y: auto;
     height: 100%;
-    padding: 0 3px 0 0 !important;
 }
 
+.chat_dm_ul_div{
+    padding: 5px;
+    display: block;
+    float: left;
+    height: 100%;
+    width: 28%;
+}
 
 .chat_unread_messages {
     border: #eb737c solid 1px !important;
@@ -83,7 +93,7 @@
 }
 
 .chat_dm_ul::-webkit-scrollbar {
-    width: 3px;
+    width: 0;
 }
 
 .chat_dm_ul::-webkit-scrollbar-track {
@@ -99,7 +109,7 @@
 
 .ui-tabs-vertical .ui-tabs-nav {
     float: left;
-    width: 28%;
+    width: 100%;
     margin: 0;
 }
 
@@ -113,26 +123,53 @@
     border: #5989b2 solid 1px;*/
 }
 
+.ui-tabs .ui-tabs-nav li {
+    list-style: none;
+    float: left;
+    position: relative;
+    top: 0;
+    margin: 0!important;
+    border-bottom-width: 0;
+    padding: 0;
+    white-space: nowrap;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active{
+    padding: 0;
+    margin: 0;
+}
+
 .ui-tabs-vertical .ui-tabs-nav li a {
     width: 100%;
+    text-align: center;
     padding-right: 0 !important;
     padding-left: 2px !important;
     font-size: 14px;
-    color: black !important;
+    color: white !important;
     cursor: pointer !important;
     display: block;
+    outline:none;
 }
 
 .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active {
     cursor: pointer;
     clear: left;
+    outline:none;
     width: 100%;
-    margin-top: 5px !important;
-    border: #d8f3e9 solid 1px!important;
     background-color: #f7aec2;
-    border-radius: 3px / 3px;
 }
 
 .ui-tabs-vertical .ui-tabs-panel {
     float: right;
+}
+
+.ui-tab{
+    padding: 0 !important;
+}
+.ui-tabs .ui-tabs-nav{
+    padding: 0;
+    margin: 0;
+}
+.ui-tabs{
+    padding: 0 !important;
 }

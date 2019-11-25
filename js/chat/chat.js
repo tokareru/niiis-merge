@@ -4,10 +4,11 @@ let Server_count = initServerCount();
 
 
 function initAllUsersChat() {
-    let $chat_window_chat = $('#chat_window_chat');
-    $('#chat_window').data({'name': '#chat_window_chat'});
+    let $chat_window_chat = $('#dm_user_0');
 
-    $chat_window_chat.data({'count_messages': 0, 'login_user_chat_with': '#chat_window_chat'});
+/*    $('#chat_window').data({'name': '#chat_window_chat'});
+
+    $chat_window_chat.data({'count_messages': 0, 'login_user_chat_with': '#chat_window_chat'});*/
     $('#chat_window').tabs({
         classes:
             {
@@ -16,10 +17,10 @@ function initAllUsersChat() {
             }
     });
 
-    //начальная инициализация общего чата, грузятся последние 100 сообщения
+    /*//начальная инициализация общего чата, грузятся последние 100 сообщения
     printComments($chat_window_chat, {
         type: 'ALL', count_messages: Max_count_messages, function: 'print_comment'
-    }, true);
+    }, true);*/
 
    /* setInterval(function () {
         addNewComments($chat_window_chat,
@@ -60,7 +61,7 @@ function initAllUsersChat() {
 
 function initServerCount() {
     let count = 0;
-    let arrOfServerCount = {'#chat_window_chat': 0};
+    let arrOfServerCount = {'#dm_user_0': 0};
 
         $.ajax({
             url: 'chat_ajax',
@@ -76,7 +77,7 @@ function initServerCount() {
     for (let key in arrOfServerCount)
     {
         let dataObj = {};
-        if (key === '#chat_window_chat')
+        if (key === '#dm_user_0')
             dataObj = {type: 'ALL',
                 function: 'count_comments'};
         else {
@@ -91,7 +92,7 @@ function initServerCount() {
             async: true,
             data: dataObj,
             success: function (data) {
-                arrOfServerCount[key] = data.count;
+                arrOfServerCount[key] = 0;
             }
         });
     }
@@ -122,7 +123,7 @@ function chatMessages($chat) {
     $chat_ul.append('<li></li>');
     $chat.find('li:last-child').text($text);
     let objData = {};
-    if ($chat.attr('id') === 'chat_window_chat')
+    if ($chat.attr('id') === 'dm_user_0')
         objData = {type: 'ALL', time: Date.now(), current_login: login, comment: $text, function: 'add_comment'};
     else {
         objData = {
@@ -134,7 +135,6 @@ function chatMessages($chat) {
             function: 'add_comment'
         };
     }
-    //console.log(objData);
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
@@ -185,7 +185,6 @@ function printComments($chat, dataToAjax, init_count = false, scrollDown = true)
     if (dataToAjax.count_messages <= 0) {
         return;
     }
-
     $.ajax({
         url: 'chat_ajax',
         data: dataToAjax,
@@ -204,7 +203,11 @@ function printComments($chat, dataToAjax, init_count = false, scrollDown = true)
         },
         complete: function () {
             if (scrollDown)
+            {
                 $chat.scrollTop($chat[0].scrollHeight);
+                $chat.data({'scroll': true});
+            }
+
         }
     });
 }
@@ -234,6 +237,8 @@ function currentCountMessagesOnServer($chat, dataToAjax) {
 
 function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
     //console.log($chat.data('login_user_chat_with') + ' cur count: ' + $chat.data('count_messages'));
+    /*console.log(dataToAjaxCount);
+    console.log(dataToAjaxPrint);*/
     let count = 0;
     let curCount = $chat.data('count_messages');
     $.ajax({
@@ -244,7 +249,7 @@ function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
         success: function (data) {
             count = data.count;
             let login_other_user =  $chat.data('login_user_chat_with');
-            /*console.log('count: ' + count+ ' Server_count[ '+login_other_user+' ]'
+           /* console.log('count: ' + count+ ' Server_count[ '+login_other_user+' ]'
                 + Server_count[login_other_user] );*/
             if (count > Server_count[login_other_user]) {
                 let count_to_ajax = count - Server_count[login_other_user];
@@ -269,18 +274,10 @@ function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
 //добавляет комменты на страничку
 function addCommentsByData(data, $chat, init_count) {
     let $chat_ul = $chat.find('ul');
-    /*for (let time in data) {
-        //console.log('key: ' + time + ' login & comment:' + data[time].login + " " + data[time].comment);
-        console.log('key: '+ time);
-        for (let key in data[time])
-            console.log('val: '+ data[time][key]+ ' key: '+ key);
-    }*/
     let countMes = 0;
     for (let key in data) {
         if (key !== 'response') {
             countMes++;
-            //let date = new Date();
-            //date.setTime(Number(data[key].time));
             let date_str = data[key].time;
             let $text_wUserDate = '<span class="spanTextLogin">' + data[key].login + '</span>' +
                 '<span class="spanTextDate"> '
