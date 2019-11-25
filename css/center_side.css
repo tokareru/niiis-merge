@@ -1,6 +1,6 @@
 .myTabs {
     /*background-color: #d7e0df;*/
-    height: 85vh;
+    height: 90vh;
     max-height: 1400px;
     color: black !important;
 }
@@ -66,7 +66,7 @@
 }
 
 .myTabsPanel {
-    height: 100%;
+    height: 90%;
     overflow-y: auto;
     background-color: #f5f5f5 !important;
 }
