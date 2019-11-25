@@ -9,10 +9,10 @@
 ?>
 <!--Чат-->
 <div id="chat_main">
-    <div class='bg-light' id="but">
+    <div class='bg-light border border-info' id="but">
         <div id="span_icon_left" class="icon_default"></div>
     </div>
-    <div id="chat_window" class='bg-white'>
+    <div id="chat_window" class='bg-white border border-info'>
         <div id="chat_dm">
         <div class="chats_header bg-light">Общий чат</div>
         <div class="chat_dm_ul_div bg-dark">
