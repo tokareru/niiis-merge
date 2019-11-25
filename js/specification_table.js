@@ -129,7 +129,7 @@ function tableData(readonly, table_block, edit_mode_div, url) {
         });
 
         $edit_mode_div.on('click', '.edit_mode_onoff', function () {
-            $(table_block).find('.edit_div_toggle').toggle(300);
+            $(table_block).find('.edit_div_toggle').slideToggle(50);
         });
 
         $edit_mode_div.on('click', '.add_row', function () {

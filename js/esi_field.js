@@ -14,7 +14,7 @@
 });*/
 
 function initESI() {
-    $('#esi_field').append('<button id=\'esi_branch_btn\' class="btn btn-primary btn-block">' +
+    $('#esi_field').append('<button id=\'esi_branch_btn\' class="btn btn-custom btn-block">' +
         'Обновить данные</button>');
     $('#esi_field').find('#esi_branch_btn').data({'init': 0});
 
