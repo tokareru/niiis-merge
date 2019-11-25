@@ -1,12 +1,12 @@
 #but {
     background-color: #efeaea;
     border-radius: 25% 0 0 25%;
-    box-shadow: 0 0 30px 6px #66a8bd;
+/ / box-shadow: 0 0 30 px 6 px #66a8bd;
     width: 7%;
     height: 20%;
     float: left;
     font-size: 100%;
-    border-left:#5997ac solid 2px;
+    border-left: #5997ac solid 2px;
     border-top: #5997ac solid 2px;
     border-bottom: #5997ac solid 2px;
 }
@@ -22,16 +22,12 @@
 }
 
 #chat_window {
-    background-color: #efeaea;
-    box-shadow: 0 0 30px 6px  #66a8bd;
-    padding-right: 2%;
-    padding-left: 2%;
+    padding: 0;
     border-left: #5997ac solid 2px;
     border-bottom: #5997ac solid 2px;
     border-top: #5997ac solid 2px;
     height: 100%;
     width: 93%;
-    border-radius: 0 0 0 5%;
     float: right;
 }
 
@@ -45,10 +41,10 @@
 
 #chat_window_text {
     margin-left: 3%;
-    width: 85%;
+    width: 100%;
     text-align: left;
     /*height: 20%;*/
-    max-width: 85%;
+    max-width: 100%;
     max-height: 90%;
     min-height: 90%;
     height: 90%;
@@ -56,6 +52,7 @@
 
 
 #chat_window_button {
+    display: none;
     height: 90%;
     width: 10%;
     max-width: 20%;
@@ -73,10 +70,11 @@
 }
 
 #chat_text_button {
-    padding: 5px;
-    border-radius: 5px;
-    border: #43A0A4 solid 2px;
-    height: 15%;
+    height: 17%;
+    padding: 10px;
+    //padding-right: 10px;
+    margin-top: 2%;
+    bottom: 0;
     display: flex;
     flex-direction: row;
 }
@@ -136,7 +134,7 @@
     color: #1b1e21;
 }
 
-.my_ui-tabs-tab{
+.my_ui-tabs-tab {
     width: 48%;
     padding: 5px !important;
     margin: 1% !important;
@@ -145,13 +143,14 @@
     border-radius: 5px;
 }
 
-.my_ui-tabs-tab a{
+.my_ui-tabs-tab a {
     color: black !important;
     cursor: pointer !important;
     width: 100%;
 }
 
-.my_ui-tabs-active{
+.my_ui-tabs-active {
     border: #f7aec2 solid 2px;
-    background-color: #f7aec2 ;// #aa9ded;
+    background-color: #f7aec2;
+/ / #aa9ded;
 }
