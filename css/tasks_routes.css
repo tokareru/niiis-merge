@@ -1,9 +1,9 @@
 .tasks_routes_main{
     padding: 1% 4% 2% 2%;
-    background-color: #ffffff;
-    min-height: 350px;
+    /*min-height: 350px;
     max-height: 1200px;
-    height: 67vh;
+    height: 67vh;*/
+    height: 100%;
 }
 
 .tasks_routes_header{
@@ -22,7 +22,6 @@
 }
 
 .tasks_routes_inner_div{
-    background-color: #ffffff;
     margin-bottom: 6%;
 }
 
@@ -32,7 +31,7 @@
 
 .tasks_routes_button{
     text-align: left;
-    padding: 0 !important;
+    padding: 3.5% 5% 4% 5% !important;
 }
 
 .tasks_routes_span_h{
@@ -43,4 +42,13 @@
 
 .tasks_routes_span_t{
     font-style: italic;
+}
+
+.task_list{
+    overflow-y: scroll;
+    height: 36vh;
+    min-height: 250px;
+    max-height: 700px;
+    border-style: groove;
+    border-width: 1px;
 }
