@@ -27,11 +27,14 @@
 
 .tasks_routes_button_h{
     background-color: #dadada;
+    box-shadow: 0px 0px 9px 3px #b7b7b7;
+    margin: 2% !important;
 }
 
 .tasks_routes_button{
     text-align: left;
     padding: 3.5% 5% 4% 5% !important;
+    margin: 3% 3% 7%;
 }
 
 .tasks_routes_span_h{

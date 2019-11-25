@@ -38,7 +38,7 @@ function setTaskRoutes(json_list, type, accord_id) {
         let $div = $(accord_id);
         $div.append(
             "<p class='tasks_routes_button_h'>" + elem.name + "</p>" +
-            "<button class='btn btn-block btn-light tasks_routes_button' id='" + type + i.toString() + "'>" +
+            "<button class='btn btn-light tasks_routes_button' id='" + type + i.toString() + "'>" +
             "<p><span class='tasks_routes_span_h'>Тип:</span><span class='tasks_routes_span_t'>" + elem.type + "</span></p>" +
             "<p><span class='tasks_routes_span_h'>Состояние:</span><span class='tasks_routes_span_t'>" + elem.state + "</span></p>" +
             "<p><span class='tasks_routes_span_h'>Инициатор:</span><span class='tasks_routes_span_t'>" + elem.initiator + "</span></p>" +
