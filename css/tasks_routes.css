@@ -52,10 +52,24 @@
 }
 
 .task_list{
-    overflow-y: scroll;
+    overflow-y: auto;
     height: 36vh;
     min-height: 250px;
     max-height: 700px;
     border-style: groove;
     border-width: 1px;
+}
+
+.task_list::-webkit-scrollbar {
+    width: 3px;
+}
+
+.task_list::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+.task_list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.5);
 }
