@@ -12,14 +12,14 @@ function initDMChat(count_users) {
         .addClass("ui-corner-left");
 
     //initDMChats();
-    let speed = 5000;
+    let speed = 500;
     setInterval(function () {
         let $chat_window_chat = $('#dm_user_0');
 
         if ($('#chat_window').data('init')) {
             $chat_window_chat.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
         }
-
+        else speed = 5000;
         addNewComments($chat_window_chat,
             {
                 type: 'ALL',
@@ -115,7 +115,17 @@ function initDMChat(count_users) {
     });*/
 
     $('.chat_dm_ul').on('click', 'li', function () {
-
+        let $this = $(this);
+        $('.chat_dm_ul').find('.dm_tabs_links_li').each(function () {
+           if($this !== this)
+           {
+               if( $(this).hasClass('bg-info'))
+               {
+                   $(this).removeClass('bg-info').addClass('bg-dark');
+               }
+           }
+        });
+        $this.addClass('bg-info').removeClass('bg-dark');
         let $attr = $(this).find('a').attr('href');
         if ($('#chat_dm').find($attr).data('scroll') === true) {
             $('#chat_dm').find($attr).data({'scroll': false});
@@ -137,7 +147,7 @@ function generateDMChat(count_users) {
 
     for (let i = 0; i < count_users + 1; i++) {
         if (!i) {
-            $dm_li.append('<li class="dm_tabs_links_li bg-dark"></li>');
+            $dm_li.append('<li class="dm_tabs_links_li bg-info"></li>');
             $dm_li.find('li').eq(i).append('<div class="dm_tabs_links"><a href="#dm_user_0">' +
                 'Общий чат</a></div>');
             continue;
