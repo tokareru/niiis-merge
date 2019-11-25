@@ -134,6 +134,7 @@ function initDMChat(count_users) {
         if($attr !== '#dm_user_0')
         $('.chats_header').text('Чат с пользователем '+ $('#chat_dm').find($attr).data('login_user_chat_with'));
         else  $('.chats_header').text('Общий чат');
+        $('#chat_window').data({'name': $attr});
     });
 
 }
