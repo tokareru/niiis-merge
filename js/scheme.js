@@ -52,7 +52,7 @@ function initScheme() {
             try {
                 $(".canvimg")[0].className += 'done';
             } catch (err) {
-                alert('Отрисовка уже выполнена');
+                //alert('Отрисовка уже выполнена');
                 break;
             }
             window.isEnded = true;
@@ -168,7 +168,7 @@ function initScheme() {
         if (isEnded) {
             check1.click();
         } else {
-            alert('Необходимо закончить рисование и нажать "Готово"');
+            //('Необходимо закончить рисование и нажать "Готово"');
         }
 
     });
@@ -177,7 +177,7 @@ function initScheme() {
         if (isEnded) {
             check2.click();
         } else {
-            alert('Необходимо закончить рисование и нажать "Готово"');
+            //alert('Необходимо закончить рисование и нажать "Готово"');
         }
 
     });
@@ -196,7 +196,7 @@ function initScheme() {
             }
         } else {
             $(this)[0].checked = false;
-            alert('Необходимо закончить рисование и нажать "Готово"');
+            //alert('Необходимо закончить рисование и нажать "Готово"');
         }
 
     });
@@ -215,7 +215,7 @@ function initScheme() {
             }
         } else {
             $(this)[0].checked = false;
-            alert('Необходимо закончить рисование и нажать "Готово"');
+            //alert('Необходимо закончить рисование и нажать "Готово"');
         }
 
     });
