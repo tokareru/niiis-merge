@@ -29,7 +29,7 @@ function setTabs(json, add_data) {
             },
         show: {effect: "fade", duration: 200},
         beforeLoad: function (event, ui) {
-            ui.panel.html("Loading...");
+            ui.panel.html("Идёт загрузка...");
             ui.jqXHR.fail(function () {
                 ui.panel.html("<div class='alert alert-warning'>Couldn't load this tab</div>");
             });
