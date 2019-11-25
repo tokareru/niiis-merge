@@ -18,8 +18,8 @@
             <div class="col-4" id="tasks_routes_info">
                 <div class="tasks_routes_inner_div">
                     <p class="tasks_routes_inner_header">Дерево маршрутов</p>
-                        <input type="button" disabled='disabled' id="tasks_active_routes" class="btn btn-primary btn-sm col-12" value="Активные маршруты">
-                        <input type="button" id="tasks_completed_routes" class="btn btn-primary btn-sm col-12" value="Завершенные маршруты">
+                        <input type="button" disabled='disabled' id="tasks_active_routes" class="btn btn-custom btn-sm col-12" value="Активные маршруты">
+                        <input type="button" id="tasks_completed_routes" class="btn btn-custom btn-sm col-12" value="Завершенные маршруты">
                 </div>
 
                  <div class="tasks_routes_inner_div" id="tasks_list">

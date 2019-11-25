@@ -17,7 +17,7 @@
 }
 
 body{
-    background-color: #eeefea;
+    /*background-color: #eeefea;*/
 }
 
 h4{
@@ -31,3 +31,15 @@ h4{
     border-top: 0;
     /*overflow-y: scroll !important;*/
 }
+
+.btn-custom{
+    color: #fff;
+    background-color: #94adad;
+    border-color: #9c9e9e;
+}
+
+.btn-custom:hover{
+    background-color: #758a8a;
+    color: white;
+}
+
