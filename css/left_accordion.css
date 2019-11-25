@@ -138,9 +138,9 @@ fieldset p label img{
     //background-color: #f7aec2;
 }
 
-/*.left_accord_div{
+.left_accord_div{
     overflow-y: scroll !important;
-}*/
+}
 
 .left_accord_div::-webkit-scrollbar {
     width: 3px;
