@@ -74,7 +74,7 @@
     <div><span class="typeproj">Вид слева</span><canvas id="canv2"></canvas><img class="canvimg" src="images/scheme/abr/left1gray.png"></div>
 
     <div><span class="typeproj">Вид сверху</span><canvas id="canv3"></canvas><img class="canvimg" src="images/scheme/abr/up1gray.png"></div>
-    <button class="btn-block btn btn-primary" id="ready">Готово</button>
+    <button class="btn-block btn btn-custom" id="ready">Готово</button>
 </section>
 <span id="info" style="position: absolute;right: 0;top: 0;"></span>
 </body>

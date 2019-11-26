@@ -98,7 +98,7 @@ $IS = $_SESSION['niiis']['is'];
         <script src="js/shell/shell.js"></script>
         <script src="js/main.js"></script>
     </head>
-    <body>
+    <body class='bg-light'>
     <div class='container'>
         <div class="row">
             <div class="col-1"><a class="medium red awesome" href="<?php echo conf::$SITE_URL.'logout' ?>">Выйти</a></div>
