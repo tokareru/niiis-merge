@@ -29,9 +29,9 @@ function setTabs(json, add_data) {
             },
         show: {effect: "fade", duration: 200},
         beforeLoad: function (event, ui) {
-            ui.panel.html("Идёт загрузка...");
+            ui.panel.html("<div class='alert alert-info'>Идёт загрузка...</div>");
             ui.jqXHR.fail(function () {
-                ui.panel.html("<div class='alert alert-warning'>Couldn't load this tab</div>");
+                ui.panel.html("<div class='alert alert-warning'>Не смогли загрузить данную вкладку</div>");
             });
         },
         load: function (event, ui) {

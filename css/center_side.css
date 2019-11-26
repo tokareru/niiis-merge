@@ -57,6 +57,9 @@
     border-right-style: solid;
     border-right-width: 5px;
     border-right-color: #f5f5f5;
+    border-bottom: whitesmoke;
+    border-bottom-style: solid;
+    border-bottom-width: 2px !important;
 }
 
 .myTabsStateDefault{

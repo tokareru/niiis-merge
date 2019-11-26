@@ -81,7 +81,9 @@ function makeCheckbox(fieldID) {
     });
 
     $checkboxid.find("input").click(function (e) {
-		showhideimage(collectDataLabels(fieldID), $(this));
+        let arrayClicked = collectDataLabels(fieldID);
+		showhideimage(arrayClicked, $(this));
+		load3d(arrayClicked, $(this));
     });
 
     $checkboxid.find('img').on('dragstart', function (event) {
@@ -128,7 +130,7 @@ function PdmOrStdHandler(event, data) {
 
 function showhideimage(arrayComp, obj) 
 {
-	if (isEnded) 
+	if (window.isEnded != undefined || window.isEnded == true)
 	{
 		arr = $('img');
 		if (obj[0].checked) 
@@ -166,5 +168,28 @@ function showhideimage(arrayComp, obj)
 		//console.log(obj[0].labels[0].className);
 		//alert('Необходимо закончить рисование и нажать "Готово"');
 	}
+}
+
+function load3d(array, obj)
+{
+    if (window.isEnded != undefined || window.isEnded == true)
+    {
+        if (obj[0].checked)
+        {
+            //for (i=0;i<window.stldata)
+            array.indexOf('std_component_'+j) != -1
+            meshs[ob.property].visible = true;
+            renderer.render(scene, camera);
+        }
+        else
+        {
+            meshs[ob.property].visible = false;
+            renderer.render(scene, camera);
+        }
+    }
+    else
+    {
+        //alert()
+    }
 }
 

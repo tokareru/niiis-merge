@@ -20,7 +20,7 @@ export function init3dField() {
 
     var inc = 0;
 
-    window.arr = {};
+    window.meshs = {};
 	
 	window.stldata = 
 	[
@@ -121,7 +121,7 @@ export function init3dField() {
 
     }
 	
-	function loadSTL (src, color, arrmesh, pos = { x:0, y:0, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 })
+	function loadSTL (src, color, arrmesh, pos = { x:0, y:-0.315, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 })
 	{
 		
 		loader.load(src, function (geometry) {
@@ -135,9 +135,9 @@ export function init3dField() {
             mesh.scale.set(scale.x, scale.y, scale.z);
 
             mesh.castShadow = true;
-            mesh.receiveShadow = true;
+            mesh.receiveShadow = false;
 
-            window.arr[arrmesh] = mesh;
+            window.meshs[arrmesh] = mesh;
             scene.add(mesh);
 
         });
@@ -195,10 +195,10 @@ export function init3dField() {
 
     function hide(ob) {
         if (ob["domElement"].children[0].checked == false) {
-            arr[ob.property].visible = false;
+            meshs[ob.property].visible = false;
             renderer.render(scene, camera);
         } else {
-            arr[ob.property].visible = true;
+            meshs[ob.property].visible = true;
             renderer.render(scene, camera);
         }
     }
