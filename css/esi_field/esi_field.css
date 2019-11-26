@@ -1,8 +1,8 @@
 #esi_field {
-    background-color: #eeefea;
+    background-color: #f2f2f2;
     height: 90vh;
     //box-shadow: 0 0 15px 1px #66a8bd;
-    border: #d7e0df solid 4px;
+   /* border: #d7e0df solid 4px;*/
 }
 
 #esi_field::-webkit-scrollbar {
@@ -29,10 +29,14 @@ overflow-y: scroll;
 }
 
 .esi_header {
-    padding: .5em 1em;
+    padding: 0.5em 1em;
     font-size: 16px;
     text-align: center;
-    background-color: #f7aec2;
+    color: white;
+    background-color: #2bbbad;
+    border-radius: .25rem;
+    transition: all 1s;
+    border-color: #dee2e6 #dee2e6 #fff;
 }
 
 .esi_branch {
