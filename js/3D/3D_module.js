@@ -1,4 +1,4 @@
-//тащерский топкек код
+//тащерский топкек код // примечание: нет
 
 import * as THREE from './stl/three.module.js';
 /*import Stats from './stl/stats.module.js';*/
@@ -35,11 +35,11 @@ export function init3dField() {
     init();
     animate();
 
-    var gui = new dat.GUI({autoPlace: false, width: 100+'vw'});
+    var gui = new dat.GUI({autoPlace: false, width: 100+'%'});
     document.getElementById("canvas3D").appendChild(gui.domElement);
     gui.domElement.id = 'gui';
 
-    gui.add(check, 'checkbox').name('Spin').onChange(function (value) {
+    gui.add(check, 'checkbox').name('Вращение').onChange(function (value) {
         animate();
     });
 
