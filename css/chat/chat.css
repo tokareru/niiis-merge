@@ -1,23 +1,27 @@
 #but {
-    background-color: #efeaea;
-    border-radius: 5px 0 0 5px;
+    text-align: center;
+    background-color: #45526e;
+    color: #fff;
+    //border-radius: 5px 0 0 5px;
 / / box-shadow: 0 0 30 px 6 px #66a8bd;
-    width: 7%;
-    height: 20%;
+    width: 16.5%;
+    height: 7.9%;
     float: left;
     font-size: 100%;
     border-width: 2px !important;
     border-right: 0 !important;
+    cursor: pointer;
+    user-select: none;
 }
 
 #chat_main {
-    z-index: 10;
+    z-index: 20;
     position: fixed;
-    width: 550px;
+    width: 600px;
     max-height: 450px;
     height: 450px;
-    right: -513.5px;
-    top: 20%;
+    right: -503px;
+    top: 14%;
 }
 
 #chat_window {
@@ -25,7 +29,7 @@
     border-width: 2px !important;
     border-right: 0 !important;
     height: 100%;
-    width: 93%;
+    width: 83.5%;
     float: right;
 }
 
@@ -132,12 +136,12 @@
 }
 
 #span_icon_right {
-    background-image: url('../icons/keyboard_arrow_right-24px.svg');
+    //background-image: url('../icons/keyboard_arrow_right-24px.svg');
 
 }
 
 #span_icon_left {
-    background-image: url('../icons/keyboard_arrow_left-24px.svg');
+    //background-image: url('../icons/keyboard_arrow_left-24px.svg');
 }
 
 .icon_but {

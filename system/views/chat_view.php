@@ -9,7 +9,7 @@
 ?>
 <!--Чат-->
 <div id="chat_main">
-    <div class='bg-light border border-info' id="but">
+    <div class='border border-info font-weight-bold' id="but">ЧАТ
         <div id="span_icon_left" class="icon_default"></div>
     </div>
     <div id="chat_window" class='bg-white border border-info'>

@@ -18,7 +18,7 @@
     <div id="right-side">
         <div class='slider_main'>
             <div class='slider_button border border-info'>
-            <div class='font-weight-bold transformed'>ЕСИ</div>
+            <div class='font-weight-bold transformed'>ЭСИ</div>
             </div>
             <div id="esi_field" class= 'bg-light border border-info'>
                     <div class="esi_header">ЭСИ</div>

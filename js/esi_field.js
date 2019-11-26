@@ -39,8 +39,6 @@ function initESI() {
     $('.slider_button').on('click', function () {
         STDLibClick($('.slider_button'), $('.slider_main'));
     });
-
-
 }
 
 function InitBranches() {
