@@ -176,7 +176,7 @@ function load3d(array, obj)
     {
         if (obj[0].checked)
         {
-            for (i=0;i<window.stldata)
+            //for (i=0;i<window.stldata)
             array.indexOf('std_component_'+j) != -1
             meshs[ob.property].visible = true;
             renderer.render(scene, camera);
