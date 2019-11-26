@@ -5,6 +5,7 @@ function initTasksRoutes() {
         dataType: "json",
         success: function (json) {
             let html = downloadHTML("pages/tasks_routes_table");
+
             $("#tasks_composition_div").append(html);
             $("#tasks_list_div_completed").hide();
             setTaskRoutes(json.active, "active_", "#tasks_list_div_active");
@@ -12,11 +13,16 @@ function initTasksRoutes() {
 
             $("#tasks_active_routes").trigger("click");
 
+            $(".tasks_routes_button").click(function () {
+                $("#task_routes_info").hide()
+            })
+
             $("#tasks_active_routes").click(function () {
-                $("#tasks_completed_routes").removeAttr("disabled")
+                $("#tasks_completed_routes").removeAttr("disabled");
                 $(this).attr("disabled", "disabled");
                 $("#tasks_list_div_active").show();
                 $("#tasks_list_div_completed").hide();
+                $("#current_task_routes_list").empty().append("Активные")
             })
 
             $("#tasks_completed_routes").click(function () {
@@ -24,6 +30,7 @@ function initTasksRoutes() {
                 $(this).attr("disabled", "disabled");
                 $("#tasks_list_div_completed").show();
                 $("#tasks_list_div_active").hide();
+                $("#current_task_routes_list").empty().append("Завершенные");
             })
         },
         error: function (message) {

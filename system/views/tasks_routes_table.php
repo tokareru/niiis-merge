@@ -19,6 +19,7 @@
         <div class="row">
                 <div class="col-md-12 p-0">
                     <h5>Задания</h5>
+                    <div id="task_routes_info" class="alert-info">Выберите маршрут из списка маршрутов</div>
                 </div>
             </div>
         <div class="row">

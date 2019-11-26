@@ -23,7 +23,7 @@
                 </div>
 
                  <div class="tasks_routes_inner_div" id="tasks_list">
-                      <p class="tasks_routes_inner_header">Список маршрутов</p>
+                      <p class="tasks_routes_inner_header">Список маршрутов: <span id="current_task_routes_list">Активные</span></p>
                       <div class="task_list">
                         <div id="tasks_list_div_active"></div>
                         <div id="tasks_list_div_completed"></div>
@@ -33,7 +33,9 @@
             <div class="col-8" id="route_tree">
                <div class="tasks_routes_inner_div" id="tasks_composition">
                    <p class="tasks_routes_inner_header">Состав маршрута</p>
-                   <div id="tasks_composition_div"></div>
+                   <div id="tasks_composition_div">
+
+                   </div>
                </div>
             </div>
 
