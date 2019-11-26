@@ -1,6 +1,6 @@
 let login = "";
 let Max_count_messages = 100;
-let Server_count = initServerCount();
+let Server_count;
 
 
 function initAllUsersChat() {
@@ -140,7 +140,6 @@ function chatMessages($chat) {
         }*/
         },
         complete: function (data) {
-            console.log('status: ' + data);
         },
         error: function () {
             $('#chat_window_text').val('Ошибка загрузки');
