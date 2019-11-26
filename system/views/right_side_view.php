@@ -15,14 +15,19 @@
 </head>
 <body>
 <!--Правая сторона-->
-<div class="col-md-3">
     <div id="right-side">
-    <div id="esi_field">
-            <div class="esi_header">ЭСИ</div>
-            <div class='esi_branches_div'></div>
+        <div class='slider_main'>
+            <div class='slider_button border border-info'>
+            <div class='font-weight-bold transformed'>ЕСИ</div>
+            </div>
+            <div id="esi_field" class= 'bg-light border border-info'>
+                    <div class="esi_header">ЭСИ</div>
+                    <div class='esi_branches_div'></div>
+                    <button id='esi_branch_btn' class="btn btn-custom btn-block">
+                            Обновить данные</button>
+                </div>
+            </div>
         </div>
-    </div>
 
-</div>
 </body>
 </html>
