@@ -83,7 +83,7 @@ function makeCheckbox(fieldID) {
     $checkboxid.find("input").click(function (e) {
         let arrayClicked = collectDataLabels(fieldID);
 		showhideimage(arrayClicked, $(this));
-		//3dload(arrayClicked);
+		//load3d(arrayClicked);
     });
 
     $checkboxid.find('img').on('dragstart', function (event) {
@@ -170,7 +170,7 @@ function showhideimage(arrayComp, obj)
 	}
 }
 
-function 3dload(array)
+function load3d(array)
 {
     if (isEnded)
     {
