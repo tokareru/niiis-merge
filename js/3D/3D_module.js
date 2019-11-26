@@ -9,14 +9,14 @@ export function init3dField() {
 
     var camera, cameraTarget, scene;
 
-    var check = {
+    /*var check = {
         checkbox: true,
         vis1: true,
         vis2: true,
         vis3: true,
         vis4: true,
         vis5: true,
-    };
+    };*/
 
     var inc = 0;
 
@@ -38,7 +38,7 @@ export function init3dField() {
     init();
     animate();
 
-    var gui = new dat.GUI({autoPlace: false, width: 100+'vw'});
+    /*var gui = new dat.GUI({autoPlace: false, width: 100+'vw'});
     document.getElementById("canvas3D").appendChild(gui.domElement);
     gui.domElement.id = 'gui';
 
@@ -51,7 +51,7 @@ export function init3dField() {
         gui.add(check, text).name('VO' + i).onChange(function () {
             hide(this);
         });
-    }
+    }*/
 
     function init() {
 
@@ -84,7 +84,7 @@ export function init3dField() {
         // ASCII file
 		window.loader = new STLLoader();
 		
-		for (i=0;i<stldata.length;i++)
+		for (let i=0;i<stldata.length;i++)
 		{
 			loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
 		}
@@ -179,10 +179,8 @@ export function init3dField() {
     }
 
     function animate() {
-        if (check.checkbox) {
             requestAnimationFrame(animate);
             render();
-        }
         //stats.update();
     }
 
@@ -196,7 +194,7 @@ export function init3dField() {
         renderer.render(scene, camera);
     }
 
-    function hide(ob) {
+    /*function hide(ob) {
         if (ob["domElement"].children[0].checked == false) {
             meshs[ob.property].visible = false;
             renderer.render(scene, camera);
@@ -204,5 +202,5 @@ export function init3dField() {
             meshs[ob.property].visible = true;
             renderer.render(scene, camera);
         }
-    }
+    }*/
 }

@@ -81,7 +81,7 @@ function makeCheckbox(fieldID) {
     });
 
     $checkboxid.find("input").click(function (e) {
-        let arrayClicked = collectDataLabels(fieldID);
+        let arrayClicked = collectDataLabels(".left-side");
 		showhideimage(arrayClicked, $(this));
 		load3d(arrayClicked, $(this));
     });
