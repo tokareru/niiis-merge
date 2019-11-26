@@ -27,7 +27,10 @@ export function init3dField() {
         ["./3dstl/pdm/11.stl", 0xAAAAAA, "vis1"],
         ["./3dstl/pdm/22.stl", 0xAAAAAA, "vis2"],
         ["./3dstl/pdm/33.stl", 0xAAAAAA, "vis3"],
-        ["./3dstl/pdm/44.stl", 0xAAAAAA, "vis4"]
+        ["./3dstl/pdm/44.stl", 0xAAAAAA, "vis4"],
+        ["./3dstl/standart/11.stl", 0xAAAAAA, "vis5"],
+        ["./3dstl/standart/22.stl", 0xAAAAAA, "vis6"],
+        ["./3dstl/standart/33.stl", 0xAAAAAA, "vis7"]
 	];
 
     init();
@@ -41,7 +44,7 @@ export function init3dField() {
         animate();
     });
 
-    for (var i = 1; i < 5; i++) {
+    for (var i = 1; i < 8; i++) {
         var text = 'vis' + i;
         gui.add(check, text).name('VO' + i).onChange(function () {
             hide(this);
@@ -79,7 +82,7 @@ export function init3dField() {
         // ASCII file
 		window.loader = new STLLoader();
 		
-		for (i=0;i<4;i++)
+		for (i=0;i<stldata.length;i++)
 		{
 			loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
 		}
