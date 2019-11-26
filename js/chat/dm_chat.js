@@ -12,7 +12,7 @@ function initDMChat(count_users) {
         .addClass("ui-corner-left");
 
     //initDMChats();
-    let speed = 500;
+    let speed = 5000;
     setInterval(function () {
         let $chat_window_chat = $('#dm_user_0');
 

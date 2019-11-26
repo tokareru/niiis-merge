@@ -6,8 +6,9 @@
 }
 
 #tabs ul li a {
+    cursor: pointer !important;
     color: #fff;
-    background-color: rgba(0,0,0,0.2);
+    /*background-color: rgba(0,0,0,0.2);*/
     border-radius: .25rem;
     -webkit-transition: all 1s;
     transition: all 1s;
@@ -23,7 +24,7 @@
     margin-right: 1rem;
     margin-bottom: -20px;
     margin-left: 1rem;
-    background-color: #2bbbad;
+    background-color: #f5f5f5;
     border: 0;
     border-radius: .25rem;
     -webkit-box-shadow: 0 5px 11px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
@@ -32,7 +33,7 @@
 
 .myTabsActive {
     color: #fff;
-    background-color: rgba(0,0,0,0.2);
+    background-color: #1c2331e3 !important;
     border-radius: .25rem;
     -webkit-transition: all 1s;
     transition: all 1s;
@@ -44,6 +45,7 @@
 }
 
 .myTabsTab {
+    background-color: #45526e;
     flex-basis: 0;
     flex-grow: 1;
     overflow: hidden;
@@ -54,7 +56,7 @@
     text-align: -webkit-match-parent;
     border-right-style: solid;
     border-right-width: 5px;
-    border-right-color: #2bbbad;
+    border-right-color: #f5f5f5;
 }
 
 .myTabsStateDefault{
@@ -68,7 +70,7 @@
 .myTabsPanel {
     height: 90%;
     overflow-y: auto;
-    background-color: #f5f5f5 !important;
+    background-color: white !important;
 }
 
 .myTabsPanel::-webkit-scrollbar {

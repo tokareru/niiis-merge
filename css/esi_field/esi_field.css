@@ -1,5 +1,5 @@
 #esi_field {
-    background-color: #f2f2f2;
+    background-color: white;
     height: 90vh;
     //box-shadow: 0 0 15px 1px #66a8bd;
    /* border: #d7e0df solid 4px;*/
@@ -34,7 +34,7 @@ overflow-y: scroll;
     font-size: 16px;
     text-align: center;
     color: white;
-    background-color: #2bbbad;
+    background-color: #1c2331e3 !important;
     border-radius: .25rem;
     transition: all 1s;
     border-color: #dee2e6 #dee2e6 #fff;

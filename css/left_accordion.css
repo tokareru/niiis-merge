@@ -14,7 +14,7 @@
 
 .my_ui-accordion-header {
     color: white;
-    background-color: #2a716a;;
+    background-color: #1c2331e3 !important;
     border-radius: .25rem;
     -webkit-transition: all 1s;
     transition: all 1s;
@@ -34,7 +34,7 @@
 }
 
 .my_ui-accordion-header-collapsed {
-    background-color: #28a094;
+    background-color: #45526e !important;
     color: #ffffff;
 }
 
@@ -50,7 +50,7 @@
 }
 
 #left-accordion div{
-    background-color: #d7e0df;
+    background-color: white;
     padding: 1.5% 0% 0% 2.5%;
     border: 0px;
 }

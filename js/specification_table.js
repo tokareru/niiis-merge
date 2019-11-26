@@ -12,7 +12,7 @@ function generateTable(json, add_data) {
     $table_made
         .append('<table style="width: 100%" class="table_edit table table-striped table-bordered table-hover">' +
             '</table>');
-    $table_made.find('.table_edit').append('<thead style="background-color: #80cbc4 !important"></thead>');
+    $table_made.find('.table_edit').append('<thead></thead>');
     $table_made.find('thead').append('<tr></tr>');
     $table_made.find('thead tr').append('<th class="p-0"><div class="edit_cell_readonly">' + "\№" + '</div></th>');
     json.thead.forEach(function (elem) {
