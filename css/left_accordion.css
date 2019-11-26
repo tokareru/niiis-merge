@@ -121,7 +121,7 @@ fieldset p:hover{
     border-radius: 8px;
 }
 
-fieldset p label img{
+.left-side p label img{
     width: 85%;
     max-height: 152px;
     max-width: 163px;
