@@ -7,22 +7,19 @@ import {STLLoader} from './stl/STLLoader.js';
 export function init3dField() {
     var container, stats;
 
-    var camera, cameraTarget, scene;
+    var cameraTarget;
 
-    /*var check = {
+    var check = {
         checkbox: true,
-        vis1: true,
-        vis2: true,
-        vis3: true,
-        vis4: true,
-        vis5: true,
-    };*/
+    };
 
     var inc = 0;
 
     window.meshs = {};
 
     window.renderer;
+    window.camera;
+    window.scene;
 	
 	window.stldata = 
 	[
@@ -38,7 +35,7 @@ export function init3dField() {
     init();
     animate();
 
-    /*var gui = new dat.GUI({autoPlace: false, width: 100+'vw'});
+    var gui = new dat.GUI({autoPlace: false, width: 100+'vw'});
     document.getElementById("canvas3D").appendChild(gui.domElement);
     gui.domElement.id = 'gui';
 
@@ -46,24 +43,17 @@ export function init3dField() {
         animate();
     });
 
-    for (var i = 1; i < 6; i++) {
-        var text = 'vis' + i;
-        gui.add(check, text).name('VO' + i).onChange(function () {
-            hide(this);
-        });
-    }*/
-
     function init() {
 
         container = document.createElement('div');
         document.getElementById("canvas3D").appendChild(container);
 
-        camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
+        window.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
         camera.position.set(3, 0.15, 3);
 
         cameraTarget = new THREE.Vector3(0, -0.25, 0);
 
-        scene = new THREE.Scene();
+        window.scene = new THREE.Scene();
         scene.background = new THREE.Color(0x72645b);
         scene.fog = new THREE.Fog(0x72645b, 2, 15);
 
@@ -179,8 +169,10 @@ export function init3dField() {
     }
 
     function animate() {
+        if (check.checkbox) {
             requestAnimationFrame(animate);
             render();
+        }
         //stats.update();
     }
 
