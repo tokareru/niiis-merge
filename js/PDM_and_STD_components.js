@@ -172,19 +172,37 @@ function showhideimage(arrayComp, obj)
 
 function load3d(array, obj)
 {
-    if (window.isEnded != undefined || window.isEnded == true)
+    if (window.isEnded != undefined && window.isEnded == true)
     {
         if (obj[0].checked)
         {
-            //for (i=0;i<window.stldata)
-            array.indexOf('std_component_'+j) != -1
-            meshs[ob.property].visible = true;
-            renderer.render(scene, camera);
+            for (i=0;i<window.stldata;i++) {
+                if (array.indexOf('component_' + i) != -1)
+                {
+                    meshs[stldata[i][2]].visible = true;
+                }
+
+                if (array.indexOf('std_component_' + i) != -1)
+                {
+                    meshs[stldata[i+4][2]].visible = true;
+                }
+            }
+            window.renderer.render(scene, camera);
         }
         else
         {
-            meshs[ob.property].visible = false;
-            renderer.render(scene, camera);
+            for (i=0;i<window.stldata;i++) {
+                if (array.indexOf('component_' + i) == -1)
+                {
+                    meshs[stldata[i][2]].visible = false;
+                }
+
+                if (array.indexOf('std_component_' + i) == -1)
+                {
+                    meshs[stldata[i+4][2]].visible = false;
+                }
+            }
+            window.renderer.render(scene, camera);
         }
     }
     else
