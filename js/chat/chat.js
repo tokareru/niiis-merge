@@ -189,7 +189,7 @@ function chatClick() {
             },
             300, 'linear'
         );
-        chat_main.attr('style','z-index: 12');
+        chat_main.attr('style','z-index: 16');
         chat_but.children().attr('id', 'span_icon_left');
     }
 }

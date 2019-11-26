@@ -39,6 +39,13 @@ function initESI() {
     $('.slider_button').on('click', function () {
         STDLibClick($('.slider_button'), $('.slider_main'));
     });
+
+    $('#shell').on('click', function () {
+       if($('.slider_main').attr('style') === 'z-index: 999; right: 0px;')
+       {
+           $('.slider_button').trigger('click');
+       }
+    });
 }
 
 function InitBranches() {
@@ -174,6 +181,6 @@ function STDLibClick($but, $main) {
             },
             300, 'linear'
         );
-        $main.attr('style','z-index: 8');
+        $main.attr('style','z-index: 15');
     }
 }
