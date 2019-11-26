@@ -338,7 +338,7 @@
       "URL": "pages/right_side",
       "ID": "right-side",
       "init": "initESI",
-      "parent": ".myRow"
+      "parent": "body"
     },
     {
       "name": "Чат",
