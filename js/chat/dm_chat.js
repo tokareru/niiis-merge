@@ -1,6 +1,7 @@
 function initChats() {
     initAllUsersChat();
     initDMChat(countUsers());
+    Server_count = initServerCount();
 }
 
 function initDMChat(count_users) {
