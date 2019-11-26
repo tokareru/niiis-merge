@@ -74,7 +74,7 @@ function initServerCount() {
                 }
             },
         });
-    for (let key in arrOfServerCount)
+    /*for (let key in arrOfServerCount)
     {
         let dataObj = {};
         if (key === '#dm_user_0')
@@ -95,7 +95,7 @@ function initServerCount() {
                 arrOfServerCount[key] = 0;
             }
         });
-    }
+    }*/
     /*for (let key in arrOfServerCount)
         console.log('key: ' + key + ' val: ' + arrOfServerCount[key]);*/
     return arrOfServerCount;
@@ -114,14 +114,8 @@ function chatMessages($chat) {
     //console.log('new count: ' + $chat.data('count_messages'));
 
     let date_str = getCurDate(new Date());
-    let $text_wUserDate = '<span class="spanTextLogin">' + login + '</span>' +
-        '<span class="spanTextDate"> '
-        + date_str + ':</span>';
     let $chat_ul = $chat.find('ul');
-    $chat_ul.append('<li>'
-        + $text_wUserDate + '</li>');
-    $chat_ul.append('<li></li>');
-    $chat.find('li:last-child').text($text);
+    $chat_ul.append(getMessage(date_str, login, $text));
     let objData = {};
     if ($chat.attr('id') === 'dm_user_0')
         objData = {type: 'ALL', time: Date.now(), current_login: login, comment: $text, function: 'add_comment'};
@@ -140,13 +134,13 @@ function chatMessages($chat) {
         type: 'POST',
         data: objData,
         success: function (data) {
-        /*for (let key in data)
+       /* for (let key in data)
         {
             console.log('key: '+ key + ' val: '+ data[key]);
         }*/
         },
-        complete: function () {
-
+        complete: function (data) {
+            console.log('status: ' + data);
         },
         error: function () {
             $('#chat_window_text').val('Ошибка загрузки');
@@ -155,6 +149,25 @@ function chatMessages($chat) {
     $chat.scrollTop($chat[0].scrollHeight);
 }
 
+function getMessage( time, loginUser, comment) {
+    let $text_wUserDate = '<span class="font-weight-bold font-italic text-light spanTextLogin">'
+        + loginUser + '</span>' +
+        '<span style="float: right" class="font-weight-light text-light spanTextDate"> '
+        + time + ':</span>';
+    let finalComment = '';
+    if(loginUser === login)
+    {
+        finalComment ='<li><div class=" chat_mes_from_cur_user bg-primary">';
+    }
+    else
+    {
+        finalComment ='<li><div class="chat_mes_from_other_user bg-success">';
+    }
+    finalComment += '<div>'+ $text_wUserDate  + '</div>'+
+        '<div class="text-white">' + comment +'</div>'+
+        '</div></li>';
+    return finalComment;
+}
 
 //функция сдвига влево/вправо чата
 function chatClick() {
@@ -279,12 +292,7 @@ function addCommentsByData(data, $chat, init_count) {
         if (key !== 'response') {
             countMes++;
             let date_str = data[key].time;
-            let $text_wUserDate = '<span class="spanTextLogin">' + data[key].login + '</span>' +
-                '<span class="spanTextDate"> '
-                + date_str + ':</span>';
-            $chat_ul.append('<li>' + $text_wUserDate + '</li>');
-            $chat_ul.append('<li></li>');
-            $chat.find('li:last-child').text(data[key].comment);
+            $chat_ul.append(getMessage(date_str, data[key].login, data[key].comment ));
         }
     }
     if (init_count) {
