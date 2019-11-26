@@ -44,13 +44,14 @@ h4{
 }
 
 .btn-custom:disabled{
-    background-color: #b6c6c6;
+    opacity: unset;
+    background-color: #455a64;
     font-style: normal;
     color: #ffffff;
 }
 
 .btn-custom:disabled:hover{
-    background-color: #b6c6c6;
+    background-color: #455a64;
     font-style: normal;
     color: #ffffff;
 }
