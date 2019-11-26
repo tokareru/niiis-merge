@@ -189,7 +189,7 @@ function load3d(array, obj)
                     meshs[stldata[i+4][2]].visible = true;
                 }
             }
-            //window.renderer.render(scene, camera);
+            window.renderer.render(scene, camera);
         }
         else
         {
@@ -206,7 +206,7 @@ function load3d(array, obj)
                     meshs[stldata[i+4][2]].visible = false;
                 }
             }
-            //window.renderer.render(scene, camera);
+            window.renderer.render(scene, camera);
         }
     }
     else
