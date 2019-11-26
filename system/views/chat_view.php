@@ -14,7 +14,7 @@
     </div>
     <div id="chat_window" class='bg-white border border-info'>
         <div id="chat_dm">
-        <div class="chats_header bg-light">Общий чат</div>
+        <div class="chats_header bg-light"><span class="font-weight-bold">Общий чат</span></div>
         <div class="chat_dm_ul_div bg-dark">
             <ul class="chat_dm_ul">
 
