@@ -118,7 +118,7 @@ export function init3dField() {
 
     }
 	
-	function loadSTL (src, color, arrmesh, pos = { x:0, y:0.07, z:0 }, rot = { x:-Math.PI / 2, y:0, z:-Math.PI / 2 }, scale = { x:0.015, y:0.015, z:0.015 })
+	function loadSTL (src, color, arrmesh, pos = { x:0, y:0, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 })
 	{
 		
 		loader.load(src, function (geometry) {
