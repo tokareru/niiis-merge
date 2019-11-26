@@ -22,8 +22,13 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification"
+                "specification",
+                "route_map_field"
               ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         },
@@ -41,8 +46,8 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification",
                 "fieldBlock",
+                "specification",
                 "tasks_routes_field"
               ]
             },
@@ -50,6 +55,10 @@
               "ID": "right-side",
               "tabs": [
               ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         }
@@ -57,6 +66,69 @@
     },
     {
       "role": "technologist",
+      "rounds": [
+        {
+          "round": 1,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "route_map_field"
+              ]
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "specification",
+                "route_map_field"
+              ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "available_sides": [
+            {
+              "ID": "left-side",
+              "tabs": [
+                "technologist_guide_field"
+              ]
+            },
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "scheme",
+                "fieldBlock",
+                "route_map_field",
+                "tasks_routes_field"
+              ]
+            },
+            {
+              "ID": "right-side",
+              "tabs": [
+
+              ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "approver",
       "rounds": [
         {
           "round": 1,
@@ -74,64 +146,14 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification"
-              ]
-            }
-          ]
-        },
-        {
-          "round": 3,
-          "available_sides": [
-            {
-              "ID": "left-side",
-              "tabs": [
-                "technologist_guide_field",
-                "std_field"
-              ]
-            },
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "fieldBlock",
                 "specification",
+                "route_map_field",
                 "tasks_routes_field"
               ]
             },
             {
-              "ID": "right-side",
-              "tabs": [
-
-              ]
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "role": "approver",
-      "rounds": [
-        {
-          "round": 1,
-          "available_sides": [
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "scheme",
-                "specification"
-              ]
-            }
-          ]
-        },
-        {
-          "round": 2,
-          "available_sides": [
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "scheme",
-                "specification",
-                "technologist_guide_field"
-              ]
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         },
@@ -149,9 +171,11 @@
             },
             {
               "ID": "right-side",
-              "tabs": [
-
-              ]
+              "tabs": []
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         }
@@ -177,8 +201,13 @@
               "tabs": [
                 "scheme",
                 "specification",
-                "technologist_guide_field"
+                "route_map_field",
+                "tasks_routes_field"
               ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         },
@@ -190,15 +219,18 @@
               "tabs": [
                 "scheme",
                 "fieldBlock",
-                "technologist_guide_field",
+                "specification",
+                "route_map_field",
                 "tasks_routes_field"
               ]
             },
             {
               "ID": "right-side",
-              "tabs": [
-
-              ]
+              "tabs": []
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         }
@@ -217,8 +249,13 @@
             {
               "ID": "main-tabs",
               "tabs": [
-                "scheme"
+                "scheme",
+                "tasks_routes_field"
               ]
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         },
@@ -230,15 +267,17 @@
               "tabs": [
                 "scheme",
                 "fieldBlock",
-                "technologist_guide_field",
+                "route_map_field",
                 "tasks_routes_field"
               ]
             },
             {
               "ID": "right-side",
-              "tabs": [
-
-              ]
+              "tabs": []
+            },
+            {
+              "ID": "chat-side",
+              "tabs": []
             }
           ]
         }
