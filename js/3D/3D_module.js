@@ -46,7 +46,7 @@ export function init3dField() {
         animate();
     });
 
-    for (var i = 1; i < 8; i++) {
+    for (var i = 1; i < 6; i++) {
         var text = 'vis' + i;
         gui.add(check, text).name('VO' + i).onChange(function () {
             hide(this);
@@ -132,6 +132,7 @@ export function init3dField() {
 
             var mesh = new THREE.Mesh(geometry, material);
 
+            mesh.visible = false;
             mesh.position.set(pos.x, pos.y, pos.z);//-0.6
             mesh.rotation.set(rot.x, rot.y, rot.z);
             mesh.scale.set(scale.x, scale.y, scale.z);
