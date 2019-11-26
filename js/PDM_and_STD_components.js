@@ -176,33 +176,37 @@ function load3d(array, obj)
     {
         if (obj[0].checked)
         {
-            for (i=0;i<window.stldata;i++) {
-                if (array.indexOf('component_' + i) != -1)
+            for (i=0;i<4;i++) {
+                if (array.indexOf('component_' + (i+1)) != -1)
                 {
                     meshs[stldata[i][2]].visible = true;
                 }
+            }
 
-                if (array.indexOf('std_component_' + i) != -1)
+            for (i=0;i<3;i++) {
+                if (array.indexOf('std_component_' + (i+1)) != -1)
                 {
                     meshs[stldata[i+4][2]].visible = true;
                 }
             }
-            window.renderer.render(scene, camera);
+            //window.renderer.render(scene, camera);
         }
         else
         {
-            for (i=0;i<window.stldata;i++) {
-                if (array.indexOf('component_' + i) == -1)
+            for (i=0;i<4;i++) {
+                if (array.indexOf('component_' + (i+1)) == -1)
                 {
                     meshs[stldata[i][2]].visible = false;
                 }
+            }
 
-                if (array.indexOf('std_component_' + i) == -1)
+            for (i=0;i<3;i++) {
+                if (array.indexOf('std_component_' + (i+1)) == -1)
                 {
                     meshs[stldata[i+4][2]].visible = false;
                 }
             }
-            window.renderer.render(scene, camera);
+            //window.renderer.render(scene, camera);
         }
     }
     else
