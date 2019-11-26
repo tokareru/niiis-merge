@@ -24,11 +24,10 @@ export function init3dField() {
 	
 	window.stldata = 
 	[
-	["./3dstl/IronMan/Colour1.stl", 0xff5533, "vis1"], 
-	["./3dstl/IronMan/Colour2.stl", 0xAAAAAA, "vis2"], 
-	["./3dstl/IronMan/Colour5.stl", 0xFFE500, "vis3"], 
-	["./3dstl/IronMan/Colour3.stl", 0x0000ff, "vis4"], 
-	["./3dstl/IronMan/Colour4.stl", 0x800080, "vis5"]
+        ["./3dstl/pdm/11.stl", 0xAAAAAA, "vis1"],
+        ["./3dstl/pdm/22.stl", 0xAAAAAA, "vis2"],
+        ["./3dstl/pdm/33.stl", 0xAAAAAA, "vis3"],
+        ["./3dstl/pdm/44.stl", 0xAAAAAA, "vis4"]
 	];
 
     init();
@@ -42,7 +41,7 @@ export function init3dField() {
         animate();
     });
 
-    for (var i = 1; i < 6; i++) {
+    for (var i = 1; i < 5; i++) {
         var text = 'vis' + i;
         gui.add(check, text).name('VO' + i).onChange(function () {
             hide(this);
@@ -80,7 +79,7 @@ export function init3dField() {
         // ASCII file
 		window.loader = new STLLoader();
 		
-		for (i=0;i<5;i++)
+		for (i=0;i<4;i++)
 		{
 			loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
 		}
@@ -119,7 +118,7 @@ export function init3dField() {
 
     }
 	
-	function loadSTL (src, color, arrmesh, pos = { x:0, y:0.07, z:0 }, rot = { x:-Math.PI / 2, y:0, z:-Math.PI / 2 }, scale = { x:0.015, y:0.015, z:0.015 })
+	function loadSTL (src, color, arrmesh, pos = { x:0, y:0, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 })
 	{
 		
 		loader.load(src, function (geometry) {

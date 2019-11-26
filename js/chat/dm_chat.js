@@ -132,8 +132,10 @@ function initDMChat(count_users) {
             $('#chat_dm').find($attr).scrollTop($('#chat_dm').find($attr)[0].scrollHeight);
         }
         if($attr !== '#dm_user_0')
-        $('.chats_header').text('Чат с пользователем '+ $('#chat_dm').find($attr).data('login_user_chat_with'));
-        else  $('.chats_header').text('Общий чат');
+        $('.chats_header').html('<span class="font-italic font-weight-light">Чат с пользователем </span>'+
+           '<span class="font-weight-bold">'
+            +$('#chat_dm').find($attr).data('login_user_chat_with') + '</span>');
+        else  $('.chats_header').html('<span class="font-weight-bold">Общий чат</span>');
         $('#chat_window').data({'name': $attr});
     });
 

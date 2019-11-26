@@ -7,7 +7,7 @@
     float: left;
     font-size: 100%;
     border-width: 2px !important;
-    border-right: 0!important;
+    border-right: 0 !important;
 }
 
 #chat_main {
@@ -22,8 +22,8 @@
 
 #chat_window {
     padding: 0;
-    border-width: 2px!important;
-    border-right: 0!important;
+    border-width: 2px !important;
+    border-right: 0 !important;
     height: 100%;
     width: 93%;
     float: right;
@@ -70,7 +70,7 @@
 #chat_text_button {
     height: 17%;
     padding: 10px;
-    //padding-right: 10px;
+/ / padding-right: 10 px;
     margin-top: 2%;
     bottom: 0;
     display: flex;
@@ -92,6 +92,35 @@
 #chat_window_chat ul {
     padding: 5px;
     list-style-type: none;
+}
+
+.chat_mes_from_cur_user {
+    display: block;
+    padding: 5px;
+    margin-top: 10px;
+    float: right;
+    max-width: 85%;
+    width: 85%;
+    min-width: 85%;
+    border-radius: 5px 5px 0 5px;
+}
+
+
+
+.chat_mes_from_other_user {
+    display: block;
+    padding: 5px;
+    margin-top: 10px;
+    float: left;
+    max-width: 85%;
+    width: 85%;
+    min-width: 85%;
+    border-radius: 5px 5px 5px 0;
+}
+
+.chat_mes_from_cur_user, .chat_mes_from_other_user div {
+    min-height: 30px;
+    word-wrap: break-word;
 }
 
 .icon_default {
@@ -122,14 +151,12 @@
 }
 
 .spanTextLogin {
-    font-weight: bold;
-    color: #1b1e21;
+    /*font-weight: bold;*/
 }
 
 .spanTextDate {
-    font-style: italic;
-    font-weight: lighter;
-    color: #1b1e21;
+    /*font-style: italic;
+    font-weight: lighter;*/
 }
 
 .my_ui-tabs-tab {
