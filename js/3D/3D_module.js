@@ -99,7 +99,7 @@ export function init3dField() {
         addShadowedLight(0.5, 1, -1, 0xffaa00, 1);
         // renderer
 
-        renderer = new THREE.WebGLRenderer({antialias: true});
+        window.renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setPixelRatio(window.devicePixelRatio);
         renderer.setSize($('#canvas3D').width(), $('#canvas3D').height());
 
