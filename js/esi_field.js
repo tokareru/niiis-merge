@@ -14,8 +14,8 @@
 });*/
 
 function initESI() {
-    $('#esi_field').append('<button id=\'esi_branch_btn\' class="btn btn-custom btn-block">' +
-        'Обновить данные</button>');
+    /* $('#esi_field').append('<button id=\'esi_branch_btn\' class="btn btn-custom btn-block">' +
+         'Обновить данные</button>');*/
     $('#esi_field').find('#esi_branch_btn').data({'init': 0});
 
     $('#esi_field').on('click', '#esi_branch_btn', function () {
@@ -34,6 +34,10 @@ function initESI() {
 
 
         //getInfoFromSpecTable(1, 2);
+    });
+
+    $('.slider_button').on('click', function () {
+        STDLibClick($('.slider_button'), $('.slider_main'));
     });
 
 
@@ -60,9 +64,9 @@ function initBranchesInside() {
         .find('.esi_branches').children().each(function (index) {
         $(this).find('.esi_branch_content').append('<div class="esi_branches"></div>');
         $(this).find('.esi_branch_content').find('.esi_branches').append(madeBranch(
-            [info[0][2],info[index + 1][2] ]));
+            [info[0][2], info[index + 1][2]]));
         $(this).find('.esi_branch_content').find('.esi_branches').append(madeBranch(
-            [info[0][4],info[index + 1][4] ]));
+            [info[0][4], info[index + 1][4]]));
         /*$(this).find('.esi_branch_content').find('.esi_branches').append(madeBranch(
             [info[0][1],info[index + 1][1] ]));*/
     });
@@ -154,6 +158,24 @@ function addContent($esi_branch, content) {
     $esi_branch.find('.esi_branch_content').append(content);
 }
 
-function getInfoFromSpecTable(ind_row, ind_col) {
-    alert($('.table_edit').html());
+
+function STDLibClick($but, $main) {
+    let css_left = -$main.width() + $but.width() + 'px';
+    let css_right = '0px';
+    if ($main.attr('style') !== ('z-index: 999; right: ' + css_right + ';')) {
+        $main.animate({
+                right: css_right
+            },
+            300, 'linear'
+        );
+        $main.removeAttr('style');
+        $main.attr('style','z-index: 999');
+    } else {
+        $main.animate({
+                right: css_left
+            },
+            300, 'linear'
+        );
+        $main.attr('style','z-index: 8');
+    }
 }

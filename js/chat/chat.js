@@ -174,13 +174,14 @@ function chatClick() {
     let css_right = '0px';
     let chat_main = $('#chat_main');
     let chat_but = $('#but');
-    if (chat_main.attr('style') !== ('right: ' + css_right + ';')) {
+    if (chat_main.attr('style') !== ('z-index: 999; right: ' + css_right + ';')) {
         chat_main.animate({
                 right: css_right
             },
             300, 'linear'
         );
         chat_main.removeAttr('style');
+        chat_main.attr('style','z-index: 999');
         chat_but.children().attr('id', 'span_icon_right');
     } else {
         chat_main.animate({
@@ -188,6 +189,7 @@ function chatClick() {
             },
             300, 'linear'
         );
+        chat_main.attr('style','z-index: 8');
         chat_but.children().attr('id', 'span_icon_left');
     }
 }
