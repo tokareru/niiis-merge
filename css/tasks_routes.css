@@ -32,6 +32,7 @@
 }
 
 .tasks_routes_button_h{
+    user-select: none;
     background-color: #dadada;
     box-shadow: 0px 0px 9px 3px #b7b7b7;
     margin: 4% !important;

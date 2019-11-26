@@ -6,6 +6,7 @@
 }
 
 .tg_header {
+    user-select: none;
     background-color: #737373;
     color: white;
     margin: 2% 0% 1% 0% !important;
@@ -22,6 +23,7 @@
 }
 
 .tg_elem_header {
+    user-select: none;
     background-color: #bfbfbf;
     font-weight: 500;
     color: black;
