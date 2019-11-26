@@ -7,7 +7,7 @@ import {STLLoader} from './stl/STLLoader.js';
 export function init3dField() {
     var container, stats;
 
-    var camera, cameraTarget, scene, renderer;
+    var camera, cameraTarget, scene;
 
     var check = {
         checkbox: true,
@@ -21,6 +21,8 @@ export function init3dField() {
     var inc = 0;
 
     window.meshs = {};
+
+    window.renderer;
 	
 	window.stldata = 
 	[
