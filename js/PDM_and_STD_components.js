@@ -81,7 +81,9 @@ function makeCheckbox(fieldID) {
     });
 
     $checkboxid.find("input").click(function (e) {
-		showhideimage(collectDataLabels(fieldID), $(this));
+        let arrayClicked = collectDataLabels(fieldID);
+		showhideimage(arrayClicked, $(this));
+		//3dload(arrayClicked);
     });
 
     $checkboxid.find('img').on('dragstart', function (event) {
@@ -166,5 +168,17 @@ function showhideimage(arrayComp, obj)
 		//console.log(obj[0].labels[0].className);
 		//alert('Необходимо закончить рисование и нажать "Готово"');
 	}
+}
+
+function 3dload(array)
+{
+    if (isEnded)
+    {
+
+    }
+    else
+    {
+        //alert()
+    }
 }
 
