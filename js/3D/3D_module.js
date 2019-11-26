@@ -7,15 +7,10 @@ import {STLLoader} from './stl/STLLoader.js';
 export function init3dField() {
     var container, stats;
 
-    var camera, cameraTarget, scene;
+    var cameraTarget;
 
     var check = {
         checkbox: true,
-        vis1: true,
-        vis2: true,
-        vis3: true,
-        vis4: true,
-        vis5: true,
     };
 
     var inc = 0;
@@ -23,6 +18,8 @@ export function init3dField() {
     window.meshs = {};
 
     window.renderer;
+    window.camera;
+    window.scene;
 	
 	window.stldata = 
 	[
@@ -46,24 +43,17 @@ export function init3dField() {
         animate();
     });
 
-    for (var i = 1; i < 8; i++) {
-        var text = 'vis' + i;
-        gui.add(check, text).name('VO' + i).onChange(function () {
-            hide(this);
-        });
-    }
-
     function init() {
 
         container = document.createElement('div');
         document.getElementById("canvas3D").appendChild(container);
 
-        camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
+        window.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
         camera.position.set(3, 0.15, 3);
 
         cameraTarget = new THREE.Vector3(0, -0.25, 0);
 
-        scene = new THREE.Scene();
+        window.scene = new THREE.Scene();
         scene.background = new THREE.Color(0x72645b);
         scene.fog = new THREE.Fog(0x72645b, 2, 15);
 
@@ -84,7 +74,7 @@ export function init3dField() {
         // ASCII file
 		window.loader = new STLLoader();
 		
-		for (i=0;i<stldata.length;i++)
+		for (let i=0;i<stldata.length;i++)
 		{
 			loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
 		}
@@ -132,6 +122,7 @@ export function init3dField() {
 
             var mesh = new THREE.Mesh(geometry, material);
 
+            mesh.visible = false;
             mesh.position.set(pos.x, pos.y, pos.z);//-0.6
             mesh.rotation.set(rot.x, rot.y, rot.z);
             mesh.scale.set(scale.x, scale.y, scale.z);
@@ -195,7 +186,7 @@ export function init3dField() {
         renderer.render(scene, camera);
     }
 
-    function hide(ob) {
+    /*function hide(ob) {
         if (ob["domElement"].children[0].checked == false) {
             meshs[ob.property].visible = false;
             renderer.render(scene, camera);
@@ -203,5 +194,5 @@ export function init3dField() {
             meshs[ob.property].visible = true;
             renderer.render(scene, camera);
         }
-    }
+    }*/
 }

@@ -81,7 +81,7 @@ function makeCheckbox(fieldID) {
     });
 
     $checkboxid.find("input").click(function (e) {
-        let arrayClicked = collectDataLabels(fieldID);
+        let arrayClicked = collectDataLabels(".left-side");
 		showhideimage(arrayClicked, $(this));
 		load3d(arrayClicked, $(this));
     });
@@ -176,13 +176,15 @@ function load3d(array, obj)
     {
         if (obj[0].checked)
         {
-            for (i=0;i<window.stldata;i++) {
-                if (array.indexOf('component_' + i) != -1)
+            for (i=0;i<4;i++) {
+                if (array.indexOf('component_' + (i+1)) != -1)
                 {
                     meshs[stldata[i][2]].visible = true;
                 }
+            }
 
-                if (array.indexOf('std_component_' + i) != -1)
+            for (i=0;i<3;i++) {
+                if (array.indexOf('std_component_' + (i+1)) != -1)
                 {
                     meshs[stldata[i+4][2]].visible = true;
                 }
@@ -191,13 +193,15 @@ function load3d(array, obj)
         }
         else
         {
-            for (i=0;i<window.stldata;i++) {
-                if (array.indexOf('component_' + i) == -1)
+            for (i=0;i<4;i++) {
+                if (array.indexOf('component_' + (i+1)) == -1)
                 {
                     meshs[stldata[i][2]].visible = false;
                 }
+            }
 
-                if (array.indexOf('std_component_' + i) == -1)
+            for (i=0;i<3;i++) {
+                if (array.indexOf('std_component_' + (i+1)) == -1)
                 {
                     meshs[stldata[i+4][2]].visible = false;
                 }
