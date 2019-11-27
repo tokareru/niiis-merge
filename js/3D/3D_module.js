@@ -54,7 +54,7 @@ export function init3dField() {
         cameraTarget = new THREE.Vector3(0, -0.25, 0);
 
         window.scene = new THREE.Scene();
-        scene.background = new THREE.Color(0xAAAAAA/*0x72645b*/);
+        scene.background = new THREE.Color(0xffffff/*0x72645b*/);
         scene.fog = new THREE.Fog(/*0x72645b*/0xAAAAAA, 2, 15);
 
 
