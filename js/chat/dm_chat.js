@@ -180,7 +180,7 @@ function generateDMChat(count_users) {
 
 function getLoginNames() {
     let loginUsers = [];
-    console.log('cur login: ' + login);
+    //console.log('cur login: ' + login);
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
@@ -193,9 +193,9 @@ function getLoginNames() {
                     continue;
                 }
                 loginUsers.push(data[login]);
-                console.log('user: ' + data[login]);
+                //console.log('user: ' + data[login]);
             }
-            console.log('count users: ' + loginUsers.length);
+            //console.log('count users: ' + loginUsers.length);
         },
         error: function (data) {
             console.log('error');
