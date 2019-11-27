@@ -60,6 +60,7 @@ function setMessageHandler() {
 async function prepareShell(json_role_and_round, add_data) {
     //console.log(json_role_and_round);
     login = json_role_and_round.login;
+    currentName = json_role_and_round.name;
     let role = json_role_and_round.role.toString();
     let round = Number(json_role_and_round.round);
     //console.log(current_round_glob)
