@@ -8,10 +8,9 @@ class chat_ajax_model extends model
                 case "print_comment":
                     switch ($_POST["type"]) {
                         case "ALL":
-                            $sql = "SELECT g.DESCR as login, date_trunc('minute',c.time) as time, c.comment 
+                            $sql = "SELECT u.LOGIN, date_trunc('minute',c.time) as time, c.comment 
                                     FROM CHAT c LEFT JOIN
-                                    USERS u on c.cur_user = u.id inner join
-                                    USER_GROUP g on g.group_id = u.group_user_id
+                                    USERS u on c.cur_user = u.id
                                     WHERE ALL_CHAT='1'
                                     Order BY c.time DESC
                                     limit :limit";
@@ -32,10 +31,9 @@ class chat_ajax_model extends model
                             ksort($result);
                             return $result;
                         case "DM":
-                            $sql = "SELECT date_trunc('seconds',c.time) as time, c.comment, u.DESCR as login
+                            $sql = "SELECT date_trunc('seconds',c.time) as time, c.comment, u.LOGIN
                                     FROM CHAT c left join 
-                                    USERS u on c.cur_user=u.id inner join
-                                    USER_GROUP g on g.group_id = u.group_user_id
+                                    USERS u on c.cur_user=u.id
                                     WHERE CUR_USER in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with) and USER_CHAT_WITH in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with)
                                     Order BY c.time DESC
                                     limit :limit";
@@ -106,7 +104,7 @@ class chat_ajax_model extends model
                     }
                     break;
                 case "login_users":
-                    $sql = "SELECT g.DESCR as login
+                    $sql = "SELECT g.DESCR, u.LOGIN
                       FROM USER_GROUP g inner join 
                       USERS u on g.group_id = u.group_user_id
                       WHERE u.LOGIN <> :login and g.GROUP_ID <> 99";
@@ -116,7 +114,8 @@ class chat_ajax_model extends model
                     $result;
                     $i = 1;
                     foreach($Q as $row){
-                        $result["login".$i++] = $row["login"];
+                        $result["user".$i++] = array("login"=>$row["login"],"name"=>$row["descr"]);
+                        
                     }
                     return $result;
                 case "count_users":
