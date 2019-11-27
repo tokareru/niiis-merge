@@ -3,7 +3,23 @@ function initChats() {
     initDMChat(getLoginNames().length);
     Server_count = initServerCount();
 
-
+    //console.log('cur login: ' + login);
+    $.ajax({
+        url: 'chat_ajax',
+        type: 'POST',
+        async: false,
+        data: {current_login: login, function: 'login_users'},
+        success: function (data) {
+            for (let login in data) {
+                LoginNameCom[data[login].login] = data[login].name;
+            }
+        },
+        error: function (data) {
+            console.log('error');
+        },
+        complete: function () {
+        }
+    });
     /*setInterval(function () {
             $.ajax({
                 url: 'chat_ajax',
@@ -43,11 +59,10 @@ function initChats() {
             })
         }
         , 10000);*/
-
-    getLoginNames();
 }
 
 function initDMChat(count_users) {
+    //console.log('cur name: ' + currentName);
     //$('#chat_dm').data({'currentDM': '#dm_user_0'});
     $('#chat_window').data({'name': '#dm_user_0', 'init': true});
     generateDMChat(count_users);
@@ -241,8 +256,8 @@ function getLoginNames(loginChoice = true) {
                     nameUsers.push(data[login].name);
 
             }
-            console.log('name users: ' + nameUsers);
-            console.log('login users: ' + loginUsers);
+            //console.log('name users: ' + nameUsers);
+            //console.log('login users: ' + loginUsers);
         },
         error: function (data) {
             console.log('error');

@@ -2,6 +2,7 @@ let login = "";
 let currentName = "";
 let Max_count_messages = 100;
 let Server_count;
+let LoginNameCom = {};
 
 
 function initAllUsersChat() {
@@ -71,7 +72,8 @@ function initServerCount() {
             data: {current_login: login, function: 'login_users'},
             success: function (data) {
                 for (let login in data) {
-                    arrOfServerCount[data[login]] = 0;
+                    arrOfServerCount[data[login].login] = 0;
+                    //console.log( data[login].login);
                 }
             },
         });
@@ -150,7 +152,12 @@ function chatMessages($chat) {
     $chat.scrollTop($chat[0].scrollHeight);
 }
 
-function getMessage( time, nameUser, comment) {
+function getMessage( time, loginUser, comment) {
+    let nameUser = LoginNameCom[loginUser];
+    if(loginUser === 'admin' || LoginNameCom[loginUser] === undefined)
+        nameUser = currentName;
+    //console.log('login: ' + loginUser+' name: '+ nameUser);
+
     let $text_wUserDate = '<span class="font-weight-bold font-italic text-light spanTextLogin">'
         + nameUser + '</span>' +
         '<span style="float: right" class="font-weight-light text-light spanTextDate"> '
@@ -207,7 +214,7 @@ function printComments($chat, dataToAjax, init_count = false, scrollDown = true)
         type: 'POST',
         success: function (data) {
 
-            /*console.log('______________');
+          /*  console.log('______________');
             console.log(data);
             for (let key in data)
             {
@@ -270,7 +277,7 @@ function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
         success: function (data) {
             count = data.count;
             let login_other_user =  $chat.data('login_user_chat_with');
-            /*console.log('count: ' + count+ ' Server_count[ '+login_other_user+' ]'
+           /* console.log('count: ' + count+ ' Server_count[ '+login_other_user+' ]'
                 + Server_count[login_other_user] );*/
             if (count > Server_count[login_other_user]) {
                 let count_to_ajax = count - Server_count[login_other_user];
@@ -297,11 +304,10 @@ function addCommentsByData(data, $chat, init_count) {
     let $chat_ul = $chat.find('ul');
     let countMes = 0;
     for (let key in data) {
-        //console.log('key: ' + key + ' val: ' + data[key] );
         if (key !== 'response') {
             countMes++;
             let date_str = data[key].time;
-            $chat_ul.append(getMessage(date_str, data[key].name, data[key].comment ));
+            $chat_ul.append(getMessage(date_str, data[key].login, data[key].comment ));
         }
     }
     if (init_count) {
