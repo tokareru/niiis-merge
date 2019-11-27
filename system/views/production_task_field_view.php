@@ -12,16 +12,19 @@
 <head>
 </head>
 <body>
+<h4>Задание на производство</h4>
 <form>
   <div class="form-group">
     <label for="productionTaskSelectUserBody">Выберите сотрудника</label>
-    <select class="form-control" id="productionTaskSelectUserBody">
+    <select class="form-control col-5" id="productionTaskSelectUserBody">
     </select>
   </div>
 </form>
 <div id="prod_task_table_container">
 
 </div>
+
+<input type="button" class="btn-custom btn" value="Сохранить">
 
 </body>
 </html>
