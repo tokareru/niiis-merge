@@ -401,7 +401,7 @@
       "name": "Создание маршрута заданий",
       "URL": "pages/create_task_route",
       "ID": "create_task_route-side",
-      "init": "",
+      "init": "initCreate_task_route",
       "parent": "body"
     }
   ],

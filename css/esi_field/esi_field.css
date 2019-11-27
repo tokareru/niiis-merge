@@ -167,7 +167,7 @@ overflow-y: scroll;
     cursor: pointer;
 }
 
-.slider_button .transformed{
+.transformed{
     text-align: center;
     //transform: rotate(90deg);
 }
