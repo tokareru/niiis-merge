@@ -1,0 +1,155 @@
+{
+  "users": [
+    {
+      "name": "Иванов Иван Иванович"
+    },
+    {
+      "name": "Петров Петр Петрович"
+    },
+    {
+      "name": "Максимов Максим Максимович"
+    }
+  ],
+  "table": {
+    "thead": [
+      {
+        "text": "",
+        "readonly": false
+      },
+      {
+        "text": "",
+        "readonly": false
+      },
+      {
+        "text": "",
+        "readonly": false
+      },
+      {
+        "text": "",
+        "readonly": false
+      },
+      {
+        "text": "",
+        "readonly": false
+      },
+      {
+        "text": "",
+        "readonly": false
+      }
+    ],
+    "tbody": [
+      {
+        "row": [
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          }
+        ]
+      },
+      {
+        "row": [
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          }
+        ]
+      },
+      {
+        "row": [
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          }
+        ]
+      },
+      {
+        "row": [
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          },
+          {
+            "text": "",
+            "readonly": false
+          }
+        ]
+      }
+    ]
+  };
+}
