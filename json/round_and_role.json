@@ -294,7 +294,8 @@
               "tabs": [
                 "specification",
                 "scheme",
-                "fieldBlock"
+                "fieldBlock",
+                "production_task_field"
               ]
             }
           ]
@@ -327,17 +328,17 @@
             {
               "ID": "left-side",
               "tabs": [
-                "std_field",
                 "pdm_field",
+                "std_field",
                 "technologist_guide_field"
               ]
             },
             {
               "ID": "main-tabs",
               "tabs": [
-                "specification",
                 "scheme",
                 "fieldBlock",
+                "specification",
                 "route_map_field",
                 "tasks_routes_field"
               ]
@@ -437,22 +438,6 @@
       "init": "createSpecificationTable"
     },
     {
-      "name": "Создание маршрута согласования/утверждения",
-      "URL": "",
-      "ID": "",
-      "location": "",
-      "notify": "",
-      "init": ""
-    },
-    {
-      "name": "Маршрут согласования/утверждения",
-      "URL": "",
-      "ID": "",
-      "location": "",
-      "notify": "",
-      "init": ""
-    },
-    {
       "name": "Справочник технолога",
       "URL": "",
       "ID": "technologist_guide_field",
@@ -494,11 +479,11 @@
     },
     {
       "name": "Задание",
-      "URL": "pages/html",
-      "ID": "",
-      "location": "",
+      "URL": "pages/production_task_field",
+      "ID": "production_task_field",
+      "location": ".main-tabs",
       "notify": "",
-      "init": "none"
+      "init": "initProductionTaskField"
     }
   ]
 }
