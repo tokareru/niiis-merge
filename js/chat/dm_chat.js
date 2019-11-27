@@ -1,7 +1,6 @@
 function initChats() {
     initAllUsersChat();
     initDMChat(getLoginNames().length);
-    countUsers();
     Server_count = initServerCount();
 }
 
@@ -20,8 +19,7 @@ function initDMChat(count_users) {
 
         if ($('#chat_window').data('init')) {
             //$chat_window_chat.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
-        }
-        else speed = 5000;
+        } else speed = 5000;
         addNewComments($chat_window_chat,
             {
                 type: 'ALL',
@@ -34,8 +32,7 @@ function initDMChat(count_users) {
                 if (index !== 0) {
 
                     let $this = $(this);
-                    if($('#chat_window').data('init'))
-                    {
+                    if ($('#chat_window').data('init')) {
                         //$this.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
                     }
                     addNewComments($this,
@@ -84,8 +81,7 @@ function initDMChat(count_users) {
 
             }
         );
-        if($('#chat_window').data('init'))
-        {
+        if ($('#chat_window').data('init')) {
             $('#chat_window').data({'init': false});
         }
     }, speed);
@@ -119,13 +115,11 @@ function initDMChat(count_users) {
     $('.chat_dm_ul').on('click', 'li', function () {
         let $this = $(this);
         $('.chat_dm_ul').find('.dm_tabs_links_li').each(function () {
-           if($this !== this)
-           {
-               if( $(this).hasClass('bg-info'))
-               {
-                   $(this).removeClass('bg-info').addClass('bg-dark');
-               }
-           }
+            if ($this !== this) {
+                if ($(this).hasClass('bg-info')) {
+                    $(this).removeClass('bg-info').addClass('bg-dark');
+                }
+            }
         });
         $this.addClass('bg-info').removeClass('bg-dark');
         let $attr = $(this).find('a').attr('href');
@@ -133,11 +127,11 @@ function initDMChat(count_users) {
             $('#chat_dm').find($attr).data({'scroll': false});
             $('#chat_dm').find($attr).scrollTop($('#chat_dm').find($attr)[0].scrollHeight);
         }
-        if($attr !== '#dm_user_0')
-        $('.chats_header').html('<span class="font-italic font-weight-light">Чат с пользователем </span>'+
-           '<span class="font-weight-bold">'
-            +$('#chat_dm').find($attr).data('login_user_chat_with') + '</span>');
-        else  $('.chats_header').html('<span class="font-weight-bold">Общий чат</span>');
+        if ($attr !== '#dm_user_0')
+            $('.chats_header').html('<span class="font-italic font-weight-light">Чат с пользователем </span>' +
+                '<span class="font-weight-bold">'
+                + $('#chat_dm').find($attr).data('login_user_chat_with') + '</span>');
+        else $('.chats_header').html('<span class="font-weight-bold">Общий чат</span>');
         $('#chat_window').data({'name': $attr});
     });
 
@@ -195,13 +189,13 @@ function getLoginNames() {
         success: function (data) {
             let log = login;
             for (let login in data) {
-                if( log === login )
-                {
+                if (log === login) {
                     continue;
                 }
                 loginUsers.push(data[login]);
-                console.log('user: ' +data[login] );
+                console.log('user: ' + data[login]);
             }
+            console.log('count users: ' + loginUsers.length);
         },
         error: function (data) {
             console.log('error');
@@ -232,7 +226,7 @@ function countUsers() {
         data: {function: 'count_users'},
         success: function (data) {
             count = data.count;
-            console.log('count: ' + count);
+            //console.log('count: ' + count);
             console.log('count by using get logins: ' + getLoginNames().length);
         },
         error: function (data) {
