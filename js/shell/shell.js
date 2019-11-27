@@ -101,6 +101,7 @@ async function prepareShell(json_role_and_round, add_data) {
     $(".myRow").empty();
     $("#chat_main").remove();
     $("#right-side").remove();
+    $("#create_task_route-side").remove();
     let i = 0;
     for (const elem of available_sides) {
         let html = await downloadHTML(elem.URL);

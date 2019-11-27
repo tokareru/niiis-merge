@@ -327,19 +327,20 @@
             {
               "ID": "left-side",
               "tabs": [
-                "std_field",
                 "pdm_field",
+                "std_field",
                 "technologist_guide_field"
               ]
             },
             {
               "ID": "main-tabs",
               "tabs": [
-                "specification",
                 "scheme",
                 "fieldBlock",
+                "specification",
                 "route_map_field",
-                "tasks_routes_field"
+                "tasks_routes_field",
+                "production_task_field"
               ]
             },
             {
@@ -350,6 +351,10 @@
             },
             {
               "ID": "chat-side",
+              "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -384,6 +389,13 @@
       "URL": "pages/chat",
       "ID": "chat-side",
       "init": "initChats",
+      "parent": "body"
+    },
+    {
+      "name": "Создание маршрута заданий",
+      "URL": "pages/create_task_route",
+      "ID": "create_task_route-side",
+      "init": "",
       "parent": "body"
     }
   ],
@@ -437,22 +449,6 @@
       "init": "createSpecificationTable"
     },
     {
-      "name": "Создание маршрута согласования/утверждения",
-      "URL": "",
-      "ID": "",
-      "location": "",
-      "notify": "",
-      "init": ""
-    },
-    {
-      "name": "Маршрут согласования/утверждения",
-      "URL": "",
-      "ID": "",
-      "location": "",
-      "notify": "",
-      "init": ""
-    },
-    {
       "name": "Справочник технолога",
       "URL": "",
       "ID": "technologist_guide_field",
@@ -493,12 +489,12 @@
       "init": "initTasksRoutes"
     },
     {
-      "name": "Задание",
-      "URL": "pages/html",
-      "ID": "",
-      "location": "",
+      "name": "Задание на производство",
+      "URL": "pages/production_task_field",
+      "ID": "production_task_field",
+      "location": "main-tabs",
       "notify": "",
-      "init": "none"
+      "init": "initProductionTaskField"
     }
   ]
 }
