@@ -206,7 +206,7 @@ function printComments($chat, dataToAjax, init_count = false, scrollDown = true)
         type: 'POST',
         success: function (data) {
 
-            console.log('______________');
+            /*console.log('______________');
             console.log(data);
             for (let key in data)
             {
@@ -218,7 +218,7 @@ function printComments($chat, dataToAjax, init_count = false, scrollDown = true)
                     console.log('k: ' + k + ' val: ' + data[key][k]);
                 }
             }
-            console.log('______________');
+            console.log('______________');*/
             addCommentsByData(data, $chat, init_count);
         },
         complete: function () {
