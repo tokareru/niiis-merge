@@ -3,7 +3,12 @@ function initCreate_task_route() {
     $('.slider_button_create').on('click', function () {
         STDLibClick($('.slider_button_create'), $('.main_all_create_task'), 25);
     });
-
+    $('#shell').on('click', function () {
+        if($('.main_all_create_task').attr('style') === 'z-index: 999; right: 0px;')
+        {
+            $('.slider_button_create').trigger('click');
+        }
+    });
 }
 
 function addRows(count_rows) {
