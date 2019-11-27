@@ -5,7 +5,7 @@ class start_ajax_model extends model
   {
     if($_SERVER["REQUEST_METHOD"]=="GET"){
             return array("login"=>sys::user_login(),"role"=>$_SESSION['niiis']['role'], "round"=>$_SESSION['niiis']['round'],
-                "server_name"=>trim($_SERVER['SERVER_NAME'],'/')    );
+                "server_name"=>trim($_SERVER['SERVER_NAME'],'/'),"name"=> $_SESSION['niiis']['name']   );
         }
         else {
             return array("response"=>"NOT FOUND POST REQUEST");

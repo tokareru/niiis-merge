@@ -39,7 +39,7 @@ class sys {
   static function autorization($name, $password, $is) {
     //Проверяем наличие такого пользователя с email
     $SQL = "SELECT 
-            g.DESCR, u.ID,ug.USER_STATUS
+            ug.DESCR, u.ID,ug.USER_STATUS
             FROM USERS AS u 
             inner join USER_GROUP ug on ug.GROUP_ID=u.GROUP_USER_ID
             where u.LOGIN=:login and u.PASSWORD=:password and u.ACTIVE_SIGN='1'";
