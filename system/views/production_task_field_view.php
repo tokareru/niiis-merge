@@ -15,7 +15,7 @@
 <h4>Задание на производство</h4>
 <form>
   <div class="form-group">
-    <label for="productionTaskSelectUserBody">Выберите сотрудника</label>
+    <label for="productionTaskSelectUserBody col-6">Выберите сотрудника</label>
     <select class="form-control" id="productionTaskSelectUserBody">
     </select>
   </div>
