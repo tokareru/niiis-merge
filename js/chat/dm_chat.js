@@ -18,7 +18,7 @@ function initDMChat(count_users) {
         let $chat_window_chat = $('#dm_user_0');
 
         if ($('#chat_window').data('init')) {
-            $chat_window_chat.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
+            //$chat_window_chat.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
         }
         else speed = 5000;
         addNewComments($chat_window_chat,
@@ -35,7 +35,7 @@ function initDMChat(count_users) {
                     let $this = $(this);
                     if($('#chat_window').data('init'))
                     {
-                        $this.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
+                        //$this.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
                     }
                     addNewComments($this,
                         {
