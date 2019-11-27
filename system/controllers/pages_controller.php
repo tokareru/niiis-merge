@@ -49,7 +49,7 @@ class pages_controller extends Controller{
         }
 
         function route_map(){
-            $this->view->render('', 'route_map.php', '');
+            $this->view->render('', 'route_map_view.php', '');
         }
 
         function edit_field(){
@@ -57,19 +57,23 @@ class pages_controller extends Controller{
         }
 
         function tasks_routes(){
-            $this->view->render('', 'tasks_routes.php', '');
+            $this->view->render('', 'tasks_routes_view.php', '');
         }
 
         function tasks_routes_table(){
-            $this->view->render('', 'tasks_routes_table.php', '');
+            $this->view->render('', 'tasks_routes_table_view.php', '');
         }
 
         function production_task_field(){
-            $this->view->render('', 'production_task_field.php', '');
+            $this->view->render('', 'production_task_field_view.php', '');
         }
 
         function create_task_route(){
-            $this->view->render('', 'create_task_route.php', '');
+            $this->view->render('', 'create_task_route_view.php', '');
+        }
+
+        function production_task_field_table(){
+            $this->view->render('', 'production_task_field_table_view.php', '');
         }
 
   // счетчики для менюшки, использовать можно на всех страницах
