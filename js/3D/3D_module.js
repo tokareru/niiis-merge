@@ -113,7 +113,7 @@ export function init3dField() {
 
     }
 	
-	function loadSTL (src, color = 0x808080, arrmesh, pos = { x:0, y:-0.315, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 })
+	function loadSTL (src, color = 0x808080, arrmesh, pos = { x:0, y:-0.315, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 }, angle = 20)
 	{
 		
 		loader.load(src, function (geometry) {
@@ -123,7 +123,7 @@ export function init3dField() {
             var mesh = new THREE.Mesh(geometry, material);
 
             //добавляем грани на модель
-            var geometry = new THREE.EdgesGeometry( mesh.geometry );
+            var geometry = new THREE.EdgesGeometry( mesh.geometry, angle );
 
             var material = new THREE.LineBasicMaterial( { color: 0x000000 } );
 
@@ -206,4 +206,9 @@ export function init3dField() {
             renderer.render(scene, camera);
         }
     }*/
+
+    $("#canvas3D").click(function()
+    {
+        animate()
+    })
 }

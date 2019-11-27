@@ -1,6 +1,7 @@
 function initChats() {
     initAllUsersChat();
-    initDMChat(countUsers());
+    initDMChat(getLoginNames().length);
+    countUsers();
     Server_count = initServerCount();
 }
 
@@ -143,7 +144,7 @@ function initDMChat(count_users) {
 }
 
 function generateDMChat(count_users) {
-    count_users -= 1;
+    //count_users -= 1;
     let loginUsers = getLoginNames();
     let $chat_dm = $('#chat_dm');
     let $dm_li = $chat_dm.find('.chat_dm_ul').eq(0);
@@ -185,14 +186,21 @@ function generateDMChat(count_users) {
 
 function getLoginNames() {
     let loginUsers = [];
+    console.log('cur login: ' + login);
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
         async: false,
         data: {current_login: login, function: 'login_users'},
         success: function (data) {
+            let log = login;
             for (let login in data) {
+                if( log === login )
+                {
+                    continue;
+                }
                 loginUsers.push(data[login]);
+                console.log('user: ' +data[login] );
             }
         },
         error: function (data) {
@@ -224,6 +232,8 @@ function countUsers() {
         data: {function: 'count_users'},
         success: function (data) {
             count = data.count;
+            console.log('count: ' + count);
+            console.log('count by using get logins: ' + getLoginNames().length);
         },
         error: function (data) {
             console.log('error');

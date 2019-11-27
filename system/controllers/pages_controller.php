@@ -49,7 +49,7 @@ class pages_controller extends Controller{
         }
 
         function route_map(){
-            $this->view->render('', 'route_map.php', '');
+            $this->view->render('', 'route_map_view.php', '');
         }
 
         function edit_field(){
