@@ -141,6 +141,7 @@ export function init3dField() {
 
             window.meshs[arrmesh] = mesh;
             scene.add(mesh);
+            scene.add( wireframe );
 
         });
 	}
