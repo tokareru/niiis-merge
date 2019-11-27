@@ -189,7 +189,9 @@
           "available_sides": [
             {
               "ID": "main-tabs",
-              "tabs": []
+              "tabs": [
+                "production_task_field"
+              ]
             }
           ]
         },
@@ -202,6 +204,7 @@
                 "scheme",
                 "specification",
                 "route_map_field",
+                "production_task_field",
                 "tasks_routes_field"
               ]
             },
@@ -221,6 +224,7 @@
                 "fieldBlock",
                 "specification",
                 "route_map_field",
+                "production_task_field",
                 "tasks_routes_field"
               ]
             },
@@ -250,6 +254,7 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
+                "production_task_field",
                 "tasks_routes_field"
               ]
             },
@@ -268,6 +273,7 @@
                 "scheme",
                 "fieldBlock",
                 "route_map_field",
+                "production_task_field",
                 "tasks_routes_field"
               ]
             },
