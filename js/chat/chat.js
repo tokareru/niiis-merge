@@ -96,8 +96,8 @@ function initServerCount() {
             }
         });
     }*/
-    for (let key in arrOfServerCount)
-        console.log('key: ' + key + ' val: ' + arrOfServerCount[key]);
+    /*for (let key in arrOfServerCount)
+        console.log('key: ' + key + ' val: ' + arrOfServerCount[key]);*/
     return arrOfServerCount;
 }
 //функция считывания сообщения из textarea (без валидации)
@@ -129,7 +129,7 @@ function chatMessages($chat) {
             function: 'add_comment'
         };
     }
-    console.log(objData);
+    //console.log(objData);
     $.ajax({
         url: 'chat_ajax',
         type: 'POST',
@@ -210,6 +210,9 @@ function printComments($chat, dataToAjax, init_count = false, scrollDown = true)
             console.log(data);
             for (let key in data)
             {
+                console.log('key: '+ key + ' val: ' + data[key]);
+                if(key === 'response')
+                    continue;
                 for(let k in data[key])
                 {
                     console.log('k: ' + k + ' val: ' + data[key][k]);
@@ -266,8 +269,8 @@ function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
         success: function (data) {
             count = data.count;
             let login_other_user =  $chat.data('login_user_chat_with');
-            console.log('count: ' + count+ ' Server_count[ '+login_other_user+' ]'
-                + Server_count[login_other_user] );
+            /*console.log('count: ' + count+ ' Server_count[ '+login_other_user+' ]'
+                + Server_count[login_other_user] );*/
             if (count > Server_count[login_other_user]) {
                 let count_to_ajax = count - Server_count[login_other_user];
                 /*console.log('count: ' + count+ ' Server_count[ '+login_other_user+' ]'
@@ -293,7 +296,7 @@ function addCommentsByData(data, $chat, init_count) {
     let $chat_ul = $chat.find('ul');
     let countMes = 0;
     for (let key in data) {
-        console.log('key: ' + key + ' val: ' + data[key] );
+        //console.log('key: ' + key + ' val: ' + data[key] );
         if (key !== 'response') {
             countMes++;
             let date_str = data[key].time;
