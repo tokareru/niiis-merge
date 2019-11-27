@@ -130,6 +130,7 @@ export function init3dField() {
             var wireframe = new THREE.LineSegments( geometry, material );
             wireframe.rotation.set(rot.x, rot.y, rot.z);
             wireframe.scale.set(scale.x, scale.y, scale.z);
+            wireframe.position.set(pos.x, pos.y, pos.z);
 
             mesh.visible = false;
             mesh.position.set(pos.x, pos.y, pos.z);//-0.6
