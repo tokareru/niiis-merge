@@ -345,8 +345,8 @@
                 "fieldBlock",
                 "specification",
                 "route_map_field",
-                "tasks_routes_field",
-                "production_task_field"
+                "production_task_field",
+                "tasks_routes_field"
               ]
             },
             {
