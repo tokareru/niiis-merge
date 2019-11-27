@@ -8,7 +8,7 @@ class chat_ajax_model extends model
                 case "print_comment":
                     switch ($_POST["type"]) {
                         case "ALL":
-                            $sql = "SELECT u.login, date_trunc('minute',c.time) as time, c.comment 
+                            $sql = "SELECT u.DESR as login, date_trunc('minute',c.time) as time, c.comment 
                                     FROM CHAT c LEFT JOIN
                                          USERS u on c.cur_user = u.id
                                     WHERE ALL_CHAT='1'
@@ -31,7 +31,7 @@ class chat_ajax_model extends model
                             ksort($result);
                             return $result;
                         case "DM":
-                            $sql = "SELECT date_trunc('seconds',c.time) as time, c.comment, u.LOGIN
+                            $sql = "SELECT date_trunc('seconds',c.time) as time, c.comment, u.DESR as login
                                     FROM CHAT c left join USERS u on c.cur_user=u.id
                                     WHERE CUR_USER in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with) and USER_CHAT_WITH in (select id from USERS WHERE LOGIN = :cur_user or LOGIN = :user_chat_with)
                                     Order BY c.time DESC
@@ -103,9 +103,10 @@ class chat_ajax_model extends model
                     }
                     break;
                 case "login_users":
-                    $sql = "SELECT LOGIN
-                      FROM USERS
-                      WHERE LOGIN <> :login";
+                    $sql = "SELECT g.DESCR as login
+                      FROM USER_GROUP g inner join 
+                      USERS u on g.group_id = u.group_user_id
+                      WHERE u.LOGIN <> :login and g.GROUP_ID <> 99";
                     $q = sys::$PDO->prepare($sql);
                     $q->execute(array("login" => $_POST["current_login"]));
                     $Q = $q->fetchAll();
@@ -117,7 +118,8 @@ class chat_ajax_model extends model
                     return $result;
                 case "count_users":
                     $sql = "SELECT COUNT(*) as COUNT
-                      FROM USERS";
+                      FROM USERS
+                      WHERE group_user_id <>99";
                     $q = sys::$PDO->prepare($sql);
                     $q->execute();
                     $Q = $q->fetchAll();
