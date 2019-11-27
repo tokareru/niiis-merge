@@ -4,22 +4,6 @@ function initChats() {
     Server_count = initServerCount();
 
     //console.log('cur login: ' + login);
-    $.ajax({
-        url: 'chat_ajax',
-        type: 'POST',
-        async: false,
-        data: {current_login: login, function: 'login_users'},
-        success: function (data) {
-            for (let login in data) {
-                LoginNameCom[data[login].login] = data[login].name;
-            }
-        },
-        error: function (data) {
-            console.log('error');
-        },
-        complete: function () {
-        }
-    });
     /*setInterval(function () {
             $.ajax({
                 url: 'chat_ajax',

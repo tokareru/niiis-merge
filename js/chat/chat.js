@@ -2,7 +2,6 @@ let login = "";
 let currentName = "";
 let Max_count_messages = 100;
 let Server_count;
-let LoginNameCom = {};
 
 
 function initAllUsersChat() {
@@ -118,7 +117,7 @@ function chatMessages($chat) {
 
     let date_str = getCurDate(new Date());
     let $chat_ul = $chat.find('ul');
-    $chat_ul.append(getMessage(date_str, login, $text));
+    $chat_ul.append(getMessage(date_str, currentName , $text));
     let objData = {};
     if ($chat.attr('id') === 'dm_user_0')
         objData = {type: 'ALL', time: Date.now(), current_login: login, comment: $text, function: 'add_comment'};
@@ -152,12 +151,7 @@ function chatMessages($chat) {
     $chat.scrollTop($chat[0].scrollHeight);
 }
 
-function getMessage( time, loginUser, comment) {
-    let nameUser = LoginNameCom[loginUser];
-    if(loginUser === 'admin' || LoginNameCom[loginUser] === undefined)
-        nameUser = currentName;
-    //console.log('login: ' + loginUser+' name: '+ nameUser);
-
+function getMessage( time, nameUser, comment) {
     let $text_wUserDate = '<span class="font-weight-bold font-italic text-light spanTextLogin">'
         + nameUser + '</span>' +
         '<span style="float: right" class="font-weight-light text-light spanTextDate"> '
