@@ -143,7 +143,7 @@ function initDMChat(count_users) {
 }
 
 function generateDMChat(count_users) {
-    count_users -= 1;
+    //count_users -= 1;
     let loginUsers = getLoginNames();
     let $chat_dm = $('#chat_dm');
     let $dm_li = $chat_dm.find('.chat_dm_ul').eq(0);
