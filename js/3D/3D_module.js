@@ -23,13 +23,13 @@ export function init3dField() {
 	
 	window.stldata = 
 	[
-        ["./3dstl/pdm/11.stl", 0xAAAAAA, "vis1"],
-        ["./3dstl/pdm/22.stl", 0xAAAAAA, "vis2"],
-        ["./3dstl/pdm/33.stl", 0xAAAAAA, "vis3"],
-        ["./3dstl/pdm/44.stl", 0xAAAAAA, "vis4"],
-        ["./3dstl/standart/11.stl", 0xAAAAAA, "vis5"],
-        ["./3dstl/standart/22.stl", 0xAAAAAA, "vis6"],
-        ["./3dstl/standart/33.stl", 0xAAAAAA, "vis7"]
+        ["./3dstl/pdm/11.stl", 0x808080, "vis1"],
+        ["./3dstl/pdm/22.stl", 0x808080, "vis2"],
+        ["./3dstl/pdm/33.stl", 0x808080, "vis3"],
+        ["./3dstl/pdm/44.stl", 0x808080, "vis4"],
+        ["./3dstl/standart/11.stl", 0x808080, "vis5"],
+        ["./3dstl/standart/22.stl", 0x808080, "vis6"],
+        ["./3dstl/standart/33.stl", 0x808080, "vis7"]
 	];
 
     init();
@@ -54,7 +54,7 @@ export function init3dField() {
         cameraTarget = new THREE.Vector3(0, -0.25, 0);
 
         window.scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x72645b);
+        scene.background = new THREE.Color(0xAAAAAA/*0x72645b*/);
         scene.fog = new THREE.Fog(0x72645b, 2, 15);
 
 
@@ -66,7 +66,7 @@ export function init3dField() {
         );
         plane.rotation.x = -Math.PI / 2;
         plane.position.y = -0.5;
-        scene.add(plane);
+        //scene.add(plane);
 
         plane.receiveShadow = true;
 
@@ -113,7 +113,7 @@ export function init3dField() {
 
     }
 	
-	function loadSTL (src, color, arrmesh, pos = { x:0, y:-0.315, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 })
+	function loadSTL (src, color = 0x808080, arrmesh, pos = { x:0, y:-0.315, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 })
 	{
 		
 		loader.load(src, function (geometry) {
