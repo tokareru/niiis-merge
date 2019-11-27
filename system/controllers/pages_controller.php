@@ -68,6 +68,10 @@ class pages_controller extends Controller{
             $this->view->render('', 'production_task_field.php', '');
         }
 
+        function create_task_route(){
+            $this->view->render('', 'create_task_route.php', '');
+        }
+
   // счетчики для менюшки, использовать можно на всех страницах
 }
 ?>

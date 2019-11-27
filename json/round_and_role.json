@@ -294,8 +294,7 @@
               "tabs": [
                 "specification",
                 "scheme",
-                "fieldBlock",
-                "production_task_field"
+                "fieldBlock"
               ]
             }
           ]
@@ -340,7 +339,8 @@
                 "fieldBlock",
                 "specification",
                 "route_map_field",
-                "tasks_routes_field"
+                "tasks_routes_field",
+                "production_task_field"
               ]
             },
             {
@@ -351,6 +351,10 @@
             },
             {
               "ID": "chat-side",
+              "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -385,6 +389,13 @@
       "URL": "pages/chat",
       "ID": "chat-side",
       "init": "initChats",
+      "parent": "body"
+    },
+    {
+      "name": "Создание маршрута заданий",
+      "URL": "pages/create_task_route",
+      "ID": "create_task_route-side",
+      "init": "",
       "parent": "body"
     }
   ],
@@ -478,10 +489,10 @@
       "init": "initTasksRoutes"
     },
     {
-      "name": "Задание",
+      "name": "Задание на производство",
       "URL": "pages/production_task_field",
       "ID": "production_task_field",
-      "location": ".main-tabs",
+      "location": "main-tabs",
       "notify": "",
       "init": "initProductionTaskField"
     }
