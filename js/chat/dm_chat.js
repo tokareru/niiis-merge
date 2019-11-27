@@ -2,6 +2,49 @@ function initChats() {
     initAllUsersChat();
     initDMChat(getLoginNames().length);
     Server_count = initServerCount();
+
+
+    /*setInterval(function () {
+            $.ajax({
+                url: 'chat_ajax',
+                type: 'POST',
+                async: true,
+                data: {
+                    type: 'DM',
+                    time: Date.now(),
+                    current_login: 'designer',
+                    login_user_chat_with: 'worker',
+                    comment: 'test',
+                    function: 'add_comment'
+                },
+                success: function (data) {
+                    console.log('test add mes');
+                    console.log(data);
+                }
+            });
+        }, 10000);
+
+
+    setInterval(function () {
+            $.ajax({
+                url: 'chat_ajax',
+                type: 'POST',
+                async: true,
+                data: {
+                    type: 'DM',
+                    current_login: 'designer',
+                    login_user_chat_with: 'worker',
+                    function: 'count_comments'
+                },
+                success: function (data) {
+                    console.log('test');
+                    console.log(data);
+                }
+            })
+        }
+        , 10000);*/
+
+    getLoginNames();
 }
 
 function initDMChat(count_users) {
@@ -140,6 +183,7 @@ function initDMChat(count_users) {
 function generateDMChat(count_users) {
     //count_users -= 1;
     let loginUsers = getLoginNames();
+    let nameUsers = getLoginNames(false);
     let $chat_dm = $('#chat_dm');
     let $dm_li = $chat_dm.find('.chat_dm_ul').eq(0);
 
@@ -153,7 +197,7 @@ function generateDMChat(count_users) {
         }
         $dm_li.append('<li class="dm_tabs_links_li bg-dark"></li>');
         $dm_li.find('li').eq(i).append('<div class="dm_tabs_links bg-light"><a href="#dm_user_' + i +
-            '">' + loginUsers[i - 1] + '</a></div>');
+            '">' + nameUsers[i - 1] + '</a></div>');
     }
     for (let i = 0; i < count_users + 1; i++) {
         if (!i) {
@@ -162,6 +206,7 @@ function generateDMChat(count_users) {
             $chat_dm.find('.chats_div').find('#dm_user_' + i).data({
                 'count_messages': 0,
                 'login_user_chat_with': '#dm_user_0',
+                'name_user': 'ALL',
                 'scroll': false
             });
             continue;
@@ -172,14 +217,16 @@ function generateDMChat(count_users) {
             'login_user_chat_with': loginUsers[i - 1],
             'count_messages': 0,
             'unread_messages': 0,
+            'name_user': nameUsers[i - 1],
             'scroll': false
         });
     }
 
 }
 
-function getLoginNames() {
+function getLoginNames(loginChoice = true) {
     let loginUsers = [];
+    let nameUsers = [];
     //console.log('cur login: ' + login);
     $.ajax({
         url: 'chat_ajax',
@@ -189,19 +236,21 @@ function getLoginNames() {
         success: function (data) {
             let log = login;
             for (let login in data) {
-                if (log === login) {
-                    continue;
-                }
-                loginUsers.push(data[login]);
-                //console.log('user: ' + data[login]);
+                    //console.log('key: ' + key + ' val: ' + data[login].login);
+                    loginUsers.push(data[login].login);
+                    nameUsers.push(data[login].name);
+
             }
-            //console.log('count users: ' + loginUsers.length);
+            console.log('name users: ' + nameUsers);
+            console.log('login users: ' + loginUsers);
         },
         error: function (data) {
             console.log('error');
         }
     });
+    if(loginChoice)
     return loginUsers;
+    else return nameUsers;
 }
 
 function initDMChats() {

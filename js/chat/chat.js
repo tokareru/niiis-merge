@@ -1,4 +1,5 @@
 let login = "";
+let currentName = "";
 let Max_count_messages = 100;
 let Server_count;
 
@@ -149,13 +150,13 @@ function chatMessages($chat) {
     $chat.scrollTop($chat[0].scrollHeight);
 }
 
-function getMessage( time, loginUser, comment) {
+function getMessage( time, nameUser, comment) {
     let $text_wUserDate = '<span class="font-weight-bold font-italic text-light spanTextLogin">'
-        + loginUser + '</span>' +
+        + nameUser + '</span>' +
         '<span style="float: right" class="font-weight-light text-light spanTextDate"> '
         + time + ':</span>';
     let finalComment = '';
-    if(loginUser === login)
+    if(nameUser === currentName)
     {
         finalComment ='<li><div class=" chat_mes_from_cur_user bg-primary">';
     }
@@ -300,7 +301,7 @@ function addCommentsByData(data, $chat, init_count) {
         if (key !== 'response') {
             countMes++;
             let date_str = data[key].time;
-            $chat_ul.append(getMessage(date_str, data[key].login, data[key].comment ));
+            $chat_ul.append(getMessage(date_str, data[key].name, data[key].comment ));
         }
     }
     if (init_count) {
