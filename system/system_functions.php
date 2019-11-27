@@ -39,7 +39,7 @@ class sys {
   static function autorization($name, $password, $is) {
     //Проверяем наличие такого пользователя с email
     $SQL = "SELECT 
-              u.ID,ug.USER_STATUS
+            g.DESCR, u.ID,ug.USER_STATUS
             FROM USERS AS u 
             inner join USER_GROUP ug on ug.GROUP_ID=u.GROUP_USER_ID
             where u.LOGIN=:login and u.PASSWORD=:password and u.ACTIVE_SIGN='1'";
@@ -59,6 +59,7 @@ class sys {
         $_SESSION['niiis']['is'] = $is;
         $_SESSION['niiis']['round'] = 1;
         $_SESSION['niiis']['role'] = $row['user_status'];
+        $_SESSION['niiis']['name'] = $row['descr'];
       
       
       // если admin, можем менять пользователей не делая relogin
