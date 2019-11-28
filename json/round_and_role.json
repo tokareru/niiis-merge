@@ -110,7 +110,8 @@
                 "scheme",
                 "fieldBlock",
                 "route_map_field",
-                "tasks_routes_field"
+                "tasks_routes_field",
+                "technological_process_field"
               ]
             },
             {
@@ -225,7 +226,8 @@
                 "specification",
                 "route_map_field",
                 "production_task_field",
-                "tasks_routes_field"
+                "tasks_routes_field",
+                "technological_process_field"
               ]
             },
             {
