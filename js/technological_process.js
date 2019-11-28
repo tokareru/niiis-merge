@@ -9,6 +9,8 @@ function technologicalProcessInit() {
             this.classList.toggle("caret-down");
         });
     }
+
+    $("#myUL").find("span").first().trigger("click");
 }
 
 
