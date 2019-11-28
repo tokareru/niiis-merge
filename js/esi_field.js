@@ -37,7 +37,7 @@ function initESI() {
     });
 
     $('.slider_button').on('click', function () {
-        STDLibClick($('.slider_button'), $('.slider_main'));
+        STDLibClick($('.slider_button'), $('.slider_main'), 15);
     });
 
     $('#shell').on('click', function () {
@@ -165,7 +165,7 @@ function addContent($esi_branch, content) {
 }
 
 
-function STDLibClick($but, $main) {
+function STDLibClick($but, $main, z_index) {
     let css_left = -$main.width() + $but.width() + 'px';
     let css_right = '0px';
     if ($main.attr('style') !== ('z-index: 999; right: ' + css_right + ';')) {
@@ -182,6 +182,6 @@ function STDLibClick($but, $main) {
             },
             300, 'linear'
         );
-        $main.attr('style','z-index: 15');
+        $main.attr('style','z-index:'+ z_index);
     }
 }

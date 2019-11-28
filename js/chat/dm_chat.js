@@ -4,22 +4,6 @@ function initChats() {
     Server_count = initServerCount();
 
     //console.log('cur login: ' + login);
-    $.ajax({
-        url: 'chat_ajax',
-        type: 'POST',
-        async: false,
-        data: {current_login: login, function: 'login_users'},
-        success: function (data) {
-            for (let login in data) {
-                LoginNameCom[data[login].login] = data[login].name;
-            }
-        },
-        error: function (data) {
-            console.log('error');
-        },
-        complete: function () {
-        }
-    });
     /*setInterval(function () {
             $.ajax({
                 url: 'chat_ajax',
@@ -188,7 +172,7 @@ function initDMChat(count_users) {
         if ($attr !== '#dm_user_0')
             $('.chats_header').html('<span class="font-italic font-weight-light">Чат с пользователем </span>' +
                 '<span class="font-weight-bold">'
-                + $('#chat_dm').find($attr).data('login_user_chat_with') + '</span>');
+                + $('#chat_dm').find($attr).data('name_user') + '</span>');
         else $('.chats_header').html('<span class="font-weight-bold">Общий чат</span>');
         $('#chat_window').data({'name': $attr});
     });

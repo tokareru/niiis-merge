@@ -75,6 +75,7 @@ $IS = $_SESSION['niiis']['is'];
         <link rel="stylesheet" href="css/tasks_routes.css">
         <link rel="stylesheet" href="css/production_task_field.css">
         <link rel="stylesheet" href="css/technological_process.css">
+        <link rel="stylesheet" href="css/create_task_route.css">
         <script src="js/libraries/jquery-3.4.1.js"></script>
         <script src="js/libraries/popper.min.js"></script>
         <script src="js/libraries/bootstrap.min.js"></script>
@@ -91,6 +92,7 @@ $IS = $_SESSION['niiis']['is'];
         <script src="js/technologist_guide.js"></script>
         <script src="js/route_map.js"></script>
         <script src="js/technological_process.js"></script>
+        <script src="js/create_task_route.js"></script>
 
         <script src="js/scheme.js"></script>
         <script src="js/3D/three.min.js"></script>

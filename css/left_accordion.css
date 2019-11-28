@@ -13,6 +13,7 @@
 }
 
 .my_ui-accordion-header {
+    outline: none;
     color: white;
     user-select: none;
     background-color: #1c2331e3 !important;
