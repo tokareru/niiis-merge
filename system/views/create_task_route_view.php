@@ -34,9 +34,10 @@
 
 					  		</tbody>
 						</table>
-						<div class="create_task_route_button"><input type="button" value="Отправить"
-							class="btn btn-primary"></div>
+
 					</div>
+					<div class="create_task_route_button"><input type="button" value="Отправить"
+                    							class="btn btn-primary"></div>
 			</div>
 	</div>
 
