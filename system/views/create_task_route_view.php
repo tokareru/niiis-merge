@@ -37,7 +37,7 @@
 
 					</div>
 					<div class="create_task_route_button"><input type="button" value="Отправить"
-                    							class="btn btn-primary"></div>
+                    							class="btn btn-custom"></div>
 			</div>
 	</div>
 
