@@ -80,6 +80,10 @@ class pages_controller extends Controller{
             $this->view->render('', 'technological_process_field_view.php', '');
         }
 
+        function work_outside_the_system(){
+            $this->view->render('', 'work_outside_the_system_view.php', '');
+        }
+
   // счетчики для менюшки, использовать можно на всех страницах
 }
 ?>

@@ -136,7 +136,9 @@
           "available_sides": [
             {
               "ID": "main-tabs",
-              "tabs": []
+              "tabs": [
+                "work_outside_the_system_field"
+              ]
             }
           ]
         },
@@ -247,7 +249,14 @@
       "rounds": [
         {
           "round": 1,
-          "available_sides": []
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "work_outside_the_system_field"
+              ]
+            }
+          ]
         },
         {
           "round": 2,
@@ -504,6 +513,14 @@
       "location": "main-tabs",
       "notify": "",
       "init": "initProductionTaskField"
+    },
+    {
+      "name": "Работа вне системы",
+      "URL": "pages/work_outside_the_system",
+      "ID": "work_outside_the_system_field",
+      "location": "main-tabs",
+      "notify": "",
+      "init": ""
     }
   ]
 }
