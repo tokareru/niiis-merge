@@ -53,7 +53,8 @@
 ?>
 <h4>Рабочий стол. Техпроцесс</h4>
 <ul id="myUL" class="bg-light col-6">
-  <li><span class="caret">Техпроцесс</span>
+  <li style="border-style: groove;">
+  <span class="caret">Техпроцесс</span>
     <ul class="nested">
       <li><span class="caret">Обозначение</span>
       <ul class="nested">

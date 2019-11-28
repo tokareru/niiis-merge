@@ -38,8 +38,12 @@ ul, #myUL {
 }
 
 .active li{
+    border-style: groove;
+    padding: 0;
     color: #0c5460;
     border-color: #bee5eb;
+    border-bottom-style: none;
+    border-right-style: none;
 }
 
 .caret:hover{
