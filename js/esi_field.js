@@ -55,6 +55,7 @@ function InitBranches() {
 function initBranchesInside() {
 
     let info = serializeTable('#specificationBlock ');
+    console.log(info)
     let countRows = info.length;
     let countCols = info[0].length;
     for (let i = 1; i < countRows; i++) {

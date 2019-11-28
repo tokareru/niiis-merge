@@ -76,6 +76,10 @@ class pages_controller extends Controller{
             $this->view->render('', 'production_task_field_table_view.php', '');
         }
 
+        function technological_process_field(){
+            $this->view->render('', 'technological_process_field_view.php', '');
+        }
+
   // счетчики для менюшки, использовать можно на всех страницах
 }
 ?>

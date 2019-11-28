@@ -346,7 +346,8 @@
                 "specification",
                 "route_map_field",
                 "production_task_field",
-                "tasks_routes_field"
+                "tasks_routes_field",
+                "technological_process_field"
               ]
             },
             {
@@ -463,12 +464,12 @@
       "init": "initTechnologistGuide"
     },
     {
-      "name": "Техпроцесс",
-      "URL": "",
-      "ID": "",
-      "location": "",
+      "name": "Рабочий стол. Техпроцесс",
+      "URL": "pages/technological_process_field",
+      "ID": "technological_process_field",
+      "location": "main-tabs",
       "notify": "",
-      "init": ""
+      "init": "technologicalProcessInit"
     },
     {
       "name": "Маршрутная карта",
