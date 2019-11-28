@@ -59,6 +59,10 @@
             {
               "ID": "chat-side",
               "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
+              "tabs": []
             }
           ]
         }
@@ -122,6 +126,10 @@
             },
             {
               "ID": "chat-side",
+              "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -238,6 +246,10 @@
             },
             {
               "ID": "chat-side",
+              "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
