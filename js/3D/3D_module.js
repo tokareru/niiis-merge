@@ -141,7 +141,8 @@ export function init3dField() {
             mesh.castShadow = true;
             mesh.receiveShadow = false;
 
-            window.meshs[arrmesh] = mesh;
+            //window.meshs[arrmesh] = mesh;
+			window.MeshsLinesScheme[arrmesh].push(mesh);
             scene.add(mesh);
             //scene.add( wireframe );
 
@@ -208,8 +209,9 @@ export function init3dField() {
         }
     }*/
 
-    /*$("#canvas3D").click(function()
+    /* $("#canvas3D").click(function()
     {
         animate()
-    })*/
+    }) */
 }
+ 
