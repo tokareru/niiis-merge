@@ -8,6 +8,7 @@
     width: 90%;
     height: 100%;
     position: relative;
+    max-height: 450px;
     /*width: 944px;
     height: 450px;*/
 }
