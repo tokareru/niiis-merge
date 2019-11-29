@@ -88,7 +88,8 @@ export function init3dField() {
         scene.add(new THREE.HemisphereLight(0x443333, 0x111122));
 
         addShadowedLight(1, 1, 1, 0xffffff, 1.35);
-        addShadowedLight(0.5, 1, -1, 0xffaa00, 1);
+        //addShadowedLight(0.5, 1, -1, 0xffaa00, 1);
+        addShadowedLight(-1, -1, -1, 0xffffff, 1);
         // renderer
 
         window.renderer = new THREE.WebGLRenderer({antialias: true});
@@ -142,7 +143,7 @@ export function init3dField() {
 
             window.meshs[arrmesh] = mesh;
             scene.add(mesh);
-            scene.add( wireframe );
+            //scene.add( wireframe );
 
         });
 	}
@@ -207,8 +208,8 @@ export function init3dField() {
         }
     }*/
 
-    $("#canvas3D").click(function()
+    /*$("#canvas3D").click(function()
     {
         animate()
-    })
+    })*/
 }
