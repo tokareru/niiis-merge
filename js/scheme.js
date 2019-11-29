@@ -111,7 +111,7 @@ export function initScheme() {
 
         window.renderersc = new THREE.WebGLRenderer({antialias: true});
         renderersc.setPixelRatio(window.devicePixelRatio);
-        renderersc.setSize($('#scheme1').width(), $('#scheme1').height());
+        renderersc.setSize( $('#scheme1').width(), $('#scheme1').width()*9/16 );
 
         renderersc.gammaInput = true;
         renderersc.gammaOutput = true;

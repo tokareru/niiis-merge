@@ -94,7 +94,7 @@ export function init3dField() {
 
         window.renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize($('#canvas3D').width(), $('#canvas3D').height());
+        renderer.setSize($('#canvas3D').width(),($('#canvas3D').width())*9/16);
 
         renderer.gammaInput = true;
         renderer.gammaOutput = true;
@@ -176,7 +176,7 @@ export function init3dField() {
         camera.updateProjectionMatrix();
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
-        renderer.setSize( $('#canvas3D').width(), $('#canvas3D').height() );
+        renderer.setSize($('#canvas3D').width(),($('#canvas3D').width())*9/16);
         canvas3D.children[0].children[0].style="width: 100%; height: 100%";
 
     }
