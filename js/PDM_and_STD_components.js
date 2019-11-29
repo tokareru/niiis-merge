@@ -82,8 +82,8 @@ function makeCheckbox(fieldID) {
 
     $checkboxid.find("input").click(function (e) {
         let arrayClicked = collectDataLabels(".left-side");
-		showhideimage(arrayClicked, $(this));
-		load3d(arrayClicked, $(this));
+        showhideimage(arrayClicked, $(this));
+        load3d(arrayClicked, $(this));
     });
 
     $checkboxid.find('img').on('dragstart', function (event) {
@@ -128,49 +128,49 @@ function PdmOrStdHandler(event, data) {
     }
 }
 
-function showhideimage(arrayComp, obj) 
+function showhideimage(arrayComp, obj)
 {
-	if (window.isEnded != undefined || window.isEnded == true)
-	{
-		arr = $('img');
-		if (obj[0].checked) 
-		{
+    if (window.isEnded != undefined || window.isEnded == true)
+    {
+        arr = $('img');
+        if (obj[0].checked)
+        {
             for (i=0;i<arr.length;i++)
-			{
-                if (arr[i].id != '') 
-		        {
-		        	for (j=1;j<4;j++)
-		        	{
-		        		if (arr[i].id.substr(0, 12) == "bolthideimg"+j && arrayComp.indexOf('std_component_'+j) != -1) {arr[i].style.display = '';}
-		        	}
-		        }
+            {
+                if (arr[i].id != '')
+                {
+                    for (j=1;j<4;j++)
+                    {
+                        if (arr[i].id.substr(0, 12) == "bolthideimg"+j && arrayComp.indexOf('std_component_'+j) != -1) {arr[i].style.display = '';}
+                    }
+                }
             }
-	    }
-		else
-		{
+        }
+        else
+        {
             for (i=0;i<arr.length;i++)
-			{
-                if (arr[i].id != '') 
-		        {
-		        	for (j=1;j<4;j++)
-		        	{
-		        		if (arr[i].id.substr(0, 12) == "bolthideimg"+j && arrayComp.indexOf('std_component_'+j) == -1) {arr[i].style.display = 'none';}
-		        	}
-		        }
+            {
+                if (arr[i].id != '')
+                {
+                    for (j=1;j<4;j++)
+                    {
+                        if (arr[i].id.substr(0, 12) == "bolthideimg"+j && arrayComp.indexOf('std_component_'+j) == -1) {arr[i].style.display = 'none';}
+                    }
+                }
             }
-		}
-	}
-	else
-	{
-		obj[0].checked = false;
-		obj[0].labels[0].className = "check_std check_non-active";
-		obj[0].labels[0].children[0].className = "check_icon-non check_icon fa fa-circle-thin material-icons";
-		//console.log(obj[0].labels[0].className);
-		//alert('Необходимо закончить рисование и нажать "Готово"');
-	}
+        }
+    }
+    else
+    {
+        obj[0].checked = false;
+        obj[0].labels[0].className = "check_std check_non-active";
+        obj[0].labels[0].children[0].className = "check_icon-non check_icon fa fa-circle-thin material-icons";
+        //console.log(obj[0].labels[0].className);
+        //alert('Необходимо закончить рисование и нажать "Готово"');
+    }
 }
 
-function load3d(array, obj)
+function load3d(array, obj={0:{"checked":"true"}})
 {
     if (window.isEnded != undefined && window.isEnded == true)
     {
@@ -179,34 +179,52 @@ function load3d(array, obj)
             for (i=0;i<4;i++) {
                 if (array.indexOf('component_' + (i+1)) != -1)
                 {
-                    meshs[stldata[i][2]].visible = true;
+                    //meshs[stldata[i][2]].visible = true;
+                    for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
+                    {
+                        MeshsLinesScheme[stldata[i][2]][j].visible = true;
+                    }
                 }
             }
 
             for (i=0;i<3;i++) {
                 if (array.indexOf('std_component_' + (i+1)) != -1)
                 {
-                    meshs[stldata[i+4][2]].visible = true;
+                    //meshs[stldata[i+4][2]].visible = true;
+                    for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
+                    {
+                        MeshsLinesScheme[stldata[i+4][2]][j].visible = true;
+                    }
                 }
             }
-            window.renderer.render(scene, camera);
+            if (typeof scene != "undefined") {window.renderer.render(scene, camera);}
+            window.renderersc.render(scenesc, camerasc);
         }
         else
         {
             for (i=0;i<4;i++) {
                 if (array.indexOf('component_' + (i+1)) == -1)
                 {
-                    meshs[stldata[i][2]].visible = false;
+                    //meshs[stldata[i][2]].visible = false;
+                    for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
+                    {
+                        MeshsLinesScheme[stldata[i][2]][j].visible = false;
+                    }
                 }
             }
 
             for (i=0;i<3;i++) {
                 if (array.indexOf('std_component_' + (i+1)) == -1)
                 {
-                    meshs[stldata[i+4][2]].visible = false;
+                    //meshs[stldata[i+4][2]].visible = false;
+                    for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
+                    {
+                        MeshsLinesScheme[stldata[i+4][2]][j].visible = false;
+                    }
                 }
             }
-            window.renderer.render(scene, camera);
+            if (typeof scene != "undefined") {window.renderer.render(scene, camera);}
+            window.renderersc.render(scenesc, camerasc);
         }
     }
     else

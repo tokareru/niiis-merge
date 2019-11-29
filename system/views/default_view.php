@@ -94,9 +94,9 @@ $IS = $_SESSION['niiis']['is'];
         <script src="js/technological_process.js"></script>
         <script src="js/create_task_route.js"></script>
 
-        <script src="js/scheme.js"></script>
         <script src="js/3D/three.min.js"></script>
         <script src="js/3D/dat.gui.min.js"></script>
+        <script src="js/loadscheme.js"></script>
 
         <script src="js/3D/3D.js"></script>
 

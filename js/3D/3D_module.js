@@ -20,17 +20,17 @@ export function init3dField() {
     window.renderer;
     window.camera;
     window.scene;
-	
-	window.stldata = 
-	[
-        ["./3dstl/pdm/11.stl", 0x808080, "vis1"],
-        ["./3dstl/pdm/22.stl", 0x808080, "vis2"],
-        ["./3dstl/pdm/33.stl", 0x808080, "vis3"],
-        ["./3dstl/pdm/44.stl", 0x808080, "vis4"],
-        ["./3dstl/standart/11.stl", 0x808080, "vis5"],
-        ["./3dstl/standart/22.stl", 0x808080, "vis6"],
-        ["./3dstl/standart/33.stl", 0x808080, "vis7"]
-	];
+
+    window.stldata =
+        [
+            ["./3dstl/pdm/11.stl", 0x808080, "vis1"],
+            ["./3dstl/pdm/22.stl", 0x808080, "vis2"],
+            ["./3dstl/pdm/33.stl", 0x808080, "vis3"],
+            ["./3dstl/pdm/44.stl", 0x808080, "vis4"],
+            ["./3dstl/standart/11.stl", 0x808080, "vis5"],
+            ["./3dstl/standart/22.stl", 0x808080, "vis6"],
+            ["./3dstl/standart/33.stl", 0x808080, "vis7"]
+        ];
 
     init();
     animate();
@@ -72,14 +72,14 @@ export function init3dField() {
 
 
         // ASCII file
-		window.loader = new STLLoader();
-		
-		for (let i=0;i<stldata.length;i++)
-		{
-			loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
-		}
-		
-		
+        window.loader = new STLLoader();
+
+        for (let i=0;i<stldata.length;i++)
+        {
+            loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
+        }
+
+
 
         // Colored binary STL
 
@@ -113,11 +113,11 @@ export function init3dField() {
         window.addEventListener('resize', onWindowResize, false);
 
     }
-	
-	function loadSTL (src, color = 0x808080, arrmesh, pos = { x:0, y:-0.315, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 }, angle = 20)
-	{
-		
-		loader.load(src, function (geometry) {
+
+    function loadSTL (src, color = 0x808080, arrmesh, pos = { x:0, y:-0.315, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 }, angle = 20)
+    {
+
+        loader.load(src, function (geometry) {
 
             var material = new THREE.MeshPhongMaterial({color: color, specular: 0x111111, shininess: 200});
 
@@ -141,12 +141,13 @@ export function init3dField() {
             mesh.castShadow = true;
             mesh.receiveShadow = false;
 
-            window.meshs[arrmesh] = mesh;
+            //window.meshs[arrmesh] = mesh;
+            window.MeshsLinesScheme[arrmesh].push(mesh);
             scene.add(mesh);
             //scene.add( wireframe );
 
         });
-	}
+    }
 
     function addShadowedLight(x, y, z, color, intensity) {
 
@@ -175,8 +176,8 @@ export function init3dField() {
         camera.updateProjectionMatrix();
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
-		renderer.setSize( $('#canvas3D').width(), $('#canvas3D').height() );
-		canvas3D.children[0].children[0].style="width: 100%; height: 100%";
+        renderer.setSize( $('#canvas3D').width(), $('#canvas3D').height() );
+        canvas3D.children[0].children[0].style="width: 100%; height: 100%";
 
     }
 
@@ -208,8 +209,9 @@ export function init3dField() {
         }
     }*/
 
-    /*$("#canvas3D").click(function()
+    /* $("#canvas3D").click(function()
     {
         animate()
-    })*/
+    }) */
 }
+

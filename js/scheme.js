@@ -1,5 +1,8 @@
-function initScheme() {
-    window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
+import * as THREE from './3D/stl/three.module.js';
+import {STLLoader} from './3D/stl/STLLoader.js';
+
+export function initScheme() {
+    /* window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
     window.lines2 = [];
     window.lines3 = [];
 
@@ -9,12 +12,277 @@ function initScheme() {
     window.r = 10;
     window.inCircle;
     window.clickedCircles;
-    window.ctxs = [];
+    window.ctxs = []; */
     //window.imageid = {"std_component_1": "bolthideimg1", "std_component_2": "bolthideimg2", "std_component_3": "bolthideimg3"};
 
     window.isEnded = false;
 
-    $('.canvimg')[2].style = "height: 28.3vw;";
+
+
+
+    var container, stats;
+
+    var cameraTarget;
+
+    var check = {
+        checkbox: true,
+    };
+
+    var inc = 0;
+
+    window.meshs = {};
+    window.renderersc;
+    window.camerasc;
+    window.scenesc;
+    window.MeshsLinesScheme = [];
+
+    window.stldata =
+        [
+            ["./3dstl/pdm/11.stl", 0xffffff, "vis1"],
+            ["./3dstl/pdm/22.stl", 0xffffff, "vis2"],
+            ["./3dstl/pdm/33.stl", 0xffffff, "vis3"],
+            ["./3dstl/pdm/44.stl", 0xffffff, "vis4"],
+            ["./3dstl/standart/11.stl", 0xffffff, "vis5"],
+            ["./3dstl/standart/22.stl", 0xffffff, "vis6"],
+            ["./3dstl/standart/33.stl", 0xffffff, "vis7"]
+        ];
+
+    init();
+    animate();
+    look();
+
+    /* var gui = new dat.GUI({autoPlace: false, width: 100+'%'});
+    document.getElementById("scheme1").appendChild(gui.domElement);
+    gui.domElement.id = 'gui';
+
+    gui.add(check, 'checkbox').name('Вращение').onChange(function (value) {
+        animate();
+    }); */
+
+    function init() {
+
+        container = document.createElement('div');
+        document.getElementById("scheme1").appendChild(container);
+
+        //window.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
+        window.camerasc = new THREE.OrthographicCamera( window.innerWidth*0.003 / - 2, window.innerWidth*0.003 / 2, window.innerHeight*0.003 / 2, window.innerHeight*0.003 / - 2, 1, 15 );
+        camerasc.position.set(3, 0.15, 3);
+
+        cameraTarget = new THREE.Vector3(0, 0.15, 0);
+
+        window.scenesc = new THREE.Scene();
+        scenesc.background = new THREE.Color(0xffffff/*0x72645b*/);
+        scenesc.fog = new THREE.Fog(/*0x72645b*/0xAAAAAA, 2, 15);
+
+
+        // Ground
+
+        var plane = new THREE.Mesh(
+            new THREE.PlaneBufferGeometry(40, 40),
+            new THREE.MeshPhongMaterial({color: 0x999999, specular: 0x101010})
+        );
+        plane.rotation.x = -Math.PI / 2;
+        plane.position.y = -0.5;
+        //scene.add(plane);
+
+        plane.receiveShadow = true;
+
+
+        // ASCII file
+        window.loader = new STLLoader();
+
+        for (let i=0;i<stldata.length;i++)
+        {
+            loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
+        }
+
+
+
+        // Colored binary STL
+
+        // Lights
+
+        scenesc.add(new THREE.HemisphereLight(0x443333, 0x111122));
+
+        addShadowedLight(1, 1, 1, 0xffffff, 1.35);
+        //addShadowedLight(0.5, 1, -1, 0xffaa00, 1);
+        addShadowedLight(-1, -1, -1, 0xffffff, 1);
+        // renderer
+
+        window.renderersc = new THREE.WebGLRenderer({antialias: true});
+        renderersc.setPixelRatio(window.devicePixelRatio);
+        renderersc.setSize($('#scheme1').width(), $('#scheme1').height());
+
+        renderersc.gammaInput = true;
+        renderersc.gammaOutput = true;
+
+        renderersc.shadowMap.enabled = true;
+
+        container.appendChild(renderersc.domElement);
+
+        // stats
+
+        //stats = new Stats();
+        //container.appendChild( stats.dom ); //счетчик фпс
+
+        //
+
+        window.addEventListener('resize', onWindowResize, false);
+
+    }
+    //-0.315
+    function loadSTL (src, color = 0x808080, arrmesh, pos = { x:1, y:0.2, z:1 }, rot = { x:-Math.PI / 2, y:0, z:Math.PI/4 }, scale = { x:0.5, y:0.5, z:0.5 }, angle = 20)
+    {
+
+        loader.load(src, function (geometry) {
+
+            var material = new THREE.MeshPhongMaterial({color: color, specular: 0x111111, shininess: 200});
+
+            var mesh = new THREE.Mesh(geometry, material);
+
+            //добавляем грани на модель
+            var geometry = new THREE.EdgesGeometry( mesh.geometry, angle );
+
+            var material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+
+            var wireframe = new THREE.LineSegments( geometry, material );
+            wireframe.rotation.set(rot.x, rot.y, rot.z);
+            wireframe.scale.set(scale.x, scale.y, scale.z);
+            wireframe.position.set(pos.x, pos.y, pos.z);
+
+            mesh.visible = false;
+            wireframe.visible = false;
+
+            mesh.position.set(pos.x, pos.y, pos.z);//-0.6
+            mesh.rotation.set(rot.x, rot.y, rot.z);
+            mesh.scale.set(scale.x, scale.y, scale.z);
+
+            mesh.castShadow = true;
+            mesh.receiveShadow = false;
+
+            var pleft = mesh.clone();
+            var pleftgran = wireframe.clone();
+
+            pleft.position.x = 1;
+            pleftgran.position.x = 1;
+            pleft.position.z = -1;
+            pleftgran.position.z = -1;
+            pleft.rotation.z = Math.PI-Math.PI/4;
+            pleftgran.rotation.z = Math.PI-Math.PI/4;
+
+            var pleft1 = mesh.clone();
+            var pleftgran1 = wireframe.clone();
+
+            pleft1.position.x = -1;
+            pleftgran1.position.x = -1;
+
+            pleft1.position.z = -1;
+            pleftgran1.position.z = -1;
+
+            pleft1.position.y = -0.7;
+            pleftgran1.position.y = -0.7;
+
+            pleft1.rotation.y = Math.PI/4;
+            pleftgran1.rotation.y = Math.PI/4;
+
+            pleft1.rotation.x = 0;
+            pleftgran1.rotation.x = 0;
+
+            pleft1.rotation.z = 0;
+            pleftgran1.rotation.z = 0;
+
+            window.MeshsLinesScheme[arrmesh]=[];
+            window.MeshsLinesScheme[arrmesh].push(mesh);
+            window.MeshsLinesScheme[arrmesh].push(wireframe);
+
+            window.MeshsLinesScheme[arrmesh].push(pleft);
+            window.MeshsLinesScheme[arrmesh].push(pleftgran);
+
+            window.MeshsLinesScheme[arrmesh].push(pleft1);
+            window.MeshsLinesScheme[arrmesh].push(pleftgran1);
+
+            scenesc.add(mesh);
+            scenesc.add( wireframe );
+            scenesc.add(pleft);
+            scenesc.add( pleftgran );
+            scenesc.add(pleft1);
+            scenesc.add( pleftgran1);
+
+        });
+    }
+
+    function addShadowedLight(x, y, z, color, intensity) {
+
+        var directionalLight = new THREE.DirectionalLight(color, intensity);
+        directionalLight.position.set(x, y, z);
+        scenesc.add(directionalLight);
+
+        directionalLight.castShadow = true;
+
+        var d = 1;
+        directionalLight.shadow.camera.left = -d;
+        directionalLight.shadow.camera.right = d;
+        directionalLight.shadow.camera.top = d;
+        directionalLight.shadow.camera.bottom = -d;
+
+        directionalLight.shadow.camera.near = 1;
+        directionalLight.shadow.camera.far = 4;
+
+        directionalLight.shadow.bias = -0.002;
+
+    }
+
+    function onWindowResize() {
+
+        // camerasc.aspect = window.innerWidth / window.innerHeight;
+        camerasc.updateProjectionMatrix();
+
+        //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
+        renderersc.setSize( $('#scheme1').width(), $('#scheme1').height() );
+        //scheme1.children[0].children[0].style="width: 100%; height: 100%";
+
+    }
+
+    function animate() {
+        requestAnimationFrame(animate);
+        render();
+        //stats.update();
+    }
+
+    function look()
+    {
+        camerasc.lookAt(cameraTarget);
+        camerasc.position.x=3.85;
+        camerasc.position.y=-0.35;
+    }
+
+    function render() {
+        /*    inc += 0.008;
+           //var timer = Date.now() * 0.0005;
+           camera.position.x = Math.cos(inc) * 3;
+           camera.position.z = Math.sin(inc) * 3;*/
+        //camera.lookAt(cameraTarget);
+
+        renderersc.render(scenesc, camerasc);
+    }
+
+    /*function hide(ob) {
+        if (ob["domElement"].children[0].checked == false) {
+            meshs[ob.property].visible = false;
+            renderer.render(scene, camera);
+        } else {
+            meshs[ob.property].visible = true;
+            renderer.render(scene, camera);
+        }
+    }*/
+
+
+
+
+
+
+
+    /* $('.canvimg')[2].style = "height: 28.3vw;";
 
     inter = setInterval(function ()
     {
@@ -44,125 +312,21 @@ function initScheme() {
         window.ctxs[i] = canvas[i].getContext("2d");
         window.ctxs[i].fillStyle = "white";
         window.ctxs[i].lineWidth = 5;
-    }
+    } */
 
     $("#ready").click(function () {
-        for (j = 0; j < 3; j++) {
-            eval('canv' + (j + 1).toString()).style.display = 'none';
+        for (let j = 0; j < 3; j++) {
+            /* eval('canv' + (j + 1).toString()).style.display = 'none';
             try {
                 $(".canvimg")[0].className += 'done';
             } catch (err) {
                 //alert('Отрисовка уже выполнена');
                 break;
-            }
+            } */
             window.isEnded = true;
         }
     });
 
-    $("section div canvas").mousedown(function (e) {
-        e.preventDefault();
-        if (isEnded == false) {
-            window.down = true;
-            n = $(this)[0].id;
-            rect = e.target.getBoundingClientRect();
-            x = e.clientX - rect.left - 8;
-            y = e.clientY - rect.top - 8;
-
-            for (i = 0; i < 3; i++) {
-                if (n == ctxs[i].canvas.id) {
-                    window.gx = x;
-                    window.gy = y;
-
-                    /*  ctxs[i].beginPath();
-                     ctxs[i].arc(areas1[0].x, areas1[0].y, r, 0, 2 * Math.PI, 0);
-                     ctxs[i].stroke();
-                     ctxs[i].beginPath();
-                     ctxs[i].arc(areas1[1].x, areas1[1].y, r, 0, 2 * Math.PI, 0); //рисуем два круга по координатам в массиве радиуса r
-                     ctxs[i].stroke();
-                     ctxs[i].beginPath();
-                     ctxs[i].arc(areas1[2].x, areas1[2].y, r, 0, 2 * Math.PI, 0);
-                     ctxs[i].stroke(); */
-
-                    for (j = 0; j < areas1.length; j++) {
-                        dx = x - areas1[j].x;
-                        dy = y - areas1[j].y;
-                        if (dx * dx + dy * dy < r * r) {
-                            window.clickedCircles = j;
-                            //info.innerText += 'down:В круге №' + (j + 1) + '\n';
-                            break;
-                            //clickedCircles.push(j);
-                        } else {
-                            window.clickedCircles = undefined;
-                            //info.innerText += 'down:Не в круге №' + (j + 1) + '\n';
-                            //clickedCircles.splice(j, 1);
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-
-
-    }).mouseup(function (e) {
-        if (isEnded == false) {
-            window.down = false;
-            n = $(this)[0].id;
-
-            rect = e.target.getBoundingClientRect();
-            x = e.clientX - rect.left - 8;
-            y = e.clientY - rect.top - 8;
-
-            for (i = 0; i < 3; i++) {
-                if (n == ctxs[i].canvas.id) {
-                    /*thisarrlines = eval('lines' + n[4]);
-                    thisarrlines.push([gx, gy, window.endx, window.endy]);
-                    drawall(ctxs[i]);*/
-
-                    if (window.clickedCircles != undefined) {
-                        for (j = 0; j < areas1.length; j++) {
-                            dx = x - areas1[j].x;
-                            dy = y - areas1[j].y;
-                            if (dx * dx + dy * dy < r * r) {
-                                //info.innerText += 'up:В круге №' + (j + 1) + '\n';
-                                ctxs[i].beginPath();
-                                ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
-                                ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
-                                ctxs[i].lineTo(areas1[j].x, areas1[j].y);
-                                ctxs[i].stroke();
-                            } else {
-                                //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
-                                //clickedCircles = undefined;
-                            }
-                        }
-                    }
-                    break;
-                }
-            }
-        }
-
-    }).mouseout(function () {
-        window.down = false;
-    }).mouseover(function () {
-
-    });
-
-
-    $("section div canvas").mousemove(function (e) {
-        if (window.down == true) {
-            n = $(this)[0].id;
-            rect = e.target.getBoundingClientRect();
-            x = e.clientX - rect.left - 8;
-            y = e.clientY - rect.top - 8;
-            window.endx = x;
-            window.endy = y;
-            for (i = 0; i < 3; i++) {
-                if (n == ctxs[i].canvas.id) {
-                    drawline(ctxs[i], x, y);
-                    break;
-                }
-            }
-        }
-    });
 
     $("#default1").click(function () {
         if (isEnded) {
@@ -185,12 +349,12 @@ function initScheme() {
     $("#check1").click(function () {
         if (isEnded) {
             if ($(this)[0].checked) {
-                for (i = 1; i < 6; i++) {
+                for (let i = 1; i < 6; i++) {
                     eval('bolthideimg' + i).style.display = '';
                 }
             } else {
                 //for (j=0;j<3;j++) {document.getElementsByClassName("canvimgdone")[0].className = document.getElementsByClassName("canvimgdone")[0].className.substr(0,7);}
-                for (i = 1; i < 6; i++) {
+                for (let i = 1; i < 6; i++) {
                     eval('bolthideimg' + i).style.display = 'none';
                 }
             }
@@ -204,12 +368,12 @@ function initScheme() {
     $("#check2").click(function () {
         if (isEnded) {
             if ($(this)[0].checked) {
-                for (i = 1; i < 6; i++) {
+                for (let i = 1; i < 6; i++) {
                     eval('bolthideimg' + i + i).style.display = '';
                 }
             } else {
                 //for (j=0;j<3;j++) {document.getElementsByClassName("canvimgdone")[0].className = document.getElementsByClassName("canvimgdone")[0].className.substr(0,7);}
-                for (i = 1; i < 6; i++) {
+                for (let i = 1; i < 6; i++) {
                     eval('bolthideimg' + i + i).style.display = 'none';
                 }
             }
@@ -256,15 +420,15 @@ function drawline(ctx, x, y) {
 } // при движении мыши рисовать линию
 
 function drawall(ctx) {
-    for (i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
         if (n == ctxs[i].canvas.id) {
             ctx.beginPath();
-            thisarrlines = eval('lines' + n[4]);
-            for (i = 0; i < thisarrlines.length; i++) {
-                aa = thisarrlines[i][0];
-                bb = thisarrlines[i][1];
-                aa1 = thisarrlines[i][2];
-                bb1 = thisarrlines[i][3];
+            let thisarrlines = eval('lines' + n[4]);
+            for (let i = 0; i < thisarrlines.length; i++) {
+                let aa = thisarrlines[i][0];
+                let bb = thisarrlines[i][1];
+                let aa1 = thisarrlines[i][2];
+                let bb1 = thisarrlines[i][3];
                 //ctx.arc(134, 134, 10, 0, 2*Math.PI, 0);
                 //ctx.arc(288, 134, 10, 0, 2*Math.PI, 0);
                 ctx.moveTo(aa, bb);
