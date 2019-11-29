@@ -4,30 +4,6 @@
     z-index: 1;
 }
 
-#scheme1 {
-	/idth: 90%;
-    height: 100%;
-    position: relative;
-	/*width: 944px;
-	height: 450px;*/
-}
-
-#scheme1 div canvas {
-    display: block;
-	width: 100%;
-    height: 100%;
-}
-
-#scheme1 div canvas:hover {
-    cursor: url(../images/scheme/pen1.png) 0 3, auto;
-}
-
-#fieldscheme{
-    width: 100%;
-    height: 87%;
-}
-
-
 .canvimgdone {
     height: 15vw;
     margin: 2vw;
@@ -428,14 +404,10 @@ section {
     position:absolute;
     /*height: 16.3vw;
     width: 37.5vw;*/
-    /*margin: 1.5vw;*/
+    margin: 1.5vw;
     z-index: 3;
-    /*padding: 0.5vw;*/
+    padding: 0.5vw;
     border: 1px dashed black;
-	width: 330px;
-    height: 140px;
-    margin-left: 168px;
-    margin-top: 9px;
 }
 
 #canv2 {

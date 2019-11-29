@@ -59,6 +59,10 @@
             {
               "ID": "chat-side",
               "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
+              "tabs": []
             }
           ]
         }
@@ -110,7 +114,8 @@
                 "scheme",
                 "fieldBlock",
                 "route_map_field",
-                "tasks_routes_field"
+                "tasks_routes_field",
+                "technological_process_field"
               ]
             },
             {
@@ -121,6 +126,10 @@
             },
             {
               "ID": "chat-side",
+              "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -135,7 +144,9 @@
           "available_sides": [
             {
               "ID": "main-tabs",
-              "tabs": []
+              "tabs": [
+                "work_outside_the_system_field"
+              ]
             }
           ]
         },
@@ -189,7 +200,9 @@
           "available_sides": [
             {
               "ID": "main-tabs",
-              "tabs": []
+              "tabs": [
+                "production_task_field"
+              ]
             }
           ]
         },
@@ -202,6 +215,7 @@
                 "scheme",
                 "specification",
                 "route_map_field",
+                "production_task_field",
                 "tasks_routes_field"
               ]
             },
@@ -221,7 +235,9 @@
                 "fieldBlock",
                 "specification",
                 "route_map_field",
-                "tasks_routes_field"
+                "production_task_field",
+                "tasks_routes_field",
+                "technological_process_field"
               ]
             },
             {
@@ -230,6 +246,10 @@
             },
             {
               "ID": "chat-side",
+              "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -241,7 +261,14 @@
       "rounds": [
         {
           "round": 1,
-          "available_sides": []
+          "available_sides": [
+            {
+              "ID": "main-tabs",
+              "tabs": [
+                "work_outside_the_system_field"
+              ]
+            }
+          ]
         },
         {
           "round": 2,
@@ -250,6 +277,7 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
+                "production_task_field",
                 "tasks_routes_field"
               ]
             },
@@ -268,6 +296,7 @@
                 "scheme",
                 "fieldBlock",
                 "route_map_field",
+                "production_task_field",
                 "tasks_routes_field"
               ]
             },
@@ -339,8 +368,9 @@
                 "fieldBlock",
                 "specification",
                 "route_map_field",
+                "production_task_field",
                 "tasks_routes_field",
-                "production_task_field"
+                "technological_process_field"
               ]
             },
             {
@@ -395,7 +425,7 @@
       "name": "Создание маршрута заданий",
       "URL": "pages/create_task_route",
       "ID": "create_task_route-side",
-      "init": "",
+      "init": "initCreate_task_route",
       "parent": "body"
     }
   ],
@@ -430,7 +460,7 @@
       "ID": "scheme",
       "location": "main-tabs",
       "notify": "PdmOrStdHandler",
-      "init": "triggerschemeInit"
+      "init": "initScheme"
     },
     {
       "name": "ЭСИ",
@@ -457,12 +487,12 @@
       "init": "initTechnologistGuide"
     },
     {
-      "name": "Техпроцесс",
-      "URL": "",
-      "ID": "",
-      "location": "",
+      "name": "Рабочий стол. Техпроцесс",
+      "URL": "pages/technological_process_field",
+      "ID": "technological_process_field",
+      "location": "main-tabs",
       "notify": "",
-      "init": ""
+      "init": "technologicalProcessInit"
     },
     {
       "name": "Маршрутная карта",
@@ -495,6 +525,14 @@
       "location": "main-tabs",
       "notify": "",
       "init": "initProductionTaskField"
+    },
+    {
+      "name": "Работа вне системы",
+      "URL": "pages/work_outside_the_system",
+      "ID": "work_outside_the_system_field",
+      "location": "main-tabs",
+      "notify": "",
+      "init": ""
     }
   ]
 }

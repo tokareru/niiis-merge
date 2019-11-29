@@ -170,7 +170,7 @@ function showhideimage(arrayComp, obj)
 	}
 }
 
-function load3d(array, obj={0:{"checked":"true"}})
+function load3d(array, obj)
 {
     if (window.isEnded != undefined && window.isEnded == true)
     {
@@ -179,52 +179,34 @@ function load3d(array, obj={0:{"checked":"true"}})
             for (i=0;i<4;i++) {
                 if (array.indexOf('component_' + (i+1)) != -1)
                 {
-                    //meshs[stldata[i][2]].visible = true;
-					for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
-					{
-						MeshsLinesScheme[stldata[i][2]][j].visible = true;
-					}
+                    meshs[stldata[i][2]].visible = true;
                 }
             }
 
             for (i=0;i<3;i++) {
                 if (array.indexOf('std_component_' + (i+1)) != -1)
                 {
-                    //meshs[stldata[i+4][2]].visible = true;
-					for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
-					{
-						MeshsLinesScheme[stldata[i+4][2]][j].visible = true;
-					}
+                    meshs[stldata[i+4][2]].visible = true;
                 }
             }
-			if (typeof scene != "undefined") {window.renderer.render(scene, camera);}
-			window.renderersc.render(scenesc, camerasc);
+            window.renderer.render(scene, camera);
         }
         else
         {
             for (i=0;i<4;i++) {
                 if (array.indexOf('component_' + (i+1)) == -1)
                 {
-                    //meshs[stldata[i][2]].visible = false;
-					for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
-					{
-						MeshsLinesScheme[stldata[i][2]][j].visible = false;
-					}
+                    meshs[stldata[i][2]].visible = false;
                 }
             }
 
             for (i=0;i<3;i++) {
                 if (array.indexOf('std_component_' + (i+1)) == -1)
                 {
-                    //meshs[stldata[i+4][2]].visible = false;
-					for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
-					{
-						MeshsLinesScheme[stldata[i+4][2]][j].visible = false;
-					}
+                    meshs[stldata[i+4][2]].visible = false;
                 }
             }
-            if (typeof scene != "undefined") {window.renderer.render(scene, camera);}
-			window.renderersc.render(scenesc, camerasc);
+            window.renderer.render(scene, camera);
         }
     }
     else
