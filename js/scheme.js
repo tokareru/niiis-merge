@@ -208,7 +208,19 @@ export function initScheme() {
             scenesc.add(pleft1);
             scenesc.add( pleftgran1);
 
+            //добавляем весь чертеж
+            firstFieldInit()
         });
+    }
+    
+    function firstFieldInit() {
+        window.isEnded = true;
+        $("#left-accordion input").each(function () {
+            let arrayClicked = collectDataLabels(".left-side");
+            showhideimage(arrayClicked, $(this));
+            load3d(arrayClicked, $(this));
+        })
+        window.isEnded = false;
     }
 
     function addShadowedLight(x, y, z, color, intensity) {
