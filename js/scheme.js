@@ -216,6 +216,7 @@ export function initScheme() {
     }
 
     function firstFieldInit() {
+        let prev = window.isEnded;
         window.isEnded = true;
         $("#left-accordion input").each(function () {
             let arrayClicked = collectDataLabels(".left-side");

@@ -155,13 +155,14 @@ export function init3dField() {
     }
 
     function firstFieldInit() {
+        let prev = window.isEnded;
         window.isEnded = true;
         $("#left-accordion input").each(function () {
             let arrayClicked = collectDataLabels(".left-side");
             showhideimage(arrayClicked, $(this));
             load3d(arrayClicked, $(this));
         })
-        window.isEnded = false;
+        window.isEnded = prev;
     }
 
     function addShadowedLight(x, y, z, color, intensity) {
