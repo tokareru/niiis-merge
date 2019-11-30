@@ -18,8 +18,6 @@ export function initScheme() {
     window.isEnded = false;
 
 
-
-
     var container, stats;
 
     var cameraTarget;
@@ -65,7 +63,7 @@ export function initScheme() {
         document.getElementById("scheme1").appendChild(container);
 
         //window.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
-        window.camerasc = new THREE.OrthographicCamera( window.innerWidth*0.003 / - 2, window.innerWidth*0.003 / 2, window.innerHeight*0.003 / 2, window.innerHeight*0.003 / - 2, 1, 15 );
+        window.camerasc = new THREE.OrthographicCamera(window.innerWidth * 0.003 / -2, window.innerWidth * 0.003 / 2, window.innerHeight * 0.003 / 2, window.innerHeight * 0.003 / -2, 1, 15);
         camerasc.position.set(3, 0.15, 3);
 
         cameraTarget = new THREE.Vector3(0, 0.15, 0);
@@ -91,11 +89,9 @@ export function initScheme() {
         // ASCII file
         window.loader = new STLLoader();
 
-        for (let i=0;i<stldata.length;i++)
-        {
+        for (let i = 0; i < stldata.length; i++) {
             loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
         }
-
 
 
         // Colored binary STL
@@ -111,7 +107,7 @@ export function initScheme() {
 
         window.renderersc = new THREE.WebGLRenderer({antialias: true});
         renderersc.setPixelRatio(window.devicePixelRatio);
-        renderersc.setSize( $('#scheme1').width(), $('#scheme1').width()*9/16 );
+        renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
 
         renderersc.gammaInput = true;
         renderersc.gammaOutput = true;
@@ -127,12 +123,18 @@ export function initScheme() {
 
         //
 
-        window.addEventListener('resize', onWindowResize, false);
-
+        $(window).on('resize', onWindowResize);
+        $("#tabs li[aria-controls=\"scheme\"]").click(function () {
+            onWindowResize();
+        })
     }
+
     //-0.315
-    function loadSTL (src, color = 0x808080, arrmesh, pos = { x:1, y:0.2, z:1 }, rot = { x:-Math.PI / 2, y:0, z:Math.PI/4 }, scale = { x:0.5, y:0.5, z:0.5 }, angle = 20)
-    {
+    function loadSTL(src, color = 0x808080, arrmesh, pos = {x: 1, y: 0.2, z: 1}, rot = {
+        x: -Math.PI / 2,
+        y: 0,
+        z: Math.PI / 4
+    }, scale = {x: 0.5, y: 0.5, z: 0.5}, angle = 20) {
 
         loader.load(src, function (geometry) {
 
@@ -141,11 +143,11 @@ export function initScheme() {
             var mesh = new THREE.Mesh(geometry, material);
 
             //добавляем грани на модель
-            var geometry = new THREE.EdgesGeometry( mesh.geometry, angle );
+            var geometry = new THREE.EdgesGeometry(mesh.geometry, angle);
 
-            var material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+            var material = new THREE.LineBasicMaterial({color: 0x000000});
 
-            var wireframe = new THREE.LineSegments( geometry, material );
+            var wireframe = new THREE.LineSegments(geometry, material);
             wireframe.rotation.set(rot.x, rot.y, rot.z);
             wireframe.scale.set(scale.x, scale.y, scale.z);
             wireframe.position.set(pos.x, pos.y, pos.z);
@@ -167,8 +169,8 @@ export function initScheme() {
             pleftgran.position.x = 1;
             pleft.position.z = -1;
             pleftgran.position.z = -1;
-            pleft.rotation.z = Math.PI-Math.PI/4;
-            pleftgran.rotation.z = Math.PI-Math.PI/4;
+            pleft.rotation.z = Math.PI - Math.PI / 4;
+            pleftgran.rotation.z = Math.PI - Math.PI / 4;
 
             var pleft1 = mesh.clone();
             var pleftgran1 = wireframe.clone();
@@ -182,8 +184,8 @@ export function initScheme() {
             pleft1.position.y = -0.7;
             pleftgran1.position.y = -0.7;
 
-            pleft1.rotation.y = Math.PI/4;
-            pleftgran1.rotation.y = Math.PI/4;
+            pleft1.rotation.y = Math.PI / 4;
+            pleftgran1.rotation.y = Math.PI / 4;
 
             pleft1.rotation.x = 0;
             pleftgran1.rotation.x = 0;
@@ -191,7 +193,7 @@ export function initScheme() {
             pleft1.rotation.z = 0;
             pleftgran1.rotation.z = 0;
 
-            window.MeshsLinesScheme[arrmesh]=[];
+            window.MeshsLinesScheme[arrmesh] = [];
             window.MeshsLinesScheme[arrmesh].push(mesh);
             window.MeshsLinesScheme[arrmesh].push(wireframe);
 
@@ -202,17 +204,17 @@ export function initScheme() {
             window.MeshsLinesScheme[arrmesh].push(pleftgran1);
 
             scenesc.add(mesh);
-            scenesc.add( wireframe );
+            scenesc.add(wireframe);
             scenesc.add(pleft);
-            scenesc.add( pleftgran );
+            scenesc.add(pleftgran);
             scenesc.add(pleft1);
-            scenesc.add( pleftgran1);
+            scenesc.add(pleftgran1);
 
             //добавляем весь чертеж
             firstFieldInit()
         });
     }
-    
+
     function firstFieldInit() {
         window.isEnded = true;
         $("#left-accordion input").each(function () {
@@ -245,14 +247,12 @@ export function initScheme() {
     }
 
     function onWindowResize() {
-
         // camerasc.aspect = window.innerWidth / window.innerHeight;
         camerasc.updateProjectionMatrix();
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
-        renderersc.setSize( $('#scheme1').width(), $('#scheme1').width()*9/16 );
-        //scheme1.children[0].children[0].style="width: 100%; height: 100%";
-
+        renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
+        //scheme1.children[0].children[0].style = "width: 100%; height: 100%";
     }
 
     function animate() {
@@ -261,11 +261,10 @@ export function initScheme() {
         //stats.update();
     }
 
-    function look()
-    {
+    function look() {
         camerasc.lookAt(cameraTarget);
-        camerasc.position.x=3.85;
-        camerasc.position.y=-0.35;
+        camerasc.position.x = 3.85;
+        camerasc.position.y = -0.35;
     }
 
     function render() {
@@ -287,11 +286,6 @@ export function initScheme() {
             renderer.render(scene, camera);
         }
     }*/
-
-
-
-
-
 
 
     /* $('.canvimg')[2].style = "height: 28.3vw;";

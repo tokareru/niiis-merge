@@ -35,7 +35,7 @@ export function init3dField() {
     init();
     animate();
 
-    var gui = new dat.GUI({autoPlace: false, width: 100+'%'});
+    var gui = new dat.GUI({autoPlace: false, width: 100 + '%'});
     document.getElementById("canvas3D").appendChild(gui.domElement);
     gui.domElement.id = 'gui';
 
@@ -74,11 +74,9 @@ export function init3dField() {
         // ASCII file
         window.loader = new STLLoader();
 
-        for (let i=0;i<stldata.length;i++)
-        {
+        for (let i = 0; i < stldata.length; i++) {
             loadSTL(stldata[i][0], stldata[i][1], stldata[i][2]);
         }
-
 
 
         // Colored binary STL
@@ -94,7 +92,7 @@ export function init3dField() {
 
         window.renderer = new THREE.WebGLRenderer({antialias: true});
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize($('#canvas3D').width(),($('#canvas3D').width())*9/16);
+        renderer.setSize($('#canvas3D').width(), ($('#canvas3D').width()) * 9 / 16);
 
         renderer.gammaInput = true;
         renderer.gammaOutput = true;
@@ -110,12 +108,17 @@ export function init3dField() {
 
         //
 
-        window.addEventListener('resize', onWindowResize, false);
-
+        $(window).on('resize', onWindowResize);
+        $("#tabs li[aria-controls=\"fieldBlock\"]").click(function () {
+            onWindowResize();
+        })
     }
 
-    function loadSTL (src, color = 0x808080, arrmesh, pos = { x:0, y:-0.315, z:0 }, rot = { x:-Math.PI / 2, y:0, z:0 }, scale = { x:0.5, y:0.5, z:0.5 }, angle = 20)
-    {
+    function loadSTL(src, color = 0x808080, arrmesh, pos = {x: 0, y: -0.315, z: 0}, rot = {
+        x: -Math.PI / 2,
+        y: 0,
+        z: 0
+    }, scale = {x: 0.5, y: 0.5, z: 0.5}, angle = 20) {
 
         loader.load(src, function (geometry) {
 
@@ -124,11 +127,11 @@ export function init3dField() {
             var mesh = new THREE.Mesh(geometry, material);
 
             //добавляем грани на модель
-            var geometry = new THREE.EdgesGeometry( mesh.geometry, angle );
+            var geometry = new THREE.EdgesGeometry(mesh.geometry, angle);
 
-            var material = new THREE.LineBasicMaterial( { color: 0x000000 } );
+            var material = new THREE.LineBasicMaterial({color: 0x000000});
 
-            var wireframe = new THREE.LineSegments( geometry, material );
+            var wireframe = new THREE.LineSegments(geometry, material);
             wireframe.rotation.set(rot.x, rot.y, rot.z);
             wireframe.scale.set(scale.x, scale.y, scale.z);
             wireframe.position.set(pos.x, pos.y, pos.z);
@@ -171,14 +174,12 @@ export function init3dField() {
     }
 
     function onWindowResize() {
-
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
-        renderer.setSize($('#canvas3D').width(),($('#canvas3D').width())*9/16);
-        canvas3D.children[0].children[0].style="width: 100%; height: 100%";
-
+        renderer.setSize($('#canvas3D').width(), ($('#canvas3D').width()) * 9 / 16);
+        canvas3D.children[0].children[0].style = "width: 100%; height: 100%";
     }
 
     function animate() {
