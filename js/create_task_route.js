@@ -9,6 +9,18 @@ function initCreate_task_route() {
             $('.slider_button_create').trigger('click');
         }
     });
+
+    $('.ctr_cell').on('click', function () {
+       $(this).find('.ctr_div_active').removeClass('ctr_div_active').addClass('ctr_div_hidden');
+       $(this).find('.ctr_input_hidden').removeClass('ctr_input_hidden').addClass('ctr_input_active')
+           .focus();
+    });
+    $('.ctr_cell').on('focusout',  function () {
+        console.log('focusout');
+        $(this).find('.ctr_input_active').addClass('ctr_input_hidden').removeClass('ctr_input_active');
+        $(this).find('.ctr_div_hidden').addClass('ctr_div_active').removeClass('ctr_div_hidden');
+        $(this).find('.ctr_div_active').text( $(this).find('.ctr_input_hidden').val());
+    });
 }
 
 function addRows(count_rows) {
@@ -19,8 +31,11 @@ function addRows(count_rows) {
             '<input type="checkbox"' +
             '>' +
             '</td>' +
-            '<td></td>' +
-                '<td>'+
+            '<td class="ctr_cell"><div class="ctr_div_active"></div>' +
+            '<input type="text" class="ctr_input_hidden">' +
+            '</td>' +
+                '<td class="ctr_cell"><div class="ctr_div_active"></div>' +
+            '<input type="text" class="ctr_input_hidden">'+
             '</td>' +
             '<td>' +
             '<select class="form-control form-control-sm">' +
