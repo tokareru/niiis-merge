@@ -2,7 +2,7 @@ import * as THREE from './3D/stl/three.module.js';
 import {STLLoader} from './3D/stl/STLLoader.js';
 
 export function initScheme() {
-    /* window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
+    window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
     window.lines2 = [];
     window.lines3 = [];
 
@@ -12,7 +12,7 @@ export function initScheme() {
     window.r = 10;
     window.inCircle;
     window.clickedCircles;
-    window.ctxs = []; */
+    window.ctxs = [];
     //window.imageid = {"std_component_1": "bolthideimg1", "std_component_2": "bolthideimg2", "std_component_3": "bolthideimg3"};
 
     window.isEnded = false;
@@ -145,7 +145,7 @@ export function initScheme() {
             //добавляем грани на модель
             var geometry = new THREE.EdgesGeometry(mesh.geometry, angle);
 
-            var material = new THREE.LineBasicMaterial({color: 0x000000});
+            var material = new THREE.LineBasicMaterial({color: 0x808080});
 
             var wireframe = new THREE.LineSegments(geometry, material);
             wireframe.rotation.set(rot.x, rot.y, rot.z);
@@ -299,14 +299,13 @@ export function initScheme() {
             clearInterval(inter);
         }
     }, 10);
-
+*/
     function resizecanv()
     {
-        for (i = 0; i < 3; i++)
+        for (let i = 0; i < $("#drawcanv").length; i++)
         {
-            $('canvas')[i].width = $(".canvimg")[i].width;
-            $('canvas')[i].height = $(".canvimg")[i].height;
-            window.ctxs[i].lineWidth = 3;
+            $("#drawcanv")[i].width = $("#field3D div div canvas")[i].width;
+            $("#drawcanv")[i].height = $("#field3D div div canvas")[i].height;
         }
     }
 
@@ -314,12 +313,14 @@ export function initScheme() {
         resizecanv();
     });
 
-    canvas = document.getElementsByTagName("canvas");
-    for (i = 0; i < 3; i++) {
-        window.ctxs[i] = canvas[i].getContext("2d");
+    for (let i = 0; i < $("#drawcanv").length; i++) {
+        window.ctxs[i] = $("#drawcanv")[i].getContext("2d");
         window.ctxs[i].fillStyle = "white";
         window.ctxs[i].lineWidth = 5;
-    } */
+        $("#drawcanv")[i].width = $("#field3D div div canvas")[i].width;
+        $("#drawcanv")[i].height = $("#field3D div div canvas")[i].height;
+    }
+
 
     $("#ready").click(function () {
         for (let j = 0; j < 3; j++) {
@@ -333,6 +334,112 @@ export function initScheme() {
             window.isEnded = true;
         }
     });
+
+    $("#drawcanv").mousedown(function (e) {
+        e.preventDefault();
+        if (isEnded == false) {
+            window.down = true;
+            let n = $(this)[0].id;
+            let rect = e.target.getBoundingClientRect();
+            let x = e.clientX - rect.left - 8;
+            let y = e.clientY - rect.top - 8;
+
+            for (let i = 0; i < 3; i++) {
+                if (n == ctxs[i].canvas.id) {
+                    window.gx = x;
+                    window.gy = y;
+
+                    /*  ctxs[i].beginPath();
+                     ctxs[i].arc(areas1[0].x, areas1[0].y, r, 0, 2 * Math.PI, 0);
+                     ctxs[i].stroke();
+                     ctxs[i].beginPath();
+                     ctxs[i].arc(areas1[1].x, areas1[1].y, r, 0, 2 * Math.PI, 0); //рисуем два круга по координатам в массиве радиуса r
+                     ctxs[i].stroke();
+                     ctxs[i].beginPath();
+                     ctxs[i].arc(areas1[2].x, areas1[2].y, r, 0, 2 * Math.PI, 0);
+                     ctxs[i].stroke(); */
+
+                    for (let j = 0; j < areas1.length; j++) {
+                        let dx = x - areas1[j].x;
+                        let dy = y - areas1[j].y;
+                        if (dx * dx + dy * dy < r * r) {
+                            window.clickedCircles = j;
+                            //info.innerText += 'down:В круге №' + (j + 1) + '\n';
+                            break;
+                            //clickedCircles.push(j);
+                        } else {
+                            window.clickedCircles = undefined;
+                            //info.innerText += 'down:Не в круге №' + (j + 1) + '\n';
+                            //clickedCircles.splice(j, 1);
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+
+    }).mouseup(function (e) {
+        if (isEnded == false) {
+            window.down = false;
+            let n = $(this)[0].id;
+
+            let rect = e.target.getBoundingClientRect();
+            let x = e.clientX - rect.left - 8;
+            let y = e.clientY - rect.top - 8;
+
+            for (let i = 0; i < 3; i++) {
+                if (n == ctxs[i].canvas.id) {
+                    /*thisarrlines = eval('lines' + n[4]);
+                    thisarrlines.push([gx, gy, window.endx, window.endy]);
+                    drawall(ctxs[i]);*/
+
+                    if (window.clickedCircles != undefined) {
+                        for (let j = 0; j < areas1.length; j++) {
+                            let dx = x - areas1[j].x;
+                            let dy = y - areas1[j].y;
+                            if (dx * dx + dy * dy < r * r) {
+                                //info.innerText += 'up:В круге №' + (j + 1) + '\n';
+                                ctxs[i].beginPath();
+                                ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
+                                ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
+                                ctxs[i].lineTo(areas1[j].x, areas1[j].y);
+                                ctxs[i].stroke();
+                            } else {
+                                //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
+                                //clickedCircles = undefined;
+                            }
+                        }
+                    }
+                    break;
+                }
+            }
+        }
+
+    }).mouseout(function () {
+        window.down = false;
+    }).mouseover(function () {
+
+    });
+
+
+    $("#drawcanv").mousemove(function (e) {
+        if (window.down == true) {
+            let n = $(this)[0].id;
+            let rect = e.target.getBoundingClientRect();
+            let x = e.clientX - rect.left - 8;
+            let y = e.clientY - rect.top - 8;
+            window.endx = x;
+            window.endy = y;
+            for (let i = 0; i < 3; i++) {
+                if (n == ctxs[i].canvas.id) {
+                    drawline(ctxs[i], x, y);
+                    break;
+                }
+            }
+        }
+    });
+
 
 
     $("#default1").click(function () {
