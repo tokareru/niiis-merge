@@ -18,7 +18,7 @@
     height: 100%;
 }
 
-#scheme1 div canvas:hover {
+#drawcanv:hover {
     cursor: url(../images/scheme/pen1.png) 0 3, auto;
 }
 
@@ -27,6 +27,10 @@
     height: 87%;
 }
 
+#drawcanv {
+    position:absolute;
+    border: 1px dashed black;
+}
 
 .canvimgdone {
     height: 15vw;
