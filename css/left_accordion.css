@@ -43,7 +43,7 @@
 .my_ui-accordion-content {
     /*margin: 5px;*/
     background-color: rgba(255, 255, 255, 0.41);
-    //overflow: auto;
+    overflow: auto;
 }
 
 .my_ui-accordion-content-active {
@@ -55,10 +55,6 @@
     background-color: white;
     padding: 1.5% 0% 0% 2.5%;
     border: 0px;
-}
-
-.ui-accordion .ui-accordion-content {
-
 }
 
 #pdm_field.label {
@@ -145,7 +141,7 @@ fieldset p:hover{
 }
 
 .left_accord_div{
-    overflow: visible !important;
+    overflow-y: scroll !important;
 }
 
 .left_accord_div::-webkit-scrollbar {
