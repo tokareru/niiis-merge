@@ -236,7 +236,6 @@ export function initScheme() {
         let prev = window.isEnded;
         window.isEnded = true;
         let array = ["component_1", "component_2", "component_3", "component_4", "std_component_1", "std_component_2", "std_component_3"];
-        console.log(array)
         for (let i = 0; i < 4; i++) {
             if (array.indexOf('component_' + (i + 1)) != -1) {
                 //meshs[stldata[i][2]].visible = true;
@@ -401,7 +400,7 @@ export function initScheme() {
                     window.gx = x;
                     window.gy = y;
 
-                    for (let j=0;j<areas1.length;j++)
+                    /*for (let j=0;j<areas1.length;j++)
                     {
                         ctxs[i].beginPath();
                         ctxs[i].arc(areas1[j].x, areas1[j].y, r, 0, 2 * Math.PI, 0);
@@ -421,7 +420,7 @@ export function initScheme() {
                             //info.innerText += 'down:Не в круге №' + (j + 1) + '\n';
                             //clickedCircles.splice(j, 1);
                         }
-                    }
+                    }*/
                     break;
                 }
             }
