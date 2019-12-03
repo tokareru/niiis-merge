@@ -157,11 +157,29 @@ export function init3dField() {
     function firstFieldInit() {
         let prev = window.isEnded;
         window.isEnded = true;
-        $("#left-accordion input").each(function () {
-            let arrayClicked = collectDataLabels(".left-side");
-            showhideimage(arrayClicked, $(this));
-            load3d(arrayClicked, $(this));
-        })
+        let array = ["component_1", "component_2", "component_3", "component_4", "std_component_1", "std_component_2", "std_component_3"];
+        console.log(array)
+        for (let i = 0; i < 4; i++) {
+            if (array.indexOf('component_' + (i + 1)) != -1) {
+                //meshs[stldata[i][2]].visible = true;
+                for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
+                    MeshsLinesScheme[stldata[i][2]][j].visible = true;
+                }
+            }
+        }
+
+        for (let i = 0; i < 3; i++) {
+            if (array.indexOf('std_component_' + (i + 1)) != -1) {
+                //meshs[stldata[i+4][2]].visible = true;
+                for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
+                    MeshsLinesScheme[stldata[i + 4][2]][j].visible = true;
+                }
+            }
+        }
+        if (typeof scene != "undefined") {
+            window.renderer.render(scene, camera);
+        }
+        window.renderersc.render(scenesc, camerasc);
         window.isEnded = prev;
     }
 
