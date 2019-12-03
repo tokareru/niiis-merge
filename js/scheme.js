@@ -62,6 +62,20 @@ export function initScheme() {
         container = document.createElement('div');
         document.getElementById("scheme1").appendChild(container);
 
+        $('#drawcanv').droppable(
+            {
+                drop: function (event, ui) {
+                    let $checkboxid1 = $('#pdm_field').find("p").last();
+                    let $checkboxid2 = $('#std_field').find("p").last();
+                    $checkboxid1.find("input").click();
+                    $checkboxid2.find("input").click();
+                    let $children = ui.draggable[0]['children'][1];
+                    let id = $children.id;
+                    $('#' + id).click();
+
+                }
+            }
+        );
         //window.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
         window.camerasc = new THREE.OrthographicCamera(window.innerWidth * 0.003 / -2, window.innerWidth * 0.003 / 2, window.innerHeight * 0.003 / 2, window.innerHeight * 0.003 / -2, 1, 15);
         camerasc.position.set(3, 0.15, 3);
