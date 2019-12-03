@@ -67,10 +67,16 @@ export function initScheme() {
                 drop: function (event, ui) {
                     let $checkboxid1 = $('#pdm_field').find("p").last();
                     let $checkboxid2 = $('#std_field').find("p").last();
-                    $checkboxid1.find("input").click();
-                    $checkboxid2.find("input").click();
+
                     let $children = ui.draggable[0]['children'][1];
                     let id = $children.id;
+                    if(id.indexOf('std') !== -1)
+                    {
+                        $checkboxid2.find("input").click();
+                    }
+                    else {
+                        $checkboxid1.find("input").click();
+                    }
                     $('#' + id).click();
 
                 }
@@ -232,30 +238,12 @@ export function initScheme() {
     function firstFieldInit() {
         let prev = window.isEnded;
         window.isEnded = true;
-        let array = ["component_1", "component_2", "component_3", "component_4", "std_component_1", "std_component_2", "std_component_3"];
-        console.log(array)
-        for (let i = 0; i < 4; i++) {
-            if (array.indexOf('component_' + (i + 1)) != -1) {
-                //meshs[stldata[i][2]].visible = true;
-                for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
-                    MeshsLinesScheme[stldata[i][2]][j].visible = true;
-                }
-            }
-        }
-
-        for (let i = 0; i < 3; i++) {
-            if (array.indexOf('std_component_' + (i + 1)) != -1) {
-                //meshs[stldata[i+4][2]].visible = true;
-                for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
-                    MeshsLinesScheme[stldata[i + 4][2]][j].visible = true;
-                }
-            }
-        }
-        if (typeof scene != "undefined") {
-            window.renderer.render(scene, camera);
-        }
-        window.renderersc.render(scenesc, camerasc);
-        window.isEnded = prev;
+        $("#left-accordion input").each(function () {
+            let arrayClicked = collectDataLabels(".left-side");
+            showhideimage(arrayClicked, $(this));
+            load3d(arrayClicked, $(this));
+        })
+        window.isEnded = false;
     }
 
     function addShadowedLight(x, y, z, color, intensity) {
@@ -332,14 +320,16 @@ export function initScheme() {
         }
     }, 10);
 */
-    function resizecanv() {
-        for (let i = 0; i < $("#drawcanv").length; i++) {
+    function resizecanv()
+    {
+        for (let i = 0; i < $("#drawcanv").length; i++)
+        {
             $("#drawcanv")[i].width = $("#field3D div div canvas")[i].width;
             $("#drawcanv")[i].height = $("#field3D div div canvas")[i].height;
         }
     }
 
-    $(window).resize(function () {
+    $(window).resize(function() {
         resizecanv();
     });
 
@@ -469,6 +459,7 @@ export function initScheme() {
             }
         }
     });
+
 
 
     $("#default1").click(function () {
