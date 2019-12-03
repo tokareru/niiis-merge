@@ -1,10 +1,18 @@
 function createPDM(event, json_Role_and_Round) {
     set_PDM_or_STD("json/PDM_images.json", "#left-accordion", "#pdm_field");
+    //$('#left-accordion').find('.pdm_draggable').draggable();
 }
 
 function createSTD(event, json_Role_and_Round) {
     set_PDM_or_STD("json/stdPDM_images.json", "#left-accordion", "#std_field");
 }
+
+$(function () {
+    $('#btn_test').on('click', function () {
+        console.log('len ' + $('#left-accordion').find('.pdm_draggable').length);
+       $('.pdm_draggable').draggable();
+    });
+});
 
 function set_PDM_or_STD(imagesURL, accordID, fieldID) {
     // получем и устанавливаем картинки в поле pdm или std
@@ -30,7 +38,7 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
 function addNewComponent(data, accordID, fieldID) {
     let field = $(accordID + " " + fieldID + " fieldset");
     field.append(
-        "<p><label for=\"" + data.ID + "\">" +
+        "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
         "<img src=\"" + data.IMG + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
         " name=\"" + data.ID +
         "\" id=\"" + data.ID + "\">" + "</p>"
@@ -40,6 +48,22 @@ function addNewComponent(data, accordID, fieldID) {
 
 
 function makeCheckbox(fieldID) {
+
+    $('#left-accordion').find('.pdm_draggable').draggable(
+        {
+            helper: 'clone'
+        }
+    );
+  /*  $('#scheme1').droppable(
+        {
+            drop: function (event, ui) {
+                console.log('dropped');
+                $(this).css({'background-color': 'yellow'})
+                    .find('p').text('dropped!');
+            }
+        }
+    );*/
+
     let $checkboxid = $(fieldID).find("p").last();
 
     let label = $checkboxid.find("label");
@@ -82,7 +106,6 @@ function makeCheckbox(fieldID) {
 
     $checkboxid.find("input").click(function (e) {
         let arrayClicked = collectDataLabels(".left-side");
-        console.log(arrayClicked)
         showhideimage(arrayClicked, $(this));
         load3d(arrayClicked, $(this));
     });
