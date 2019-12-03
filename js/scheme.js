@@ -6,10 +6,10 @@ export function initScheme() {
     window.lines2 = [];
     window.lines3 = [];
 
-    window.areas1 = [{x: 134, y: 134}, {x: 288, y: 134}, {x: 288, y: 230}]; // массив круглых областей в которых происходит клик
+    window.areas1 = []; // массив круглых областей в которых происходит клик
     window.areas2 = [];
     window.areas3 = [];
-    window.r = 10;
+    window.r = 5;
     window.inCircle;
     window.clickedCircles;
     window.ctxs = [];
@@ -17,6 +17,7 @@ export function initScheme() {
 
     window.isEnded = false;
 
+    createCoor();
 
     var container, stats;
 
@@ -324,8 +325,19 @@ export function initScheme() {
     {
         for (let i = 0; i < $("#drawcanv").length; i++)
         {
+<<<<<<< HEAD
+=======
+            //$("#field3D div div canvas")[i].width *= 1.2;
+            //$("#field3D div div canvas")[i].height *= 1.2;
+            //$("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth;
+            //$("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
+
+>>>>>>> eb5dfd5e74803163b71ce5e2e8f1bf64915f7384
             $("#drawcanv")[i].width = $("#field3D div div canvas")[i].width;
             $("#drawcanv")[i].height = $("#field3D div div canvas")[i].height;
+            $("#field3D div div canvas")[i].style = "";
+            //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
+            window.ctxs[i].lineWidth = 2;
         }
     }
 
@@ -335,10 +347,17 @@ export function initScheme() {
 
     for (let i = 0; i < $("#drawcanv").length; i++) {
         window.ctxs[i] = $("#drawcanv")[i].getContext("2d");
-        window.ctxs[i].fillStyle = "white";
-        window.ctxs[i].lineWidth = 5;
+        //$("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth;
+        //$("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
+
+        //$("#field3D div div canvas")[i].width *= 1.2;
+        //$("#field3D div div canvas")[i].height *= 1.2;
         $("#drawcanv")[i].width = $("#field3D div div canvas")[i].width;
         $("#drawcanv")[i].height = $("#field3D div div canvas")[i].height;
+        $("#field3D div div canvas")[i].style = "";
+        //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
+        window.ctxs[i].fillStyle = "white";
+        window.ctxs[i].lineWidth = 2;
     }
 
 
@@ -361,23 +380,20 @@ export function initScheme() {
             window.down = true;
             let n = $(this)[0].id;
             let rect = e.target.getBoundingClientRect();
-            let x = e.clientX - rect.left - 8;
-            let y = e.clientY - rect.top - 8;
+            let x = e.clientX - rect.left - 1;
+            let y = e.clientY - rect.top - 1;
 
             for (let i = 0; i < 3; i++) {
                 if (n == ctxs[i].canvas.id) {
                     window.gx = x;
                     window.gy = y;
 
-                    /*  ctxs[i].beginPath();
-                     ctxs[i].arc(areas1[0].x, areas1[0].y, r, 0, 2 * Math.PI, 0);
-                     ctxs[i].stroke();
-                     ctxs[i].beginPath();
-                     ctxs[i].arc(areas1[1].x, areas1[1].y, r, 0, 2 * Math.PI, 0); //рисуем два круга по координатам в массиве радиуса r
-                     ctxs[i].stroke();
-                     ctxs[i].beginPath();
-                     ctxs[i].arc(areas1[2].x, areas1[2].y, r, 0, 2 * Math.PI, 0);
-                     ctxs[i].stroke(); */
+                    for (let j=0;j<areas1.length;j++)
+                    {
+                        ctxs[i].beginPath();
+                        ctxs[i].arc(areas1[j].x, areas1[j].y, r, 0, 2 * Math.PI, 0);
+                        ctxs[i].stroke();
+                    }
 
                     for (let j = 0; j < areas1.length; j++) {
                         let dx = x - areas1[j].x;
@@ -405,26 +421,28 @@ export function initScheme() {
             let n = $(this)[0].id;
 
             let rect = e.target.getBoundingClientRect();
-            let x = e.clientX - rect.left - 8;
-            let y = e.clientY - rect.top - 8;
+            let x = e.clientX - rect.left - 1;
+            let y = e.clientY - rect.top - 1;
 
             for (let i = 0; i < 3; i++) {
                 if (n == ctxs[i].canvas.id) {
                     /*thisarrlines = eval('lines' + n[4]);
                     thisarrlines.push([gx, gy, window.endx, window.endy]);
                     drawall(ctxs[i]);*/
-
                     if (window.clickedCircles != undefined) {
                         for (let j = 0; j < areas1.length; j++) {
                             let dx = x - areas1[j].x;
                             let dy = y - areas1[j].y;
                             if (dx * dx + dy * dy < r * r) {
                                 //info.innerText += 'up:В круге №' + (j + 1) + '\n';
+                                if (areas1[j].arr.indexOf(window.clickedCircles) == -1) {continue;}
+                                lines1.push([areas1[clickedCircles].x, areas1[clickedCircles].y, areas1[j].x, areas1[j].y]);
                                 ctxs[i].beginPath();
                                 ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
                                 ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
                                 ctxs[i].lineTo(areas1[j].x, areas1[j].y);
                                 ctxs[i].stroke();
+
                             } else {
                                 //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
                                 //clickedCircles = undefined;
@@ -447,8 +465,8 @@ export function initScheme() {
         if (window.down == true) {
             let n = $(this)[0].id;
             let rect = e.target.getBoundingClientRect();
-            let x = e.clientX - rect.left - 8;
-            let y = e.clientY - rect.top - 8;
+            let x = e.clientX - rect.left - 1;
+            let y = e.clientY - rect.top - 1;
             window.endx = x;
             window.endy = y;
             for (let i = 0; i < 3; i++) {
@@ -574,5 +592,19 @@ function drawall(ctx) {
     }
 
 } // нарисовать все линии после очистки canvas
+
+function createCoor()
+{
+    let delta = 0;
+    let m = 1;
+    let c = [{x: 134, y: 134, arr:[2]}, {x: 288, y: 134, arr:[]}, {x: 288, y: 230, arr:[0]}];
+
+    for (let i=0;i<c.length;i++)
+    {
+        let aaa={x: m*c[i].x+delta, y: m*c[i].y+delta, arr: c[i].arr};
+        areas1.push(aaa);
+    }
+
+}
 
 
