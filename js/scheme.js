@@ -84,9 +84,9 @@ export function initScheme() {
             }
         );
 
-
         //window.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
-        window.camerasc = new THREE.OrthographicCamera($("#fcheme")[0].clientWidth * 0.004 / -2, $("#fcheme")[0].clientWidth * 0.004 / 2, $("#fcheme")[0].clientHeight * 0.004 / 2, $("#fcheme")[0].clientHeight * 0.004 / -2, 1, 15);
+        //window.camerasc = new THREE.OrthographicCamera(window.innerWidth * 0.003 / -2, window.innerWidth * 0.003 / 2, window.innerHeight * 0.003 / 2, window.innerHeight * 0.003 / -2, 1, 15);
+        window.camerasc = new THREE.OrthographicCamera($("#field3D")[0].clientWidth * 0.004 / -2, $("#field3D")[0].clientWidth * 0.004 / 2, $("#field3D")[0].clientHeight * 0.004 / 2, $("#field3D")[0].clientHeight * 0.004 / -2, 1, 15);
         camerasc.position.set(3, 0.15, 3);
 
         cameraTarget = new THREE.Vector3(0, 0.15, 0);
@@ -129,7 +129,7 @@ export function initScheme() {
         // renderer
 
         window.renderersc = new THREE.WebGLRenderer({antialias: true, canvas: topcanv});
-        renderersc.setPixelRatio(window.devicePixelRatio);
+        //renderersc.setPixelRatio(window.devicePixelRatio);
         renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
 
         renderersc.gammaInput = true;
@@ -267,7 +267,6 @@ export function initScheme() {
         window.isEnded = false;
     }
 
-
     function addShadowedLight(x, y, z, color, intensity) {
 
         var directionalLight = new THREE.DirectionalLight(color, intensity);
@@ -290,7 +289,7 @@ export function initScheme() {
     }
 
     function onWindowResize() {
-        // camerasc.aspect = window.innerWidth / window.innerHeight;
+        //camerasc.aspect = window.innerWidth / window.innerHeight;
         camerasc.updateProjectionMatrix();
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
@@ -348,13 +347,13 @@ export function initScheme() {
         {
             //$("#field3D div div canvas")[i].width *= 1.2;
             //$("#field3D div div canvas")[i].height *= 1.2;
-            $("#fcheme div div canvas")[i].width = $("#fcheme")[0].clientWidth;
-            $("#fcheme div div canvas")[i].height = $("#fcheme")[0].clientHeight;
+            $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth;
+            $("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
 
-            $("#drawcanv")[i].width = $("#fcheme")[0].clientWidth;
-            $("#drawcanv")[i].height = $("#fcheme")[0].clientHeight;
-            $("#fcheme div div canvas")[i].style = "";
-            renderersc.setSize($("#fcheme")[0].clientWidth, $("#fcheme")[0].clientHeight);
+            $("#drawcanv")[i].width = $("#field3D")[0].clientWidth;
+            $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
+            $("#field3D div div canvas")[i].style = "";
+            renderersc.setSize($("#field3D")[0].clientWidth, $("#field3D")[0].clientHeight);
             //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
             window.ctxs[i].lineWidth = 2;
         }
@@ -366,18 +365,19 @@ export function initScheme() {
 
     for (let i = 0; i < $("#drawcanv").length; i++) {
         window.ctxs[i] = $("#drawcanv")[i].getContext("2d");
-        $("#fcheme div div canvas")[i].width = $("#fcheme")[0].clientWidth;
-        $("#fcheme div div canvas")[i].height = $("#fcheme")[0].clientHeight;
+        $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth;
+        $("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
 
         //$("#field3D div div canvas")[i].width *= 1.2;
         //$("#field3D div div canvas")[i].height *= 1.2;
-        $("#drawcanv")[i].width = $("#fcheme")[0].clientWidth;
-        $("#drawcanv")[i].height = $("#fcheme")[0].clientHeight;
-        $("#fcheme div div canvas")[i].style = "";
-        renderersc.setSize($("#fcheme")[0].clientWidth, $("#fcheme")[0].clientHeight);
+        $("#drawcanv")[i].width = $("#field3D")[0].clientWidth;
+        $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
+        $("#field3D div div canvas")[i].style = "";
+        renderersc.setSize($("#field3D")[0].clientWidth, $("#field3D")[0].clientHeight);
         //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
         window.ctxs[i].fillStyle = "white";
         window.ctxs[i].lineWidth = 2;
+        //console.log($("#fcheme div div canvas")[i].width +';'+ $("#fcheme div div canvas")[i].height);
     }
 
 
@@ -408,7 +408,7 @@ export function initScheme() {
                     window.gx = x;
                     window.gy = y;
 
-                    /*for (let j=0;j<areas1.length;j++)
+                    for (let j=0;j<areas1.length;j++)
                     {
                         ctxs[i].beginPath();
                         ctxs[i].arc(areas1[j].x, areas1[j].y, r, 0, 2 * Math.PI, 0);
@@ -428,7 +428,7 @@ export function initScheme() {
                             //info.innerText += 'down:Не в круге №' + (j + 1) + '\n';
                             //clickedCircles.splice(j, 1);
                         }
-                    }*/
+                    }
                     break;
                 }
             }
