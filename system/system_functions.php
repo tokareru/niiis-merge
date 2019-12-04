@@ -392,6 +392,19 @@ class sys {
        return $datetime;
   }
   
+  /**
+   * Функция возвращает строку для инклуда файла предотвращая кэширование
+   * необходимо передать тип файла, css или javascript
+   * и путь файла от корневой директории
+   */
+  static function inc_no_cache($type, $path){
+      if($type == 'css'){
+          return '<link href="'.conf::$SITE_URL.$path.'?'.rand(1,999999).'" rel="stylesheet" type="text/css">';
+      } else if($type == 'javascript'){
+          return '<script src="'.conf::$SITE_URL.$path.'?'.rand(1,999999).'" type="text/javascript"></script>';
+      }
+      
+  }
   
 }
 

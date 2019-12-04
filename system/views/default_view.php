@@ -19,8 +19,13 @@ $IS = $_SESSION['niiis']['is'];
     <head>
         <meta charset="utf-8"/>
         <title><?php echo isset($data['title']) ? $data['title'] : conf::$SITE_NAME; ?></title>
-        <script src="<?php echo conf::$SITE_URL ?>js/tablesorter/jquery.tablesorter.js" type="text/javascript"></script>
-        <link href="<?php echo conf::$SITE_URL ?>css/tablesorter.css" rel="stylesheet" type="text/css"/>
+        
+        <?php 
+        sys::inc_no_cache('javascript', 'js/tablesorter/jquery.tablesorter.js');
+        sys::inc_no_cache('css', 'css/tablesorter.css');
+        ?>
+<!--        <script src="<?php echo conf::$SITE_URL ?>js/tablesorter/jquery.tablesorter.js" type="text/javascript"></script>
+        <link href="<?php echo conf::$SITE_URL ?>css/tablesorter.css" rel="stylesheet" type="text/css"/>-->
 
         <script src="<?php echo conf::$SITE_URL ?>js/main.js" type="text/javascript"></script>
 
