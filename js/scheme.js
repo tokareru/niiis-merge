@@ -68,10 +68,16 @@ export function initScheme() {
                 drop: function (event, ui) {
                     let $checkboxid1 = $('#pdm_field').find("p").last();
                     let $checkboxid2 = $('#std_field').find("p").last();
-                    $checkboxid1.find("input").click();
-                    $checkboxid2.find("input").click();
+
                     let $children = ui.draggable[0]['children'][1];
                     let id = $children.id;
+                    if(id.indexOf('std') !== -1)
+                    {
+                        $checkboxid2.find("input").click();
+                    }
+                    else {
+                        $checkboxid1.find("input").click();
+                    }
                     $('#' + id).click();
 
                 }
