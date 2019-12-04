@@ -403,8 +403,6 @@ class sys {
       } else if($type == 'javascript'){
           echo '<script src="'.conf::$SITE_URL.$path.'?'.rand(1,999999).'" type="text/javascript"></script>';
       }
-      
   }
-  
 }
 
