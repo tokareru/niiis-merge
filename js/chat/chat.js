@@ -152,9 +152,10 @@ function chatMessages($chat) {
 }
 
 function getMessage( time, nameUser, comment) {
-    let $text_wUserDate = '<span class="font-weight-bold font-italic text-light spanTextLogin">'
+    let $text_wUserDate = '<span class="font-weight-bold font-italic text-light spanTextLogin"' +
+        'style="font-size: 12px;">'
         + nameUser + '</span>' +
-        '<span style="float: right" class="font-weight-light text-light spanTextDate"> '
+        '<span style="float: right; font-size: 12px;" class="font-weight-light text-light spanTextDate" > '
         + time + ':</span>';
     let finalComment = '';
     if(nameUser === currentName)
