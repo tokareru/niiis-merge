@@ -82,25 +82,18 @@ $IS = $_SESSION['niiis']['is'];
             var CURRENT_PAGE = "<?= $CURRENT_PAGE ?>"
         </script>
 
-        <style>
-            .main_menu .nav>li>a {
-                position: relative;
-                display: block;
-                padding: 3px 10px;
-            }
-        </style>
-        <title>Demo</title>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body class='bg-light'>
     <div class='container'>
-        <div class="row">
+        <div class="row" style="width:100%">
             <div class="col-1"><a class="medium red awesome" href="<?php echo conf::$SITE_URL.'logout' ?>">Выйти</a></div>
-            <div class="col-2">
+            <div class="col-3">
                 <div class="row">
                     <div class="col-3">Вы вошли как:</div>
-                    <div class="col-3"><?php echo sys::user_login() ?>
+                    <div class="col-3">
+                      <?php echo sys::user_login() ?>
                     </div>
                 </div>
             </div>
@@ -111,7 +104,7 @@ $IS = $_SESSION['niiis']['is'];
                     </div>
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-3">
                 <div class="row">
                     <div class="col-4">Текущий раунд:</div>
                     <div class="col-6"><?php echo $_SESSION['niiis']['round'] ?>
