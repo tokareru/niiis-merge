@@ -399,9 +399,9 @@ class sys {
    */
   static function inc_no_cache($type, $path){
       if($type == 'css'){
-          return '<link href="'.conf::$SITE_URL.$path.'?'.rand(1,999999).'" rel="stylesheet" type="text/css">';
+          echo '<link href="'.conf::$SITE_URL.$path.'?'.rand(1,999999).'" rel="stylesheet" type="text/css">';
       } else if($type == 'javascript'){
-          return '<script src="'.conf::$SITE_URL.$path.'?'.rand(1,999999).'" type="text/javascript"></script>';
+          echo '<script src="'.conf::$SITE_URL.$path.'?'.rand(1,999999).'" type="text/javascript"></script>';
       }
       
   }
