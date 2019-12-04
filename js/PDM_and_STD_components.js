@@ -107,7 +107,7 @@ function makeCheckbox(fieldID) {
     $checkboxid.find("input").click(function (e) {
         let arrayClicked = collectDataLabels(".left-side");
         showhideimage(arrayClicked, $(this));
-        load3d(arrayClicked, $(this));
+        (arrayClicked, $(this));
     });
 
     $checkboxid.find('img').on('dragstart', function (event) {

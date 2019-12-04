@@ -6,7 +6,7 @@
 }
 
 #tabs ul li a {
-    cursor: pointer !important;
+    cursor: inherit !important;
     color: #fff;
     /*background-color: rgba(0,0,0,0.2);*/
     border-radius: .25rem;
@@ -32,6 +32,7 @@
 }
 
 .myTabsActive {
+    cursor: default !important;
     color: #fff;
     background-color: #1c2331e3 !important;
     -webkit-transition: all 1s;
