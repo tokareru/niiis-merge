@@ -5,18 +5,15 @@
 }
 
 .chats_div{
-    height: 78%;
+    height: 80%;
 }
 
 .chats_header{
-    font-size: 14px;
-    height: 15%;
-    max-height: 15%;
+    height: 10%;
     width: 72%;
     color: #343a40 !important;
     padding: 10px;
     float: right;
-    overflow-y: auto;
     margin-bottom: 2%;
 }
 
