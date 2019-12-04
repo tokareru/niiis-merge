@@ -19,25 +19,12 @@ $IS = $_SESSION['niiis']['is'];
     <head>
         <meta charset="utf-8"/>
         <title><?php echo isset($data['title']) ? $data['title'] : conf::$SITE_NAME; ?></title>
-    <!--    <link href="<?php echo conf::$SITE_URL ?>img/favicon.ico" rel="shortcut icon" />-->
-
-         <!--<script type="text/javascript" src="<?php echo conf::$SITE_URL ?>js/jquery-1.11.3.min.js"></script> -->
-        <!-- <script type="text/javascript" src="<?php echo conf::$SITE_URL ?>js/jquery-ui/jquery-ui.min.js"></script> -->
-<!--        <script src="<?php echo conf::$SITE_URL ?>js/fancybox/jquery.fancybox-1.3.4.pack.js" type="text/javascript"></script>-->
-         <!--<link href="<?php echo conf::$SITE_URL ?>js/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css">-->
-
         <script src="<?php echo conf::$SITE_URL ?>js/tablesorter/jquery.tablesorter.js" type="text/javascript"></script>
         <link href="<?php echo conf::$SITE_URL ?>css/tablesorter.css" rel="stylesheet" type="text/css"/>
-        <!--script src="<?php echo conf::$SITE_URL ?>js/combobox.js" type="text/javascript"></script-->
-
-        <!-- bootstrap -->
-        <!-- <<link href="<?php echo conf::$SITE_URL ?>css/bootstrap.min.css" rel="stylesheet" type="text/css"/>-->
-        <!-- <script src="<?php echo conf::$SITE_URL ?>js/bootstrap.min.js" type="text/javascript"></script> -->
 
         <script src="<?php echo conf::$SITE_URL ?>js/main.js" type="text/javascript"></script>
 
         <link href="<?php echo conf::$SITE_URL ?>css/main.css" rel="stylesheet" type="text/css">
-        <!--link href="<?php echo conf::$SITE_URL ?>css/jquery-ui-combobox.css" rel="stylesheet" type="text/css"/-->
         <link href="<?php echo conf::$SITE_URL ?>css/menu.css" rel="stylesheet" type="text/css">
         <link href="<?php echo conf::$SITE_URL ?>css/btn_heder.css" rel="stylesheet" type="text/css">
 
