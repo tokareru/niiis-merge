@@ -106,7 +106,7 @@ class chat_ajax_model extends model
                     }
                     break;
                 case "login_users":
-                    $sql = "SELECT g.DESCR, u.LOGIN
+                    $sql = "SELECT g.user_group_name, u.login, u.fio
                       FROM USER_GROUP g inner join 
                       USERS u on g.group_id = u.group_user_id
                       WHERE u.LOGIN <> :login and g.GROUP_ID <> 99";
@@ -116,7 +116,7 @@ class chat_ajax_model extends model
                     $result;
                     $i = 1;
                     foreach($Q as $row){
-                        $result["user".$i++] = array("login"=>$row["login"],"name"=>$row["descr"]);
+                        $result["user".$i++] = array("login"=>$row["login"],"name"=>$row["fio"],"role"=>$row["user_group_name"]);
                         
                     }
                     return $result;
