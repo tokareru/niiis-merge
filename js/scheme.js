@@ -128,7 +128,7 @@ export function initScheme() {
         addShadowedLight(-1, -1, -1, 0xffffff, 1);
         // renderer
 
-        window.renderersc = new THREE.WebGLRenderer({antialias: true});
+        window.renderersc = new THREE.WebGLRenderer({antialias: true, canvas: topcanv});
         renderersc.setPixelRatio(window.devicePixelRatio);
         renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
 
@@ -348,12 +348,13 @@ export function initScheme() {
         {
             //$("#field3D div div canvas")[i].width *= 1.2;
             //$("#field3D div div canvas")[i].height *= 1.2;
-            //$("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth;
-            //$("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
+            $("#fcheme div div canvas")[i].width = $("#fcheme")[0].clientWidth;
+            $("#fcheme div div canvas")[i].height = $("#fcheme")[0].clientHeight;
 
-            $("#drawcanv")[i].width = $("#field3D div div canvas")[i].width;
-            $("#drawcanv")[i].height = $("#field3D div div canvas")[i].height;
-            $("#field3D div div canvas")[i].style = "";
+            $("#drawcanv")[i].width = $("#fcheme")[0].clientWidth;
+            $("#drawcanv")[i].height = $("#fcheme")[0].clientHeight;
+            $("#fcheme div div canvas")[i].style = "";
+            renderersc.setSize($("#fcheme")[0].clientWidth, $("#fcheme")[0].clientHeight);
             //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
             window.ctxs[i].lineWidth = 2;
         }
@@ -365,14 +366,15 @@ export function initScheme() {
 
     for (let i = 0; i < $("#drawcanv").length; i++) {
         window.ctxs[i] = $("#drawcanv")[i].getContext("2d");
-        //$("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth;
-        //$("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
+        $("#fcheme div div canvas")[i].width = $("#fcheme")[0].clientWidth;
+        $("#fcheme div div canvas")[i].height = $("#fcheme")[0].clientHeight;
 
         //$("#field3D div div canvas")[i].width *= 1.2;
         //$("#field3D div div canvas")[i].height *= 1.2;
-        $("#drawcanv")[i].width = $("#field3D div div canvas")[i].width;
-        $("#drawcanv")[i].height = $("#field3D div div canvas")[i].height;
-        $("#field3D div div canvas")[i].style = "";
+        $("#drawcanv")[i].width = $("#fcheme")[0].clientWidth;
+        $("#drawcanv")[i].height = $("#fcheme")[0].clientHeight;
+        $("#fcheme div div canvas")[i].style = "";
+        renderersc.setSize($("#fcheme")[0].clientWidth, $("#fcheme")[0].clientHeight);
         //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
         window.ctxs[i].fillStyle = "white";
         window.ctxs[i].lineWidth = 2;

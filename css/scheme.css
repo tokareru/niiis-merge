@@ -12,6 +12,16 @@
     height: 450px;*/
 }
 
+#fcheme {
+    width: 90%;
+    height: 87%;
+    max-width:955px;
+    max-height:500px;
+    min-width: 955px;
+    min-height: 500px;
+    margin: auto;
+}
+
 #scheme1 div canvas {
     display: block;
 }

@@ -13,8 +13,8 @@
 </head>
 <body>
 <button class="btn-block btn btn-custom" id="ready">Готово</button>
-<div id="field3D">
-    <div id="scheme1"><canvas id="drawcanv"></canvas></div>
+<div id="fcheme">
+    <div id="scheme1"><canvas id="drawcanv"></canvas><canvas id="topcanv"></canvas></div>
 </div>
 
 </body>
