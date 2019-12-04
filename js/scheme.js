@@ -86,14 +86,14 @@ export function initScheme() {
 
 
         //window.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
-        window.camerasc = new THREE.OrthographicCamera(window.innerWidth * 0.003 / -2, window.innerWidth * 0.003 / 2, window.innerHeight * 0.003 / 2, window.innerHeight * 0.003 / -2, 1, 15);
+        window.camerasc = new THREE.OrthographicCamera($("#fcheme")[0].clientWidth * 0.004 / -2, $("#fcheme")[0].clientWidth * 0.004 / 2, $("#fcheme")[0].clientHeight * 0.004 / 2, $("#fcheme")[0].clientHeight * 0.004 / -2, 1, 15);
         camerasc.position.set(3, 0.15, 3);
 
         cameraTarget = new THREE.Vector3(0, 0.15, 0);
 
         window.scenesc = new THREE.Scene();
         scenesc.background = new THREE.Color(0xffffff/*0x72645b*/);
-        scenesc.fog = new THREE.Fog(/*0x72645b*/0xAAAAAA, 2, 15);
+        //scenesc.fog = new THREE.Fog(/*0x72645b*/0xAAAAAA, 2, 15);
 
 
         // Ground
@@ -294,7 +294,7 @@ export function initScheme() {
         camerasc.updateProjectionMatrix();
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
-        renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
+        //renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
         //scheme1.children[0].children[0].style = "width: 100%; height: 100%";
     }
 
