@@ -183,7 +183,7 @@ function initDMChat(count_users) {
 function generateDMChat(count_users) {
     //count_users -= 1;
     let loginUsers = getLoginNames();
-    let nameUsers = getLoginNames('name');
+    let roleUsers = getLoginNames('role');
     let $chat_dm = $('#chat_dm');
     let $dm_li = $chat_dm.find('.chat_dm_ul').eq(0);
 
@@ -197,7 +197,7 @@ function generateDMChat(count_users) {
         }
         $dm_li.append('<li class="dm_tabs_links_li bg-dark"></li>');
         $dm_li.find('li').eq(i).append('<div class="dm_tabs_links bg-light"><a href="#dm_user_' + i +
-            '">' + nameUsers[i - 1] + '</a></div>');
+            '">' + roleUsers[i - 1] + '</a></div>');
     }
     for (let i = 0; i < count_users + 1; i++) {
         if (!i) {
@@ -217,7 +217,7 @@ function generateDMChat(count_users) {
             'login_user_chat_with': loginUsers[i - 1],
             'count_messages': 0,
             'unread_messages': 0,
-            'name_user': nameUsers[i - 1],
+            'name_user': roleUsers[i - 1],
             'scroll': false
         });
     }

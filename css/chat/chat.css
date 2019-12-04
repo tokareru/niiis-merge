@@ -72,9 +72,8 @@
 }
 
 #chat_text_button {
-    height: 16%;
+    height: 17%;
     padding: 10px;
-/ / padding-right: 10 px;
     margin-top: 2%;
     bottom: 0;
     display: flex;
