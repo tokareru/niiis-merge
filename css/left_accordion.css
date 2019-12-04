@@ -74,6 +74,7 @@
 
 /*значение стиля checkbox по умолчанию*/
 .check_std{
+    cursor: grab;
     margin: 5px;
     display: inline-block;
     padding: 0.2%;
@@ -102,6 +103,7 @@ fieldset p label span{
 }
 
 fieldset p{
+    cursor: grab;
     margin-top: 5%;
     margin-left: 3%;
     display: grid;
