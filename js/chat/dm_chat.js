@@ -242,9 +242,6 @@ function getLoginNames(loginChoice = "login") {
                     nameUsers.push(data[login].name);
                     roleUsers.push(data[login].role);
             }
-            //console.log('name users: ' + nameUsers);
-            //console.log('login users: ' + loginUsers);
-            console.log('login users: ' + roleUsers);
         },
         error: function (data) {
             console.log('error');
