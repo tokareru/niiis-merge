@@ -182,7 +182,7 @@ function initDMChat(count_users) {
 function generateDMChat(count_users) {
     //count_users -= 1;
     let loginUsers = getLoginNames();
-    let nameUsers = getLoginNames(false);
+    let nameUsers = getLoginNames('name');
     let $chat_dm = $('#chat_dm');
     let $dm_li = $chat_dm.find('.chat_dm_ul').eq(0);
 
@@ -223,9 +223,10 @@ function generateDMChat(count_users) {
 
 }
 
-function getLoginNames(loginChoice = true) {
+function getLoginNames(loginChoice = "login") {
     let loginUsers = [];
     let nameUsers = [];
+    let roleUsers = [];
     //console.log('cur login: ' + login);
     $.ajax({
         url: 'chat_ajax',
@@ -238,7 +239,7 @@ function getLoginNames(loginChoice = true) {
                     //console.log('key: ' + key + ' val: ' + data[login].login);
                     loginUsers.push(data[login].login);
                     nameUsers.push(data[login].name);
-
+                    roleUsers.push(data[login].role);
             }
             //console.log('name users: ' + nameUsers);
             //console.log('login users: ' + loginUsers);
@@ -247,9 +248,11 @@ function getLoginNames(loginChoice = true) {
             console.log('error');
         }
     });
-    if(loginChoice)
+    if(loginChoice === "login")
     return loginUsers;
-    else return nameUsers;
+    else if(loginChoice === "name")
+        return nameUsers;
+    else return roleUsers;
 }
 
 function initDMChats() {
