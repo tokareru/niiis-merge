@@ -10,7 +10,7 @@ function createSTD(event, json_Role_and_Round) {
 $(function () {
     $('#btn_test').on('click', function () {
         console.log('len ' + $('#left-accordion').find('.pdm_draggable').length);
-       $('.pdm_draggable').draggable();
+        $('.pdm_draggable').draggable();
     });
 });
 
@@ -49,20 +49,20 @@ function addNewComponent(data, accordID, fieldID) {
 
 function makeCheckbox(fieldID) {
 
-    $('#left-accordion').find('.pdm_draggable').draggable(
+    /*$('#left-accordion').find('.pdm_draggable').draggable(
         {
             helper: 'clone'
         }
-    );
-  /*  $('#scheme1').droppable(
-        {
-            drop: function (event, ui) {
-                console.log('dropped');
-                $(this).css({'background-color': 'yellow'})
-                    .find('p').text('dropped!');
-            }
-        }
     );*/
+    /*  $('#scheme1').droppable(
+          {
+              drop: function (event, ui) {
+                  console.log('dropped');
+                  $(this).css({'background-color': 'yellow'})
+                      .find('p').text('dropped!');
+              }
+          }
+      );*/
 
     let $checkboxid = $(fieldID).find("p").last();
 
@@ -76,6 +76,7 @@ function makeCheckbox(fieldID) {
 
     //checkbox
     $checkboxid.find('input').on('click', function () {
+        let $input = $(this);
         let id = $(this).attr('id');
         $(this).parent().children().each(function (val, obj) {
             let $obj = $(obj);
@@ -89,7 +90,9 @@ function makeCheckbox(fieldID) {
                         $span.removeClass('fa-circle-thin');
                         $span.addClass('check_icon-checked');
                         $span.addClass('ui-icon-check fa-check');
+                        //$input.parent('p').removeClass('ui-draggable ui-draggable-handle pdm_draggable');
                     });
+                    $input.parent('p').draggable("destroy" );
                 } else {
                     $obj.removeClass('check_active');
                     $obj.addClass('check_non-active');
@@ -97,7 +100,13 @@ function makeCheckbox(fieldID) {
                         let $span = $(objspan);
                         $span.removeClass('check_icon-checked');
                         $span.addClass('check_icon-non fa-circle-thin');
+                        $input.parent('p').addClass('ui-draggable ui-draggable-handle pdm_draggable');
                     });
+                    $input.parent('p').draggable(
+                        {
+                            helper: 'clone'
+                        }
+                    );
                 }
             }
 
@@ -152,40 +161,31 @@ function PdmOrStdHandler(event, data) {
     }
 }
 
-function showhideimage(arrayComp, obj)
-{
-    if (window.isEnded != undefined || window.isEnded == true)
-    {
+function showhideimage(arrayComp, obj) {
+    if (window.isEnded != undefined || window.isEnded == true) {
         arr = $('img');
-        if (obj[0].checked)
-        {
-            for (i=0;i<arr.length;i++)
-            {
-                if (arr[i].id != '')
-                {
-                    for (j=1;j<4;j++)
-                    {
-                        if (arr[i].id.substr(0, 12) == "bolthideimg"+j && arrayComp.indexOf('std_component_'+j) != -1) {arr[i].style.display = '';}
+        if (obj[0].checked) {
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].id != '') {
+                    for (j = 1; j < 4; j++) {
+                        if (arr[i].id.substr(0, 12) == "bolthideimg" + j && arrayComp.indexOf('std_component_' + j) != -1) {
+                            arr[i].style.display = '';
+                        }
+                    }
+                }
+            }
+        } else {
+            for (i = 0; i < arr.length; i++) {
+                if (arr[i].id != '') {
+                    for (j = 1; j < 4; j++) {
+                        if (arr[i].id.substr(0, 12) == "bolthideimg" + j && arrayComp.indexOf('std_component_' + j) == -1) {
+                            arr[i].style.display = 'none';
+                        }
                     }
                 }
             }
         }
-        else
-        {
-            for (i=0;i<arr.length;i++)
-            {
-                if (arr[i].id != '')
-                {
-                    for (j=1;j<4;j++)
-                    {
-                        if (arr[i].id.substr(0, 12) == "bolthideimg"+j && arrayComp.indexOf('std_component_'+j) == -1) {arr[i].style.display = 'none';}
-                    }
-                }
-            }
-        }
-    }
-    else
-    {
+    } else {
         obj[0].checked = false;
         obj[0].labels[0].className = "check_std check_non-active";
         obj[0].labels[0].children[0].className = "check_icon-non check_icon fa fa-circle-thin material-icons";
@@ -194,65 +194,54 @@ function showhideimage(arrayComp, obj)
     }
 }
 
-function load3d(array, obj={0:{"checked":"true"}})
-{
-    if (window.isEnded != undefined && window.isEnded == true)
-    {
-        if (obj[0].checked)
-        {
-            for (i=0;i<4;i++) {
-                if (array.indexOf('component_' + (i+1)) != -1)
-                {
+function load3d(array, obj = {0: {"checked": "true"}}) {
+    if (window.isEnded != undefined && window.isEnded == true) {
+        if (obj[0].checked) {
+            for (i = 0; i < 4; i++) {
+                if (array.indexOf('component_' + (i + 1)) != -1) {
                     //meshs[stldata[i][2]].visible = true;
-                    for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
-                    {
+                    for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                         MeshsLinesScheme[stldata[i][2]][j].visible = true;
                     }
                 }
             }
 
-            for (i=0;i<3;i++) {
-                if (array.indexOf('std_component_' + (i+1)) != -1)
-                {
+            for (i = 0; i < 3; i++) {
+                if (array.indexOf('std_component_' + (i + 1)) != -1) {
                     //meshs[stldata[i+4][2]].visible = true;
-                    for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
-                    {
-                        MeshsLinesScheme[stldata[i+4][2]][j].visible = true;
+                    for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
+                        MeshsLinesScheme[stldata[i + 4][2]][j].visible = true;
                     }
                 }
             }
-            if (typeof scene != "undefined") {window.renderer.render(scene, camera);}
+            if (typeof scene != "undefined") {
+                window.renderer.render(scene, camera);
+            }
             window.renderersc.render(scenesc, camerasc);
-        }
-        else
-        {
-            for (i=0;i<4;i++) {
-                if (array.indexOf('component_' + (i+1)) == -1)
-                {
+        } else {
+            for (i = 0; i < 4; i++) {
+                if (array.indexOf('component_' + (i + 1)) == -1) {
                     //meshs[stldata[i][2]].visible = false;
-                    for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
-                    {
+                    for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                         MeshsLinesScheme[stldata[i][2]][j].visible = false;
                     }
                 }
             }
 
-            for (i=0;i<3;i++) {
-                if (array.indexOf('std_component_' + (i+1)) == -1)
-                {
+            for (i = 0; i < 3; i++) {
+                if (array.indexOf('std_component_' + (i + 1)) == -1) {
                     //meshs[stldata[i+4][2]].visible = false;
-                    for (let j=0; j<MeshsLinesScheme[stldata[i][2]].length; j++)
-                    {
-                        MeshsLinesScheme[stldata[i+4][2]][j].visible = false;
+                    for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
+                        MeshsLinesScheme[stldata[i + 4][2]][j].visible = false;
                     }
                 }
             }
-            if (typeof scene != "undefined") {window.renderer.render(scene, camera);}
+            if (typeof scene != "undefined") {
+                window.renderer.render(scene, camera);
+            }
             window.renderersc.render(scenesc, camerasc);
         }
-    }
-    else
-    {
+    } else {
         //alert()
     }
 }
