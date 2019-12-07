@@ -26,6 +26,9 @@ function initCreate_task_route() {
         let arr = serializeCreateTaskRoute();
         if (arr.length !== 0) {
             createTaskRouteToServer(arr);
+            $('.table_create_task_route').find('tbody').children().remove();
+            addRows(getLoginNames().length, false, true);
+            $('.slider_button_create').trigger('click');
         }
     });
 }
