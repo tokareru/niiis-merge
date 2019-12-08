@@ -138,7 +138,7 @@ function createTaskRouteHandler(dataToAjax) {
 
 function initCreateTaskRoute() {
 
-    if (login === 'administrator' || currentName === 'Админ') {
+    if (login === 'designer' || login === 'approver' || currentName === 'Админ') {
         createTaskRouteEvents([true, true]);
     } else {
         createTaskRouteEvents([false, false]);
