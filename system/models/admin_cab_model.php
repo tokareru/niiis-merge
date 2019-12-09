@@ -5,7 +5,12 @@ class admin_cab_model extends model
   {
     $data = array();
     $data['title'] = conf::$SITE_NAME;
-    $data['content'] = '';
+    $data['content'] = self::content();
     return $data;
+  }
+  function content(){
+  }
+  function change_users(){
+      
   }
 }

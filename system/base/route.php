@@ -8,8 +8,11 @@ class Route
 	{ 
     global $CONF;
 		// контроллер и действие по умолчанию
+    
     $controller_name = 'default';
+    
     $action_name = 'index';
+   
 		
     $aUrl=parse_url(trim($_SERVER['REQUEST_URI'],'/\\'));
     $path = explode('/', $aUrl['path']);
@@ -27,7 +30,11 @@ class Route
         $modul = $path[0];
     }
     if(sys::is_autorised()){
-      
+        if($_SESSION["niiis"]["role"] === "administrator"){
+            if($modul =='default'){
+                $modul ='admin_cab';
+            }
+        }
       require_once conf::$ROOT.'system/etc/functions.php';
       
       if($modul=='ajax'){

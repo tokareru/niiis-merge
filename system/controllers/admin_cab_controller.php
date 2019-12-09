@@ -13,10 +13,14 @@ class admin_cab_controller extends Controller{
 	function index(){
                 if($_SESSION["niiis"]["role"] === "administrator"){    
                     $data = $this->model->get_data();
-                    $this->view->render('', 'admin_cab_view.php', $data);
+                    $this->view->render('', 'admin/admin_cab_view.php', $data);
                 }else{
-                    $this->view->render('', 'admin_error_view.php','');
+                    $this->view->render('', 'admin/admin_error_view.php','');
                 }
 	}
+        function change_users(){
+            $data = $this->model->change_users();
+            $this->view->render('','admin/admin_cab_view');
+        }
 }
 ?>
