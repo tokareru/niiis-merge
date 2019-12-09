@@ -9,7 +9,7 @@ export function initScheme() {
     window.areas1 = []; // массив круглых областей в которых происходит клик
     window.areas2 = [];
     window.areas3 = [];
-    window.r = 5;
+    window.r = 3;
     window.inCircle;
     window.clickedCircles;
     window.ctxs = [];
@@ -443,6 +443,7 @@ export function initScheme() {
             let rect = e.target.getBoundingClientRect();
             let x = e.clientX - rect.left - 1;
             let y = e.clientY - rect.top - 1;
+            //alert(x+'; '+y);
 
             for (let i = 0; i < 3; i++) {
                 if (n == ctxs[i].canvas.id) {
@@ -459,9 +460,15 @@ export function initScheme() {
                                 lines1.push([areas1[clickedCircles].x, areas1[clickedCircles].y, areas1[j].x, areas1[j].y]);
                                 ctxs[i].beginPath();
                                 ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
-                                ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
+                                for (let k=0; k<lines1.length; k++)
+                                {
+                                    ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
+                                    ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
+                                    ctxs[i].stroke();
+                                }
+                                /* ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
                                 ctxs[i].lineTo(areas1[j].x, areas1[j].y);
-                                ctxs[i].stroke();
+                                ctxs[i].stroke(); */
 
                             } else {
                                 //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
@@ -617,7 +624,26 @@ function createCoor()
 {
     let delta = 0;
     let m = 1;
-    let c = [{x: 134, y: 134, arr:[2]}, {x: 288, y: 134, arr:[]}, {x: 288, y: 230, arr:[0]}];
+    let c = [{x: 152, y: 56, arr:[1,9]}, {x: 228, y: 56, arr:[0,2]}, {x: 233, y: 19, arr:[1,3]}, {x: 272, y: 19, arr:[2,4]},
+        {x: 276, y: 56, arr:[3,5]}, {x: 499, y: 56, arr:[4,6]}, {x: 499, y: 157, arr:[5,7]}, {x: 234, y: 157, arr:[6,8]},
+        {x: 234, y: 161, arr:[7,9]}, {x: 153, y: 161, arr:[8,0]},
+
+        {x: 558, y: 56, arr:[11,25]}, {x: 752, y: 56, arr:[10,12]}, {x: 757, y: 19, arr:[11,13]}, {x: 795, y: 19, arr:[12,14]},
+        {x: 801, y: 56, arr:[13,15]}, {x: 804, y: 56, arr:[14,16]}, {x: 804, y: 129, arr:[15,17]}, {x: 779, y: 129, arr:[16,18]},
+        {x: 779, y: 160, arr:[17,19]}, {x: 586, y: 160, arr:[18,20]}, {x: 586, y: 129, arr:[19,21]}, {x: 558, y: 129, arr:[20,22]},
+        {x: 558, y: 81, arr:[21,23]}, {x: 538, y: 81, arr:[22,24]}, {x: 538, y: 75, arr:[23,25]}, {x: 558, y: 75, arr:[24,10]},
+
+        {x: 153, y: 215, arr:[27,69]}, {x: 220, y: 215, arr:[26,28]}, {x: 220, y: 194, arr:[27,29]}, {x: 224, y: 194, arr:[28,30]},
+        {x: 224, y: 215, arr:[29,31]}, {x: 237, y: 215, arr:[30,32]}, {x: 237, y: 194, arr:[31,33]}, {x: 241, y: 194, arr:[32,34]},
+        {x: 241, y: 215, arr:[33,35]}, {x: 254, y: 215, arr:[34,36]}, {x: 254, y: 194, arr:[35,37]}, {x: 258, y: 194, arr:[36,38]},
+        {x: 258, y: 215, arr:[37,39]}, {x: 271, y: 215, arr:[38,40]}, {x: 271, y: 194, arr:[39,41]}, {x: 275, y: 194, arr:[40,42]},
+        {x: 275, y: 215, arr:[41,43]}, {x: 288, y: 215, arr:[42,44]}, {x: 288, y: 194, arr:[43,45]}, {x: 292, y: 194, arr:[44,46]},
+        {x: 292, y: 215, arr:[45,47]}, {x: 358, y: 215, arr:[46,48]}, {x: 358, y: 194, arr:[47,49]}, {x: 362, y: 194, arr:[48,50]},
+        {x: 362, y: 215, arr:[49,51]}, {x: 375, y: 215, arr:[50,52]}, {x: 375, y: 194, arr:[51,53]}, {x: 379, y: 194, arr:[52,54]},
+        {x: 379, y: 215, arr:[53,55]}, {x: 392, y: 215, arr:[54,56]}, {x: 392, y: 194, arr:[55,57]}, {x: 396, y: 194, arr:[56,58]},
+        {x: 396, y: 215, arr:[57,59]}, {x: 409, y: 215, arr:[58,60]}, {x: 409, y: 194, arr:[59,61]}, {x: 413, y: 194, arr:[60,62]},
+        {x: 413, y: 215, arr:[61,63]}, {x: 426, y: 215, arr:[62,64]}, {x: 426, y: 194, arr:[63,65]}, {x: 430, y: 194, arr:[64,66]},
+        {x: 430, y: 215, arr:[65,67]}, {x: 498, y: 215, arr:[66,68]}, {x: 498, y: 462, arr:[67,69]}, {x: 153, y: 462, arr:[68,26]}];
 
     for (let i=0;i<c.length;i++)
     {
