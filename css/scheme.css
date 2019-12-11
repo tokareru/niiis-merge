@@ -478,6 +478,7 @@ section div {
 #ready {
     width: 100%;
     margin-bottom: 3%;
+    display:none;
 }
 
 /*for example*/
