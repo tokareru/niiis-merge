@@ -5,11 +5,14 @@ export function initScheme() {
     window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
     window.lines2 = [];
     window.lines3 = [];
+    window.crivie = [];
+    window.arrcoor = [];
+    window.showlines = [0,1];
 
     window.areas1 = []; // массив круглых областей в которых происходит клик
     window.areas2 = [];
     window.areas3 = [];
-    window.r = 3;
+    window.r = 3.5;
     window.inCircle;
     window.clickedCircles;
     window.ctxs = [];
@@ -63,7 +66,7 @@ export function initScheme() {
         container = document.createElement('div');
         document.getElementById("scheme1").appendChild(container);
 
-        $('#drawcanv').droppable(
+        /* $('#drawcanv').droppable(
             {
                 drop: function (event, ui) {
                     let $checkboxid1 = $('#pdm_field').find("p").last();
@@ -82,7 +85,7 @@ export function initScheme() {
 
                 }
             }
-        );
+        ); */
 
         //window.camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 1, 15);
         //window.camerasc = new THREE.OrthographicCamera(window.innerWidth * 0.003 / -2, window.innerWidth * 0.003 / 2, window.innerHeight * 0.003 / 2, window.innerHeight * 0.003 / -2, 1, 15);
@@ -356,6 +359,14 @@ export function initScheme() {
             renderersc.setSize($("#field3D")[0].clientWidth, $("#field3D")[0].clientHeight);
             //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
             window.ctxs[i].lineWidth = 2;
+            if (window.isEnded) {$("#scheme1 div canvas")[0].style.cssText += " display:block;";}
+        }
+        ctxs[0].beginPath();
+        for (let k=0; k<lines1.length; k++)
+        {
+            ctxs[0].moveTo(lines1[k][0], lines1[k][1]);
+            ctxs[0].lineTo(lines1[k][2], lines1[k][3]);
+            ctxs[0].stroke();
         }
     }
 
@@ -375,21 +386,36 @@ export function initScheme() {
         $("#field3D div div canvas")[i].style = "";
         renderersc.setSize($("#field3D")[0].clientWidth, $("#field3D")[0].clientHeight);
         //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
-        window.ctxs[i].fillStyle = "white";
+        window.ctxs[i].fillStyle = "black";
         window.ctxs[i].lineWidth = 2;
         //console.log($("#fcheme div div canvas")[i].width +';'+ $("#fcheme div div canvas")[i].height);
     }
 
 
+    function circlesdraw()
+    {
+        for (let j=0;j<areas1.length;j++)
+        {
+            if (showlines.indexOf(j) != -1)
+            {
+                ctxs[0].beginPath();
+                ctxs[0].arc(areas1[j].x, areas1[j].y, r, 0, 2 * Math.PI, 0);
+                ctxs[0].stroke();
+                ctxs[0].font = "italic 10pt Arial";
+                ctxs[0].fillText(j+1, areas1[j].x+5, areas1[j].y+10);
+            }
+        }
+    }
+
     $("#ready").click(function () {
         for (let j = 0; j < 3; j++) {
-            /* eval('canv' + (j + 1).toString()).style.display = 'none';
-            try {
-                $(".canvimg")[0].className += 'done';
-            } catch (err) {
-                //alert('Отрисовка уже выполнена');
-                break;
-            } */
+            /*   eval('canv' + (j + 1).toString()).style.display = 'none';
+             try {
+                 $(".canvimg")[0].className += 'done';
+             } catch (err) {
+                 //alert('Отрисовка уже выполнена');
+                 break;
+             } */
             window.isEnded = true;
         }
     });
@@ -408,18 +434,17 @@ export function initScheme() {
                     window.gx = x;
                     window.gy = y;
 
-                    for (let j=0;j<areas1.length;j++)
-                    {
-                        ctxs[i].beginPath();
-                        ctxs[i].arc(areas1[j].x, areas1[j].y, r, 0, 2 * Math.PI, 0);
-                        ctxs[i].stroke();
-                    }
+                    circlesdraw();
 
                     for (let j = 0; j < areas1.length; j++) {
                         let dx = x - areas1[j].x;
                         let dy = y - areas1[j].y;
                         if (dx * dx + dy * dy < r * r) {
                             window.clickedCircles = j;
+                            arrcoor = [];
+                            window.arrcoor.push([areas1[j].x, areas1[j].y]);
+                            //console.log('; '+areas1[j].x+'; '+areas1[j].y);
+                            //console.log(arrcoor);
                             //info.innerText += 'down:В круге №' + (j + 1) + '\n';
                             break;
                             //clickedCircles.push(j);
@@ -450,27 +475,82 @@ export function initScheme() {
                     /*thisarrlines = eval('lines' + n[4]);
                     thisarrlines.push([gx, gy, window.endx, window.endy]);
                     drawall(ctxs[i]);*/
+                    let summ = 0;
+                    for (let l=0; l<window.crivie.length; l++)
+                    {
+                        summ+=window.crivie[l];
+                    }
+                    window.crivie = [];
+                    ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
+                        document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
+
+                    circlesdraw();
+
+                    for (let k=0; k<lines1.length; k++)
+                    {
+                        ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
+                        ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
+                        ctxs[i].stroke();
+                    }
+
                     if (window.clickedCircles != undefined) {
                         for (let j = 0; j < areas1.length; j++) {
                             let dx = x - areas1[j].x;
                             let dy = y - areas1[j].y;
                             if (dx * dx + dy * dy < r * r) {
+                                //console.log(window.arrcoor);
+                                let d = Math.sqrt((x-arrcoor[0][0])*(x-arrcoor[0][0])+(y-arrcoor[0][1])*(y-arrcoor[0][1]));
+                                //console.log(d+'; '+summ);
+                                if ((summ-d)/summ > 0.2) {return;}
+                                window.arrcoor = [];
+                                window.crivie = [];
                                 //info.innerText += 'up:В круге №' + (j + 1) + '\n';
                                 if (areas1[j].arr.indexOf(window.clickedCircles) == -1) {continue;}
                                 lines1.push([areas1[clickedCircles].x, areas1[clickedCircles].y, areas1[j].x, areas1[j].y]);
                                 ctxs[i].beginPath();
-                                ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
+
+                                ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
+                                    document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
+
                                 for (let k=0; k<lines1.length; k++)
                                 {
                                     ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
                                     ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
                                     ctxs[i].stroke();
                                 }
+
+                                if (showlines.indexOf(lines1.length+1) == -1)
+                                {
+                                    if (lines1.length == 9 || lines1.length == 20)
+                                    {
+                                        showlines.push(lines1.length);
+                                        showlines.push(lines1.length+1);
+                                    }
+                                    else
+                                    {
+                                        if (lines1.length != 8 && lines1.length != 19)
+                                        {
+                                            showlines.push(lines1.length+1);
+                                        }
+                                    }
+                                }
+                                if (lines1.length == 32)
+                                {
+                                    $("#ready").click();
+                                    $("#scheme1 div canvas")[0].style.cssText += " display:block;";
+                                }
+                                else
+                                {
+                                    circlesdraw();
+                                }
+
                                 /* ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
                                 ctxs[i].lineTo(areas1[j].x, areas1[j].y);
                                 ctxs[i].stroke(); */
 
                             } else {
+                                /* window.arrcoor = [];
+                                window.crivie = []; */
                                 //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
                                 //clickedCircles = undefined;
                             }
@@ -569,6 +649,8 @@ export function initScheme() {
         e.preventDefault();
     });*/
 
+    circlesdraw();
+
 }
 
 /* function PdmOrStdHandler(event, data) {
@@ -591,6 +673,9 @@ function drawline(ctx, x, y) {
     ctx.beginPath();
     ctx.moveTo(gx, gy);
     ctx.lineTo(x, y);
+    let d = Math.sqrt((x-gx)*(x-gx)+(y-gy)*(y-gy));
+    //window.crivie.push([gx,gy,x,y]);
+    window.crivie.push(d);
     window.gx = x;
     window.gy = y;
     //ctx.clearRect(0, 0, document.getElementsByTagName("canvas")[ctx.canvas.id].width, document.getElementsByTagName("canvas")[ctx.canvas.id].height);
@@ -624,26 +709,33 @@ function createCoor()
 {
     let delta = 0;
     let m = 1;
-    let c = [{x: 152, y: 56, arr:[1,9]}, {x: 228, y: 56, arr:[0,2]}, {x: 233, y: 19, arr:[1,3]}, {x: 272, y: 19, arr:[2,4]},
-        {x: 276, y: 56, arr:[3,5]}, {x: 499, y: 56, arr:[4,6]}, {x: 499, y: 157, arr:[5,7]}, {x: 234, y: 157, arr:[6,8]},
-        {x: 234, y: 161, arr:[7,9]}, {x: 153, y: 161, arr:[8,0]},
+    let c = [{x: 152, y: 56, arr:[1,8]}, {x: 228, y: 56, arr:[0,2]}, {x: 233, y: 19, arr:[1,3]}, {x: 272, y: 19, arr:[2,4]},
+        {x: 276, y: 56, arr:[3,5]}, {x: 499, y: 56, arr:[4,6]}, {x: 499, y: 157, arr:[5,7]}, {x: 234, y: 159, arr:[6,8]},
+        {x: 153, y: 161, arr:[7,0]},
 
-        {x: 558, y: 56, arr:[11,25]}, {x: 752, y: 56, arr:[10,12]}, {x: 757, y: 19, arr:[11,13]}, {x: 795, y: 19, arr:[12,14]},
-        {x: 801, y: 56, arr:[13,15]}, {x: 804, y: 56, arr:[14,16]}, {x: 804, y: 129, arr:[15,17]}, {x: 779, y: 129, arr:[16,18]},
-        {x: 779, y: 160, arr:[17,19]}, {x: 586, y: 160, arr:[18,20]}, {x: 586, y: 129, arr:[19,21]}, {x: 558, y: 129, arr:[20,22]},
-        {x: 558, y: 81, arr:[21,23]}, {x: 538, y: 81, arr:[22,24]}, {x: 538, y: 75, arr:[23,25]}, {x: 558, y: 75, arr:[24,10]},
+        {x: 558, y: 56, arr:[10,19]}, {x: 752, y: 56, arr:[9,11]}, {x: 757, y: 19, arr:[10,12]}, {x: 795, y: 19, arr:[11,13]},
+        {x: 804, y: 56, arr:[12,14]}, {x: 804, y: 129, arr:[13,15]}, {x: 779, y: 129, arr:[14,16]},
+        {x: 779, y: 160, arr:[15,17]}, {x: 586, y: 160, arr:[16,18]}, {x: 586, y: 129, arr:[17,19]}, {x: 558, y: 129, arr:[18,9]},
+        //{x: 558, y: 81, arr:[21,23]}, {x: 538, y: 81, arr:[22,24]}, {x: 538, y: 75, arr:[23,25]}, {x: 558, y: 75, arr:[24,10]},
 
-        {x: 153, y: 215, arr:[27,69]}, {x: 220, y: 215, arr:[26,28]}, {x: 220, y: 194, arr:[27,29]}, {x: 224, y: 194, arr:[28,30]},
-        {x: 224, y: 215, arr:[29,31]}, {x: 237, y: 215, arr:[30,32]}, {x: 237, y: 194, arr:[31,33]}, {x: 241, y: 194, arr:[32,34]},
-        {x: 241, y: 215, arr:[33,35]}, {x: 254, y: 215, arr:[34,36]}, {x: 254, y: 194, arr:[35,37]}, {x: 258, y: 194, arr:[36,38]},
-        {x: 258, y: 215, arr:[37,39]}, {x: 271, y: 215, arr:[38,40]}, {x: 271, y: 194, arr:[39,41]}, {x: 275, y: 194, arr:[40,42]},
-        {x: 275, y: 215, arr:[41,43]}, {x: 288, y: 215, arr:[42,44]}, {x: 288, y: 194, arr:[43,45]}, {x: 292, y: 194, arr:[44,46]},
-        {x: 292, y: 215, arr:[45,47]}, {x: 358, y: 215, arr:[46,48]}, {x: 358, y: 194, arr:[47,49]}, {x: 362, y: 194, arr:[48,50]},
-        {x: 362, y: 215, arr:[49,51]}, {x: 375, y: 215, arr:[50,52]}, {x: 375, y: 194, arr:[51,53]}, {x: 379, y: 194, arr:[52,54]},
-        {x: 379, y: 215, arr:[53,55]}, {x: 392, y: 215, arr:[54,56]}, {x: 392, y: 194, arr:[55,57]}, {x: 396, y: 194, arr:[56,58]},
-        {x: 396, y: 215, arr:[57,59]}, {x: 409, y: 215, arr:[58,60]}, {x: 409, y: 194, arr:[59,61]}, {x: 413, y: 194, arr:[60,62]},
-        {x: 413, y: 215, arr:[61,63]}, {x: 426, y: 215, arr:[62,64]}, {x: 426, y: 194, arr:[63,65]}, {x: 430, y: 194, arr:[64,66]},
-        {x: 430, y: 215, arr:[65,67]}, {x: 498, y: 215, arr:[66,68]}, {x: 498, y: 462, arr:[67,69]}, {x: 153, y: 462, arr:[68,26]}];
+        {x: 153, y: 215, arr:[21,31]}, {x: 220, y: 215, arr:[20,22]}, {x: 220, y: 194, arr:[21,23]}, {x: 292, y: 194, arr:[22,24]},
+        {x: 292, y: 215, arr:[23,25]}, {x: 358, y: 215, arr:[24,26]}, {x: 358, y: 194, arr:[25,27]}, {x: 430, y: 194, arr:[26,28]},
+        {x: 430, y: 215, arr:[27,29]}, {x: 498, y: 215, arr:[28,30]}, {x: 498, y: 462, arr:[29,31]}, {x: 153, y: 462, arr:[30,20]}];
+    //{x: 498, y: 215, arr:[66,68,26]}, {x: 498, y: 462, arr:[67,69]}, {x: 153, y: 462, arr:[68,26]}];
+
+
+    /*{x: 220, y: 215, arr:[26,28]}, {x: 220, y: 194, arr:[27,29]}, {x: 224, y: 194, arr:[28,30]},
+    {x: 224, y: 215, arr:[29,31]}, {x: 237, y: 215, arr:[30,32]}, {x: 237, y: 194, arr:[31,33]}, {x: 241, y: 194, arr:[32,34]},
+    {x: 241, y: 215, arr:[33,35]}, {x: 254, y: 215, arr:[34,36]}, {x: 254, y: 194, arr:[35,37]}, {x: 258, y: 194, arr:[36,38]},
+    {x: 258, y: 215, arr:[37,39]}, {x: 271, y: 215, arr:[38,40]}, {x: 271, y: 194, arr:[39,41]}, {x: 275, y: 194, arr:[40,42]},
+    {x: 275, y: 215, arr:[41,43]}, {x: 288, y: 215, arr:[42,44]}, {x: 288, y: 194, arr:[43,45]}, {x: 292, y: 194, arr:[44,46]},
+
+    {x: 292, y: 215, arr:[45,47]}, {x: 358, y: 215, arr:[46,48]}, {x: 358, y: 194, arr:[47,49]}, {x: 362, y: 194, arr:[48,50]},
+    {x: 362, y: 215, arr:[49,51]}, {x: 375, y: 215, arr:[50,52]}, {x: 375, y: 194, arr:[51,53]}, {x: 379, y: 194, arr:[52,54]},
+    {x: 379, y: 215, arr:[53,55]}, {x: 392, y: 215, arr:[54,56]}, {x: 392, y: 194, arr:[55,57]}, {x: 396, y: 194, arr:[56,58]},
+    {x: 396, y: 215, arr:[57,59]}, {x: 409, y: 215, arr:[58,60]}, {x: 409, y: 194, arr:[59,61]}, {x: 413, y: 194, arr:[60,62]},
+    {x: 413, y: 215, arr:[61,63]}, {x: 426, y: 215, arr:[62,64]}, {x: 426, y: 194, arr:[63,65]}, {x: 430, y: 194, arr:[64,66]},
+    {x: 430, y: 215, arr:[65,67]},*/
 
     for (let i=0;i<c.length;i++)
     {
