@@ -19,7 +19,13 @@
     max-height:500px;
     min-width: 955px;
     min-height: 500px;
-    margin: auto;
+}
+#field3DAll{
+    border: 3px solid black;
+    border-bottom: 0;
+    padding: 0;
+    max-width:955px;
+    min-width: 955px;
 }
 
 #scheme1 div canvas {
@@ -37,7 +43,7 @@
 
 #drawcanv {
     position:absolute;
-    border: 1px dashed black;
+    //border: 1px dashed black;
 }
 
 .canvimgdone {

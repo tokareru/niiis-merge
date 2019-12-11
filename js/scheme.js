@@ -2,6 +2,7 @@ import * as THREE from './3D/stl/three.module.js';
 import {STLLoader} from './3D/stl/STLLoader.js';
 
 export function initScheme() {
+    initTitleBlock();
     window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
     window.lines2 = [];
     window.lines3 = [];

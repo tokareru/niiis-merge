@@ -13,9 +13,19 @@
 </head>
 <body>
 <button class="btn-block btn btn-custom" id="ready">Готово</button>
-<div id="field3D">
-    <div id="scheme1"><canvas id="drawcanv"></canvas><canvas id="topcanv"></canvas></div>
+<div id='field3DAll'>
+    <div id="field3D">
+        <div id="scheme1"><canvas id="drawcanv"></canvas><canvas id="topcanv"></canvas></div>
+
+    </div>
+     <table class="table " id="table_title_block">
+                    <tbody>
+
+                    </tbody>
+                </table>
 </div>
+
+
 
 </body>
 </html>
