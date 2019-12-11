@@ -60,31 +60,31 @@ function initTitleBlock() {
     }
 
     //Графа 1
-    addText($table, ['Графа 1'], [[5, 3]], 'text-center font-weight-bold' +
+    addText($table, [''], [[5, 3]], 'text-center font-weight-bold' +
         ' td_fontSize18');
     //Графа 2
-    addText($table,['Графа 2'] ,[[5, 0]], 'text-center' +
+    addText($table,[''] ,[[5, 0]], 'text-center' +
         ' font-weight-bold td_fontSize18');
     //Графа 3
-    addText($table,['Графа 3'] ,[[4, 8]], 'text-center' +
+    addText($table,[''] ,[[4, 8]], 'text-center' +
         ' font-weight-bold td_fontSize12');
     //Графы 4
-    addText($table,['Графа 4'] ,[[5, 4]], 'text-center' +
+    addText($table,[''] ,[[5, 4]], 'text-center' +
         '');
     //Графы 4
-    addText($table,['Графа 4'] ,[[6, 4]], 'text-center' +
+    addText($table,[''] ,[[6, 4]], 'text-center' +
         '');
     //Графы 4
-    addText($table,['Графа 4'] ,[[7, 4]], 'text-center' +
+    addText($table,[''] ,[[7, 4]], 'text-center' +
         '');
     //Графа 5
-    addText($table,['Графа 5'] ,[[8, 4]], 'text-center' +
+    addText($table,[''] ,[[8, 4]], 'text-center' +
         ' font-weight-bold td_fontSize12');
     //Графа 6
-    addText($table,['Графа 6'] ,[[9, 4]], 'text-center' +
+    addText($table,[''] ,[[9, 4]], 'text-center' +
         ' font-weight-bold td_fontSize12');
     //Графа 9
-    addText($table,['Графа 9'] ,[[5, 8]], 'text-center' +
+    addText($table,[''] ,[[5, 8]], 'text-center' +
         ' font-weight-bold td_fontSize12');
     //добавляем текст на 5 строке
     addText($table, ['Изм.', 'Лист', '№ докум.', "Подп.", 'Дата'],
