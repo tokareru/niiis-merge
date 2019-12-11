@@ -21,7 +21,6 @@ $IS = $_SESSION['niiis']['is'];
         <title><?php echo isset($data['title']) ? $data['title'] : conf::$SITE_NAME; ?></title>
         
         <?php
-        
         sys::inc_no_cache('css', 'css/tablesorter.css');
         sys::inc_no_cache('css', 'css/bootstrap.css');
         sys::inc_no_cache('css', 'css/styles.css');

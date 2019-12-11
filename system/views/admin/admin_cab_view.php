@@ -75,7 +75,7 @@ sys::inc_no_cache('javascript', 'js/main.js');
         </div>
         <div class="col-2">
             <?php if (sys::is_super_admin()) { ?>
-                <select id="change_role" name="role" class="form-control">
+                <select id="change_round" name="round" class="form-control">
                     <option value="1" <?php if ($_SESSION["niiis"]["round"] == 1) echo "selected"; ?>>1 раунд</option>
                     <option value="2" <?php if ($_SESSION["niiis"]["round"] == 2) echo "selected"; ?>>2 раунд</option>
                     <option value="3" <?php if ($_SESSION["niiis"]["round"] == 3) echo "selected"; ?>>3 раунд</option>

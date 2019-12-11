@@ -1,10 +1,10 @@
   $(function () {
-       $("#change_role").on('change', function(){
-        var role = $("#change_role").val();
+       $("#change_round").on('change', function(){
+        var round = $("#change_round").val();
         $.ajax	({
-      url: "default/change_role",
+      url: "start_ajax/set_data",
       type: "GET",
-      data:{role:role},
+      data:{round:round},
       success:	function (answer)
       {
       }
