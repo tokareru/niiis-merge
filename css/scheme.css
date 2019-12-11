@@ -23,7 +23,7 @@
 }
 
 #scheme1 div canvas {
-    display: block;
+    display: none;
 }
 
 #drawcanv:hover {
