@@ -351,7 +351,7 @@ export function initScheme() {
         {
             //$("#field3D div div canvas")[i].width *= 1.2;
             //$("#field3D div div canvas")[i].height *= 1.2;
-            $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth-7;
+            $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth-14;
             $("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
 
             $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
@@ -377,7 +377,7 @@ export function initScheme() {
 
     for (let i = 0; i < $("#drawcanv").length; i++) {
         window.ctxs[i] = $("#drawcanv")[i].getContext("2d");
-        $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth-7;
+        $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth-14;
         $("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
 
         //$("#field3D div div canvas")[i].width *= 1.2;
