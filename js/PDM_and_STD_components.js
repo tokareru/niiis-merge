@@ -7,13 +7,6 @@ function createSTD(event, json_Role_and_Round) {
     set_PDM_or_STD("json/stdPDM_images.json", "#left-accordion", "#std_field");
 }
 
-$(function () {
-    $('#btn_test').on('click', function () {
-        console.log('len ' + $('#left-accordion').find('.pdm_draggable').length);
-        $('.pdm_draggable').draggable();
-    });
-});
-
 function set_PDM_or_STD(imagesURL, accordID, fieldID) {
     // получем и устанавливаем картинки в поле pdm или std
     $.ajax({

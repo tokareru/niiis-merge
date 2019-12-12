@@ -67,7 +67,7 @@ function initTitleBlock() {
         ' font-weight-bold td_fontSize18');
     //Графа 3
     addText($table,[''] ,[[4, 8]], 'text-center' +
-        ' font-weight-bold td_fontSize12');
+        ' font-weight-bold td_fontSize18');
     //Графы 4
     addText($table,[''] ,[[5, 4]], 'text-center' +
         '');
@@ -79,21 +79,23 @@ function initTitleBlock() {
         '');
     //Графа 5
     addText($table,[''] ,[[8, 4]], 'text-center' +
-        ' font-weight-bold td_fontSize12');
+        ' font-weight-bold td_fontSize18');
     //Графа 6
     addText($table,[''] ,[[9, 4]], 'text-center' +
-        ' font-weight-bold td_fontSize12');
+        ' font-weight-bold td_fontSize18');
     //Графа 9
     addText($table,[''] ,[[5, 8]], 'text-center' +
-        ' font-weight-bold td_fontSize12');
+        ' font-weight-bold td_fontSize18');
     //добавляем текст на 5 строке
     addText($table, ['Изм.', 'Лист', '№ докум.', "Подп.", 'Дата'],
-        [[0, 4], [1, 4], [2, 4], [3, 4], [4, 4]]);
+        [[0, 4], [1, 4], [2, 4], [3, 4], [4, 4]], '', true);
     //добавляем текст на первый столбец
     addText($table, ['Разраб.', 'Пров.', 'Т. контр.', 'Н. контр.', 'Утв.'],
-        [[0, 5], [0, 6], [0, 7], [0, 9], [0, 10]]);
-    addText($table, ['Лит.', 'Масса', 'Масштаб', 'Лист', 'Листов'],
-        [[6, 3], [7, 3], [8, 3], [4, 7], [5, 7]]);
+        [[0, 5], [0, 6], [0, 7], [0, 9], [0, 10]], '', true);
+    addText($table, ['Лит.', 'Масса', 'Масштаб'],
+        [[6, 3], [7, 3], [8, 3]], '', true);
+    addText($table, [ 'Лист', 'Листов'],
+        [[4, 7], [5, 7]], '');
 
 
     $('.edit_cell_title_block').on('click', function () {
@@ -154,7 +156,7 @@ function generateTableRow($table, sett_row) {
             $tbody.find('tr').eq(i).find('.title_block_div')
                 .flowtype(
                     {
-                        minFont : 8,
+                        minFont : 12,
                         maxFont: 50
                     }
                 );
@@ -203,10 +205,19 @@ function changeTdStyleRow(x, y, $table) {
         {'border-top-width': '1px'});
 }
 
-function addText($table, text, positions, style = '') {
+function addText($table, text, positions, style, readonly = false) {
     let $tbody = $table.find('tbody');
 
     for (let i = 0; i < positions.length; i++) {
+        if(readonly)
+        {
+            console.log('ro');
+            $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
+                .removeClass('edit_cell_title_block').off('click')
+                .find('.title_block_div').text(text[i]);
+            continue;
+        }
+
         $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
             .find('.title_block_div').text(text[i]);
         $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
