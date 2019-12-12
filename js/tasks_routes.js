@@ -119,11 +119,12 @@ function delZeroCol(table_block) {
     $tbody.find('tr').each(function () {
         $(this).children().each(function (index, elem) {
             //alert($(this).html());
-            if (index === $number) {
+            if (index === $number || index === 1) {
                 $(this).remove();
             }
         });
     });
     let $thead = $(table_block + '.table_edit thead');
     $thead.find('th').eq($number).remove();
+    $thead.find('th').eq(1).remove();
 }
