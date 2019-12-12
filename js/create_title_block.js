@@ -67,7 +67,7 @@ function initTitleBlock() {
         ' font-weight-bold td_fontSize18');
     //Графа 3
     addText($table,[''] ,[[4, 8]], 'text-center' +
-        ' font-weight-bold td_fontSize12');
+        ' font-weight-bold td_fontSize18');
     //Графы 4
     addText($table,[''] ,[[5, 4]], 'text-center' +
         '');
@@ -85,7 +85,7 @@ function initTitleBlock() {
         ' font-weight-bold td_fontSize18');
     //Графа 9
     addText($table,[''] ,[[5, 8]], 'text-center' +
-        ' font-weight-bold td_fontSize12');
+        ' font-weight-bold td_fontSize18');
     //добавляем текст на 5 строке
     addText($table, ['Изм.', 'Лист', '№ докум.', "Подп.", 'Дата'],
         [[0, 4], [1, 4], [2, 4], [3, 4], [4, 4]], '', true);
