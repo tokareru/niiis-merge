@@ -134,3 +134,18 @@
     //content: "\f067";
     display: inline-block;
 }
+
+.editCol{
+    cursor: pointer;
+    display: inline-block;
+}
+
+.toEditPenCol{
+    width: 30px;
+    content: url("../images/banned_pen.png");
+}
+
+.toRoPenCol{
+    width: 30px;
+    content: url("../images/edit_pen.png");
+}

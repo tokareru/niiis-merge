@@ -14,7 +14,11 @@ function generateTable(json, add_data) {
             '</table>');
     $table_made.find('.table_edit').append('<thead></thead>');
     $table_made.find('thead').append('<tr></tr>');
+    //кнопка удаления строки
     $table_made.find('thead tr').append('<th class="p-0"><div class="edit_cell_readonly">' /*+ "\№"*/ + '</div></th>');
+    //кнопка "сделать строку редактируемой"
+    $table_made.find('thead tr').append('<th class="p-0"><div class="edit_cell_readonly">' + '</div></th>');
+
     json.thead.forEach(function (elem) {
         $table_made.find('thead tr').append('<th class="p-0"><div>' + elem.text + '</div></th>');
     });
@@ -22,7 +26,10 @@ function generateTable(json, add_data) {
     $table_made.find('.table_edit').append('<tbody></tbody>');
     json.tbody.forEach(function (curr_row, rows) {
         $table_made.find('tbody').append('<tr></tr>');
+        //кнопка удаления строки
         $table_made.find('tbody tr').last().append('<td class="p-0"><div>' /*+ (rows + 1)*/ + '</div></td>');
+        //кнопка "сделать строку редактируемой"
+        $table_made.find('tbody tr').last().append('<td class="p-0"><div class="toRoPenCol editCol">' /*+ (rows + 1)*/ + '</div></td>');
         curr_row.row.forEach(function (curr_col, cols) {
             $table_made.find('tbody').find('tr').last().append('<td class="p-0"><div>' + curr_col.text + '</div></td>');
         })
@@ -31,45 +38,49 @@ function generateTable(json, add_data) {
     $table_made.find('tbody').append("<tr><td class='p-0'><div class='firstColPlus'>+</div></td></tr>")
 
     tableData(false, table_block, edit_mode_div, url);
-    json.thead.forEach(function (elem, i) {
+    /*json.thead.forEach(function (elem, i) {
         if (elem.readonly) cellToReadOnly(0, i + 1, table_block);
     });
     json.tbody.forEach(function (curr_row, rows) {
         curr_row.row.forEach(function (curr_col, cols) {
             if (curr_col.readonly) cellToReadOnly(rows + 1, cols + 1, table_block);
         })
-    });
+    });*/
 
     setRowsNumber(table_block);
     colToReadOnly(0, 'readonly', table_block);
+    colToReadOnly(1, 'readonly', table_block);
 }
 
 function postDataFromTable(table_block) {
     let json = {};
     let tbody = [];
     $(table_block + ".table_made").find("tbody tr").each(function (rows) {
-        let row_arr = [];
-        $(this).find("td").each(function (cols) {
-            if (cols > 0) {
-                let $div = $(this).find("div");
-                let r_o = $div.attr("readonly");
-                if (r_o !== undefined) {
-                    row_arr.push({
-                        "text": $div.text(),
-                        "readonly": true
-                    });
-                } else {
-                    row_arr.push({
-                        "text": $div.text(),
-                        "readonly": false
-                    });
+        if (rows < $(table_block + ".table_made").find("tr").length - 3) {
+            let row_arr = [];
+            $(this).find("td").each(function (cols) {
+                if (cols > 1) {
+                    let $div = $(this).find("div");
+                    let r_o = $div.attr("readonly");
+                    if (r_o !== undefined) {
+                        row_arr.push({
+                            "text": $div.text(),
+                            "readonly": true
+                        });
+                    } else {
+                        row_arr.push({
+                            "text": $div.text(),
+                            "readonly": false
+                        });
+                    }
                 }
-            }
-        });
-        let obj = {
-            row: row_arr
-        };
-        tbody.push(obj);
+            });
+            let obj = {
+                row: row_arr
+            };
+            tbody.push(obj);
+        }
+
     });
 
     json = {
@@ -131,13 +142,50 @@ function tableData(readonly, table_block, edit_mode_div, url) {
         });
 
         $table_edit.on('click', '.firstCol', function (event) {
-           delRow(table_block);
-            $(this).parent().parent().hide();
+            delRow(table_block);
+            $(this).parent().parent().remove();
         });
 
         $table_edit.on('click', '.firstColPlus', function (event) {
-           delRow(table_block);
-           addRow(table_block, $table_edit.find("tr").length-2)
+            addRow(table_block, $table_edit.find("tr").length - 2);
+            setRowsNumber(table_block);
+        });
+
+        $table_edit.on('click', '.toEditPenCol', function (event) {
+            let $this = $(this);
+            let length = $table_edit.find("tbody").find("tr").first().find("td").length;
+            $this.attr("current", "current")
+            $table_edit.find("tbody").find(".editCol").each(function (i) {
+                let check = $(this).attr("current");
+                if (check === "current"){
+                    console.log(i)
+                    $this.removeAttr("current");
+                    for (let x = 2; x < length; x++){
+                        cellToEdit(i+1, x, table_block);
+                    }
+                }
+            })
+            $this
+                .removeClass("toEditPenCol")
+                .addClass("toRoPenCol");
+        });
+
+        $table_edit.on('click', '.toRoPenCol', function (event) {
+            let $this = $(this);
+            let length = $table_edit.find("tbody").find("tr").first().find("td").length;
+            $this.attr("current", "current")
+            $table_edit.find("tbody").find(".editCol").each(function (i) {
+                let check = $(this).attr("current");
+                if (check === "current"){
+                    $this.removeAttr("current");
+                    for (let x = 2; x < length; x++){
+                        cellToReadOnly(i+1, x, table_block);
+                    }
+                }
+            })
+            $this
+                .removeClass("toRoPenCol")
+                .addClass("toEditPenCol");
         });
 
         $edit_mode_div.on('click', '.edit_mode_onoff', function () {
@@ -337,7 +385,6 @@ function addRow(table_block, number) {
     if (isZeroRows) {
         $tbody.find('tr:first').remove();
     }
-    setRowsNumber(table_block);
 }
 
 function delRow(table_block) {
@@ -663,9 +710,9 @@ function serializeTable(table_block) {
 function setRowsNumber(table_block) {
     let $tbody = $(table_block + "tbody");
     $tbody.find("tr").each(function (index) {
-        if(index !== $tbody.find("tr").length-1){
+        if (index !== $tbody.find("tr").length - 1) {
             let $this = $(this);
-            let $first_div = $this.find("td").first().find("div")
+            let $first_div = $this.find("td").first().find("div");
             //$first_div.text(index + 1);
             $first_div
                 .addClass("firstCol")
@@ -677,8 +724,36 @@ function setRowsNumber(table_block) {
             })
                 .attr("readonly", "readonly")
                 .removeClass("edit_cell");
+
+            //кнопка редактировать строку
+            let $secondCol_div = $this.find("td").eq(1).find("div");
+            $secondCol_div
+                .addClass("editCol")
+                .attr("readonly", "readonly")
+                .removeClass("edit_cell_div");
+            let $secondCol_td = $this.find("td").eq(1);
+            $secondCol_td.find("input").remove();
+            $secondCol_td.css({
+                "width": "33px"
+            })
+                .attr("readonly", "readonly")
+                .removeClass("edit_cell");
         }
     })
+
+
+    let $secondCol_div = $tbody.find(".editCol").last();
+    $secondCol_div
+        .addClass("toRoPenCol")
+        .attr("readonly", "readonly")
+        .removeClass("edit_cell_div");
+    let $secondCol_td = $secondCol_div.parent();
+    $secondCol_td.find("input").remove();
+    $secondCol_td.css({
+        "width": "33px"
+    })
+        .attr("readonly", "readonly")
+        .removeClass("edit_cell");
 }
 
 function highlightCol(col, table_block) {
