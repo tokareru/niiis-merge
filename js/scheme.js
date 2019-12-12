@@ -357,7 +357,7 @@ export function initScheme() {
             $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
             $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
             $("#field3D div div canvas")[i].style = "";
-            renderersc.setSize($("#field3D")[0].clientWidth, $("#field3D")[0].clientHeight);
+            renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
             //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
             window.ctxs[i].lineWidth = 2;
             if (window.isEnded) {$("#scheme1 div canvas")[0].style.cssText += " display:block;";}
@@ -385,7 +385,7 @@ export function initScheme() {
         $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
         $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
         $("#field3D div div canvas")[i].style = "";
-        renderersc.setSize($("#field3D")[0].clientWidth, $("#field3D")[0].clientHeight);
+        renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
         //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
         window.ctxs[i].fillStyle = "black";
         window.ctxs[i].lineWidth = 2;
