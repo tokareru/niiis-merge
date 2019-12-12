@@ -11,9 +11,9 @@ export function initScheme() {
     window.showlines = [0,1];
 
     window.areas1 = []; // массив круглых областей в которых происходит клик
-    window.areas2 = [];
-    window.areas3 = [];
-    window.r = 3.5;
+    window.areas2 = []; // координаты кругов в размерах
+    window.areas3 = []; // координаты стрелок в размерах
+    window.r = 6;
     window.inCircle;
     window.clickedCircles;
     window.ctxs = [];
@@ -22,6 +22,7 @@ export function initScheme() {
     window.isEnded = false;
 
     createCoor();
+    createrazmer();
 
     var container, stats;
 
@@ -408,6 +409,102 @@ export function initScheme() {
         }
     }
 
+    function razmerdraw()
+    {
+        for (let j=0;j<areas2.length;j++)
+        {
+            ctxs[0].beginPath();
+            ctxs[0].arc(areas2[j].x, areas2[j].y, 5, 0, 2 * Math.PI, 0);
+            ctxs[0].stroke();
+        }
+
+        for (let j=0;j<areas3.length;j++)
+        {
+            let x = areas3[j].x;
+            let y = areas3[j].y;
+            let y1, x1;
+            //if (j == 1) {y1 = -20} else {y1 = 20}
+            ctxs[0].beginPath();
+            ctxs[0].moveTo(x, y);
+
+            switch (areas3[j].rotation)
+            {
+                case "up":
+                {
+                    ctxs[0].lineTo(x-7, y+20);
+                    ctxs[0].lineTo(x+7, y+20);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x-10, y);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                        ctxs[0].font = "italic 10pt Arial";
+                        ctxs[0].fillText(j+10, areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "down":
+                {
+                    ctxs[0].lineTo(x-7, y-20);
+                    ctxs[0].lineTo(x+7, y-20);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x-10, y);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "left":
+                {
+                    ctxs[0].lineTo(x+20, y-7);
+                    ctxs[0].lineTo(x+20, y+7);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x, y+10);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                        ctxs[0].font = "italic 10pt Arial";
+                        ctxs[0].fillText(j*10, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "right":
+                {
+                    ctxs[0].lineTo(x-20, y-7);
+                    ctxs[0].lineTo(x-20, y+7);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x, y+10);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+            }
+
+        }
+    }
+
     $("#ready").click(function () {
         for (let j = 0; j < 3; j++) {
             /*   eval('canv' + (j + 1).toString()).style.display = 'none';
@@ -423,142 +520,148 @@ export function initScheme() {
 
     $("#drawcanv").mousedown(function (e) {
         e.preventDefault();
-        if (isEnded == false) {
-            window.down = true;
-            let n = $(this)[0].id;
-            let rect = e.target.getBoundingClientRect();
-            let x = e.clientX - rect.left - 1;
-            let y = e.clientY - rect.top - 1;
+        window.down = true;
+        let n = $(this)[0].id;
+        let rect = e.target.getBoundingClientRect();
+        let x = e.clientX - rect.left - 1;
+        let y = e.clientY - rect.top - 1;
 
-            for (let i = 0; i < 3; i++) {
-                if (n == ctxs[i].canvas.id) {
-                    window.gx = x;
-                    window.gy = y;
+        for (let i = 0; i < 3; i++) {
+            if (n == ctxs[i].canvas.id) {
+                window.gx = x;
+                window.gy = y;
 
-                    circlesdraw();
+                if (isEnded == false) {circlesdraw();}
 
-                    for (let j = 0; j < areas1.length; j++) {
-                        let dx = x - areas1[j].x;
-                        let dy = y - areas1[j].y;
-                        if (dx * dx + dy * dy < r * r) {
-                            window.clickedCircles = j;
-                            arrcoor = [];
-                            window.arrcoor.push([areas1[j].x, areas1[j].y]);
-                            //console.log('; '+areas1[j].x+'; '+areas1[j].y);
-                            //console.log(arrcoor);
-                            //info.innerText += 'down:В круге №' + (j + 1) + '\n';
-                            break;
-                            //clickedCircles.push(j);
-                        } else {
-                            window.clickedCircles = undefined;
-                            //info.innerText += 'down:Не в круге №' + (j + 1) + '\n';
-                            //clickedCircles.splice(j, 1);
-                        }
+                for (let j = 0; j < areas1.length; j++) {
+                    let dx = x - areas1[j].x;
+                    let dy = y - areas1[j].y;
+                    if (dx * dx + dy * dy < r * r) {
+                        window.clickedCircles = j;
+                        arrcoor = [];
+                        window.arrcoor.push([areas1[j].x, areas1[j].y]);
+                        //console.log('; '+areas1[j].x+'; '+areas1[j].y);
+                        //console.log(arrcoor);
+                        //info.innerText += 'down:В круге №' + (j + 1) + '\n';
+                        break;
+                        //clickedCircles.push(j);
+                    } else {
+                        window.clickedCircles = undefined;
+                        //info.innerText += 'down:Не в круге №' + (j + 1) + '\n';
+                        //clickedCircles.splice(j, 1);
                     }
-                    break;
                 }
+                if (isEnded == true)
+                {
+                    razmerdraw();
+                }
+
+                break;
             }
         }
 
 
     }).mouseup(function (e) {
-        if (isEnded == false) {
-            window.down = false;
-            let n = $(this)[0].id;
+        window.down = false;
+        let n = $(this)[0].id;
 
-            let rect = e.target.getBoundingClientRect();
-            let x = e.clientX - rect.left - 1;
-            let y = e.clientY - rect.top - 1;
-            //alert(x+'; '+y);
+        let rect = e.target.getBoundingClientRect();
+        let x = e.clientX - rect.left - 1;
+        let y = e.clientY - rect.top - 1;
+        //alert(x+'; '+y);
 
-            for (let i = 0; i < 3; i++) {
-                if (n == ctxs[i].canvas.id) {
-                    /*thisarrlines = eval('lines' + n[4]);
-                    thisarrlines.push([gx, gy, window.endx, window.endy]);
-                    drawall(ctxs[i]);*/
-                    let summ = 0;
-                    for (let l=0; l<window.crivie.length; l++)
-                    {
-                        summ+=window.crivie[l];
-                    }
-                    window.crivie = [];
-                    ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
-                        document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
+        for (let i = 0; i < 3; i++) {
+            if (n == ctxs[i].canvas.id) {
+                /*thisarrlines = eval('lines' + n[4]);
+                thisarrlines.push([gx, gy, window.endx, window.endy]);
+                drawall(ctxs[i]);*/
+                let summ = 0;
+                for (let l=0; l<window.crivie.length; l++)
+                {
+                    summ+=window.crivie[l];
+                }
+                window.crivie = [];
+                ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
+                    document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
 
-                    circlesdraw();
+                if (isEnded == false) {circlesdraw();}
 
-                    for (let k=0; k<lines1.length; k++)
-                    {
-                        ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
-                        ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
-                        ctxs[i].stroke();
-                    }
+                for (let k=0; k<lines1.length; k++)
+                {
+                    ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
+                    ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
+                    ctxs[i].stroke();
+                }
 
-                    if (window.clickedCircles != undefined) {
-                        for (let j = 0; j < areas1.length; j++) {
-                            let dx = x - areas1[j].x;
-                            let dy = y - areas1[j].y;
-                            if (dx * dx + dy * dy < r * r) {
-                                //console.log(window.arrcoor);
-                                let d = Math.sqrt((x-arrcoor[0][0])*(x-arrcoor[0][0])+(y-arrcoor[0][1])*(y-arrcoor[0][1]));
-                                //console.log(d+'; '+summ);
-                                if ((summ-d)/summ > 0.2) {return;}
-                                window.arrcoor = [];
-                                window.crivie = [];
-                                //info.innerText += 'up:В круге №' + (j + 1) + '\n';
-                                if (areas1[j].arr.indexOf(window.clickedCircles) == -1) {continue;}
-                                lines1.push([areas1[clickedCircles].x, areas1[clickedCircles].y, areas1[j].x, areas1[j].y]);
-                                ctxs[i].beginPath();
+                if (window.clickedCircles != undefined) {
+                    for (let j = 0; j < areas1.length; j++) {
+                        let dx = x - areas1[j].x;
+                        let dy = y - areas1[j].y;
+                        if (dx * dx + dy * dy < r * r) {
+                            //console.log(window.arrcoor);
+                            let d = Math.sqrt((x-arrcoor[0][0])*(x-arrcoor[0][0])+(y-arrcoor[0][1])*(y-arrcoor[0][1]));
+                            //console.log(d+'; '+summ);
+                            if ((summ-d)/summ > 0.2) {return;}
+                            window.arrcoor = [];
+                            window.crivie = [];
+                            //info.innerText += 'up:В круге №' + (j + 1) + '\n';
+                            if (areas1[j].arr.indexOf(window.clickedCircles) == -1) {continue;}
+                            lines1.push([areas1[clickedCircles].x, areas1[clickedCircles].y, areas1[j].x, areas1[j].y]);
+                            ctxs[i].beginPath();
 
-                                ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
-                                    document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
+                            ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
+                                document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
 
-                                for (let k=0; k<lines1.length; k++)
+                            for (let k=0; k<lines1.length; k++)
+                            {
+                                ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
+                                ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
+                                ctxs[i].stroke();
+                            }
+
+                            if (showlines.indexOf(lines1.length+1) == -1)
+                            {
+                                if (lines1.length == 9 || lines1.length == 20)
                                 {
-                                    ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
-                                    ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
-                                    ctxs[i].stroke();
-                                }
-
-                                if (showlines.indexOf(lines1.length+1) == -1)
-                                {
-                                    if (lines1.length == 9 || lines1.length == 20)
-                                    {
-                                        showlines.push(lines1.length);
-                                        showlines.push(lines1.length+1);
-                                    }
-                                    else
-                                    {
-                                        if (lines1.length != 8 && lines1.length != 19)
-                                        {
-                                            showlines.push(lines1.length+1);
-                                        }
-                                    }
-                                }
-                                if (lines1.length == 32)
-                                {
-                                    $("#ready").click();
-                                    $("#scheme1 div canvas")[0].style.cssText += " display:block;";
+                                    showlines.push(lines1.length);
+                                    showlines.push(lines1.length+1);
                                 }
                                 else
                                 {
-                                    circlesdraw();
+                                    if (lines1.length != 8 && lines1.length != 19)
+                                    {
+                                        showlines.push(lines1.length+1);
+                                    }
                                 }
-
-                                /* ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
-                                ctxs[i].lineTo(areas1[j].x, areas1[j].y);
-                                ctxs[i].stroke(); */
-
-                            } else {
-                                /* window.arrcoor = [];
-                                window.crivie = []; */
-                                //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
-                                //clickedCircles = undefined;
                             }
+                            if (lines1.length == 32)
+                            {
+                                $("#ready").click();
+                                $("#scheme1 div canvas")[0].style.cssText += " display:block;";
+                            }
+                            else
+                            {
+                                circlesdraw();
+                            }
+
+                            /* ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
+                            ctxs[i].lineTo(areas1[j].x, areas1[j].y);
+                            ctxs[i].stroke(); */
+
+                        } else {
+                            /* window.arrcoor = [];
+                            window.crivie = []; */
+                            //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
+                            //clickedCircles = undefined;
                         }
                     }
-                    break;
                 }
+                if (isEnded == true)
+                {
+                    razmerdraw();
+                }
+
+                break;
             }
         }
 
@@ -742,6 +845,32 @@ function createCoor()
     {
         let aaa={x: m*c[i].x+delta, y: m*c[i].y+delta, arr: c[i].arr};
         areas1.push(aaa);
+    }
+
+}
+
+function createrazmer()
+{
+    let delta = 0;
+    let m = 1;
+    let c = [{x: 152, y: 56, arr:[1]}, {x: 152, y: 161, arr:[0]},
+        {x: 153, y: 462, arr:[2]}, {x: 498, y: 462, arr:[3]},
+        {x: 558, y: 129, arr:[5]}, {x: 804, y: 129, arr:[4]}];
+
+    let razm = [{x: 140, y: 56, rotation: "up"}, {x: 140, y: 161, rotation: "down"},
+        {x: 153, y: 474, rotation: "left"}, {x: 498, y: 474, rotation: "right"}, {x: 558, y: 170, rotation: "left"}, {x: 804, y: 170, rotation: "right"}
+    ];
+
+    for (let i=0;i<c.length;i++)
+    {
+        let aaa={x: m*c[i].x+delta, y: m*c[i].y+delta, arr: c[i].arr};
+        areas2.push(aaa);
+    }
+
+    for (let i=0;i<razm.length;i++)
+    {
+        let aaa={x: m*razm[i].x+delta, y: m*razm[i].y+delta, rotation: razm[i].rotation};
+        areas3.push(aaa);
     }
 
 }

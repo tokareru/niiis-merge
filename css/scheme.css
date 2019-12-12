@@ -43,7 +43,7 @@
 
 #drawcanv {
     position:absolute;
-    //border: 1px dashed black;
+    margin-left: -3px;
 }
 
 .canvimgdone {
