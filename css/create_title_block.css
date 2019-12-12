@@ -32,6 +32,10 @@
     font-size: 18px!important;
 }
 
+.td_fontSize16 > *{
+    font-size: 16px!important;
+}
+
 .td_fontSize14 > *{
     font-size: 14px!important;
 }
@@ -69,4 +73,9 @@
 
 .edit_cell_title_block{
 
+}
+
+#addToServerTitleBlock{
+    background-color: #00acc1;
+    border-color: #9c9e9e;
 }

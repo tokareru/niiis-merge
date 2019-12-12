@@ -22,8 +22,9 @@
                     <tbody>
 
                     </tbody>
-                </table>
+     </table>
 </div>
+<input type='button' class='btn' id='addToServerTitleBlock' value='отправить на сервер'>
 
 
 

@@ -119,6 +119,10 @@ function initTitleBlock() {
     });
 
     $(window).trigger('resize');
+    
+    $('#addToServerTitleBlock').on('click', function () {
+        addToServerTitleBlock();
+    })
 }
 
 function changeTableRow($row_tr, settings, $table) {
@@ -211,7 +215,6 @@ function addText($table, text, positions, style, readonly = false) {
     for (let i = 0; i < positions.length; i++) {
         if(readonly)
         {
-            console.log('ro');
             $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
                 .removeClass('edit_cell_title_block').off('click')
                 .find('.title_block_div').text(text[i]);
@@ -225,4 +228,36 @@ function addText($table, text, positions, style, readonly = false) {
         $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
             .addClass(style);
     }
+}
+
+function serializedTitleBlock() {
+    let $table = $('#table_title_block');
+    let $tbody = $table.find('tbody');
+    let serArr = [];
+    $tbody.find('tr').each(function () {
+        let tempArr = [];
+        $(this).find('td').each(function () {
+            tempArr.push($(this).find('.title_block_div').text());
+        });
+        serArr.push(tempArr);
+    });
+    console.log(serArr);
+    return serArr;
+}
+
+function addToServerTitleBlock() {
+    let serArr = serializedTitleBlock();
+    $.ajax(
+        {
+            url: '',
+            type: 'POST',
+            data: {data: serArr, function: 'add_title_block'},
+            success: function (data) {
+                console.log(data);
+            },
+            error: function () {
+                
+            }
+        }
+    )
 }
