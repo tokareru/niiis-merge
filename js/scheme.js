@@ -13,7 +13,7 @@ export function initScheme() {
     window.areas1 = []; // массив круглых областей в которых происходит клик
     window.areas2 = [];
     window.areas3 = [];
-    window.r = 3.5;
+    window.r = 6;
     window.inCircle;
     window.clickedCircles;
     window.ctxs = [];
