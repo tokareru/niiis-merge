@@ -217,7 +217,7 @@ function load3d(array, obj = {0: {"checked": "true"}}) {
             if (typeof scene != "undefined") {
                 window.renderer.render(scene, camera);
             }
-            window.renderersc.render(scenesc, camerasc);
+            //window.renderersc.render(scenesc, camerasc);
         } else {
             for (i = 0; i < 4; i++) {
                 if (array.indexOf('component_' + (i + 1)) == -1) {
@@ -239,7 +239,7 @@ function load3d(array, obj = {0: {"checked": "true"}}) {
             if (typeof scene != "undefined") {
                 window.renderer.render(scene, camera);
             }
-            window.renderersc.render(scenesc, camerasc);
+            //window.renderersc.render(scenesc, camerasc);
         }
     } else {
         //alert()
