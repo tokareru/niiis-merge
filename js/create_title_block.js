@@ -253,7 +253,7 @@ function addToServerTitleBlock() {
             type: 'POST',
             data: {data: serArr, function: 'add_title_block'},
             success: function (data) {
-                console.log(data);
+                //console.log(data);
             },
             error: function () {
                 
