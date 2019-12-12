@@ -14,8 +14,8 @@
     <title>Left-side</title>
 </head>
 <body>
+<div class="col-xl-2">
 <!--Левая сторона-->
-<div class="col-md-2">
     <div class="left-side">
         <div id="left-accordion">
             <p> Идёт загрузка...</p>

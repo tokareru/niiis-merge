@@ -14,8 +14,8 @@
     <title>Main-tabs</title>
 </head>
 <body>
+<div class="col-xl">
 <!--Центральная сторона-->
-<div class="col-md">
     <div id="tabs">
         <ul style="list-style-type: none">
             <li><a href="#tabs-empty"></a></li>
