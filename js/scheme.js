@@ -179,8 +179,8 @@ export function initScheme() {
             wireframe.scale.set(scale.x, scale.y, scale.z);
             wireframe.position.set(pos.x, pos.y, pos.z);
 
-            mesh.visible = false;
-            wireframe.visible = false;
+            mesh.visible = true;
+            wireframe.visible = true;
 
             mesh.position.set(pos.x, pos.y, pos.z);//-0.6
             mesh.rotation.set(rot.x, rot.y, rot.z);
@@ -221,14 +221,14 @@ export function initScheme() {
             pleftgran1.rotation.z = 0;
 
             window.MeshsLinesScheme[arrmesh] = [];
-            window.MeshsLinesScheme[arrmesh].push(mesh);
+            /*window.MeshsLinesScheme[arrmesh].push(mesh);
             window.MeshsLinesScheme[arrmesh].push(wireframe);
 
             window.MeshsLinesScheme[arrmesh].push(pleft);
             window.MeshsLinesScheme[arrmesh].push(pleftgran);
 
             window.MeshsLinesScheme[arrmesh].push(pleft1);
-            window.MeshsLinesScheme[arrmesh].push(pleftgran1);
+            window.MeshsLinesScheme[arrmesh].push(pleftgran1);*/
 
             scenesc.add(mesh);
             scenesc.add(wireframe);
@@ -238,7 +238,7 @@ export function initScheme() {
             scenesc.add(pleftgran1);
 
             //добавляем весь чертеж
-            firstFieldInit()
+            //firstFieldInit()
         });
     }
 
@@ -351,13 +351,13 @@ export function initScheme() {
         {
             //$("#field3D div div canvas")[i].width *= 1.2;
             //$("#field3D div div canvas")[i].height *= 1.2;
-            $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth;
+            $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth-14;
             $("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
 
-            $("#drawcanv")[i].width = $("#field3D")[0].clientWidth;
+            $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
             $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
             $("#field3D div div canvas")[i].style = "";
-            renderersc.setSize($("#field3D")[0].clientWidth, $("#field3D")[0].clientHeight);
+            renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
             //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
             window.ctxs[i].lineWidth = 2;
             if (window.isEnded) {$("#scheme1 div canvas")[0].style.cssText += " display:block;";}
@@ -377,15 +377,15 @@ export function initScheme() {
 
     for (let i = 0; i < $("#drawcanv").length; i++) {
         window.ctxs[i] = $("#drawcanv")[i].getContext("2d");
-        $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth;
+        $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth-14;
         $("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
 
         //$("#field3D div div canvas")[i].width *= 1.2;
         //$("#field3D div div canvas")[i].height *= 1.2;
-        $("#drawcanv")[i].width = $("#field3D")[0].clientWidth;
+        $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
         $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
         $("#field3D div div canvas")[i].style = "";
-        renderersc.setSize($("#field3D")[0].clientWidth, $("#field3D")[0].clientHeight);
+        renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
         //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
         window.ctxs[i].fillStyle = "black";
         window.ctxs[i].lineWidth = 2;
