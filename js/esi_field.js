@@ -14,8 +14,6 @@
 });*/
 
 function initESI() {
-    /* $('#esi_field').append('<button id=\'esi_branch_btn\' class="btn btn-custom btn-block">' +
-         'Обновить данные</button>');*/
     $('#esi_field').find('#esi_branch_btn').data({'init': 0});
 
     $('#esi_field').on('click', '#esi_branch_btn', function () {
@@ -28,12 +26,8 @@ function initESI() {
 
 
         if ($('#esi_field').find('#esi_branch_btn').data('init') === 0) {
-            //
             $('#esi_branch_btn').data({'init': 1});
         }
-
-
-        //getInfoFromSpecTable(1, 2);
     });
 
     $('.slider_button').on('click', function () {

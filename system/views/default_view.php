@@ -41,7 +41,8 @@ $IS = $_SESSION['niiis']['is'];
         sys::inc_no_cache('css', 'css/production_task_field.css');
         sys::inc_no_cache('css', 'css/technological_process.css');
         sys::inc_no_cache('css', 'css/create_task_route.css');
-        
+        sys::inc_no_cache('css', 'css/create_title_block.css');
+
         sys::inc_no_cache('javascript', 'js/tablesorter/jquery.tablesorter.js');
         sys::inc_no_cache('javascript', 'js/tablesorter/jquery.tablesorter.js');
         sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
@@ -67,6 +68,8 @@ $IS = $_SESSION['niiis']['is'];
         sys::inc_no_cache('javascript', 'js/3D/3D.js');
         sys::inc_no_cache('javascript', 'js/shell/shell.js');
         sys::inc_no_cache('javascript', 'js/main.js');
+        sys::inc_no_cache('javascript', 'js/flowtype.js');
+        sys::inc_no_cache('javascript', 'js/create_title_block.js');
         ?>
         
         <script src="<?php echo conf::$SITE_URL ?>js/main.js" type="text/javascript"></script>
