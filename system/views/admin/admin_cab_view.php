@@ -55,7 +55,7 @@ sys::inc_no_cache('javascript', 'js/main.js');
         <div class="col-3">
             <div class="row">
                 <div class="col-5">Вы вошли как:</div>
-                <div class="col-4"><?php echo sys::user_login() ?>
+                <div class="col-4"><?php echo sys::user_login();?>
                 </div>
             </div>
         </div>
@@ -85,5 +85,5 @@ sys::inc_no_cache('javascript', 'js/main.js');
     </div>
 </div>
 <div>
-    
+    <?php include_once 'system/views/admin/'.$content_view ?>
 </div>
