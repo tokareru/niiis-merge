@@ -63,16 +63,15 @@ async function prepareShell(json_role_and_round, add_data) {
     login = json_role_and_round.login;
     currentName = json_role_and_round.name;
     let role = json_role_and_round.role.toString();
-    Role = role;
     let round = Number(json_role_and_round.round);
-    Round = round;
     //console.log(current_round_glob)
     //console.log(round)
-    if (round === Number(current_round_glob)) return;
+    if (round === Number(Round)) return;
     $("#change_role").attr("disabled", "disabled");
-    current_round_glob = round;
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
 
+    Role = role;
+    Round = round;
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];
 

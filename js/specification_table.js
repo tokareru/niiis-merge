@@ -174,7 +174,6 @@ function tableData(readonly, table_block, edit_mode_div, url) {
             $table_edit.find("tbody").find(".editCol").each(function (i) {
                 let check = $(this).attr("current");
                 if (check === "current") {
-                    console.log(i)
                     $this.removeAttr("current");
                     for (let x = 2; x < length; x++) {
                         cellToEdit(i + 1, x, table_block);
