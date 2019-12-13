@@ -696,13 +696,12 @@ function serializeTable(table_block) {
     let $table_made = $(table_block + '.table_made');
     let count_cols = $(table_block + '.table_edit tr').find('th').length;
     let count_rows = $table_made.find('tbody').find('tr').length;
-    //alert(count_rows + ' ' + count_cols);
     let temp = Array();
     for (let cols = 0; cols < count_cols; cols++) {
         temp.push($table_made.find('thead tr').children().eq(cols).find('div').text());
     }
     array_table.push(temp);
-    for (let rows = 0; rows < count_rows; rows++) {
+    for (let rows = 0; rows < count_rows - 1; rows++) {
         let temp = Array();
         let $each_tr = $table_made.find('tbody tr').eq(rows);
         for (let cols = 0; cols < count_cols; cols++) {
