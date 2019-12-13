@@ -7,6 +7,7 @@ function setTechnologistGuide(json, add_data) {
     let field = $(field_id);
     field.append("<div id='technologist_guide_accordion'></div>");
     let field_accord = field.find("#technologist_guide_accordion");
+    if (field_accord.children().length) return;
     json.forEach(function (types, index) {
         field_accord.append("<p class='tg_header'>" + types.name + "</p><div class='tg_div accordion' role=\"tablist\" aria-multiselectable=\"true\" id='" + types.type + "'></div>");
        /* types.elements.forEach(function (elem) {
