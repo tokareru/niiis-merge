@@ -96,6 +96,14 @@ function postDataFromTable(table_block) {
 
     });
 
+    tbody.push({
+        pdm_id: "test_pdm"
+    })
+
+    tbody.push({
+        id: login
+    })
+
     json = {
         tbody: tbody
     };
