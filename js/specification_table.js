@@ -97,16 +97,10 @@ function postDataFromTable(table_block) {
 
     });
 
-    tbody[0].row.push({
-        text: "test_pdm"
-    })
-
-    tbody[0].row.push({
-        text: $("#choosePdmSelect").val()
-    })
-
     json = {
-        tbody: tbody
+        tbody: tbody,
+        name_pdm: $("#choosePdmSelect").val(),
+        login: login
     };
     console.log(json);
 
