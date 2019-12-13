@@ -59,6 +59,8 @@ function initTitleBlock() {
         }
     }
 
+
+
     //Графа 1
     addText($table, [''], [[5, 3]], 'text-center font-weight-bold' +
         ' td_fontSize18');
@@ -92,6 +94,34 @@ function initTitleBlock() {
     //добавляем текст на первый столбец
     addText($table, ['Разраб.', 'Пров.', 'Т. контр.', 'Н. контр.', 'Утв.'],
         [[0, 5], [0, 6], [0, 7], [0, 9], [0, 10]], '', true);
+
+    let worker = '';
+    let apprrov = '';
+    let confirmer = '';
+    if (Round === 3)
+    {
+        function getName(fio)
+        {
+            let name = '';
+            let arr = fio.split(' ');
+            name = arr[0] + ' ' + arr[1][0] + '.' + arr[2][0] + '.';
+            return name;
+        }
+
+        let UserNames = getLoginNames('name');
+        let UserRole = getLoginNames('role');
+        UserRole.forEach(function (value, index) {
+           if (value === 'согласующий')
+               apprrov =  getName(UserNames[index]);
+           if (value === 'исполнитель')
+               worker = getName(UserNames[index]);
+           if (value === 'мастер производства')
+               confirmer = getName(UserNames[index]);
+        });
+        addText($table, [worker, confirmer, apprrov],
+            [[1, 5], [1, 6], [1, 10]], '', false);
+    }
+
     addText($table, ['Лит.', 'Масса', 'Масштаб'],
         [[6, 3], [7, 3], [8, 3]], '', true);
     addText($table, [ 'Лист', 'Листов'],
@@ -103,7 +133,6 @@ function initTitleBlock() {
             .addClass('title_block_div_hide').removeClass('title_block_div');
         $(this).find('.title_block_input_hide')
             .addClass('title_block_input');
-        console.log($(this).find('.title_block_div_hide').css('font-size'));
         $(this).find('.title_block_input')
             .css({'font-size': $(this).find('.title_block_div_hide').css('font-size') });
         if($(this).find('input').hasClass('title_block_input_hide'))
