@@ -21,12 +21,12 @@ function generateTable(json, add_data) {
     $table_made.find('.table_edit').append('<tbody></tbody>');
 
 
-    if (json.thea > "") {
+    if (json.thead > "") {
         json.thead.forEach(function (elem) {
             $table_made.find('thead tr').append('<th class="p-0"><div>' + elem.text + '</div></th>');
         });
     }else {
-        for (let i = 0; i < 5; i++){
+        for (let i = 0; i < 4; i++){
             $table_made.find('thead tr').append('<th class="p-0"><div></div></th>');
         }
     }
