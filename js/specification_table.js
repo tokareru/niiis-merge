@@ -15,27 +15,37 @@ function generateTable(json, add_data) {
     $table_made.find('.table_edit').append('<thead></thead>');
     $table_made.find('thead').append('<tr></tr>');
     //кнопка удаления строки
-    $table_made.find('thead tr').append('<th class="p-0"><div class="edit_cell_readonly">' /*+ "\№"*/ + '</div></th>');
+    $table_made.find('thead tr').append('<th><div class="edit_cell_readonly">' /*+ "\№"*/ + '</div></th>');
     //кнопка "сделать строку редактируемой"
-    $table_made.find('thead tr').append('<th class="p-0"><div class="edit_cell_readonly">' + '</div></th>');
-
-    json.thead.forEach(function (elem) {
-        $table_made.find('thead tr').append('<th class="p-0"><div>' + elem.text + '</div></th>');
-    });
-
+    $table_made.find('thead tr').append('<th class="p-0" style="width: 33px"><div class="edit_cell_readonly">' + '</div></th>');
     $table_made.find('.table_edit').append('<tbody></tbody>');
-    json.tbody.forEach(function (curr_row, rows) {
-        $table_made.find('tbody').append('<tr></tr>');
-        //кнопка удаления строки
-        $table_made.find('tbody tr').last().append('<td class="p-0"><div>' /*+ (rows + 1)*/ + '</div></td>');
-        //кнопка "сделать строку редактируемой"
-        $table_made.find('tbody tr').last().append('<td class="p-0"><div class="toRoPenCol editCol">' /*+ (rows + 1)*/ + '</div></td>');
-        curr_row.row.forEach(function (curr_col, cols) {
-            $table_made.find('tbody').find('tr').last().append('<td class="p-0"><div>' + curr_col.text + '</div></td>');
-        })
-    });
 
-    $table_made.find('tbody').append("<tr><td class='p-0'><div class='firstColPlus'>+</div></td></tr>")
+
+    if (json.thea > "") {
+        json.thead.forEach(function (elem) {
+            $table_made.find('thead tr').append('<th class="p-0"><div>' + elem.text + '</div></th>');
+        });
+    }else {
+        for (let i = 0; i < 5; i++){
+            $table_made.find('thead tr').append('<th class="p-0"><div></div></th>');
+        }
+    }
+
+
+    if (json.tbody > "") {
+        json.tbody.forEach(function (curr_row, rows) {
+            $table_made.find('tbody').append('<tr></tr>');
+            //кнопка удаления строки
+            $table_made.find('tbody tr').last().append('<td class="p-0"><div>' /*+ (rows + 1)*/ + '</div></td>');
+            //кнопка "сделать строку редактируемой"
+            $table_made.find('tbody tr').last().append('<td class="p-0"><div class="toRoPenCol editCol">' /*+ (rows + 1)*/ + '</div></td>');
+            curr_row.row.forEach(function (curr_col, cols) {
+                $table_made.find('tbody').find('tr').last().append('<td class="p-0"><div>' + curr_col.text + '</div></td>');
+            })
+        });
+    }
+
+    $table_made.find('tbody').append("<tr><td class='p-0' style='width: 33px'><div class='firstColPlus'>+</div></td></tr>")
 
     tableData(false, table_block, edit_mode_div, url);
     /*json.thead.forEach(function (elem, i) {
@@ -157,11 +167,11 @@ function tableData(readonly, table_block, edit_mode_div, url) {
             $this.attr("current", "current")
             $table_edit.find("tbody").find(".editCol").each(function (i) {
                 let check = $(this).attr("current");
-                if (check === "current"){
+                if (check === "current") {
                     console.log(i)
                     $this.removeAttr("current");
-                    for (let x = 2; x < length; x++){
-                        cellToEdit(i+1, x, table_block);
+                    for (let x = 2; x < length; x++) {
+                        cellToEdit(i + 1, x, table_block);
                     }
                 }
             })
@@ -176,10 +186,10 @@ function tableData(readonly, table_block, edit_mode_div, url) {
             $this.attr("current", "current")
             $table_edit.find("tbody").find(".editCol").each(function (i) {
                 let check = $(this).attr("current");
-                if (check === "current"){
+                if (check === "current") {
                     $this.removeAttr("current");
-                    for (let x = 2; x < length; x++){
-                        cellToReadOnly(i+1, x, table_block);
+                    for (let x = 2; x < length; x++) {
+                        cellToReadOnly(i + 1, x, table_block);
                     }
                 }
             })
