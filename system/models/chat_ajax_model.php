@@ -116,7 +116,7 @@ class chat_ajax_model extends model
                     $result;
                     $i = 1;
                     foreach($Q as $row){
-                        $result["user".$i++] = array("login"=>$row["login"],"name"=>$row["fio"],"role"=>$row["user_group_name"]);
+                        $result["user".$i++] = array("login"=>$row["login"],"first_name"=>$row["first_name"],"last_name"=>$row["last_name"],"otc"=>$row["otc"],"role"=>$row["user_group_name"]);
                         
                     }
                     return $result;
