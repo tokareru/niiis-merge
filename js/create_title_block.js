@@ -103,9 +103,10 @@ function initTitleBlock() {
             .addClass('title_block_div_hide').removeClass('title_block_div');
         $(this).find('.title_block_input_hide')
             .addClass('title_block_input');
+        console.log($(this).find('.title_block_div_hide').css('font-size'));
         $(this).find('.title_block_input')
             .css({'font-size': $(this).find('.title_block_div_hide').css('font-size') });
-        if(!$(this).find('input').hasClass('title_block_input'))
+        if($(this).find('input').hasClass('title_block_input_hide'))
         {
             $(this).find('.title_block_input').val($(this).find('.title_block_div_hide').text());
         }
