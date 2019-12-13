@@ -15,7 +15,7 @@
         echo '
             <tr>
                 <td>'.$rows['id'].'</td>
-                <td>'.$rows['fio'].'</td>
+                <td>'.$rows['first_name'].' '.$rows['first_name'].' '.$rows['first_name'].'</td>
                 <td>'.$rows['login'].'</td>
                 <td>'.$rows['password'].'</td>
                 <td><select class="form-control">';

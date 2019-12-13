@@ -3,7 +3,7 @@
 class spec_table_ajax_model extends model {
 
     public function get_data() {
-        $sql = "SELECT * FROM SPEC_TABLE";
+        $sql = "SELECT * FROM SPEC_TABLE WHERE ACTIVE_SIGN = '1'";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
@@ -32,9 +32,14 @@ class spec_table_ajax_model extends model {
 
     function save() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "DELETE FROM SPEC_TABLE";
+            $sql = "UPDATE SPEC_TABLE SET ACTIVE_SIGN = '0'";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
+            $Q = $_POST['tbody'];
+            $sql = "SELECT round from system_conf";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $round = $q->fetchAll()[0][0];
             $Q = $_POST['tbody'];
             foreach ($Q as $row) {
                 $readonly_str = "";
@@ -46,13 +51,17 @@ class spec_table_ajax_model extends model {
                         $readonly_str .= "f";
                     }
                 }
-                $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY)
-                        VALUES(:position, :name_short, :name_long, :count, :readonly)";
+                
+                $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY, ROUND, PDM_ID, USER_ID)
+                        VALUES(:position, :name_short, :name_long, :count, :readonly, :round, 1, (SELECT ID FROM USERS WHERE login=:login))";
                 $q = sys::$PDO->prepare($sql);
                 $i = 0;
                 $q->execute(array("position" => $row["row"][$i++]["text"], "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
-                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str));
+                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str,'round'=> $round, 'login'=> $Q['login']));
             }
+            $sql = "UPDATE MODIFY_DATE SET SPEC_TABLE = default";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
             return array("response" => 200);
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
