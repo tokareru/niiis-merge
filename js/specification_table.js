@@ -101,7 +101,7 @@ function postDataFromTable(table_block) {
     })
 
     tbody.push({
-        id: login
+        login: login
     })
 
     json = {
