@@ -32,7 +32,7 @@ function generateTable(json, add_data) {
     }
 
 
-    if (json.tbody === undefined) {
+    if (json.tbody > "") {
         json.tbody.forEach(function (curr_row, rows) {
             $table_made.find('tbody').append('<tr></tr>');
             //кнопка удаления строки
@@ -49,7 +49,6 @@ function generateTable(json, add_data) {
 
     tableData(false, table_block, edit_mode_div, url);
     if (json.tbody === undefined) {
-        alert()
         $(table_block + " .post_data_button").attr("disabled", "disabled");
     }
     /*json.thead.forEach(function (elem, i) {
