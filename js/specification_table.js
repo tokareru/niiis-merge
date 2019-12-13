@@ -96,11 +96,11 @@ function postDataFromTable(table_block) {
 
     });
 
-    tbody.row.push({
+    tbody[0].row.push({
         text: "test_pdm"
     })
 
-    tbody.row.push({
+    tbody[0].row.push({
         text: login
     })
 

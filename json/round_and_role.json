@@ -45,6 +45,8 @@
             {
               "ID": "main-tabs",
               "tabs": [
+                "scheme",
+                "fieldBlock",
                 "specification",
                 "tasks_routes_field"
               ]
