@@ -51,7 +51,7 @@
 
 */
 ?>
-<h4>Рабочий стол. Техпроцесс</h4>
+<div class='spec_header'>Рабочий стол. Техпроцесс</div>
 <ul id="myUL" class="bg-light col-6">
   <li style="border-style: groove;">
   <span class="caret">Техпроцесс</span>

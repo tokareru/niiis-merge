@@ -36,7 +36,7 @@
 }
 
 .edit_cell_div {
-    color: #bdb8b3;
+    color: #455a64;
     padding: 3px;
     height: 100%;
     word-wrap: break-word;
@@ -52,8 +52,7 @@
     //height: 100%;
     min-width: 80px;
     width: 100%;
-    margin-top: 0 !important;
-    margin-bottom: 0 !important;
+    margin-top: 2px !important;
     border-width: 0 !important;
     padding: 1px !important;
     display: block;
@@ -80,6 +79,7 @@
 }
 
 .edit_cell_readonly {
+    padding: 3px;
     color: #000000;
 }
 
