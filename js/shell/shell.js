@@ -1,6 +1,7 @@
 // область вызывает событие createdNewMessage после создания сообщения,
 // а остальные вкладки получают уведомление о новом сообщении с помощью события newMessage
-let current_round_glob;
+let Round;
+let Role;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
@@ -62,7 +63,9 @@ async function prepareShell(json_role_and_round, add_data) {
     login = json_role_and_round.login;
     currentName = json_role_and_round.name;
     let role = json_role_and_round.role.toString();
+    Role = role;
     let round = Number(json_role_and_round.round);
+    Round = round;
     //console.log(current_round_glob)
     //console.log(round)
     if (round === Number(current_round_glob)) return;
