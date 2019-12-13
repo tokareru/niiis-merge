@@ -25,14 +25,14 @@ function generateTable(json, add_data) {
         json.thead.forEach(function (elem) {
             $table_made.find('thead tr').append('<th class="p-0"><div>' + elem.text + '</div></th>');
         });
-    }else {
-        for (let i = 0; i < 4; i++){
+    } else {
+        for (let i = 0; i < 4; i++) {
             $table_made.find('thead tr').append('<th class="p-0"><div></div></th>');
         }
     }
 
 
-    if (json.tbody > "") {
+    if (json.tbody === undefined) {
         json.tbody.forEach(function (curr_row, rows) {
             $table_made.find('tbody').append('<tr></tr>');
             //кнопка удаления строки
@@ -48,6 +48,10 @@ function generateTable(json, add_data) {
     $table_made.find('tbody').append("<tr><td class='p-0' style='width: 33px'><div class='firstColPlus'>+</div></td></tr>")
 
     tableData(false, table_block, edit_mode_div, url);
+    if (json.tbody === undefined) {
+        alert()
+        $(table_block + " .post_data_button").attr("disabled", "disabled");
+    }
     /*json.thead.forEach(function (elem, i) {
         if (elem.readonly) cellToReadOnly(0, i + 1, table_block);
     });
@@ -66,7 +70,7 @@ function postDataFromTable(table_block) {
     let json = {};
     let tbody = [];
     $(table_block + ".table_made").find("tbody tr").each(function (rows) {
-        if (rows < $(table_block + ".table_made").find("tr").length - 3) {
+        if (rows < $(table_block + ".table_made").find("tr").length - 2) {
             let row_arr = [];
             $(this).find("td").each(function (cols) {
                 if (cols > 1) {
@@ -153,11 +157,15 @@ function tableData(readonly, table_block, edit_mode_div, url) {
         $table_edit.on('click', '.firstCol', function (event) {
             delRow(table_block);
             $(this).parent().parent().remove();
+            if ($table_edit.find("tbody").find("tr").first().find("td").length < 2){
+                $(table_block + " .post_data_button").attr("disabled", "disabled")
+            }
         });
 
         $table_edit.on('click', '.firstColPlus', function (event) {
             addRow(table_block, $table_edit.find("tr").length - 2);
             setRowsNumber(table_block);
+            $(table_block + " .post_data_button").removeAttr("disabled")
         });
 
         $table_edit.on('click', '.toEditPenCol', function (event) {
