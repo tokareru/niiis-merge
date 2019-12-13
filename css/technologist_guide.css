@@ -7,7 +7,7 @@
 
 .tg_header {
     user-select: none;
-    background-color: #737373;
+    background-color: #455a64;
     color: white;
     margin: 2% 0% 1% 0% !important;
 }
@@ -24,13 +24,15 @@
 
 .tg_elem_header {
     user-select: none;
-    background-color: #bfbfbf;
+    background-color: #ffffff;
     font-weight: 500;
     color: black;
+    border-color: #e0e0e0;
+    border-style: solid;
     margin-left: -1% !important;
 }
 
 .tg_elem_div {
-    background-color: #e8fff8 !important;
+    background-color: #f8f9fa !important;
     padding: 8% 1% 8% 1%!important;
 }
