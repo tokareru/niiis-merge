@@ -30,16 +30,16 @@
 
         <form>
           <div class="form-group">
-            <label for="choosePdmSelect"><h5>Выберите изделие</h5></label>
-            <select class="form-control col-5" id="choosePdmSelect">
-                <option>Деталь 1</option>
-                <option>Деталь 2</option>
-                <option>Деталь 3</option>
-                <option>Деталь 4</option>
+            <label for="choosePdmSelect"><div>Выберите изделие</div></label>
+            <select class="form-control col-3" id="choosePdmSelect">
+                <option value='pdm_component_1'>Деталь 1</option>
+                <option value='pdm_component_2'>Деталь 2</option>
+                <option value='pdm_component_3'>Деталь 3</option>
+                <option value='pdm_component_4'>Деталь 4</option>
             </select>
           </div>
         </form>
-
+        </br>
         <div class="row">
             <div id="specification_edit"></div>
         </div>
