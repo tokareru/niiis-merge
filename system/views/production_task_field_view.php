@@ -12,7 +12,7 @@
 <head>
 </head>
 <body>
-<h4>Задание на производство</h4>
+<div class='spec_header'>Задание на производство</div>
 <form>
   <div class="form-group">
     <label for="productionTaskSelectUserBody"><h5>Выберите сотрудника</h5></label>

@@ -2,6 +2,7 @@ function createSpecificationTable() {
     //serializeTable();
     getJsonByURL("spec_table_ajax", generateTable,
         {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field"});
+
 }
 
 function generateTable(json, add_data) {
@@ -101,7 +102,7 @@ function postDataFromTable(table_block) {
     })
 
     tbody[0].row.push({
-        text: login
+        text: $("#choosePdmSelect").val()
     })
 
     json = {
