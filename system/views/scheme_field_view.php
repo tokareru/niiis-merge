@@ -24,7 +24,7 @@
                     </tbody>
      </table>
 </div>
-<input type='button' class='btn' id='addToServerTitleBlock' value='отправить на сервер'>
+<input type='button' class='btn' id='addToServerTitleBlock' value='Сохранить'>
 
 
 
