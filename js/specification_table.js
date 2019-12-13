@@ -96,12 +96,12 @@ function postDataFromTable(table_block) {
 
     });
 
-    tbody.push({
-        pdm_id: "test_pdm"
+    tbody.row.push({
+        text: "test_pdm"
     })
 
-    tbody.push({
-        login: login
+    tbody.row.push({
+        text: login
     })
 
     json = {
