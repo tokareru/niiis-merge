@@ -15,7 +15,7 @@ function generateTable(json, add_data) {
     $table_made.find('.table_edit').append('<thead></thead>');
     $table_made.find('thead').append('<tr></tr>');
     //кнопка удаления строки
-    $table_made.find('thead tr').append('<th><div class="edit_cell_readonly">' /*+ "\№"*/ + '</div></th>');
+    $table_made.find('thead tr').append('<th style="border-right-color: transparent;"><div class="edit_cell_readonly">' /*+ "\№"*/ + '</div></th>');
     //кнопка "сделать строку редактируемой"
     $table_made.find('thead tr').append('<th class="p-0" style="width: 33px"><div class="edit_cell_readonly">' + '</div></th>');
     $table_made.find('.table_edit').append('<tbody></tbody>');
