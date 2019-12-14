@@ -140,6 +140,36 @@ function initTitleBlock() {
             .addClass('title_block_input_hide').removeClass('title_block_input');
     });
 
+    $('.edit_cell_title_block').on('keydown', function (e) {
+        if (e.which === 9) {
+            e.preventDefault();
+            let $table_td = $table.find('td');
+            let $this = $(this);
+            let next = false;
+            let count = $table_td.length;
+            $table_td.each(function (index) {
+                    if (count === index + 1)
+                    {
+                        $(this).focusout();
+                    }
+                    if (next && $(this).hasClass('edit_cell_title_block')) {
+                        $(this).trigger('click');
+                        next = false;
+                        return;
+                    }
+                if ($this.get(0) === $(this).get(0)) {
+                    next = true;
+                }
+            });
+            /*
+                       //console.log($(this).next().html());
+                       $(this).next().trigger('click');
+                       console.log($(this).get(0) === $(this).get(0));
+                       console.log($(this).get(0) === $(this).next().get(0));*/
+        }
+    });
+
+
     $(window).trigger('resize');
 
     $('#addToServerTitleBlock').on('click', function () {
@@ -263,9 +293,9 @@ function serializedTitleBlock() {
         }
     }
     //21 ячейка
-    serArr.push( $tbody.find('tr').eq(0).find('td').eq(5).text());
+    serArr.push($tbody.find('tr').eq(0).find('td').eq(5).text());
     //22 ячейка
-    serArr.push( $tbody.find('tr').eq(3).find('td').eq(5).text());
+    serArr.push($tbody.find('tr').eq(3).find('td').eq(5).text());
 
     //23-31 ячейки
     for (let i = 5; i < 8; i++) {
@@ -276,8 +306,7 @@ function serializedTitleBlock() {
     }
 
     //32-35 ячейки
-    for (let i = 0; i < 4; i++ )
-    {
+    for (let i = 0; i < 4; i++) {
         let tdata = $tbody.find('tr').eq(8).find('td').eq(i).text();
         serArr.push(tdata);
     }
@@ -290,30 +319,27 @@ function serializedTitleBlock() {
     }
 
     //42 ячейка
-    serArr.push( $tbody.find('tr').eq(8).find('td').eq(4).text());
+    serArr.push($tbody.find('tr').eq(8).find('td').eq(4).text());
 
     //43-47 ячейки
-    for (let i = 5; i < 10; i++ )
-    {
+    for (let i = 5; i < 10; i++) {
         let tdata = $tbody.find('tr').eq(4).find('td').eq(i).text();
         serArr.push(tdata);
     }
 
     //48-49 ячейки
-    for (let i = 4; i < 6; i++ )
-    {
+    for (let i = 4; i < 6; i++) {
         let tdata = $tbody.find('tr').eq(7).find('td').eq(i).text();
         serArr.push(tdata);
     }
 
     //50 ячейка
-    serArr.push( $tbody.find('tr').eq(8).find('td').eq(5).text());
+    serArr.push($tbody.find('tr').eq(8).find('td').eq(5).text());
     return serArr;
 }
 
 function addToServerTitleBlock() {
     let serArr = serializedTitleBlock();
-    console.log(serArr);
     $.ajax(
         {
             url: 'drawing_main_text_ajax/save',
