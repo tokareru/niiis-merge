@@ -75,8 +75,9 @@ async function prepareShell(json_role_and_round, add_data) {
     //console.log(current_round_glob)
     //console.log(round)
     // проверяем обновления
-    let chech = round === Number(Round) || drawing_main_text === Drawing_main_text
-        || pdm === Pdm || spec_table === Spec_table || tasks_route === Tasks_route;
+    let chech = round === Number(Round) && drawing_main_text == Drawing_main_text
+        && pdm == Pdm && spec_table == Spec_table && tasks_route == Tasks_route;
+    //console.log(chech);
     if (chech) return;
     $("#change_role").attr("disabled", "disabled");
     let data = await
