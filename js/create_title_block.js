@@ -60,33 +60,32 @@ function initTitleBlock() {
     }
 
 
-
     //Графа 1
     addText($table, [''], [[5, 3]], 'text-center font-weight-bold' +
         ' td_fontSize18');
     //Графа 2
-    addText($table,[''] ,[[5, 0]], 'text-center' +
+    addText($table, [''], [[5, 0]], 'text-center' +
         ' font-weight-bold td_fontSize18');
     //Графа 3
-    addText($table,[''] ,[[4, 8]], 'text-center' +
+    addText($table, [''], [[4, 8]], 'text-center' +
         ' font-weight-bold td_fontSize18');
     //Графы 4
-    addText($table,[''] ,[[5, 4]], 'text-center' +
+    addText($table, [''], [[5, 4]], 'text-center' +
         '');
     //Графы 4
-    addText($table,[''] ,[[6, 4]], 'text-center' +
+    addText($table, [''], [[6, 4]], 'text-center' +
         '');
     //Графы 4
-    addText($table,[''] ,[[7, 4]], 'text-center' +
+    addText($table, [''], [[7, 4]], 'text-center' +
         '');
     //Графа 5
-    addText($table,[''] ,[[8, 4]], 'text-center' +
+    addText($table, [''], [[8, 4]], 'text-center' +
         ' font-weight-bold td_fontSize18');
     //Графа 6
-    addText($table,[''] ,[[9, 4]], 'text-center' +
+    addText($table, [''], [[9, 4]], 'text-center' +
         ' font-weight-bold td_fontSize18');
     //Графа 9
-    addText($table,[''] ,[[5, 8]], 'text-center' +
+    addText($table, [''], [[5, 8]], 'text-center' +
         ' font-weight-bold td_fontSize18');
     //добавляем текст на 5 строке
     addText($table, ['Изм.', 'Лист', '№ докум.', "Подп.", 'Дата'],
@@ -98,17 +97,16 @@ function initTitleBlock() {
     let worker = '';
     let apprrov = '';
     let confirmer = '';
-    if (Round === 3)
-    {
+    if (Round === 3) {
         let UserNames = getLoginNames('short_name');
         let UserRole = getLoginNames('role');
         UserRole.forEach(function (value, index) {
-           if (value === 'согласующий')
-               apprrov =  UserNames[index];
-           if (value === 'исполнитель')
-               worker = UserNames[index];
-           if (value === 'технолог')
-               confirmer = UserNames[index];
+            if (value === 'согласующий')
+                apprrov = UserNames[index];
+            if (value === 'исполнитель')
+                worker = UserNames[index];
+            if (value === 'технолог')
+                confirmer = UserNames[index];
         });
         addText($table, [worker, confirmer, apprrov],
             [[1, 5], [1, 6], [1, 10]], '', false);
@@ -116,7 +114,7 @@ function initTitleBlock() {
 
     addText($table, ['Лит.', 'Масса', 'Масштаб'],
         [[6, 3], [7, 3], [8, 3]], '', true);
-    addText($table, [ 'Лист', 'Листов'],
+    addText($table, ['Лист', 'Листов'],
         [[4, 7], [5, 7]], '');
 
 
@@ -126,9 +124,8 @@ function initTitleBlock() {
         $(this).find('.title_block_input_hide')
             .addClass('title_block_input');
         $(this).find('.title_block_input')
-            .css({'font-size': $(this).find('.title_block_div_hide').css('font-size') });
-        if($(this).find('input').hasClass('title_block_input_hide'))
-        {
+            .css({'font-size': $(this).find('.title_block_div_hide').css('font-size')});
+        if ($(this).find('input').hasClass('title_block_input_hide')) {
             $(this).find('.title_block_input').val($(this).find('.title_block_div_hide').text());
         }
 
@@ -144,7 +141,7 @@ function initTitleBlock() {
     });
 
     $(window).trigger('resize');
-    
+
     $('#addToServerTitleBlock').on('click', function () {
         addToServerTitleBlock();
     })
@@ -185,7 +182,7 @@ function generateTableRow($table, sett_row) {
             $tbody.find('tr').eq(i).find('.title_block_div')
                 .flowtype(
                     {
-                        minFont : 12,
+                        minFont: 12,
                         maxFont: 50
                     }
                 );
@@ -238,8 +235,7 @@ function addText($table, text, positions, style, readonly = false) {
     let $tbody = $table.find('tbody');
 
     for (let i = 0; i < positions.length; i++) {
-        if(readonly)
-        {
+        if (readonly) {
             $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
                 .removeClass('edit_cell_title_block').off('click')
                 .find('.title_block_div').text(text[i]);
@@ -259,14 +255,59 @@ function serializedTitleBlock() {
     let $table = $('#table_title_block');
     let $tbody = $table.find('tbody');
     let serArr = [];
-    $tbody.find('tr').each(function () {
-        let tempArr = [];
-        $(this).find('td').each(function () {
-            tempArr.push($(this).find('.title_block_div').text());
-        });
-        serArr.push(tempArr);
-    });
-    console.log(serArr);
+    //1-20 ячейки
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 5; j++) {
+            let tdata = $tbody.find('tr').eq(i).find('td').eq(j).text();
+            serArr.push(tdata);
+        }
+    }
+    //21 ячейка
+    serArr.push( $tbody.find('tr').eq(0).find('td').eq(5).text());
+    //22 ячейка
+    serArr.push( $tbody.find('tr').eq(3).find('td').eq(5).text());
+
+    //23-31 ячейки
+    for (let i = 5; i < 8; i++) {
+        for (let j = 1; j < 4; j++) {
+            let tdata = $tbody.find('tr').eq(i).find('td').eq(j).text();
+            serArr.push(tdata);
+        }
+    }
+
+    //32-35 ячейки
+    for (let i = 0; i < 4; i++ )
+    {
+        let tdata = $tbody.find('tr').eq(8).find('td').eq(i).text();
+        serArr.push(tdata);
+    }
+    //36-41 ячейки
+    for (let i = 9; i < 11; i++) {
+        for (let j = 1; j < 4; j++) {
+            let tdata = $tbody.find('tr').eq(i).find('td').eq(j).text();
+            serArr.push(tdata);
+        }
+    }
+
+    //42 ячейка
+    serArr.push( $tbody.find('tr').eq(8).find('td').eq(4).text());
+
+    //43-47 ячейки
+    for (let i = 5; i < 10; i++ )
+    {
+        let tdata = $tbody.find('tr').eq(4).find('td').eq(i).text();
+        serArr.push(tdata);
+    }
+
+    //48-49 ячейки
+    for (let i = 4; i < 6; i++ )
+    {
+        let tdata = $tbody.find('tr').eq(7).find('td').eq(i).text();
+        serArr.push(tdata);
+    }
+
+    //50 ячейка
+    serArr.push( $tbody.find('tr').eq(8).find('td').eq(5).text());
     return serArr;
 }
 
@@ -274,14 +315,14 @@ function addToServerTitleBlock() {
     let serArr = serializedTitleBlock();
     $.ajax(
         {
-            url: '',
+            url: 'drawing_main_text_ajax/save',
             type: 'POST',
-            data: {data: serArr, function: 'add_title_block'},
+            data: {body: serArr},
             success: function (data) {
-                //console.log(data);
+                console.log(data);
             },
             error: function () {
-                
+
             }
         }
     )
