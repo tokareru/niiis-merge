@@ -2,6 +2,10 @@
 // а остальные вкладки получают уведомление о новом сообщении с помощью события newMessage
 let Round;
 let Role;
+let Drawing_main_text;
+let Pdm;
+let Spec_table;
+let Tasks_route;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
@@ -10,8 +14,8 @@ function shellInit() {
     getJsonByURL("start_ajax", prepareShell, {});
 
     setInterval(function () {
-         getJsonByURL("start_ajax", prepareShell, {});
-    }, 2000);
+        getJsonByURL("start_ajax", prepareShell, {});
+    }, 5000);
 }
 
 function interShellMessage(event, data) {
@@ -64,14 +68,27 @@ async function prepareShell(json_role_and_round, add_data) {
     currentName = json_role_and_round.name;
     let role = json_role_and_round.role.toString();
     let round = Number(json_role_and_round.round);
+    let drawing_main_text = json_role_and_round.drawing_main_text;
+    let pdm = json_role_and_round.pdm;
+    let spec_table = json_role_and_round.spec_table;
+    let tasks_route = json_role_and_round.tasks_route;
     //console.log(current_round_glob)
     //console.log(round)
-    if (round === Number(Round)) return;
+    // проверяем обновления
+    let chech = round === Number(Round) || drawing_main_text === Drawing_main_text
+        || pdm === Pdm || spec_table === Spec_table || tasks_route === Tasks_route;
+    if (chech) return;
     $("#change_role").attr("disabled", "disabled");
-    let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
+    let data = await
+    getJsonByURLWithoutCallback("json/round_and_role.json");
 
+    //оюновляем данные
     Role = role;
     Round = round;
+    Drawing_main_text;
+    Pdm = pdm;
+    Spec_table = spec_table;
+    Tasks_route = tasks_route;
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];
 
@@ -193,7 +210,7 @@ function setRightSide(json, add_data) {
 }
 
 // получаем информацию о доступных вкладках и передаем информацию в функцию setTabs
-function getJsonByURL(url ,callback, add_data) {
+function getJsonByURL(url, callback, add_data) {
     // получаем сведения о роле и раунде
     $.ajax({
         type: "GET",
@@ -212,9 +229,11 @@ function getJsonByURL(url ,callback, add_data) {
 
 //блокировка нажатия правой кнопки мыши
 function forbidPressRightMouseButton() {
-    document.oncontextmenu = function() {return false;};
-    $(document).mousedown(function(e){
-        if( e.button == 2 ) {
+    document.oncontextmenu = function () {
+        return false;
+    };
+    $(document).mousedown(function (e) {
+        if (e.button == 2) {
             //alert('Right mouse button!');
             return false;
         }
