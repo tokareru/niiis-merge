@@ -85,6 +85,7 @@ async function prepareShell(json_role_and_round, add_data) {
     //обновляем данные
     Role = role;
     Round = round;
+    $("#current_round").text(Round);
     Drawing_main_text = drawing_main_text;
     Pdm = pdm;
     Spec_table = spec_table;

@@ -116,7 +116,7 @@ $IS = $_SESSION['niiis']['is'];
             <div class="col-3">
                 <div class="row">
                     <div class="col-6">Текущий раунд:</div>
-                    <div class="col-6"><?php echo $_SESSION['niiis']['round'] ?>
+                    <div class="col-6" id='current_round'><?php echo $_SESSION['niiis']['round'] ?>
                     </div>
                 </div>
             </div>
