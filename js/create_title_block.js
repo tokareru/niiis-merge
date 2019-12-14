@@ -100,23 +100,15 @@ function initTitleBlock() {
     let confirmer = '';
     if (Round === 3)
     {
-        function getName(fio)
-        {
-            let name = '';
-            let arr = fio.split(' ');
-            name = arr[0] + ' ' + arr[1][0] + '.' + arr[2][0] + '.';
-            return name;
-        }
-
-        let UserNames = getLoginNames('name');
+        let UserNames = getLoginNames('short_name');
         let UserRole = getLoginNames('role');
         UserRole.forEach(function (value, index) {
            if (value === 'согласующий')
-               apprrov =  getName(UserNames[index]);
+               apprrov =  UserNames[index];
            if (value === 'исполнитель')
-               worker = getName(UserNames[index]);
-           if (value === 'мастер производства')
-               confirmer = getName(UserNames[index]);
+               worker = UserNames[index];
+           if (value === 'технолог')
+               confirmer = UserNames[index];
         });
         addText($table, [worker, confirmer, apprrov],
             [[1, 5], [1, 6], [1, 10]], '', false);

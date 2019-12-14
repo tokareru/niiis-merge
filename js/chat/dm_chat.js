@@ -237,9 +237,13 @@ function getLoginNames(loginChoice = "login") {
         success: function (data) {
             let log = login;
             for (let login in data) {
-                    //console.log('key: ' + key + ' val: ' + data[login].login);
+                let name = '';
+                if (loginChoice === 'long_name')
+                     name = data[login].first_name + " " + data[login].last_name + " " + data[login].otc;
+                else if('short_name')
+                    name = data[login].first_name + " " + data[login].last_name[0] + "." + data[login].otc[0] +'.';
                     loginUsers.push(data[login].login);
-                    nameUsers.push(data[login].name);
+                    nameUsers.push(name);
                     roleUsers.push(data[login].role);
             }
         },
@@ -249,7 +253,7 @@ function getLoginNames(loginChoice = "login") {
     });
     if(loginChoice === "login")
     return loginUsers;
-    else if(loginChoice === "name")
+    else if(loginChoice === "short_name" || loginChoice === "long_name")
         return nameUsers;
     else return roleUsers;
 }

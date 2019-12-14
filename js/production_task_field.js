@@ -6,7 +6,7 @@ function initProductionTaskField () {
         dataType: "json",
         success: function (json) {
             let selectUserBody = $("#productionTaskSelectUserBody");
-            let nameUsers = getLoginNames("name");
+            let nameUsers = getLoginNames("long_name");
             nameUsers.forEach(function (user) {
                 selectUserBody.append("<option>" + user + "</option>");
             })

@@ -4,7 +4,7 @@ function initCreate_task_route() {
 
 function addRows(count_rows, addInputs, addRolesNames) {
     let UsersRoles = getLoginNames('role');
-    let UsersNames = getLoginNames('name');
+    let UsersNames = getLoginNames('short_name');
     let UsersLogins = getLoginNames();
 
     let $tbody = $('.table_create_task_route').find('tbody');
