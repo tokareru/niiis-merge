@@ -106,7 +106,7 @@ class chat_ajax_model extends model
                     }
                     break;
                 case "login_users":
-                    $sql = "SELECT g.user_group_name, u.login, u.fio
+                    $sql = "SELECT g.user_group_name, u.login, u.first_name, u.last_name, u.otc
                       FROM USER_GROUP g inner join 
                       USERS u on g.group_id = u.group_user_id
                       WHERE u.LOGIN <> :login and g.GROUP_ID <> 99";

@@ -57,7 +57,7 @@ class spec_table_ajax_model extends model {
                 $q = sys::$PDO->prepare($sql);
                 $i = 0;
                 $q->execute(array("position" => $row["row"][$i++]["text"], "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
-                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str,'round'=> $round, 'login'=> $Q['login']));
+                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str,'round'=> $round, 'login'=> $_POST['login']));
             }
             $sql = "UPDATE MODIFY_DATE SET SPEC_TABLE = default";
             $q = sys::$PDO->prepare($sql);
