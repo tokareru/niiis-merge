@@ -68,25 +68,24 @@ async function prepareShell(json_role_and_round, add_data) {
     currentName = json_role_and_round.name;
     let role = json_role_and_round.role.toString();
     let round = Number(json_role_and_round.round);
-    let drawing_main_text = json_role_and_round.drawing_main_text;
-    let pdm = json_role_and_round.pdm;
-    let spec_table = json_role_and_round.spec_table;
-    let tasks_route = json_role_and_round.tasks_route;
+    let drawing_main_text = json_role_and_round.drawing_main_text.toString();
+    let pdm = json_role_and_round.pdm.toString();
+    let spec_table = json_role_and_round.spec_table.toString();
+    let tasks_route = json_role_and_round.tasks_route.toString();
     //console.log(current_round_glob)
     //console.log(round)
     // проверяем обновления
-    let chech = round === Number(Round) && drawing_main_text == Drawing_main_text
-        && pdm == Pdm && spec_table == Spec_table && tasks_route == Tasks_route;
-    //console.log(chech);
+    let chech = (round === Number(Round)) && (drawing_main_text === Drawing_main_text)
+        && (pdm === Pdm) && (spec_table === Spec_table) && (tasks_route === Tasks_route);
     if (chech) return;
     $("#change_role").attr("disabled", "disabled");
     let data = await
     getJsonByURLWithoutCallback("json/round_and_role.json");
 
-    //оюновляем данные
+    //обновляем данные
     Role = role;
     Round = round;
-    Drawing_main_text;
+    Drawing_main_text = drawing_main_text;
     Pdm = pdm;
     Spec_table = spec_table;
     Tasks_route = tasks_route;
