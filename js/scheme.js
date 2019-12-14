@@ -372,7 +372,7 @@ export function initScheme() {
         }
     }
 
-    $(window).resize(function() {
+    $(".field3DAll").resize(function() {
         resizecanv();
     });
 
