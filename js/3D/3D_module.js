@@ -108,7 +108,7 @@ export function init3dField() {
 
         //
 
-        $(window).on('resize', onWindowResize);
+        $("#fieldBlock").on('resize', onWindowResize);
         $("#tabs li[aria-controls=\"fieldBlock\"]").click(function () {
             onWindowResize();
         })
