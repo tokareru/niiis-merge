@@ -313,13 +313,14 @@ function serializedTitleBlock() {
 
 function addToServerTitleBlock() {
     let serArr = serializedTitleBlock();
+    console.log(serArr);
     $.ajax(
         {
             url: 'drawing_main_text_ajax/save',
             type: 'POST',
             data: {body: serArr},
             success: function (data) {
-                console.log(data);
+                //console.log(data);
             },
             error: function () {
 
