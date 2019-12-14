@@ -94,23 +94,9 @@ function initTitleBlock() {
     addText($table, ['Разраб.', 'Пров.', 'Т. контр.', 'Н. контр.', 'Утв.'],
         [[0, 5], [0, 6], [0, 7], [0, 9], [0, 10]], '', true);
 
-    let worker = '';
-    let apprrov = '';
-    let confirmer = '';
-    if (Round === 3) {
-        let UserNames = getLoginNames('short_name');
-        let UserRole = getLoginNames('role');
-        UserRole.forEach(function (value, index) {
-            if (value === 'согласующий')
-                apprrov = UserNames[index];
-            if (value === 'исполнитель')
-                worker = UserNames[index];
-            if (value === 'технолог')
-                confirmer = UserNames[index];
-        });
-        addText($table, [worker, confirmer, apprrov],
-            [[1, 5], [1, 6], [1, 10]], '', false);
-    }
+    //добавляем данные из БД
+    getDataFromServerTitleBlock();
+
 
     addText($table, ['Лит.', 'Масса', 'Масштаб'],
         [[6, 3], [7, 3], [8, 3]], '', true);
@@ -148,27 +134,20 @@ function initTitleBlock() {
             let next = false;
             let count = $table_td.length;
             $table_td.each(function (index) {
-                    if (count === index + 1)
-                    {
-                        $(this).focusout();
-                    }
-                    if (next && $(this).hasClass('edit_cell_title_block')) {
-                        $(this).trigger('click');
-                        next = false;
-                        return;
-                    }
+                if (count === index + 1) {
+                    $(this).focusout();
+                }
+                if (next && $(this).hasClass('edit_cell_title_block')) {
+                    $(this).trigger('click');
+                    next = false;
+                    return;
+                }
                 if ($this.get(0) === $(this).get(0)) {
                     next = true;
                 }
             });
-            /*
-                       //console.log($(this).next().html());
-                       $(this).next().trigger('click');
-                       console.log($(this).get(0) === $(this).get(0));
-                       console.log($(this).get(0) === $(this).next().get(0));*/
         }
     });
-
 
     $(window).trigger('resize');
 
@@ -336,6 +315,116 @@ function serializedTitleBlock() {
     //50 ячейка
     serArr.push($tbody.find('tr').eq(8).find('td').eq(5).text());
     return serArr;
+}
+
+function addToServerTitleBlock() {
+    let serArr = serializedTitleBlock();
+    $.ajax(
+        {
+            url: 'drawing_main_text_ajax/save',
+            type: 'POST',
+            data: {body: serArr},
+            success: function (data) {
+                //console.log(data);
+            },
+            error: function () {
+
+            }
+        }
+    )
+}
+
+function getDataFromServerTitleBlock() {
+
+    let ServerData = [];
+    let index = 1;
+
+    $.ajax(
+        {
+            url: 'drawing_main_text_ajax',
+            type: 'POST',
+            data: {},
+            success: function (data) {
+                for (let key in data) {
+                    if (index > 50)
+                        break;
+                    ServerData.push(data[index++]);
+                }
+                addDataToTitleBlock(ServerData);
+            },
+            error: function () {
+
+            }
+        }
+    );
+}
+
+function addDataToTitleBlock(data) {
+    let $table = $('#table_title_block');
+    let $tbody = $table.find('tbody');
+    let index = 0;
+    //1-20 ячейки
+    for (let i = 0; i < 4; i++) {
+        for (let j = 0; j < 5; j++) {
+            $tbody.find('tr').eq(i).find('td').eq(j).find('.title_block_div').text(data[index++]);
+        }
+    }
+    //21 ячейка
+    $tbody.find('tr').eq(0).find('td').eq(5).find('.title_block_div').text(data[index++]);
+    //22 ячейка
+    $tbody.find('tr').eq(3).find('td').eq(5).find('.title_block_div').text(data[index++]);
+
+    //23-31 ячейки
+    for (let i = 5; i < 8; i++) {
+        for (let j = 1; j < 4; j++) {
+            $tbody.find('tr').eq(i).find('td').eq(j).find('.title_block_div').text(data[index++]);
+        }
+    }
+
+    //32-35 ячейки
+    for (let i = 0; i < 4; i++) {
+        $tbody.find('tr').eq(8).find('td').eq(i).find('.title_block_div').text(data[index++]);
+    }
+    //36-41 ячейки
+    for (let i = 9; i < 11; i++) {
+        for (let j = 1; j < 4; j++) {
+           $tbody.find('tr').eq(i).find('td').eq(j).find('.title_block_div').text(data[index++]);
+        }
+    }
+
+    //42 ячейка
+    $tbody.find('tr').eq(8).find('td').eq(4).find('.title_block_div').text(data[index++]);
+
+    //43-47 ячейки
+    for (let i = 5; i < 10; i++) {
+        $tbody.find('tr').eq(4).find('td').eq(i).find('.title_block_div').text(data[index++]);
+    }
+
+    //48-49 ячейки
+    for (let i = 4; i < 6; i++) {
+       $tbody.find('tr').eq(7).find('td').eq(i).find('.title_block_div').text(data[index++]);
+    }
+
+    //50 ячейка
+    $tbody.find('tr').eq(8).find('td').eq(5).find('.title_block_div').text(data[index++]);
+
+    let worker = '';
+    let apprrov = '';
+    let confirmer = '';
+    if (Round === 3) {
+        let UserNames = getLoginNames('short_name');
+        let UserRole = getLoginNames('role');
+        UserRole.forEach(function (value, index) {
+            if (value === 'согласующий')
+                apprrov = UserNames[index];
+            if (value === 'исполнитель')
+                worker = UserNames[index];
+            if (value === 'технолог')
+                confirmer = UserNames[index];
+        });
+        addText($table, [worker, confirmer, apprrov],
+            [[1, 5], [1, 6], [1, 10]], '', false);
+    }
 }
 
 function addToServerTitleBlock() {
