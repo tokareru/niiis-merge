@@ -48,11 +48,22 @@
         sys::inc_no_cache('javascript', 'js/flowtype.js');
         sys::inc_no_cache('javascript', 'js/create_title_block.js');
         sys::inc_no_cache('javascript', 'js/admin/admin.js');
+$page = $data["content"]["page"];
 ?>
 <link href="<?php echo conf::$SITE_URL ?>css/main.css" rel="stylesheet" type="text/css">
 <link href="<?php echo conf::$SITE_URL ?>css/menu.css" rel="stylesheet" type="text/css">
 <link href="<?php echo conf::$SITE_URL ?>css/btn_heder.css" rel="stylesheet" type="text/css">
 <?php require_once("system/views/header.php"); ?>
 <div>
+    <div>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+          <a class="nav-link <?php if($page == "users") echo "active"; ?>" href="<?php echo conf::$SITE_URL ?>">Пользователи</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link <?php if($page == "pdm_edit") echo "active"; ?>" href="admin_cab/pdm_edit">Редактирование pdm</a>
+        </li>
+    </ul>
+</div>
     <?php include_once 'system/views/admin/'.$content_view ?>
 </div>
