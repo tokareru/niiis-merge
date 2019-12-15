@@ -95,10 +95,11 @@ class spec_autoentered_table_ajax_model extends model {
             $q->execute();
             foreach ($arr as $name){
                 $sql = "INSERT PRODUCT_CHECKED(NAME)
-                        VALUES(:name) ";
+                        VALUES(:name)";
                 $q = sys::$PDO->prepare($sql);
-                $q->execute(array("name"=>$name));
+                $q->execute(array("name"=>$name[0]));
             }
+            return $arr;
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
         }
