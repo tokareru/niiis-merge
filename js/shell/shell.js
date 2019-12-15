@@ -73,8 +73,9 @@ async function prepareShell(json_role_and_round, add_data) {
 
     // проверяем обновления
     let check = (round === Number(Round)) && ((dateChange === DateChange) || (loginChange == login)) && ((loginChange == LoginChange) || (loginChange == login)) ;
-    console.log(check)
+    //console.log(check)
     if (check) return;
+    console.log("Производится загрузка кабинета");
 
     $("#change_role").attr("disabled", "disabled");
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");

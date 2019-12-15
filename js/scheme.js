@@ -257,6 +257,7 @@ export function initScheme() {
                     $('#topcanv').css({'display': 'block'});
                     firstFieldInit();
                     razmerdrawfull();
+                    $("#ready").click();
                 }
             }
             else {$('#hidedraw').css({'display': 'none'});}
