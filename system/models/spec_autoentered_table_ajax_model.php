@@ -76,5 +76,33 @@ class spec_autoentered_table_ajax_model extends model {
             return array("response" => "NOT FOUND POST REQUEST");
         }
     }
+    
+    function save_product_checked(){
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $arr = $_POST["checked"];
+            $sql = "UPDATE PRODUCT_CHECKED SET ACTIVE_SIGN='0'";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            foreach ($arr as $name){
+                $sql = "INSERT PRODUCT_CHECKED(NAME)
+                        VALUES(:name) ";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute(array("name"=>$name));
+            }
+        } else {
+            return array("response" => "NOT FOUND POST REQUEST");
+        }
+    }
+    function load_product_checked(){
+        $sql = "SELECT NAME FROM PRODUCT_CHECKED WHERE ACTIVE_SIGN = '1'";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $names = [];
+        foreach ($Q as $row) {
+            array_push($names,$row["name"]);
+        }
+        return array("checked"=>$names);
+    }
 
 }
