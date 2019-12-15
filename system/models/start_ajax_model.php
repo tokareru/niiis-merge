@@ -4,7 +4,10 @@ class start_ajax_model extends model
   public function get_data() 
   {
     if($_SERVER["REQUEST_METHOD"]=="GET"){
-        $sql = "SELECT * FROM MODIFY_DATE";
+        $sql = "SELECT date_trunc('seconds',m.DATE_CHANGE) as date_change, u.LOGIN 
+            FROM MODIFY_DATE m INNER JOIN
+            USERS u on u.id = m.user_id
+                ";
          $q = sys::$PDO->prepare($sql);
           $q->execute();
           $Q1 = $q->fetchAll();
@@ -13,8 +16,8 @@ class start_ajax_model extends model
           $q->execute();
           $Q = $q->fetchAll();
           $_SESSION["niiis"]["round"] = $Q[0]["round"];
-            return array_merge(array("login"=>sys::user_login(),"role"=>$_SESSION['niiis']['role'], "round"=>$Q[0]["round"],
-                "server_name"=>trim($_SERVER['SERVER_NAME'],'/'),"name"=> $_SESSION['niiis']['name']), $Q1[0]);
+            return array("login"=>sys::user_login(),"role"=>$_SESSION['niiis']['role'], "round"=>$Q[0]["round"],
+                "server_name"=>trim($_SERVER['SERVER_NAME'],'/'),"name"=> $_SESSION['niiis']['name'], "date_change"=>substr($Q1[0]["date_change"], 0, -3), "login_change"=>$Q1[0]["login"]);
         }
         else {
             return array("response"=>"NOT FOUND GET REQUEST");
@@ -32,5 +35,13 @@ class start_ajax_model extends model
         else {
             return array("response"=>"NOT FOUND GET REQUEST");
         }
+  }
+  function db_change_time(){
+      if($_SERVER["REQUEST_METHOD"]=="POST"){
+          $sql = "UPDATE MODIFY_DATE SET login=:login, date_change = default";
+          $q = sys::$PDO->prepare($sql);
+          $q->execute(array("login" => $_POST["login"]));
+          return(array("response"=>200));
+      }
   }
 }

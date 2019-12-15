@@ -59,9 +59,6 @@ class spec_table_ajax_model extends model {
                 $q->execute(array("position" => $row["row"][$i++]["text"], "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
                     "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str,'round'=> $round, 'login'=> $_POST['login']));
             }
-            $sql = "UPDATE MODIFY_DATE SET SPEC_TABLE = default";
-            $q = sys::$PDO->prepare($sql);
-            $q->execute();
             return array("response" => 200);
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
