@@ -338,7 +338,6 @@ function addToServerTitleBlock() {
                 })
             },
             error: function () {
-
             }
         }
     )
