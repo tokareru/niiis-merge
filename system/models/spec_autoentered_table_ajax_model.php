@@ -79,6 +79,7 @@ class spec_autoentered_table_ajax_model extends model {
     
     function save_product_checked(){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            return $_POST;
             $arr = $_POST["checked"];
             $sql = "SELECT COUNT(NAME) FROM PRODUCT_CHECKED WHERE ACTIVE_SIGN = '0'";
             $q = sys::$PDO->prepare($sql);
