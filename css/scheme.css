@@ -12,6 +12,11 @@
     height: 450px;*/
 }
 
+#hidedraw {
+    position: absolute;
+    z-index: 5;
+}
+
 #field3D  {
     width: 90%;
     height: 87%;
