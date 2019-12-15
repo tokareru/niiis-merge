@@ -17,7 +17,8 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
             let div = $(accordID).find(fieldID);
             div.append("<fieldset></fieldset>");
             let field = $(accordID + " " + fieldID + " fieldset");
-            if (Round === 3) {let array;
+            let array;
+            if (Round === 3) {
                 $.ajax({
                     type: "POST",
                     async: false,
@@ -31,7 +32,9 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
             json.images.forEach(function (elem, i) {
                 if (Round < 3) addNewComponent(elem, accordID, fieldID)
                 else {
-                    addNewComponent(elem, accordID, fieldID);
+                    array.checked.forEach(function (value) {
+                        if (elem.ID == value) addNewComponent(elem, accordID, fieldID);
+                    })
                 }
             });
             //$("#left-accordion").accordion("refresh");
