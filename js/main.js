@@ -1,15 +1,4 @@
   $(function () {
-       $("#change_round").on('change', function(){
-        var round = $("#change_round").val();
-        $.ajax	({
-      url: "start_ajax/set_data",
-      type: "GET",
-      data:{round:round},
-      success:	function (answer)
-      {
-      }
-    });
-    });
     // Смена пользователя
     $('.select_user').on('change', function () {
       var id = $(this).val();
