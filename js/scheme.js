@@ -15,6 +15,7 @@ export function initScheme() {
     window.lines3 = [];
     window.crivie = [];
     window.arrcoor = [];
+    window.arrcoor1 = [];
     window.showlines = [0,1];
 
     window.areas1 = []; // массив круглых областей в которых происходит клик
@@ -23,7 +24,9 @@ export function initScheme() {
     window.r = 6;
     window.inCircle;
     window.clickedCircles;
+    window.clickedCircles1;
     window.ctxs = [];
+    window.dlinaarr = [];
     //window.imageid = {"std_component_1": "bolthideimg1", "std_component_2": "bolthideimg2", "std_component_3": "bolthideimg3"};
 
     window.isEnded = false;
@@ -367,23 +370,26 @@ export function initScheme() {
         {
             //$("#field3D div div canvas")[i].width *= 1.2;
             //$("#field3D div div canvas")[i].height *= 1.2;
-            $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth-14;
-            $("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
+            $("#topcanv")[i].width = $("#field3D")[0].clientWidth-14;
+            $("#topcanv")[i].height = $("#field3D")[0].clientHeight;
 
             $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
             $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
-            $("#field3D div div canvas")[i].style = "";
+            $("#topcanv")[i].style = "";
             renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
             //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
             window.ctxs[i].lineWidth = 2;
-            if (window.isEnded) {$("#scheme1 div canvas")[0].style.cssText += " display:block;";}
+            if (window.isEnded) {$("#topcanv")[0].style.cssText += " display:block;";}
         }
         ctxs[0].beginPath();
-        for (let k=0; k<lines1.length; k++)
+        if (isEnded==false)
         {
-            ctxs[0].moveTo(lines1[k][0], lines1[k][1]);
-            ctxs[0].lineTo(lines1[k][2], lines1[k][3]);
-            ctxs[0].stroke();
+            for (let k=0; k<lines1.length; k++)
+            {
+                ctxs[0].moveTo(lines1[k][0], lines1[k][1]);
+                ctxs[0].lineTo(lines1[k][2], lines1[k][3]);
+                ctxs[0].stroke();
+            }
         }
     }
 
@@ -393,14 +399,14 @@ export function initScheme() {
 
     for (let i = 0; i < $("#drawcanv").length; i++) {
         window.ctxs[i] = $("#drawcanv")[i].getContext("2d");
-        $("#field3D div div canvas")[i].width = $("#field3D")[0].clientWidth-14;
-        $("#field3D div div canvas")[i].height = $("#field3D")[0].clientHeight;
+        $("#topcanv")[i].width = $("#field3D")[0].clientWidth-14;
+        $("#topcanv")[i].height = $("#field3D")[0].clientHeight;
 
         //$("#field3D div div canvas")[i].width *= 1.2;
         //$("#field3D div div canvas")[i].height *= 1.2;
         $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
         $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
-        $("#field3D div div canvas")[i].style = "";
+        $("#topcanv")[i].style = "";
         renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
         //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
         window.ctxs[i].fillStyle = "black";
@@ -424,21 +430,40 @@ export function initScheme() {
         }
     }
 
-    function razmerdraw()
+    function razmerdraw(dlina)
     {
-        for (let j=0;j<areas2.length;j++)
+        let ar=[];
+        for (let i=0; i<lines2.length; i++)
         {
-            ctxs[0].beginPath();
-            ctxs[0].arc(areas2[j].x, areas2[j].y, 5, 0, 2 * Math.PI, 0);
-            ctxs[0].stroke();
+            for (let ii=0; ii<lines2[i].length-1; ii++)
+            {
+                for (let k=0; k<areas2.length; k++)
+                {
+                    if (lines2[i][ii] == areas2[k].x && lines2[i][ii+1] == areas2[k].y)
+                    {
+                        ar.push(k);
+                    }
+                }
+
+            }
         }
 
-        for (let j=0;j<areas3.length;j++)
+        /* for (let i=0; i<6; i++)
         {
+            window.dlinaarr[ar[i]]=dlina;
+        } */
+
+        dlinaarr[0]=112;
+        dlinaarr[1]=345;
+        dlinaarr[2]=248;
+
+        for (let l=0; l<ar.length; l++)
+        {
+            let j = ar[l];
+            let echo;
             let x = areas3[j].x;
             let y = areas3[j].y;
             let y1, x1;
-            //if (j == 1) {y1 = -20} else {y1 = 20}
             ctxs[0].beginPath();
             ctxs[0].moveTo(x, y);
 
@@ -457,7 +482,22 @@ export function initScheme() {
                         ctxs[0].moveTo(areas3[j].x, areas3[j].y);
                         ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
                         ctxs[0].font = "italic 10pt Arial";
-                        ctxs[0].fillText(j+10, areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                        for (let i=0; i<ar.length; i++)
+                        {
+                            if (areas3[ar[i]].y == 472)
+                            {
+                                echo = dlinaarr[1];
+                            }
+                            if (areas3[ar[i]].x == 144)
+                            {
+                                echo = dlinaarr[0];
+                            }
+                            if (areas3[ar[i]].y == 170)
+                            {
+                                echo = dlinaarr[2];
+                            }
+                        }
+                        ctxs[0].fillText(echo, areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
                     }
                     ctxs[0].stroke();
                     break;
@@ -493,7 +533,22 @@ export function initScheme() {
                         ctxs[0].moveTo(areas3[j].x, areas3[j].y);
                         ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
                         ctxs[0].font = "italic 10pt Arial";
-                        ctxs[0].fillText(j*10, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
+                        for (let i=0; i<ar.length; i++)
+                        {
+                            if (areas3[ar[i]].y == 472)
+                            {
+                                echo = dlinaarr[1];
+                            }
+                            if (areas3[ar[i]].x == 144)
+                            {
+                                echo = dlinaarr[0];
+                            }
+                            if (areas3[ar[i]].y == 170)
+                            {
+                                echo = dlinaarr[2];
+                            }
+                        }
+                        ctxs[0].fillText(echo, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
                     }
                     ctxs[0].stroke();
                     break;
@@ -516,8 +571,8 @@ export function initScheme() {
                     break;
                 }
             }
-
         }
+
     }
 
     $("#ready").click(function () {
@@ -568,6 +623,25 @@ export function initScheme() {
                 }
                 if (isEnded == true)
                 {
+                    for (let j=0;j<areas2.length;j++)
+                    {
+                        ctxs[0].beginPath();
+                        ctxs[0].arc(areas2[j].x, areas2[j].y, r, 0, 2 * Math.PI, 0);
+                        ctxs[0].stroke();
+                    }
+                    for (let j = 0; j < areas2.length; j++) {
+                        let dx = x - areas2[j].x;
+                        let dy = y - areas2[j].y;
+                        if (dx * dx + dy * dy < r * r) {
+                            window.clickedCircles1 = j;
+                            arrcoor1 = [];
+                            window.arrcoor1.push([areas2[j].x, areas2[j].y]);
+                            console.log(arrcoor1);
+                            break;
+                        } else {
+                            window.clickedCircles1 = undefined;
+                        }
+                    }
                     razmerdraw();
                 }
 
@@ -601,12 +675,17 @@ export function initScheme() {
 
                 if (isEnded == false) {circlesdraw();}
 
-                for (let k=0; k<lines1.length; k++)
+                if (lines1.length<32)
                 {
-                    ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
-                    ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
-                    ctxs[i].stroke();
+                    for (let k=0; k<lines1.length; k++)
+                    {
+                        ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
+                        ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
+                        ctxs[i].stroke();
+                    }
                 }
+
+
 
                 if (window.clickedCircles != undefined) {
                     for (let j = 0; j < areas1.length; j++) {
@@ -627,11 +706,15 @@ export function initScheme() {
                             ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
                                 document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
 
-                            for (let k=0; k<lines1.length; k++)
+
+                            if (lines1.length<32)
                             {
-                                ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
-                                ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
-                                ctxs[i].stroke();
+                                for (let k=0; k<lines1.length; k++)
+                                {
+                                    ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
+                                    ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
+                                    ctxs[i].stroke();
+                                }
                             }
 
                             if (showlines.indexOf(lines1.length+1) == -1)
@@ -671,6 +754,7 @@ export function initScheme() {
                             {
                                 $("#ready").click();
                                 $("#scheme1 div canvas")[0].style.cssText += " display:block;";
+
                             }
                             else
                             {
@@ -693,7 +777,48 @@ export function initScheme() {
                 }
                 if (isEnded == true)
                 {
+                    for (let j=0;j<areas2.length;j++)
+                    {
+                        ctxs[0].beginPath();
+                        ctxs[0].arc(areas2[j].x, areas2[j].y, r, 0, 2 * Math.PI, 0);
+                        ctxs[0].stroke();
+                    }
+
+                    if (window.clickedCircles1 != undefined) {
+                        for (let j = 0; j < areas2.length; j++) {
+                            let dx = x - areas2[j].x;
+                            let dy = y - areas2[j].y;
+                            if (dx * dx + dy * dy < r * r) {
+                                //console.log(window.arrcoor);
+                                let d = Math.sqrt((x-arrcoor1[0][0])*(x-arrcoor1[0][0])+(y-arrcoor1[0][1])*(y-arrcoor1[0][1]));
+                                console.log(d+'; '+summ);
+                                if ((summ-d)/summ > 0.2) {return;}
+                                window.arrcoor1 = [];
+                                window.crivie = [];
+                                //info.innerText += 'up:В круге №' + (j + 1) + '\n';
+                                if (areas2[j].arr.indexOf(window.clickedCircles1) == -1) {continue;}
+                                lines2.push([areas2[clickedCircles1].x, areas2[clickedCircles1].y, areas2[j].x, areas2[j].y]);
+                                ctxs[i].beginPath();
+
+                                ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
+                                    document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
+                                razmerdraw(d.toFixed());
+
+                            } else {
+                                /* window.arrcoor = [];
+                                window.crivie = []; */
+                                //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
+                                //clickedCircles = undefined;
+                            }
+                        }
+                    }
                     razmerdraw();
+                    for (let j=0;j<areas2.length;j++)
+                    {
+                        ctxs[0].beginPath();
+                        ctxs[0].arc(areas2[j].x, areas2[j].y, r, 0, 2 * Math.PI, 0);
+                        ctxs[0].stroke();
+                    }
                 }
 
                 break;
@@ -884,12 +1009,12 @@ function createrazmer()
 {
     let delta = 0;
     let m = 1;
-    let c = [{x: 152, y: 56, arr:[1]}, {x: 152, y: 161, arr:[0]},
-        {x: 153, y: 462, arr:[2]}, {x: 498, y: 462, arr:[3]},
+    let c = [{x: 156, y: 54, arr:[1]}, {x: 156, y: 161, arr:[0]},
+        {x: 156, y: 460, arr:[3]}, {x: 498, y: 460, arr:[2]},
         {x: 558, y: 129, arr:[5]}, {x: 804, y: 129, arr:[4]}];
 
-    let razm = [{x: 140, y: 56, rotation: "up"}, {x: 140, y: 161, rotation: "down"},
-        {x: 153, y: 474, rotation: "left"}, {x: 498, y: 474, rotation: "right"}, {x: 558, y: 170, rotation: "left"}, {x: 804, y: 170, rotation: "right"}
+    let razm = [{x: 144, y: 54, rotation: "up"}, {x: 144, y: 161, rotation: "down"},
+        {x: 156, y: 472, rotation: "left"}, {x: 498, y: 472, rotation: "right"}, {x: 558, y: 170, rotation: "left"}, {x: 804, y: 170, rotation: "right"}
     ];
 
     for (let i=0;i<c.length;i++)
