@@ -22,5 +22,9 @@ class admin_cab_controller extends Controller{
             $data = $this->model->change_users();
             $this->view->render('','admin/admin_cab_view');
         }
+        function reset(){
+            $this->model->reset();
+            header("location:".conf::$SITE_URL);
+        }
 }
 ?>

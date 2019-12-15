@@ -96,41 +96,7 @@ $IS = $_SESSION['niiis']['is'];
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body class='bg-light'>
-    <div class='container-fluid'>
-        <div class="row">
-            <div class="col-1"><a class="medium red awesome" href="<?php echo conf::$SITE_URL.'logout' ?>">Выйти</a></div>
-            <div class="col-3">
-                <div class="row">
-                    <div class="col-5">Вы вошли как:</div>
-                    <div class="col-4"><?php echo sys::user_login() ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="row">
-                    <div class="col-4">Ваша роль:</div>
-                    <div class="col-6"><?php echo $_SESSION['niiis']['role'] ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-3">
-                <div class="row">
-                    <div class="col-6">Текущий раунд:</div>
-                    <div class="col-6" id='current_round'><?php echo $_SESSION['niiis']['round'] ?>
-                    </div>
-                </div>
-            </div>
-            <div class="col-2">
-                <?php if (sys::is_super_admin()){?>
-                    <select id="change_role" name="role" class="form-control">
-                        <option value="1" <?php if($_SESSION["niiis"]["round"] == 1) echo "selected"; ?>>1 раунд</option>
-                        <option value="2" <?php if($_SESSION["niiis"]["round"] == 2) echo "selected"; ?>>2 раунд</option>
-                        <option value="3" <?php if($_SESSION["niiis"]["round"] == 3) echo "selected"; ?>>3 раунд</option>
-                    </select>
-                <?php } ?>
-            </div>
-        </div>
-     </div>
+    <?php require_once("system/views/header.php"); ?>
       <hr>
 <!--        <div>
             <?php

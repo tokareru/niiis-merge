@@ -22,4 +22,25 @@ class admin_cab_model extends model
   function change_users(){
       
   }
+  function reset(){
+    $sql = "DELETE FROM SPEC_TABLE WHERE ROUND=1";
+    $q = sys::$PDO->prepare($sql);
+    $q->execute();
+    $Q = $q->fetchAll();
+    $sql = "UPDATE DRAWING_MAIN_TEXT SET ";
+    for($i = 1; $i <= 50; $i++){
+        if($i == 1){
+            $sql.= "field$i = ''";
+        }else{
+            $sql.= ", field$i = ''";
+        }
+    }
+    $q = sys::$PDO->prepare($sql);
+    $q->execute();
+    $Q = $q->fetchAll();
+    $sql = "UPDATE MODIFY_DATE SET user_id=(select id from users where login=:login), date_change = default";
+    $q = sys::$PDO->prepare($sql);
+    $q->execute(array("login" => $_SESSION["niiis"]["login"]));
+    $Q = $q->fetchAll();
+  }
 }

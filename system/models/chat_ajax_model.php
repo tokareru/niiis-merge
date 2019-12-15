@@ -19,7 +19,6 @@ class chat_ajax_model extends model
                             $q->execute(array("limit" => $_POST["count_messages"]));
                             $Q = $q->fetchAll();
                             $result;
-                            
                             $result["response"] = 200;
                             $i = count($Q);
                             foreach($Q as $row){
@@ -65,7 +64,13 @@ class chat_ajax_model extends model
                                     VALUES(:all,(select ID from USERS WHERE LOGIN=:cur_user),:comment)";
                             $q = sys::$PDO->prepare($sql);
                             $q->execute(array("all"=>'1',"cur_user"=>$_POST["current_login"], "comment" => $_POST["comment"]));
-                            return array("response"=>200);
+                            $Q = $q->fetchAll(); 
+                            if($Q){
+                            return(array("response"=>200));
+                            }
+                            else{
+                                return array("response"=>"Unexecute request to db");
+                            }
                         case "DM":
                              case "ALL":
                             if($_POST["current_login"] != $_POST["login_user_chat_with"]){
@@ -74,7 +79,13 @@ class chat_ajax_model extends model
                                 $q = sys::$PDO->prepare($sql);
                                 $q->execute(array("user_chat_with"=>$_POST["login_user_chat_with"],
                                     "cur_user"=>$_POST["current_login"], "comment" => $_POST["comment"]));
-                                return array("response"=>200);
+                                $Q = $q->fetchAll(); 
+                                if($Q){
+                                return(array("response"=>200));
+                                }
+                                else{
+                                    return array("response"=>"Unexecute request to db");
+                                }
                             }else{
                                 return array("response"=>"You can't sent messange by self");
                             }
