@@ -5,10 +5,10 @@ export function initScheme() {
     initTitleBlock();
 
     let FirstInitDownloaded = false;
-    if (Round === 3)
+    /*if (Round === 3)
     {
         $('#drawcanv').css({'display': 'none'});
-    }
+    }*/
 
     window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
     window.lines2 = [];
@@ -249,7 +249,7 @@ export function initScheme() {
             if (Round === 3)
             {
                 if(!FirstInitDownloaded){
-                    $('#drawcanv').css({'display': 'none'});
+                    //$('#drawcanv').css({'display': 'none'});
                     $('#scheme1 div canvas').css({'display': 'block'});
                     firstFieldInit();
                 }
