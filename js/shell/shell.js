@@ -73,7 +73,7 @@ async function prepareShell(json_role_and_round, add_data) {
 
     // проверяем обновления
     let check = (round === Number(Round)) && ((dateChange === DateChange) || (loginChange == login)) && ((loginChange == LoginChange) || (loginChange == login)) ;
-    //console.log(check)
+    console.log(check)
     if (check) return;
 
     $("#change_role").attr("disabled", "disabled");
