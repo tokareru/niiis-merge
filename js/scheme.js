@@ -17,6 +17,8 @@ export function initScheme() {
     window.arrcoor = [];
     window.arrcoor1 = [];
     window.showlines = [0,1];
+    window.increment = 0;
+    window.echo;
 
     window.areas1 = []; // массив круглых областей в которых происходит клик
     window.areas2 = []; // координаты кругов в размерах
@@ -249,6 +251,7 @@ export function initScheme() {
             scenesc.add(pleftgran1);
 
             //добавляем весь чертеж
+            //Round = 2;
             if (Round === 3)
             {
                 if(!FirstInitDownloaded){
@@ -258,9 +261,47 @@ export function initScheme() {
                     firstFieldInit();
                     razmerdrawfull();
                     $("#ready").click();
+                    setDrawingStatus();
                 }
             }
-            else {$('#hidedraw').css({'display': 'none'});}
+            else
+            {
+                if(!FirstInitDownloaded)
+                {
+                    FirstInitDownloaded = true;
+                    $('#hidedraw').css({'display': 'none'});
+                    getDrawingStatus();
+                    let inter = setInterval(function()
+                    {
+                        if (window.echo != undefined)
+                        {
+                            let inter1 = setInterval(function()
+                            {
+                                if (window.namerole != undefined)
+                                {
+                                    clearInterval(inter1);
+                                }
+                            }, 100) ;
+                            //window.namerole = "kek";
+                            if (echo.is_drawing_finished == false && window.namerole != "конструктор")
+                            {
+                                $('#drawcanv').css({'display': 'none'});
+                                $('#topcanv').css({'display': 'none'});
+                            }
+                            else
+                            {
+                                $('#drawcanv').css({'display': 'block'});
+                                $('#topcanv').css({'display': 'block'});
+                                $('#hidedraw').css({'display': 'block'});
+                                razmerdrawfull();
+                                $("#ready").click();
+                            }
+                            clearInterval(inter);
+                        }
+                    }, 100);
+                }
+            }
+            //Round = 3;
         });
     }
 
@@ -460,11 +501,6 @@ export function initScheme() {
             }
         }
 
-        /* for (let i=0; i<6; i++)
-        {
-            window.dlinaarr[ar[i]]=dlina;
-        } */
-
         dlinaarr[0]=112;
         dlinaarr[1]=345;
         dlinaarr[2]=248;
@@ -561,100 +597,6 @@ export function initScheme() {
                             }
                         }
                         ctxs[0].fillText(echo, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
-                    }
-                    ctxs[0].stroke();
-                    break;
-                }
-
-                case "right":
-                {
-                    ctxs[0].lineTo(x-20, y-7);
-                    ctxs[0].lineTo(x-20, y+7);
-                    ctxs[0].fill();
-                    ctxs[0].beginPath();
-                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
-                    ctxs[0].lineTo(x, y+10);
-                    if (j % 2 == 0)
-                    {
-                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
-                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
-                    }
-                    ctxs[0].stroke();
-                    break;
-                }
-            }
-        }
-
-    }
-
-    function razmerdrawfull()
-    {
-        dlinaarr[0]=112;
-        dlinaarr[2]=345;
-        dlinaarr[4]=248;
-
-        for (let j=0; j<areas3.length; j++)
-        {
-            let echo;
-            let x = areas3[j].x;
-            let y = areas3[j].y;
-            let y1, x1;
-            ctxs[0].beginPath();
-            ctxs[0].moveTo(x, y);
-
-            switch (areas3[j].rotation)
-            {
-                case "up":
-                {
-                    ctxs[0].lineTo(x-7, y+20);
-                    ctxs[0].lineTo(x+7, y+20);
-                    ctxs[0].fill();
-                    ctxs[0].beginPath();
-                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
-                    ctxs[0].lineTo(x-10, y);
-                    if (j % 2 == 0)
-                    {
-                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
-                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
-                        ctxs[0].font = "italic 10pt Arial";
-
-                        ctxs[0].fillText(dlinaarr[j], areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
-                    }
-                    ctxs[0].stroke();
-                    break;
-                }
-
-                case "down":
-                {
-                    ctxs[0].lineTo(x-7, y-20);
-                    ctxs[0].lineTo(x+7, y-20);
-                    ctxs[0].fill();
-                    ctxs[0].beginPath();
-                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
-                    ctxs[0].lineTo(x-10, y);
-                    if (j % 2 == 0)
-                    {
-                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
-                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
-                    }
-                    ctxs[0].stroke();
-                    break;
-                }
-
-                case "left":
-                {
-                    ctxs[0].lineTo(x+20, y-7);
-                    ctxs[0].lineTo(x+20, y+7);
-                    ctxs[0].fill();
-                    ctxs[0].beginPath();
-                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
-                    ctxs[0].lineTo(x, y+10);
-                    if (j % 2 == 0)
-                    {
-                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
-                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
-                        ctxs[0].font = "italic 10pt Arial";
-                        ctxs[0].fillText(dlinaarr[j], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
                     }
                     ctxs[0].stroke();
                     break;
@@ -926,6 +868,14 @@ export function initScheme() {
                         ctxs[0].stroke();
                     }
                 }
+                if (lines2.length ==3)
+                {
+                    window.increment++;
+                    if (window.increment < 2)
+                    {
+                        setDrawingStatus();
+                    }
+                }
 
                 break;
             }
@@ -1019,7 +969,104 @@ export function initScheme() {
         e.preventDefault();
     });*/
 
-    if (Round !== 3) {circlesdraw();}
+    if (Round !== 3 && window.namerole == 'конструктор')
+    {
+        circlesdraw();
+    }
+
+}
+
+function razmerdrawfull()
+{
+    dlinaarr[0]=112;
+    dlinaarr[2]=345;
+    dlinaarr[4]=248;
+
+    for (let j=0; j<areas3.length; j++)
+    {
+        let echo;
+        let x = areas3[j].x;
+        let y = areas3[j].y;
+        let y1, x1;
+        ctxs[0].beginPath();
+        ctxs[0].moveTo(x, y);
+
+        switch (areas3[j].rotation)
+        {
+            case "up":
+            {
+                ctxs[0].lineTo(x-7, y+20);
+                ctxs[0].lineTo(x+7, y+20);
+                ctxs[0].fill();
+                ctxs[0].beginPath();
+                ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                ctxs[0].lineTo(x-10, y);
+                if (j % 2 == 0)
+                {
+                    ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                    ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                    ctxs[0].font = "italic 10pt Arial";
+
+                    ctxs[0].fillText(dlinaarr[j], areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                }
+                ctxs[0].stroke();
+                break;
+            }
+
+            case "down":
+            {
+                ctxs[0].lineTo(x-7, y-20);
+                ctxs[0].lineTo(x+7, y-20);
+                ctxs[0].fill();
+                ctxs[0].beginPath();
+                ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                ctxs[0].lineTo(x-10, y);
+                if (j % 2 == 0)
+                {
+                    ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                    ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                }
+                ctxs[0].stroke();
+                break;
+            }
+
+            case "left":
+            {
+                ctxs[0].lineTo(x+20, y-7);
+                ctxs[0].lineTo(x+20, y+7);
+                ctxs[0].fill();
+                ctxs[0].beginPath();
+                ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                ctxs[0].lineTo(x, y+10);
+                if (j % 2 == 0)
+                {
+                    ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                    ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                    ctxs[0].font = "italic 10pt Arial";
+                    ctxs[0].fillText(dlinaarr[j], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
+                }
+                ctxs[0].stroke();
+                break;
+            }
+
+            case "right":
+            {
+                ctxs[0].lineTo(x-20, y-7);
+                ctxs[0].lineTo(x-20, y+7);
+                ctxs[0].fill();
+                ctxs[0].beginPath();
+                ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                ctxs[0].lineTo(x, y+10);
+                if (j % 2 == 0)
+                {
+                    ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                    ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                }
+                ctxs[0].stroke();
+                break;
+            }
+        }
+    }
 
 }
 
@@ -1137,4 +1184,60 @@ function createrazmer()
 
 }
 
+/* let sinterval = setInterval(function()
+{
+	getDrawingStatus();
+	let inter = setInterval(function()
+	{
+	if (window.echo != undefined)
+	{
+		let inter1 = setInterval(function()
+		{
+			if (window.namerole != undefined)
+			{
+				clearInterval(inter1);
+			}
+		}, 100) ;
+		//window.namerole = "kek";
+		if (echo.is_drawing_finished == false && window.namerole != "конструктор")
+		{
+			$('#drawcanv').css({'display': 'none'});
+			$('#topcanv').css({'display': 'none'});
+		}
+		else
+		{
+			$('#drawcanv').css({'display': 'block'});
+			$('#topcanv').css({'display': 'block'});
+		}
+		clearInterval(inter);
+	}
+	}, 100);
+}, 5000); */
+
+function getDrawingStatus()
+{
+    $.ajax({
+        type: "GET",
+        url: "drawing_main_text_ajax/is_drawing_finished",
+        dataType: "json",
+        data: "type=get",
+        success: function (answer) {
+            console.log(answer);
+            window.echo = answer;
+        }
+    });
+}
+
+function setDrawingStatus()
+{
+    $.ajax({
+        type: "GET",
+        url: "drawing_main_text_ajax/is_drawing_finished",
+        dataType: "json",
+        data: "type=set",
+        success: function (answer) {
+            console.log(answer);
+        }
+    });
+}
 

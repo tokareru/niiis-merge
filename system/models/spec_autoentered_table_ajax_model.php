@@ -1,9 +1,9 @@
 <?php
 
-class spec_table_ajax_model extends model {
+class spec_autoentered_table_ajax_model extends model {
 
     public function get_data() {
-        $sql = "SELECT * FROM SPEC_TABLE WHERE ACTIVE_SIGN = '1'";
+        $sql = "SELECT * FROM SPEC_AUTOENTERED_TABLE WHERE ACTIVE_SIGN = '1'";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
@@ -32,23 +32,10 @@ class spec_table_ajax_model extends model {
         }
         return $result;
     }
-    function save_product(){
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "INSERT PRODUCT(MODEL_NAME, PATH_3D, DESCRIPTION, USER_ID, TYPE_ID)
-                    VALUES(:model_name, :path_3d, :description, (SELECT ID FROM USERS WHERE LOGIN = :login), 
-                    (SELECT TYPE_ID FROM PRODUCT_TYPE WHERE TYPE=:type))
-                    ";
-            $q = sys::$PDO->prepare($sql);
-            $q->execute(array("model_name" => $_POST["model_name"], "path_3d"=>$path_3d, 
-                "description"=>$description, "login"=>$login, "type"=>$type));
-        } else {
-            return array("response" => "NOT FOUND POST REQUEST");
-        }
-    }
     
     function save() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "UPDATE SPEC_TABLE SET ACTIVE_SIGN = '0'";
+            $sql = "UPDATE SPEC_AUTOENTERED_TABLE SET ACTIVE_SIGN = '0'";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $Q = $_POST['tbody'];
@@ -68,7 +55,7 @@ class spec_table_ajax_model extends model {
                     }
                 }
                 
-                $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY, ROUND, PRODUCT_ID, USER_ID)
+                $sql = "INSERT INTO SPEC_AUTOENTERED_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY, ROUND, PRODUCT_ID, USER_ID)
                         VALUES(:position, :name_short, :name_long, :count, :readonly, :round, :product_id, (SELECT ID FROM USERS WHERE login=:login))";
                 $q = sys::$PDO->prepare($sql);
                 $i = 0;

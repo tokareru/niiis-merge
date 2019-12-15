@@ -21,7 +21,7 @@ $IS = $_SESSION['niiis']['is'];
         <title><?php echo isset($data['title']) ? $data['title'] : conf::$SITE_NAME; ?></title>
         
         <?php
-        sys::inc_no_cache('css', 'css/tablesorter.css');
+        
         sys::inc_no_cache('css', 'css/bootstrap.css');
         sys::inc_no_cache('css', 'css/styles.css');
         sys::inc_no_cache('css', 'css/3D.css');
@@ -43,8 +43,6 @@ $IS = $_SESSION['niiis']['is'];
         sys::inc_no_cache('css', 'css/create_task_route.css');
         sys::inc_no_cache('css', 'css/create_title_block.css');
 
-        sys::inc_no_cache('javascript', 'js/tablesorter/jquery.tablesorter.js');
-        sys::inc_no_cache('javascript', 'js/tablesorter/jquery.tablesorter.js');
         sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
         sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');
         sys::inc_no_cache('javascript', 'js/libraries/bootstrap.min.js');
