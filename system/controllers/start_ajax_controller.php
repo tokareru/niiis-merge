@@ -14,6 +14,10 @@ class start_ajax_controller extends Controller{
             $data = $this->model->set_data();
             $this->view->render('', 'ajax_view_json.php', $data);
         }
+        function db_change_time(){
+            $data = $this->model->db_change_time();
+            $this->view->render('', 'ajax_view_json.php', $data);
+        }
   // счетчики для менюшки, использовать можно на всех страницах
 }
 ?>
