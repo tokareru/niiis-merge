@@ -80,6 +80,16 @@ class spec_autoentered_table_ajax_model extends model {
     function save_product_checked(){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $arr = $_POST["checked"];
+            $sql = "SELECT COUNT(NAME) FROM PRODUCT_CHECKED WHERE ACTIVE_SIGN = '0'";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $Q = $q->fetchAll();
+            if($Q[0] > 100){
+                $sql = "DELETE FROM PRODUCT_CHECKED WHERE ACTIVE_SIGN = '0'";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute();
+                $Q = $q->fetchAll();
+            }
             $sql = "UPDATE PRODUCT_CHECKED SET ACTIVE_SIGN='0'";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
