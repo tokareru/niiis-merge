@@ -79,6 +79,10 @@ function generateTable(json, add_data) {
     setRowsNumber(table_block);
     colToReadOnly(0, 'readonly', table_block);
     colToReadOnly(1, 'readonly', table_block);
+
+    if (save_url === "spec_autoentered_table_ajax/save"){
+        setTableByPdmAndStd(tableBlock);
+    }
 }
 
 function postDataFromTable(table_block, save_url) {
@@ -923,8 +927,8 @@ function setTableByPdmAndStd(tableBlock) {
         {
             id: "component_2",
             position: 2,
-            designation: "Обоз. дет. 1",
-            name: "Деталь 1",
+            designation: "Обоз. дет. 2",
+            name: "Деталь 2",
             number: 1
         },
         {

@@ -30,10 +30,12 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
                 console.log(array)
             }
             json.images.forEach(function (elem, i) {
-                if (Round < 3) addNewComponent(elem, accordID, fieldID)
+                if (Round < 3) addNewComponent(elem, accordID, fieldID, true)
                 else {
+                    addNewComponent(elem, accordID, fieldID, true);
                     array.checked.forEach(function (value) {
-                        if (elem.ID == value) addNewComponent(elem, accordID, fieldID);
+                        if (elem.ID == value) addNewComponent(elem, accordID, fieldID, true)
+                        else addNewComponent(elem, accordID, fieldID, false)
                     })
                 }
             });
@@ -45,15 +47,24 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
     })
 }
 
-function addNewComponent(data, accordID, fieldID) {
-    console.log()
+function addNewComponent(data, accordID, fieldID, isChecked) {
     let field = $(accordID + " " + fieldID + " fieldset");
-    field.append(
-        "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
-        "<img src=\"" + data.IMG + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
-        " name=\"" + data.ID +
-        "\" id=\"" + data.ID + "\">" + "</p>"
-    );
+    if (isChecked){
+        field.append(
+            "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
+            "<img src=\"" + data.IMG + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
+            " name=\"" + data.ID +
+            "\" id=\"" + data.ID + "\">" + "</p>"
+        );
+    }else {
+        field.append(
+            "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
+            "<img src=\"" + data.IMG + "\">" + data.name + "</label><input type=\"checkbox\"" +
+            " name=\"" + data.ID +
+            "\" id=\"" + data.ID + "\">" + "</p>"
+        );
+    }
+
     makeCheckbox(fieldID);
 }
 
