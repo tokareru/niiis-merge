@@ -3,6 +3,13 @@ import {STLLoader} from './3D/stl/STLLoader.js';
 
 export function initScheme() {
     initTitleBlock();
+
+    let FirstInitDownloaded = false;
+    if (Round === 3)
+    {
+        $('#drawcanv').css({'display': 'none'});
+    }
+
     window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
     window.lines2 = [];
     window.lines3 = [];
@@ -239,7 +246,14 @@ export function initScheme() {
             scenesc.add(pleftgran1);
 
             //добавляем весь чертеж
-            //firstFieldInit()
+            if (Round === 3)
+            {
+                if(!FirstInitDownloaded){
+                    $('#drawcanv').css({'display': 'none'});
+                    $('#scheme1 div canvas').css({'display': 'block'});
+                    firstFieldInit();
+                }
+            }
         });
     }
 
@@ -269,6 +283,7 @@ export function initScheme() {
         }
         window.renderersc.render(scenesc, camerasc);
 
+        FirstInitDownloaded = true;
         window.isEnded = false;
     }
 
