@@ -20,6 +20,9 @@ class spec_autoentered_table_ajax_model extends model {
                     if ($is_readonly[$j] == 'f') {
                         $readonly = false;
                     }
+                    if($row[$j] == null){
+                        $row[$j] = '';
+                    }
                     $result['tbody'][$i]["row"][$j] = array('text' => $row[$j], 'readonly' => $readonly);
 
                     $j++;
@@ -40,7 +43,6 @@ class spec_autoentered_table_ajax_model extends model {
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $round = $q->fetchAll()[0][0];
-            $table = "SPEC_TABLE";
             $Q = $_POST['tbody'];
             foreach ($Q as $row) {
                 $readonly_str = "";
@@ -57,8 +59,17 @@ class spec_autoentered_table_ajax_model extends model {
                         VALUES(:position, :name_short, :name_long, :count, :readonly, :round, :product_id, (SELECT ID FROM USERS WHERE login=:login))";
                 $q = sys::$PDO->prepare($sql);
                 $i = 0;
-                $q->execute(array("position" => $row["row"][$i++]["text"], "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
-                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str,'round'=> $round, 'product_id'=>$row["row"]["product_id"], 'login'=> $_POST['login']));
+                $pos=null;
+                $kol=null;
+                if($row["row"][0]["text"] != ""){
+                    $pos = $row["row"][0]["text"];
+                }
+                if($row["row"][3]["text"] != ""){
+                    $kol = $row["row"][3]["text"];
+                }
+                
+                $q->execute(array("position" =>$pos, "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
+                    "count" => $kol, "readonly" => $readonly_str,'round'=> $round, 'product_id'=>$row["row"][4]["product_id"], 'login'=> $_POST['login']));
             }
             return array("response" => 200);
         } else {
