@@ -50,7 +50,6 @@ $p->AddFont('gost', 'B', 'gost_b.php');
 $p->SetAutoPageBreak(0);
 
 // метаданные
-$p->SetAuthor("NIIIS");
 $p->SetTitle("Report");
 $p->SetSubject("ID");
 
