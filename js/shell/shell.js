@@ -67,21 +67,23 @@ async function prepareShell(json_role_and_round, add_data) {
     let role = json_role_and_round.role.toString();
     let round = Number(json_role_and_round.round);
     let dateChange = json_role_and_round.date_change.toString();
-    let loginChange = json_role_and_round.LoginChange.toString();
+    let loginChange = json_role_and_round.login_change.toString();
     //console.log(current_round_glob)
     //console.log(round)
+
     // проверяем обновления
-    let chech = (round === Number(Round)) && (dateChange === DateChange) && (loginChange !== LoginChange);
-    if (chech) return;
+    let check = (round === Number(Round)) && (dateChange === DateChange) && (loginChange == LoginChange);
+    if (check) return;
+
     $("#change_role").attr("disabled", "disabled");
-    let data = await
-    getJsonByURLWithoutCallback("json/round_and_role.json");
+    let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
 
     //обновляем данные
     Role = role;
     Round = round;
-    $("#current_round").text(Round);
     LoginChange = loginChange;
+    DateChange = dateChange;
+    $("#current_round").text(Round);
 
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];
