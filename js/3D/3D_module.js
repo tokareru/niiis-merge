@@ -158,7 +158,7 @@ export function init3dField() {
         let prev = window.isEnded;
         window.isEnded = true;
         let array = ["component_1", "component_2", "component_3", "component_4", "std_component_1", "std_component_2", "std_component_3"];
-        console.log(array)
+        //console.log(array)
         for (let i = 0; i < 4; i++) {
             if (array.indexOf('component_' + (i + 1)) != -1) {
                 //meshs[stldata[i][2]].visible = true;
@@ -210,7 +210,7 @@ export function init3dField() {
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
         renderer.setSize($('#canvas3D').width(), ($('#canvas3D').width()) * 9 / 16);
-        canvas3D.children[0].children[0].style = "width: 100%; height: 100%";
+        $("#canvas3D").children[0].children[0].style = "width: 100%; height: 100%";
     }
 
     function animate() {

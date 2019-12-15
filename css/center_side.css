@@ -43,7 +43,26 @@
     background-color: #0b2e13;
 }
 
-.myTabsTab {
+#print_btn{
+    list-style: none;
+    float: right;
+    text-decoration: none;
+    outline: none;
+    position: relative;
+    top: -2px;
+    margin: 0!important;
+    height: 100%;
+    width:auto;
+    color: #fff;
+    border-radius: .25rem;
+    -webkit-transition: all 1s;
+    transition: all 1s;
+    border-color: #dee2e6 #dee2e6 #fff;
+    display: block;
+    padding: 0.5rem 1rem;
+}
+
+.myTabsTab, #print_btn {
     background-color: #45526e;
     flex-basis: 0;
     flex-grow: 1;
