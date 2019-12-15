@@ -253,10 +253,13 @@ export function initScheme() {
             {
                 if(!FirstInitDownloaded){
                     //$('#drawcanv').css({'display': 'none'});
-                    $('#scheme1 div canvas').css({'display': 'block'});
+                    $('#hidedraw').css({'display': 'block'});
+                    $('#topcanv').css({'display': 'block'});
                     firstFieldInit();
+                    razmerdrawfull();
                 }
             }
+            else {$('#hidedraw').css({'display': 'none'});}
         });
     }
 
@@ -375,6 +378,10 @@ export function initScheme() {
 
             $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
             $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
+
+            $("#hidedraw").width($("#drawcanv").width());
+            $("#hidedraw").height($("#drawcanv").height());
+
             $("#topcanv")[i].style = "";
             renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
             //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
@@ -406,6 +413,10 @@ export function initScheme() {
         //$("#field3D div div canvas")[i].height *= 1.2;
         $("#drawcanv")[i].width = $("#field3D")[0].clientWidth-7;
         $("#drawcanv")[i].height = $("#field3D")[0].clientHeight;
+
+        $("#hidedraw").width($("#drawcanv").width());
+        $("#hidedraw").height($("#drawcanv").height());
+
         $("#topcanv")[i].style = "";
         renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
         //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
@@ -549,6 +560,100 @@ export function initScheme() {
                             }
                         }
                         ctxs[0].fillText(echo, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "right":
+                {
+                    ctxs[0].lineTo(x-20, y-7);
+                    ctxs[0].lineTo(x-20, y+7);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x, y+10);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+            }
+        }
+
+    }
+
+    function razmerdrawfull()
+    {
+        dlinaarr[0]=112;
+        dlinaarr[2]=345;
+        dlinaarr[4]=248;
+
+        for (let j=0; j<areas3.length; j++)
+        {
+            let echo;
+            let x = areas3[j].x;
+            let y = areas3[j].y;
+            let y1, x1;
+            ctxs[0].beginPath();
+            ctxs[0].moveTo(x, y);
+
+            switch (areas3[j].rotation)
+            {
+                case "up":
+                {
+                    ctxs[0].lineTo(x-7, y+20);
+                    ctxs[0].lineTo(x+7, y+20);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x-10, y);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                        ctxs[0].font = "italic 10pt Arial";
+
+                        ctxs[0].fillText(dlinaarr[j], areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "down":
+                {
+                    ctxs[0].lineTo(x-7, y-20);
+                    ctxs[0].lineTo(x+7, y-20);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x-10, y);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "left":
+                {
+                    ctxs[0].lineTo(x+20, y-7);
+                    ctxs[0].lineTo(x+20, y+7);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x, y+10);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                        ctxs[0].font = "italic 10pt Arial";
+                        ctxs[0].fillText(dlinaarr[j], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
                     }
                     ctxs[0].stroke();
                     break;
