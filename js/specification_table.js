@@ -2,6 +2,13 @@ function createSpecificationTable() {
     //serializeTable();
     getJsonByURL("spec_table_ajax", generateTable,
         {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field"});
+    $("#left-accordion #pdm_field input").click(function () {
+        addRowByData({}, "#specificationBlock");
+    })
+
+    $("#left-accordion #std_field input").click(function () {
+        addRowByData({},"#specificationBlock");
+    })
 
 }
 
@@ -89,6 +96,9 @@ function postDataFromTable(table_block) {
                     }
                 }
             });
+            row_arr.push({
+                product_id: "product id"
+            })
             let obj = {
                 row: row_arr
             };
@@ -869,4 +879,16 @@ function unhighlightCol(table_block) {
 
 function emptyCells() {
 
+}
+
+function addRowByData(data, tableBlock) {
+    /*let position = data.position;
+    let designation = data.designation;
+    let name = data.name;
+    let number = data.number;*/
+    let tbody_lenght = Number($(tableBlock).find("tbody tr").length);
+    console.log(tbody_lenght);
+    console.log(tableBlock);
+    $(".firstColPlus ").trigger("click")
+    //addRow(tableBlock, 1 );
 }
