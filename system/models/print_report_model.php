@@ -19,16 +19,27 @@ class print_report_model extends model
     $q->execute();
     $round = $q->fetchAll();
     
-    $sql = "SELECT  position,
+    if($round[0]['round'] == 3){
+      $sql = "SELECT  position,
+                    name_short,
+                    name_long,
+                    count
+            FROM    spec_autoentered_table 
+            WHERE   active_sign = True";
+    } else {
+      $sql = "SELECT  position,
                     name_short,
                     name_long,
                     count
             FROM    spec_table 
             WHERE   active_sign = True";
+    }
+    
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $spec_table = $q->fetchAll();
     
+//    var_dump($spec_table);
     
     $result = array("data" => $main_label,
                     "round"=>$round[0]['round'],
