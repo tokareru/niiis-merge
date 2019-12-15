@@ -70,7 +70,7 @@ class spec_table_ajax_model extends model {
                 $q = sys::$PDO->prepare($sql);
                 $i = 0;
                 $q->execute(array("position" => $row["row"][$i++]["text"], "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
-                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str,'round'=> $round, 'product_id'=>$product_id, 'login'=> $_POST['login']));
+                    "count" => $row["row"][$i++]["text"], "readonly" => $readonly_str,'round'=> $round, 'product_id'=>$row["row"]["product_id"], 'login'=> $_POST['login']));
             }
             return array("response" => 200);
         } else {
