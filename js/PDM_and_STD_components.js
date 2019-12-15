@@ -18,7 +18,11 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
             div.append("<fieldset></fieldset>");
             let field = $(accordID + " " + fieldID + " fieldset");
             json.images.forEach(function (elem, i) {
-                addNewComponent(elem, accordID, fieldID)
+                if (Round < 3) addNewComponent(elem, accordID, fieldID)
+                else {
+                    let array = getJsonByURLWithoutCallback("spec_autoentered_table_ajax/load_product_checked");
+                    console.log(array);
+                }
             });
             //$("#left-accordion").accordion("refresh");
         },

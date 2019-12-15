@@ -7,7 +7,7 @@ function createSpecificationTable() {
     }else {
         getJsonByURL("spec_autoentered_table_ajax", generateTable,
             {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
-                save_url: "spec_autoentered_table_ajax/save"});
+                save_url: "spec_autoentered_table_ajax/save_product_checked"});
 
         $("#left-accordion #pdm_field input").click(function () {
             setTableByPdmAndStd( "#specificationBlock");
