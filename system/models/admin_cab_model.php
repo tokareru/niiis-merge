@@ -42,5 +42,10 @@ class admin_cab_model extends model
     $q = sys::$PDO->prepare($sql);
     $q->execute(array("login" => $_SESSION["niiis"]["login"]));
     $Q = $q->fetchAll();
+    $sql = "UPDATE SYSTEM_CONF SET ROUND=1";
+    $q = sys::$PDO->prepare($sql);
+    $q->execute();
+    $Q = $q->fetchAll();
+    return array("round"=>1);
   }
 }

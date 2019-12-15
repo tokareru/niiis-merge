@@ -30,7 +30,7 @@
                     <option value="3">3 раунд</option>
                 </select>
         </div>
-        <div class="col-1"><a class="medium red awesome" href="<?php echo conf::$SITE_URL . 'admin_cab/reset' ?>">Сбросить</a></div>          
+        <div class="col-1"><a id="reset" class="medium red awesome" href="#">Сбросить</a></div>          
         
         <?php } ?>
     </div>

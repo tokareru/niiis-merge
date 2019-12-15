@@ -23,8 +23,8 @@ class admin_cab_controller extends Controller{
             $this->view->render('','admin/admin_cab_view');
         }
         function reset(){
-            $this->model->reset();
-            header("location:".conf::$SITE_URL);
+            $data = $this->model->reset();
+            $this->view->render('', 'ajax_view_json.php', $data);
         }
 }
 ?>
