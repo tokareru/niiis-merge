@@ -1018,7 +1018,7 @@ export function initScheme() {
         e.preventDefault();
     });*/
 
-    circlesdraw();
+    if (Round !== 3) {circlesdraw();}
 
 }
 
