@@ -17,11 +17,21 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
             let div = $(accordID).find(fieldID);
             div.append("<fieldset></fieldset>");
             let field = $(accordID + " " + fieldID + " fieldset");
+            if (Round === 3) {let array;
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "spec_autoentered_table_ajax/load_product_checked",
+                    success: function (data) {
+                        array = data;
+                    }
+                })
+                console.log(array)
+            }
             json.images.forEach(function (elem, i) {
-                if (Round < 4) addNewComponent(elem, accordID, fieldID)
+                if (Round < 3) addNewComponent(elem, accordID, fieldID)
                 else {
-                    let array = getJsonByURLWithoutCallback("spec_autoentered_table_ajax/load_product_checked");
-                    console.log(array)
+                    addNewComponent(elem, accordID, fieldID);
                 }
             });
             //$("#left-accordion").accordion("refresh");
@@ -33,6 +43,7 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
 }
 
 function addNewComponent(data, accordID, fieldID) {
+    console.log()
     let field = $(accordID + " " + fieldID + " fieldset");
     field.append(
         "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
