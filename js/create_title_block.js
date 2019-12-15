@@ -326,6 +326,16 @@ function addToServerTitleBlock() {
             data: {body: serArr},
             success: function (data) {
                 //console.log(data);
+                $.ajax({
+                    type: "POST",
+                    url: "/start_ajax/db_change_time",
+                    data: {
+                        login: login
+                    },
+                    success: function (answer) {
+                        console.log(answer);
+                    }
+                })
             },
             error: function () {
 

@@ -2,10 +2,8 @@
 // а остальные вкладки получают уведомление о новом сообщении с помощью события newMessage
 let Round;
 let Role;
-let Drawing_main_text;
-let Pdm;
-let Spec_table;
-let Tasks_route;
+let DateChange;
+let LoginChange;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
@@ -68,15 +66,12 @@ async function prepareShell(json_role_and_round, add_data) {
     currentName = json_role_and_round.name;
     let role = json_role_and_round.role.toString();
     let round = Number(json_role_and_round.round);
-    let drawing_main_text = json_role_and_round.drawing_main_text.toString();
-    let pdm = json_role_and_round.pdm.toString();
-    let spec_table = json_role_and_round.spec_table.toString();
-    let tasks_route = json_role_and_round.tasks_route.toString();
+    let dateChange = json_role_and_round.date_change.toString();
+    let loginChange = json_role_and_round.LoginChange.toString();
     //console.log(current_round_glob)
     //console.log(round)
     // проверяем обновления
-    let chech = (round === Number(Round)) && (drawing_main_text === Drawing_main_text)
-        && (pdm === Pdm) && (spec_table === Spec_table) && (tasks_route === Tasks_route);
+    let chech = (round === Number(Round)) && (dateChange === DateChange) && (loginChange !== LoginChange);
     if (chech) return;
     $("#change_role").attr("disabled", "disabled");
     let data = await
@@ -86,10 +81,8 @@ async function prepareShell(json_role_and_round, add_data) {
     Role = role;
     Round = round;
     $("#current_round").text(Round);
-    Drawing_main_text = drawing_main_text;
-    Pdm = pdm;
-    Spec_table = spec_table;
-    Tasks_route = tasks_route;
+    LoginChange = loginChange;
+
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];
 
