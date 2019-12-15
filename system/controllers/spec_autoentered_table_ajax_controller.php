@@ -2,7 +2,7 @@
 class spec_autoentered_table_ajax_controller extends Controller{
   function __construct(){
 		include "system/models/spec_autoentered_table_ajax_model.php";
-		$this->model = new spec_table_ajax_model();
+		$this->model = new spec_autoentered_table_ajax_model();
 		$this->view = new View();
 	}
 	
