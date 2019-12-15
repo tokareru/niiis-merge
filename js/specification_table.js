@@ -97,7 +97,7 @@ function postDataFromTable(table_block) {
                 }
             });
             row_arr.push({
-                product_id: "product id"
+                product_id: 1
             })
             let obj = {
                 row: row_arr
@@ -886,9 +886,8 @@ function addRowByData(data, tableBlock) {
     let designation = data.designation;
     let name = data.name;
     let number = data.number;*/
-    let tbody_lenght = Number($(tableBlock).find("tbody tr").length);
-    console.log(tbody_lenght);
-    console.log(tableBlock);
+    let tbody_lenght = Number($(tableBlock).find("tbody tr").length) - 2;
+    //console.log(tbody_lenght);
     $(".firstColPlus ").trigger("click")
-    //addRow(tableBlock, 1 );
+    //addRow(tableBlock, length);
 }
