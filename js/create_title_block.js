@@ -346,7 +346,7 @@ function addToServerTitleBlock() {
 function getDataFromServerTitleBlock() {
 
     let ServerData = [];
-    let index = 1;
+    let index = 0;
 
     $.ajax(
         {
