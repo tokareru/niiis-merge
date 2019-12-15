@@ -38,7 +38,7 @@ $spec_table = $data['content']['spec_table'];
 
 //var_dump($spec_table);
 // -------------------------формирование страницы PDF---------------------------
-$frame = 1;
+$frame = 0;
 $x = 20;
 $y = 234;
 
@@ -50,7 +50,6 @@ $p->AddFont('gost', 'B', 'gost_b.php');
 $p->SetAutoPageBreak(0);
 
 // метаданные
-$p->SetAuthor("NIIIS");
 $p->SetTitle("Report");
 $p->SetSubject("ID");
 
