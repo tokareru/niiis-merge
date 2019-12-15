@@ -41,7 +41,7 @@ function setTabs(json, add_data) {
             //вызов функции инициализации области
             $(ui.panel).trigger("initialization");
             $('.myTabsNav').find('#print_btn').remove();
-            $('.myTabsNav').append('<input id="print_btn" type="button" value="Печать">');
+            $('.myTabsNav').append('<a href="print_report" target="_blank"><input id="print_btn" type="button" value="Печать"><a/>');
         }
     });
     //$(tabs_id).tabs("refresh");
