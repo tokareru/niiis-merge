@@ -38,10 +38,13 @@ class start_ajax_model extends model
   }
   function db_change_time(){
       if($_SERVER["REQUEST_METHOD"]=="POST"){
-          $sql = "UPDATE MODIFY_DATE SET login=:login, date_change = default";
+          $sql = "UPDATE MODIFY_DATE SET user_id=(select id from users where login=:login), date_change = default";
           $q = sys::$PDO->prepare($sql);
           $q->execute(array("login" => $_POST["login"]));
           return(array("response"=>200));
       }
+      else {
+            return array("response"=>"NOT FOUND GET REQUEST");
+        }
   }
 }
