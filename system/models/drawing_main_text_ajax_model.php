@@ -57,9 +57,6 @@ class drawing_main_text_ajax_model extends model {
         $q->execute($data);
         $Q = $q->fetchAll();
         }
-        $sql = "UPDATE MODIFY_DATE SET drawing_main_text = default";
-            $q = sys::$PDO->prepare($sql);
-            $q->execute();
             return array("response" => 200);
     }
 
