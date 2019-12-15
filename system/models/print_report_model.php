@@ -9,20 +9,31 @@ class print_report_model extends model
     return $data;
   }
   function content(){
-    
-    $sql = "SELECT * FROM USERS WHERE group_user_id <> 99 ORDER BY id";
+    $sql = "SELECT * FROM drawing_main_text";
     $q = sys::$PDO->prepare($sql);
     $q->execute();
-    $Q = $q->fetchAll();
-    $sql = "SELECT * FROM USER_GROUP WHERE group_id <> 99";
+    $main_label = $q->fetchAll();
+    
+    $sql = "SELECT round FROM system_conf";
     $q = sys::$PDO->prepare($sql);
     $q->execute();
-    $Q1 = $q->fetchAll();
-
-    return array("users" => $Q, "group_users" => $Q1);
-  }
-  
-  function report_pdf(){
+    $round = $q->fetchAll();
     
+    $sql = "SELECT  position,
+                    name_short,
+                    name_long,
+                    count
+            FROM    spec_table 
+            WHERE   active_sign = True";
+    $q = sys::$PDO->prepare($sql);
+    $q->execute();
+    $spec_table = $q->fetchAll();
+    
+    
+    $result = array("data" => $main_label,
+                    "round"=>$round[0]['round'],
+                    "spec_table"=>$spec_table); 
+//    var_dump($result);
+   return $result;
   }
 }
