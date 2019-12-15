@@ -41,7 +41,13 @@ class start_ajax_model extends model
           $sql = "UPDATE MODIFY_DATE SET user_id=(select id from users where login=:login), date_change = default";
           $q = sys::$PDO->prepare($sql);
           $q->execute(array("login" => $_POST["login"]));
+          $Q = $q->fetchAll(); 
+          if($Q){
           return(array("response"=>200));
+          }
+          else{
+              return array("response"=>"Unexecute request to db");
+          }
       }
       else {
             return array("response"=>"NOT FOUND GET REQUEST");

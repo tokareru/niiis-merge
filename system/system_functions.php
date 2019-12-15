@@ -61,11 +61,11 @@ class sys {
         $_SESSION['niiis']['role'] = $row['user_status'];
         $_SESSION['niiis']['name'] = $row['descr'];
       
-      
       // если admin, можем менять пользователей не делая relogin
       // В остальных случаях не использовать $_SESSION['hostel']['is_super_admin'] !
       // для проверки принадлежности к админу, а использовать sys::user_group()
       if($row['user_status']==='administrator'){
+        $_SESSION['niiis']['login'] = $name;
         sys::session_set('is_super_admin', 1, false);
       }else{
         sys::session_set('is_super_admin', 0, false);
