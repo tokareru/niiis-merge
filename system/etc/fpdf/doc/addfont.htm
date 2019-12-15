@@ -1,58 +1,55 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>AddFont</title>
-<link type="text/css" rel="stylesheet" href="fpdf.css">
+<link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
 <h1>AddFont</h1>
 <code>AddFont(<b>string</b> family [, <b>string</b> style [, <b>string</b> file]])</code>
-<h4 class='st'>Версия</h4>
-1.5
-<h4 class='st'>Описание</h4>
-Импортирует TrueType или Type1 шрифт и делает его доступным. Сначала необходимо
-сгенерировать файл определения шрифта с помощью утилиты makefont.php.
-<BR>
-Файл определения (и сам файл шрифта во время внедрения) должен присутствовать в
-каталоге шрифтов. Если он не найден, будет выдана ошибка "Could not include font definition file".
-<h4 class='st'>Параметры</h4>
+<h2>Description</h2>
+Imports a TrueType, OpenType or Type1 font and makes it available. It is necessary to generate a font
+definition file first with the MakeFont utility.
+<br>
+The definition file (and the font file itself when embedding) must be present in the font directory.
+If it is not found, the error "Could not include font definition file" is raised.
+<h2>Parameters</h2>
 <dl class="param">
 <dt><code>family</code></dt>
 <dd>
-Семейство шрифта. Название может быть выбрано произвольно. Если это название
-стандартного семейства шрифтов, то оно перезапишет соответствующий шрифт.
+Font family. The name can be chosen arbitrarily. If it is a standard family name, it will
+override the corresponding font.
 </dd>
 <dt><code>style</code></dt>
 <dd>
-Стиль шрифта. Допустимые значения (регистронезависимы):
-<UL>
-<LI>пустая строка: обычный
-<LI><TT>B</TT>: жирный
-<LI><TT>I</TT>: курсив
-<LI><TT>BI</TT> или <TT>IB</TT>: жирный курсив
-</UL>
-По умолчанию - обычный шрифт.
+Font style. Possible values are (case insensitive):
+<ul>
+<li>empty string: regular</li>
+<li><code>B</code>: bold</li>
+<li><code>I</code>: italic</li>
+<li><code>BI</code> or <code>IB</code>: bold italic</li>
+</ul>
+The default value is regular.
 </dd>
 <dt><code>file</code></dt>
 <dd>
-Файл определения шрифта.
-<BR>
-По умолчанию название формируется из названия семейства и стиля шрифта,
-в нижнем регистре и без пробелов.
+The font definition file.
+<br>
+By default, the name is built from the family and style, in lower case with no space.
 </dd>
 </dl>
-<h4 CLASS='st'>Пример</h4>
+<h2>Example</h2>
 <div class="doc-source">
 <pre><code>$pdf-&gt;AddFont('Comic','I');</code></pre>
 </div>
-или, что то же самое:
+is equivalent to:
 <div class="doc-source">
 <pre><code>$pdf-&gt;AddFont('Comic','I','comici.php');</code></pre>
 </div>
-<h4 class='st'>См. также</h4>
-<a href="setfont.htm">SetFont()</a>.
+<h2>See also</h2>
+<a href="setfont.htm">SetFont</a>
 <hr style="margin-top:1.5em">
-<div style="text-align:center"><a href="index.htm">Оглавление</a></div>
+<div style="text-align:center"><a href="index.htm">Index</a></div>
 </body>
 </html>
