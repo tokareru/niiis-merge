@@ -7,7 +7,7 @@ function createSpecificationTable() {
     }else {
         getJsonByURL("spec_autoentered_table_ajax", generateTable,
             {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
-                save_url: "spec_autoentered_table_ajax/save_product_checked"});
+                save_url: "spec_autoentered_table_ajax/save"});
 
         $("#left-accordion #pdm_field input").click(function () {
             setTableByPdmAndStd( "#specificationBlock");
@@ -129,10 +129,11 @@ function postDataFromTable(table_block, save_url) {
             console.log(answer);
         }
     })
-    if (Round === 3 && save_url === "spec_autoentered_table_ajax/save"){
+    if (Round === 3){
+        //console.log(collectDataLabels(".left-side"))
         $.ajax({
             type: "POST",
-            url: "",
+            url: "spec_autoentered_table_ajax/save_product_checked",
             data: {
                 checked: collectDataLabels(".left-side")
             },
