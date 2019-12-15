@@ -23,7 +23,7 @@ class admin_cab_model extends model
       
   }
   function reset(){
-    $sql = "DELETE FROM SPEC_TABLE WHERE ROUND=1";
+    $sql = "DELETE FROM SPEC_TABLE";
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $Q = $q->fetchAll();
