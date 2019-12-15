@@ -4,6 +4,7 @@ let Round;
 let Role;
 let DateChange;
 let LoginChange;
+window.namerole;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
@@ -64,6 +65,7 @@ async function prepareShell(json_role_and_round, add_data) {
     //console.log(json_role_and_round);
     login = json_role_and_round.login;
     currentName = json_role_and_round.name;
+    window.namerole = currentName;
     let role = json_role_and_round.role.toString();
     let round = Number(json_role_and_round.round);
     let dateChange = json_role_and_round.date_change.toString();
