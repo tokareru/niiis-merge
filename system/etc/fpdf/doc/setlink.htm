@@ -1,37 +1,34 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>SetLink</title>
-<link type="text/css" rel="stylesheet" href="fpdf.css">
+<link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
 <h1>SetLink</h1>
 <code>SetLink(<b>int</b> link [, <b>float</b> y [, <b>int</b> page]])</code>
-<h4 class='st'>Версия</h4>
-1.5
-<h4 class='st'>Описание</h4>
-Задает страницу и позицию, куда указывает ссылка.
-<h4 class='st'>Параметры</h4>
+<h2>Description</h2>
+Defines the page and position a link points to.
+<h2>Parameters</h2>
 <dl class="param">
 <dt><code>link</code></dt>
 <dd>
-Идентификатор ссылки, полученный с помощью AddLink().
+The link identifier returned by AddLink().
 </dd>
 <dt><code>y</code></dt>
 <dd>
-Ордината цели ссылки; <TT>-1</TT> обозначает текущую позицию.
-По умолчанию <TT>0</TT> (верх страницы).
+Ordinate of target position; <code>-1</code> indicates the current position.
+The default value is <code>0</code> (top of page).
 </dd>
 <dt><code>page</code></dt>
 <dd>
-Номер страницы, на которую делается ссылка; <TT>-1</TT> обозначает текущую позицию.
-Это значение по умолчанию.
+Number of target page; <code>-1</code> indicates the current page. This is the default value.
 </dd>
 </dl>
-<h4 class='st'>См. также</h4>
-<a href="addlink.htm">AddLink()</a>.
+<h2>See also</h2>
+<a href="addlink.htm">AddLink</a>
 <hr style="margin-top:1.5em">
-<div style="text-align:center"><a href="index.htm">Оглавление</a></div>
+<div style="text-align:center"><a href="index.htm">Index</a></div>
 </body>
 </html>

@@ -1,109 +1,104 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=Windows-1251">
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <title>Cell</title>
-<link type="text/css" rel="stylesheet" href="fpdf.css">
+<link type="text/css" rel="stylesheet" href="../fpdf.css">
 </head>
 <body>
 <h1>Cell</h1>
-<code>Cell(<b>float</b> w [, <b>float</b> h [, <b>string</b> txt [, <b>mixed</b> border [, <b>int</b> ln [, <b>string</b> align [, <b>int</b> fill [, <b>mixed</b> link]]]]]]])</code>
-<h4 class='st'>Версия</h4>
-1.0
-<h4 class='st'>Описание</h4>
-Выводит ячейку (прямоугольная область) с заданными границами, цветом фона и строкой.
-Верхний левый угол ячейки соответствует текущей позиции. Текст может быть выровнен.
-После вызова этого метода текущая позиция перемещается вправо или на следующую строку.
-Возможно задать ссылку на текст.
-<BR>
-Если задан автоматический разрыв страниц и ячейка превышает установленный лимит, то
-разрыв страницы произойдет перед выводом ячейки.
-<h4 class='st'>Параметры</h4>
+<code>Cell(<b>float</b> w [, <b>float</b> h [, <b>string</b> txt [, <b>mixed</b> border [, <b>int</b> ln [, <b>string</b> align [, <b>boolean</b> fill [, <b>mixed</b> link]]]]]]])</code>
+<h2>Description</h2>
+Prints a cell (rectangular area) with optional borders, background color and character string.
+The upper-left corner of the cell corresponds to the current position. The text can be aligned
+or centered. After the call, the current position moves to the right or to the next line. It is
+possible to put a link on the text.
+<br>
+If automatic page breaking is enabled and the cell goes beyond the limit, a page break is
+done before outputting.
+<h2>Parameters</h2>
 <dl class="param">
 <dt><code>w</code></dt>
 <dd>
-Ширина ячейки. Если задан <TT>0</TT>, то ячейка будет расширена до правой границы.
+Cell width. If <code>0</code>, the cell extends up to the right margin.
 </dd>
 <dt><code>h</code></dt>
 <dd>
-Высота ячейки.
-По умолчанию: <TT>0</TT>.
+Cell height.
+Default value: <code>0</code>.
 </dd>
 <dt><code>txt</code></dt>
 <dd>
-Строка для вывода.
-По умолчанию: пустая строка.
+String to print.
+Default value: empty string.
 </dd>
 <dt><code>border</code></dt>
 <dd>
-Задает должна ли выводиться граница вокруг ячейки. Значение может быть задано
-одним из следующих чисел:
-<UL>
-<LI><TT>0</TT>: без границ
-<LI><TT>1</TT>: с границами
-</UL>
-или же некоторыми или всеми следующими символами (в любой последовательности):
-<UL>
-<LI><TT>L</TT>: левая граница
-<LI><TT>T</TT>: верхняя граница
-<LI><TT>R</TT>: правая граница
-<LI><TT>B</TT>: нижняя граница
-</UL>
-По умолчанию: <TT>0</TT>.
+Indicates if borders must be drawn around the cell. The value can be either a number:
+<ul>
+<li><code>0</code>: no border</li>
+<li><code>1</code>: frame</li>
+</ul>
+or a string containing some or all of the following characters (in any order):
+<ul>
+<li><code>L</code>: left</li>
+<li><code>T</code>: top</li>
+<li><code>R</code>: right</li>
+<li><code>B</code>: bottom</li>
+</ul>
+Default value: <code>0</code>.
 </dd>
 <dt><code>ln</code></dt>
 <dd>
-Указывает где должна будет находиться текущая позиция после вывода ячейки.
-Допустимые значения:
-<UL>
-<LI><TT>0</TT>: справа
-<LI><TT>1</TT>: вначале следующей строки
-<LI><TT>2</TT>: под ячейкой
-</UL>
-Заданное значение <TT>1</TT> эквивалентно заданию значения <TT>0</TT> последующего
-вызова метода Ln().
-По умолчанию: <TT>0</TT>.
+Indicates where the current position should go after the call. Possible values are:
+<ul>
+<li><code>0</code>: to the right</li>
+<li><code>1</code>: to the beginning of the next line</li>
+<li><code>2</code>: below</li>
+</ul>
+Putting <code>1</code> is equivalent to putting <code>0</code> and calling Ln() just after.
+Default value: <code>0</code>.
 </dd>
 <dt><code>align</code></dt>
 <dd>
-Позволяет выравнивать текст. Допустимые значения:
-<UL>
-<LI><TT>L</TT> или пустая строка: выравнивание по левому краю (значение по умолчанию)
-<LI><TT>C</TT>: выравнивание по центру
-<LI><TT>R</TT>: выравнивание по правому краю
-</UL>
+Allows to center or align the text. Possible values are:
+<ul>
+<li><code>L</code> or empty string: left align (default value)</li>
+<li><code>C</code>: center</li>
+<li><code>R</code>: right align</li>
+</ul>
 </dd>
 <dt><code>fill</code></dt>
 <dd>
-Указывает будет ли произведена заливка фона ячейки (<TT>1</TT>) или фон будет прозрачным (<TT>0</TT>).
-По умолчанию: <TT>0</TT>.
+Indicates if the cell background must be painted (<code>true</code>) or transparent (<code>false</code>).
+Default value: <code>false</code>.
 </dd>
 <dt><code>link</code></dt>
 <dd>
-URL или идентификатор, возвращенный методом AddLink().
+URL or identifier returned by AddLink().
 </dd>
 </dl>
-<h4 CLASS='st'>Пример</h4>
+<h2>Example</h2>
 <div class="doc-source">
-<pre><code>//Задаем шрифт
+<pre><code>// Set font
 $pdf-&gt;SetFont('Arial','B',16);
-//Двигаемся на 8 см вправо
+// Move to 8 cm to the right
 $pdf-&gt;Cell(80);
-//В ячейке 20х10 мм с разрывом строк выравнивание текста задаем по центру
+// Centered text in a framed 20*10 mm cell and line break
 $pdf-&gt;Cell(20,10,'Title',1,1,'C');</code></pre>
 </div>
-<h4 class='st'>См. также</h4>
-<a href="setfont.htm">SetFont()</a>,
-<a href="setdrawcolor.htm">SetDrawColor()</a>,
-<a href="setfillcolor.htm">SetFillColor()</a>,
-<a href="settextcolor.htm">SetTextColor()</a>,
-<a href="setlinewidth.htm">SetLineWidth()</a>,
-<a href="addlink.htm">AddLink()</a>,
-<a href="ln.htm">Ln()</a>,
-<a href="multicell.htm">MultiCell()</a>,
-<a href="write.htm">Write()</a>,
-<a href="setautopagebreak.htm">SetAutoPageBreak()</a>.
+<h2>See also</h2>
+<a href="setfont.htm">SetFont</a>,
+<a href="setdrawcolor.htm">SetDrawColor</a>,
+<a href="setfillcolor.htm">SetFillColor</a>,
+<a href="settextcolor.htm">SetTextColor</a>,
+<a href="setlinewidth.htm">SetLineWidth</a>,
+<a href="addlink.htm">AddLink</a>,
+<a href="ln.htm">Ln</a>,
+<a href="multicell.htm">MultiCell</a>,
+<a href="write.htm">Write</a>,
+<a href="setautopagebreak.htm">SetAutoPageBreak</a>
 <hr style="margin-top:1.5em">
-<div style="text-align:center"><a href="index.htm">Оглавление</a></div>
+<div style="text-align:center"><a href="index.htm">Index</a></div>
 </body>
 </html>
