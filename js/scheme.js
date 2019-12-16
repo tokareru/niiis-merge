@@ -378,7 +378,7 @@ export function initScheme() {
         camerasc.updateProjectionMatrix();
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
-        renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
+        //renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
         /*$("#scheme1").find("canvas").last().css({
             "width": "100%",
             "height": "100%"
