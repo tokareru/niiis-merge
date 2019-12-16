@@ -63,13 +63,14 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
         );
     } else {
         field.append(
-            "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
+            "<p class='pdm_draggable ui-draggable ui-draggable-handle'><label for=\"" + data.ID + "\">" +
             "<img src=\"" + data.IMG + "\">" + data.name + "</label><input type=\"checkbox\"" +
             " name=\"" + data.ID +
             "\" id=\"" + data.ID + "\">" + "</p>"
         );
     }
 
+    field.find("p").last().draggable();
     makeCheckbox(fieldID, isChecked);
 }
 
