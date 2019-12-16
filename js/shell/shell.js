@@ -79,10 +79,11 @@ async function prepareShell(json_role_and_round, add_data) {
         && ((loginChange == LoginChange) || (loginChange == login));
     //console.log(check)
     if (check) return;
-    if (prepareShellIsFinished) return;
+    if (!prepareShellIsFinished){
+        prepareShellIsFinished = true;
+        return;
+    }
     console.log("Производится загрузка кабинета");
-
-    prepareShellIsFinished = true;
 
     $("#change_role").attr("disabled", "disabled");
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
