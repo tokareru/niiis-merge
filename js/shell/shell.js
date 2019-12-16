@@ -76,10 +76,13 @@ async function prepareShell(json_role_and_round, add_data) {
 
     // проверяем обновления
     let check = (round === Number(Round)) && ((dateChange === DateChange) || (loginChange == login))
-        && ((loginChange == LoginChange) || (loginChange == login) && prepareShellIsFinished) ;
+        && ((loginChange == LoginChange) || (loginChange == login));
     //console.log(check)
     if (check) return;
+    if (prepareShellIsFinished) return;
     console.log("Производится загрузка кабинета");
+
+    prepareShellIsFinished = true;
 
     $("#change_role").attr("disabled", "disabled");
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
@@ -160,7 +163,6 @@ async function prepareShell(json_role_and_round, add_data) {
     $("#change_role").removeAttr("disabled");
     /*console.log(available_sides);
     console.log(available_tabs);*/
-    prepareShellIsFinished = true;
 }
 
 async function getJsonByURLWithoutCallback(url) {
