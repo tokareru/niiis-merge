@@ -1024,7 +1024,7 @@ export function initScheme() {
                     ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
                     ctxs[0].font = "italic 10pt Arial";
 
-                    ctxs[0].fillText(dlinaarr[j], areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                    ctxs[0].fillText(dlinaarr[j], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
                 }
                 ctxs[0].stroke();
                 break;
