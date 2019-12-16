@@ -35,6 +35,7 @@ class PDF extends FPDF
 $main_label = $data['content']['data'][0];
 $round = $data['content']['round'];
 $spec_table = $data['content']['spec_table'];
+$draw_finish = $data['content']['draw_finish'];
 
 //var_dump($spec_table);
 // -------------------------формирование страницы PDF---------------------------
@@ -59,17 +60,19 @@ $p->AddPage();
 $p->SetFont('gost', '', 10);
 
 $p->Image('images/report/frame.jpg',0,0,-130); 
-$p->Image('images/report/ABR3d-1.png',30,20,-350); 
 
-// размеры на чертеже
-$p->SetXY(26,45);
-$p->Cell(6,5,'112',$frame,1,'C'); // размер 1
-$p->SetXY(160,63);
-$p->Cell(6,5,'248',$frame,1,'C'); // размер 2
-$p->SetXY(72,136);
-$p->Cell(6,5,'345',$frame,1,'C'); // размер 3
-// -----------------
+if($draw_finish){ // если чертеж дорисован
+  $p->Image('images/report/ABR3d-1.png',30,20,-350); 
 
+  // размеры на чертеже
+  $p->SetXY(26,45);
+  $p->Cell(6,5,'112',$frame,1,'C'); // размер 1
+  $p->SetXY(160,63);
+  $p->Cell(6,5,'248',$frame,1,'C'); // размер 2
+  $p->SetXY(72,136);
+  $p->Cell(6,5,'345',$frame,1,'C'); // размер 3
+  // -----------------
+}
 // первая строка
 $p->SetXY($x,$y);
 $p->Cell(7,5,$p->conv($main_label['field1']),$frame,1,'L'); // первая ячейка

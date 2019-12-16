@@ -14,6 +14,13 @@ class print_report_model extends model
     $q->execute();
     $main_label = $q->fetchAll();
     
+    $sql = "SELECT is_drawing_finished FROM system_conf";
+    $q = sys::$PDO->prepare($sql);
+    $q->execute();
+    $Q = $q->fetchAll();
+    $draw_finish = $Q[0]['is_drawing_finished'];
+//    var_dump($draw_finish);
+    
     $sql = "SELECT round FROM system_conf";
     $q = sys::$PDO->prepare($sql);
     $q->execute();
@@ -43,7 +50,8 @@ class print_report_model extends model
     
     $result = array("data" => $main_label,
                     "round"=>$round[0]['round'],
-                    "spec_table"=>$spec_table); 
+                    "spec_table"=>$spec_table,
+                    "draw_finish" => $draw_finish); 
 //    var_dump($result);
    return $result;
   }
