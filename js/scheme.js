@@ -253,6 +253,18 @@ export function initScheme() {
             //добавляем весь чертеж
             //Round = 2;
             console.log("Round: "+ Round);
+
+            let getStatusDraw = setInterval(function () {
+                try {
+                    getDrawingStatus();
+                    //console.log(echo.is_drawing_finished);
+                    if ( echo.is_drawing_finished)
+                        clearInterval(getStatusDraw);
+                }catch (e) {
+                }
+              
+            }, 5000);
+
             if (Round === 3)
             {
                 if(!FirstInitDownloaded){
@@ -285,21 +297,23 @@ export function initScheme() {
                                 }
                             }, 100) ;
                             //window.namerole = "kek";
+                            //console.log(echo.is_drawing_finished);
                             if (echo.is_drawing_finished == false && window.namerole != "конструктор")
                             {
                                 $('#drawcanv').css({'display': 'none'});
                                 $('#topcanv').css({'display': 'none'});
                             }
-                            else if(echo.is_drawing_finished)
+                            if(echo.is_drawing_finished)
                             {
+                                //console.log('finish');
                                 $('#drawcanv').css({'display': 'block'});
                                 $('#topcanv').css({'display': 'block'});
                                 $('#hidedraw').css({'display': 'block'});
                                 razmerdrawfull();
                                 $("#ready").click();
-
+                                clearInterval(inter);
                             }
-                            clearInterval(inter);
+
                         }
                     }, 100);
                 }
@@ -725,7 +739,7 @@ export function initScheme() {
                     document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
 
                 if (isEnded == false) {circlesdraw();}
-
+                //#lines32
                 if (lines1.length<32)
                 {
                     for (let k=0; k<lines1.length; k++)
@@ -1239,7 +1253,7 @@ function getDrawingStatus()
         dataType: "json",
         data: "type=get",
         success: function (answer) {
-            console.log(answer);
+           // console.log(answer);
             window.echo = answer;
         }
     });
@@ -1253,15 +1267,11 @@ function setDrawingStatus()
         dataType: "json",
         data: "type=set",
         success: function (answer) {
-            console.log('response'+answer);
-            for (let i in answer)
-            {
-                console.log('k'+ i + ' val: ' + answer[i]);
-            }
+
         }
     });
 
-    $.ajax({
+    /*$.ajax({
         type: "POST",
         url: "/start_ajax/db_change_time",
         data: {
@@ -1270,6 +1280,6 @@ function setDrawingStatus()
         success: function (answer) {
             console.log(answer);
         }
-    })
+    })*/
 }
 
