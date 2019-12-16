@@ -252,6 +252,7 @@ export function initScheme() {
 
             //добавляем весь чертеж
             //Round = 2;
+            console.log("Round: "+ Round);
             if (Round === 3)
             {
                 if(!FirstInitDownloaded){
@@ -971,10 +972,23 @@ export function initScheme() {
         e.preventDefault();
     });*/
 
-    if (Round !== 3 && window.namerole == 'конструктор' && echo.is_drawing_finished == false)
-    {
-        circlesdraw();
+    async function initDrawStatus() {
+        await getDrawingStatus();
     }
+    initDrawStatus();
+    let tempInt = setInterval(function () {
+        try {
+            if (Round !== 3 && window.namerole == 'конструктор' && echo.is_drawing_finished == false)
+            {
+                circlesdraw();
+                clearInterval(tempInt);
+            }
+        }
+        catch (e) {
+        }
+
+    });
+
 
     }
 
