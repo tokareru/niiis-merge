@@ -71,7 +71,7 @@ class spec_table_ajax_model extends model {
                 $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY, ROUND, PRODUCT_ID, USER_ID)
                         VALUES(:position, :name_short, :name_long, :count, :readonly, :round, :product_id, (SELECT ID FROM USERS WHERE login=:login))";
                 $q = sys::$PDO->prepare($sql);
-                $i = 0;
+                $i = 1;
                 $pos=null;
                 $kol=null;
                 if($row["row"][0]["text"] != ""){
