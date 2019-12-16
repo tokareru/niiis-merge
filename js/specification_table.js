@@ -20,6 +20,7 @@ function createSpecificationTable() {
 }
 
 function generateTable(json, add_data) {
+    //console.log(json)
     let table_block = add_data.table_block + " ";
     let edit_mode_div = add_data.edit_mode_div + " ";
     let url = add_data.url;
@@ -81,7 +82,7 @@ function generateTable(json, add_data) {
     colToReadOnly(1, 'readonly', table_block);
 
     if (save_url === "spec_autoentered_table_ajax/save"){
-        setTableByPdmAndStd(tableBlock);
+        setTableByPdmAndStd(table_block);
     }
 }
 
