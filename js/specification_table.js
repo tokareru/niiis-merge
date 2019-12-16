@@ -210,7 +210,8 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
         });
 
         $table_edit.on('click', '.firstColPlus', function (event) {
-            addRow(table_block, $table_edit.find("tr").length - 2);
+            let t_edit = $(this).parents('.table_edit');
+            addRow(table_block, t_edit.find("tr").length - 2);
             setRowsNumber(table_block);
             $(table_block + " .post_data_button").removeAttr("disabled")
         });
