@@ -70,8 +70,11 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
         );
     }
 
-    field.find("p").last().draggable();
+
     makeCheckbox(fieldID, isChecked);
+    field.find("p").last().draggable({
+        helper: 'clone'
+    });
 }
 
 

@@ -951,21 +951,21 @@ function setTableByPdmAndStd(tableBlock) {
             position: 5,
             designation: "Обоз. стд. дет. 1",
             name: "Стд. деталь 4",
-            number: 1
+            number: 4
         },
         {
             id: "std_component_2",
             position: 6,
             designation: "Обоз. стд. дет. 2",
             name: "Стд. деталь 4",
-            number: 1
+            number: 4
         },
         {
             id: "std_component_3",
             position: 7,
             designation: "Обоз. стд. дет. 3",
             name: "Стд. деталь 4",
-            number: 1
+            number: 10
         }
     ]
     array.forEach(function (component_id) {
