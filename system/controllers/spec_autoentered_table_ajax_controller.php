@@ -14,6 +14,14 @@ class spec_autoentered_table_ajax_controller extends Controller{
             $data = $this->model->save();
             $this->view->render('', 'ajax_view_json.php', $data);
         }
+        function save_product_checked(){
+            $data = $this->model->save_product_checked();
+            $this->view->render('', 'ajax_view_json.php', $data);
+        }
+        function load_product_checked(){
+            $data = $this->model->load_product_checked();
+            $this->view->render('', 'ajax_view_json.php', $data);
+        }
   // счетчики для менюшки, использовать можно на всех страницах
 }
 ?>

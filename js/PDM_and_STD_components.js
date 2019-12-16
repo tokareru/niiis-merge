@@ -17,8 +17,32 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
             let div = $(accordID).find(fieldID);
             div.append("<fieldset></fieldset>");
             let field = $(accordID + " " + fieldID + " fieldset");
+            let array;
+            if (Round === 3) {
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "spec_autoentered_table_ajax/load_product_checked",
+                    success: function (data) {
+                        array = data;
+                    }
+                })
+                console.log(array)
+            }
             json.images.forEach(function (elem, i) {
-                addNewComponent(elem, accordID, fieldID)
+                if (Round < 3) addNewComponent(elem, accordID, fieldID, true)
+                else {
+                    //addNewComponent(elem, accordID, fieldID, true);
+                    let check = true;
+                    array.checked.forEach(function (value) {
+                        if (elem.ID == value && check){
+                            addNewComponent(elem, accordID, fieldID, true)
+                            check = false;
+                    }
+                    })
+                    if (check) addNewComponent(elem, accordID, fieldID, false);
+
+                }
             });
             //$("#left-accordion").accordion("refresh");
         },
@@ -28,19 +52,29 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
     })
 }
 
-function addNewComponent(data, accordID, fieldID) {
+function addNewComponent(data, accordID, fieldID, isChecked) {
     let field = $(accordID + " " + fieldID + " fieldset");
-    field.append(
-        "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
-        "<img src=\"" + data.IMG + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
-        " name=\"" + data.ID +
-        "\" id=\"" + data.ID + "\">" + "</p>"
-    );
-    makeCheckbox(fieldID);
+    if (isChecked) {
+        field.append(
+            "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
+            "<img src=\"" + data.IMG + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
+            " name=\"" + data.ID +
+            "\" id=\"" + data.ID + "\">" + "</p>"
+        );
+    } else {
+        field.append(
+            "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
+            "<img src=\"" + data.IMG + "\">" + data.name + "</label><input type=\"checkbox\"" +
+            " name=\"" + data.ID +
+            "\" id=\"" + data.ID + "\">" + "</p>"
+        );
+    }
+
+    makeCheckbox(fieldID, isChecked);
 }
 
 
-function makeCheckbox(fieldID) {
+function makeCheckbox(fieldID, isChecked) {
 
     /*$('#left-accordion').find('.pdm_draggable').draggable(
         {
@@ -61,8 +95,13 @@ function makeCheckbox(fieldID) {
 
     let label = $checkboxid.find("label");
     label.addClass('check_std');
-    label.addClass('check_active');
-    label.html("<span class='check_icon check_icon fa material-icons check_icon-checked ui-icon-check fa-check'></span>" + label.html());
+    if (isChecked){
+        label.addClass('check_active');
+        label.html("<span class='check_icon check_icon fa material-icons check_icon-checked ui-icon-check fa-check'></span>" + label.html());
+    }   else {
+        label.addClass('check_non-active');
+        label.html("<span class='check_icon check_icon fa material-icons ui-icon-check fa-check check_icon-non fa-circle-thin'></span>" + label.html());
+    }
 
     //скрывает теги input
     $checkboxid.find('input').attr('style', 'visibility: hidden');
@@ -85,7 +124,7 @@ function makeCheckbox(fieldID) {
                         $span.addClass('ui-icon-check fa-check');
                         //$input.parent('p').removeClass('ui-draggable ui-draggable-handle pdm_draggable');
                     });
-                    $input.parent('p').draggable("destroy" );
+                    $input.parent('p').draggable("destroy");
                 } else {
                     $obj.removeClass('check_active');
                     $obj.addClass('check_non-active');

@@ -17,7 +17,7 @@ class admin_cab_model extends model
       $q = sys::$PDO->prepare($sql);
       $q->execute();
       $Q1 = $q->fetchAll();
-      return array("users" => $Q, "group_users" => $Q1);
+      return array("users" => $Q, "group_users" => $Q1, "page"=>"users");
   }
   function change_users(){
       
@@ -51,5 +51,8 @@ class admin_cab_model extends model
     $q->execute();
     $Q = $q->fetchAll();
     return array("round"=>1);
+  }
+  function pdm_edit(){
+      return array("content"=>array("page"=>"pdm_edit"));
   }
 }

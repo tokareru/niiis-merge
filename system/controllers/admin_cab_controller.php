@@ -26,5 +26,9 @@ class admin_cab_controller extends Controller{
             $data = $this->model->reset();
             $this->view->render('', 'ajax_view_json.php', $data);
         }
+        function pdm_edit(){
+            $data = $this->model->pdm_edit();
+            $this->view->render('pdm_edit.php', 'admin/admin_cab_view.php', $data);
+        }
 }
 ?>

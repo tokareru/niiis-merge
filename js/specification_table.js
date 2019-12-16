@@ -1,21 +1,30 @@
 function createSpecificationTable() {
     //serializeTable();
-    getJsonByURL("spec_table_ajax", generateTable,
-        {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field"});
-    $("#left-accordion #pdm_field input").click(function () {
-        addRowByData({}, "#specificationBlock");
-    })
+    if(Round < 3){
+        getJsonByURL("spec_table_ajax", generateTable,
+            {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
+                save_url: "spec_table_ajax/save"});
+    }else {
+        getJsonByURL("spec_autoentered_table_ajax", generateTable,
+            {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
+                save_url: "spec_autoentered_table_ajax/save"});
 
-    $("#left-accordion #std_field input").click(function () {
-        addRowByData({},"#specificationBlock");
-    })
+        $("#left-accordion #pdm_field input").click(function () {
+            setTableByPdmAndStd( "#specificationBlock");
+        })
 
+        $("#left-accordion #std_field input").click(function () {
+            setTableByPdmAndStd("#specificationBlock");
+        })
+    }
 }
 
 function generateTable(json, add_data) {
+    //console.log(json)
     let table_block = add_data.table_block + " ";
     let edit_mode_div = add_data.edit_mode_div + " ";
     let url = add_data.url;
+    let save_url = add_data.save_url;
     let $table_made = $(table_block + '.table_made');
     $table_made
         .append('<table style="width: 100%" class="table_edit table table-striped table-bordered table-hover">' +
@@ -55,7 +64,7 @@ function generateTable(json, add_data) {
 
     $table_made.find('tbody').append("<tr><td class='p-0' style='width: 33px'><div class='firstColPlus'>+</div></td></tr>")
 
-    tableData(false, table_block, edit_mode_div, url);
+    tableData(false, table_block, edit_mode_div, url, save_url);
     if (json.tbody === undefined) {
         $(table_block + " .post_data_button").attr("disabled", "disabled");
     }
@@ -71,9 +80,13 @@ function generateTable(json, add_data) {
     setRowsNumber(table_block);
     colToReadOnly(0, 'readonly', table_block);
     colToReadOnly(1, 'readonly', table_block);
+
+    if (save_url === "spec_autoentered_table_ajax/save"){
+        setTableByPdmAndStd(table_block);
+    }
 }
 
-function postDataFromTable(table_block) {
+function postDataFromTable(table_block, save_url) {
     let json = {};
     let tbody = [];
     $(table_block + ".table_made").find("tbody tr").each(function (rows) {
@@ -113,15 +126,28 @@ function postDataFromTable(table_block) {
         login: login
     };
     console.log(json);
-
     $.ajax({
         type: "POST",
-        url: "spec_table_ajax/save",
+        url: save_url,
         data: json,
         success: function (answer) {
             console.log(answer);
         }
     })
+    if (Round === 3){
+        //console.log(collectDataLabels(".left-side"))
+        $.ajax({
+            type: "POST",
+            url: "spec_autoentered_table_ajax/save_product_checked",
+            data: {
+                checked: collectDataLabels(".left-side")
+            },
+            success: function (answer) {
+                console.log(answer);
+            }
+        })
+    }
+
     $.ajax({
         type: "POST",
         url: "/start_ajax/db_change_time",
@@ -150,7 +176,7 @@ function addInputs(table_block) {
     });
 }
 
-function tableData(readonly, table_block, edit_mode_div, url) {
+function tableData(readonly, table_block, edit_mode_div, url, save_url) {
 
     let $table_edit = $('.table_edit');
     $table_edit.find('div').each(function () {
@@ -290,7 +316,7 @@ function tableData(readonly, table_block, edit_mode_div, url) {
         });
 
         $edit_mode_div.on('click', '.post_data_button', function () {
-            postDataFromTable(table_block);
+            postDataFromTable(table_block, save_url);
         });
 
         $edit_mode_div.on('click', '.cell_to_edit_but', function () {
@@ -392,6 +418,7 @@ function addRow(table_block, number) {
     }
 
     if ($index >= $len_tr + 1 || $index < 0) {
+        console.log("Ошибка")
         $text_add_row.attr('placeholder', 'ошибка!');
         return;
     }
@@ -881,13 +908,91 @@ function emptyCells() {
 
 }
 
+function setTableByPdmAndStd(tableBlock) {
+    let length = Number($(tableBlock).find("tbody tr").length);
+    $(tableBlock).find("tbody").find("tr").each(function (number) {
+        if ((number < (length - 1)) && length > 1) {
+            $(this).remove();
+        }
+    });
+    let array = collectDataLabels(".left-side");
+    console.log(array)
+    let info = [
+        {
+            id: "component_1",
+            position: 1,
+            designation: "Обоз. дет. 1",
+            name: "Деталь 1",
+            number: 1
+        },
+        {
+            id: "component_2",
+            position: 2,
+            designation: "Обоз. дет. 2",
+            name: "Деталь 2",
+            number: 1
+        },
+        {
+            id: "component_3",
+            position: 3,
+            designation: "Обоз. дет. 3",
+            name: "Деталь 3",
+            number: 1
+        },
+        {
+            id: "component_4",
+            position: 4,
+            designation: "Обоз. дет. 4",
+            name: "Деталь 4",
+            number: 1
+        },
+        {
+            id: "std_component_1",
+            position: 5,
+            designation: "Обоз. стд. дет. 1",
+            name: "Стд. деталь 4",
+            number: 1
+        },
+        {
+            id: "std_component_2",
+            position: 6,
+            designation: "Обоз. стд. дет. 2",
+            name: "Стд. деталь 4",
+            number: 1
+        },
+        {
+            id: "std_component_3",
+            position: 7,
+            designation: "Обоз. стд. дет. 3",
+            name: "Стд. деталь 4",
+            number: 1
+        }
+    ]
+    array.forEach(function (component_id) {
+        info.forEach(function (comp_info) {
+            if (comp_info.id === component_id) {
+                addRowByData({
+                    position: comp_info.position,
+                    designation: comp_info.designation,
+                    name: comp_info.name,
+                    number: comp_info.number
+                }, tableBlock);
+            }
+        })
+    })
+}
+
 function addRowByData(data, tableBlock) {
-    /*let position = data.position;
+    let position = data.position;
     let designation = data.designation;
     let name = data.name;
-    let number = data.number;*/
-    let tbody_lenght = Number($(tableBlock).find("tbody tr").length) - 2;
-    //console.log(tbody_lenght);
-    $(".firstColPlus ").trigger("click")
-    //addRow(tableBlock, length);
+    let number = data.number;
+    let tbody_lenght = Number($(tableBlock).find("table tr").length);
+    $(".firstColPlus ").trigger("click");
+    let str =  $(tableBlock).find("tbody tr").eq(tbody_lenght-2);
+    let td = str.find("td");
+    td.eq(2).find("div").text(tbody_lenght-1);
+    td.eq(3).find("div").text(designation);
+    td.eq(4).find("div").text(name);
+    td.eq(5).find("div").text(number);
 }
