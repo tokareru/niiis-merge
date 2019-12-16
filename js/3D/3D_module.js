@@ -162,7 +162,7 @@ export function init3dField() {
                         array = data.checked;
                     }
                 })
-                console.log(array)
+                //console.log(array)
                 firstFieldInit(array);
             }else{
                 firstFieldInit(["component_1", "component_2", "component_3",

@@ -916,7 +916,7 @@ function setTableByPdmAndStd(tableBlock) {
         }
     });
     let array = collectDataLabels(".left-side");
-    console.log(array)
+    //console.log(array)
     let info = [
         {
             id: "component_1",

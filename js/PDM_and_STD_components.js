@@ -27,7 +27,7 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
                         array = data;
                     }
                 })
-                console.log(array)
+                //console.log(array)
             }
             json.images.forEach(function (elem, i) {
                 if (Round < 3) addNewComponent(elem, accordID, fieldID, true)
