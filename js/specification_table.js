@@ -197,8 +197,8 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
         }
 
         let $table_edit = $('.table_edit');
-        $table_edit.on('keypress', '.input_text', function (event) {
-            moveOnTableByEnter(event, $(this), table_block);
+        $table_edit.on('keydown', '.edit_cell', function (event) {
+            moveOnTableByEnter(event, $(this));
         });
 
         $table_edit.on('click', '.firstCol', function (event) {
@@ -553,66 +553,28 @@ function delCol(table_block) {
     }
 }
 
-function moveOnTableByEnter(event, $this, table_block) {
-    if (event.which === 13) {
-        let $next = $this.parent().next();
-        $next.addClass("p-0");
-        //alert($next.html());
-        if ($next.find('div').attr('readonly') === 'readonly' ||
-            $next.find('div').attr('disabled') === 'disabled') {
-            while ($next.find('div').attr('readonly') === 'readonly' ||
-            $next.find('div').attr('disabled') === 'disabled') {
-                $next = $next.next();
+function moveOnTableByEnter(event, $this) {
+    if (event.which === 9) {
+        event.preventDefault();
+        let $table_edit = $this.parents('.table_edit');
+        let $td_th = $table_edit.find('td, th');
+        let count = $td_th.length;
+        let next = false;
+        let $prev = $this;
+        $td_th.each(function (index) {
+            if (count - 1 === index  + 1) {
+                $prev.find("input").focusout();
             }
-        }
-        //if($next.find(''))
-        if ($next.html() !== undefined) {
-            //alert($next.find('input').text());
-            $next.find('div').removeClass('edit_cell_div').addClass('edit_cell_div_hide');
-            $next.find('.input_text').removeClass('edit_cell_input_hide')
-                .addClass('edit_cell_input');
-            //$this.blur();
-            $next.find('.input_text').focus();
-        } else {
-            let count_cols = $(table_block + '.table_edit tr').find('th').length;
-
-
-            let $new_tr = $this.parent().parent().next().children().first();
-            let $arr_td = $this.parent().parent(); //$this.parent().parent().next().html()
-            //alert($arr_td.next().html());
-            let td_loop_end = true;
-            while (($arr_td.next().html() !== '' && $arr_td.next().html() !== undefined) && td_loop_end) {
-                for (let i = 0; i < count_cols; i++) {
-                    $new_tr = $arr_td.next().children().eq(i);
-                    //alert($new_tr.html());
-                    if ($new_tr.html() === undefined || (i + 1 === count_cols)) {
-                        $arr_td = $arr_td.next();
-                        break;
-                    }
-                    if ($new_tr.find('div').attr('disabled') !== 'disabled' &&
-                        $new_tr.find('div').attr('readonly') !== 'readonly') {
-                        td_loop_end = false;
-                        break;
-                    }
-                }
-                if ($new_tr.next().html() === undefined) {
-                    $this.blur();
-                    return;
-                }
+            if (next && $(this).hasClass('edit_cell')) {
+                $(this).trigger('click');
+                next = false;
+                return;
             }
-            let $tbody_tr = $new_tr.parent();
-            if ($new_tr.html() !== undefined && $tbody_tr.html() !== undefined) {
-                $new_tr.find('div')
-                    .removeClass('edit_cell_div').addClass('edit_cell_div_hide');
-                $new_tr.find('.input_text').removeClass('edit_cell_input_hide')
-                    .addClass('edit_cell_input');
-                $new_tr.find('.input_text').focus();
-                $new_tr.addClass("p-0");
-            } else {
-                $this.blur();
+            if ($this.get(0) === $(this).get(0)) {
+                next = true;
+                $prev = $(this);
             }
-        }
-
+        });
     }
 }
 
