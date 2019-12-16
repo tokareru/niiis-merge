@@ -150,7 +150,7 @@ function postDataFromTable(table_block, save_url) {
 
     $.ajax({
         type: "POST",
-        url: "/start_ajax/db_change_time",
+        url: "start_ajax/db_change_time",
         data: {
             login: login
         },
