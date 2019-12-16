@@ -122,7 +122,7 @@ function postDataFromTable(table_block, save_url) {
 
     json = {
         tbody: tbody,
-        name_pdm: $("#choosePdmSelect").val(),
+        name_pdm: "pdm_component_",
         login: login
     };
     console.log(json);

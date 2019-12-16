@@ -27,19 +27,6 @@
             <div class="table_made col-md-12 table-responsive">
             </div>
         </div>
-
-        <form>
-          <div class="form-group">
-            <label for="choosePdmSelect"><div>Выберите изделие</div></label>
-            <select class="form-control col-3" id="choosePdmSelect">
-                <option value='pdm_component_1'>Деталь 1</option>
-                <option value='pdm_component_2'>Деталь 2</option>
-                <option value='pdm_component_3'>Деталь 3</option>
-                <option value='pdm_component_4'>Деталь 4</option>
-            </select>
-          </div>
-        </form>
-        </br>
         <div class="row">
             <div id="specification_edit"></div>
         </div>
