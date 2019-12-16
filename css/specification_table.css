@@ -148,5 +148,6 @@
 
 .toRoPenCol{
     width: 30px;
+    height: 30px;
     content: url("../images/edit_pen.png");
 }
