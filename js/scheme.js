@@ -267,39 +267,41 @@ export function initScheme() {
             else
             {
                 if(!FirstInitDownloaded)
+            {
+                //setDrawingStatus();
+                FirstInitDownloaded = true;
+                $('#hidedraw').css({'display': 'none'});
+                getDrawingStatus();
+                let inter = setInterval(function()
                 {
-                    FirstInitDownloaded = true;
-                    $('#hidedraw').css({'display': 'none'});
-                    getDrawingStatus();
-                    let inter = setInterval(function()
+                    if (window.echo != undefined)
                     {
-                        if (window.echo != undefined)
+                        let inter1 = setInterval(function()
                         {
-                            let inter1 = setInterval(function()
+                            if (window.namerole != undefined)
                             {
-                                if (window.namerole != undefined)
-                                {
-                                    clearInterval(inter1);
-                                }
-                            }, 100) ;
-                            //window.namerole = "kek";
-                            if (echo.is_drawing_finished == false && window.namerole != "конструктор")
-                            {
-                                $('#drawcanv').css({'display': 'none'});
-                                $('#topcanv').css({'display': 'none'});
+                                clearInterval(inter1);
                             }
-                            else
-                            {
-                                $('#drawcanv').css({'display': 'block'});
-                                $('#topcanv').css({'display': 'block'});
-                                $('#hidedraw').css({'display': 'block'});
-                                razmerdrawfull();
-                                $("#ready").click();
-                            }
-                            clearInterval(inter);
+                        }, 100) ;
+                        //window.namerole = "kek";
+                        if (echo.is_drawing_finished == false && window.namerole != "конструктор")
+                        {
+                            $('#drawcanv').css({'display': 'none'});
+                            $('#topcanv').css({'display': 'none'});
                         }
-                    }, 100);
-                }
+                        else if(echo.is_drawing_finished)
+                        {
+                            $('#drawcanv').css({'display': 'block'});
+                            $('#topcanv').css({'display': 'block'});
+                            $('#hidedraw').css({'display': 'block'});
+                            razmerdrawfull();
+                            $("#ready").click();
+
+                        }
+                        clearInterval(inter);
+                    }
+                }, 100);
+            }
             }
             //Round = 3;
         });
@@ -969,18 +971,19 @@ export function initScheme() {
         e.preventDefault();
     });*/
 
-    if (Round !== 3 && window.namerole == 'конструктор')
+    if (Round !== 3 && window.namerole == 'конструктор' && echo.is_drawing_finished == false)
     {
         circlesdraw();
     }
 
-}
+    }
 
-function razmerdrawfull()
-{
-    dlinaarr[0]=112;
-    dlinaarr[2]=345;
-    dlinaarr[4]=248;
+    function razmerdrawfull()
+    {
+        dlinaarr[0]=112;
+        dlinaarr[2]=345;
+        dlinaarr[4]=248;
+
 
     for (let j=0; j<areas3.length; j++)
     {
@@ -1236,7 +1239,11 @@ function setDrawingStatus()
         dataType: "json",
         data: "type=set",
         success: function (answer) {
-            console.log(answer);
+            console.log('response'+answer);
+            for (let i in answer)
+            {
+                console.log('k'+ i + ' val: ' + answer[i]);
+            }
         }
     });
 }
