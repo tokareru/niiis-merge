@@ -61,6 +61,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
             " name=\"" + data.ID +
             "\" id=\"" + data.ID + "\">" + "</p>"
         );
+        makeCheckbox(fieldID, isChecked);
     } else {
         field.append(
             "<p class='pdm_draggable ui-draggable ui-draggable-handle'><label for=\"" + data.ID + "\">" +
@@ -68,13 +69,11 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
             " name=\"" + data.ID +
             "\" id=\"" + data.ID + "\">" + "</p>"
         );
+        makeCheckbox(fieldID, isChecked);
+        field.find("p").last().draggable({
+            helper: 'clone'
+        });
     }
-
-
-    makeCheckbox(fieldID, isChecked);
-    field.find("p").last().draggable({
-        helper: 'clone'
-    });
 }
 
 
