@@ -226,7 +226,10 @@ export function init3dField() {
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
         renderer.setSize($('#canvas3D').width(), ($('#canvas3D').width()) * 9 / 16);
-        $("#canvas3D").children[0].children[0].style = "width: 100%; height: 100%";
+        $("#canvas3D").find("canvas").css({
+            "width": "100%",
+            "height": "100%"
+        });
     }
 
     function animate() {
