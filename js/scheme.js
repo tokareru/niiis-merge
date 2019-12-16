@@ -1260,5 +1260,16 @@ function setDrawingStatus()
             }
         }
     });
+
+    $.ajax({
+        type: "POST",
+        url: "/start_ajax/db_change_time",
+        data: {
+            login: login
+        },
+        success: function (answer) {
+            console.log(answer);
+        }
+    })
 }
 
