@@ -218,9 +218,9 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
 
         $table_edit.on('click', '.toEditPenCol', function (event) {
             let $this = $(this);
-            let length = $table_edit.find("tbody").find("tr").first().find("td").length;
+            let length = $(this).parents('.table_edit').find("tbody").find("tr").first().find("td").length;
             $this.attr("current", "current")
-            $table_edit.find("tbody").find(".editCol").each(function (i) {
+            $(this).parents('.table_edit').find("tbody").find(".editCol").each(function (i) {
                 let check = $(this).attr("current");
                 if (check === "current") {
                     $this.removeAttr("current");
