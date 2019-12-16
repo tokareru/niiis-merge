@@ -81,7 +81,7 @@ function generateTable(json, add_data) {
     colToReadOnly(0, 'readonly', table_block);
     colToReadOnly(1, 'readonly', table_block);
 
-    if (save_url === "spec_autoentered_table_ajax/save"){
+    if (save_url === "spec_autoentered_table_ajax/save" && $("#pdm_field").length){
         setTableByPdmAndStd(table_block);
     }
 }
