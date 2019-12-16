@@ -992,7 +992,11 @@ function addRowByData(data, tableBlock) {
     let str =  $(tableBlock).find("tbody tr").eq(tbody_lenght-2);
     let td = str.find("td");
     td.eq(2).find("div").text(tbody_lenght-1);
+    td.eq(2).find("input").attr("value", tbody_lenght-1);
     td.eq(3).find("div").text(designation);
+    td.eq(3).find("input").attr("value", designation);
     td.eq(4).find("div").text(name);
+    td.eq(4).find("input").attr("value", name);
     td.eq(5).find("div").text(number);
+    td.eq(5).find("input").attr("value", number);
 }
