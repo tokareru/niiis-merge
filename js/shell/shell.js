@@ -5,6 +5,7 @@ let Role;
 let DateChange;
 let LoginChange;
 window.namerole;
+let prepareShellIsFinished = false;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
@@ -14,7 +15,7 @@ function shellInit() {
 
     setInterval(function () {
         getJsonByURL("start_ajax", prepareShell, {});
-    }, 5000);
+    }, 8000);
 }
 
 function interShellMessage(event, data) {
@@ -74,7 +75,8 @@ async function prepareShell(json_role_and_round, add_data) {
     //console.log(round)
 
     // проверяем обновления
-    let check = (round === Number(Round)) && ((dateChange === DateChange) || (loginChange == login)) && ((loginChange == LoginChange) || (loginChange == login)) ;
+    let check = (round === Number(Round)) && ((dateChange === DateChange) || (loginChange == login))
+        && ((loginChange == LoginChange) || (loginChange == login) && prepareShellIsFinished) ;
     //console.log(check)
     if (check) return;
     console.log("Производится загрузка кабинета");
@@ -158,6 +160,7 @@ async function prepareShell(json_role_and_round, add_data) {
     $("#change_role").removeAttr("disabled");
     /*console.log(available_sides);
     console.log(available_tabs);*/
+    prepareShellIsFinished = true;
 }
 
 async function getJsonByURLWithoutCallback(url) {
