@@ -511,7 +511,7 @@ export function initScheme() {
         for (let l=0; l<ar.length; l++)
         {
             let j = ar[l];
-            let echo;
+            let echo=[];
             let x = areas3[j].x;
             let y = areas3[j].y;
             let y1, x1;
@@ -537,18 +537,18 @@ export function initScheme() {
                         {
                             if (areas3[ar[i]].y == 472)
                             {
-                                echo = dlinaarr[1];
+                                echo.push(dlinaarr[1]);
                             }
                             if (areas3[ar[i]].x == 144)
                             {
-                                echo = dlinaarr[0];
+                                echo.push(dlinaarr[0]);
                             }
                             if (areas3[ar[i]].y == 170)
                             {
-                                echo = dlinaarr[2];
+                                echo.push(dlinaarr[2]);
                             }
                         }
-                        ctxs[0].fillText(echo, areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                        ctxs[0].fillText(echo[l], areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
                     }
                     ctxs[0].stroke();
                     break;
@@ -588,18 +588,18 @@ export function initScheme() {
                         {
                             if (areas3[ar[i]].y == 472)
                             {
-                                echo = dlinaarr[1];
+                                echo.push(dlinaarr[1]);
                             }
                             if (areas3[ar[i]].x == 144)
                             {
-                                echo = dlinaarr[0];
+                                echo.push(dlinaarr[0]);
                             }
                             if (areas3[ar[i]].y == 170)
                             {
-                                echo = dlinaarr[2];
+                                echo.push(dlinaarr[2]);
                             }
                         }
-                        ctxs[0].fillText(echo, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
+                        ctxs[0].fillText(echo[l], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
                     }
                     ctxs[0].stroke();
                     break;
