@@ -143,6 +143,7 @@
 
 .toEditPenCol{
     width: 30px;
+    height: 30px;
     content: url("../images/banned_pen.png");
 }
 
