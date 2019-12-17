@@ -99,7 +99,7 @@ function setTaskRoutes(json_list, type, accord_id) {
                 save_url: ""
             });
             delZeroCol("#taskRoutesBlock ");
-            $("#taskRoutesBlock " + '.table_edit thead').find('th').first().remove();
+            //$("#taskRoutesBlock " + '.table_edit thead').find('th').first().remove();
             /*getJsonByURL("spec_table_ajax", generateTable,
                 {table_block : "#taskRoutesBlock", edit_mode_div: "#taskRoutes_edit", url: "pages/edit_field"});*/
         })
@@ -128,5 +128,5 @@ function delZeroCol(table_block) {
     });
     let $thead = $(table_block + '.table_edit thead');
     $thead.find('th').eq($number).remove();
-    //$thead.find('th').eq(1).remove();
+    $thead.find('th').eq($number).remove();
 }

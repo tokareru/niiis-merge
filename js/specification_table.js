@@ -88,6 +88,7 @@ function generateTable(json, add_data) {
         })
         rowToReadOnly(0, table_block + " ");
         delZeroCol(table_block + " ");
+        $("#specification_edit").remove();
     }
 
     // маршрутная карта
