@@ -31,62 +31,70 @@ class drawing_main_text_ajax_model extends model {
                 return array("is_drawing_finished"=>$Q[0][0]);
             }
         }else {
-            return array("response"=>"NOT FOUND POST REQUEST");
+            return array("response"=>"NOT FOUND GET REQUEST");
         }
     }
     function save() {
-        $sql = "SELECT * FROM DRAWING_MAIN_TEXT";
-        $q = sys::$PDO->prepare($sql);
-        $q->execute();
-        $Q = $q->fetchAll();
-        if($Q){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "SELECT * FROM DRAWING_MAIN_TEXT";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $Q = $q->fetchAll();
+            if($Q){
+                $i = 1;
+                $sql = "UPDATE DRAWING_MAIN_TEXT SET";
+                foreach ($_POST["body"] as $row) {
+                if($i != 1){
+                $sql .= " ,field$i = :field$i";
+                }
+                else{
+                $sql .= " field$i = :field$i";
+                }
+                $data["field$i"] = $row;
+                $i++;
+                }
+
+            $q = sys::$PDO->prepare($sql);
+            $q->execute($data);
+            $Q = $q->fetchAll();
+
+
+            }else{
             $i = 1;
-            $sql = "UPDATE DRAWING_MAIN_TEXT SET";
+            $data = [];
+            $sql = "INSERT INTO DRAWING_MAIN_TEXT(";
+            $str = "VALUES (";
             foreach ($_POST["body"] as $row) {
-            if($i != 1){
-            $sql .= " ,field$i = :field$i";
+                if($i != 1){
+                $sql .= " ,field$i";
+                $str.=" ,:field$i";
+                }
+                else{
+                $sql .= " field$i";
+                $str.=" :field$i";
+                }
+                $data["field$i"] = $row;
+                $i++;
             }
-            else{
-            $sql .= " field$i = :field$i";
+            $sql.=") ".$str.");";
+            echo $sql;
+            $q = sys::$PDO->prepare($sql);
+            $q->execute($data);
+            $Q = $q->fetchAll();
             }
-            $data["field$i"] = $row;
-            $i++;
-            }
-        
-        $q = sys::$PDO->prepare($sql);
-        $q->execute($data);
-        $Q = $q->fetchAll();
-        
-            
-        }else{
-        $i = 1;
-        $data = [];
-        $sql = "INSERT INTO DRAWING_MAIN_TEXT(";
-        $str = "VALUES (";
-        foreach ($_POST["body"] as $row) {
-            if($i != 1){
-            $sql .= " ,field$i";
-            $str.=" ,:field$i";
-            }
-            else{
-            $sql .= " field$i";
-            $str.=" :field$i";
-            }
-            $data["field$i"] = $row;
-            $i++;
+                return array("response" => 200);
+        }else {
+            return array("response"=>"NOT FOUND POST REQUEST");
         }
-        $sql.=") ".$str.");";
-        echo $sql;
-        $q = sys::$PDO->prepare($sql);
-        $q->execute($data);
-        $Q = $q->fetchAll();
-        }
-            return array("response" => 200);
     }
     function save_size(){
-        $sql = "UPDATE DRAWING_SIZE set drawing_name = :name, size_1 = :size_1, size_2 = :size_2, size_3 = :size_3";
-        $q = sys::$PDO->prepare($sql);
-        $q->execute(array("name" => $_POST["scheme"], "size_1" => $_POST["razm1"], "size_2" => $_POST["razm2"], "size_3" => $_POST["razm3"]));
+        if($_SERVER["REQUEST_METHOD"]=="GET"){
+            $sql = "UPDATE DRAWING_SIZE set drawing_name = :name, size_1 = :size_1, size_2 = :size_2, size_3 = :size_3";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("name" => $_POST["scheme"], "size_1" => $_POST["razm1"], "size_2" => $_POST["razm2"], "size_3" => $_POST["razm3"]));
+        }else {
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }
     }
     function load_size(){
         $sql = "SELECT * FROM DRAWING_SIZE";
