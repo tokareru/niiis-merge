@@ -10,7 +10,9 @@ function initTitleBlock() {
     let $table = $('#table_title_block');
     $table.css({"height": $table.outerWidth() / 3.36 - 11 * 2});
     generateTableRow($table, [6, 6, 6, 9, 11, 10, 10, 7, 6, 6, 6]);
-
+    if (Role !== 'designer') {
+        $("#addToServerTitleBlock").remove();
+    }
     let $tbody_tr = $table.find('tbody tr');
     changeTableRow($tbody_tr.eq(0),
         [7, 10, 23, 15, 10, 120], $table);
@@ -427,7 +429,7 @@ function addDataToTitleBlock(data) {
     let worker = '';
     let apprrov = '';
     let confirmer = '';
-    if (Round === 3) {
+    if (Round === 3 && Role === 'designer') {
         let UserNames = getLoginNames('short_name');
         let UserRole = getLoginNames('role');
         UserRole.forEach(function (value, index) {
