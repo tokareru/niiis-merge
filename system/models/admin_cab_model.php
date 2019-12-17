@@ -50,6 +50,9 @@ class admin_cab_model extends model
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $Q = $q->fetchAll();
+    $sql = "UPDATE DRAWING_SIZE set drawing_name = default, size_1 = default, size_2 = default, size_3 = default";
+    $q = sys::$PDO->prepare($sql);
+    $q->execute();
     return array("round"=>1);
   }
   function pdm_edit(){
