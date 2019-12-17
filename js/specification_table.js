@@ -81,6 +81,33 @@ function generateTable(json, add_data) {
     colToReadOnly(0, 'readonly', table_block);
     colToReadOnly(1, 'readonly', table_block);
 
+    // спецификация
+    if ((table_block === "#specificationBlock ") && (Role === "approver" || Role === "technologist" || Role === "production_master")){
+        $(table_block).find("tbody tr").each(function (i) {
+            $(this).find("td").eq(1).find("div").trigger("click");
+        })
+        rowToReadOnly(0, table_block + " ");
+        delZeroCol(table_block + " ");
+    }
+
+    // маршрутная карта
+    if ((table_block === "#routeMapBlock ") && (Role === "approver" || Role === "production_master")){
+        $(table_block).find("tbody tr").each(function (i) {
+            $(this).find("td").eq(1).find("div").trigger("click");
+        });
+        rowToReadOnly(0, table_block + " ");
+        delZeroCol(table_block + " ");
+    }
+
+    // маршруты заданий
+    if (table_block === "#taskRoutesBlock "){
+        $(table_block).find("tbody tr").each(function (i) {
+            $(this).find("td").eq(1).find("div").trigger("click");
+        });
+        rowToReadOnly(0, table_block + " ");
+    }
+
+
     if (save_url === "spec_autoentered_table_ajax/save" && $("#pdm_field").length){
         setTableByPdmAndStd(table_block);
     }

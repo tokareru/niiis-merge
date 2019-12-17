@@ -22,8 +22,7 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification",
-                "route_map_field"
+                "specification"
               ]
             },
             {
@@ -113,6 +112,7 @@
               "tabs": [
                 "scheme",
                 "fieldBlock",
+                "specification",
                 "route_map_field",
                 "tasks_routes_field",
                 "technological_process_field"
@@ -177,6 +177,7 @@
                 "scheme",
                 "fieldBlock",
                 "specification",
+                "route_map_field",
                 "tasks_routes_field"
               ]
             },
