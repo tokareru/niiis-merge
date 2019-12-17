@@ -83,5 +83,16 @@ class drawing_main_text_ajax_model extends model {
         }
             return array("response" => 200);
     }
-
+    function save_size(){
+        $sql = "UPDATE DRAWING_SIZE set drawing_name = :name, size_1 = :size_1, size_2 = :size_2, size_3 = :size_3";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("name" => $_POST["scheme"], "size_1" => $_POST["razm1"], "size_2" => $_POST["razm2"], "size_3" => $_POST["razm3"]));
+    }
+    function load_size(){
+        $sql = "SELECT * FROM DRAWING_SIZE";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        return array("scheme" => $Q[0]["drawing_name"], "razm1" => $Q[0]["size_1"], "razm2" => $Q[0]["size_2"], "razm3" => $Q[0]["size_3"]);
+    }
 }
