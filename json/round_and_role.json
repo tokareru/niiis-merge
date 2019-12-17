@@ -22,11 +22,16 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification"
+                "specification",
+                "tasks_routes_field"
               ]
             },
             {
               "ID": "chat-side",
+              "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -89,11 +94,16 @@
               "tabs": [
                 "scheme",
                 "specification",
-                "route_map_field"
+                "route_map_field",
+                "tasks_routes_field"
               ]
             },
             {
               "ID": "chat-side",
+              "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -223,6 +233,10 @@
             {
               "ID": "chat-side",
               "tabs": []
+            },
+            {
+              "ID": "create_task_route-side",
+              "tabs": []
             }
           ]
         },
@@ -297,16 +311,12 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
-                "specification",
                 "fieldBlock",
+                "specification",
                 "route_map_field",
                 "production_task_field",
                 "tasks_routes_field"
               ]
-            },
-            {
-              "ID": "right-side",
-              "tabs": []
             },
             {
               "ID": "chat-side",
