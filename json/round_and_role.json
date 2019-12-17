@@ -278,6 +278,8 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
+                "specification",
+                "route_map_field",
                 "production_task_field",
                 "tasks_routes_field"
               ]
@@ -295,6 +297,7 @@
               "ID": "main-tabs",
               "tabs": [
                 "scheme",
+                "specification",
                 "fieldBlock",
                 "route_map_field",
                 "production_task_field",

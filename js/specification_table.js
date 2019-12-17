@@ -82,7 +82,8 @@ function generateTable(json, add_data) {
     colToReadOnly(1, 'readonly', table_block);
 
     // спецификация
-    if ((table_block === "#specificationBlock ") && (Role === "approver" || Role === "technologist" || Role === "production_master")){
+    if ((table_block === "#specificationBlock ") && (Role === "approver"
+        || Role === "technologist" || Role === "production_master" || Role === "worker")){
         $(table_block).find("tbody tr").each(function (i) {
             $(this).find("td").eq(1).find("div").trigger("click");
         })
@@ -92,7 +93,7 @@ function generateTable(json, add_data) {
     }
 
     // маршрутная карта
-    if ((table_block === "#routeMapBlock ") && (Role === "approver" || Role === "production_master")){
+    if ((table_block === "#routeMapBlock ") && (Role === "approver" || Role === "production_master" || Role === "worker")){
         $(table_block).find("tbody tr").each(function (i) {
             $(this).find("td").eq(1).find("div").trigger("click");
         });
