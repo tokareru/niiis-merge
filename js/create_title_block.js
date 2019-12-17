@@ -182,9 +182,16 @@ function generateTableRow($table, sett_row) {
     for (let i = 0; i < sett_row.length; i++) {
         $tbody.append('<tr></tr>');
         $tbody.find('tr').eq(i).data({'count': sett_row[i]});
+
+        let $edit_cell = '';
+        if (Role === 'designer') {
+            $edit_cell = 'edit_cell_title_block';
+        }
+
+
         for (let j = 0; j < sett_row[i]; j++) {
             $tbody.find('tr').eq(i)
-                .append('<td class="edit_cell_title_block">' +
+                .append('<td class="' + $edit_cell + '">' +
                     '<div class="title_block_div"></div>' +
                     '<input type="text" class="title_block_input_hide">' +
                     '</td>');
@@ -397,7 +404,7 @@ function addDataToTitleBlock(data) {
     //36-41 ячейки
     for (let i = 9; i < 11; i++) {
         for (let j = 1; j < 4; j++) {
-           $tbody.find('tr').eq(i).find('td').eq(j).find('.title_block_div').text(data[index++]);
+            $tbody.find('tr').eq(i).find('td').eq(j).find('.title_block_div').text(data[index++]);
         }
     }
 
@@ -411,7 +418,7 @@ function addDataToTitleBlock(data) {
 
     //48-49 ячейки
     for (let i = 4; i < 6; i++) {
-       $tbody.find('tr').eq(7).find('td').eq(i).find('.title_block_div').text(data[index++]);
+        $tbody.find('tr').eq(7).find('td').eq(i).find('.title_block_div').text(data[index++]);
     }
 
     //50 ячейка
