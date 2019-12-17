@@ -262,7 +262,7 @@ export function initScheme() {
                         clearInterval(getStatusDraw);
                 }catch (e) {
                 }
-              
+
             }, 5000);
 
             if (Round === 3)
@@ -487,6 +487,62 @@ export function initScheme() {
         //console.log($("#fcheme div div canvas")[i].width +';'+ $("#fcheme div div canvas")[i].height);
     }
 
+    function CirclesRazmDraw()
+    {
+        let k;
+        let arr = [];
+
+        for (let i=0;i<lines2.length;i++)
+        {
+            for (let j=0;j<areas2.length;j++)
+            {
+                k=j;
+                if (j == 0 && areas2[j].x == 156 && areas2[j].y == 54) {k = 1;}
+                if (j == 2 && areas2[j].x == 156 && areas2[j].y == 460) {k = 3;}
+                if (j == 4 && areas2[j].x == 558 && areas2[j].y == 129) {k = 5;}
+                if ((lines2[i][0] == areas2[j].x && lines2[i][1] == areas2[j].y && lines2[i][2] == areas2[k].x && lines2[i][3] == areas2[k].y) ||
+                    (lines2[i][2] == areas2[j].x && lines2[i][3] == areas2[j].y && lines2[i][0] == areas2[k].x && lines2[i][1] == areas2[k].y))
+                {
+                    arr.push(areas2[j], areas2[k]);
+                }
+                else
+                {
+
+                }
+            }
+
+            //if (i % 2==1) {k = i-1;} else {k = i;}
+            /* if ((lines2[i][0] == areas2[k].x && lines2[i][1] == areas2[k].y) && (lines2[i][2] == areas2[k].x && lines2[i][3] == areas2[k].y))
+            {
+
+            }
+            else
+            {
+
+            } */
+        }
+        if (lines2.length == 0)
+        {
+            for (let j=0;j<areas2.length;j++)
+            {
+                ctxs[0].beginPath();
+                ctxs[0].arc(areas2[j].x, areas2[j].y, r, 0, 2 * Math.PI, 0);
+                ctxs[0].stroke();
+            }
+        }
+        else
+        {
+            for (let l=0;l<areas2.length;l++)
+            {
+                if (arr.indexOf(areas2[l]) == -1)
+                {
+                    ctxs[0].beginPath();
+                    ctxs[0].arc(areas2[l].x, areas2[l].y, r, 0, 2 * Math.PI, 0);
+                    ctxs[0].stroke();
+                }
+            }
+        }
+    }
 
     function circlesdraw()
     {
@@ -565,7 +621,7 @@ export function initScheme() {
                                 echo.push(dlinaarr[2]);
                             }
                         }
-                        ctxs[0].fillText(echo[l], areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                        ctxs[0].fillText(echo[l], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
                     }
                     ctxs[0].stroke();
                     break;
@@ -691,12 +747,7 @@ export function initScheme() {
                 }
                 if (isEnded == true)
                 {
-                    for (let j=0;j<areas2.length;j++)
-                    {
-                        ctxs[0].beginPath();
-                        ctxs[0].arc(areas2[j].x, areas2[j].y, r, 0, 2 * Math.PI, 0);
-                        ctxs[0].stroke();
-                    }
+                    CirclesRazmDraw();
                     for (let j = 0; j < areas2.length; j++) {
                         let dx = x - areas2[j].x;
                         let dy = y - areas2[j].y;
@@ -845,12 +896,7 @@ export function initScheme() {
                 }
                 if (isEnded == true)
                 {
-                    for (let j=0;j<areas2.length;j++)
-                    {
-                        ctxs[0].beginPath();
-                        ctxs[0].arc(areas2[j].x, areas2[j].y, r, 0, 2 * Math.PI, 0);
-                        ctxs[0].stroke();
-                    }
+                    CirclesRazmDraw();
 
                     if (window.clickedCircles1 != undefined) {
                         for (let j = 0; j < areas2.length; j++) {
@@ -881,12 +927,7 @@ export function initScheme() {
                         }
                     }
                     razmerdraw();
-                    for (let j=0;j<areas2.length;j++)
-                    {
-                        ctxs[0].beginPath();
-                        ctxs[0].arc(areas2[j].x, areas2[j].y, r, 0, 2 * Math.PI, 0);
-                        ctxs[0].stroke();
-                    }
+                    CirclesRazmDraw();
                 }
                 if (lines2.length ==3)
                 {
@@ -1256,7 +1297,7 @@ function getDrawingStatus()
         dataType: "json",
         data: "type=get",
         success: function (answer) {
-           // console.log(answer);
+            // console.log(answer);
             window.echo = answer;
         }
     });
