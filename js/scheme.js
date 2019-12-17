@@ -252,6 +252,19 @@ export function initScheme() {
 
             //добавляем весь чертеж
             //Round = 2;
+            console.log("Round: "+ Round);
+
+            let getStatusDraw = setInterval(function () {
+                try {
+                    getDrawingStatus();
+                    //console.log(echo.is_drawing_finished);
+                    if ( echo.is_drawing_finished)
+                        clearInterval(getStatusDraw);
+                }catch (e) {
+                }
+              
+            }, 5000);
+
             if (Round === 3)
             {
                 if(!FirstInitDownloaded){
@@ -268,6 +281,7 @@ export function initScheme() {
             {
                 if(!FirstInitDownloaded)
                 {
+                    //setDrawingStatus();
                     FirstInitDownloaded = true;
                     $('#hidedraw').css({'display': 'none'});
                     getDrawingStatus();
@@ -283,20 +297,23 @@ export function initScheme() {
                                 }
                             }, 100) ;
                             //window.namerole = "kek";
+                            //console.log(echo.is_drawing_finished);
                             if (echo.is_drawing_finished == false && window.namerole != "конструктор")
                             {
                                 $('#drawcanv').css({'display': 'none'});
                                 $('#topcanv').css({'display': 'none'});
                             }
-                            else
+                            if(echo.is_drawing_finished)
                             {
+                                //console.log('finish');
                                 $('#drawcanv').css({'display': 'block'});
                                 $('#topcanv').css({'display': 'block'});
                                 $('#hidedraw').css({'display': 'block'});
                                 razmerdrawfull();
                                 $("#ready").click();
+                                clearInterval(inter);
                             }
-                            clearInterval(inter);
+
                         }
                     }, 100);
                 }
@@ -362,7 +379,10 @@ export function initScheme() {
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
         //renderersc.setSize($('#scheme1').width(), $('#scheme1').width() * 9 / 16);
-        //scheme1.children[0].children[0].style = "width: 100%; height: 100%";
+        /*$("#scheme1").find("canvas").last().css({
+            "width": "100%",
+            "height": "100%"
+        });*/
     }
 
     function animate() {
@@ -508,7 +528,7 @@ export function initScheme() {
         for (let l=0; l<ar.length; l++)
         {
             let j = ar[l];
-            let echo;
+            let echo=[];
             let x = areas3[j].x;
             let y = areas3[j].y;
             let y1, x1;
@@ -534,18 +554,18 @@ export function initScheme() {
                         {
                             if (areas3[ar[i]].y == 472)
                             {
-                                echo = dlinaarr[1];
+                                echo.push(dlinaarr[1]);
                             }
                             if (areas3[ar[i]].x == 144)
                             {
-                                echo = dlinaarr[0];
+                                echo.push(dlinaarr[0]);
                             }
                             if (areas3[ar[i]].y == 170)
                             {
-                                echo = dlinaarr[2];
+                                echo.push(dlinaarr[2]);
                             }
                         }
-                        ctxs[0].fillText(echo, areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                        ctxs[0].fillText(echo[l], areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
                     }
                     ctxs[0].stroke();
                     break;
@@ -585,18 +605,18 @@ export function initScheme() {
                         {
                             if (areas3[ar[i]].y == 472)
                             {
-                                echo = dlinaarr[1];
+                                echo.push(dlinaarr[1]);
                             }
                             if (areas3[ar[i]].x == 144)
                             {
-                                echo = dlinaarr[0];
+                                echo.push(dlinaarr[0]);
                             }
                             if (areas3[ar[i]].y == 170)
                             {
-                                echo = dlinaarr[2];
+                                echo.push(dlinaarr[2]);
                             }
                         }
-                        ctxs[0].fillText(echo, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
+                        ctxs[0].fillText(echo[l], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
                     }
                     ctxs[0].stroke();
                     break;
@@ -722,7 +742,7 @@ export function initScheme() {
                     document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
 
                 if (isEnded == false) {circlesdraw();}
-
+                //#lines32
                 if (lines1.length<32)
                 {
                     for (let k=0; k<lines1.length; k++)
@@ -969,10 +989,23 @@ export function initScheme() {
         e.preventDefault();
     });*/
 
-    if (Round !== 3 && window.namerole == 'конструктор')
-    {
-        circlesdraw();
+    async function initDrawStatus() {
+        await getDrawingStatus();
     }
+    initDrawStatus();
+    let tempInt = setInterval(function () {
+        try {
+            if (Round !== 3 && window.namerole == 'конструктор' && echo.is_drawing_finished == false)
+            {
+                circlesdraw();
+                clearInterval(tempInt);
+            }
+        }
+        catch (e) {
+        }
+
+    });
+
 
 }
 
@@ -981,6 +1014,7 @@ function razmerdrawfull()
     dlinaarr[0]=112;
     dlinaarr[2]=345;
     dlinaarr[4]=248;
+
 
     for (let j=0; j<areas3.length; j++)
     {
@@ -1007,7 +1041,7 @@ function razmerdrawfull()
                     ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
                     ctxs[0].font = "italic 10pt Arial";
 
-                    ctxs[0].fillText(dlinaarr[j], areas3[j].x-20, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                    ctxs[0].fillText(dlinaarr[j], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
                 }
                 ctxs[0].stroke();
                 break;
@@ -1222,7 +1256,7 @@ function getDrawingStatus()
         dataType: "json",
         data: "type=get",
         success: function (answer) {
-            console.log(answer);
+           // console.log(answer);
             window.echo = answer;
         }
     });
@@ -1236,8 +1270,19 @@ function setDrawingStatus()
         dataType: "json",
         data: "type=set",
         success: function (answer) {
-            console.log(answer);
+
         }
     });
+
+    /*$.ajax({
+        type: "POST",
+        url: "/start_ajax/db_change_time",
+        data: {
+            login: login
+        },
+        success: function (answer) {
+            console.log(answer);
+        }
+    })*/
 }
 

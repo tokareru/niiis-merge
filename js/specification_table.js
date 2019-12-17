@@ -20,6 +20,7 @@ function createSpecificationTable() {
 }
 
 function generateTable(json, add_data) {
+    //console.log(json)
     let table_block = add_data.table_block + " ";
     let edit_mode_div = add_data.edit_mode_div + " ";
     let url = add_data.url;
@@ -79,6 +80,10 @@ function generateTable(json, add_data) {
     setRowsNumber(table_block);
     colToReadOnly(0, 'readonly', table_block);
     colToReadOnly(1, 'readonly', table_block);
+
+    if (save_url === "spec_autoentered_table_ajax/save" && $("#pdm_field").length){
+        setTableByPdmAndStd(table_block);
+    }
 }
 
 function postDataFromTable(table_block, save_url) {
@@ -117,7 +122,7 @@ function postDataFromTable(table_block, save_url) {
 
     json = {
         tbody: tbody,
-        name_pdm: $("#choosePdmSelect").val(),
+        name_pdm: "pdm_component_",
         login: login
     };
     console.log(json);
@@ -145,7 +150,7 @@ function postDataFromTable(table_block, save_url) {
 
     $.ajax({
         type: "POST",
-        url: "/start_ajax/db_change_time",
+        url: "start_ajax/db_change_time",
         data: {
             login: login
         },
@@ -192,8 +197,8 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
         }
 
         let $table_edit = $('.table_edit');
-        $table_edit.on('keypress', '.input_text', function (event) {
-            moveOnTableByEnter(event, $(this), table_block);
+        $table_edit.on('keydown', '.edit_cell', function (event) {
+            moveOnTableByEnter(event, $(this));
         });
 
         $table_edit.on('click', '.firstCol', function (event) {
@@ -205,16 +210,17 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
         });
 
         $table_edit.on('click', '.firstColPlus', function (event) {
-            addRow(table_block, $table_edit.find("tr").length - 2);
+            let t_edit = $(this).parents('.table_edit');
+            addRow(table_block, t_edit.find("tr").length - 2);
             setRowsNumber(table_block);
             $(table_block + " .post_data_button").removeAttr("disabled")
         });
 
         $table_edit.on('click', '.toEditPenCol', function (event) {
             let $this = $(this);
-            let length = $table_edit.find("tbody").find("tr").first().find("td").length;
+            let length = $(this).parents('.table_edit').find("tbody").find("tr").first().find("td").length;
             $this.attr("current", "current")
-            $table_edit.find("tbody").find(".editCol").each(function (i) {
+            $(this).parents('.table_edit').find("tbody").find(".editCol").each(function (i) {
                 let check = $(this).attr("current");
                 if (check === "current") {
                     $this.removeAttr("current");
@@ -230,9 +236,9 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
 
         $table_edit.on('click', '.toRoPenCol', function (event) {
             let $this = $(this);
-            let length = $table_edit.find("tbody").find("tr").first().find("td").length;
-            $this.attr("current", "current")
-            $table_edit.find("tbody").find(".editCol").each(function (i) {
+            let length =$(this).parents('.table_edit').find("tbody").find("tr").first().find("td").length;
+            $this.attr("current", "current");
+            $(this).parents('.table_edit').find("tbody").find(".editCol").each(function (i) {
                 let check = $(this).attr("current");
                 if (check === "current") {
                     $this.removeAttr("current");
@@ -240,7 +246,7 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
                         cellToReadOnly(i + 1, x, table_block);
                     }
                 }
-            })
+            });
             $this
                 .removeClass("toRoPenCol")
                 .addClass("toEditPenCol");
@@ -548,66 +554,28 @@ function delCol(table_block) {
     }
 }
 
-function moveOnTableByEnter(event, $this, table_block) {
-    if (event.which === 13) {
-        let $next = $this.parent().next();
-        $next.addClass("p-0");
-        //alert($next.html());
-        if ($next.find('div').attr('readonly') === 'readonly' ||
-            $next.find('div').attr('disabled') === 'disabled') {
-            while ($next.find('div').attr('readonly') === 'readonly' ||
-            $next.find('div').attr('disabled') === 'disabled') {
-                $next = $next.next();
+function moveOnTableByEnter(event, $this) {
+    if (event.which === 9) {
+        event.preventDefault();
+        let $table_edit = $this.parents('.table_edit');
+        let $td_th = $table_edit.find('td, th');
+        let count = $td_th.length;
+        let next = false;
+        let $prev = $this;
+        $td_th.each(function (index) {
+            if (count - 1 === index  + 1) {
+                $prev.find("input").focusout();
             }
-        }
-        //if($next.find(''))
-        if ($next.html() !== undefined) {
-            //alert($next.find('input').text());
-            $next.find('div').removeClass('edit_cell_div').addClass('edit_cell_div_hide');
-            $next.find('.input_text').removeClass('edit_cell_input_hide')
-                .addClass('edit_cell_input');
-            //$this.blur();
-            $next.find('.input_text').focus();
-        } else {
-            let count_cols = $(table_block + '.table_edit tr').find('th').length;
-
-
-            let $new_tr = $this.parent().parent().next().children().first();
-            let $arr_td = $this.parent().parent(); //$this.parent().parent().next().html()
-            //alert($arr_td.next().html());
-            let td_loop_end = true;
-            while (($arr_td.next().html() !== '' && $arr_td.next().html() !== undefined) && td_loop_end) {
-                for (let i = 0; i < count_cols; i++) {
-                    $new_tr = $arr_td.next().children().eq(i);
-                    //alert($new_tr.html());
-                    if ($new_tr.html() === undefined || (i + 1 === count_cols)) {
-                        $arr_td = $arr_td.next();
-                        break;
-                    }
-                    if ($new_tr.find('div').attr('disabled') !== 'disabled' &&
-                        $new_tr.find('div').attr('readonly') !== 'readonly') {
-                        td_loop_end = false;
-                        break;
-                    }
-                }
-                if ($new_tr.next().html() === undefined) {
-                    $this.blur();
-                    return;
-                }
+            if (next && $(this).hasClass('edit_cell')) {
+                $(this).trigger('click');
+                next = false;
+                return;
             }
-            let $tbody_tr = $new_tr.parent();
-            if ($new_tr.html() !== undefined && $tbody_tr.html() !== undefined) {
-                $new_tr.find('div')
-                    .removeClass('edit_cell_div').addClass('edit_cell_div_hide');
-                $new_tr.find('.input_text').removeClass('edit_cell_input_hide')
-                    .addClass('edit_cell_input');
-                $new_tr.find('.input_text').focus();
-                $new_tr.addClass("p-0");
-            } else {
-                $this.blur();
+            if ($this.get(0) === $(this).get(0)) {
+                next = true;
+                $prev = $(this);
             }
-        }
-
+        });
     }
 }
 
@@ -911,7 +879,7 @@ function setTableByPdmAndStd(tableBlock) {
         }
     });
     let array = collectDataLabels(".left-side");
-    console.log(array)
+    //console.log(array)
     let info = [
         {
             id: "component_1",
@@ -923,8 +891,8 @@ function setTableByPdmAndStd(tableBlock) {
         {
             id: "component_2",
             position: 2,
-            designation: "Обоз. дет. 1",
-            name: "Деталь 1",
+            designation: "Обоз. дет. 2",
+            name: "Деталь 2",
             number: 1
         },
         {
@@ -946,21 +914,21 @@ function setTableByPdmAndStd(tableBlock) {
             position: 5,
             designation: "Обоз. стд. дет. 1",
             name: "Стд. деталь 4",
-            number: 1
+            number: 4
         },
         {
             id: "std_component_2",
             position: 6,
             designation: "Обоз. стд. дет. 2",
             name: "Стд. деталь 4",
-            number: 1
+            number: 4
         },
         {
             id: "std_component_3",
             position: 7,
             designation: "Обоз. стд. дет. 3",
             name: "Стд. деталь 4",
-            number: 1
+            number: 10
         }
     ]
     array.forEach(function (component_id) {
@@ -987,7 +955,11 @@ function addRowByData(data, tableBlock) {
     let str =  $(tableBlock).find("tbody tr").eq(tbody_lenght-2);
     let td = str.find("td");
     td.eq(2).find("div").text(tbody_lenght-1);
+    td.eq(2).find("input").attr("value", tbody_lenght-1);
     td.eq(3).find("div").text(designation);
+    td.eq(3).find("input").attr("value", designation);
     td.eq(4).find("div").text(name);
+    td.eq(4).find("input").attr("value", name);
     td.eq(5).find("div").text(number);
+    td.eq(5).find("input").attr("value", number);
 }

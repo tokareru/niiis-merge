@@ -95,7 +95,8 @@ function setTaskRoutes(json_list, type, accord_id) {
             generateTable(table_info, {
                 table_block: "#taskRoutesBlock",
                 edit_mode_div: "#taskRoutes_edit",
-                url: ""
+                url: "",
+                save_url: ""
             });
             delZeroCol("#taskRoutesBlock ")
             /*getJsonByURL("spec_table_ajax", generateTable,

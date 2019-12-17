@@ -150,14 +150,30 @@ export function init3dField() {
             //scene.add( wireframe );
 
             //добавляем весь чертеж
-            firstFieldInit()
+            if (Round === 3 && $("#pdm_field").length){
+                firstFieldInit(collectDataLabels(".left-side"));
+            }else if(Round === 3 && !$("#pdm_field").length){
+                let array;
+                $.ajax({
+                    type: "POST",
+                    async: false,
+                    url: "spec_autoentered_table_ajax/load_product_checked",
+                    success: function (data) {
+                        array = data.checked;
+                    }
+                })
+                //console.log(array)
+                firstFieldInit(array);
+            }else{
+                firstFieldInit(["component_1", "component_2", "component_3",
+                    "component_4", "std_component_1", "std_component_2", "std_component_3"])
+            }
         });
     }
 
-    function firstFieldInit() {
+    function firstFieldInit(array) {
         let prev = window.isEnded;
         window.isEnded = true;
-        let array = ["component_1", "component_2", "component_3", "component_4", "std_component_1", "std_component_2", "std_component_3"];
         //console.log(array)
         for (let i = 0; i < 4; i++) {
             if (array.indexOf('component_' + (i + 1)) != -1) {
@@ -210,7 +226,10 @@ export function init3dField() {
 
         //renderer.setSize( window.innerWidth/1.5, window.innerHeight/1.5 );
         renderer.setSize($('#canvas3D').width(), ($('#canvas3D').width()) * 9 / 16);
-        $("#canvas3D").children[0].children[0].style = "width: 100%; height: 100%";
+        $("#canvas3D").find("canvas").css({
+            "width": "100%",
+            "height": "100%"
+        });
     }
 
     function animate() {
