@@ -34,6 +34,12 @@ function setTechnologistGuide(json, add_data) {
                 .append("<p class='tg_elem_header'>" + elem.name + "</p><div class='tg_elem_div'>" + elem.text + "</div>")
         });
 
+        field.find('div .tg_elem_div').each(function () {
+            $(this).draggable({
+                helper: 'clone'
+            });
+        });
+
         field.find(".tg_div").last().accordion({
             heightStyle: "content",
             animate: 50,

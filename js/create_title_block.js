@@ -15,27 +15,27 @@ function initTitleBlock() {
     }
     let $tbody_tr = $table.find('tbody tr');
     changeTableRow($tbody_tr.eq(0),
-        [7, 10, 23, 15, 10, 120], $table);
+        [7, 10, 23, 15, 10, 120], $table, 185);
     changeTableRow($tbody_tr.eq(1),
-        [7, 10, 23, 15, 10, 120], $table);
+        [7, 10, 23, 15, 10, 120], $table, 185);
     changeTableRow($tbody_tr.eq(2),
-        [7, 10, 23, 15, 10, 120], $table);
+        [7, 10, 23, 15, 10, 120], $table, 185);
     changeTableRow($tbody_tr.eq(3),
-        [7, 10, 23, 15, 10, 70, 15, 17, 18], $table);
+        [7, 10, 23, 15, 10, 70, 15, 17, 18], $table, 185);
     changeTableRow($tbody_tr.eq(4),
-        [7, 10, 23, 15, 10, 70, 5, 5, 5, 17, 18], $table);
+        [7, 10, 23, 15, 10, 70, 5, 5, 5, 17, 18], $table, 185);
     changeTableRow($tbody_tr.eq(5),
-        [17, 23, 15, 10, 70, 5, 5, 5, 17, 18], $table);
+        [17, 23, 15, 10, 70, 5, 5, 5, 17, 18], $table, 185);
     changeTableRow($tbody_tr.eq(6),
-        [17, 23, 15, 10, 70, 5, 5, 5, 17, 18], $table);
+        [17, 23, 15, 10, 70, 5, 5, 5, 17, 18], $table, 185);
     changeTableRow($tbody_tr.eq(7),
-        [17, 23, 15, 10, 70, 20, 30], $table);
+        [17, 23, 15, 10, 70, 20, 30], $table, 185);
     changeTableRow($tbody_tr.eq(8),
-        [17, 23, 15, 10, 70, 50], $table);
+        [17, 23, 15, 10, 70, 50], $table, 185);
     changeTableRow($tbody_tr.eq(9),
-        [17, 23, 15, 10, 70, 50], $table);
+        [17, 23, 15, 10, 70, 50], $table, 185);
     changeTableRow($tbody_tr.eq(10),
-        [17, 23, 15, 10, 70, 50], $table);
+        [17, 23, 15, 10, 70, 50], $table, 185);
 
     addRowspan(4, 8, $table, 3, [4, 4]);
     addRowspan(5, 8, $table, 3, [5, 5]);
@@ -158,12 +158,12 @@ function initTitleBlock() {
     })
 }
 
-function changeTableRow($row_tr, settings, $table) {
+function changeTableRow($row_tr, settings, $table, percent) {
 
     let width = $table.width();
 
     function calcWidth(setting) {
-        return Math.floor(width * setting / 185 * 100) / 100;
+        return Math.floor(width * setting / percent * 100) / 100;
     }
 
     $row_tr.children().each(function (index) {
@@ -224,6 +224,8 @@ function addRowspan(x, y, $table, rowspan, otherCoords) {
         let index = otherCoords[i - 1] -
             ($tbody.find('tr').eq(y + i).data('count') -
                 $tbody.find('tr').eq(y + i).children().length);
+        if (index < 0)
+            index = 0;
         $tbody.find('tr').eq(y + i).children().eq(index).remove();
     }
 }
@@ -256,12 +258,12 @@ function addText($table, text, positions, style, readonly = false) {
         if (readonly) {
             $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
                 .removeClass('edit_cell_title_block').off('click')
-                .find('.title_block_div').text(text[i]);
+                .find('.title_block_div').html(text[i]);
             continue;
         }
 
         $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
-            .find('.title_block_div').text(text[i]);
+            .find('.title_block_div').html(text[i]);
         $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])
             .find('.title_block_input').val(text[i]);
         $tbody.find('tr').eq(positions[i][1]).children().eq(positions[i][0])

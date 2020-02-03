@@ -1,5 +1,5 @@
 function technologicalProcessInit() {
-    //initTree("#techProcessBlock ")
+    /*//initTree("#techProcessBlock ")
     //init_tech_process();
     let toggler = document.getElementsByClassName("caret");
 
@@ -10,20 +10,149 @@ function technologicalProcessInit() {
         });
     }
 
-    $("#myUL").find("span").first().trigger("click");
+    $("#myUL").find("span").first().trigger("click");*/
+
+    let $table = $('#tech_process_table');
+
+    //количество технологических процессов
+    let countProcess = 2;
+
+
+    let arrProcess = [10, 12, 12, 12];
+    for (let i = 0; i < countProcess; i++)
+        arrProcess.push(12);
+
+    generateTableRow($table, arrProcess);
+
+    $('#tech_process_table').droppable(
+        {
+            drop: function (event, ui) {
+                let text = ui.draggable[0]['innerText'];
+                console.log(text);
+                let tr = '';
+                let $lastTr = $table.find('tr:last');
+                for (let i = 0; i < 12; i++) {
+                    tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
+                    if (i === 0 || i === 4) {
+                        tr += 'class="tdBorderBlackLeft"';
+                    } else if (i === 2  || i === 11) {
+                        tr += 'class="tdBorderBlackRight"';
+                    }
+                    tr +='>';
+                    if (i === 3) {
+                        tr += text;
+                    }
+                    tr += '</td>';
+                }
+                $('<tr>' + tr + '</tr>').insertBefore($table.find('tr:last'));
+            }
+        }
+    );
+
+    let $tbody_tr = $table.find('tbody tr');
+
+    //генерируются надписи
+    changeTableRow($tbody_tr.eq(0),
+        [11, 34, 12, 12, 6, 5, 5, 5, 5, 5], $table, 100);
+    changeTableRow($tbody_tr.eq(1),
+        [4, 3, 4, 34, 12, 12, 6, 5, 5, 5, 5, 5], $table, 100);
+    changeTableRow($tbody_tr.eq(2),
+        [4, 3, 4, 34, 12, 12, 6, 5, 5, 5, 5, 5], $table, 100);
+    changeTableRow($tbody_tr.eq(3),
+        [4, 3, 4, 34, 12, 12, 6, 5, 5, 5, 5, 5], $table, 100);
+
+    addRowspan(1, 0, $table, 4, [3, 3, 3, 3]);
+    addRowspan(2, 0, $table, 4, [4, 4, 4, 4]);
+    addRowspan(3, 0, $table, 4, [5, 5, 5, 5]);
+    addRowspan(4, 0, $table, 2, [6]);
+    addRowspan(5, 0, $table, 2, [7]);
+    addRowspan(6, 0, $table, 2, [8]);
+    addRowspan(7, 0, $table, 2, [9]);
+    addRowspan(8, 0, $table, 4, [10, 10, 10]);
+    addRowspan(9, 0, $table, 2, [11]);
+
+    addRowspan(0, 1, $table, 3, [0, 0, 0]);
+    addRowspan(1, 1, $table, 3, [1, 1, 1]);
+    addRowspan(2, 1, $table, 3, [2, 2, 2]);
+
+    addRowspan(0, 2, $table, 2, [0, 0, 0]);
+    addRowspan(1, 2, $table, 2, [1, 1, 1]);
+    addRowspan(2, 2, $table, 2, [2, 2, 2]);
+    addRowspan(3, 2, $table, 2, [3, 3, 3]);
+    addRowspan(4, 2, $table, 2, [4, 4, 4]);
+
+    addText($table, ['Номер'], [[0, 0]], 'text-center');
+    addText($table, ['Наименование<br> и содержание операции'],
+        [[1, 0]], 'text-center td_fontSize18 p-3');
+    addText($table, ['Оборудование <br>(код, наименование, инвентарный номер)'],
+        [[2, 0]], 'text-center p-1');
+    addText($table, ['Приспособление <br/> и <br/> инструмент<br/>(код, наименование)'],
+        [[3, 0]], 'text-center p-1');
+    addText($table, ['Коэфф.<br>шт. вр.'],
+        [[4, 0]], 'text-center p-0 td_fontSize12 rotateText90');
+    addText($table, ['Кол. раб.'],
+        [[5, 0]], 'text-center pl-1 pr-1 td_fontSize12 rotateText90');
+    addText($table, ['Кол. одн.<br>обраб. дет.'],
+        [[6, 0]], 'text-center pl-1 pr-1 td_fontSize12 rotateText90');
+    addText($table, ['Код тариф<br>сетки'],
+        [[7, 0]], 'text-center pl-1 pr-1 td_fontSize12 rotateText90');
+    addText($table, ['Объем производственной<br> партии'],
+        [[8, 0]], 'text-center pl-1 pr-1 td_fontSize12 rotateText90');
+    addText($table, ['Тп.З'],
+        [[9, 0]], 'text-center p-0 td_fontSize12');
+
+    addText($table, ['Цеха'],
+        [[0, 1]], 'text-center pl-1 pr-1 td_fontSize12 rotateText90');
+    addText($table, ['Участка'],
+        [[1, 1]], 'text-center pl-1 pr-1 td_fontSize12 rotateText90');
+    addText($table, ['Операции'],
+        [[2, 1]], 'text-center pl-1 pr-1 td_fontSize12 rotateText90');
+
+    addText($table, ['Код профессии'],
+        [[0, 2]], 'text-center p-1 pt-2 td_fontSize12 rotateText90');
+    addText($table, ['Разр. раб.'],
+        [[1, 2]], 'text-center p-1 pt-2 td_fontSize12 rotateText90');
+    addText($table, ['Ед. нормир.'],
+        [[2, 2]], 'text-center p-1 pt-2 td_fontSize12 rotateText90');
+    addText($table, ['Код вида нормы'],
+        [[3, 2]], 'text-center p-1 pt-2 td_fontSize12 rotateText90');
+    addText($table, ['Тшт'],
+        [[4, 2]], 'text-center p-1 pt-2 td_fontSize12');
+
+
+    for (let i = 0; i < countProcess; i++) {
+        addStyleTd($table, [0, i + 4], 'tdBorderBlackLeft');
+        addStyleTd($table, [2, i + 4], 'tdBorderBlackRight');
+    }
+
+    addStyleTd($table, [0, 4], 'tdBorderBlackTop');
+    addStyleTd($table, [1, 4], 'tdBorderBlackTop');
+    addStyleTd($table, [2, 4], 'tdBorderBlackTop');
+
+    addStyleTd($table, [0, 5], 'tdBorderBlackBottom');
+    addStyleTd($table, [1, 5], 'tdBorderBlackBottom');
+    addStyleTd($table, [2, 5], 'tdBorderBlackBottom');
+
+    for (let i = 0; i < countProcess; i++) {
+        addStyleTd($table, [4, i + 4], 'tdBorderBlackLeft');
+        addStyleTd($table, [11, i + 4], 'tdBorderBlackRight');
+    }
+
+    for (let i = 0; i < 8; i++) {
+        addStyleTd($table, [4 + i, 4], 'tdBorderBlackTop');
+        addStyleTd($table, [4 + i, 5], 'tdBorderBlackBottom');
+    }
+
+
+    for (let i = 0; i < countProcess; i++) {
+        changeTableRow($tbody_tr.eq(i + 4),
+            [4, 3, 4, 34, 12, 12, 6, 5, 5, 5, 5, 5], $table, 100);
+    }
 }
 
-
-
-
-
-
-
-
-
-
-
-
+function addStyleTd($table, coords, style) {
+    $table.find('tr').eq(coords[1]).children().eq(coords[0]).addClass(style);
+}
 
 
 /*function init_tech_process() {
@@ -179,7 +308,6 @@ function addBranch_tech_process(depth, params, classNameCont, classNameHeader, i
     }
     $depth.find('.esi_branches').append(madeBranch_tech_process(info, classNameHeader, classNameCont));
 }*/
-
 
 
 //ccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc

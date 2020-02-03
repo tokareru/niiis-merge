@@ -54,3 +54,50 @@ ul, #myUL {
 .emptySpan{
     font-size: 1.2em;
 }
+
+#tech_process_table{
+    width: 100%;
+}
+
+#tech_process_table td{
+    border: black solid 1px;
+    padding: 0;
+    padding-left: 1px;
+    margin: 0;
+    text-align: left;
+    font-size: 0.7rem;
+    font-style: italic;
+    font-weight: 500;
+    overflow-x: hidden;
+    vertical-align: middle;
+    height: 50px;
+    min-height: 100px!important;
+}
+
+.rotateText90 >*{
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    word-wrap: normal!important;
+}
+
+.tdBorderBlackLeft{
+    border-left: 3px solid black!important;
+}
+
+.tdBorderBlackRight {
+    border-right: 3px solid black !important;
+}
+
+.tdBorderBlackTop {
+    border-top: 3px solid black !important;
+}
+
+.tdBorderBlackBottom {
+    border-bottom: 3px solid black !important;
+}
+
+#tech_process_drop{
+    height: 150px;
+    background-color: black;
+    z-index: 999;
+}

@@ -35,4 +35,6 @@
 .tg_elem_div {
     background-color: #f8f9fa !important;
     padding: 8% 1% 8% 1%!important;
+    z-index: 999;
+    min-width: 100%;
 }
