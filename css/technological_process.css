@@ -16,17 +16,18 @@ ul, #myUL {
     -moz-user-select: none; /* Firefox 2+ */
     -ms-user-select: none; /* IE 10+ */
     user-select: none;
+    font-weight: bold;
 }
 
 .caret::before {
-    content: "\f068";
+    content: "\f067";
     color: black;
     display: inline-block;
     margin-right: 6px;
 }
 
 .caret-down::before {
-    content: "\f067";
+    content: "\f068";
 }
 
 .nested {
@@ -38,7 +39,7 @@ ul, #myUL {
 }
 
 .active li{
-    border-style: groove;
+    border-left-style: groove;
     padding: 0;
     color: #0c5460;
     border-color: #bee5eb;

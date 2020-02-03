@@ -1,3 +1,176 @@
+function initESI() {
+    let data = {
+        "details": [
+            {
+                "description": "дт 1",
+                "name": "Деталь 1",
+                "position": 1,
+                "amount": 1,
+                "id": 1,
+                "children": [
+                    {
+                        "description": "дт 1.1",
+                        "name": "Деталь 1.1",
+                        "position": 1,
+                        "amount": 1,
+                        "id": 1_1,
+                        "children": []
+                    },
+                    {
+                        "description": "дт 1.2",
+                        "name": "Деталь 1.2",
+                        "position": 1,
+                        "amount": 1,
+                        "id": 1_2,
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "description": "дт 2",
+                "name": "Деталь 2",
+                "position": 1,
+                "amount": 2,
+                "id": 2,
+                "children": [
+                    {
+                        "description": "дт 2.1",
+                        "name": "Деталь 2.1",
+                        "position": 1,
+                        "amount": 1,
+                        "id": 2_1,
+                        "children": []
+                    },
+                    {
+                        "description": "дт 2.2",
+                        "name": "Деталь 2.2",
+                        "position": 1,
+                        "amount": 1,
+                        "id": 1,
+                        "children": []
+                    }
+                ]
+            },
+            {
+                "description": "дт 3",
+                "name": "Деталь 3",
+                "position": 1,
+                "amount": 3,
+                "id": 3,
+                "children": []
+            },
+            {
+                "description": "дт 4",
+                "name": "Деталь 4",
+                "position": 1,
+                "amount": 4,
+                "id": 4,
+                "children": []
+            }
+        ]
+    }
+
+    $('.slider_button').on('click', function () {
+        STDLibClick($('.slider_button'), $('.slider_main'), 15);
+    });
+
+    $('#shell').on('click', function () {
+        if ($('.slider_main').attr('style') === 'z-index: 999; right: 0px;') {
+            $('.slider_button').trigger('click');
+        }
+    });
+
+    $("#esi_branch_body").append(createNodes(data.details))
+
+    let toggler = document.getElementsByClassName("caret");
+
+    for (let i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function () {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret-down");
+        });
+    }
+
+    $("#esi_branch_body").find(".detailChildren").trigger("click");
+}
+
+function createNodes(children) {
+    let node = '';
+    let isDisabled = (Role !== 'designer') ? 'disabled' : '';
+    children.forEach(function (child) {
+        let _children =
+            (child.children.length > 0) ?
+            "<li>" +
+                "<span class='caret detailChildren'>Состав</span>" +
+                "<ul class='nested'>" +
+                    createNodes(child.children) +
+                "</ul>" +
+            "</li>" : '';
+        node +=
+            "<li>" +
+                "<span class='caret detailChildren'>" + child.name + "</span>" +
+                "<ul class='nested'>" +
+                    "<li>" +
+                        "<span class='caret'>Название</span>" +
+                        "<ul class='nested'>" +
+                            "<li class='lastChild'>" +
+                                "<input " + isDisabled + " value='" + child.name + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
+                            "</li>" +
+                        "</ul>" +
+                    "</li>" +
+                    "<li>" +
+                        "<span class='caret'>Обозначение</span>" +
+                        "<ul class='nested'>" +
+                            "<li class='lastChild'>" +
+                                "<input " + isDisabled + " value='" + child.description + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
+                            "</li>" +
+                        "</ul>" +
+                    "</li>" +
+                    "<li>" +
+                        "<span class='caret'>Позиция</span>" +
+                        "<ul class='nested'>" +
+                            "<li class='lastChild'>" +
+                                "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
+                            "</li>" +
+                        "</ul>" +
+                    "</li>" +
+                    "<li>" +
+                        "<span class='caret'>Количество</span>" +
+                        "<ul class='nested'>" +
+                            "<li class='lastChild'>" +
+                                "<input " + isDisabled + " value='" + child.amount + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
+                            "</li>" +
+                        "</ul>" +
+                    "</li>" +
+                    _children +
+                "</ul>" +
+            "</li>";
+    });
+    return node;
+}
+
+function STDLibClick($but, $main, z_index) {
+    let css_left = -$main.width() + $but.width() + 'px';
+    let css_right = '0px';
+    if ($main.attr('style') !== ('z-index: 999; right: ' + css_right + ';')) {
+        $main.animate({
+                right: css_right
+            },
+            300, 'linear'
+        );
+        $main.removeAttr('style');
+        $main.attr('style', 'z-index: 999');
+    } else {
+        $main.animate({
+                right: css_left
+            },
+            300, 'linear'
+        );
+        $main.attr('style', 'z-index:' + z_index);
+    }
+}
+
+
 /*$(function () {
     addBranches(5);
     toggleEsiBranchContent();
@@ -12,6 +185,7 @@
     //addBranch( 3, [[0], [0, 1], [0]], true);
     hideBranchContent();
 });*/
+/*
 
 function initESI() {
     $('#esi_field').find('#esi_branch_btn').data({'init': 0});
@@ -35,10 +209,9 @@ function initESI() {
     });
 
     $('#shell').on('click', function () {
-       if($('.slider_main').attr('style') === 'z-index: 999; right: 0px;')
-       {
-           $('.slider_button').trigger('click');
-       }
+        if ($('.slider_main').attr('style') === 'z-index: 999; right: 0px;') {
+            $('.slider_button').trigger('click');
+        }
     });
 }
 
@@ -65,8 +238,8 @@ function initBranchesInside() {
             [info[0][2], info[index + 1][2]]));
         $(this).find('.esi_branch_content').find('.esi_branches').append(madeBranch(
             [info[0][4], info[index + 1][4]]));
-        /*$(this).find('.esi_branch_content').find('.esi_branches').append(madeBranch(
-            [info[0][1],info[index + 1][1] ]));*/
+        /!*$(this).find('.esi_branch_content').find('.esi_branches').append(madeBranch(
+            [info[0][1],info[index + 1][1] ]));*!/
     });
 }
 
@@ -156,24 +329,6 @@ function addContent($esi_branch, content) {
     $esi_branch.find('.esi_branch_content').append(content);
 }
 
+*/
 
-function STDLibClick($but, $main, z_index) {
-    let css_left = -$main.width() + $but.width() + 'px';
-    let css_right = '0px';
-    if ($main.attr('style') !== ('z-index: 999; right: ' + css_right + ';')) {
-        $main.animate({
-                right: css_right
-            },
-            300, 'linear'
-        );
-        $main.removeAttr('style');
-        $main.attr('style','z-index: 999');
-    } else {
-        $main.animate({
-                right: css_left
-            },
-            300, 'linear'
-        );
-        $main.attr('style','z-index:'+ z_index);
-    }
-}
+

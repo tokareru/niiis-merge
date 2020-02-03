@@ -1,11 +1,38 @@
 #esi_field {
-    width: 75%;
+    width: 83%;
     height: 100%;
     float: right;
     //box-shadow: 0 0 15px 1px #66a8bd;
     border-width: 2px!important;
     border-right: 0!important;
    /* border: #d7e0df solid 4px;*/
+
+    padding: 2%;
+}
+
+.esi_branch_body{
+    height: 90%;
+    overflow-y: auto;
+    box-shadow: 0 5px 0px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+}
+
+.lastChild{
+    border-left: none !important;
+    background-color: white;
+    font-size: 1.1em;
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
+}
+
+.lastChildInput{
+    width: 100%;
+    padding: 0.25rem !important;
+}
+
+.lastChildInput:disabled{
+    border-left: none !important;
+    background-color: white !important;
+    font-size: 1.1em;
+    box-shadow: 0 0px 0px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
 }
 
 .esi_branches_div::-webkit-scrollbar {
@@ -163,7 +190,7 @@ overflow-y: scroll;
     max-height: 7%;
     border-width: 2px!important;
     border-right: 0!important;
-    width: 25%;
+    width: 17%;
     cursor: pointer;
 }
 
@@ -175,10 +202,10 @@ overflow-y: scroll;
 .slider_main{
     top: 18%;
     z-index: 15;
-    width: 400px;
+    width: 600px;
     height: 500px;
     max-height: 80vh;
-    right: -302px;
+    right: -500px;
     position: fixed;
 }
 
