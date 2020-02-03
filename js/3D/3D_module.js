@@ -3,6 +3,7 @@
 import * as THREE from './stl/three.module.js';
 /*import Stats from './stl/stats.module.js';*/
 import {STLLoader} from './stl/STLLoader.js';
+import { OrbitControls } from './OrbitControls.js';
 
 export function init3dField() {
     var container, stats;
@@ -35,13 +36,13 @@ export function init3dField() {
     init();
     animate();
 
-    var gui = new dat.GUI({autoPlace: false, width: 100 + '%'});
+    /* var gui = new dat.GUI({autoPlace: false, width: 100 + '%'});
     document.getElementById("canvas3D").appendChild(gui.domElement);
     gui.domElement.id = 'gui';
 
     gui.add(check, 'checkbox').name('Вращение').onChange(function (value) {
         animate();
-    });
+    }); */
 
     function init() {
 
@@ -100,6 +101,17 @@ export function init3dField() {
         renderer.shadowMap.enabled = true;
 
         container.appendChild(renderer.domElement);
+
+        window.controls = new OrbitControls( window.camera, window.renderer.domElement );
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+
+        controls.screenSpacePanning = false;
+
+        controls.minDistance = 2;
+        controls.maxDistance = 5;
+
+        //controls.maxPolarAngle = Math.PI / 2;
 
         // stats
 
@@ -235,16 +247,17 @@ export function init3dField() {
     function animate() {
         if (check.checkbox) {
             requestAnimationFrame(animate);
+            controls.update();
             render();
         }
         //stats.update();
     }
 
     function render() {
-        inc += 0.008;
+        //inc += 0.008;
         //var timer = Date.now() * 0.0005;
-        camera.position.x = Math.cos(inc) * 3;
-        camera.position.z = Math.sin(inc) * 3;
+        //camera.position.x = Math.cos(inc) * 3;
+        //camera.position.z = Math.sin(inc) * 3;
         camera.lookAt(cameraTarget);
 
         renderer.render(scene, camera);
