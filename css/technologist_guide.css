@@ -1,6 +1,29 @@
 #technologist_guide_field {
 }
 
+#technologist_guide_field .caret{
+    font: normal normal normal 1.2em/1 FontAwesome;
+}
+
+#technologist_guide_field .lastChildInput{
+    font-size: 0.9em;
+}
+
+.instruments_list_li{
+    list-style: circle;
+    margin-left: 2rem !important;
+}
+
+#technologist_guide_field .lastChild{
+    font-size: 1.1em;
+    box-shadow: none !important;
+    color: #606469;
+}
+
+.operationName{
+    z-index: 999;
+}
+
 #technologist_guide_accordion {
     padding: 2% 4% 6% 2% !important;
 }

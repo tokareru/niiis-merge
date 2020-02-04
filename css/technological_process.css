@@ -17,6 +17,7 @@ ul, #myUL {
     -ms-user-select: none; /* IE 10+ */
     user-select: none;
     font-weight: bold;
+    display: block;
 }
 
 .caret::before {
@@ -62,8 +63,7 @@ ul, #myUL {
 
 #tech_process_table td{
     border: black solid 1px;
-    padding: 0;
-    padding-left: 1px;
+    padding: 0 0 0 1px;
     margin: 0;
     text-align: left;
     font-size: 0.7rem;

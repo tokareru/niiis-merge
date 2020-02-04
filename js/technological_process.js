@@ -27,24 +27,72 @@ function technologicalProcessInit() {
     $('#tech_process_table').droppable(
         {
             drop: function (event, ui) {
-                let text = ui.draggable[0]['innerText'];
-                console.log(text);
-                let tr = '';
-                let $lastTr = $table.find('tr:last');
-                for (let i = 0; i < 12; i++) {
-                    tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
-                    if (i === 0 || i === 4) {
-                        tr += 'class="tdBorderBlackLeft"';
-                    } else if (i === 2  || i === 11) {
-                        tr += 'class="tdBorderBlackRight"';
+
+                function setCells(obj) {
+                    let text = obj.find(".operationNameField").text()
+                    let instruments = [];
+                    let equipment = [];
+                    obj.find(".operationInstrumentList li span").each(function () {
+                        instruments.push($(this).text())
+                    });
+                    instruments = instruments.join(", ");
+
+                    obj.find(".operationEquipList li span").each(function () {
+                        equipment.push($(this).text())
+                    });
+                    equipment = equipment.join(", ");
+
+                    //console.log(text);
+                    //console.log(instruments);
+                    //console.log(equipment);
+
+                    let tr = '';
+                    let $lastTr = $table.find('tr:last');
+                    for (let i = 0; i < 12; i++) {
+                        tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
+                        if (i === 0 || i === 4) {
+                            tr += 'class="tdBorderBlackLeft"';
+                        } else if (i === 2 || i === 11) {
+                            tr += 'class="tdBorderBlackRight"';
+                        }
+                        tr += '>';
+                        if (i === 3) {
+                            tr += text;
+                        }
+                        if (i === 4) {
+                            tr += equipment;
+                        }
+                        if (i === 5) {
+                            tr += instruments;
+                        }
+                        tr += '</td>';
                     }
-                    tr +='>';
-                    if (i === 3) {
-                        tr += text;
-                    }
-                    tr += '</td>';
+                    $('<tr>' + tr + '</tr>').insertBefore($table.find('tr:last'));
                 }
-                $('<tr>' + tr + '</tr>').insertBefore($table.find('tr:last'));
+
+                if ($(ui.draggable).hasClass("techName")) {
+                    let tr = '';
+                    let $lastTr = $table.find('tr:last');
+                    for (let i = 0; i < 12; i++) {
+                        tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
+                        if (i === 0 || i === 4) {
+                            tr += 'class="tdBorderBlackLeft"';
+                        } else if (i === 2 || i === 11) {
+                            tr += 'class="tdBorderBlackRight"';
+                        }
+                        tr += '>';
+                        if (i === 3) {
+                            tr += $(ui.draggable).find("span").first().text();
+                        }
+
+                        tr += '</td>';
+                    }
+                    $('<tr>' + tr + '</tr>').insertBefore($table.find('tr:last'));
+                    $(ui.draggable).find(".operationName").each(function () {
+                        setCells($(this))
+                    });
+                }
+                else setCells($(ui.draggable))
             }
         }
     );

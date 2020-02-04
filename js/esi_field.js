@@ -82,7 +82,7 @@ function initESI() {
 
     $("#esi_branch_body").append(createNodes(data.details))
 
-    let toggler = document.getElementsByClassName("caret");
+    let toggler = document.getElementById("esi_field").getElementsByClassName("caret");
 
     for (let i = 0; i < toggler.length; i++) {
         toggler[i].addEventListener("click", function () {
