@@ -31,18 +31,27 @@ function setTechnologistGuide(json, add_data) {
     }
 
     $("#technologist_guide_accordion").find(".detailChildren").trigger("click");
+
+    $(".operationName").draggable({
+        helper: 'clone',
+        appendTo: "#tech_process_table"
+    });
+    $(".techName").draggable({
+        helper: 'clone',
+        appendTo: "#tech_process_table"
+    })
 }
 
 
 function createTechGuideNodes(tech) {
     let node = '';
     let isDisabled = "disabled";
-    console.log(tech);
+    //console.log(tech);
 
     let inp = '';
 
     tech.children.forEach(function (child, i) {
-        console.log(child)
+        //console.log(child)
         let equip = '';
         child.equipment.forEach(function (eq) {
             equip +=
@@ -60,26 +69,26 @@ function createTechGuideNodes(tech) {
         });
 
         inp +=
-            "<il>" +
+            "<il class='operationName'>" +
                 "<span class='caret'>" + (i + 1).toString() + "." + child.name + "</span>" +
                 "<ul class='nested pl-2'>" +
                     "<li>" +
-                        "<span class='caret'>Название</span>" +
+                        "<span class='caret '>Название</span>" +
                         "<ul class='nested pl-2'>" +
                             "<li class='lastChild instruments_list_li'>" +
-                                "<span class=''>" + child.name + "</span>" +
+                                "<span class='operationNameField'>" + child.name + "</span>" +
                             "</li>" +
                         "</ul>" +
                     "</li>" +
                     "<li>" +
                         "<span class='caret'>Оборудование</span>" +
-                        "<ul class='nested pl-2'>" +
+                        "<ul class='nested pl-2 operationEquipList'>" +
                             equip +
                         "</ul>" +
                     "</li>" +
                     "<li>" +
                         "<span class='caret'>Инструменты</span>" +
-                        "<ul class='nested pl-2'>" +
+                        "<ul class='nested pl-2 operationInstrumentList'>" +
                             instr +
                         "</ul>" +
                     "</li>" +
@@ -88,7 +97,7 @@ function createTechGuideNodes(tech) {
     });
 
     node =
-        "<li>" +
+        "<li class='techName'>" +
             "<span class='caret detailChildren'>" + tech.name + "</span>" +
             "<ul class='nested pl-2'>" +
                 inp +

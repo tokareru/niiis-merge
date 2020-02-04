@@ -20,6 +20,9 @@
     color: #606469;
 }
 
+.operationName{
+    z-index: 999;
+}
 
 #technologist_guide_accordion {
     padding: 2% 4% 6% 2% !important;
