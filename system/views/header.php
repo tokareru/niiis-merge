@@ -3,7 +3,7 @@
         <div class="col-1"><a class="medium red awesome" href="<?php echo conf::$SITE_URL . 'logout' ?>">Выйти</a></div>
         <div class="col-3">
             <div class="row">
-                <div class="col-5">Вы вошли как:</div>
+                <div class="col-5">Ваш логин:</div>
                 <div class="col-4"><?php echo sys::user_login();?>
                 </div>
             </div>
