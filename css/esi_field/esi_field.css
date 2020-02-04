@@ -26,12 +26,13 @@
 .lastChildInput{
     width: 100%;
     padding: 0.25rem !important;
+    font-size: 1.1em;
 }
 
 .lastChildInput:disabled{
     border-left: none !important;
     background-color: white !important;
-    font-size: 1.1em;
+
     box-shadow: 0 0px 0px 0 rgba(0,0,0,0.18), 0 4px 15px 0 rgba(0,0,0,0.15);
 }
 
