@@ -13,7 +13,12 @@ class drawing_main_text_ajax_model extends model {
         if($_SERVER["REQUEST_METHOD"]=="GET"){
             if($_GET["type"] == 'set')
             {
-                $sql = "UPDATE SYSTEM_CONF SET is_drawing_finished = '1'";
+                $sql = "";
+                if (trim($_SERVER['SERVER_NAME'], '/') === '82.146.41.218') {
+                    $sql = "UPDATE SYSTEM_CONF SET is_drawing_finished = '1'";
+                }else{
+                    $sql = "UPDATE SYS_CNF SET cnfval = '1' where cnfname = 'is_drawing_finished'";
+                }
                 $q = sys::$PDO->prepare($sql);
                 $q->execute();
                 $Q = $q->fetchAll();
