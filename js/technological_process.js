@@ -71,9 +71,9 @@ function technologicalProcessInit() {
                 }
 
                 if ($(ui.draggable).hasClass("techName")) {
-                    let tr = '';
+                    let tr = '<td><button class="tech_proc_del_td btn bg-white p-0">Удл.</button></td>';
                     let $lastTr = $table.find('tr:last');
-                    for (let i = 0; i < 13; i++) {
+                    for (let i = 1; i < 13; i++) {
                         tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
                         if (i === 1 || i === 5) {
                             tr += 'class="tdBorderBlackLeft"';
@@ -81,7 +81,7 @@ function technologicalProcessInit() {
                             tr += 'class="tdBorderBlackRight"';
                         }
                         tr += '>';
-                        if (i === 5) {
+                        if (i === 4) {
                             tr += $(ui.draggable).find("span").first().text();
                         }
 
@@ -91,8 +91,13 @@ function technologicalProcessInit() {
                     $(ui.draggable).find(".operationName").each(function () {
                         setCells($(this))
                     });
-                } else setCells($(ui.draggable))
+                } else setCells($(ui.draggable));
+
+                $table.on('click', '.tech_proc_del_td', function () {
+                    $(this).parents('tr').remove();
+                });
             }
+
         }
     );
 
@@ -202,10 +207,6 @@ function technologicalProcessInit() {
             $(this).find('td:first').before(`<td ${index === 0?
             'rowspan="3"':''}>${index > 4 && index + 1 !== $table.find('tr').length ? '' +
                 '<button class="tech_proc_del_td btn bg-white p-0">Удл.</button>': ''}</td>`);
-        });
-
-        $table.on('click', '.tech_proc_del_td', function () {
-            $(this).parents('tr').remove();
         });
 }
 
