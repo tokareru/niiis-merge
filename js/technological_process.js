@@ -56,13 +56,13 @@ function technologicalProcessInit() {
                             tr += 'class="tdBorderBlackRight"';
                         }
                         tr += '>';
-                        if (i === 3) {
+                        if (i === 4) {
                             tr += text;
                         }
-                        if (i === 4) {
+                        if (i === 5) {
                             tr += equipment;
                         }
-                        if (i === 5) {
+                        if (i === 6) {
                             tr += instruments;
                         }
                         tr += '</td>';
