@@ -1,5 +1,7 @@
 function initESI() {
-    let data = {
+    esiGetDataFromServer();
+
+    /*let data = {
         "details": [
             {
                 "description": "дт 1",
@@ -68,7 +70,7 @@ function initESI() {
                 "children": []
             }
         ]
-    }
+    }*/
 
     $('.slider_button').on('click', function () {
         STDLibClick($('.slider_button'), $('.slider_main'), 15);
@@ -80,8 +82,44 @@ function initESI() {
         }
     });
 
-    $("#esi_branch_body").append(createNodes(data.details))
 
+
+
+}
+
+function setESI(data) {
+    try {
+        $("#esi_branch_body").empty().append(createNodes(data.details));
+        esiSetBranchesNestedFunc();
+    }catch (e) {
+        
+    }
+
+    setInterval(function () {
+        let _data = convertArray(getDataFromSpecTable());
+        //console.log(_data)
+
+        function arraysIdentical(a, b) {
+            let i = a.length;
+            if (i != b.length) return false;
+            while (i--) {
+                if (a[i] !== b[i]) return false;
+            }
+            return true;
+        }
+
+        if (arraysIdentical(_data, data) || _data === undefined) return;
+        data = _data;
+        $("#esi_branch_body").empty().append(createNodes(_data.details));
+
+        esiSetBranchesNestedFunc();
+
+        //$("#esi_branch_body").find(".detailChildren").trigger("click");
+
+    }, 5000)
+}
+
+function esiSetBranchesNestedFunc() {
     let toggler = document.getElementById("esi_field").getElementsByClassName("caret");
 
     for (let i = 0; i < toggler.length; i++) {
@@ -90,8 +128,6 @@ function initESI() {
             this.classList.toggle("caret-down");
         });
     }
-
-    $("#esi_branch_body").find(".detailChildren").trigger("click");
 }
 
 function createNodes(children) {
@@ -147,6 +183,71 @@ function createNodes(children) {
             "</li>";
     });
     return node;
+}
+
+function getDataFromSpecTable() {
+    let table_block = "#specificationBlock ";
+    let array = [];
+
+    $(table_block + ".table_made").find("tbody tr").each(function (rows) {
+        if (rows < $(table_block + ".table_made").find("tr").length - 2) {
+            let row_arr = [];
+            $(this).find("td").each(function (cols) {
+                if (Role === "approver"
+                    || Role === "technologist" || Role === "production_master" || Role === "worker") {
+                    let $div = $(this).find("div");
+                    row_arr.push($div.text())
+                }else{
+                if (cols > 1){
+                    let $div = $(this).find("div");
+                    row_arr.push($div.text())
+                }
+            }
+            });
+            array.push(row_arr);
+            //console.log(row_arr)
+        }
+
+    });
+    return array;
+}
+
+function esiGetDataFromServer() {
+    $.ajax({
+        type: "GET",
+        url: "spec_autoentered_table_ajax",
+        async: false,
+        dataType: "json",
+        success: function (json) {
+            let arr = [];
+            json.tbody.forEach(function (row) {
+                arr.push([row.row[0].text, row.row[1].text, row.row[2].text, row.row[3].text]);
+            })
+            console.log(arr)
+            setESI(convertArray(arr))
+        },
+        error: function (message) {
+            //console.log("Can't load the data");
+        },
+    })
+}
+
+function convertArray(arr) {
+    //console.log(arr);
+    let obj = {
+        "details": []
+    };
+    arr.forEach(function (element) {
+        obj.details.push({
+            name: element[2],
+            description: element[1],
+            position: element[0],
+            amount: element[3],
+            children: []
+        })
+    });
+    //console.log(obj);
+    return obj;
 }
 
 function STDLibClick($but, $main, z_index) {
