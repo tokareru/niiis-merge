@@ -29,7 +29,7 @@ conf::$SITE_PATH = dirname(__FILE__).DIRECTORY_SEPARATOR.'../';
 conf::$SESSION_TIME = 2592000;
 ini_set("memory_limit", "200M");  // для экспорта надо много
 
-if(trim($_SERVER['SERVER_NAME'],'/') === 'abitprof.nntu.ru'){
+if(trim($_SERVER['SERVER_NAME'],'/') === '82.146.41.218'){
   conf::$ROOT = rtrim($_SERVER['DOCUMENT_ROOT'],'/').'/';
   conf::$SITE_URL = 'https://'.$_SERVER['SERVER_NAME'].'/';
   conf::$DB_SERVER_NAME='127.0.0.1';
@@ -43,7 +43,7 @@ if(trim($_SERVER['SERVER_NAME'],'/') === 'abitprof.nntu.ru'){
   conf::$ROOT = rtrim($_SERVER['DOCUMENT_ROOT'],'/').'/';
   conf::$SITE_URL = 'http://'.$_SERVER['SERVER_NAME'].'/';
   conf::$DB_SERVER_NAME='127.0.0.1';
-  conf::$DB_NAME='niiis';
+  conf::$DB_NAME='niiis-test';
   conf::$DB_USER_NAME='dmitry';
   conf::$DB_PASSWORD='ubvyfpbz50';
   conf::$SITE_LOCAL=true;
