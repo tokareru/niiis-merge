@@ -41,6 +41,11 @@
     padding-bottom: 5% !important;
 }
 
+.techName:hover {
+    background-color: blanchedalmond;
+    list-style: none;
+}
+
 #technologist_guide_accordion div {
     overflow-y: hidden !important;
 }
