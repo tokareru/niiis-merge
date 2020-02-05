@@ -204,7 +204,7 @@ function technologicalProcessInit() {
                 '<button class="tech_proc_del_td btn bg-white p-0">Удл.</button>': ''}</td>`);
         });
 
-        $('.tech_proc_del_td').on('click', function () {
+        $table.on('click', '.tech_proc_del_td', function () {
             $(this).parents('tr').remove();
         });
 }
