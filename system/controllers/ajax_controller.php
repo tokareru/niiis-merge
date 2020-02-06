@@ -12,6 +12,9 @@ class ajax_controller extends Controller {
     $data = $this->model->select_user();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
-  
+  function get_technologist_info(){
+    $data = $this->model->get_technologist_info();
+    $this->view->render('', 'ajax_view_json.php', $data);    
+  }
 }
 
