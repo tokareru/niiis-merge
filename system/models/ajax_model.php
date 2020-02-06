@@ -25,7 +25,7 @@ class ajax_model extends model {
            if($name != $row["name"]){
                $i++;
                $name = $row["name"];
-               $result[$i] = array("name"=>$name, "children" => array(array("name" => $row["child_name"], "tools"=>array(get_array_from_string($row["tools"])), "equipment" => array(get_array_from_string($row["equipment"])))));
+               $result[$i] = array("name"=>$name, "children" => array(array("name" => $row["child_name"], "tools"=>get_array_from_string($row["tools"]), "equipment" => get_array_from_string($row["equipment"]))));
                
            }else{
                array_push($result[$i]["children"], array("name" => $row["child_name"], "tools"=>array(array("name"=>$row["tools"])), "equipment" => array(array("name"=>$row["equipment"]))));
