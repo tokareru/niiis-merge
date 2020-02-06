@@ -19,6 +19,7 @@ export function initScheme() {
     window.showlines = [0,1];
     window.increment = 0;
     window.echo;
+    window.echoarray = [0,0,0,0];
 
     window.areas1 = []; // массив круглых областей в которых происходит клик
     window.areas2 = []; // координаты кругов в размерах
@@ -561,6 +562,7 @@ export function initScheme() {
 
     function razmerdraw(dlina)
     {
+        let razmID, echotext;
         let ar=[];
         for (let i=0; i<lines2.length; i++)
         {
@@ -595,8 +597,8 @@ export function initScheme() {
             {
                 case "up":
                 {
-                    ctxs[0].lineTo(x-7, y+20);
-                    ctxs[0].lineTo(x+7, y+20);
+                    ctxs[0].lineTo(x-5, y+10);
+                    ctxs[0].lineTo(x+5, y+10);
                     ctxs[0].fill();
                     ctxs[0].beginPath();
                     ctxs[0].moveTo(areas2[j].x, areas2[j].y);
@@ -620,8 +622,31 @@ export function initScheme() {
                             {
                                 echo.push(dlinaarr[2]);
                             }
+
+                            if (ar[i] == 0 || ar[i] == 1) {razmID = 1}
+                            if (ar[i] == 2 || ar[i] == 3) {razmID = 2}
+                            if (ar[i] == 4 || ar[i] == 5) {razmID = 3}
                         }
-                        ctxs[0].fillText(echo[l], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+
+                        if (document.getElementById('razmNumber'+razmID) === null)
+                        {
+                            $( "#scheme1" ).append( "<input id='razmNumber"+razmID+"'>" );
+                            $( "#razmNumber"+razmID ).val('100');
+                            $( "#razmNumber"+razmID ).focus();
+                            $( "#razmNumber"+razmID ).keypress(function( event )
+                            {
+                                if ( event.which == 13 )
+                                {
+                                    event.preventDefault();
+                                    //echotext = this.value;
+                                    //echoarray[razmID] = echotext;
+                                    $( "#razmNumber"+razmID ).blur();
+                                    //$( "#razmNumber"+razmID ).hide();
+                                    //ctxs[0].fillText(echotext, areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2); //echo[l]
+                                }
+                            });
+                        }
+                        //ctxs[0].fillText(echoarray[razmID], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
                     }
                     ctxs[0].stroke();
                     break;
@@ -629,8 +654,8 @@ export function initScheme() {
 
                 case "down":
                 {
-                    ctxs[0].lineTo(x-7, y-20);
-                    ctxs[0].lineTo(x+7, y-20);
+                    ctxs[0].lineTo(x-5, y-10);
+                    ctxs[0].lineTo(x+5, y-10);
                     ctxs[0].fill();
                     ctxs[0].beginPath();
                     ctxs[0].moveTo(areas2[j].x, areas2[j].y);
@@ -646,8 +671,8 @@ export function initScheme() {
 
                 case "left":
                 {
-                    ctxs[0].lineTo(x+20, y-7);
-                    ctxs[0].lineTo(x+20, y+7);
+                    ctxs[0].lineTo(x+10, y-5);
+                    ctxs[0].lineTo(x+10, y+5);
                     ctxs[0].fill();
                     ctxs[0].beginPath();
                     ctxs[0].moveTo(areas2[j].x, areas2[j].y);
@@ -671,8 +696,32 @@ export function initScheme() {
                             {
                                 echo.push(dlinaarr[2]);
                             }
+
+                            if (ar[i] == 0 || ar[i] == 1) {razmID = 1}
+                            if (ar[i] == 2 || ar[i] == 3) {razmID = 2}
+                            if (ar[i] == 4 || ar[i] == 5) {razmID = 3}
+
+                            //if (i % 2==0) {ctxs[0].fillText($( "#razmNumber"+razmID ).val(), areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y-7);}
                         }
-                        ctxs[0].fillText(echo[l], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
+                        if (document.getElementById('razmNumber'+razmID) === null)
+                        {
+                            $( "#scheme1" ).append( "<input id='razmNumber"+razmID+"'>" );
+                            $( "#razmNumber"+razmID ).val('100');
+                            $( "#razmNumber"+razmID ).focus();
+                            $( "#razmNumber"+razmID).keypress(function( event )
+                            {
+                                if ( event.which == 13 )
+                                {
+                                    event.preventDefault();
+                                    //echotext = this.value;
+                                    //echoarray[razmID] = echotext;
+                                    $( "#razmNumber"+razmID ).blur();
+                                    //$( "#razmNumber"+razmID ).hide();
+                                    //ctxs[0].fillText(echotext, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15); //echo[l]
+                                }
+                            });
+                        }
+                        //ctxs[0].fillText($( "#razmNumber"+razmID ).val(), areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y-7);
                     }
                     ctxs[0].stroke();
                     break;
@@ -680,8 +729,8 @@ export function initScheme() {
 
                 case "right":
                 {
-                    ctxs[0].lineTo(x-20, y-7);
-                    ctxs[0].lineTo(x-20, y+7);
+                    ctxs[0].lineTo(x-10, y-5);
+                    ctxs[0].lineTo(x-10, y+5);
                     ctxs[0].fill();
                     ctxs[0].beginPath();
                     ctxs[0].moveTo(areas2[j].x, areas2[j].y);
@@ -929,14 +978,14 @@ export function initScheme() {
                     razmerdraw();
                     CirclesRazmDraw();
                 }
-                if (lines2.length ==3)
+                /* if (lines2.length ==3)
                 {
                     window.increment++;
                     if (window.increment < 2)
                     {
                         setDrawingStatus();
                     }
-                }
+                } */
 
                 break;
             }
@@ -1052,97 +1101,109 @@ export function initScheme() {
 
 function razmerdrawfull()
 {
-    dlinaarr[0]=112;
-    dlinaarr[2]=345;
-    dlinaarr[4]=248;
-
-
-    for (let j=0; j<areas3.length; j++)
-    {
-        let echo;
-        let x = areas3[j].x;
-        let y = areas3[j].y;
-        let y1, x1;
-        ctxs[0].beginPath();
-        ctxs[0].moveTo(x, y);
-
-        switch (areas3[j].rotation)
-        {
-            case "up":
+    let ObjectRazmer = {};
+    $.ajax({
+        type: "GET",
+        url: "drawing_main_text_ajax/load_size",
+        success: function (answer) {
+            ObjectRazmer = answer;
+            dlinaarr[0]=ObjectRazmer.razm1;
+            dlinaarr[2]=ObjectRazmer.razm2;
+            dlinaarr[4]=ObjectRazmer.razm3;
+            for (let j=0; j<areas3.length; j++)
             {
-                ctxs[0].lineTo(x-7, y+20);
-                ctxs[0].lineTo(x+7, y+20);
-                ctxs[0].fill();
+                let echo;
+                let x = areas3[j].x;
+                let y = areas3[j].y;
+                let y1, x1;
                 ctxs[0].beginPath();
-                ctxs[0].moveTo(areas2[j].x, areas2[j].y);
-                ctxs[0].lineTo(x-10, y);
-                if (j % 2 == 0)
-                {
-                    ctxs[0].moveTo(areas3[j].x, areas3[j].y);
-                    ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
-                    ctxs[0].font = "italic 10pt Arial";
+                ctxs[0].moveTo(x, y);
 
-                    ctxs[0].fillText(dlinaarr[j], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
-                }
-                ctxs[0].stroke();
-                break;
-            }
-
-            case "down":
-            {
-                ctxs[0].lineTo(x-7, y-20);
-                ctxs[0].lineTo(x+7, y-20);
-                ctxs[0].fill();
-                ctxs[0].beginPath();
-                ctxs[0].moveTo(areas2[j].x, areas2[j].y);
-                ctxs[0].lineTo(x-10, y);
-                if (j % 2 == 0)
+                switch (areas3[j].rotation)
                 {
-                    ctxs[0].moveTo(areas3[j].x, areas3[j].y);
-                    ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
-                }
-                ctxs[0].stroke();
-                break;
-            }
+                    case "up":
+                    {
+                        ctxs[0].lineTo(x-5, y+10);
+                        ctxs[0].lineTo(x+5, y+10);
+                        ctxs[0].fill();
+                        ctxs[0].beginPath();
+                        ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                        ctxs[0].lineTo(x-10, y);
+                        if (j % 2 == 0)
+                        {
+                            ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                            ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                            ctxs[0].font = "italic 10pt Arial";
 
-            case "left":
-            {
-                ctxs[0].lineTo(x+20, y-7);
-                ctxs[0].lineTo(x+20, y+7);
-                ctxs[0].fill();
-                ctxs[0].beginPath();
-                ctxs[0].moveTo(areas2[j].x, areas2[j].y);
-                ctxs[0].lineTo(x, y+10);
-                if (j % 2 == 0)
-                {
-                    ctxs[0].moveTo(areas3[j].x, areas3[j].y);
-                    ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
-                    ctxs[0].font = "italic 10pt Arial";
-                    ctxs[0].fillText(dlinaarr[j], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15);
-                }
-                ctxs[0].stroke();
-                break;
-            }
+                            $( "#scheme1" ).append("<canvas id='razmer1'></canvas>");
+                            let ct = document.getElementById("razmer1").getContext("2d");
+                            ct.beginPath();
+                            ct.font = "italic 10pt Arial";
+                            ct.fillText(dlinaarr[j], 105, 50);
+                            ct.stroke();
 
-            case "right":
-            {
-                ctxs[0].lineTo(x-20, y-7);
-                ctxs[0].lineTo(x-20, y+7);
-                ctxs[0].fill();
-                ctxs[0].beginPath();
-                ctxs[0].moveTo(areas2[j].x, areas2[j].y);
-                ctxs[0].lineTo(x, y+10);
-                if (j % 2 == 0)
-                {
-                    ctxs[0].moveTo(areas3[j].x, areas3[j].y);
-                    ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                            //ctxs[0].fillText(dlinaarr[j], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                        }
+                        ctxs[0].stroke();
+                        break;
+                    }
+
+                    case "down":
+                    {
+                        ctxs[0].lineTo(x-5, y-10);
+                        ctxs[0].lineTo(x+5, y-10);
+                        ctxs[0].fill();
+                        ctxs[0].beginPath();
+                        ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                        ctxs[0].lineTo(x-10, y);
+                        if (j % 2 == 0)
+                        {
+                            ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                            ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                        }
+                        ctxs[0].stroke();
+                        break;
+                    }
+
+                    case "left":
+                    {
+                        ctxs[0].lineTo(x+10, y-5);
+                        ctxs[0].lineTo(x+10, y+5);
+                        ctxs[0].fill();
+                        ctxs[0].beginPath();
+                        ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                        ctxs[0].lineTo(x, y+10);
+                        if (j % 2 == 0)
+                        {
+                            ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                            ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                            ctxs[0].font = "italic 10pt Arial";
+                            ctxs[0].fillText(dlinaarr[j], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y-7);
+                        }
+                        ctxs[0].stroke();
+                        break;
+                    }
+
+                    case "right":
+                    {
+                        ctxs[0].lineTo(x-10, y-5);
+                        ctxs[0].lineTo(x-10, y+5);
+                        ctxs[0].fill();
+                        ctxs[0].beginPath();
+                        ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                        ctxs[0].lineTo(x, y+10);
+                        if (j % 2 == 0)
+                        {
+                            ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                            ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                        }
+                        ctxs[0].stroke();
+                        break;
+                    }
                 }
-                ctxs[0].stroke();
-                break;
             }
         }
-    }
-
+    });
 }
 
 /* function PdmOrStdHandler(event, data) {
@@ -1241,8 +1302,8 @@ function createrazmer()
         {x: 156, y: 460, arr:[3]}, {x: 498, y: 460, arr:[2]},
         {x: 558, y: 129, arr:[5]}, {x: 804, y: 129, arr:[4]}];
 
-    let razm = [{x: 144, y: 54, rotation: "up"}, {x: 144, y: 161, rotation: "down"},
-        {x: 156, y: 472, rotation: "left"}, {x: 498, y: 472, rotation: "right"}, {x: 558, y: 170, rotation: "left"}, {x: 804, y: 170, rotation: "right"}
+    let razm = [{x: 132, y: 54, rotation: "up"}, {x: 132, y: 161, rotation: "down"},
+        {x: 156, y: 488, rotation: "left"}, {x: 498, y: 488, rotation: "right"}, {x: 558, y: 184, rotation: "left"}, {x: 804, y: 184, rotation: "right"}
     ];
 
     for (let i=0;i<c.length;i++)
@@ -1325,5 +1386,24 @@ function setDrawingStatus()
             console.log(answer);
         }
     })*/
+}
+
+function setRazmer(razm)
+{
+    $.ajax({
+        type: "POST",
+        url: "drawing_main_text_ajax/save_size",
+        dataType: "json",
+        data:
+            {
+                "scheme":"scheme",
+                "razm1":1,
+                "razm2":2,
+                "razm3":3
+            },
+        success: function (answer) {
+            console.log(answer);
+        }
+    });
 }
 
