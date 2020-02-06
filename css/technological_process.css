@@ -102,3 +102,7 @@ ul, #myUL {
     background-color: black;
     z-index: 999;
 }
+
+.techProcessCell{
+    font-size: 1em !important;
+}

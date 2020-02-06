@@ -52,11 +52,13 @@ function technologicalProcessInit() {
                     for (let i = 1; i < 13; i++) {
                         tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
                         if (i === 1 || i === 5) {
-                            tr += 'class="tdBorderBlackLeft"';
+                            tr += 'class="tdBorderBlackLeft techProcessCell">';
                         } else if (i === 3 || i === 12) {
-                            tr += 'class="tdBorderBlackRight"';
+                            tr += 'class="tdBorderBlackRight">';
+                        }else {
+                            tr += 'class="techProcessCell">';
                         }
-                        tr += '>';
+
                         if (i === 4) {
                             tr += text;
                         }
@@ -86,11 +88,12 @@ function technologicalProcessInit() {
                     for (let i = 1; i < 13; i++) {
                         tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
                         if (i === 1 || i === 5) {
-                            tr += 'class="tdBorderBlackLeft"';
+                            tr += 'class="tdBorderBlackLeft">';
                         } else if (i === 3 || i === 12) {
-                            tr += 'class="tdBorderBlackRight"';
+                            tr += 'class="tdBorderBlackRight">';
+                        }else {
+                            tr += 'class="techProcessCell">';
                         }
-                        tr += '>';
                         if (i === 4) {
                             tr += $(ui.draggable).find("span").first().text();
                         }

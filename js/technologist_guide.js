@@ -1,5 +1,5 @@
 function initTechnologistGuide() {
-    getJsonByURL("json/technologist_guide.json", setTechnologistGuide, {})
+    getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
 }
 
 function setTechnologistGuide(json, add_data) {
@@ -61,11 +61,11 @@ function createTechGuideNodes(tech) {
         });
 
         let instr = '';
-        child.instruments.forEach(function (ins) {
+        child.tools.forEach(function (ins) {
             instr +=
                 "<li class='lastChild instruments_list_li'>" +
                     "<span>" + ins.name + "</span>" +
-                "</li>"
+                "</li>";
         });
 
         inp +=
