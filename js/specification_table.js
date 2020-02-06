@@ -900,6 +900,58 @@ function emptyCells() {
 
 }
 
+let spec_table_info = [
+    {
+        id: "component_1",
+        position: 1,
+        designation: "Обоз. дет. 1",
+        name: "Деталь 1",
+        number: 1
+    },
+    {
+        id: "component_2",
+        position: 2,
+        designation: "Обоз. дет. 2",
+        name: "Деталь 2",
+        number: 1
+    },
+    {
+        id: "component_3",
+        position: 3,
+        designation: "Обоз. дет. 3",
+        name: "Деталь 3",
+        number: 1
+    },
+    {
+        id: "component_4",
+        position: 4,
+        designation: "Обоз. дет. 4",
+        name: "Деталь 4",
+        number: 1
+    },
+    {
+        id: "std_component_1",
+        position: 5,
+        designation: "Обоз. стд. дет. 1",
+        name: "Стд. деталь 1",
+        number: 4
+    },
+    {
+        id: "std_component_2",
+        position: 6,
+        designation: "Обоз. стд. дет. 2",
+        name: "Стд. деталь 2",
+        number: 4
+    },
+    {
+        id: "std_component_3",
+        position: 7,
+        designation: "Обоз. стд. дет. 3",
+        name: "Стд. деталь 3",
+        number: 10
+    }
+]
+
 function setTableByPdmAndStd(tableBlock) {
     let length = Number($(tableBlock).find("tbody tr").length);
     $(tableBlock).find("tbody").find("tr").each(function (number) {
@@ -909,59 +961,9 @@ function setTableByPdmAndStd(tableBlock) {
     });
     let array = collectDataLabels(".left-side");
     //console.log(array)
-    let info = [
-        {
-            id: "component_1",
-            position: 1,
-            designation: "Обоз. дет. 1",
-            name: "Деталь 1",
-            number: 1
-        },
-        {
-            id: "component_2",
-            position: 2,
-            designation: "Обоз. дет. 2",
-            name: "Деталь 2",
-            number: 1
-        },
-        {
-            id: "component_3",
-            position: 3,
-            designation: "Обоз. дет. 3",
-            name: "Деталь 3",
-            number: 1
-        },
-        {
-            id: "component_4",
-            position: 4,
-            designation: "Обоз. дет. 4",
-            name: "Деталь 4",
-            number: 1
-        },
-        {
-            id: "std_component_1",
-            position: 5,
-            designation: "Обоз. стд. дет. 1",
-            name: "Стд. деталь 4",
-            number: 4
-        },
-        {
-            id: "std_component_2",
-            position: 6,
-            designation: "Обоз. стд. дет. 2",
-            name: "Стд. деталь 4",
-            number: 4
-        },
-        {
-            id: "std_component_3",
-            position: 7,
-            designation: "Обоз. стд. дет. 3",
-            name: "Стд. деталь 4",
-            number: 10
-        }
-    ]
+
     array.forEach(function (component_id) {
-        info.forEach(function (comp_info) {
+        spec_table_info.forEach(function (comp_info) {
             if (comp_info.id === component_id) {
                 addRowByData({
                     position: comp_info.position,

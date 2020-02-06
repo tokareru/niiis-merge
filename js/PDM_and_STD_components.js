@@ -167,6 +167,7 @@ function collectDataLabels(id_div) {
         arr.push(val.name);
     });
     //console.log(id_div + ":" + arr);
+    esiNotifyHandler(arr);
 
     if (id_div === "#pdm_field") {
         sendMessage({

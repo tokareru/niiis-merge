@@ -1,77 +1,6 @@
 function initESI() {
     esiGetDataFromServer();
 
-    /*let data = {
-        "details": [
-            {
-                "description": "дт 1",
-                "name": "Деталь 1",
-                "position": 1,
-                "amount": 1,
-                "id": 1,
-                "children": [
-                    {
-                        "description": "дт 1.1",
-                        "name": "Деталь 1.1",
-                        "position": 1,
-                        "amount": 1,
-                        "id": 1_1,
-                        "children": []
-                    },
-                    {
-                        "description": "дт 1.2",
-                        "name": "Деталь 1.2",
-                        "position": 1,
-                        "amount": 1,
-                        "id": 1_2,
-                        "children": []
-                    }
-                ]
-            },
-            {
-                "description": "дт 2",
-                "name": "Деталь 2",
-                "position": 1,
-                "amount": 2,
-                "id": 2,
-                "children": [
-                    {
-                        "description": "дт 2.1",
-                        "name": "Деталь 2.1",
-                        "position": 1,
-                        "amount": 1,
-                        "id": 2_1,
-                        "children": []
-                    },
-                    {
-                        "description": "дт 2.2",
-                        "name": "Деталь 2.2",
-                        "position": 1,
-                        "amount": 1,
-                        "id": 1,
-                        "children": []
-                    }
-                ]
-            },
-            {
-                "description": "дт 3",
-                "name": "Деталь 3",
-                "position": 1,
-                "amount": 3,
-                "id": 3,
-                "children": []
-            },
-            {
-                "description": "дт 4",
-                "name": "Деталь 4",
-                "position": 1,
-                "amount": 4,
-                "id": 4,
-                "children": []
-            }
-        ]
-    }*/
-
     $('.slider_button').on('click', function () {
         STDLibClick($('.slider_button'), $('.slider_main'), 15);
     });
@@ -83,33 +12,40 @@ function initESI() {
     });
 
 
-
-
 }
 
-function setESI(data) {
-    try {
-        $("#esi_branch_body").empty().append(createNodes(data.details));
-        esiSetBranchesNestedFunc();
-    }catch (e) {
-        
-    }
+function setESI(data, setNewInterval = false) {
 
-    setInterval(function () {
+    if (data.details.length) {
+        $("#esi_branch_body").empty().append(createNodes(data.details));
+    }
+    esiSetBranchesNestedFunc();
+
+    if (setNewInterval) setInterval(function () {
         let _data = convertArray(getDataFromSpecTable());
-        //console.log(_data)
+        _data = (_data === 'empty') ? { details: []} : _data;
+        if (_data !== 'empty') {
+            if (_data.details.length === 0) _data = data;
+        }
+
+        //console.log(_data);
 
         function arraysIdentical(a, b) {
             let i = a.length;
             if (i != b.length) return false;
             while (i--) {
-                if (a[i] !== b[i]) return false;
+                if (a[i].name !== b[i].name || a[i].description !== b[i].description || a[i].position !== b[i].position
+                || a[i].amount !== b[i].amount)
+                    return false;
             }
             return true;
         }
 
-        if (arraysIdentical(_data, data) || _data === undefined) return;
+        //console.log(_data)
+
+        if (arraysIdentical(_data.details, data.details)) return;
         data = _data;
+        //alert()
         $("#esi_branch_body").empty().append(createNodes(_data.details));
 
         esiSetBranchesNestedFunc();
@@ -136,53 +72,73 @@ function createNodes(children) {
     children.forEach(function (child) {
         let _children =
             (child.children.length > 0) ?
-            "<li>" +
+                "<li>" +
                 "<span class='caret detailChildren'>Состав</span>" +
                 "<ul class='nested'>" +
-                    createNodes(child.children) +
+                createNodes(child.children) +
                 "</ul>" +
-            "</li>" : '';
+                "</li>" : '';
         node +=
             "<li>" +
-                "<span class='caret detailChildren'>" + child.name + "</span>" +
-                "<ul class='nested'>" +
-                    "<li>" +
-                        "<span class='caret'>Название</span>" +
-                        "<ul class='nested'>" +
-                            "<li class='lastChild'>" +
-                                "<input " + isDisabled + " value='" + child.name + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
-                            "</li>" +
-                        "</ul>" +
-                    "</li>" +
-                    "<li>" +
-                        "<span class='caret'>Обозначение</span>" +
-                        "<ul class='nested'>" +
-                            "<li class='lastChild'>" +
-                                "<input " + isDisabled + " value='" + child.description + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
-                            "</li>" +
-                        "</ul>" +
-                    "</li>" +
-                    "<li>" +
-                        "<span class='caret'>Позиция</span>" +
-                        "<ul class='nested'>" +
-                            "<li class='lastChild'>" +
-                                "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
-                            "</li>" +
-                        "</ul>" +
-                    "</li>" +
-                    "<li>" +
-                        "<span class='caret'>Количество</span>" +
-                        "<ul class='nested'>" +
-                            "<li class='lastChild'>" +
-                                "<input " + isDisabled + " value='" + child.amount + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
-                            "</li>" +
-                        "</ul>" +
-                    "</li>" +
-                    _children +
-                "</ul>" +
+            "<span class='caret detailChildren'>" + child.name + "</span>" +
+            "<ul class='nested'>" +
+            "<li>" +
+            "<span class='caret'>Название</span>" +
+            "<ul class='nested'>" +
+            "<li class='lastChild'>" +
+            "<input " + isDisabled + " value='" + child.name + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
+            "</li>" +
+            "</ul>" +
+            "</li>" +
+            "<li>" +
+            "<span class='caret'>Обозначение</span>" +
+            "<ul class='nested'>" +
+            "<li class='lastChild'>" +
+            "<input " + isDisabled + " value='" + child.description + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
+            "</li>" +
+            "</ul>" +
+            "</li>" +
+            "<li>" +
+            "<span class='caret'>Позиция</span>" +
+            "<ul class='nested'>" +
+            "<li class='lastChild'>" +
+            "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
+            "</li>" +
+            "</ul>" +
+            "</li>" +
+            "<li>" +
+            "<span class='caret'>Количество</span>" +
+            "<ul class='nested'>" +
+            "<li class='lastChild'>" +
+            "<input " + isDisabled + " value='" + child.amount + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
+            "</li>" +
+            "</ul>" +
+            "</li>" +
+            _children +
+            "</ul>" +
             "</li>";
     });
     return node;
+}
+
+function esiNotifyHandler(array){
+    let _data = {
+        "details": []
+    };
+    array.forEach(function (component_id) {
+        spec_table_info.forEach(function (component) {
+            if (component_id === component.id){
+                _data.details.push({
+                    "name": component.name,
+                    "description": component.designation,
+                    "amount": component.number,
+                    "position": component.position,
+                    "children": []
+                })
+            }
+        })
+    })
+    setESI(_data);
 }
 
 function getDataFromSpecTable() {
@@ -197,17 +153,17 @@ function getDataFromSpecTable() {
                     || Role === "technologist" || Role === "production_master" || Role === "worker") {
                     let $div = $(this).find("div");
                     row_arr.push($div.text())
-                }else{
-                if (cols > 1){
-                    let $div = $(this).find("div");
-                    row_arr.push($div.text())
+                } else {
+                    if (cols > 1) {
+                        let $div = $(this).find("div");
+                        row_arr.push($div.text())
+                    }
                 }
-            }
             });
             array.push(row_arr);
             //console.log(row_arr)
         }
-
+        if (array.length === 0) array = ["empty"];
     });
     return array;
 }
@@ -224,7 +180,7 @@ function esiGetDataFromServer() {
                 arr.push([row.row[0].text, row.row[1].text, row.row[2].text, row.row[3].text]);
             })
             console.log(arr)
-            setESI(convertArray(arr))
+            setESI(convertArray(arr), true)
         },
         error: function (message) {
             //console.log("Can't load the data");
@@ -234,6 +190,8 @@ function esiGetDataFromServer() {
 
 function convertArray(arr) {
     //console.log(arr);
+    if (arr[0] === "empty") return "empty";
+
     let obj = {
         "details": []
     };
