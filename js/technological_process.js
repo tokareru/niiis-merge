@@ -46,7 +46,8 @@ function technologicalProcessInit() {
                     //console.log(instruments);
                     //console.log(equipment);
 
-                    let tr = '<td><button class="tech_proc_del_td btn bg-white p-0">Удл.</button></td>';
+                    let tr = '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
+                        '<i class="fa fa-times"></i></button></td>';
                     let $lastTr = $table.find('tr:last');
                     for (let i = 1; i < 13; i++) {
                         tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
@@ -77,7 +78,8 @@ function technologicalProcessInit() {
                         "<td colspan='6'></td><td colspan='5'></td><td colspan='5'></td><td colspan='5'></td>" +
                         "<td colspan='5'></td><td colspan='5' class='tdBorderBlackRight'></td></tr>"
                     ).insertBefore($table.find('tr:last'));
-                    let tr = '<td><button class="tech_proc_del_td btn bg-white p-0">Удл.</button></td>';
+                    let tr = '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
+                        '<i class="fa fa-times"></i></button></td>';
                     let $lastTr = $table.find('tr:last');
                     for (let i = 1; i < 13; i++) {
                         tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
@@ -212,8 +214,9 @@ function technologicalProcessInit() {
                 return;
             $(this).find('td:first').before(`<td ${index === 0?
             'rowspan="3"':''}>${index > 4 && index + 1 !== $table.find('tr').length ? '' +
-                '<button class="tech_proc_del_td btn bg-white p-0">Удл.</button>': ''}</td>`);
+                '<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>': ''}</td>`);
         });
+    $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>')
 }
 
 function addStyleTd($table, coords, style) {
