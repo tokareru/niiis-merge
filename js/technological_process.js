@@ -72,7 +72,9 @@ function technologicalProcessInit() {
                 }
 
                 if ($(ui.draggable).hasClass("techName")) {
-                     if ($("#technological_process_field").find("tbody tr").length > 6) $("<tr><td><button class='tech_proc_del_td btn bg-white p-0'>Удл.</button></td><td colspan='4'" +
+                     if ($("#technological_process_field").find("tbody tr").length > 6)
+                         $("<tr><td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
+                             "</td><td colspan='4'" +
                         " class='tdBorderBlackLeft'></td><td colspan='3'></td><td colspan='4' class='tdBorderBlackRight'></td>" +
                         "<td colspan='34'></td><td colspan='12' class='tdBorderBlackLeft'></td><td colspan='12'></td>" +
                         "<td colspan='6'></td><td colspan='5'></td><td colspan='5'></td><td colspan='5'></td>" +
