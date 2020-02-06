@@ -21,6 +21,15 @@
     background-color: transparent;
 }
 
+#technologist_guide_field .caret:hover{
+    color: black !important;
+}
+
+.detailChildren:hover{
+    background-color: black;
+    color: white;
+}
+
 .operationName{
     z-index: 999;
 }

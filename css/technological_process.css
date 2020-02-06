@@ -49,6 +49,11 @@ ul, #myUL {
 }
 
 .caret:hover{
+    color: black;
+    background-color: #FFFFFF;
+}
+
+#esi_branch_body .caret:hover{
     color: white;
     background-color: #515356;
 }
