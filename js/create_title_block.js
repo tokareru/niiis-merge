@@ -155,7 +155,80 @@ function initTitleBlock() {
 
     $('#addToServerTitleBlock').on('click', function () {
         addToServerTitleBlock();
+        addToServerRazmer();
+        HideInputAndDrawRazmerOnScheme();
+        setDrawingStatus();
     })
+}
+
+function setDrawingStatus()
+{
+    $.ajax({
+        type: "GET",
+        url: "drawing_main_text_ajax/is_drawing_finished",
+        dataType: "json",
+        data: "type=set",
+        success: function (answer) {
+
+        }
+    });
+
+    /*$.ajax({
+        type: "POST",
+        url: "/start_ajax/db_change_time",
+        data: {
+            login: login
+        },
+        success: function (answer) {
+            console.log(answer);
+        }
+    })*/
+}
+
+function HideInputAndDrawRazmerOnScheme()
+{
+    for (let i=1;i<4;i++)
+    {
+        $("#razmNumber"+i).hide();
+        if (i == 1)
+        {
+            $( "#scheme1" ).append("<canvas id='razmer1'></canvas>");
+            let ct = document.getElementById("razmer1").getContext("2d");
+            ct.beginPath();
+            ct.font = "italic 10pt Arial";
+            ct.fillText($("#razmNumber1").val(), 105, 50);
+            ct.stroke();
+        }
+        else
+        {
+            let j=(i-1)*2;
+            ctxs[0].fillText($("#razmNumber"+i).val(), areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y-7);
+        }
+    }
+}
+
+function addToServerRazmer()
+{
+    let razm1 = $("#razmNumber1").val();
+    let razm2 = $("#razmNumber2").val();
+    let razm3 = $("#razmNumber3").val();
+
+    $.ajax({
+        type: "POST",
+        url: "drawing_main_text_ajax/save_size",
+        dataType: "json",
+        data:
+            {
+                "scheme":"scheme",
+                "razm1":razm1,
+                "razm2":razm2,
+                "razm3":razm3
+            },
+        success: function (answer) {
+            console.log(answer);
+        }
+    });
+
 }
 
 function changeTableRow($row_tr, settings, $table, percent) {
