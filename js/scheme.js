@@ -36,6 +36,7 @@ export function initScheme() {
 
     createCoor();
     createrazmer();
+    createKontur();
 
     var container, stats;
 
@@ -1405,5 +1406,10 @@ function setRazmer(razm)
             console.log(answer);
         }
     });
+}
+
+function createKontur()
+{
+    $( "#hidedraw" ).after( "<img id='Kontur1' src='./images/scheme/Kontur/forward1gray1.png'>" );
 }
 

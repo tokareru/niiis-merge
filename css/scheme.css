@@ -17,6 +17,13 @@
     z-index: 5;
 }
 
+#Kontur1 {
+    width: 39.8%;
+    position: absolute;
+    top: 21px;
+    left: 151px;
+}
+
 #razmNumber1 {
     position: absolute;
     top: 93px;
