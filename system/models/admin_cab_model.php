@@ -42,11 +42,11 @@ class admin_cab_model extends model
     $q = sys::$PDO->prepare($sql);
     $q->execute(array("login" => $_SESSION["niiis"]["login"]));
     $Q = $q->fetchAll();
-    $sql = "UPDATE SYSTEM_CONF SET is_drawing_finished = '0'";
+    $sql = "UPDATE SYS_CNF SET cnfval = 'false' where cnfname = 'is_drawing_finished'";
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $Q = $q->fetchAll();
-    $sql = "UPDATE SYSTEM_CONF SET ROUND=1";
+    $sql = "UPDATE SYS_CNF SET cnfval = '1' where cnfname = 'round'";
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $Q = $q->fetchAll();
