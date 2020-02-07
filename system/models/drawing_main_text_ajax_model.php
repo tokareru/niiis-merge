@@ -39,7 +39,7 @@ class drawing_main_text_ajax_model extends model {
               $q = sys::$PDO->prepare($sql);
               $q->execute();
               $Q = $q->fetchAll();
-              return array("is_drawing_finished"=>$Q[0][0]);
+              return array("is_drawing_finished"=>(bool)$Q[0][0]);
             }
         }else {
             return array("response"=>"NOT FOUND GET REQUEST");
