@@ -40,7 +40,7 @@ class drawing_main_text_ajax_model extends model {
               $q->execute();
               $Q = $q->fetchAll();
               
-              return array("is_drawing_finished"=>$Q[0][0]);
+              return array("is_drawing_finished"=>($Q[0][0]=='true')?true:false);
             }
         }else {
             return array("response"=>"NOT FOUND GET REQUEST");
