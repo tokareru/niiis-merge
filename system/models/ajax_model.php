@@ -35,8 +35,13 @@ class ajax_model extends model {
     }
     function save_work_place_tech_process(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            
+            foreach($_POST as $row){
+                
+            }
         }
+    }
+    function get_work_place_tech_process(){
+        
     }
     function save_pdm_standart_products(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
