@@ -39,14 +39,21 @@ class ajax_model extends model {
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $i = 1;
-            foreach($_POST as $row){
-                if(isset($row["empty"])){
-                    $sql = "INSERT INTO WORK_PLACE_TECH_PROCESS(row_id, item_id, lvl)
-                            VALUES(:row_id, :item_id, :lvl)";
-                    $q = sys::$PDO->prepare($sql);
-                    $q->execute(array("row_id"=>$i++, "item_id" => $row["id"], "lvl" => $row["lvl"]));
-                }
-            }
+            return $_POST;
+//            foreach($_POST as $row){
+//                
+//                if(!isset($row["empty"])){
+//                    $sql = "INSERT INTO WORK_PLACE_TECH_PROCESS(row_id, item_id, lvl)
+//                            VALUES(:row_id, :item_id, :lvl)";
+//                    $q = sys::$PDO->prepare($sql);
+//                    $q->execute(array("row_id"=>$i++, "item_id" => $row["id"], "lvl" => $row["lvl"]));
+//                }else{
+//                    $sql = "INSERT INTO WORK_PLACE_TECH_PROCESS(row_id, item_id, lvl)
+//                            VALUES(:row_id, null, null)";
+//                    $q = sys::$PDO->prepare($sql);
+//                    $q->execute(array("row_id"=>$i++));
+//                }
+//            }
             return(array("response"=>200));
         }
         else{
