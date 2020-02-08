@@ -18,10 +18,8 @@
 }
 
 #Kontur1 {
-    width: 39.8%;
     position: absolute;
-    top: 21px;
-    left: 151px;
+    margin-left: -3px;
 }
 
 #razmNumber1 {

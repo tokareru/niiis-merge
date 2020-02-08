@@ -36,7 +36,7 @@ export function initScheme() {
 
     createCoor();
     createrazmer();
-    createKontur();
+    //createKontur();
 
     var container, stats;
 
@@ -172,6 +172,7 @@ export function initScheme() {
     }
 
     //-0.315
+    var konturallow = true;
     function loadSTL(src, color = 0x808080, arrmesh, pos = {x: 1, y: 0.2, z: 1}, rot = {
         x: -Math.PI / 2,
         y: 0,
@@ -261,7 +262,17 @@ export function initScheme() {
                     getDrawingStatus();
                     //console.log(echo.is_drawing_finished);
                     if ( echo.is_drawing_finished)
+                    {
                         clearInterval(getStatusDraw);
+                    }
+                    else
+                    {
+                        if (konturallow)
+                        {
+                            createKontur();
+                            konturallow = false;
+                        }
+                    }
                 }catch (e) {
                 }
 
@@ -305,6 +316,7 @@ export function initScheme() {
                                 $('#drawcanv').css({'display': 'none'});
                                 $('#topcanv').css({'display': 'none'});
                             }
+
                             if(echo.is_drawing_finished)
                             {
                                 //console.log('finish');
@@ -923,6 +935,7 @@ export function initScheme() {
                             {
                                 $("#ready").click();
                                 $("#scheme1 div canvas")[0].style.cssText += " display:block;";
+                                $("#Kontur1").hide();
 
                             }
                             else
@@ -1408,8 +1421,186 @@ function setRazmer(razm)
     });
 }
 
-function createKontur()
-{
-    $( "#hidedraw" ).after( "<img id='Kontur1' src='./images/scheme/Kontur/forward1gray1.png'>" );
+function createKontur() {
+    let areasCircles1 = [];
+    let areasCircles2 = [];
+    let areasCircles3 = [];
+
+    for (let i = 0; i < areas1.length; i++) {
+        if (i < 9) {
+            areasCircles1.push(areas1[i]);
+        }
+
+        if (i > 8 && i < 20) {
+            areasCircles2.push(areas1[i]);
+        }
+
+        if (i > 19) {
+            areasCircles3.push(areas1[i]);
+        }
+    }
+
+    let w = $("#drawcanv").width();
+    let h = $("#drawcanv").height();
+    $("#hidedraw").after('<canvas width=' + w + ' height=' + h + ' id=Kontur1>');
+
+    let CX = $("#Kontur1")[0].getContext("2d");
+    CX.strokeStyle = "#9aa197";
+    for (let i = 0; i < areasCircles1.length - 1; i++) {
+        CX.beginPath();
+        CX.moveTo(areasCircles1[i].x, areasCircles1[i].y);
+        CX.lineTo(areasCircles1[i + 1].x, areasCircles1[i + 1].y);
+        CX.stroke();
+
+        if (i == areasCircles1.length - 2) {
+            CX.beginPath();
+            CX.moveTo(areasCircles1[i + 1].x, areasCircles1[i + 1].y);
+            CX.lineTo(areasCircles1[0].x, areasCircles1[0].y);
+            CX.stroke();
+        }
+    }
+
+    for (let i = 0; i < areasCircles2.length - 1; i++) {
+        CX.beginPath();
+        CX.moveTo(areasCircles2[i].x, areasCircles2[i].y);
+        CX.lineTo(areasCircles2[i + 1].x, areasCircles2[i + 1].y);
+        CX.stroke();
+
+        if (i == areasCircles2.length - 2) {
+            CX.beginPath();
+            CX.moveTo(areasCircles2[i + 1].x, areasCircles2[i + 1].y);
+            CX.lineTo(areasCircles2[0].x, areasCircles2[0].y);
+            CX.stroke();
+        }
+    }
+
+    for (let i = 0; i < areasCircles3.length - 1; i++) {
+        CX.beginPath();
+        CX.moveTo(areasCircles3[i].x, areasCircles3[i].y);
+        CX.lineTo(areasCircles3[i + 1].x, areasCircles3[i + 1].y);
+        CX.stroke();
+
+        if (i == areasCircles3.length - 2) {
+            CX.beginPath();
+            CX.moveTo(areasCircles3[i + 1].x, areasCircles3[i + 1].y);
+            CX.lineTo(areasCircles3[0].x, areasCircles3[0].y);
+            CX.stroke();
+        }
+    }
 }
+
+/*
+CX = $("#drawcanv")[0].getContext("2d");
+for (let i=0;i<areas1.length;i++)
+{
+    CX.beginPath();
+    CX.moveTo(gx, gy);
+    CX.lineTo(x, y);
+    CX.stroke();
+}
+
+w=$("#drawcanv").width();
+h=$("#drawcanv").height();
+$( "#hidedraw" ).after( '<canvas width='+w+' height='+h+' id=Kontur1>' );
+
+areasCircles1 = [];
+areasCircles2 = [];
+areasCircles3 = [];
+for (let i=0;i<areas1.length-1;i++)
+{
+    if (i<9)
+    {
+        areasCircles1.push(areas1[i]);
+    }
+
+    if (i>8 && i<20)
+    {
+        areasCircles2.push(areas1[i]);
+    }
+
+    if (i>19)
+    {
+        areasCircles3.push(areas1[i]);
+    }
+}
+
+
+areasCircles1 = [];
+areasCircles2 = [];
+areasCircles3 = [];
+for (let i=0;i<areas1.length;i++)
+{
+    if (i<9)
+    {
+        areasCircles1.push(areas1[i]);
+    }
+
+    if (i>8 && i<20)
+    {
+        areasCircles2.push(areas1[i]);
+    }
+
+    if (i>19)
+    {
+        areasCircles3.push(areas1[i]);
+    }
+}
+
+w=$("#drawcanv").width();
+h=$("#drawcanv").height();
+$( "#hidedraw" ).after( '<canvas width='+w+' height='+h+' id=Kontur1>' );
+
+CX = $("#Kontur1")[0].getContext("2d");
+CX.strokeStyle = "#9aa197";
+for (let i=0;i<areasCircles1.length-1;i++)
+{
+    CX.beginPath();
+    CX.moveTo(areasCircles1[i].x, areasCircles1[i].y);
+    CX.lineTo(areasCircles1[i+1].x, areasCircles1[i+1].y);
+    CX.stroke();
+
+    if (i==areasCircles1.length-2)
+    {
+        CX.beginPath();
+        CX.moveTo(areasCircles1[i].x, areasCircles1[i].y);
+        CX.lineTo(areasCircles1[0].x, areasCircles1[0].y);
+        CX.stroke();
+    }
+}
+
+for (let i=0;i<areasCircles2.length-1;i++)
+{
+    CX.beginPath();
+    CX.moveTo(areasCircles2[i].x, areasCircles2[i].y);
+    CX.lineTo(areasCircles2[i+1].x, areasCircles2[i+1].y);
+    CX.stroke();
+
+    if (i==areasCircles2.length-2)
+    {
+        CX.beginPath();
+        CX.moveTo(areasCircles2[i].x, areasCircles2[i].y);
+        CX.lineTo(areasCircles2[0].x, areasCircles2[0].y);
+        CX.stroke();
+    }
+}
+
+for (let i=0;i<areasCircles3.length-1;i++)
+{
+    CX.beginPath();
+    CX.moveTo(areasCircles3[i].x, areasCircles3[i].y);
+    CX.lineTo(areasCircles3[i+1].x, areasCircles3[i+1].y);
+    CX.stroke();
+
+    if (i==areasCircles3.length-2)
+    {
+        CX.beginPath();
+        CX.moveTo(areasCircles3[i].x, areasCircles3[i].y);
+        CX.lineTo(areasCircles3[0].x, areasCircles3[0].y);
+        CX.stroke();
+    }
+}
+
+
+
+*/
 
