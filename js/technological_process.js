@@ -250,11 +250,11 @@ function saveTechProcessTable($table) {
     });
     console.log(saveObj);
     $.ajax({
-        url: '',
+        url: 'ajax/save_work_place_tech_process',
         type: 'POST',
         data: saveObj,
         success: function (res) {
-            //console.log(res);
+            console.log(res);
         }
     })
 }
