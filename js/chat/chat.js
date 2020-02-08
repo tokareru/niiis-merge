@@ -39,12 +39,12 @@ function initAllUsersChat() {
         chatClick();
     });
 
-    $("#shell").click(function () {
+    /*$("#shell").click(function () {
 
         if ($('#but').children().attr('id') === 'span_icon_right') {
             $('#but').trigger("click");
         }
-    });
+    });*/
 
     $('#chat_window_text').on('keypress', function (event) {
         if (event.which === 13) {
