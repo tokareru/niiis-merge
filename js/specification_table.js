@@ -393,6 +393,12 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
             $input.val(addToStrHTMLTags($input.val(), table_block));
         });
     }
+
+    $('#spec_field_clear').on('click', function () {
+        $table_edit.find('tbody .firstCol').each(function () {
+            $(this).click();
+        })
+    })
 }
 
 function validateDiv(str_div) {
