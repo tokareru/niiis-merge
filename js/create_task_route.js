@@ -160,11 +160,11 @@ function createTaskRouteEvents(settings) {
     $('.slider_button_create').on('click', function () {
         STDLibClick($('.slider_button_create'), $('.main_all_create_task'), 25);
     });
-    $('#shell').on('click', function () {
+   /* $('#shell').on('click', function () {
         if ($('.main_all_create_task').attr('style') === 'z-index: 999; right: 0px;') {
             $('.slider_button_create').trigger('click');
         }
-    });
+    });*/
 
     $('.ctr_cell').on('click', function () {
         $(this).find('.ctr_div_active').removeClass('ctr_div_active').addClass('ctr_div_hidden');

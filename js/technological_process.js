@@ -26,6 +26,7 @@ function technologicalProcessInit() {
 
     $('#tech_process_table').droppable(
         {
+            tolerance: "touch",
             drop: function (event, ui) {
 
                 function setCells(obj) {
@@ -70,12 +71,14 @@ function technologicalProcessInit() {
                         }
                         tr += '</td>';
                     }
-                    $('<tr>' + tr + '</tr>').insertBefore($table.find('tr:last'));
+                    $("<tr tech-lvl='" + $(obj).attr("tech-lvl") + "' tech-id='" + $(obj).attr("tech-id") + "'>" + tr + '</tr>').insertBefore($table.find('tr:last'));
                 }
 
                 if ($(ui.draggable).hasClass("techName")) {
-                     if ($("#technological_process_field").find("tbody tr").length > 6)
-                         $("<tr><td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
+                    console.log($(ui.draggable).attr("tech-lvl"));
+                    if ($("#technological_process_field").find("tbody tr").length > 6)
+                         $("<tr empty='empty'>" +
+                             "<td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
                              "</td><td colspan='4'" +
                         " class='tdBorderBlackLeft'></td><td colspan='3'></td><td colspan='4' class='tdBorderBlackRight'></td>" +
                         "<td colspan='34'></td><td colspan='12' class='tdBorderBlackLeft'></td><td colspan='12'></td>" +
@@ -100,7 +103,7 @@ function technologicalProcessInit() {
 
                         tr += '</td>';
                     }
-                    $('<tr>' + tr + '</tr>').insertBefore($table.find('tr:last'));
+                    $("<tr tech-lvl='" + $(ui.draggable).attr("tech-lvl") + "' tech-id='" + $(ui.draggable).attr("tech-id") + "'>" + tr + '</tr>').insertBefore($table.find('tr:last'));
                     $(ui.draggable).find(".operationName").each(function () {
                         setCells($(this))
                     });
@@ -221,13 +224,40 @@ function technologicalProcessInit() {
             'rowspan="3"':''}>${index > 4 && index + 1 !== $table.find('tr').length ? '' +
                 '<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>': ''}</td>`);
         });
-    $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>')
+    $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>');
+
+
+    $('#tech_process_save').on('click', function () {
+        saveTechProcessTable($table);
+    });
 }
 
 function addStyleTd($table, coords, style) {
     $table.find('tr').eq(coords[1]).children().eq(coords[0]).addClass(style);
 }
 
+function saveTechProcessTable($table) {
+    let saveObj = [];
+    $table.find('tr').each(function () {
+        let attrLvl = $(this).attr('tech-lvl');
+        if (attrLvl === undefined){
+            if ($(this).attr('empty') !== undefined){
+                saveObj.push({empty: true});
+                return;
+            } else return;
+        }
+        saveObj.push({lvl: attrLvl, id: $(this).attr('tech-id')});
+    });
+    console.log(saveObj);
+    $.ajax({
+        url: 'ajax/save_work_place_tech_process',
+        type: 'POST',
+        data: {save : saveObj},
+        success: function (res) {
+            console.log(res);
+        }
+    })
+}
 
 /*function init_tech_process() {
     /!* $('#esi_field').append('<button id=\'techProcessBlock_field_btn\' class="btn btn-custom btn-block">' +

@@ -7,8 +7,9 @@
  */
 
 ?>
-<div class="col-3">
+<div class="col-12">
      <input value="Сохранить табл. на сервер" type="button" class="btn btn-sm btn-custom post_data_button">
+     <input value="Очистить" type="button" class="btn btn-sm btn-custom"id="spec_field_clear">
 </div>
 <!--
 <div class="col-md-12">

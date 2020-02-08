@@ -37,9 +37,9 @@ function setTechnologistGuide(json, add_data) {
         appendTo: "#tech_process_table",
         drag: function (event, ui) {
             $(ui.helper).find("span").first().css("color", "black !important");
-            $(ui.helper).find("span").css("background-color", "blanchedalmond");
-            $(ui.helper).find("li").css("background-color", "blanchedalmond");
-            $(ui.helper).find("ul").css("background-color", "blanchedalmond");
+            $(ui.helper).find("span").css("background-color", "#dbf4ff");
+            $(ui.helper).find("li").css("background-color", "#dbf4ff");
+            $(ui.helper).find("ul").css("background-color", "#dbf4ff");
         }
     });
     $(".techName").draggable({
@@ -47,9 +47,9 @@ function setTechnologistGuide(json, add_data) {
         appendTo: "#tech_process_table",
         drag: function (event, ui) {
             $(ui.helper).find("span").css("color", "black !important");
-            $(ui.helper).find("span").css("background-color", "blanchedalmond");
-            $(ui.helper).find("li").css("background-color", "blanchedalmond");
-            $(ui.helper).find("ul").css("background-color", "blanchedalmond");
+            $(ui.helper).find("span").css("background-color", "#dbf4ff");
+            $(ui.helper).find("li").css("background-color", "#dbf4ff");
+            $(ui.helper).find("ul").css("background-color", "#dbf4ff");
         }
     })
 }
@@ -81,7 +81,7 @@ function createTechGuideNodes(tech) {
         });
 
         inp +=
-            "<il class='operationName'>" +
+            "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
                 "<span class='caret'>" + (i + 1).toString() + "." + child.name + "</span>" +
                 "<ul class='nested pl-2'>" +
                     "<li>" +
@@ -109,7 +109,7 @@ function createTechGuideNodes(tech) {
     });
 
     node =
-        "<li class='techName'>" +
+        "<li tech-lvl='" + tech.lvl + "' tech-id='" + tech.id + "' class='techName'>" +
             "<span class='caret detailChildren'>" + tech.name + "</span>" +
             "<ul class='nested pl-2'>" +
                 inp +

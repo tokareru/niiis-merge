@@ -58,7 +58,7 @@
 
          </tbody>
      </table>
-
+<button id='tech_process_save' class="btn bg-info text-white">Сохранить</button>
 
 <script>
 

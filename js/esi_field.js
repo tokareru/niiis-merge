@@ -5,11 +5,11 @@ function initESI() {
         STDLibClick($('.slider_button'), $('.slider_main'), 15);
     });
 
-    $('#shell').on('click', function () {
+   /* $('#shell').on('click', function () {
         if ($('.slider_main').attr('style') === 'z-index: 999; right: 0px;') {
             $('.slider_button').trigger('click');
         }
-    });
+    });*/
 
 
 }
