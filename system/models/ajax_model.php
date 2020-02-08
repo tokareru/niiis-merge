@@ -35,9 +35,22 @@ class ajax_model extends model {
     }
     function save_work_place_tech_process(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "DELETE * FROM WORK_PLACE_TECH_PROCESS";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $i = 1;
             foreach($_POST as $row){
-                
+                if(isset($row["empty"])){
+                    $sql = "INSERT INTO WORK_PLACE_TECH_PROCESS(row_id, item_id, lvl)
+                            VALUES(:row_id, :item_id, :lvl)";
+                    $q = sys::$PDO->prepare($sql);
+                    $q->execute(array("row_id"=>$i++, "item_id" => $row["id"], "lvl" => $row["lvl"]));
+                }
             }
+            return(array("response"=>200));
+        }
+        else{
+            return array("response"=>"NOT FOUND POST REQUEST");
         }
     }
     function get_work_place_tech_process(){
@@ -51,6 +64,9 @@ class ajax_model extends model {
             $q->execute(array("model_name" => $_POST["model_name"], "path_3d" => $_POST["path_3d"], "descr" => $_POST["descr"], "user_id" => $_POST["user_id"], "type" => $_POST["type"]));
         
             return(array("response" => 200));
+        }
+        else{
+            return array("response"=>"NOT FOUND POST REQUEST");
         }
     }
     function get_pdm_standart_products(){
