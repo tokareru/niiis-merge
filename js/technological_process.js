@@ -70,12 +70,14 @@ function technologicalProcessInit() {
                         }
                         tr += '</td>';
                     }
-                    $('<tr>' + tr + '</tr>').insertBefore($table.find('tr:last'));
+                    $("<tr tech-lvl='" + $(obj).attr("tech-lvl") + "' tech-id='" + $(obj).attr("tech-id") + "'>" + tr + '</tr>').insertBefore($table.find('tr:last'));
                 }
 
                 if ($(ui.draggable).hasClass("techName")) {
-                     if ($("#technological_process_field").find("tbody tr").length > 6)
-                         $("<tr><td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
+                    console.log($(ui.draggable).attr("tech-lvl"));
+                    if ($("#technological_process_field").find("tbody tr").length > 6)
+                         $("<tr empty='empty'>" +
+                             "<td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
                              "</td><td colspan='4'" +
                         " class='tdBorderBlackLeft'></td><td colspan='3'></td><td colspan='4' class='tdBorderBlackRight'></td>" +
                         "<td colspan='34'></td><td colspan='12' class='tdBorderBlackLeft'></td><td colspan='12'></td>" +
@@ -100,7 +102,7 @@ function technologicalProcessInit() {
 
                         tr += '</td>';
                     }
-                    $('<tr>' + tr + '</tr>').insertBefore($table.find('tr:last'));
+                    $("<tr tech-lvl='" + $(ui.draggable).attr("tech-lvl") + "' tech-id='" + $(ui.draggable).attr("tech-id") + "'>" + tr + '</tr>').insertBefore($table.find('tr:last'));
                     $(ui.draggable).find(".operationName").each(function () {
                         setCells($(this))
                     });
