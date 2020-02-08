@@ -16,5 +16,17 @@ class ajax_controller extends Controller {
     $data = $this->model->get_technologist_info();
     $this->view->render('', 'ajax_view_json.php', $data);    
   }
+  function save_work_place_tech_process(){
+    $data = $this->model->save_work_place_tech_process();
+    $this->view->render('', 'ajax_view_json.php', $data); 
+  }
+  function save_pdm_standart_products(){
+    $data = $this->model->save_pdm_standart_products();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function get_pdm_standart_products(){
+    $data = $this->model->get_pdm_standart_products();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
 }
 
