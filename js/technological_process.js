@@ -252,7 +252,7 @@ function saveTechProcessTable($table) {
     $.ajax({
         url: 'ajax/save_work_place_tech_process',
         type: 'POST',
-        data: saveObj,
+        data: {save : saveObj},
         success: function (res) {
             console.log(res);
         }
