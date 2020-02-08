@@ -10,7 +10,7 @@ ul, #myUL {
 .caret {
     padding: 5px;
     margin: 3px;
-    font: normal normal normal 1.3em/1 FontAwesome;
+    font: normal normal normal 1.15em/1 FontAwesome;
     cursor: pointer;
     -webkit-user-select: none; /* Safari 3.1+ */
     -moz-user-select: none; /* Firefox 2+ */
@@ -56,6 +56,10 @@ ul, #myUL {
 #esi_branch_body .caret:hover{
     color: white;
     background-color: #515356;
+}
+
+#esi_branch_body .active li{
+    border-left-style: none;
 }
 
 .emptySpan{

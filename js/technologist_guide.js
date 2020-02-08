@@ -37,9 +37,9 @@ function setTechnologistGuide(json, add_data) {
         appendTo: "#tech_process_table",
         drag: function (event, ui) {
             $(ui.helper).find("span").first().css("color", "black !important");
-            $(ui.helper).find("span").css("background-color", "blanchedalmond");
-            $(ui.helper).find("li").css("background-color", "blanchedalmond");
-            $(ui.helper).find("ul").css("background-color", "blanchedalmond");
+            $(ui.helper).find("span").css("background-color", "#dbf4ff");
+            $(ui.helper).find("li").css("background-color", "#dbf4ff");
+            $(ui.helper).find("ul").css("background-color", "#dbf4ff");
         }
     });
     $(".techName").draggable({
@@ -47,9 +47,9 @@ function setTechnologistGuide(json, add_data) {
         appendTo: "#tech_process_table",
         drag: function (event, ui) {
             $(ui.helper).find("span").css("color", "black !important");
-            $(ui.helper).find("span").css("background-color", "blanchedalmond");
-            $(ui.helper).find("li").css("background-color", "blanchedalmond");
-            $(ui.helper).find("ul").css("background-color", "blanchedalmond");
+            $(ui.helper).find("span").css("background-color", "#dbf4ff");
+            $(ui.helper).find("li").css("background-color", "#dbf4ff");
+            $(ui.helper).find("ul").css("background-color", "#dbf4ff");
         }
     })
 }
