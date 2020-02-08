@@ -17,7 +17,7 @@ class drawing_main_text_ajax_model extends model {
                 if (trim($_SERVER['SERVER_NAME'], '/') === '82.146.41.218') {
                     $sql = "UPDATE SYSTEM_CONF SET is_drawing_finished = '1'";
                 }else{
-                    $sql = "UPDATE SYS_CNF SET cnfval = '1' where cnfname = 'is_drawing_finished'";
+                    $sql = "UPDATE SYS_CNF SET cnfval = 'true' where cnfname = 'is_drawing_finished'";
                 }
                 $q = sys::$PDO->prepare($sql);
                 $q->execute();
@@ -29,11 +29,18 @@ class drawing_main_text_ajax_model extends model {
                     return array("response"=>"Unexecute request to db");
                 }
             }elseif($_GET["type"] == 'get'){
+              $sql = "";
+              if (trim($_SERVER['SERVER_NAME'], '/') === '82.146.41.218') {
                 $sql = "SELECT is_drawing_finished FROM SYSTEM_CONF";
-                $q = sys::$PDO->prepare($sql);
-                $q->execute();
-                $Q = $q->fetchAll();
-                return array("is_drawing_finished"=>$Q[0][0]);
+              }else{
+                $sql = "SELECT cnfval FROM SYS_CNF where cnfname='is_drawing_finished'";
+              }
+              
+              $q = sys::$PDO->prepare($sql);
+              $q->execute();
+              $Q = $q->fetchAll();
+              
+              return array("is_drawing_finished"=>($Q[0][0]=='true')?true:false);
             }
         }else {
             return array("response"=>"NOT FOUND GET REQUEST");

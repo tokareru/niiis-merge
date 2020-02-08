@@ -34,11 +34,23 @@ function setTechnologistGuide(json, add_data) {
 
     $(".operationName").draggable({
         helper: 'clone',
-        appendTo: "#tech_process_table"
+        appendTo: "#tech_process_table",
+        drag: function (event, ui) {
+            $(ui.helper).find("span").first().css("color", "black !important");
+            $(ui.helper).find("span").css("background-color", "blanchedalmond");
+            $(ui.helper).find("li").css("background-color", "blanchedalmond");
+            $(ui.helper).find("ul").css("background-color", "blanchedalmond");
+        }
     });
     $(".techName").draggable({
         helper: 'clone',
-        appendTo: "#tech_process_table"
+        appendTo: "#tech_process_table",
+        drag: function (event, ui) {
+            $(ui.helper).find("span").css("color", "black !important");
+            $(ui.helper).find("span").css("background-color", "blanchedalmond");
+            $(ui.helper).find("li").css("background-color", "blanchedalmond");
+            $(ui.helper).find("ul").css("background-color", "blanchedalmond");
+        }
     })
 }
 
