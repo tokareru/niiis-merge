@@ -26,6 +26,7 @@ function technologicalProcessInit() {
 
     $('#tech_process_table').droppable(
         {
+            tolerance: "touch",
             drop: function (event, ui) {
 
                 function setCells(obj) {
@@ -223,13 +224,40 @@ function technologicalProcessInit() {
             'rowspan="3"':''}>${index > 4 && index + 1 !== $table.find('tr').length ? '' +
                 '<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>': ''}</td>`);
         });
-    $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>')
+    $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>');
+
+
+    $('#tech_process_save').on('click', function () {
+        saveTechProcessTable($table);
+    });
 }
 
 function addStyleTd($table, coords, style) {
     $table.find('tr').eq(coords[1]).children().eq(coords[0]).addClass(style);
 }
 
+function saveTechProcessTable($table) {
+    let saveObj = [];
+    $table.find('tr').each(function () {
+        let attrLvl = $(this).attr('tech-lvl');
+        if (attrLvl === undefined){
+            if ($(this).attr('empty') !== undefined){
+                saveObj.push({empty: true});
+                return;
+            } else return;
+        }
+        saveObj.push({lvl: attrLvl, id: $(this).attr('tech-id')});
+    });
+    console.log(saveObj);
+    $.ajax({
+        url: '',
+        type: 'POST',
+        data: saveObj,
+        success: function (res) {
+            //console.log(res);
+        }
+    })
+}
 
 /*function init_tech_process() {
     /!* $('#esi_field').append('<button id=\'techProcessBlock_field_btn\' class="btn btn-custom btn-block">' +
