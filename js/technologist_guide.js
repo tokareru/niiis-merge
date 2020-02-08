@@ -81,7 +81,7 @@ function createTechGuideNodes(tech) {
         });
 
         inp +=
-            "<il class='operationName'>" +
+            "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
                 "<span class='caret'>" + (i + 1).toString() + "." + child.name + "</span>" +
                 "<ul class='nested pl-2'>" +
                     "<li>" +
@@ -109,7 +109,7 @@ function createTechGuideNodes(tech) {
     });
 
     node =
-        "<li class='techName'>" +
+        "<li tech-lvl='" + tech.lvl + "' tech-id='" + tech.id + "' class='techName'>" +
             "<span class='caret detailChildren'>" + tech.name + "</span>" +
             "<ul class='nested pl-2'>" +
                 inp +
