@@ -35,25 +35,23 @@ class ajax_model extends model {
     }
     function save_work_place_tech_process(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql = "DELETE * FROM WORK_PLACE_TECH_PROCESS";
+            $sql = "DELETE FROM WORK_PLACE_TECH_PROCESS";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $i = 1;
-            return $_POST;
-//            foreach($_POST as $row){
-//                
-//                if(!isset($row["empty"])){
-//                    $sql = "INSERT INTO WORK_PLACE_TECH_PROCESS(row_id, item_id, lvl)
-//                            VALUES(:row_id, :item_id, :lvl)";
-//                    $q = sys::$PDO->prepare($sql);
-//                    $q->execute(array("row_id"=>$i++, "item_id" => $row["id"], "lvl" => $row["lvl"]));
-//                }else{
-//                    $sql = "INSERT INTO WORK_PLACE_TECH_PROCESS(row_id, item_id, lvl)
-//                            VALUES(:row_id, null, null)";
-//                    $q = sys::$PDO->prepare($sql);
-//                    $q->execute(array("row_id"=>$i++));
-//                }
-//            }
+            foreach($_POST["save"] as $row){       
+                if(!isset($row["empty"])){
+                    $sql = "INSERT INTO WORK_PLACE_TECH_PROCESS(row_id, item_id, lvl)
+                            VALUES(:row_id, :item_id, :lvl)";
+                    $q = sys::$PDO->prepare($sql);
+                    $q->execute(array("row_id"=>$i++, "item_id" => $row["id"], "lvl" => $row["lvl"]));
+                }else{
+                    $sql = "INSERT INTO WORK_PLACE_TECH_PROCESS(row_id, item_id, lvl)
+                            VALUES(:row_id, null, null)";
+                    $q = sys::$PDO->prepare($sql);
+                    $q->execute(array("row_id"=>$i++));
+                }
+            }
             return(array("response"=>200));
         }
         else{
@@ -61,7 +59,26 @@ class ajax_model extends model {
         }
     }
     function get_work_place_tech_process(){
-        
+        $sql = "SELECT * FROM WORK_PLACE_TECH_PROCESS";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $result = [];
+        foreach($Q as $row){
+            $sql = "SELECT NAME
+                    FROM technologist_info_".$row["lvl"]."_layout
+                    WHERE id = :id";
+            $q1 = sys::$PDO->prepare($sql);
+            $q1->execute(array("id"=>$row["item_id"]));
+            $Q1 = $q1->fetchAll();
+            if($Q1 == null){
+                array_push($result, array("empty"=>true));
+            }
+            else{
+            array_push($result,array("name"=>$Q1[0]["name"], "lvl"=>$row["lvl"], "id"=>$row["item_id"]));
+            }
+        }
+        return $result;
     }
     function save_pdm_standart_products(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
