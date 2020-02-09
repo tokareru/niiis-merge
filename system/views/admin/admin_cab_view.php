@@ -34,7 +34,6 @@ $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
 
 <style>
         .main_menu .nav>li>a {
-          position: relative;
           display: block;
           padding: 3px 10px;
         }
@@ -47,10 +46,7 @@ $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
     <table class="heder">
         <tbody>
             <tr>
-                <td class="hedtdl">
-
-                </td>
-                <td>
+                <td align="center">
                     <div class="main_name">
                       <div class="page-header" style="color: #337ab7;">
                         <h1>«<?php echo conf::$SITE_NAME;?>» <small></small></h1>
