@@ -250,6 +250,7 @@ function saveTechProcessTable($table) {
         let attrLvl = $(this).attr('tech-lvl');
         if (attrLvl === undefined) {
             if ($(this).attr('empty') !== undefined) {
+                saveObj.push({empty: true});
                 return;
             } else return;
         }
