@@ -2,7 +2,10 @@ function initTechnologistGuide() {
     getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
 }
 
+let techGuideJson;
+
 function setTechnologistGuide(json, add_data) {
+    techGuideJson = json;
     let field_id = "#technologist_guide_field";
     let field = $(field_id);
     field.append("<div id='technologist_guide_accordion'></div>");
