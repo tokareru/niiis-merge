@@ -335,10 +335,10 @@ function madeTr(vals, $lastTr) {
             tr += 'class="techProcessCell">' + vals.name;
         } else if (i === 5) {
             tr += 'class="tdBorderBlackLeft techProcessCell"';
-            if (vals.tools !== undefined)
-                tr += '>' + vals.tools;
-        } else if (i === 6 && vals.equipment !== undefined) {
-            tr += 'class="techProcessCell">' + vals.equipment;
+            if (vals.equipment !== undefined)
+                tr += '>' + vals.equipment;
+        } else if (i === 6 && vals.tools !== undefined) {
+            tr += 'class="techProcessCell">' + vals.tools;
         } else if (i === 12) {
             tr += 'class="tdBorderBlackRight">';
         } else {
