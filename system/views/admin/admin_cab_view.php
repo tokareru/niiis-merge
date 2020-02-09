@@ -1,73 +1,138 @@
-<?php
- sys::inc_no_cache('css', 'css/tablesorter.css');
+<?php  sys::inc_no_cache('css', 'css/tablesorter.css');
         sys::inc_no_cache('css', 'css/bootstrap.css');
         sys::inc_no_cache('css', 'css/styles.css');
-        sys::inc_no_cache('css', 'css/3D.css');
         sys::inc_no_cache('css', 'css/jquery-ui.structure.css');
-        sys::inc_no_cache('css', 'css/left_accordion.css');
-        sys::inc_no_cache('css', 'css/font-awesome.css');
-        sys::inc_no_cache('css', 'css/chat/chat.css');
-        sys::inc_no_cache('css', 'css/chat/dm_chat.css');
-        sys::inc_no_cache('css', 'css/center_side.css');
-        sys::inc_no_cache('css', 'css/specification_table.css');
-        sys::inc_no_cache('css', 'css/center_side.css');
-        sys::inc_no_cache('css', 'css/scheme.css');
-        sys::inc_no_cache('css', 'css/esi_field.css');
-        sys::inc_no_cache('css', 'css/esi_field/esi_field.css');
-        sys::inc_no_cache('css', 'css/technologist_guide.css');
-        sys::inc_no_cache('css', 'css/tasks_routes.css');
-        sys::inc_no_cache('css', 'css/production_task_field.css');
-        sys::inc_no_cache('css', 'css/technological_process.css');
-        sys::inc_no_cache('css', 'css/create_task_route.css');
-        sys::inc_no_cache('css', 'css/create_title_block.css');
-
-        sys::inc_no_cache('javascript', 'js/tablesorter/jquery.tablesorter.js');
-        sys::inc_no_cache('javascript', 'js/tablesorter/jquery.tablesorter.js');
+        sys::inc_no_cache('css','css/main.css');
+        sys::inc_no_cache('css','css/btn_heder.css');
+        
         sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
         sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');
         sys::inc_no_cache('javascript', 'js/libraries/bootstrap.min.js');
         sys::inc_no_cache('javascript', 'js/libraries/jquery-ui.js');
         sys::inc_no_cache('javascript', 'js/mainTabs.js');
-        sys::inc_no_cache('javascript', 'js/left_accordion.js');
-        sys::inc_no_cache('javascript', 'js/PDM_and_STD_components.js');
-        sys::inc_no_cache('javascript', 'js/specification_table.js');
-        sys::inc_no_cache('javascript', 'js/chat/chat.js');
-        sys::inc_no_cache('javascript', 'js/chat/dm_chat.js');
-        sys::inc_no_cache('javascript', 'js/esi_field.js');
-        sys::inc_no_cache('javascript', 'js/tasks_routes.js');
-        sys::inc_no_cache('javascript', 'js/production_task_field.js');
-        sys::inc_no_cache('javascript', 'js/technologist_guide.js');
-        sys::inc_no_cache('javascript', 'js/route_map.js');
-        sys::inc_no_cache('javascript', 'js/technological_process.js');
-        sys::inc_no_cache('javascript', 'js/create_task_route.js');
-        sys::inc_no_cache('javascript', 'js/3D/three.min.js');
-        sys::inc_no_cache('javascript', 'js/3D/dat.gui.min.js');
-        sys::inc_no_cache('javascript', 'js/loadscheme.js');
-        sys::inc_no_cache('javascript', 'js/3D/3D.js');
-        sys::inc_no_cache('javascript', 'js/shell/shell.js');
-        sys::inc_no_cache('javascript', 'js/flowtype.js');
-        sys::inc_no_cache('javascript', 'js/create_title_block.js');
         sys::inc_no_cache('javascript', 'js/admin/admin.js');
 $page = $data["content"]["page"];
+require_once conf::$ROOT . 'system/etc/functions.php';
+
+// получаем адрес страницы без учета параметров
+if($_SERVER['REQUEST_URI'] == '/'){
+    $CURRENT_PAGE = 'admin';
+}
+else{
+$CURRENT_PAGE = basename($_SERVER['REQUEST_URI']); // получаем адрес
+// способ 1
+//$pos = strpos($CURRENT_PAGE, '?'); // получаем позицию знака вопроса
+//if($pos) $CURRENT_PAGE = substr($CURRENT_PAGE, 0, $pos); // если знак вопроса есть, получаем подстроку до знака вопроса
+// способ 2
+// парсим адрес 
+$arr = parse_url($CURRENT_PAGE);
+$CURRENT_PAGE_HARD = $CURRENT_PAGE; // сохраняем для жестких ссылок прописанных с учетом параметров в запросе
+$CURRENT_PAGE = $arr['path']; // получаем конечный адрес
+}
 ?>
-<link href="<?php echo conf::$SITE_URL ?>css/main.css" rel="stylesheet" type="text/css">
-<link href="<?php echo conf::$SITE_URL ?>css/menu.css" rel="stylesheet" type="text/css">
-<link href="<?php echo conf::$SITE_URL ?>css/btn_heder.css" rel="stylesheet" type="text/css">
 <?php require_once("system/views/header.php"); ?>
 
-<div class="row">
+<style>
+        .main_menu .nav>li>a {
+          position: relative;
+          display: block;
+          padding: 3px 10px;
+        }
+      </style>
+    
+    
+ <div id="all">
+
+    <!--"Шапка"-->
+    <table class="heder">
+        <tbody>
+            <tr>
+                <td class="hedtdl">
+
+                </td>
+                <td>
+                    <div class="main_name">
+                      <div class="page-header" style="color: #337ab7;">
+                        <h1>«<?php echo conf::$SITE_NAME;?>» <small></small></h1>
+                      </div>
+                    </div>
+                </td>     
+            </tr>
+        </tbody>
+    </table>
+    <!--"Тело"-->
+    <table class="total">
+        <tr>
+            <td class="menu_td">
+                    <nav class="main_menu">
+
+                        <nav class="main_menu">
+                          <!--class="active"-->
+                          <ul class="list-group">
+                            <li class="list-group-item">
+                              <h5 class="list-group-item-heading">редактирование</h5>
+                              <p class="list-group-item-text">
+                                <ul class="nav nav-pills nav-stacked">
+                                  <li <?php echo ($CURRENT_PAGE == 'admin')?('class="active"'):""?>><a href="<?php echo conf::$SITE_URL ?>" style="padding-right: 0px;padding-left: 5px;">Пользователи<span class="badge pull-right" id="count_abits"></span></a></li> 
+                                </ul>
+                              </p>
+                            </li>
+                          </ul>
+                          
+                        </nav>
+
+                    </td>
+                   
+                    <td class="content">
+                      
+                      <?php
+                      if ($content_view <> '') {
+                        include 'system/views/admin/' . $content_view;
+                      }
+                      else
+                      {
+                        ?>
+                        <h3><?php echo conf::$SITE_NAME;?></h3>
+                        <br>
+                        <!--index-content-->
+                        
+                        <?php
+                      }
+                      ?>
+                        
+                    </td>
+                </tr>	
+            </table>
+</div>
+    
+            
+   <div class="row">
     <div class="col-2">
         <ul class="nav flex-column nav-pills">
             <li class="nav-item">
-              <a class="nav-link <?php if($page == "users") echo "active"; ?>" href="<?php echo conf::$SITE_URL ?>">Пользователи</a>
+              <a class="nav-link ////<?php if($page == "users") echo "active"; ?>" href="<?php echo conf::$SITE_URL ?>">Пользователи</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link <?php if($page == "pdm_edit") echo "active"; ?>" href="admin_cab/pdm_edit">Редактирование pdm</a>
+                <a class="nav-link ////<?php if($page == "pdm_edit") echo "active"; ?>" href="admin_cab/pdm_edit">Редактирование pdm</a>
             </li>
         </ul>
-    </div>
-
+    </div>         
     <div class="col-7">
         <?php include_once 'system/views/admin/'.$content_view ?>
     </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
