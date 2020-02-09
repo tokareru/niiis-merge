@@ -33,12 +33,13 @@ function schemeMessage(){
         "<div id=\"dialog-message\" title=\"Область заблокирована\">" +
         "<p class='alert-warning p-1'>" +
         "<span class=\"ui-icon ui-icon-circle-check\"></span>" +
-        "Необходимо полностью собрать иззделие." +
+        "Необходимо полностью собрать изделие." +
         "</p>" +
         "</div>");
 
     $("#dialog-message").dialog({
         modal: false,
+        draggable: false,
         appendTo: "#scheme",
         resizable: false,
         position: { my: "center", at: "center", of: "#field3D" }/*,
