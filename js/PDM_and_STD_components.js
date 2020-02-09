@@ -169,6 +169,24 @@ function collectDataLabels(id_div) {
     //console.log(id_div + ":" + arr);
     esiNotifyHandler(arr);
 
+    if (Round === 3){
+        let amountOfChecked = $("#left-accordion").find("input:checked").length;
+        let amountOfInputs = $("#left-accordion").find("input").length;
+        let field3D = $("#field3DAll");
+
+        if (amountOfChecked !== amountOfInputs){
+            field3D.addClass("blur-filter");
+            field3D.find("input").attr("disabled", "disabled");
+            $("#addToServerTitleBlock").attr("disabled", "disabled");
+            $( "#dialog-message" ).dialog( "open" );
+        }else {
+            field3D.removeClass("blur-filter");
+            field3D.find("input").removeAttr("disabled");
+            $("#addToServerTitleBlock").removeAttr("disabled");
+            $( "#dialog-message" ).dialog( "close" );
+        }
+    }
+
     if (id_div === "#pdm_field") {
         sendMessage({
             "sender": id_div,

@@ -22,7 +22,8 @@
 }
 
 #technologist_guide_field .caret:hover{
-    color: black !important;
+    color: white !important;
+    background-color: #515356;
 }
 
 .detailChildren:hover{
@@ -52,7 +53,7 @@
 }
 
 .techName:hover {
-    background-color: blanchedalmond;
+    background-color: #dbf4ff;
     list-style: none;
 }
 

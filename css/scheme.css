@@ -4,6 +4,18 @@
     z-index: 1;
 }
 
+.dialog-scheme{
+    border: 1px solid #c5c5c5;
+}
+
+.cross-scheme{
+    background: url("../images/cross.svg");
+}
+
+.cross-scheme:hover{
+    background-color: #c7c7ca;
+}
+
 #scheme1 {
     width: 90%;
     height: 100%;
@@ -18,10 +30,8 @@
 }
 
 #Kontur1 {
-    width: 39.8%;
     position: absolute;
-    top: 21px;
-    left: 151px;
+    margin-left: -3px;
 }
 
 #razmNumber1 {

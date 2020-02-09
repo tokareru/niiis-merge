@@ -59,3 +59,7 @@ hr{
     margin-top: 0;
     margin-bottom: 4px;
 }
+
+.blur-filter{
+    filter: blur(10px);
+}
