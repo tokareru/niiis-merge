@@ -33,26 +33,27 @@ function schemeMessage(){
         "<div id=\"dialog-message\" title=\"Область заблокирована\">" +
         "<p class='alert-warning p-1'>" +
         "<span class=\"ui-icon ui-icon-circle-check\"></span>" +
-        "Выберете все детали." +
+        "Необходимо полностью собрать изделие." +
         "</p>" +
         "</div>");
 
     $("#dialog-message").dialog({
         modal: false,
+        draggable: false,
         appendTo: "#scheme",
         resizable: false,
-        position: { my: "center", at: "center", of: "#field3D" },
+        position: { my: "center", at: "center", of: "#field3D" }/*,
         buttons: {
             "Закрыть": function () {
                 $(this).dialog("close");
             }
-        }
+        }*/
     });
 
     $("#dialog-message").parent().css({
         "border": "1px solid #c5c5c5",
         "z-index": "99999999999"
     }).addClass("bg-light");
-    $("#dialog-message").parent().find("button").first().addClass("cross-scheme").addClass("btn");
+    $("#dialog-message").parent().find("button").remove();//first().addClass("cross-scheme").addClass("btn");
     $("#dialog-message").parent().find("div").first().addClass("alert-secondary");
 }

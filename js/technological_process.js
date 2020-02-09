@@ -56,7 +56,7 @@ function technologicalProcessInit() {
                             tr += 'class="tdBorderBlackLeft techProcessCell">';
                         } else if (i === 3 || i === 12) {
                             tr += 'class="tdBorderBlackRight">';
-                        }else {
+                        } else {
                             tr += 'class="techProcessCell">';
                         }
 
@@ -77,14 +77,14 @@ function technologicalProcessInit() {
                 if ($(ui.draggable).hasClass("techName")) {
                     console.log($(ui.draggable).attr("tech-lvl"));
                     if ($("#technological_process_field").find("tbody tr").length > 6)
-                         $("<tr empty='empty'>" +
-                             "<td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
-                             "</td><td colspan='4'" +
-                        " class='tdBorderBlackLeft'></td><td colspan='3'></td><td colspan='4' class='tdBorderBlackRight'></td>" +
-                        "<td colspan='34'></td><td colspan='12' class='tdBorderBlackLeft'></td><td colspan='12'></td>" +
-                        "<td colspan='6'></td><td colspan='5'></td><td colspan='5'></td><td colspan='5'></td>" +
-                        "<td colspan='5'></td><td colspan='5' class='tdBorderBlackRight'></td></tr>"
-                    ).insertBefore($table.find('tr:last'));
+                        $("<tr empty='empty'>" +
+                            "<td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
+                            "</td><td colspan='4'" +
+                            " class='tdBorderBlackLeft'></td><td colspan='3'></td><td colspan='4' class='tdBorderBlackRight'></td>" +
+                            "<td colspan='34'></td><td colspan='12' class='tdBorderBlackLeft'></td><td colspan='12'></td>" +
+                            "<td colspan='6'></td><td colspan='5'></td><td colspan='5'></td><td colspan='5'></td>" +
+                            "<td colspan='5'></td><td colspan='5' class='tdBorderBlackRight'></td></tr>"
+                        ).insertBefore($table.find('tr:last'));
                     let tr = '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
                         '<i class="fa fa-times"></i></button></td>';
                     let $lastTr = $table.find('tr:last');
@@ -94,7 +94,7 @@ function technologicalProcessInit() {
                             tr += 'class="tdBorderBlackLeft">';
                         } else if (i === 3 || i === 12) {
                             tr += 'class="tdBorderBlackRight">';
-                        }else {
+                        } else {
                             tr += 'class="techProcessCell">';
                         }
                         if (i === 4) {
@@ -217,19 +217,27 @@ function technologicalProcessInit() {
             [4, 3, 4, 34, 12, 12, 6, 5, 5, 5, 5, 5], $table, 100);
     }
 
-        $table.find('tr').each(function (index) {
-            if (index > 0 && index < 3)
-                return;
-            $(this).find('td:first').before(`<td ${index === 0?
-            'rowspan="3"':''}>${index > 4 && index + 1 !== $table.find('tr').length ? '' +
-                '<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>': ''}</td>`);
-        });
+    $table.find('tr').each(function (index) {
+        if (index > 0 && index < 3)
+            return;
+        $(this).find('td:first').before(`<td ${index === 0 ?
+            'rowspan="3"' : ''}>${index > 4 && index + 1 !== $table.find('tr').length ? '' +
+            '<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>' : ''}</td>`);
+    });
     $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>');
 
 
     $('#tech_process_save').on('click', function () {
         saveTechProcessTable($table);
     });
+
+    $.ajax({
+        url: 'ajax/get_work_place_tech_process',
+        type: 'GET',
+        success: function (res) {
+            setTechProcessJson(techGuideJson, res, $table);
+        }
+    })
 }
 
 function addStyleTd($table, coords, style) {
@@ -240,8 +248,8 @@ function saveTechProcessTable($table) {
     let saveObj = [];
     $table.find('tr').each(function () {
         let attrLvl = $(this).attr('tech-lvl');
-        if (attrLvl === undefined){
-            if ($(this).attr('empty') !== undefined){
+        if (attrLvl === undefined) {
+            if ($(this).attr('empty') !== undefined) {
                 saveObj.push({empty: true});
                 return;
             } else return;
@@ -252,11 +260,95 @@ function saveTechProcessTable($table) {
     $.ajax({
         url: 'ajax/save_work_place_tech_process',
         type: 'POST',
-        data: {save : saveObj},
+        data: {save: saveObj},
         success: function (res) {
             console.log(res);
         }
     })
+}
+
+function setTechProcessJson(json, res, $table) {
+    let $lastTr = $table.find('tr:last');
+    for (let lvl in res) {
+        let level = res[lvl].lvl;
+        let idProc = res[lvl].id;
+        //console.log(`${level} ${idProc}`);
+        let proc = findProcInJson(json, level, idProc);
+        let attr = '';
+        if (proc !== undefined) {
+            attr += `tech-lvl="${level}" tech-id="${idProc}"`;
+        } else {
+            attr += 'empty="empty"'
+        }
+        $(`<tr ${attr}>` + madeTr(proc, $lastTr) + '</tr>').insertBefore($lastTr);
+
+        $table.on('click', '.tech_proc_del_td', function () {
+            $(this).parents('tr').remove();
+        });
+    }
+}
+
+function findProcInJson(json, lvl, id) {
+    for (let proc in json) {
+        if (json[proc].id === id && json[proc].lvl === lvl) {
+            return {name: json[proc].name};
+
+        } else {
+            for (let child in json[proc]['children']) {
+                //console.log(json[proc]['children'][child]);
+                if (json[proc]['children'][child].lvl === lvl && json[proc]['children'][child].id === id) {
+                    //console.log('right ' + json[proc]['children'][child].lvl + ' ' + json[proc]['children'][child].id);
+                    let tools = [];
+                    for (let tool in json[proc]['children'][child].tools) {
+                        tools.push(json[proc]['children'][child].tools[tool].name);
+                    }
+
+                    let equips = [];
+                    for (let equip in json[proc]['children'][child].equipment) {
+                        equips.push(json[proc]['children'][child].equipment[equip].name);
+                    }
+
+                    return {
+                        name: json[proc]['children'][child].name,
+                        tools: tools.join(','),
+                        equipment: equips.join(',')
+                    }
+                }
+            }
+        }
+    }
+}
+
+function madeTr(vals, $lastTr) {
+    let tr = '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
+        '<i class="fa fa-times"></i></button></td>';
+    if (vals === undefined) {
+        vals = {name: undefined, tools: undefined, equipment: undefined};
+    }
+    for (let i = 1; i < 13; i++) {
+        tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
+        if (i === 1) {
+            tr += 'class="tdBorderBlackLeft">';
+        } else if (i === 3) {
+            tr += 'class="tdBorderBlackRight">';
+        } else if (i === 4 && vals.name !== undefined) {
+            tr += 'class="techProcessCell">' + vals.name;
+        } else if (i === 5) {
+            tr += 'class="tdBorderBlackLeft techProcessCell"';
+            if (vals.equipment !== undefined)
+                tr += '>' + vals.equipment;
+        } else if (i === 6 && vals.tools !== undefined) {
+            tr += 'class="techProcessCell">' + vals.tools;
+        } else if (i === 12) {
+            tr += 'class="tdBorderBlackRight">';
+        } else {
+            tr += 'class="techProcessCell">';
+        }
+
+        tr += '</td>';
+    }
+
+    return tr;
 }
 
 /*function init_tech_process() {
