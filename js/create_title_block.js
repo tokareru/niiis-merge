@@ -189,7 +189,7 @@ function HideInputAndDrawRazmerOnScheme()
 {
     for (let i=1;i<4;i++)
     {
-        $("#razmNumber"+i).hide();
+        //$("#razmNumber"+i).hide();
         if (i == 1)
         {
             $( "#scheme1" ).append("<canvas id='razmer1'></canvas>");
@@ -209,9 +209,9 @@ function HideInputAndDrawRazmerOnScheme()
 
 function addToServerRazmer()
 {
-    let razm1 = $("#razmNumber1").val();
-    let razm2 = $("#razmNumber2").val();
-    let razm3 = $("#razmNumber3").val();
+    if ($("#razmNumber1").val() == undefined ||  $("#razmNumber1").val() == '') {var razm1 = 0;} else {var razm1 = $("#razmNumber1").val();}
+    if ($("#razmNumber2").val() == undefined ||  $("#razmNumber2").val() == '') {var razm2 = 0;} else {var razm2 = $("#razmNumber2").val();}
+    if ($("#razmNumber3").val() == undefined ||  $("#razmNumber3").val() == '') {var razm3 = 0;} else {var razm3 = $("#razmNumber3").val();}
 
     $.ajax({
         type: "POST",
