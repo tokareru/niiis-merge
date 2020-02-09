@@ -17,12 +17,10 @@ require_once conf::$ROOT . 'system/etc/functions.php';
 // получаем адрес страницы без учета параметров
 if($_SERVER['REQUEST_URI'] == '/'){
     $CURRENT_PAGE = 'admin';
+    $CURRENT_PAGE_HARD = conf::$SITE_URL;
 }
 else{
 $CURRENT_PAGE = basename($_SERVER['REQUEST_URI']); // получаем адрес
-// способ 1
-//$pos = strpos($CURRENT_PAGE, '?'); // получаем позицию знака вопроса
-//if($pos) $CURRENT_PAGE = substr($CURRENT_PAGE, 0, $pos); // если знак вопроса есть, получаем подстроку до знака вопроса
 // способ 2
 // парсим адрес 
 $arr = parse_url($CURRENT_PAGE);
