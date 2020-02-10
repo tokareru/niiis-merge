@@ -26,6 +26,14 @@ class drawing_main_text_ajax_controller extends Controller{
             $data = $this->model->load_size();
             $this->view->render('', 'ajax_view_json.php', $data);
         }
+        function save_is_full(){
+            $data = $this->model->save_is_full();
+            $this->view->render('', 'ajax_view_json.php', $data);
+        }
+        function load_is_full(){
+            $data = $this->model->load_is_full();
+            $this->view->render('', 'ajax_view_json.php', $data);
+        }
   // счетчики для менюшки, использовать можно на всех страницах
 }
 ?>

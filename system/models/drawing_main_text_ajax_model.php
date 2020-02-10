@@ -115,4 +115,22 @@ class drawing_main_text_ajax_model extends model {
         $Q = $q->fetchAll();
         return array("scheme" => $Q[0]["drawing_name"], "razm1" => $Q[0]["size_1"], "razm2" => $Q[0]["size_2"], "razm3" => $Q[0]["size_3"]);
     }
+    function save_is_full(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "UPDATE sys_cnf SET cnfval = ':val' WHERE cnfname = 'drawing_is_full'";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("val" => $_POST["isFull"]));
+        }else {
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }
+    }
+    function load_is_full(){
+        $sql = "SELECT cnfval 
+                FROM sys_cnf 
+                WHERE cnfname = 'drawing_is_full'";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        return array("isFull"=>$Q[0][0]);
+    }
 }
