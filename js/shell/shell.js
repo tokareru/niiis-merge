@@ -71,8 +71,6 @@ async function prepareShell(json_role_and_round, add_data) {
     let round = Number(json_role_and_round.round);
     let dateChange = json_role_and_round.date_change.toString();
     let loginChange = json_role_and_round.login_change.toString();
-    //console.log(current_round_glob)
-    //console.log(round)
 
     // проверяем обновления
     let check = (round === Number(Round)) && ((dateChange === DateChange) || (loginChange == login))
