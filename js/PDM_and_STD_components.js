@@ -174,17 +174,26 @@ function collectDataLabels(id_div) {
         let amountOfInputs = $("#left-accordion").find("input").length;
         let field3D = $("#field3DAll");
 
-        if (amountOfChecked !== amountOfInputs){
-            field3D.addClass("blur-filter");
-            field3D.find("input").attr("disabled", "disabled");
-            $("#addToServerTitleBlock").attr("disabled", "disabled");
-            $( "#dialog-message" ).dialog( "open" );
-        }else {
-            field3D.removeClass("blur-filter");
-            field3D.find("input").removeAttr("disabled");
-            $("#addToServerTitleBlock").removeAttr("disabled");
-            $( "#dialog-message" ).dialog( "close" );
+        if (Round === 3 && Role === 'designer'){
+            if (amountOfChecked !== amountOfInputs){
+                blockScheme()
+            }else {
+                unlockScheme();
+                $.ajax({
+                    type: "POST",
+                    url: "drawing_main_text_ajax/save_is_full",
+                    dataType: "json",
+                    data:
+                        {
+                            "isFull": true
+                        },
+                    success: function (answer) {
+                        console.log(answer);
+                    }
+                });
+            }
         }
+
     }
 
     if (id_div === "#pdm_field") {

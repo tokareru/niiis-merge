@@ -2,6 +2,10 @@ async function triggerschemeInit() {
     let fieldscheme = await import('./scheme.js');
     await fieldscheme.initScheme();
 
+    if (Round === 3){
+        schemeMessage();
+    }
+
     if (Round === 3 && Role === 'designer') {
         let field3D = $("#field3DAll");
 
@@ -16,15 +20,46 @@ async function triggerschemeInit() {
 
         let amountOfChecked = $("#left-accordion").find("input:checked").length;
         let amountOfInputs = $("#left-accordion").find("input").length;
-        schemeMessage();
+
         if (amountOfChecked !== amountOfInputs) {
-            field3D.addClass("blur-filter");
-            field3D.find("input").attr("disabled", "disabled");
-            $("#addToServerTitleBlock").attr("disabled", "disabled");
-            $("#dialog-message").dialog( "open" );
+            blockScheme()
         }
     }
+    if (Round === 3 && Role !== 'designer'){
+        setInterval(function () {
+            $.ajax({
+                type: "GET",
+                url: "drawing_main_text_ajax/load_is_full",
+                dataType: "json",
+                data: "json",
+                success: function (json) {
+                    console.log(json);
+                    if (json.isFull === "false"){
+                        blockScheme();
+                    }else {
+                        unlockScheme()
+                    }
+                }
+            });
+        }, 5000)
+    }
 
+}
+
+function blockScheme() {
+    let field3D = $("#field3DAll");
+    field3D.addClass("blur-filter");
+    field3D.find("input").attr("disabled", "disabled");
+    $("#addToServerTitleBlock").attr("disabled", "disabled");
+    $("#dialog-message").dialog( "open" );
+}
+
+function unlockScheme() {
+    let field3D = $("#field3DAll");
+    field3D.removeClass("blur-filter");
+    field3D.find("input").removeAttr("disabled");
+    $("#addToServerTitleBlock").removeAttr("disabled");
+    $( "#dialog-message" ).dialog( "close" );
 }
 
 function schemeMessage(){
