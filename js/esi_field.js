@@ -82,37 +82,29 @@ function createNodes(children) {
             "<li>" +
             "<span class='caret detailChildren'>" + child.name + "</span>" +
             "<ul class='nested'>" +
-            "<li>" +
-            "<span class='caret'>Название</span>" +
-            "<ul class='nested'>" +
-            "<li class='lastChild'>" +
-            "<input " + isDisabled + " value='" + child.name + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
-            "</li>" +
-            "</ul>" +
-            "</li>" +
-            "<li>" +
-            "<span class='caret'>Обозначение</span>" +
-            "<ul class='nested'>" +
-            "<li class='lastChild'>" +
-            "<input " + isDisabled + " value='" + child.description + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
-            "</li>" +
-            "</ul>" +
-            "</li>" +
-            "<li>" +
-            "<span class='caret'>Позиция</span>" +
-            "<ul class='nested'>" +
-            "<li class='lastChild'>" +
-            "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
-            "</li>" +
-            "</ul>" +
-            "</li>" +
-            "<li>" +
-            "<span class='caret'>Количество</span>" +
-            "<ul class='nested'>" +
-            "<li class='lastChild'>" +
-            "<input " + isDisabled + " value='" + child.amount + "' type='text' class='input-group-sm border-0 lastChildInput'>" +
-            "</li>" +
-            "</ul>" +
+            "<li class=''>" +
+            "<table>" +
+            "<tbody>" +
+            "<tr>" +
+            "<td>" +
+            "<div>Обозначение:</div>" +
+            "</td>" +
+            "<td>" + "<input " + isDisabled + " value='" + child.description + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td>" +
+            "<div>Позиция:</div>" +
+            "</td>" +
+            "<td>" + "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
+            "</tr>" +
+            "<tr>" +
+            "<td>" +
+            "<div>Позиция:</div>" +
+            "</td>" +
+            "<td>" + "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
+            "</tr>" +
+            "</tbody>" +
+            "</table>" +
             "</li>" +
             _children +
             "</ul>" +
@@ -137,7 +129,7 @@ function esiNotifyHandler(array){
                 })
             }
         })
-    })
+    });
     setESI(_data);
 }
 

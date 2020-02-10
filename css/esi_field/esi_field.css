@@ -27,6 +27,7 @@
     width: 100%;
     padding: 0.25rem !important;
     font-size: 0.9em;
+    margin-left: 50%;
 }
 
 .lastChildInput:disabled{
