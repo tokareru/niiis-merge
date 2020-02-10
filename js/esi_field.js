@@ -6,7 +6,7 @@ function initESI() {
     });
 
    /* $('#shell').on('click', function () {
-        if ($('.slider_main').attr('style') === 'z-index: 999; right: 0px;') {
+        if ($('.slider_main').attr('style') === 'z-index: 99999999999; right: 0px;') {
             $('.slider_button').trigger('click');
         }
     });*/
@@ -203,14 +203,14 @@ function convertArray(arr) {
 function STDLibClick($but, $main, z_index) {
     let css_left = -$main.width() + $but.width() + 'px';
     let css_right = '0px';
-    if ($main.attr('style') !== ('z-index: 999; right: ' + css_right + ';')) {
+    if ($main.attr('style') !== ('z-index: 99999999999; right: ' + css_right + ';')) {
         $main.animate({
                 right: css_right
             },
             300, 'linear'
         );
         $main.removeAttr('style');
-        $main.attr('style', 'z-index: 999');
+        $main.attr('style', 'z-index: 99999999999');
     } else {
         $main.animate({
                 right: css_left
@@ -260,7 +260,7 @@ function initESI() {
     });
 
     $('#shell').on('click', function () {
-        if ($('.slider_main').attr('style') === 'z-index: 999; right: 0px;') {
+        if ($('.slider_main').attr('style') === 'z-index: 99999999999; right: 0px;') {
             $('.slider_button').trigger('click');
         }
     });
