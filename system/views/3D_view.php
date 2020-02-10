@@ -12,7 +12,7 @@
 <head>
 </head>
 <body>
-<div id="field3D">
+<div id="field3Dview">
     <div id="canvas3D"></div>
 </div>
 </body>
