@@ -21,7 +21,7 @@
             <div class='font-weight-bold transformed'>ЭСИ</div>
         </div>
         <div id="esi_field" class='bg-light border border-info'>
-            <div class='spec_header' style="text-align: center; z-index: 99999999999;"><span>Электронный состав изделия</span></div>
+            <div class='spec_header' style="text-align: center;"><span>Электронный состав изделия</span></div>
             <div class="esi_branch_body">
                 <ul id="esi_branch_body" class="bg-light col-12">
                 </ul>
