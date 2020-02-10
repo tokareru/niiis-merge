@@ -1,13 +1,21 @@
 #canvas3D div canvas {
     display: block;
-	width: 100%;
-    height: 100%;
+	width: 100% !important;
+    height: 100% !important;
+    outline: 0;
+    outline-offset: 0;
+}
+
+#canvas3D div {
+    display: block;
+    width: 100% !important;
+    height: 100% !important;
     outline: 0;
     outline-offset: 0;
 }
 
 #canvas3D {
-    width: 90%;
+    width: 100%;
     height: 100%;
 	position:relative;
 }
@@ -19,9 +27,9 @@
     z-index: 11;
 }
 
-#field3D{
-    width: 90%;
-    height: 87%;
+#field3Dview{
+    width: 100%;
+    height: 100%;
 }
 
 /* dat gui */

@@ -16,14 +16,13 @@ async function triggerschemeInit() {
 
         let amountOfChecked = $("#left-accordion").find("input:checked").length;
         let amountOfInputs = $("#left-accordion").find("input").length;
-
+        schemeMessage();
         if (amountOfChecked !== amountOfInputs) {
             field3D.addClass("blur-filter");
             field3D.find("input").attr("disabled", "disabled");
             $("#addToServerTitleBlock").attr("disabled", "disabled");
+            $("#dialog-message").dialog( "open" );
         }
-
-        schemeMessage();
     }
 
 }
@@ -42,6 +41,7 @@ function schemeMessage(){
         draggable: false,
         appendTo: "#scheme",
         resizable: false,
+        autoOpen: false,
         position: { my: "center", at: "center", of: "#field3D" }/*,
         buttons: {
             "Закрыть": function () {
