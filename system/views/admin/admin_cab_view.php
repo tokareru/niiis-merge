@@ -11,7 +11,7 @@
         sys::inc_no_cache('javascript', 'js/libraries/jquery-ui.js');
         sys::inc_no_cache('javascript', 'js/mainTabs.js');
         sys::inc_no_cache('javascript', 'js/admin/admin.js');
-$page = $data["content"]["page"];
+
 require_once conf::$ROOT . 'system/etc/functions.php';
 
 // получаем адрес страницы без учета параметров
@@ -69,6 +69,9 @@ $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
                                 <ul class="nav nav-pills nav-stacked">
                                   <li <?php echo ($CURRENT_PAGE == 'admin')?('class="active"'):""?>><a href="<?php echo conf::$SITE_URL ?>" style="padding-right: 0px;padding-left: 5px;">Пользователи<span class="badge pull-right" id="count_abits"></span></a></li> 
                                 </ul>
+                                <ul class="nav nav-pills nav-stacked">
+                                  <li <?php echo ($CURRENT_PAGE == 'technologist_guide_edit')?('class="active"'):""?>><a href="<?php echo conf::$SITE_URL ?>admin_cab/technologist_guide_edit" style="padding-right: 0px;padding-left: 5px;">Справочник технолога<span class="badge pull-right" id="count_abits"></span></a></li> 
+                                </ul>
                               </p>
                             </li>
                           </ul>
@@ -98,35 +101,3 @@ $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
                 </tr>	
             </table>
 </div>
-    
-            
-   <div class="row">
-    <div class="col-2">
-        <ul class="nav flex-column nav-pills">
-            <li class="nav-item">
-              <a class="nav-link ////<?php if($page == "users") echo "active"; ?>" href="<?php echo conf::$SITE_URL ?>">Пользователи</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link ////<?php if($page == "pdm_edit") echo "active"; ?>" href="admin_cab/pdm_edit">Редактирование pdm</a>
-            </li>
-        </ul>
-    </div>         
-    <div class="col-7">
-        <?php include_once 'system/views/admin/'.$content_view ?>
-    </div>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -30,5 +30,9 @@ class admin_cab_controller extends Controller{
             $data = $this->model->pdm_edit();
             $this->view->render('pdm_edit.php', 'admin/admin_cab_view.php', $data);
         }
+        function technologist_guide_edit(){
+            $data = $this->model->technologist_guide_edit();
+            $this->view->render('technologist_guide_edit.php', 'admin/admin_cab_view.php', $data);
+        }
 }
 ?>

@@ -6,22 +6,6 @@ class start_ajax_model extends model {
         $Q = [];
 
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            if (trim($_SERVER['SERVER_NAME'], '/') === '82.146.41.218') {
-                $sql = "SELECT date_trunc('seconds',m.DATE_CHANGE) as date_change, u.LOGIN 
-            FROM MODIFY_DATE m INNER JOIN
-            USERS u on u.id = m.user_id
-                ";
-                $q = sys::$PDO->prepare($sql);
-                $q->execute();
-                $Q1 = $q->fetchAll();
-                $sql = "SELECT * FROM SYSTEM_CONF";
-                $q = sys::$PDO->prepare($sql);
-                $q->execute();
-                $Q = $q->fetchAll();
-                $_SESSION["niiis"]["round"] = $Q[0]["round"];
-                return array("login" => sys::user_login(), "role" => $_SESSION['niiis']['role'], "round" => $Q[0]["round"],
-                    "server_name" => trim($_SERVER['SERVER_NAME'], '/'), "name" => $_SESSION['niiis']['name'], "date_change" => substr($Q1[0]["date_change"], 0, -3), "login_change" => $Q1[0]["login"]);
-            } else {
                 $sql = "SELECT date_trunc('seconds',m.DATE_CHANGE) as date_change, u.LOGIN 
             FROM MODIFY_DATE m INNER JOIN
             USERS u on u.id = m.user_id
@@ -42,7 +26,6 @@ class start_ajax_model extends model {
                 $_SESSION["niiis"]["round"] = $round - '0';
                 return array("login" => sys::user_login(), "role" => $_SESSION['niiis']['role'], "round" => $round - '0',
                     "server_name" => trim($_SERVER['SERVER_NAME'], '/'), "name" => $_SESSION['niiis']['name'], "date_change" => substr($Q1[0]["date_change"], 0, -3), "login_change" => $Q1[0]["login"]);
-            }
         } else {
             return array("response" => "NOT FOUND GET REQUEST");
         }
@@ -50,13 +33,7 @@ class start_ajax_model extends model {
 
     function set_data() {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $sql="";
-            if (trim($_SERVER['SERVER_NAME'], '/') === '82.146.41.218') {
-                $sql = "UPDATE SYSTEM_CONF SET round=:round";
-            }
-            else{
-                $sql = "UPDATE SYS_CNF SET cnfval=:round_val where cnfname = 'round'";
-            }
+            $sql = "UPDATE SYS_CNF SET cnfval=:round_val where cnfname = 'round'";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("round_val" => $_GET["round"]));
             $_SESSION["niiis"]["round"] = $_GET['round'];
