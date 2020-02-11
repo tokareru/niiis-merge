@@ -68,7 +68,7 @@ class admin_cab_model extends model
            }
            return $result;
         }
-       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.Name as dop_name, t.EQUIPMENT, t.TOOLS
+       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.EQUIPMENT, t.TOOLS
                FROM technologist_info_1_layout f LEFT JOIN
                technologist_info_2_layout s on f.id = s.id_1_layout LEFT JOIN
                technologist_info_3_layout t on s.id = t.id_2_layout"; 
@@ -90,4 +90,39 @@ class admin_cab_model extends model
        }
        return $result;
   }
+  function save_technologist_info() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $save = $_POST["save"];
+            $sql = "DELETE FROM technologist_info_1_layout";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            foreach ($save["layout1"] as $row) {
+                $sql = "INSERT INTO technologist_info_1_layout (id, name)
+                     VALUES(:id,:name)";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute(array("id"=>$row["id"],"name" => $row["name"]));
+            }
+            $sql = "DELETE FROM technologist_info_2_layout";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            foreach ($save["layout2"] as $row) {
+                $sql = "INSERT INTO technologist_info_2_layout (id, id_1_layout, name)
+                     VALUES(:id,:parent_id, :name)";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute(array("id"=>$row["id"],"parent_id"=>$row["parent"],"name" => $row["name"]));
+            }
+            $i = 0;
+             $sql = "DELETE FROM technologist_info_3_layout";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            foreach ($save["layout3"]["tools"] as $row) {
+                    $sql = "INSERT INTO technologist_info_3_layout (id, id_2_layout, equipment, tools)
+                         VALUES(:id, :id_layout,:equipment, :tools)";
+                    $q = sys::$PDO->prepare($sql);
+                    $q->execute(array("id"=>$i+1,"id_layout"=>$row["parent"],"equipment"=>$save["layout3"]["equipment"][$i++]["name"],"tools" => $row["name"]));
+            }
+        } else {
+            return array("response" => "NOT FOUND POST REQUEST");
+        }
+    }
 }
