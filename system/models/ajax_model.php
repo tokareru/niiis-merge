@@ -11,7 +11,7 @@ class ajax_model extends model {
            }
            return $result;
         }
-       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.Name as dop_name, t.EQUIPMENT, t.TOOLS
+       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.EQUIPMENT, t.TOOLS
                FROM technologist_info_1_layout f LEFT JOIN
                technologist_info_2_layout s on f.id = s.id_1_layout LEFT JOIN
                technologist_info_3_layout t on s.id = t.id_2_layout"; 
