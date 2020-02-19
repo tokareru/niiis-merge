@@ -52,7 +52,9 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
       </div>
 
       <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
-      <p class="mt-5 mb-3 text-muted text-center">&copy; НГТУ им. Р.Е.Алексеева</p>
+      <p class="mt-5 mb-3 text-muted text-center">&copy; НГТУ им. Р.Е.Алексеева<br>
+        <a href="http://62.109.26.219/pgadmin4/" target="_blank">pgAdmin</a></p>
+
     </form>
   </body>
 </html>
