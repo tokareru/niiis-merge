@@ -13,7 +13,8 @@ $CURRENT_PAGE_HARD = $CURRENT_PAGE; // сохраняем для жестких 
 $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
 //var_dump($arr);
 // ------------- получаем адрес страницы без учета параметров
-$IS = $_SESSION['niiis']['is'];
+
+
 ?><!DOCTYPE html>
 <html lang="ru">
     <head>
@@ -96,13 +97,6 @@ $IS = $_SESSION['niiis']['is'];
     <body class='bg-light'>
     <?php require_once("system/views/header.php"); ?>
       <hr>
-<!--        <div>
-            <?php
-//            echo '<a class="medium red awesome" href="' . conf::$SITE_URL . 'logout">Выйти</a>';
-//            echo '<p>Вы вошли как:</small> ' . sys::user_login() . '</p>';
-            ?>
-        </div>-->
-
 
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">

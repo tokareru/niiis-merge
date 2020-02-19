@@ -7,6 +7,5 @@ class logout_controller extends Controller{
         session_destroy();
         header("location:".conf::$SITE_URL);
 	}
-    
 }
 ?>

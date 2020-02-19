@@ -36,7 +36,7 @@ class sys {
   }
 
   //Авторизация пользователя
-  static function autorization($name, $password, $is) {
+  static function autorization($name, $password) {
     //Проверяем наличие такого пользователя с email
     $SQL = "SELECT 
             ug.DESCR, u.ID,ug.USER_STATUS
@@ -56,7 +56,6 @@ class sys {
         $row = $result[0];
         $_SESSION['niiis']['user_id'] = (int) $row['id'];
         $_SESSION['niiis']['user_status'] = $row['user_status'];
-        $_SESSION['niiis']['is'] = $is;
         $_SESSION['niiis']['round'] = 1;
         $_SESSION['niiis']['role'] = $row['user_status'];
         $_SESSION['niiis']['name'] = $row['descr'];
