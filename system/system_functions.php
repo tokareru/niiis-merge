@@ -7,12 +7,12 @@ class sys {
   
   static function db_connect($db_host, $user, $password, $db) {
 
-    sys::$mssql_link = $dbconn3 = pg_connect("host=82.146.41.218 port=5432 dbname=niiis user=dmitry password=ubvyfpbz50");
+    sys::$mssql_link = $dbconn3 = pg_connect("host=62.109.26.219 port=5433 dbname=niiis user=niiis password=123qweasd");
     if (!sys::$mssql_link) {
       throw new Exception("Failed to connect to database");
     }
     
-    $PDO = new PDO("pgsql:host='82.146.41.218';dbname=$db", "dmitry", "ubvyfpbz50");
+    $PDO = new PDO("pgsql:host='62.109.26.219';dbname=$db", 'niiis', '123qweasd');
     sys::$PDO=$PDO;
   }
 
