@@ -13,16 +13,15 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
   <head>
     <title><?= $data['title']; ?></title>
     <meta charset="UTF-8" />
-
-    <script type="text/javascript" src="<?php echo conf::$SITE_URL ?>js/jquery-1.11.3.min.js"></script>
-
-    <!-- bootstrap -->
-    <link href="<?php echo conf::$SITE_URL ?>css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
-    <script src="<?php echo conf::$SITE_URL ?>js/bootstrap.min.js" type="text/javascript"></script>
-
-    <script src="<?php echo conf::$SITE_URL ?>js/login.js" type="text/javascript"></script>
-    <link rel="stylesheet" href="<?php echo conf::$SITE_URL ?>css/login.css">
-
+    <?php 
+    
+    sys::inc_no_cache('css', 'css/bootstrap.css');
+    sys::inc_no_cache('js', 'js/bootstrap.js');
+    
+    sys::inc_no_cache('css', 'css/login.css');
+    sys::inc_no_cache('js', 'js/login.js');
+    ?>
+    
   </head>
   <body> 
     <form class="form-signin login_form" method="post">

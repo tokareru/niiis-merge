@@ -12,7 +12,7 @@ require_once 'base/route.php';
 conf::$VERSION = sys::version();
 try {
     //Подключаемся к БД
-    sys::db_connect(conf::$DB_SERVER_NAME,conf::$DB_USER_NAME, conf::$DB_PASSWORD, conf::$DB_NAME);
+    sys::db_connect(conf::$DB_SERVER_NAME, conf::$DB_PORT, conf::$DB_USER_NAME, conf::$DB_PASSWORD, conf::$DB_NAME);
     
     //Роутинг запроса
     Route::start();

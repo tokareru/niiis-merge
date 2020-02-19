@@ -5,14 +5,14 @@ class sys {
   static $mysqli, $mssql_link,$PDO;
 
   
-  static function db_connect($db_host, $user, $password, $db) {
+  static function db_connect($db_host, $db_port, $db_user, $db_password, $db) {
 
-    sys::$mssql_link = $dbconn3 = pg_connect("host=82.146.41.218 port=5432 dbname=niiis user=dmitry password=ubvyfpbz50");
+    sys::$mssql_link = $dbconn3 = pg_connect("host=$db_host port=$db_port dbname=$db user=$db_user password=$db_password");
     if (!sys::$mssql_link) {
       throw new Exception("Failed to connect to database");
     }
     
-    $PDO = new PDO("pgsql:host='82.146.41.218';dbname=$db", "dmitry", "ubvyfpbz50");
+    $PDO = new PDO("pgsql:host='$db_host';dbname=$db", "$db_user", "$db_password");
     sys::$PDO=$PDO;
   }
 
