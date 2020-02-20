@@ -1,24 +1,4 @@
-<?php
-sys::inc_no_cache('css', 'css/bootstrap.css');
-sys::inc_no_cache('css', 'css/styles.css');
-sys::inc_no_cache('css', 'css/jquery-ui.structure.css');
-sys::inc_no_cache('css', 'css/font-awesome.css');
-//sys::inc_no_cache('css', 'css/technologist_guide.css');
-sys::inc_no_cache('css', 'css/technological_process.css');
-sys::inc_no_cache('css','css/main.css');
-sys::inc_no_cache('css','css/btn_heder.css');
 
-sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
-sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');
-sys::inc_no_cache('javascript', 'js/libraries/bootstrap.min.js');
-sys::inc_no_cache('javascript', 'js/libraries/jquery-ui.js');
-sys::inc_no_cache('javascript', 'js/mainTabs.js');
-sys::inc_no_cache('javascript', 'js/admin/admin.js');
-sys::inc_no_cache('javascript', 'js/admin/technologist_guide_edit.js');
-       
-sys::inc_no_cache('javascript', 'js/shell/shell.js');
-//        print_r($data);
-?>
 <div id="technologist_guide_field">
     <table border="bordered">
         <?php 
