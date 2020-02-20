@@ -28,7 +28,12 @@ if (isset($_POST['login']) && isset($_POST['password'])) {
 
       <div class="text-center mb-4">
         <img class="mb-4" src="<?php echo conf::$SITE_URL ?>images/niiis_sm.png" alt="" width="72" height="72">
-        <h1 class="h3 mb-3 font-weight-normal">Цифровая фабрика<br>IT-процессов</h1>
+        <h1 class="h3 mb-3 font-weight-normal">Цифровая фабрика<br>IT-процессов
+        
+          <?php if (conf::$SITE_URL == 'http://62.109.26.219/'): ?>
+          <br> Сервер для разработки
+          <?php endif; ?>
+        </h1>
       </div>
 
       <?php if (!empty($data['message'])): ?>
