@@ -22,8 +22,14 @@ if ($_SERVER['REQUEST_URI'] == '/') {
     <?php
     sys::inc_no_cache('css', 'css/tablesorter.css');
     sys::inc_no_cache('css', 'css/bootstrap.css');
-
+    
+    sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
+    sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');
+    sys::inc_no_cache('javascript', 'js/libraries/bootstrap.min.js');
+    sys::inc_no_cache('javascript', 'js/libraries/jquery-ui.js');
+    
     sys::inc_no_cache('javascript', 'js/admin/admin.js');
+    
     sys::inc_no_cache('css', 'css/admin_cab.css');
     sys::inc_no_cache('css', 'css/icons-fontawesome.css');
     ?>
@@ -51,8 +57,8 @@ if ($_SERVER['REQUEST_URI'] == '/') {
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link active" href="#"><span data-feather="home"></span>
-                  <i class="fas fa-database"></i> Статистика         
+                <a class="nav-link" href="<?=conf::$SITE_URL?>"><span data-feather="home"></span>
+                  <i class="fas fa-cogs"></i> Настройки         
                 </a>
               </li>
               </ul>
@@ -64,7 +70,7 @@ if ($_SERVER['REQUEST_URI'] == '/') {
               </h6>
               <ul class="nav flex-column mb-2">
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="<?=conf::$SITE_URL?>admin_cab/change_users">
                     <i class="fas fa-user-edit"></i> Пользователи
                   </a>
                 </li>
@@ -84,22 +90,17 @@ if ($_SERVER['REQUEST_URI'] == '/') {
         <!-------------конец левого меню--------------->
 
         <!-------------Основной контент--------------->
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
-          <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-            <h1 class="h2"><?php echo $CURRENT_PAGE ?></h1>
-          </div>
-          <div class="mb-md-0">
+        
             <!--вставить содержимое сюда-->
-<?php
-if ($content_view <> '') {
-  include 'system/views/admin/' . $content_view;
-} else {
-  
-}
-?>
+            <?php
+            if ($content_view <> '') {
+              include 'system/views/admin/' . $content_view;
+            } else {
+
+            }
+            ?>
             <!--конец блока содержимого-->
-          </div>
-        </main>
+          
       </div>
     </div>
   </body>

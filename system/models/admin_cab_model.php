@@ -9,6 +9,20 @@ class admin_cab_model extends model
     return $data;
   }
   function content(){
+      
+  }
+  
+  function settings(){
+      $sql = "SELECT * FROM public.users 
+        LEFT JOIN public.user_group ON public.users.group_user_id = public.user_group.group_id
+        WHERE login = '".sys::user_login()."'";
+      $q = sys::$PDO->prepare($sql);
+      $q->execute();
+      $Q = $q->fetchAll();
+      return array("user_data" => $Q[0]);
+  }
+  
+  function change_users(){
       $sql = "SELECT * FROM USERS WHERE group_user_id <> 99 ORDER BY id";
       $q = sys::$PDO->prepare($sql);
       $q->execute();
@@ -17,10 +31,7 @@ class admin_cab_model extends model
       $q = sys::$PDO->prepare($sql);
       $q->execute();
       $Q1 = $q->fetchAll();
-      return array("users" => $Q, "group_users" => $Q1, "page"=>"users");
-  }
-  function change_users(){
-      
+      return array("users" => $Q, "group_users" => $Q1, "page"=>"users", "page_name"=>"Пользователи");
   }
   function reset(){
     $sql = "DELETE FROM SPEC_TABLE";
@@ -88,6 +99,7 @@ class admin_cab_model extends model
                array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "tools"=>array(array("name"=>$row["tools"])), "equipment" => array(array("name"=>$row["equipment"]))));
            }
        }
+       
        return $result;
   }
   function save_technologist_info() {
