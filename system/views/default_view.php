@@ -1,21 +1,7 @@
 <?php
-// test commit makss56
 require_once conf::$ROOT . 'system/etc/functions.php';
-// получаем адрес страницы без учета параметров
-$CURRENT_PAGE = basename($_SERVER['REQUEST_URI']); // получаем адрес
-// способ 1
-//$pos = strpos($CURRENT_PAGE, '?'); // получаем позицию знака вопроса
-//if($pos) $CURRENT_PAGE = substr($CURRENT_PAGE, 0, $pos); // если знак вопроса есть, получаем подстроку до знака вопроса
-// способ 2
-// парсим адрес 
-$arr = parse_url($CURRENT_PAGE);
-$CURRENT_PAGE_HARD = $CURRENT_PAGE; // сохраняем для жестких ссылок прописанных с учетом параметров в запросе
-$CURRENT_PAGE = $arr['path']; // получаем конечный адрес
-//var_dump($arr);
-// ------------- получаем адрес страницы без учета параметров
-
-
-?><!DOCTYPE html>
+?>
+<!DOCTYPE html>
 <html lang="ru">
     <head>
         <meta charset="utf-8"/>
@@ -80,7 +66,6 @@ $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
 
         <script>
             var SITE_URL = "<?php echo conf::$SITE_URL ?>";
-            var CURRENT_PAGE = "<?= $CURRENT_PAGE ?>"
         </script>
 
         <style>
@@ -90,8 +75,6 @@ $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
                 padding: 3px 10px;
             }
         </style>
-        <title>Demo</title>
-        <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body class='bg-light'>
