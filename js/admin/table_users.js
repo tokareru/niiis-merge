@@ -54,8 +54,18 @@ $(function () {
             });
         }
     });
+    $(".active_sign").on("change",function(){
+        var id = $(this).parents("tr:first").attr("id");
+         $.ajax({
+            url: "change_user_active_sign",
+            type: "POST",
+            data: { 
+                    id:id,
+                   },
+            success: function (answer)
+            {
+                console.log(answer);
+            }
+        });
+    })
 });
-
-function save_edit(data){
-    alert(data);
-}

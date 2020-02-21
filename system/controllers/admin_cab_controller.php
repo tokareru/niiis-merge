@@ -55,8 +55,12 @@ class admin_cab_controller extends Controller {
     $this->view->render('', 'ajax_view_json.php', $data);
   }
   function save_users_edit(){
-      $data = $this->model->save_users_edit();
-      $this->view->render('', 'ajax_view_json.php', $data);
+    $data = $this->model->save_users_edit();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function change_user_active_sign(){
+    $data = $this->model->change_user_active_sign();
+    $this->view->render('', 'ajax_view_json.php', $data);
   }
 }
 

@@ -35,7 +35,7 @@
                 <td id = "fio">' . $rows['last_name'] . ' ' . $rows['first_name'] . ' ' . $rows['otc'] . '</td>
                 <td id = "login">' . $rows['login'] . '</td>
                 <td id = "password">' . $rows['password'] . '</td>
-                <td><select class="form-control form-control-sm">';
+                <td><select class="form-control form-control-sm" id = "role">';
         foreach ($data["group_users"] as $row) {
           echo "<option value=" . $row["group_id"] . " ";
           if ($rows['group_user_id'] == $row["group_id"]) {
@@ -43,7 +43,7 @@
           } echo ">" . $row["descr"] . "</option>";
         }
         echo '</select></td>
-                <td><div class="form-check"><input class="form-check-input" type="checkbox" name="active_sign" ';
+                <td><div class="form-check"><input class="form-check-input active_sign" type="checkbox" id = "active_sign" name="active_sign" ';
         if ($rows['active_sign'] == 1) {
           echo 'checked';
         } echo '></div></td>

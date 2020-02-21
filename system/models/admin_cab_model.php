@@ -160,5 +160,11 @@ class admin_cab_model extends model {
         $q->execute(array("last_name" => $_POST["last_name"], "first_name" => $_POST["first_name"], "otc" => $_POST["otc"], "login" => $_POST["login"], "password" => $_POST["password"], "id" => $_POST["id"]));
         return array("response"=>200);
     }
-
+    function change_user_active_sign(){
+        $sql="UPDATE users set active_sign = not active_sign
+              WHERE id = :id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("id" => $_POST["id"]));
+        return array("response"=>200);
+    }
 }
