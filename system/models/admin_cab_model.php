@@ -167,4 +167,11 @@ class admin_cab_model extends model {
         $q->execute(array("id" => $_POST["id"]));
         return array("response"=>200);
     }
+    function change_user_role(){
+        $sql="UPDATE users set group_user_id = :group_user_id
+              WHERE id = :id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("group_user_id" => $_POST["role_id"],"id" => $_POST["id"]));
+        return array("response"=>200);
+    }
 }

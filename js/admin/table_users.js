@@ -68,4 +68,18 @@ $(function () {
             }
         });
     })
+    $(".role").on("change",function(){
+        var id = $(this).parents("tr:first").attr("id");
+         $.ajax({
+            url: "change_user_role",
+            type: "POST",
+            data: { 
+                    id:id,role_id:$(this).val()
+                   },
+            success: function (answer)
+            {
+                console.log(answer);
+            }
+        });
+    })
 });

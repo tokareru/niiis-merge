@@ -35,7 +35,7 @@
                 <td id = "fio">' . $rows['last_name'] . ' ' . $rows['first_name'] . ' ' . $rows['otc'] . '</td>
                 <td id = "login">' . $rows['login'] . '</td>
                 <td id = "password">' . $rows['password'] . '</td>
-                <td><select class="form-control form-control-sm" id = "role">';
+                <td><select class="form-control form-control-sm role" id = "role">';
         foreach ($data["group_users"] as $row) {
           echo "<option value=" . $row["group_id"] . " ";
           if ($rows['group_user_id'] == $row["group_id"]) {

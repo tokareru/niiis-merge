@@ -62,6 +62,10 @@ class admin_cab_controller extends Controller {
     $data = $this->model->change_user_active_sign();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
+  function change_user_role(){
+    $data = $this->model->change_user_role();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
 }
 
 ?>
