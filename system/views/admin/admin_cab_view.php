@@ -27,7 +27,6 @@ if ($_SERVER['REQUEST_URI'] == '/') {
     sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');
     sys::inc_no_cache('javascript', 'js/libraries/bootstrap.min.js');
     sys::inc_no_cache('javascript', 'js/libraries/jquery-ui.js');
-    
     sys::inc_no_cache('javascript', 'js/admin/admin.js');
     
     sys::inc_no_cache('css', 'css/admin_cab.css');

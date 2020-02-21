@@ -50,7 +50,14 @@ class admin_cab_controller extends Controller {
     $data = $this->model->save_technologist_info();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
-
+  function get_user_info_by_id(){
+    $data = $this->model->get_user_info_by_id();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function save_users_edit(){
+      $data = $this->model->save_users_edit();
+      $this->view->render('', 'ajax_view_json.php', $data);
+  }
 }
 
 ?>
