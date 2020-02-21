@@ -23,7 +23,7 @@ class admin_cab_model extends model {
         return array("user_data" => $Q[0]);
     }
 
-    function change_users() {
+    public function change_users() {
         $sql = "SELECT * FROM USERS WHERE group_user_id <> 99 ORDER BY id";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
@@ -173,5 +173,45 @@ class admin_cab_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("group_user_id" => $_POST["role_id"],"id" => $_POST["id"]));
         return array("response"=>200);
+    }
+    function add_user(){
+        $sql = "INSERT INTO USERS (first_name, last_name, otc, login, password, group_user_id)
+                VALUES(:first_name, :last_name, :otc, :login, :password, :group_user_id);
+               ";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("first_name" => $_POST["first_name"], "last_name" => $_POST["last_name"],  "otc" => $_POST["otc"],  "login" => $_POST["login"],  "password" => $_POST["password"],  "group_user_id" => $_POST["group_user_id"]));
+        $sql = "SELECT id from users where login=:login;
+               ";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_POST["login"]));
+        $Q = $q->fetchAll();
+        return array("id" => $Q[0][0]);
+        
+    }
+    function get_users_groups(){
+         $sql = "SELECT * FROM USERS WHERE group_user_id <> 99 ORDER BY id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $sql = "SELECT * FROM USER_GROUP WHERE group_id <> 99";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q1 = $q->fetchAll();
+        $data = array("users" => $Q, "group_users" => $Q1);
+        $result = '<select class="form-control form-control-sm role" id = "role">';
+        foreach ($data["group_users"] as $row) {
+          $result .="<option value=" . $row["group_id"] . " ";
+          if ($_GET['group_user_id'] == $row["group_id"]) {
+            $result .= "selected";
+          } $result .= ">" . $row["descr"] . "</option>";
+        }
+        $result .= "</select>";
+        return $result;
+    }
+    function delete_user(){
+        $sql = "DELETE FROM users WHERE id=:id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("id" => $_POST["id"]));
+        return array("response" => 200);
     }
 }

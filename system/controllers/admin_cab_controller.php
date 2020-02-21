@@ -66,6 +66,18 @@ class admin_cab_controller extends Controller {
     $data = $this->model->change_user_role();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
+  function add_user(){
+    $data = $this->model->add_user();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function get_users_groups(){
+    $data = $this->model->get_users_groups();
+    $this->view->render('', 'ajax_view.php', $data);
+  }
+  function delete_user(){
+    $data = $this->model->delete_user();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
 }
 
 ?>

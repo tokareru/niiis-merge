@@ -29,8 +29,8 @@
       foreach ($data["users"] as $rows) {
         echo '
             <tr id = "'.$rows["id"].'">
-                <td><button id = "'.$rows["id"].'" class = "glyphicon glyphicon-pencil edit"></button></td>
-                <td><button class = "glyphicon glyphicon-remove"></button></td> 
+                <td><button class = "glyphicon glyphicon-pencil edit"></button></td>
+                <td><button class = "glyphicon glyphicon-remove delete"></button></td> 
                 <td id = "id">' . $rows['id'] . '</td>
                 <td id = "fio">' . $rows['last_name'] . ' ' . $rows['first_name'] . ' ' . $rows['otc'] . '</td>
                 <td id = "login">' . $rows['login'] . '</td>
@@ -54,72 +54,156 @@
 
     </tbody>
   </table>
-
+  <button class="btn btn-primary add_user" id="add_user">Добавить пользователя</button>
 </div>
 
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">Редактирование</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-       
-      <div class="modal-body">
-           <form id = "form_edit">
-              <input hidden id="id">
-              <div id="loading" align="center">Загрузка...</div>
-              <div id="content" hidden="true">
-              <div class="row">
-                  <div class="col-3" align="right">
-                      Фамилия
-                  </div>
-                  <div class="col-6">
-                      <input class="form-control" id="last_name" name="last_name">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-3" align="right">
-                      Имя
-                  </div>
-                  <div class="col-6">
-                      <input class="form-control" id="first_name" name="first_name">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-3" align="right">
-                      Отчество
-                  </div>
-                  <div class="col-6">
-                      <input class="form-control" id="otc" name="otc">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-3" align="right">
-                      Логин
-                  </div>
-                  <div class="col-6">
-                      <input class="form-control" id="login" name="login">
-                  </div>
-              </div>
-              <div class="row">
-                  <div class="col-3" align="right">
-                      Пароль
-                  </div>
-                  <div class="col-6">
-                      <input class="form-control" id="password" name="password">
-                  </div>
-              </div>
-              </div>
-                  </form>
+<div class="modal fade" id="edit_users" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Редактирование</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-lastary" data-dismiss="modal">Закрыть</button>
-        <button type="submit" class="btn btn-primary" id="save">Сохранить</button>
-      </div>
+            <div class="modal-body">
+                <form id = "form_edit">
+                    <input hidden id="id">
+                    <div id="loading" align="center">Загрузка...</div>
+                    <div id="content" hidden="true">
+                        <div class="row">
+                            <div class="col-3" align="right">
+                                Фамилия
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="last_name" name="last_name">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3" align="right">
+                                Имя
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="first_name" name="first_name">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3" align="right">
+                                Отчество
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="otc" name="otc">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3" align="right">
+                                Логин
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="login" name="login">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3" align="right">
+                                Пароль
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="password" name="password">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lastary" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary" id="save">Сохранить</button>
+            </div>
+        </div>
     </div>
-  </div>
+</div>
+
+<div class="modal fade" id="create_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Добавление</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id = "form_edit">
+                    <input hidden id="id">
+                    <div id="content">
+                        <div class="row">
+                            <div class="col-4" align="right">
+                                Фамилия
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="last_name" name="last_name">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4" align="right">
+                                Имя
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="first_name" name="first_name">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4" align="right">
+                                Отчество
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="otc" name="otc">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4" align="right">
+                                Логин
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="login" name="login">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4" align="right">
+                                Пароль
+                            </div>
+                            <div class="col-6">
+                                <input class="form-control" id="password" name="password">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                Группа пользователя
+                            </div>
+                            <div class="col-6">
+                                <select class="form-control role" id = "role">
+                                    <?php
+                                    foreach ($data["group_users"] as $row) {
+                                        echo "<option value=" . $row["group_id"] . " ";
+                                        if ($rows['group_user_id'] == $row["group_id"]) {
+                                            echo "selected";
+                                        } echo ">" . $row["descr"] . "</option>";
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+
+                        </div>
+                    </div>
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-lastary" data-dismiss="modal">Закрыть</button>
+                <button type="submit" class="btn btn-primary" id="save">Сохранить</button>
+            </div>
+        </div>
+    </div>
 </div>
