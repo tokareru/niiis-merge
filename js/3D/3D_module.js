@@ -195,6 +195,11 @@ export function init3dField() {
                     MeshsLinesScheme[stldata[i][2]][j].visible = true;
                 }
             }
+            else {
+                for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
+                    MeshsLinesScheme[stldata[i][2]][j].visible = false;
+                }
+            }
         }
 
         for (let i = 0; i < 3; i++) {
@@ -202,6 +207,11 @@ export function init3dField() {
                 //meshs[stldata[i+4][2]].visible = true;
                 for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                     MeshsLinesScheme[stldata[i + 4][2]][j].visible = true;
+                }
+            }
+            else {
+                for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
+                    MeshsLinesScheme[stldata[i + 4][2]][j].visible = false;
                 }
             }
         }
