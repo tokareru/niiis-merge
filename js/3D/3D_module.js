@@ -24,10 +24,10 @@ export function init3dField() {
 
     window.stldata =
         [
-            ["./3dstl/pdm/11.stl", 0x808080, "vis1"],
-            ["./3dstl/pdm/22.stl", 0x808080, "vis2"],
-            ["./3dstl/pdm/33.stl", 0x808080, "vis3"],
-            ["./3dstl/pdm/44.stl", 0x808080, "vis4"],
+            ["./3dstl/pdm/11.stl", 0xc6c491, "vis1"],
+            ["./3dstl/pdm/22.stl", 0xc3c069, "vis2"],
+            ["./3dstl/pdm/33.stl", 0xc6c491, "vis3"],
+            ["./3dstl/pdm/44.stl", 0xc6c491, "vis4"],
             ["./3dstl/standart/11.stl", 0x808080, "vis5"],
             ["./3dstl/standart/22.stl", 0x808080, "vis6"],
             ["./3dstl/standart/33.stl", 0x808080, "vis7"]
@@ -158,8 +158,9 @@ export function init3dField() {
 
             //window.meshs[arrmesh] = mesh;
             window.MeshsLinesScheme[arrmesh].push(mesh);
+            window.MeshsLinesScheme[arrmesh].push(wireframe);
             scene.add(mesh);
-            //scene.add( wireframe );
+            scene.add( wireframe );
 
             //добавляем весь чертеж
             if (Round === 3 && $("#pdm_field").length){
