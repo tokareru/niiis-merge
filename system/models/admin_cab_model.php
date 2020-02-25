@@ -34,6 +34,14 @@ class admin_cab_model extends model {
         $Q1 = $q->fetchAll();
         return array("users" => $Q, "group_users" => $Q1, "page" => "users", "page_name" => "Пользователи");
     }
+    
+    function change_groups_users(){
+        $sql = "SELECT * FROM USER_GROUP WHERE group_id <> 99 ORDER BY group_id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        return $Q;
+    }
 
     function reset() {
         $sql = "DELETE FROM SPEC_TABLE";
@@ -143,6 +151,46 @@ class admin_cab_model extends model {
             return array("response" => "NOT FOUND POST REQUEST");
         }
     }
+    function get_group_user_info_by_id(){
+        if($_POST["id"] != 99){
+            $sql = "
+                  SELECT user_group_name, user_status, descr
+                  FROM user_group
+                  WHERE group_id = :id";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("id"=>$_POST["id"]));
+            $Q = $q->fetchAll();
+            return $Q[0];
+        }
+    }
+    function save_groups_users_edit() {
+        $sql="UPDATE user_group set user_group_name = :user_group_name, user_status = :user_status, descr = :descr
+              WHERE group_id = :id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("user_group_name" => $_POST["user_group_name"], "user_status" => $_POST["user_status"], "descr" => $_POST["descr"], "id" => $_POST["id"]));
+        return array("response"=>200);
+    }
+    function add_group_user(){
+        $sql = "INSERT INTO user_group (group_id, user_group_name, user_status, descr)
+                VALUES(((SELECT group_id FROM user_group WHERE group_id <> 99 ORDER BY group_id DESC
+                        limit 1) + 1), :user_group_name, :user_status, :descr);
+               ";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("user_group_name" => $_POST["user_group_name"], "user_status" => $_POST["user_status"],  "descr" => $_POST["descr"]));
+        $sql = "SELECT group_id FROM user_group WHERE group_id <> 99 ORDER BY group_id DESC
+               limit 1";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        return array("id" => $Q[0][0]);
+        
+    }
+    function delete_group_user(){
+        $sql = "DELETE FROM user_group WHERE group_id=:id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("id" => $_POST["id"]));
+        return array("response" => 200);
+    }
     function get_user_info_by_id(){
       $sql = "
             SELECT first_name, last_name, otc, login, password
@@ -153,6 +201,7 @@ class admin_cab_model extends model {
       $Q = $q->fetchAll();
       return $Q[0];
     }
+    
     function save_users_edit() {
         $sql="UPDATE users set last_name = :last_name, first_name = :first_name, otc = :otc, login = :login, password = :password
               WHERE id = :id";

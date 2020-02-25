@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_URI'] == '/') {
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="#">
+                  <a class="nav-link" href="<?=conf::$SITE_URL?>admin_cab/change_groups_users">
                     <i class="fas fa-user-friends"></i> Группы пользователей
                   </a>
                 </li>

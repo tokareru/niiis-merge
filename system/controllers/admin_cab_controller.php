@@ -30,6 +30,11 @@ class admin_cab_controller extends Controller {
     $data = $this->model->change_users();
     $this->view->render('table_users_view.php', 'admin/admin_cab_view.php', $data);
   }
+  
+  function change_groups_users(){
+    $data = $this->model->change_groups_users();
+    $this->view->render('change_groups_users_view.php', 'admin/admin_cab_view.php', $data);
+  }
 
   function reset() {
     $data = $this->model->reset();
@@ -48,6 +53,22 @@ class admin_cab_controller extends Controller {
 
   function save_technologist_info() {
     $data = $this->model->save_technologist_info();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function get_group_user_info_by_id(){
+    $data = $this->model->get_group_user_info_by_id();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function save_groups_users_edit(){
+    $data = $this->model->save_groups_users_edit();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function add_group_user(){
+    $data = $this->model->add_group_user();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function delete_group_user(){
+    $data = $this->model->delete_group_user();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
   function get_user_info_by_id(){
