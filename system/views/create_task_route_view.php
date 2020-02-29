@@ -15,7 +15,7 @@
 <div id='create_task_route-side' >
 
 	<div class="main_all_create_task">
-		<div class='slider_button_create border border-info'>
+		<div class='slider_button_create border border-info bg-secondary'>
             <div class='font-weight-bold transformed'>Создание маршрута заданий</div>
             </div>
 		<div id='create_task_route_main' class='bg-light border border-info'>
