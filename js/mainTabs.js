@@ -73,8 +73,8 @@ function addAvailableTabs(data, tableID) {
 
     shell.data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 
-    table.find("a").click(function (event) {
-        event.preventDefault();
-    });
+/*    table.find("a").click(function (event) {
+        //event.preventDefault();
+    });*/
 
 }

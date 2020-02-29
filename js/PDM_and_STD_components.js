@@ -185,7 +185,7 @@ function collectDataLabels(id_div) {
                     dataType: "json",
                     data:
                         {
-                            "isFull": "true"
+                            "isFull": true
                         },
                     success: function (answer) {
                         console.log(answer);

@@ -115,3 +115,19 @@ ul, #myUL {
 .techProcessCell{
     font-size: 1em !important;
 }
+
+#tech_process_field_drop{
+    min-height: 300px;
+}
+
+.operationNameDropArea{}
+
+.myNested{
+    min-height: 100px;
+}
+
+.techNameDropped{
+    list-style: none;
+
+    background-color: #fbfbfb;
+}

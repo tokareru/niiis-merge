@@ -37,7 +37,7 @@ function setTechnologistGuide(json, add_data) {
 
     $(".operationName").draggable({
         helper: 'clone',
-        appendTo: "#tech_process_table",
+        appendTo: ".tech_process_table",
         drag: function (event, ui) {
             $(ui.helper).find("span").first().css("color", "black !important");
             $(ui.helper).find("span").css("background-color", "#dbf4ff");
@@ -47,7 +47,7 @@ function setTechnologistGuide(json, add_data) {
     });
     $(".techName").draggable({
         helper: 'clone',
-        appendTo: "#tech_process_table",
+        appendTo: ".tech_process_table",
         drag: function (event, ui) {
             $(ui.helper).find("span").css("color", "black !important");
             $(ui.helper).find("span").css("background-color", "#dbf4ff");
