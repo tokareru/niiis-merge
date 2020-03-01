@@ -28,6 +28,12 @@ function technologicalProcessInit() {
         }
     );
 
+    $(".tech_process_table").sortable({
+        items: ".techNameDropped",
+        axis: 'y'
+    });
+    $(".tech_process_table").disableSelection();
+
     function setTechName($draggable) {
         $container.append(
             "<li class='techNameDropped'>" +
@@ -39,12 +45,27 @@ function technologicalProcessInit() {
         $container.find(".operationNameDropArea").last().droppable({
             accept: ".operationName",
             drop: function (e, u) {
+                //sortOperationNames();
                 setOperationNameToTechName( $(this),$(u.draggable));
+
                 $container.find(".techNameDropped").last().remove();
             }
         });
+        sortOperationNames()
     }
 
+    function sortOperationNames() {
+        let uls = $container.find('ul.operationNameDropArea');
+        uls.each(function () {
+            $(this).sortable({
+                items: ".tpLI",
+                axis: 'y',
+                connectWith: ".operationNameDropArea"
+            });
+            $(this).disableSelection();
+        });
+    }
+    
     function setTechNameDefault($draggableON) {
         $container.append(
             "<li class='techNameDropped'>" +
@@ -58,20 +79,21 @@ function technologicalProcessInit() {
         $container.find(".operationNameDropArea").last().droppable({
             accept: ".operationName",
             drop: function (e, u) {
+                //sortOperationNames();
                 setOperationNameToTechName( $(this),$(u.draggable));
                 $container.find(".techNameDropped").last().remove();
             }
         });
+        sortOperationNames()
     }
 
     function setOperationNameToTechName( $this,$draggable) {
-        console.log($this);
         let name = $draggable.find(".operationNameField").text();
         let equip = $draggable.find(".operationEquipList").find("li span").first().text();
         let tool = $draggable.find(".operationInstrumentList").find("li span").first().text();
-        console.log(name, equip, tool)
+        //console.log(name, equip, tool)
         $this.append(
-            "<li>" +
+            "<li class='tpLI'>" +
             "<span class='caret'>" + name +  "</span>" +
             "<ul class='nested'>" +
             "<table>" +
