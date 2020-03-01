@@ -21,16 +21,7 @@ function technologicalProcessInit() {
                     setTechName($draggable);
                     }
 
-                let toggler = document.getElementById("tech_process_field_drop").getElementsByClassName("caret");
-
-                for (let i = 0; i < toggler.length; i++) {
-                    let f = function (){
-                        this.parentElement.querySelector(".nested").classList.toggle("active");
-                        this.classList.toggle("caret-down");
-                    };
-                    $(toggler[i]).unbind("click");
-                    $(toggler[i]).click(f);
-                }
+                setToggler();
             }
         }
     );
@@ -74,13 +65,24 @@ function technologicalProcessInit() {
             "</ul>" +
             "</li>"
         );
-        $this.find("li .caret").click(function () {
-            this.parentElement.querySelector(".nested").classList.toggle("active");
-            this.classList.toggle("caret-down");
-        })
+        setToggler();
+    }
+
+    function setToggler() {
+        let toggler = document.getElementById("tech_process_field_drop").getElementsByClassName("caret");
+
+        for (let i = 0; i < toggler.length; i++) {
+            let f = function (){
+                this.parentElement.querySelector(".nested").classList.toggle("active");
+                this.classList.toggle("caret-down");
+            };
+            $(toggler[i]).unbind("click");
+            $(toggler[i]).click(f);
+        }
     }
 
 }
+
 
 
 
