@@ -39,7 +39,6 @@ $(function () {
                 success: function (answer)
                 {
                     console.log(answer);
-                    alert("Сохранено");
                     var id = $('#edit_group_users #id').val();
                     var changed_row = "#table_group_edit #" + id + " ";
                     $(changed_row + "#user_group_name").html($("#edit_group_users #user_group_name").val());
@@ -67,7 +66,6 @@ $(function () {
             success: function (answer)
             {
                 console.log(answer);
-                alert("Добавлен");
                 $("#edit_group_users").append('<tr id = "' + answer.id + '">\
                 <td><button class = "glyphicon glyphicon-pencil edit"></button></td>\
                 <td><button class = "glyphicon glyphicon-remove delete"></button></td> \
@@ -99,7 +97,6 @@ $(function () {
                 },
                 success: function (answer) {
                     console.log(answer);
-                    alert("Удален");
                     item.parents("tr:first").remove();
                 }
             });

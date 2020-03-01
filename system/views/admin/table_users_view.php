@@ -1,5 +1,6 @@
-<?php sys::inc_no_cache('css', 'css/bootstrap.css');?>
-<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<?php sys::inc_no_cache('css', 'css/bootstrap.css');
+      sys::inc_no_cache('css', 'css/font-awesome.css');
+?>
 <?php sys::inc_no_cache('javascript', 'js/admin/table_users.js');
     sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
     sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');
@@ -29,8 +30,8 @@
       foreach ($data["users"] as $rows) {
         echo '
             <tr id = "'.$rows["id"].'">
-                <td><button class = "glyphicon glyphicon-pencil edit"></button></td>
-                <td><button class = "glyphicon glyphicon-remove delete"></button></td> 
+                <td class="text-center"><button class = "btn btn-sm btn-secondary edit"><span><i class="fa fa-pencil" aria-hidden="true"></i></span></button></td>
+                <td class="text-center"><button class = "btn btn-sm btn-secondary delete"><span><i class="fa fa-times" aria-hidden="true"></i></spawn></button></td>  
                 <td id = "id">' . $rows['id'] . '</td>
                 <td id = "fio">' . $rows['last_name'] . ' ' . $rows['first_name'] . ' ' . $rows['otc'] . '</td>
                 <td id = "login">' . $rows['login'] . '</td>
