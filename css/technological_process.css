@@ -117,7 +117,7 @@ ul, #myUL {
 }
 
 #tech_process_field_drop{
-    min-height: 300px;
+    min-height: 700px;
 }
 
 .operationNameDropArea{}
@@ -130,4 +130,28 @@ ul, #myUL {
     list-style: none;
 
     background-color: #fbfbfb;
+}
+
+.route_map_new_row_button{
+    font: normal normal normal 1.3em/1 FontAwesome;
+    margin-left: 0.1rem;
+    cursor: pointer;
+}
+
+.route_map_new_row_button::before{
+    content: "\f067";
+    color: black;
+    display: inline-block;
+    margin-right: 6px;
+}
+
+.routeMapInput{
+    width: 100%;
+    height: 100%;
+    padding: 0.1rem !important;
+    text-align: left;
+    font-size: 1.2rem;
+    font-style: italic;
+    font-weight: 500;
+    border: none;
 }
