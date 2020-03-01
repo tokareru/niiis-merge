@@ -13,14 +13,16 @@ function technologicalProcessInit() {
     $container.droppable(
         {
             tolerance: "touch",
+            accept: ".techName, .operationName",
             drop: function (event, ui) {
 
                 let $draggable = $(ui.draggable);
 
                 if ($draggable.hasClass("techName")) {
                     setTechName($draggable);
-                    }
-
+                    }else{
+                    setTechNameDefault($draggable)
+                }
                 setToggler();
             }
         }
@@ -37,7 +39,27 @@ function technologicalProcessInit() {
         $container.find(".operationNameDropArea").last().droppable({
             accept: ".operationName",
             drop: function (e, u) {
-                setOperationNameToTechName( $(this),$(u.draggable))
+                setOperationNameToTechName( $(this),$(u.draggable));
+                $container.find(".techNameDropped").last().remove();
+            }
+        });
+    }
+
+    function setTechNameDefault($draggableON) {
+        $container.append(
+            "<li class='techNameDropped'>" +
+            "<span class='caret'> Техпроцесс " + ($container.find(".techNameDropped").length + 1) + "</span>" +
+            "<ul class='nested myNested operationNameDropArea'></ul>" +
+            "</li>"
+        );
+
+        setOperationNameToTechName( $container.find(".operationNameDropArea").last(), $draggableON);
+
+        $container.find(".operationNameDropArea").last().droppable({
+            accept: ".operationName",
+            drop: function (e, u) {
+                setOperationNameToTechName( $(this),$(u.draggable));
+                $container.find(".techNameDropped").last().remove();
             }
         });
     }
