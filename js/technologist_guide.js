@@ -22,7 +22,7 @@ function setTechnologistGuide(json, add_data) {
         "<ul class='col-12 pl-0'>" +
             techs +
         "</ul>"
-    )
+    );
 
     let toggler = document.getElementById("technologist_guide_accordion").getElementsByClassName("caret");
 

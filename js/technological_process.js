@@ -24,6 +24,7 @@ function technologicalProcessInit() {
                     setTechNameDefault($draggable)
                 }
                 setToggler();
+                $container.find(".techNameDropped").last().find(".caret").first().trigger("click");
             }
         }
     );
@@ -34,24 +35,28 @@ function technologicalProcessInit() {
     });
     $(".tech_process_table").disableSelection();
 
+
     function setTechName($draggable) {
         $container.append(
             "<li class='techNameDropped'>" +
-            "<span class='caret'>" + $draggable.find("span").first().text() + "</span>" +
+            "<span class='caret'>" + $draggable.find("span").first().text() + "</span><span class='deleteNodeButtonRM'></span>" +
             "<ul class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
+
+        $(".deleteNodeButtonRM").last().click(function () {
+           $(this).parent().remove();
+        })
 
         $container.find(".operationNameDropArea").last().droppable({
             accept: ".operationName",
             drop: function (e, u) {
                 //sortOperationNames();
                 setOperationNameToTechName( $(this),$(u.draggable));
-
                 $container.find(".techNameDropped").last().remove();
             }
         });
-        sortOperationNames()
+        sortOperationNames();
     }
 
     function sortOperationNames() {
@@ -69,11 +74,14 @@ function technologicalProcessInit() {
     function setTechNameDefault($draggableON) {
         $container.append(
             "<li class='techNameDropped'>" +
-            "<span class='caret'> Техпроцесс " + ($container.find(".techNameDropped").length + 1) + "</span>" +
+            "<span class='caret'> Техпроцесс " + ($container.find(".techNameDropped").length + 1) + "</span><span class='deleteNodeButtonRM'></span>" +
             "<ul class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
 
+        $(".deleteNodeButtonRM").last().click(function () {
+            $(this).parent().remove();
+        })
         setOperationNameToTechName( $container.find(".operationNameDropArea").last(), $draggableON);
 
         $container.find(".operationNameDropArea").last().droppable({
@@ -94,7 +102,7 @@ function technologicalProcessInit() {
         //console.log(name, equip, tool)
         $this.append(
             "<li class='tpLI'>" +
-            "<span class='caret'>" + name +  "</span>" +
+            "<span class='caret'>" + name +  "</span><span class='deleteNodeButtonRM'></span>" +
             "<ul class='nested'>" +
             "<table>" +
             "<tbody>" +
@@ -110,6 +118,10 @@ function technologicalProcessInit() {
             "</li>"
         );
         setToggler();
+
+        $this.find(".deleteNodeButtonRM").last().click(function () {
+            $(this).parent().remove();
+        })
     }
 
     function setToggler() {

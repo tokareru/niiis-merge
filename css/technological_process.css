@@ -156,3 +156,18 @@ ul, #myUL {
     font-weight: 500;
     border: none;
 }
+
+.deleteNodeButtonRM{
+    font: normal normal normal 1.0em/1 FontAwesome;
+    margin-left: 0.1rem;
+    cursor: pointer;
+}
+
+.deleteNodeButtonRM::before{
+    content: "\f00d";
+    color: black;
+}
+
+#tech_process_field_drop .caret{
+    display: initial !important;
+}
