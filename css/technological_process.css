@@ -46,6 +46,7 @@ ul, #myUL {
     border-color: #bee5eb;
     border-bottom-style: none;
     border-right-style: none;
+    margin-bottom: -3px;
 }
 
 .caret:hover{

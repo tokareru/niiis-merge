@@ -49,6 +49,7 @@ function setTechnologistGuide(json, add_data) {
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
+            $(ui.helper).find("ul").hide();
             $(ui.helper).find("span").css("color", "black !important");
             $(ui.helper).find("span").css("background-color", "#dbf4ff");
             $(ui.helper).find("li").css("background-color", "#dbf4ff");
