@@ -14,7 +14,7 @@
 <body>
 
 <div id="routeMapBlock">
-    <div class="col-md-12 spec_main">
+    <!--<div class="col-md-12 spec_main">
         <div class="row">
             <div class="col-md-12 spec_header">
                 Маршрутная карта
@@ -29,7 +29,15 @@
             <div id="routeMap_edit"></div>
         </div>
 
-    </div>
+    </div>-->
+    <div class='spec_header'>Маршрутная карта</div>
+
+    <table id='tech_process_table' class='table table-bordered tech_process_table'>
+        <tbody>
+
+        </tbody>
+    </table>
+    <button id='tech_process_save' class="btn bg-info text-white">Сохранить</button>
 </div>
 
 </body>

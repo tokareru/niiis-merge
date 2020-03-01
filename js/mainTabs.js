@@ -25,7 +25,7 @@ function setTabs(json, add_data) {
                 "ui-tabs-nav": "myTabsNav",
                 "ui-tabs-tab": "myTabsTab",
                 "ui-tabs-panel": "myTabsPanel",
-                'ui-tabs-active': 'myTabsActive'
+                'ui-tabs-active': 'bg-primary'
             },
         show: {effect: "fade", duration: 200},
         beforeLoad: function (event, ui) {
@@ -60,6 +60,7 @@ function chooseTabsByRoleAndRound(json) {
 function addAvailableTabs(data, tableID) {
     let table = $(tableID);
     let ul = table.find("ul");
+    ul.addClass('navbar navbar-light');
     let shell = $("#shell");
     let availableSubscribers = shell.data("shellInterconnection").availableSubscribers;
     data.forEach(function (elem) {
@@ -73,8 +74,8 @@ function addAvailableTabs(data, tableID) {
 
     shell.data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 
-    table.find("a").click(function (event) {
-        event.preventDefault();
-    });
+/*    table.find("a").click(function (event) {
+        //event.preventDefault();
+    });*/
 
 }

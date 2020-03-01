@@ -26,11 +26,9 @@
 </body>
 </html>
 */
-
-
 //sssssssssssssssssss
 /*
-<!DOCTYPE html>
+<!--<!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
 </head>
@@ -47,19 +45,12 @@
             </div>
         </div>
 </body>
-</html>
-
+</html>-->
 */
 ?>
 <div class='spec_header'>Рабочий стол. Техпроцесс</div>
+<div id="tech_process_field_container">
+    <div id="tech_process_field_drop" class="tech_process_table">
 
-    <table id='tech_process_table' class='table table-bordered'>
-         <tbody>
-
-         </tbody>
-     </table>
-<button id='tech_process_save' class="btn bg-info text-white">Сохранить</button>
-
-<script>
-
-</script>
+    </div>
+</div>

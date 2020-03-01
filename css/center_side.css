@@ -10,6 +10,8 @@
     color: #fff;
     /*background-color: rgba(0,0,0,0.2);*/
     border-radius: .25rem;
+    width: 100%;
+    text-align: center;
     -webkit-transition: all 1s;
     transition: all 1s;
     border-color: #dee2e6 #dee2e6 #fff;
@@ -63,7 +65,7 @@
 }
 
 .myTabsTab, #print_btn {
-    background-color: #45526e;
+    background-color: #6c757d ;
     flex-basis: 0;
     flex-grow: 1;
     overflow: hidden;

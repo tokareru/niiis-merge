@@ -22,7 +22,7 @@ function setTechnologistGuide(json, add_data) {
         "<ul class='col-12 pl-0'>" +
             techs +
         "</ul>"
-    )
+    );
 
     let toggler = document.getElementById("technologist_guide_accordion").getElementsByClassName("caret");
 
@@ -37,7 +37,7 @@ function setTechnologistGuide(json, add_data) {
 
     $(".operationName").draggable({
         helper: 'clone',
-        appendTo: "#tech_process_table",
+        appendTo: ".tech_process_table",
         drag: function (event, ui) {
             $(ui.helper).find("span").first().css("color", "black !important");
             $(ui.helper).find("span").css("background-color", "#dbf4ff");
@@ -47,8 +47,9 @@ function setTechnologistGuide(json, add_data) {
     });
     $(".techName").draggable({
         helper: 'clone',
-        appendTo: "#tech_process_table",
+        appendTo: ".tech_process_table",
         drag: function (event, ui) {
+            $(ui.helper).find("ul").hide();
             $(ui.helper).find("span").css("color", "black !important");
             $(ui.helper).find("span").css("background-color", "#dbf4ff");
             $(ui.helper).find("li").css("background-color", "#dbf4ff");
