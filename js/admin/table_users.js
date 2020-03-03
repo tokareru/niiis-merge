@@ -44,7 +44,6 @@ $(function () {
                 success: function (answer)
                 {
                     console.log(answer);
-                    alert("Сохранено");
                     var id = $("#edit_users #id").val();
                     var changed_row = "#table_edit #" + id + " ";
                     var fio = $("#edit_users #last_name").val() + ' ' + $("#edit_users #first_name").val() + ' ' + $("#edit_users #otc").val()
@@ -106,7 +105,6 @@ $(function () {
             success: function (answer)
             {
                 console.log(answer);
-                alert("Добавлен");
                 var fio = $("#create_user #last_name").val() + ' ' + $("#create_user #first_name").val() + ' ' + $("#create_user #otc").val()
                 $.ajax({
                     url: "get_users_groups",
@@ -152,7 +150,6 @@ $(function () {
                 },
                 success: function (answer) {
                     console.log(answer);
-                    alert("Удален");
                     item.parents("tr:first").remove();
                 }
             });
