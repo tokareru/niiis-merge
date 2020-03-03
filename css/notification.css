@@ -1,0 +1,7 @@
+.custom-toast-position {
+    position: absolute;
+    bottom: 5rem;
+    right: 1rem;
+    min-width: 300px;
+    z-index: 999;
+}

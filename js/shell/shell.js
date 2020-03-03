@@ -160,6 +160,7 @@ async function prepareShell(json_role_and_round, add_data) {
     }
 
     $("#change_role").removeAttr("disabled");
+    initNotifications();
     /*console.log(available_sides);
     console.log(available_tabs);*/
 }

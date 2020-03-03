@@ -1,14 +1,17 @@
 function technologicalProcessInit() {
-
+    let $container = $("#tech_process_field_drop");
+    let tech_process_table = $("#tech_process_table");
     $("#tabs li[aria-controls=\"technological_process_field\"]").on("click", function () {
         $("#tech_process_field_drop").addClass("tech_process_table");
         //$("#tech_process_field_drop").droppable("enable");
         $("#tech_process_table").removeClass("tech_process_table");
         //$("#tech_process_table").droppable("disable");
     });
-    $("#tabs li[aria-controls=\"technological_process_field\"]").trigger("click");
 
-    let $container = $("#tech_process_field_drop");
+    $container.addClass("tech_process_table");
+    tech_process_table.removeClass("tech_process_table");
+
+
 
     $container.droppable(
         {

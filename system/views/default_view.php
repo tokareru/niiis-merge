@@ -29,6 +29,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         sys::inc_no_cache('css', 'css/technological_process.css');
         sys::inc_no_cache('css', 'css/create_task_route.css');
         sys::inc_no_cache('css', 'css/create_title_block.css');
+        sys::inc_no_cache('css', 'css/notification.css');
 
         sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
         sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');
@@ -55,6 +56,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         sys::inc_no_cache('javascript', 'js/main.js');
         sys::inc_no_cache('javascript', 'js/flowtype.js');
         sys::inc_no_cache('javascript', 'js/create_title_block.js');
+        sys::inc_no_cache('javascript', 'js/notification.js');
         ?>
         
         <script src="<?php echo conf::$SITE_URL ?>js/main.js" type="text/javascript"></script>
@@ -83,6 +85,10 @@ require_once conf::$ROOT . 'system/etc/functions.php';
 
         <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">
+            </div>
+            <div id="toast-section">
+                <div id="toast-position" class="custom-toast-position">
+                </div>
             </div>
         </div>
     </body>
