@@ -52,3 +52,25 @@ function setNotificationToFieldInitialization(fieldName, notification) {
 function triggerEventOnField(fieldName, eventName) {
     $("#" + fieldName).trigger(eventName);
 }
+
+
+
+
+
+
+/*
+Как добавлять и вызывать уведомления:
+1) Если уведомление появляется при каком-то событии, а не при инициализации вкладки, то:
+    * Придумайте название события и сделайте вызов функции triggerEventOnField(fieldName, eventName)
+       (где fieldName - область к которой привязывется событие eventName, eventName - название события)
+       в том месте где есть, например, некоторая проверка условия, т.е логические операторы или в любом другом месте кода
+       области. Для установки уведомления используйте setNotificationToField(fieldName, eventName, notification).
+    * В случае если вам нужно сообщение, которое бы появлялось при инициализации,
+      то используте либо функцию для установки уведомления setNotificationToFieldInitialization(fieldName, notification) в пункте 2,
+      либо примите имя события как "initialization".
+      Делать вызов фунции triggerEventOnField(fieldName, eventName) не нужно.
+
+2) В файле notification.js в функции initNotifications() устанавливайте уведомления с помощью
+   setNotificationToField(fieldName, eventName, notification) или
+   с помощью  setNotificationToFieldInitialization(fieldName, notification)
+*/
