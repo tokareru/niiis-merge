@@ -49,7 +49,7 @@ function technologicalProcessInit() {
 
         $(".deleteNodeButtonRM").last().click(function () {
            $(this).parent().remove();
-        })
+        });
 
         $container.find(".operationNameDropArea").last().droppable({
             accept: ".operationName",
@@ -84,9 +84,9 @@ function technologicalProcessInit() {
             "</li>"
         );
 
-        /*$(".deleteNodeButtonRM").last().click(function () {
+        $(".deleteNodeButtonRM").last().click(function () {
             $(this).parent().remove();
-        });*/
+        });
 
         setOperationNameToTechName( $container.find(".operationNameDropArea").last(), $draggableON);
 
