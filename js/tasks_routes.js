@@ -67,6 +67,13 @@ function tasksRoutesMadeRoutes(id, count) {
                     inits: 'The Man Who Sold The World',
                     start: date.toDateString(),
                     end: id === 'task_routes_active_routes' ? '-' : date.toDateString(),
+                    table: {
+                        number: i + 1,
+                        type: 'Тестовый вид',
+                        exist: id === 'task_routes_active_routes' ? 'Активный' : 'Завершенный',
+                        worker: currentName,
+                        inits: 'The Man Who Sold The World'
+                    }
                 }
             )
         })}</li>`);
@@ -96,8 +103,32 @@ function generateInfoForRoute(infos) {
     info += '<li><span class="font-weight-bold">' +
         'Состав маршрута' +
         '</span></li>';
+    info += generateTableForRoutes(infos.table);
     info += '</ul>';
     return info;
+}
+
+function generateTableForRoutes(data) {
+    return '<table class="table table-bordered">' +
+        '<thead class="thead-light">' +
+        '<tr>' +
+        '<th>Порядковый номер задания</th>' +
+        '<th>Вид задания</th>' +
+        '<th>Состояние задания</th>' +
+        '<th>Исполнитель</th>' +
+        '<th>Инициатор</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>' +
+        '<tr>' +
+        `<td>${data.number}</td>` +
+        `<td>${data.type}</td>` +
+        `<td>${data.exist}</td>` +
+        `<td>${data.worker}</td>` +
+        `<td>${data.inits}</td>` +
+        '</tr>' +
+        '</tbody>' +
+        '</table>';
 }
 
 function setTaskRoutes(json_list, type, accord_id) {

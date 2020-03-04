@@ -13,7 +13,6 @@
 </head>
 <body>
 <div id="tasks_routes" class="tasks_routes_main">
-    <h3 class="font-weight-bold">Спецификация</h3>
     <div id="task_routes_tree">
         <h2 class="font-weight-bold">Дерево маршрутов</h2>
         <ul>
