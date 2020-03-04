@@ -2,7 +2,7 @@ function initNotifications() {
     setNotificationToFieldInitialization("technological_process_field", {
         mainHeader: "Рабочий стол. Техпроцесс",
         extraHeader: "",
-        text: "Чтобы создать техпроцесс, перетащите узлы Справочника технолога в центр рабочего стола"
+        text: "Чтобы создать техпроцесс, перетащите узлы \"Справочника технолога\" в центр рабочего стола"
     });
 
     setNotificationToField("scheme", "schemeBlock", {
@@ -14,9 +14,20 @@ function initNotifications() {
     setNotificationToFieldInitialization("technologist_guide_field", {
         mainHeader: "Справочник технолога",
         extraHeader:"",
-        text: "Вы можете перетаскивать узлы справочника в Маршрутную карту или в Рабочий стол. Техпроцесс."
+        text: "Вы можете перетаскивать узлы \"Справочник технолога\" в \"Маршрутную карту\" или в \"Рабочий стол. Техпроцесс\"."
+    });
+
+    setNotificationToFieldInitialization("pdm_field", {
+        mainHeader: "Изделия PDM",
+        extraHeader:"",
+        text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
     })
 
+    setNotificationToFieldInitialization("std_field", {
+        mainHeader: "Стандартные изделия",
+        extraHeader:"",
+        text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
+    })
 }
 
 function generateNotification(notification) {
@@ -52,7 +63,7 @@ function setNotificationToField(fieldName, eventName, notification = {mainHeader
 }
 
 function setNotificationToFieldInitialization(fieldName, notification) {
-    setNotificationToField(fieldName, "initialization", notification);
+    setNotificationToField(fieldName, "endOfInitialization", notification);
 }
 
 function triggerEventOnField(fieldName, eventName) {
@@ -73,7 +84,7 @@ function triggerEventOnField(fieldName, eventName) {
        области. Для установки уведомления используйте setNotificationToField(fieldName, eventName, notification).
     * В случае если вам нужно сообщение, которое бы появлялось при инициализации,
       то используте либо функцию для установки уведомления setNotificationToFieldInitialization(fieldName, notification) в пункте 2,
-      либо примите имя события как "initialization".
+      либо примите имя события как "endOfInitialization".
       Делать вызов фунции triggerEventOnField(fieldName, eventName) не нужно.
 
 2) В файле notification.js в функции initNotifications() устанавливайте уведомления с помощью
