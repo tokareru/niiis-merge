@@ -39,23 +39,26 @@ function setTechnologistGuide(json, add_data) {
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            $(ui.helper).find("span").first().css("color", "black !important");
-            $(ui.helper).find("span").css("background-color", "#dbf4ff");
-            $(ui.helper).find("li").css("background-color", "#dbf4ff");
-            $(ui.helper).find("ul").css("background-color", "#dbf4ff");
+            let $helper =$ (ui.helper);
+            $helper.find("span").first().css("color", "black !important");
+            $helper.find("span").css("background-color", "#dbf4ff");
+            $helper.find("li").css("background-color", "#dbf4ff");
+            $helper.find("ul").css("background-color", "#dbf4ff");
         }
     });
     $(".techName").draggable({
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            $(ui.helper).find("ul").hide();
-            $(ui.helper).find("span").css("color", "black !important");
-            $(ui.helper).find("span").css("background-color", "#dbf4ff");
-            $(ui.helper).find("li").css("background-color", "#dbf4ff");
-            $(ui.helper).find("ul").css("background-color", "#dbf4ff");
+            let $helper =$ (ui.helper);
+            $helper.find("ul").hide();
+            $helper.css("list-style-type", "none");
+            $helper.find("span").css("color", "black !important");
+            $helper.find("span").css("background-color", "#dbf4ff");
+            $helper.find("li").css("background-color", "#dbf4ff");
+            $helper.find("ul").css("background-color", "#dbf4ff");
         }
-    })
+    });
     field.trigger("initialization");
 }
 

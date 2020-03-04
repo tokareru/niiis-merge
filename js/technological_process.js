@@ -43,7 +43,7 @@ function technologicalProcessInit() {
         $container.append(
             "<li class='techNameDropped'>" +
             "<span class='caret'>" + $draggable.find("span").first().text() + "</span><span class='deleteNodeButtonRM'></span>" +
-            "<ul style='height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
+            "<ul style='min-height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
 
@@ -58,7 +58,7 @@ function technologicalProcessInit() {
                 //sortOperationNames();
                 setOperationNameToTechName( $this,$(u.draggable));
                 $container.find(".techNameDropped").last().remove();
-                $this.css("height", ($this.height() + 15) + "px");
+                $this.css("min-height", ($this.height() + 15) + "px");
             }
         });
         sortOperationNames();
@@ -80,7 +80,7 @@ function technologicalProcessInit() {
         $container.append(
             "<li class='techNameDropped'>" +
             "<span class='caret'> Техпроцесс " + ($container.find(".techNameDropped").length + 1) + "</span><span class='deleteNodeButtonRM'></span>" +
-            "<ul style='height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
+            "<ul style='min-height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
 
@@ -97,7 +97,7 @@ function technologicalProcessInit() {
                 let $this = $(this);
                 setOperationNameToTechName( $(this),$(u.draggable));
                 $container.find(".techNameDropped").last().remove();
-                $this.css("height", ($this.height() + 15) + "px");
+                $this.css("min-height", ($this.height() + 15) + "px");
             }
         });
         sortOperationNames()
@@ -129,7 +129,7 @@ function technologicalProcessInit() {
 
         $this.find(".deleteNodeButtonRM").last().click(function () {
             $(this).parent().remove();
-            $this.css("height", ($this.height() - 15) + "px");
+            $this.css("min-height", ($this.height() - 15) + "px");
         })
     }
 
@@ -145,7 +145,6 @@ function technologicalProcessInit() {
             $(toggler[i]).click(f);
         }
     }
-
 }
 
 
