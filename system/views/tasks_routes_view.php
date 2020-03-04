@@ -13,7 +13,30 @@
 </head>
 <body>
 <div id="tasks_routes" class="tasks_routes_main">
-    <div>
+    <h3 class="font-weight-bold">Спецификация</h3>
+    <div id="task_routes_tree">
+        <h2 class="font-weight-bold">Дерево маршрутов</h2>
+        <ul>
+            <li>
+                <span class="caret">
+                    Маршруты активные
+                </span>
+                <ul class="nested" id="task_routes_active_routes">
+
+                </ul>
+            </li>
+            <li>
+                <span class="caret">
+                    Маршруты завершенные
+                </span>
+                <ul class="nested" id="task_routes_ended_routes">
+
+                </ul>
+            </li>
+        </ul>
+
+    </div>
+    <!--<div>
          <div class="row">
             <div class="col-4" id="tasks_routes_info">
                 <div class="tasks_routes_inner_div">
@@ -40,7 +63,7 @@
             </div>
 
          </div>
-    </div>
+    </div>-->
 </div>
 </body>
 </html>
