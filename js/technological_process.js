@@ -43,7 +43,7 @@ function technologicalProcessInit() {
         $container.append(
             "<li class='techNameDropped'>" +
             "<span class='caret'>" + $draggable.find("span").first().text() + "</span><span class='deleteNodeButtonRM'></span>" +
-            "<ul class='nested myNested operationNameDropArea'></ul>" +
+            "<ul style='height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
 
@@ -54,9 +54,11 @@ function technologicalProcessInit() {
         $container.find(".operationNameDropArea").last().droppable({
             accept: ".operationName",
             drop: function (e, u) {
+                let $this = $(this);
                 //sortOperationNames();
-                setOperationNameToTechName( $(this),$(u.draggable));
+                setOperationNameToTechName( $this,$(u.draggable));
                 $container.find(".techNameDropped").last().remove();
+                $this.css("height", ($this.height() + 15) + "px");
             }
         });
         sortOperationNames();
@@ -78,21 +80,24 @@ function technologicalProcessInit() {
         $container.append(
             "<li class='techNameDropped'>" +
             "<span class='caret'> Техпроцесс " + ($container.find(".techNameDropped").length + 1) + "</span><span class='deleteNodeButtonRM'></span>" +
-            "<ul class='nested myNested operationNameDropArea'></ul>" +
+            "<ul style='height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
 
-        $(".deleteNodeButtonRM").last().click(function () {
+        /*$(".deleteNodeButtonRM").last().click(function () {
             $(this).parent().remove();
-        })
+        });*/
+
         setOperationNameToTechName( $container.find(".operationNameDropArea").last(), $draggableON);
 
         $container.find(".operationNameDropArea").last().droppable({
             accept: ".operationName",
             drop: function (e, u) {
                 //sortOperationNames();
+                let $this = $(this);
                 setOperationNameToTechName( $(this),$(u.draggable));
                 $container.find(".techNameDropped").last().remove();
+                $this.css("height", ($this.height() + 15) + "px");
             }
         });
         sortOperationNames()
@@ -124,6 +129,7 @@ function technologicalProcessInit() {
 
         $this.find(".deleteNodeButtonRM").last().click(function () {
             $(this).parent().remove();
+            $this.css("height", ($this.height() - 15) + "px");
         })
     }
 

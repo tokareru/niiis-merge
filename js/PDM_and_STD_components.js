@@ -74,6 +74,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
             helper: 'clone'
         });
     }
+    field.trigger("initialization");
 }
 
 

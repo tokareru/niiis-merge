@@ -1,3 +1,24 @@
+function initNotifications() {
+    setNotificationToFieldInitialization("technological_process_field", {
+        mainHeader: "Рабочий стол. Техпроцесс",
+        extraHeader: "",
+        text: "Чтобы создать техпроцесс, перетащите узлы Справочника технолога в центр рабочего стола"
+    });
+
+    setNotificationToField("scheme", "schemeBlock", {
+        mainHeader: "Рабочий стол. Чертёж",
+        extraHeader: "",
+        text: "Область заблокирована. Необходимо полностью собрать изделие."
+    });
+
+    setNotificationToFieldInitialization("technologist_guide_field", {
+        mainHeader: "Справочник технолога",
+        extraHeader:"",
+        text: "Вы можете перетаскивать узлы справочника в Маршрутную карту или в Рабочий стол. Техпроцесс."
+    })
+
+}
+
 function generateNotification(notification) {
     let toast_position = $("#toast-position");
     toast_position.append(
@@ -7,7 +28,7 @@ function generateNotification(notification) {
                     <div class="toast-header">                        
                         <strong class="mr-auto">${notification.mainHeader}</strong>
                         <small class="text-muted">${notification.extraHeader}</small>
-                        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                        <button type="button" class="ml-2 mb-1 close btn shadow-none" data-dismiss="toast" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -22,21 +43,6 @@ function generateNotification(notification) {
     toast.find("button").click(function () {
         toast.remove();
     })
-}
-
-function initNotifications() {
-    setNotificationToFieldInitialization("technological_process_field", {
-        mainHeader: "Рабочий стол. Техпроцесс",
-        extraHeader: "",
-        text: "Чтобы создать техпроцесс, перетащите узлы Справочника технолога в центр рабочего стола"
-    });
-
-    setNotificationToField("scheme", "schemeBlock", {
-        mainHeader: "Рабочий стол. Чертёж",
-        extraHeader: "",
-        text: "Область заблокирована. Необходимо полностью собрать изделие."
-    })
-
 }
 
 function setNotificationToField(fieldName, eventName, notification = {mainHeader: "",  extraHeader: "", text: ""}) {
