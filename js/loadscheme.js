@@ -1,3 +1,5 @@
+let schemeState = "unlocked";
+
 async function triggerschemeInit() {
     let fieldscheme = await import('./scheme.js');
     await fieldscheme.initScheme();
@@ -22,7 +24,7 @@ async function triggerschemeInit() {
         let amountOfInputs = $("#left-accordion").find("input").length;
 
         if (amountOfChecked !== amountOfInputs) {
-            blockScheme()
+            blockScheme();
         }
     }
     if (Round === 3 && Role !== 'designer'){
@@ -52,6 +54,8 @@ function blockScheme() {
     field3D.find("input").attr("disabled", "disabled");
     $("#addToServerTitleBlock").attr("disabled", "disabled");
     $("#dialog-message").dialog( "open" );
+    if (schemeState === 'unlocked') triggerEventOnField("scheme", "schemeBlock");
+    schemeState = "blocked";
 }
 
 function unlockScheme() {
@@ -60,6 +64,7 @@ function unlockScheme() {
     field3D.find("input").removeAttr("disabled");
     $("#addToServerTitleBlock").removeAttr("disabled");
     $( "#dialog-message" ).dialog( "close" );
+    schemeState = "unlocked";
 }
 
 function schemeMessage(){
