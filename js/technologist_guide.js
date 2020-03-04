@@ -59,7 +59,7 @@ function setTechnologistGuide(json, add_data) {
             $helper.find("ul").css("background-color", "#dbf4ff");
         }
     });
-    field.trigger("initialization");
+    field.trigger("endOfInitialization");
 }
 
 

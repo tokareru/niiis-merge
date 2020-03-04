@@ -39,7 +39,9 @@ function setTabs(json, add_data) {
             let a = $(ui.tab).children();
             a.attr("href", "#" + ui.panel.attr("id"));
             //вызов функции инициализации области
-            $(ui.panel).trigger("initialization");
+            let $panel = $(ui.panel);
+            $panel.trigger("initialization");
+            $panel.trigger("endOfInitialization");
             let myTabsNav = $('.myTabsNav');
             myTabsNav.find('#print_btn').remove();
             myTabsNav.append('<a href="print_report" target="_blank"><input id="print_btn" type="button" value="Печать"><a/>');
