@@ -75,7 +75,13 @@ function addAvailableTabs(data, tableID) {
             <li aria-controls="${elem.ID}" class="nav-item">
             <a id="main-tabs-${elem.ID}" class="nav-link" data-toggle="pill" href="${elem.URL}" tab-target="${elem.ID}" role="tab">${elem.name}</a>
             </li>`);
-        tabsContent.append("<div class='tabs_div tab-pane' role=\"tabpanel\" id='" + elem.ID + "'></div>");
+        tabsContent.append(
+            "<div class='tabs_div tab-pane' role=\"tabpanel\" id='" + elem.ID + "'>" +
+                "<div class='loadingDiv mt-5 d-flex justify-content-center'>" +
+                    "<strong class='mr-3'>Идёт загрузка...</strong>" +
+                    "<div class=\"spinner-border\" role=\"status\" aria-hidden=\"true\"></div>" +
+                "</div>" +
+            "</div>");
         ul.find("a").last().one("click", function(){
             downloadAndSetHrefToTab($(this));
         })
@@ -104,9 +110,12 @@ function downloadAndSetHrefToTab($a) {
         url: $a.attr("href"),
         dataType: "HTML",
         success: function (html) {
-            $("#" + $a.attr("tab-target")).append(html);
-            $a.attr("href", "#" + $a.attr("tab-target"));
-            $(`#${$a.attr("tab-target")}`).trigger("initialization");
+            let target = $a.attr("tab-target");
+            let $target = $(`#${target}`);
+            $target.find(".loadingDiv").remove();
+            $target.append(html);
+            $a.attr("href", "#" + target);
+            $target.trigger("initialization");
         }
     });
 }
