@@ -1,4 +1,4 @@
-<div class="btn-group">
+<div class="btn-group ml-3">
     <button type="button" class="btn btn-outline-light dropdown-toggle userNicknameButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <span class="text-monospace alert-dismissible">Меню</span>
     </button>
