@@ -92,7 +92,7 @@ function schemeMessage(){
 
     $("#dialog-message").parent().css({
         "border": "1px solid #c5c5c5",
-        "z-index": "99999999999"
+        "z-index": "999"
     }).addClass("bg-light");
     $("#dialog-message").parent().find("button").remove();//first().addClass("cross-scheme").addClass("btn");
     $("#dialog-message").parent().find("div").first().addClass("alert-secondary");

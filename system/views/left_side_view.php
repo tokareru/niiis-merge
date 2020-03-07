@@ -22,7 +22,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="left-accordion-collapse">
-                <ul class="pl-2" id="left-accordion">
+                <ul class="pl-0" id="left-accordion">
                     <p> Идёт загрузка...</p>
                 </ul>
             </div>
