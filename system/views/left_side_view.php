@@ -14,7 +14,7 @@
     <title>Left-side</title>
 </head>
 <body>
-<div class="col-xl-2">
+<div class="col-xl-2 mb-4">
 <!--Левая сторона-->
     <div class="left-side">
         <div id="left-accordion">
