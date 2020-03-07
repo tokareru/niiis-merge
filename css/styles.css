@@ -63,6 +63,13 @@ h4{
     color: #ffffff;
 }
 
+.logoutButton{
+    font: normal normal normal 1.15em/1 FontAwesome;
+}
+
+.logoutButton:before{
+}
+
 hr{
     margin-top: 0;
     margin-bottom: 4px;

@@ -18,12 +18,14 @@
             <span class="bold">Текущий раунд:</span> <span class="ml-2 font-italic"><?php echo $_SESSION['niiis']['round'] ?></span>
         </div>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="print_report" target="_blank">
+        <a class="dropdown-item logoutButton d-inline-flex" href="print_report" target="_blank">
             <!--<input id="print_btn" type="button" value="Печать">-->
-            Печать
+             Печать <i class="fas fa-print ml-auto"></i>
         <a/>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" style="text-decoration: none;" href="<?php echo conf::$SITE_URL . 'logout' ?>">Выйти</a>
+        <a class="dropdown-item logoutButton d-inline-flex" style="text-decoration: none;" href="<?php echo conf::$SITE_URL . 'logout' ?>">
+            Выйти <i class="fas fa-sign-out ml-auto"></i>
+        </a>
     </div>
 </div>
 
