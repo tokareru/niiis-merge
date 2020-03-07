@@ -70,7 +70,7 @@ function unlockScheme() {
 function schemeMessage(){
     $("#field3D").append(
         "<div id=\"dialog-message\" title=\"Область заблокирована\">" +
-        "<p class='alert-warning p-1'>" +
+        "<p class='p-1'>" +
         "<span class=\"ui-icon ui-icon-circle-check\"></span>" +
         "Необходимо полностью собрать изделие." +
         "</p>" +

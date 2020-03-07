@@ -12,6 +12,14 @@
     height: 100% !important;*/
 }
 
+#tabs li:hover{
+    cursor: pointer;
+}
+
+#tabs .nav-link.active{
+    background-color: #202021;
+}
+
 .myRow{
     /*height: 97vh;*/
 }

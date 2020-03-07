@@ -80,10 +80,10 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body class='bg-light'>
-    <?php require_once("system/views/header.php"); ?>
+
       <hr>
 
-        <div id="shell" class="container-fluid myContainer">
+        <div id="shell" class="container-fluid myContainer" style="margin-top: 6rem">
             <div class="row myRow">
             </div>
             <div id="toast-section">
