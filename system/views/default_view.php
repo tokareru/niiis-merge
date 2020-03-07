@@ -83,7 +83,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
 
       <hr>
 
-        <div id="shell" class="container-fluid myContainer" style="margin-top: 6rem">
+        <div id="shell" class="container-fluid myContainer" style="margin-top: 4rem">
             <div class="row myRow">
             </div>
             <div id="toast-section">

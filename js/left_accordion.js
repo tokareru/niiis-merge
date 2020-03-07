@@ -23,8 +23,8 @@ function setAccordionPanels(json, add_data) {
         classes:
             {
                 'ui-accordion': 'my_ui-accordion',
-                'ui-accordion-header': 'my_ui-accordion-header bg-dark',
-                'ui-accordion-header-collapsed': 'bg-secondary',
+                'ui-accordion-header': 'my_ui-accordion-header',
+                'ui-accordion-header-collapsed': 'my-accordion-header bg-dark',
                 'ui-accordion-content': 'my_ui-accordion-content',
                 'ui-accordion-header-active': 'myAccordionActive'
             },

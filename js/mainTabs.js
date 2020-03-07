@@ -67,7 +67,6 @@ function addAvailableTabs(data, tableID) {
     let table = $(tableID);
     let tabsContent = $("#tabs-content");
     let ul = table.find("ul");
-    ul.addClass('navbar navbar-light');
     let shell = $("#shell");
     let availableSubscribers = shell.data("shellInterconnection").availableSubscribers;
     data.forEach(function (elem) {

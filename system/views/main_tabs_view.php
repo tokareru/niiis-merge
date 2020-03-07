@@ -16,7 +16,7 @@
 <body>
 <div class="col-xl">
 <!--Центральная сторона-->
-    <nav id="tabs" class="navbar navbar-expand-xl  navbar-dark fixed-top bg-dark">
+    <nav id="tabs" class="navbar navbar-expand-xl flex-column navbar-dark fixed-top bg-dark">
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

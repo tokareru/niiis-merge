@@ -139,7 +139,7 @@ fieldset p:hover{
 }
 
 .myAccordionActive{
-    //background-color: #f7aec2;
+    background-color: #2f2f2f  !important;
 }
 
 .left_accord_div{
