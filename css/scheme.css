@@ -64,6 +64,14 @@
     top: 0;
 }
 
+@media (max-width: 900px) {
+    #field3DAll{
+        max-width: 900px !important;
+        min-width: unset !important;
+        overflow-y: auto !important;
+    }
+}
+
 #field3D  {
     width: 90%;
     height: 87%;
