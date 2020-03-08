@@ -24,7 +24,7 @@
         </div>
 
         <div class="row">
-            <div class="table_made col-md-12 table-responsive">
+            <div class="table_made col-md-12 table-responsive-md">
             </div>
         </div>
         <div class="row">

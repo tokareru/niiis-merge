@@ -116,6 +116,7 @@ function downloadAndSetHrefToTab($a) {
             $target.append(html);
             $a.attr("href", "#" + target);
             $target.trigger("initialization");
+            $target.trigger("endOfInitialization");
         }
     });
 }
