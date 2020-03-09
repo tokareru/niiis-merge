@@ -1,11 +1,11 @@
 function initNotifications() {
     let $toastSection = $("#toast-section");
     let $notificationBell = $("#notificationBell");
-    $notificationBell.popover({
+    /*$notificationBell.popover({
         content: "Уведомлений нет",
         placement: "left",
         trigger: 'focus'
-    });
+    });*/
 
     $toastSection.on("newNotification", function () {
         let $navbar = $("#navbarTogglerNotification");
@@ -15,17 +15,17 @@ function initNotifications() {
         }else{
             $notificationBell.removeClass("fa-bell-o").removeClass("fa-bell-slash-o").removeClass("fa-bell").addClass("fa-bell-slash");
         }
-        $notificationBell.popover('hide').popover("disable");
+        //$notificationBell.popover('hide').popover("disable");
     });
 
     $notificationBell.on("click", function () {
-        let $navbar = $("#navbarTogglerNotification");
         let $notificationBell = $("#notificationBell");
+        //$notificationBell.popover('update');
         if ($notificationBell.hasClass("fa-bell") || $notificationBell.hasClass("fa-bell-o")){
-            $("#notificationBell").removeClass("fa-bell-o").removeClass("fa-bell").addClass("fa-bell-slash-o");
+            $notificationBell.removeClass("fa-bell-o").removeClass("fa-bell").addClass("fa-bell-slash-o");
 
         }else {
-            $("#notificationBell").removeClass("fa-bell-slash").removeClass("fa-bell-slash-o").addClass("fa-bell-o");
+            $notificationBell.removeClass("fa-bell-slash").removeClass("fa-bell-slash-o").addClass("fa-bell-o");
         }
 
 
@@ -87,11 +87,11 @@ function generateNotification(notification) {
         toast.remove();
         let $notificationBell = $('#notificationBell');
         $notificationBell.removeClass("fa-bell").addClass("fa-bell-o");
-        if ($("#navbarTogglerNotification").find(".toast").length === 0){
+        /*if ($("#navbarTogglerNotification").find(".toast").length === 0){
             $notificationBell.popover("enable").one("click", function () {
                 $(this).popover("show");
             })
-        }
+        }*/
     });
 
     $("#toast-section").trigger("newNotification")
