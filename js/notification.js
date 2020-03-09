@@ -1,4 +1,36 @@
 function initNotifications() {
+    let $toastSection = $("#toast-section");
+    let $notificationBell = $("#notificationBell");
+    $notificationBell.popover({
+        content: "Новых уведомлений нет",
+        placement: "top",
+        trigger: 'focus'
+    });
+
+    $toastSection.on("newNotification", function () {
+        let $navbar = $("#navbarTogglerNotification");
+        let $notificationBell = $("#notificationBell");
+        if ($navbar.hasClass("show")){
+            $notificationBell.removeClass("fa-bell-o").removeClass("fa-bell-slash-o").removeClass("fa-bell-slash").addClass("fa-bell");
+        }else{
+            $notificationBell.removeClass("fa-bell-o").removeClass("fa-bell-slash-o").removeClass("fa-bell").addClass("fa-bell-slash");
+        }
+        $notificationBell.popover('hide').popover("disable");
+    });
+
+    $notificationBell.on("click", function () {
+        let $navbar = $("#navbarTogglerNotification");
+        let $notificationBell = $("#notificationBell");
+        if ($notificationBell.hasClass("fa-bell") || $notificationBell.hasClass("fa-bell-o")){
+            $("#notificationBell").removeClass("fa-bell-o").removeClass("fa-bell").addClass("fa-bell-slash-o");
+
+        }else {
+            $("#notificationBell").removeClass("fa-bell-slash").removeClass("fa-bell-slash-o").addClass("fa-bell-o");
+        }
+
+
+    });
+
     setNotificationToFieldInitialization("technological_process_field", {
         mainHeader: "Рабочий стол. Техпроцесс",
         extraHeader: "",
@@ -53,7 +85,17 @@ function generateNotification(notification) {
     toast.toast("show");
     toast.find("button").click(function () {
         toast.remove();
-    })
+        let $notificationBell = $('#notificationBell');
+        $notificationBell.removeClass("fa-bell").addClass("fa-bell-o");
+        if ($("#navbarTogglerNotification").find(".toast").length === 0){
+            $notificationBell.popover("enable").one("click", function () {
+                $(this).popover("show");
+            })
+        }
+    });
+
+    $("#toast-section").trigger("newNotification")
+
 }
 
 function setNotificationToField(fieldName, eventName, notification = {mainHeader: "",  extraHeader: "", text: ""}) {

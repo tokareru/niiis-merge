@@ -6,7 +6,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
     <head>
         <meta charset="utf-8"/>
         <title><?php echo isset($data['title']) ? $data['title'] : conf::$SITE_NAME; ?></title>
-        
+
         <?php
         
         sys::inc_no_cache('css', 'css/bootstrap.css');
@@ -58,7 +58,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         sys::inc_no_cache('javascript', 'js/create_title_block.js');
         sys::inc_no_cache('javascript', 'js/notification.js');
         ?>
-        
+
         <script src="<?php echo conf::$SITE_URL ?>js/main.js" type="text/javascript"></script>
 
         <link href="<?php echo conf::$SITE_URL ?>css/main.css" rel="stylesheet" type="text/css">
@@ -86,10 +86,17 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         <div id="shell" class="container-fluid myContainer" style="margin-top: 4rem">
             <div class="row myRow">
             </div>
-            <div id="toast-section">
-                <div id="toast-position" class="custom-toast-position">
-                </div>
-            </div>
         </div>
+      <div id="toast-section" class="">
+          <nav class="navbar">
+              <button class="btn shadow-none navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#navbarTogglerNotification" aria-controls="navbarTogglerNotification" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="btn btn-sm shadow-none fa-bell-slash-o" tabindex="0" id="notificationBell"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarTogglerNotification">
+                  <div id="toast-position" class="custom-toast-position">
+              </div>
+          </nav>
+          </div>
+      </div>
     </body>
 </html>
