@@ -272,13 +272,30 @@ function initRouteMap() {
     });
 
     if (Round === 3){
-        $.ajax({
-            url: 'ajax/get_work_place_tech_process',
-            type: 'GET',
-            success: function (res) {
-                setTechProcessJson(techGuideJson, res, $table);
-            }
-        })
+        if (Role !== "technologist"){
+            $.ajax({
+                url: 'ajax/get_technologist_info',
+                type: 'GET',
+                success: function (techJson) {
+                    techGuideJson = techJson;
+                    $.ajax({
+                        url: 'ajax/get_work_place_tech_process',
+                        type: 'GET',
+                        success: function (res) {
+                            setTechProcessJson(techGuideJson, res, $table);
+                        }
+                    })
+                }
+            })
+        }else {
+            $.ajax({
+                url: 'ajax/get_work_place_tech_process',
+                type: 'GET',
+                success: function (res) {
+                    setTechProcessJson(techGuideJson, res, $table);
+                }
+            })
+        }
     }else {
         $table.on('click', '.tech_proc_del_td', function () {
             $(this).parents('tr').remove();
