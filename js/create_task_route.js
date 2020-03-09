@@ -27,7 +27,9 @@ function addRows(count_rows, addInputs, addRolesNames) {
             input_div_names = name;
         }
 
-        let $td = '<td style="text-align: center">' +
+        let $td =
+            '<td style="text-align: center">' + (i + 1) + '</td>'+
+            '<td style="text-align: center">' +
             '<input type="checkbox"' +
             '>' +
             '</td>' +
@@ -50,7 +52,9 @@ function initSingleTable() {
     $('.table_create_task_route').css({'height': 50});
     let $tbody = $('.table_create_task_route').find('tbody');
 
-    let $td = '<td style="text-align: center">' +
+    let $td ='<td class="ctr_cell">' + 1 +
+    '</td>'+
+        '<td style="text-align: center">' +
         '<input type="checkbox" checked' +
         '>' +
         '</td>' +
