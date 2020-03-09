@@ -80,10 +80,20 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     </head>
     <body class='bg-light'>
+      <nav id="tabs" class="navbar navbar-expand-xl navbar-dark sticky-top mb-xl-2 bg-dark">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarToggler">
+              <div class="ml-auto text-center d-xxl-block d-sm-none"><span class="navbar-brand">Цифровая фабрика IT-процессов</span></div>
+              <ul class="nav ml-sm-to-xxl-auto nav-pills navbar-nav" role="tablist" style="list-style-type: none">
+                  <li><a href="#tabs-empty"></a></li>
+              </ul>
+              <?php require_once("system/views/header.php"); ?>
+          </div>
+      </nav>
 
-      <hr>
-
-        <div id="shell" class="container-fluid myContainer" style="margin-top: 4rem">
+        <div id="shell" class="container-fluid myContainer">
             <div class="row myRow">
             </div>
         </div>
