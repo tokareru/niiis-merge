@@ -3,7 +3,7 @@ function initNotifications() {
     let $notificationBell = $("#notificationBell");
     $notificationBell.popover({
         content: "Новых уведомлений нет",
-        placement: "top",
+        placement: "left",
         trigger: 'focus'
     });
 
