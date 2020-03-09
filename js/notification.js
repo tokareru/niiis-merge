@@ -2,7 +2,7 @@ function initNotifications() {
     let $toastSection = $("#toast-section");
     let $notificationBell = $("#notificationBell");
     $notificationBell.popover({
-        content: "Новых уведомлений нет",
+        content: "Уведомлений нет",
         placement: "left",
         trigger: 'focus'
     });
