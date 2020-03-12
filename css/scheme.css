@@ -36,10 +36,11 @@
 
 #razmNumber1 {
     position: absolute;
-    top: 93px;
+    top: 94px;
     width: 40px;
     height: 20px;
-    left: 84px;
+    left: 85px;
+    z-index: 5;
 }
 
 #razmNumber2 {
@@ -48,6 +49,7 @@
     width: 40px;
     height: 20px;
     left: 315px;
+    z-index: 5;
 }
 
 #razmNumber3 {
@@ -56,6 +58,7 @@
     width: 40px;
     height: 20px;
     left: 662px;
+    z-index: 5;
 }
 
 #razmer1 {
