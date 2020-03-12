@@ -190,20 +190,24 @@ function HideInputAndDrawRazmerOnScheme()
     for (let i=1;i<4;i++)
     {
         //$("#razmNumber"+i).hide();
-        if (i == 1)
+        if ($("#razmNumber"+i).val() !== undefined ||  $("#razmNumber1").val() !== '')
         {
-            $( "#scheme1" ).append("<canvas id='razmer1'></canvas>");
-            let ct = document.getElementById("razmer1").getContext("2d");
-            ct.beginPath();
-            ct.font = "italic 10pt Arial";
-            ct.fillText($("#razmNumber1").val(), 105, 50);
-            ct.stroke();
+            if (i == 1)
+            {
+                $( "#scheme1" ).append("<canvas id='razmer1'></canvas>");
+                let ct = document.getElementById("razmer1").getContext("2d");
+                ct.beginPath();
+                ct.font = "italic 10pt Arial";
+                ct.fillText($("#razmNumber1").val(), 110, 50);
+                ct.stroke();
+            }
+            else
+            {
+                let j=(i-1)*2;
+                ctxs[0].fillText($("#razmNumber"+i).val(), areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y-7);
+            }
         }
-        else
-        {
-            let j=(i-1)*2;
-            ctxs[0].fillText($("#razmNumber"+i).val(), areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y-7);
-        }
+
     }
 }
 

@@ -1011,6 +1011,43 @@ export function initScheme() {
 
     });
 
+    $("#scheme1").dblclick(function (e) {
+        //[120 102, 325 475, 680 170]
+        let CoordinatesToShowInputRazm = [{x: 120, y: 102}, {x: 325, y: 475}, {x: 680, y: 170}];
+        let rr = 20;
+        let rect = e.target.getBoundingClientRect();
+        let x = e.clientX - rect.left - 1;
+        let y = e.clientY - rect.top - 1;
+        for (let i=0; i<CoordinatesToShowInputRazm.length; i++)
+        {
+            let dx = x - CoordinatesToShowInputRazm[i].x;
+            let dy = y - CoordinatesToShowInputRazm[i].y;
+            if (dx * dx + dy * dy < rr * rr)
+            {
+                let idr = i+1;
+                if (document.getElementById('razmNumber'+idr) === null)
+                {
+                    $( "#scheme1" ).append( "<input id='razmNumber"+idr+"'>" );
+                    $( "#razmNumber"+idr ).focus();
+                    $( "#razmNumber"+idr).keypress(function( event )
+                    {
+                        if ( event.which == 13 )
+                        {
+                            event.preventDefault();
+                            //echotext = this.value;
+                            //echoarray[razmID] = echotext;
+                            $( "#razmNumber"+idr ).blur();
+                            //$( "#razmNumber"+razmID ).hide();
+                            //ctxs[0].fillText(echotext, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15); //echo[l]
+                        }
+                    });
+                }
+                console.log(x+"--"+y);
+
+            }
+        }
+    });
+
 
     $("#drawcanv").mousemove(function (e) {
         if (window.down == true) {
@@ -1153,7 +1190,7 @@ function razmerdrawfull()
                             let ct = document.getElementById("razmer1").getContext("2d");
                             ct.beginPath();
                             ct.font = "italic 10pt Arial";
-                            ct.fillText(dlinaarr[j], 105, 50);
+                            ct.fillText(dlinaarr[j], 110, 50);
                             ct.stroke();
 
                             //ctxs[0].fillText(dlinaarr[j], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
