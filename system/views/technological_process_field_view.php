@@ -53,4 +53,5 @@
     <div id="tech_process_field_drop" class="tech_process_table">
 
     </div>
+    <button class="btn btn-dark" id="tech_process_field_save_button">Сохранить техпроцесс</button>
 </div>

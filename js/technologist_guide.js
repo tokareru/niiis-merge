@@ -71,7 +71,7 @@ function createTechGuideNodes(tech) {
     let inp = '';
 
     tech.children.forEach(function (child, i) {
-        console.log(child);
+        //console.log(child);
         let equip = '';
         child.equipment.forEach(function (eq) {
             equip +=
