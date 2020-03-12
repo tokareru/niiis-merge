@@ -84,7 +84,7 @@ function technologicalProcessInit() {
         let length = $container.find(".techNameDropped").length + 1;
         $container.append(
             "<li tech-lvl='new' tech-id='" + length + "' class='techNameDropped'>" +
-            "<span class='caret'> Техпроцесс " + length + "</span><span class='deleteNodeButtonRM'></span>" +
+            "<span class='caret'>Техпроцесс " + length + "</span><span class='deleteNodeButtonRM'></span>" +
             "<ul style='min-height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
@@ -135,7 +135,7 @@ function technologicalProcessInit() {
 
     function downloadTechProcess() {
         $.ajax({
-            url: '',
+            url: 'json/tech_process.json',
             type: 'GET',
             success: function (json) {
                 let $field = $("#tech_process_field_drop");

@@ -16,7 +16,7 @@
 <body>
 <div class="col-xl">
 <!--Центральная сторона-->
-    <div class="tab-content" id="tabs-content">
+    <div class="tab-content mb-3" id="tabs-content">
 
     </div>
 </div>
