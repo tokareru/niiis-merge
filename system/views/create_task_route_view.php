@@ -21,11 +21,11 @@
 		<div id='create_task_route_main' class='bg-light border border-info'>
 				<div class="create_task_route_header"></div>
 					<div class="content_create_task_route">
-						<select class="form-control bg-dark text-white">
+						<select class="form-control bg-dark text-white" id="content_create_task_route_route">
 							<option>Маршрут согласования/утверждения</option>
 							<option>Маршрут выдачи задания</option>
 						</select>
-						<table class="table table-striped table_create_task_route table-bordered table-hover">
+						<table class="table table_create_task_route table-hover">
 					 	 	<thead>
 					  			<tr>
 							  		<th>№</th>
