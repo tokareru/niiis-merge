@@ -27,7 +27,7 @@ function generateTable(json, add_data) {
     let save_url = add_data.save_url;
     let $table_made = $(table_block + '.table_made');
     $table_made
-        .append('<table style="width: 100%" class="table_edit table table-striped table-bordered table-hover">' +
+        .append('<table style="width: 100%" class="table_edit table table-hover">' +
             '</table>');
     $table_made.find('.table_edit').append('<thead></thead>');
     $table_made.find('thead').append('<tr></tr>');

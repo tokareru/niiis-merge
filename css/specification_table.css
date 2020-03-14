@@ -16,7 +16,7 @@
 }
 
 .table_edit thead {
-    background-color: #0097a7;
+    /*background-color: #0097a7;*/
 }
 
 .table_edit tr {
@@ -24,7 +24,7 @@
 }
 
 .table_edit th {
-    border-width: 1px;
+    border: black solid 3px;
 }
 
 .table_edit th div {
@@ -33,6 +33,7 @@
 
 .table_edit td {
     max-width: 80px;
+    border: black solid 3px;
 }
 
 .edit_cell_div_hide {
