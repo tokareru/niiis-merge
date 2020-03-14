@@ -548,5 +548,27 @@ function addToServerTitleBlock() {
 
             }
         }
-    )
+    );
+
+    $.ajax({
+        type: "POST",
+        url: "spec_autoentered_table_ajax/save_product_checked",
+        data: {
+            checked: collectDataLabels(".left-side")
+        },
+        success: function (answer) {
+            console.log(answer);
+        }
+    });
+
+    $.ajax({
+        type: "POST",
+        url: "start_ajax/db_change_time",
+        data: {
+            login: login
+        },
+        success: function (answer) {
+            console.log(answer);
+        }
+    })
 }

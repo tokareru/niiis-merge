@@ -140,7 +140,7 @@ function postDataFromTable(table_block, save_url) {
             });
             row_arr.push({
                 product_id: 1
-            })
+            });
             let obj = {
                 row: row_arr
             };
@@ -162,7 +162,7 @@ function postDataFromTable(table_block, save_url) {
         success: function (answer) {
             console.log(answer);
         }
-    })
+    });
     if (Round === 3){
         //console.log(collectDataLabels(".left-side"))
         $.ajax({

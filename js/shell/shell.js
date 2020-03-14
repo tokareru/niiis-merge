@@ -81,7 +81,31 @@ async function prepareShell(json_role_and_round, add_data) {
         prepareShellIsFinished = true;
         return;
     }
+
+    if ( !( (dateChange === DateChange) || (loginChange == login)) && ((loginChange == LoginChange) || (loginChange == login)) ){
+        LoginChange = loginChange;
+        DateChange = dateChange;
+        triggerEventOnField("shell", "dataChanged");
+        $("#shell").off("updateShell", "#shell");
+        $("#shell").off("dataChanged");
+        return;
+    }
+
+    $("#shell").off("updateShell", "#shell");
+    //$("body").off("dataChanged", "#shell");
+    $("#shell").on("updateShell", function () {
+        $("#shell").off("updateShell", "#shell");
+        updateShell(Role, Round, LoginChange, DateChange);
+    });
+
+    updateShell(role, round, loginChange, dateChange)
+
+}
+
+async function updateShell(role, round, loginChange, dateChange){
     console.log("Производится загрузка кабинета");
+    let shell = $("#shell");
+    shell.addClass("blur-filter");
 
     $("#change_role").attr("disabled", "disabled");
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
@@ -126,6 +150,7 @@ async function prepareShell(json_role_and_round, add_data) {
     $("#chat_main").remove();
     $("#right-side").remove();
     $("#create_task_route-side").remove();
+    $("#toast-position").empty();
     let i = 0;
     for (const elem of available_sides) {
         let html = await downloadHTML(elem.URL);
@@ -161,6 +186,8 @@ async function prepareShell(json_role_and_round, add_data) {
 
     $("#change_role").removeAttr("disabled");
     initNotifications();
+
+    shell.removeClass("blur-filter");
     /*console.log(available_sides);
     console.log(available_tabs);*/
 }

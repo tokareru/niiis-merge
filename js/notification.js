@@ -1,4 +1,50 @@
 function initNotifications() {
+    initBell();
+
+    setNotificationToField("shell", "dataChanged",{
+        mainHeader: "Обновление кабинета",
+        extraHeader: "",
+        text: "Появилось обновление кабинета. Нажмите на кнопку, чтобы обновить кабинет",
+        button: {
+            name: "Обновить",
+            class: "updateShellButton",
+            triggeredEvent: "updateShell",
+            target: "#shell"
+        }
+    });
+
+    setNotificationToFieldInitialization("technological_process_field", {
+        mainHeader: "Рабочий стол. Техпроцесс",
+        extraHeader: "",
+        text: "Чтобы создать техпроцесс, перетащите узлы \"Справочника технолога\" в центр рабочего стола"
+    });
+
+    setNotificationToField("scheme", "schemeBlock", {
+        mainHeader: "Рабочий стол. Чертёж",
+        extraHeader: "",
+        text: "Область заблокирована. Необходимо полностью собрать изделие."
+    });
+
+    setNotificationToFieldInitialization("technologist_guide_field", {
+        mainHeader: "Справочник технолога",
+        extraHeader:"",
+        text: "Вы можете перетаскивать узлы \"Справочник технолога\" в \"Маршрутную карту\" или в \"Рабочий стол. Техпроцесс\"."
+    });
+
+    setNotificationToFieldInitialization("pdm_field", {
+        mainHeader: "Изделия PDM",
+        extraHeader:"",
+        text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
+    });
+
+    setNotificationToFieldInitialization("std_field", {
+        mainHeader: "Стандартные изделия",
+        extraHeader:"",
+        text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
+    })
+}
+
+function initBell() {
     let $toastSection = $("#toast-section");
     let $notificationBell = $("#notificationBell");
     /*$notificationBell.popover({
@@ -27,43 +73,13 @@ function initNotifications() {
         }else {
             $notificationBell.removeClass("fa-bell-slash").removeClass("fa-bell-slash-o").addClass("fa-bell-o");
         }
-
-
     });
-
-    setNotificationToFieldInitialization("technological_process_field", {
-        mainHeader: "Рабочий стол. Техпроцесс",
-        extraHeader: "",
-        text: "Чтобы создать техпроцесс, перетащите узлы \"Справочника технолога\" в центр рабочего стола"
-    });
-
-    setNotificationToField("scheme", "schemeBlock", {
-        mainHeader: "Рабочий стол. Чертёж",
-        extraHeader: "",
-        text: "Область заблокирована. Необходимо полностью собрать изделие."
-    });
-
-    setNotificationToFieldInitialization("technologist_guide_field", {
-        mainHeader: "Справочник технолога",
-        extraHeader:"",
-        text: "Вы можете перетаскивать узлы \"Справочник технолога\" в \"Маршрутную карту\" или в \"Рабочий стол. Техпроцесс\"."
-    });
-
-    setNotificationToFieldInitialization("pdm_field", {
-        mainHeader: "Изделия PDM",
-        extraHeader:"",
-        text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
-    })
-
-    setNotificationToFieldInitialization("std_field", {
-        mainHeader: "Стандартные изделия",
-        extraHeader:"",
-        text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
-    })
 }
 
 function generateNotification(notification) {
     let toast_position = $("#toast-position");
+    let button = (notification.button !== undefined)
+        ? `<button class="btn btn-dark btn-sm btn-toolbar ml-auto mt-2 ${notification.button.class}">${notification.button.name}</button>` : '';
     toast_position.append(
         `
                 <div class="toast" role="alert" data-autohide="false" aria-live="assertive"
@@ -71,19 +87,20 @@ function generateNotification(notification) {
                     <div class="toast-header">                        
                         <strong class="mr-auto">${notification.mainHeader}</strong>
                         <small class="text-muted">${notification.extraHeader}</small>
-                        <button type="button" class="ml-2 mb-1 close btn shadow-none" data-dismiss="toast" aria-label="Close">
+                        <button type="button" class="ml-2 mb-1 close btn shadow-none notificationCloseButton" data-dismiss="toast" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="toast-body">
                     ${notification.text}
+                    ${button}
                     </div>
                 </div>
-`
+        `
     );
     let toast = toast_position.find(".toast").last();
     toast.toast("show");
-    toast.find("button").click(function () {
+    toast.find("button.notificationCloseButton").click(function () {
         toast.remove();
         let $notificationBell = $('#notificationBell');
         $notificationBell.removeClass("fa-bell").addClass("fa-bell-o");
@@ -94,11 +111,19 @@ function generateNotification(notification) {
         }*/
     });
 
+    if (notification.button !== undefined) {
+        $(notification.button.target).off(notification.button.triggeredEvent, notification.button.target);
+        //$(`.${notification.button.class}`).off("click", `.${notification.button.class}`);
+        $(`.toast-body button`).last().on("click", function () {
+            $(notification.button.target).trigger(notification.button.triggeredEvent);
+        });
+    }
+
     $("#toast-section").trigger("newNotification")
 
 }
 
-function setNotificationToField(fieldName, eventName, notification = {mainHeader: "",  extraHeader: "", text: ""}) {
+function setNotificationToField(fieldName, eventName, notification = {mainHeader: "",  extraHeader: "", text: "", button: { name: "", class: "", triggeredEvent: "", target: ""}}) {
     $("#" + fieldName).on(eventName, function () {
         generateNotification(notification);
     });
@@ -111,7 +136,6 @@ function setNotificationToFieldInitialization(fieldName, notification) {
 function triggerEventOnField(fieldName, eventName) {
     $("#" + fieldName).trigger(eventName);
 }
-
 
 
 

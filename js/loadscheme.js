@@ -43,7 +43,7 @@ async function triggerschemeInit() {
                     }
                 }
             });
-        }, 1000)
+        }, 5000)
     }
 
 }
