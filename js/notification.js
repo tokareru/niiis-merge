@@ -1,5 +1,7 @@
 function initNotifications() {
     initBell();
+    $("#shell").off("dataChanged");
+
 
     setNotificationToField("shell", "dataChanged",{
         mainHeader: "Обновление кабинета",
@@ -63,6 +65,10 @@ function initBell() {
         }
         //$notificationBell.popover('hide').popover("disable");
     });
+
+    $("#toast-position").click(function () {
+        $notificationBell.removeClass("fa-bell-slash").removeClass("fa-bell-slash-o").addClass("fa-bell-o");
+    })
 
     $notificationBell.on("click", function () {
         let $notificationBell = $("#notificationBell");
