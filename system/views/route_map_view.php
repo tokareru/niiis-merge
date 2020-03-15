@@ -32,11 +32,14 @@
     </div>-->
     <div class='spec_header'>Маршрутная карта</div>
 
-    <table id='tech_process_table' class='table table-bordered tech_process_table'>
-        <tbody>
+    <div class="table-responsive-md">
+        <table id='tech_process_table' class='table table-bordered tech_process_table'>
+            <tbody>
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
     <button id='tech_process_save' class="btn bg-info text-white">Сохранить</button>
 </div>
 

@@ -16,15 +16,8 @@
 <body>
 <div class="col-xl">
 <!--Центральная сторона-->
-    <div id="tabs">
-        <ul style="list-style-type: none">
-            <li><a href="#tabs-empty"></a></li>
-        </ul>
-        <div id="tabs-empty">
-            <p>
-                Подождите пока страница загружается...
-            </p>
-        </div>
+    <div class="tab-content mb-3" id="tabs-content">
+
     </div>
 </div>
 </body>

@@ -6,14 +6,16 @@ function initRouteMap() {
 */
 
 function initRouteMap() {
+    let tech_process_field_drop = $("#tech_process_field_drop");
+    let tech_process_table = $("#tech_process_table");
     $("#tabs li[aria-controls='route_map_field']").on("click", function () {
         $("#tech_process_field_drop").removeClass("tech_process_table");
         //$("#tech_process_field_drop").droppable("disable");
         $("#tech_process_table").addClass("tech_process_table");
         //$("#tech_process_table").droppable("enable");
     });
-
-    $("#tabs li[aria-controls='route_map_field']").trigger("click");
+    tech_process_field_drop.removeClass("tech_process_table");
+    tech_process_table.addClass("tech_process_table");
 
     /*//initTree("#techProcessBlock ")
     //init_tech_process();
@@ -246,37 +248,58 @@ function initRouteMap() {
         saveTechProcessTable($table);
     });
 
-    let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
-    addNewRowButton.append("<span class='route_map_new_row_button'></span>");
-    addNewRowButton.find("span").click(function () {
-        $("#tech_process_table").find("tbody tr").last().before(
-        '<tr>' +
-            '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
-            '<i class="fa fa-times"></i></button></td><td colspan="4" class="tdBorderBlackLeft">' +
-            '</td>' +
-            '<td colspan="3" class="techProcessCell"></td>' +
-            '<td colspan="4" class="tdBorderBlackRight"></td>' +
-            '<td colspan="34" class="techProcessCell"><input class="input-group-sm routeMapInputName routeMapInput"></td>' +
-            '<td colspan="12" class="tdBorderBlackLeft techProcessCell"><input class="input-group-sm routeMapInputEquip routeMapInput"></td>' +
-            '<td colspan="12" class="techProcessCell"><input class="input-group-sm routeMapInputTool routeMapInput"></td>' +
-            '<td colspan="6" class="techProcessCell"></td>' +
-            '<td colspan="5" class="techProcessCell"></td>' +
-            '<td colspan="5" class="techProcessCell"></td>' +
-            '<td colspan="5" class="techProcessCell"></td>' +
-            '<td colspan="5" class="techProcessCell"></td>' +
-            '<td colspan="5" class="tdBorderBlackRight"></td>' +
-            '</tr>'
-        )
-    });
+    // кнопка "добавить новую строку"
+    if (Round !== 3){
+        let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
+        addNewRowButton.append("<span class='route_map_new_row_button'></span>");
+        addNewRowButton.find("span").click(function () {
+            $("#tech_process_table").find("tbody tr").last().before(
+                '<tr>' +
+                '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
+                '<i class="fa fa-times"></i></button></td><td colspan="4" class="tdBorderBlackLeft">' +
+                '</td>' +
+                '<td colspan="3" class="techProcessCell"></td>' +
+                '<td colspan="4" class="tdBorderBlackRight"></td>' +
+                '<td colspan="34" class="techProcessCell"><input class="input-group-sm routeMapInputName routeMapInput"></td>' +
+                '<td colspan="12" class="tdBorderBlackLeft techProcessCell"><input class="input-group-sm routeMapInputEquip routeMapInput"></td>' +
+                '<td colspan="12" class="techProcessCell"><input class="input-group-sm routeMapInputTool routeMapInput"></td>' +
+                '<td colspan="6" class="techProcessCell"></td>' +
+                '<td colspan="5" class="techProcessCell"></td>' +
+                '<td colspan="5" class="techProcessCell"></td>' +
+                '<td colspan="5" class="techProcessCell"></td>' +
+                '<td colspan="5" class="techProcessCell"></td>' +
+                '<td colspan="5" class="tdBorderBlackRight"></td>' +
+                '</tr>'
+            )
+        });
+    }
+
 
     if (Round === 3){
-        $.ajax({
-            url: 'ajax/get_work_place_tech_process',
-            type: 'GET',
-            success: function (res) {
-                setTechProcessJson(techGuideJson, res, $table);
-            }
-        })
+        if (Role !== "technologist"){
+            $.ajax({
+                url: 'ajax/get_technologist_info',
+                type: 'GET',
+                success: function (techJson) {
+                    techGuideJson = techJson;
+                    $.ajax({
+                        url: 'ajax/get_work_place_tech_process',
+                        type: 'GET',
+                        success: function (res) {
+                            setTechProcessJson(techGuideJson, res, $table);
+                        }
+                    })
+                }
+            })
+        }else {
+            $.ajax({
+                url: 'ajax/get_work_place_tech_process',
+                type: 'GET',
+                success: function (res) {
+                    setTechProcessJson(techGuideJson, res, $table);
+                }
+            })
+        }
     }else {
         $table.on('click', '.tech_proc_del_td', function () {
             $(this).parents('tr').remove();
@@ -308,6 +331,16 @@ function saveTechProcessTable($table) {
         data: {save: saveObj},
         success: function (res) {
             console.log(res);
+            $.ajax({
+                type: "POST",
+                url: "/start_ajax/db_change_time",
+                data: {
+                    login: login
+                },
+                success: function (answer) {
+                    console.log(answer);
+                }
+            })
         }
     })
 }

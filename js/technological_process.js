@@ -1,14 +1,21 @@
 function technologicalProcessInit() {
-
+    let $container = $("#tech_process_field_drop");
+    let tech_process_table = $("#tech_process_table");
     $("#tabs li[aria-controls=\"technological_process_field\"]").on("click", function () {
         $("#tech_process_field_drop").addClass("tech_process_table");
         //$("#tech_process_field_drop").droppable("enable");
         $("#tech_process_table").removeClass("tech_process_table");
         //$("#tech_process_table").droppable("disable");
     });
-    $("#tabs li[aria-controls=\"technological_process_field\"]").trigger("click");
 
-    let $container = $("#tech_process_field_drop");
+    $container.addClass("tech_process_table");
+    tech_process_table.removeClass("tech_process_table");
+
+    downloadTechProcess();
+
+    $("#tech_process_field_save_button").click(function () {
+        saveTechProcess();
+    });
 
     $container.droppable(
         {
@@ -38,60 +45,56 @@ function technologicalProcessInit() {
 
     function setTechName($draggable) {
         $container.append(
-            "<li class='techNameDropped'>" +
+            "<li tech-lvl='" + $draggable.attr("tech-lvl") + "' tech-id='" + $draggable.attr("tech-id") + "' class='techNameDropped'>" +
             "<span class='caret'>" + $draggable.find("span").first().text() + "</span><span class='deleteNodeButtonRM'></span>" +
-            "<ul class='nested myNested operationNameDropArea'></ul>" +
+            "<ul style='min-height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
 
         $(".deleteNodeButtonRM").last().click(function () {
            $(this).parent().remove();
-        })
-
-        $container.find(".operationNameDropArea").last().droppable({
-            accept: ".operationName",
-            drop: function (e, u) {
-                //sortOperationNames();
-                setOperationNameToTechName( $(this),$(u.draggable));
-                $container.find(".techNameDropped").last().remove();
-            }
         });
+
+        setDropAreaForTechName($container.find(".operationNameDropArea").last());
+
         sortOperationNames();
     }
 
     function sortOperationNames() {
         let uls = $container.find('ul.operationNameDropArea');
-        uls.each(function () {
-            $(this).sortable({
-                items: ".tpLI",
-                axis: 'y',
-                connectWith: ".operationNameDropArea"
+        if (uls.length){
+            uls.each(function () {
+                $(this).sortable({
+                    items: ".tpLI",
+                    axis: 'y',
+                    connectWith: ".operationNameDropArea"
+                });
+                $(this).disableSelection();
             });
-            $(this).disableSelection();
+        }
+    }
+
+    function setDeleteButtonToTechName($parent) {
+        $parent.find(".deleteNodeButtonRM").first().click(function () {
+            $(this).parent().remove();
         });
     }
     
     function setTechNameDefault($draggableON) {
+        let length = $container.find(".techNameDropped").length + 1;
         $container.append(
-            "<li class='techNameDropped'>" +
-            "<span class='caret'> Техпроцесс " + ($container.find(".techNameDropped").length + 1) + "</span><span class='deleteNodeButtonRM'></span>" +
-            "<ul class='nested myNested operationNameDropArea'></ul>" +
+            "<li tech-lvl='new' tech-id='" + length + "' class='techNameDropped'>" +
+            "<span class='caret'>Техпроцесс " + length + "</span><span class='deleteNodeButtonRM'></span>" +
+            "<ul style='min-height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
             "</li>"
         );
 
-        $(".deleteNodeButtonRM").last().click(function () {
-            $(this).parent().remove();
-        })
+        setDeleteButtonToTechName($(".techNameDropped").last());
+
         setOperationNameToTechName( $container.find(".operationNameDropArea").last(), $draggableON);
 
-        $container.find(".operationNameDropArea").last().droppable({
-            accept: ".operationName",
-            drop: function (e, u) {
-                //sortOperationNames();
-                setOperationNameToTechName( $(this),$(u.draggable));
-                $container.find(".techNameDropped").last().remove();
-            }
-        });
+        setDropAreaForTechName($container.find(".operationNameDropArea").last());
+
         sortOperationNames()
     }
 
@@ -99,9 +102,8 @@ function technologicalProcessInit() {
         let name = $draggable.find(".operationNameField").text();
         let equip = $draggable.find(".operationEquipList").find("li span").first().text();
         let tool = $draggable.find(".operationInstrumentList").find("li span").first().text();
-        //console.log(name, equip, tool)
         $this.append(
-            "<li class='tpLI'>" +
+            "<li tech-lvl='" + $draggable.attr("tech-lvl") + "' tech-id='" + $draggable.attr("tech-id") + "' class='tpLI'>" +
             "<span class='caret'>" + name +  "</span><span class='deleteNodeButtonRM'></span>" +
             "<ul class='nested'>" +
             "<table>" +
@@ -117,11 +119,172 @@ function technologicalProcessInit() {
             "</ul>" +
             "</li>"
         );
+
         setToggler();
 
-        $this.find(".deleteNodeButtonRM").last().click(function () {
-            $(this).parent().remove();
+        setDeleteButtonToOperationName($this.find(".deleteNodeButtonRM").last());
+    }
+
+    function setDeleteButtonToOperationName($target) {
+        $target.click(function () {
+            let parent =  $(this).parent();
+            parent.parent().css("min-height", (parent.parent().height() - 15) + "px");
+            parent.remove();
         })
+    }
+
+    function downloadTechProcess() {
+        $.ajax({
+            url: 'json/tech_process.json',
+            type: 'GET',
+            success: function (json) {
+                let $field = $("#tech_process_field_drop");
+                if (json.techProcess != undefined){
+                    if (json.techProcess.length){
+                        json.techProcess.forEach(function (techName) {
+                            let info = getTechName(techName.id, techName.lvl);
+                            let operationNames = [];
+                            let $operationNames = "";
+                            if (techName.operationNames.length){
+                                operationNames = getOperationNames(techName.operationNames);
+                                $operationNames = combineOperationNames(operationNames);
+                            }
+
+                            let name = (techName.lvl.toString() == "new") ? ("Техпроцесс " + techName.id) : info.name;
+                            $field.append(`
+                            <li class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
+                                <span class='caret'>${name}</span><span class='deleteNodeButtonRM'></span>
+                                <ul style='min-height: 35px;' class='nested myNested operationNameDropArea'>
+                                    ${$operationNames}
+                                </ul>
+                            </li>
+                        `);
+
+                            let $techNameDropped = $(".techNameDropped").last();
+                            setDeleteButtonToTechName($techNameDropped);
+                            setDropAreaForTechName($(".operationNameDropArea").last());
+
+                            let $li = $techNameDropped.find(".operationNameDropArea").find("li");
+                            if ($li.length){
+                                $li.each(function () {
+                                    setDeleteButtonToOperationName($(this).find(".deleteNodeButtonRM").last())
+                                })
+                            }
+                        });
+                        sortOperationNames();
+                        setToggler();
+                    }
+                }
+
+            }
+        });
+
+        function getTechName(id, lvl) {
+            let tchNm = {};
+            techGuideJson.forEach(function (techName) {
+                if (techName.lvl == lvl.toString() && techName.id == id.toString()) tchNm = techName;
+            });
+            if (lvl == "new")
+                tchNm = {
+                    id: id,
+                    lvl: "new",
+                    operationNames: []
+                };
+
+            return tchNm;
+        }
+
+        function getOperationNames(operationNames){
+            let operationNamesInfo = [];
+            operationNames.forEach(function (_techName) {
+                operationNamesInfo.push(getOperationNameInfo(_techName.id, _techName.lvl))
+            });
+            return operationNamesInfo;
+        }
+
+        function getOperationNameInfo(id, lvl) {
+            let _operationName = {};
+            techGuideJson.forEach(function (techName) {
+                techName.children.forEach(function (operationName) {
+                if (operationName.id == id && operationName.lvl == lvl)
+                    _operationName = operationName;
+                if (operationName.lvl == "new" && operationName.id == id)
+                    _operationName = {
+                        name: "",
+                        id: operationName.id,
+                        lvl: "new",
+                        tools: operationName.tools,
+                        equipment: operationName.equipment
+                    }
+            })
+            });
+            return _operationName;
+        }
+
+        function combineOperationNames(operationNames) {
+            let $operationNames = "";
+            operationNames.forEach(function (operationName) {
+                $operationNames += `
+            <li tech-lvl='${operationName.lvl}' tech-id='${operationName.lvl}' class='tpLI'>
+            <span class='caret'>${operationName.name}</span><span class='deleteNodeButtonRM'></span>
+            <ul class='nested'>
+            <table>
+            <tbody>
+            <tr><td><div>Оборудование:</div></td>
+            <td><div class='ml-5 bg-white'>${operationName.equipment[0].name}</div></td>
+            </tr>
+            <tr><td><div>Инструменты:</div></td>
+            <td><div class='ml-5 bg-white'>${operationName.tools[0].name}</div></td>
+            </tr>
+            </tbody>
+            </table>
+            </ul>
+            </li>
+            `
+            });
+            return $operationNames;
+        }
+    }
+
+    function setDropAreaForTechName($techName) {
+        $techName.droppable({
+            accept: ".operationName",
+            drop: function (e, u) {
+                let $this = $(this);
+                //sortOperationNames();
+                setOperationNameToTechName( $this,$(u.draggable));
+                $container.find(".techNameDropped").last().remove();
+                $this.css("min-height", ($this.height() + 15) + "px");
+            }
+        });
+    }
+
+    function saveTechProcess() {
+        let json = {
+            techProcess: []
+        };
+        let $field = $("#tech_process_field_drop");
+        let $techNames = $field.find(".techNameDropped");
+        $techNames.each(function () {
+            let this_tech_name = $(this);
+            let techName = {
+                id: this_tech_name.attr("tech-id"),
+                lvl: this_tech_name.attr("tech-lvl"),
+                operationNames: []
+            };
+            let operationsNames = this_tech_name.find(".tpLI");
+            if (operationsNames.length){
+                operationsNames.each(function () {
+                    let this_operation_name = $(this);
+                    techName.operationNames.push({
+                        id: this_operation_name.attr("tech-id"),
+                        lvl: this_operation_name.attr("tech-lvl")
+                    })
+                })
+            }
+            json.techProcess.push(techName);
+        });
+        console.log(json);
     }
 
     function setToggler() {
@@ -136,7 +299,6 @@ function technologicalProcessInit() {
             $(toggler[i]).click(f);
         }
     }
-
 }
 
 

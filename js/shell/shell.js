@@ -1,16 +1,17 @@
 // область вызывает событие createdNewMessage после создания сообщения,
 // а остальные вкладки получают уведомление о новом сообщении с помощью события newMessage
 let Round;
+let login = "";
 let Role;
 let DateChange;
 let LoginChange;
 window.namerole;
 let prepareShellIsFinished = false;
+let FirstInit = true;
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
     setMessageHandler();
-    let current_round;
     getJsonByURL("start_ajax", prepareShell, {});
 
     setInterval(function () {
@@ -75,23 +76,64 @@ async function prepareShell(json_role_and_round, add_data) {
     // проверяем обновления
     let check = (round === Number(Round)) && ((dateChange === DateChange) || (loginChange == login))
         && ((loginChange == LoginChange) || (loginChange == login));
-    //console.log(check)
+    //console.log(check);
     if (check) return;
     if (!prepareShellIsFinished){
         prepareShellIsFinished = true;
         return;
     }
-    console.log("Производится загрузка кабинета");
-
-    $("#change_role").attr("disabled", "disabled");
-    let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
 
     //обновляем данные
     Role = role;
     Round = round;
     LoginChange = loginChange;
     DateChange = dateChange;
-    $("#current_round").text(Round);
+
+    if (FirstInit) $("#shell").on("updateShell", function () {
+        updateShell();
+    });
+
+    if (FirstInit) {
+        updateShell();
+        FirstInit = false;
+    }
+
+    triggerEventOnField("shell", "dataChanged");
+
+    //$("#shell").off("updateShell", "#shell");
+    //$("#shell").off("dataChanged");
+
+    /*return;
+    if ( !dbChange && prepareShellIsFinished){
+
+    }
+
+    //$("#shell").off("updateShell", "#shell");
+    $("#shell").off("dataChanged");
+
+    updateShell()*/
+
+}
+
+async function updateShell(){
+    let role = Role;
+    let round = Round;
+
+    console.log("Производится загрузка кабинета");
+    let shell = $("#shell");
+    let tabs_fields_ul = $("#tabs-fields-ul");
+    shell.addClass("blur-filter");
+    tabs_fields_ul.addClass("blur-filter");
+
+    //обновляем данные раунда
+    $("#current_login_field").text(login);
+    $("#current_role_field").text(role);
+    $("#current_round_number").text(round);
+
+    //$("#change_role").attr("disabled", "disabled");
+    let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
+
+    //$("#current_round").text(Round);
 
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];
@@ -126,6 +168,7 @@ async function prepareShell(json_role_and_round, add_data) {
     $("#chat_main").remove();
     $("#right-side").remove();
     $("#create_task_route-side").remove();
+    $("#toast-position").empty();
     let i = 0;
     for (const elem of available_sides) {
         let html = await downloadHTML(elem.URL);
@@ -160,6 +203,10 @@ async function prepareShell(json_role_and_round, add_data) {
     }
 
     $("#change_role").removeAttr("disabled");
+    initNotifications();
+
+    shell.removeClass("blur-filter");
+    tabs_fields_ul.removeClass("blur-filter");
     /*console.log(available_sides);
     console.log(available_tabs);*/
 }

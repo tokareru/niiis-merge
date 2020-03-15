@@ -1,3 +1,5 @@
+let schemeState = "unlocked";
+
 async function triggerschemeInit() {
     let fieldscheme = await import('./scheme.js');
     await fieldscheme.initScheme();
@@ -22,7 +24,7 @@ async function triggerschemeInit() {
         let amountOfInputs = $("#left-accordion").find("input").length;
 
         if (amountOfChecked !== amountOfInputs) {
-            blockScheme()
+            blockScheme();
         }
     }
     if (Round === 3 && Role !== 'designer'){
@@ -41,7 +43,7 @@ async function triggerschemeInit() {
                     }
                 }
             });
-        }, 1000)
+        }, 5000)
     }
 
 }
@@ -52,6 +54,8 @@ function blockScheme() {
     field3D.find("input").attr("disabled", "disabled");
     $("#addToServerTitleBlock").attr("disabled", "disabled");
     $("#dialog-message").dialog( "open" );
+    if (schemeState === 'unlocked') triggerEventOnField("scheme", "schemeBlock");
+    schemeState = "blocked";
 }
 
 function unlockScheme() {
@@ -60,12 +64,13 @@ function unlockScheme() {
     field3D.find("input").removeAttr("disabled");
     $("#addToServerTitleBlock").removeAttr("disabled");
     $( "#dialog-message" ).dialog( "close" );
+    schemeState = "unlocked";
 }
 
 function schemeMessage(){
     $("#field3D").append(
         "<div id=\"dialog-message\" title=\"Область заблокирована\">" +
-        "<p class='alert-warning p-1'>" +
+        "<p class='p-1'>" +
         "<span class=\"ui-icon ui-icon-circle-check\"></span>" +
         "Необходимо полностью собрать изделие." +
         "</p>" +
@@ -87,7 +92,7 @@ function schemeMessage(){
 
     $("#dialog-message").parent().css({
         "border": "1px solid #c5c5c5",
-        "z-index": "99999999999"
+        "z-index": "999"
     }).addClass("bg-light");
     $("#dialog-message").parent().find("button").remove();//first().addClass("cross-scheme").addClass("btn");
     $("#dialog-message").parent().find("div").first().addClass("alert-secondary");

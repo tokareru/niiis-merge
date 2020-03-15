@@ -39,23 +39,27 @@ function setTechnologistGuide(json, add_data) {
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            $(ui.helper).find("span").first().css("color", "black !important");
-            $(ui.helper).find("span").css("background-color", "#dbf4ff");
-            $(ui.helper).find("li").css("background-color", "#dbf4ff");
-            $(ui.helper).find("ul").css("background-color", "#dbf4ff");
+            let $helper =$ (ui.helper);
+            $helper.find("span").first().css("color", "black !important");
+            $helper.find("span").css("background-color", "#dbf4ff");
+            $helper.find("li").css("background-color", "#dbf4ff");
+            $helper.find("ul").css("background-color", "#dbf4ff");
         }
     });
     $(".techName").draggable({
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            $(ui.helper).find("ul").hide();
-            $(ui.helper).find("span").css("color", "black !important");
-            $(ui.helper).find("span").css("background-color", "#dbf4ff");
-            $(ui.helper).find("li").css("background-color", "#dbf4ff");
-            $(ui.helper).find("ul").css("background-color", "#dbf4ff");
+            let $helper =$ (ui.helper);
+            $helper.find("ul").hide();
+            $helper.css("list-style-type", "none");
+            $helper.find("span").css("color", "black !important");
+            $helper.find("span").css("background-color", "#dbf4ff");
+            $helper.find("li").css("background-color", "#dbf4ff");
+            $helper.find("ul").css("background-color", "#dbf4ff");
         }
-    })
+    });
+    field.trigger("endOfInitialization");
 }
 
 
@@ -67,7 +71,7 @@ function createTechGuideNodes(tech) {
     let inp = '';
 
     tech.children.forEach(function (child, i) {
-        console.log(child);
+        //console.log(child);
         let equip = '';
         child.equipment.forEach(function (eq) {
             equip +=
@@ -87,7 +91,7 @@ function createTechGuideNodes(tech) {
         inp +=
             "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
                 "<span class='caret'>" + (i + 1).toString() + "." + child.name + "</span>" +
-                "<ul class='nested pl-2'>" +
+                "<ul class='nested pl-3'>" +
                     "<li>" +
                         "<span class='caret '>Название</span>" +
                         "<ul class='nested pl-2'>" +
@@ -115,7 +119,7 @@ function createTechGuideNodes(tech) {
     node =
         "<li tech-lvl='" + tech.lvl + "' tech-id='" + tech.id + "' class='techName'>" +
             "<span class='caret detailChildren'>" + tech.name + "</span>" +
-            "<ul class='nested pl-2'>" +
+            "<ul class='nested pl-3'>" +
                 inp +
             "</ul>" +
         "</li>";

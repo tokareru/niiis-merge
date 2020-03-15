@@ -27,15 +27,17 @@ function addRows(count_rows, addInputs, addRolesNames) {
             input_div_names = name;
         }
 
-        let $td = '<td style="text-align: center">' +
+        let $td =
+            '<td style="text-align: center; width: 63px" class="create_task_route_nunb">' + (i + 1) + '</td>' +
+            '<td style="text-align: center; width: 105px">' +
             '<input type="checkbox"' +
             '>' +
             '</td>' +
-            '<td class="ctr_cell">' + input_div_roles +
+            '<td class="ctr_cell" style="width: 116px">' + input_div_roles +
             '</td>' +
-            '<td class="ctr_cell">' + input_div_names +
+            '<td class="ctr_cell" style="width: 136px">' + input_div_names +
             '</td>' +
-            '<td>' +
+            '<td style="width: 156px" class="create_task_route_select">' +
             '<select class="form-control form-control-sm">' +
             '<option value="Согласовать">Согласовать</option>' +
             '<option value="Утвердить">Утвердить</option>' +
@@ -43,14 +45,66 @@ function addRows(count_rows, addInputs, addRolesNames) {
             '</td>';
         $tbody.append('<tr>' + $td + '</tr>');
         $tbody.find('tr').eq(i).data({'login': UsersLogins[i]});
+        // $tbody.find('th, td').width($('#create_task_route_main').width() / 5);
     }
+
+    $('#content_create_task_route_route').on('change', function () {
+        let select_task = $('#content_create_task_route_route option:selected').text();
+        console.log(select_task);
+        if (select_task === 'Маршрут согласования/утверждения') {
+            $tbody.find('.create_task_route_select').each(function () {
+                $(this).html(
+                    '<select class="form-control form-control-sm">' +
+                    '<option value="Согласовать">Согласовать</option>' +
+                    '<option value="Утвердить">Утвердить</option>' +
+                    '</select>')
+            })
+        }
+        else if(select_task === 'Маршрут выдачи задания') {
+            $tbody.find('.create_task_route_select').each(function () {
+                $(this).html(
+                    '<select class="form-control form-control-sm">' +
+                    '<option value="3D-модель сборки">3D-модель сборки</option>' +
+                    '<option value="Сборочный чертеж">Сборочный чертеж</option>' +
+                    '<option value="Спецификация">Спецификация</option>' +
+                    '<option value="Техпроцесс">Техпроцесс</option>' +
+                    '<option value="Маршрутная карта">Маршрутная карта</option>' +
+                    '<option value="ЭСИ">ЭСИ</option>' +
+                    '<option value="Задание на производство">Задание на производство</option>' +
+                    '</select>')
+            })
+        }
+    });
+
+    $('.table_create_task_route tbody').sortable(
+        {
+            axis: 'y',
+            placeholder: 'bg-secondary',
+            update: function () {
+                console.log('change');
+                changeCounting('.table_create_task_route tbody', '.create_task_route_nunb');
+            },
+            classes: {
+                'ui-sortable-helper': 'bg-white'
+            }
+        }
+    );
+}
+
+function changeCounting(selector, findSel) {
+    $(selector).find(findSel).each(function (index) {
+        $(this).text(index + 1);
+        //console.log($(this).text());
+    })
 }
 
 function initSingleTable() {
     $('.table_create_task_route').css({'height': 50});
     let $tbody = $('.table_create_task_route').find('tbody');
 
-    let $td = '<td style="text-align: center">' +
+    let $td = '<td class="ctr_cell">' + 1 +
+        '</td>' +
+        '<td style="text-align: center">' +
         '<input type="checkbox" checked' +
         '>' +
         '</td>' +
@@ -160,11 +214,11 @@ function createTaskRouteEvents(settings) {
     $('.slider_button_create').on('click', function () {
         STDLibClick($('.slider_button_create'), $('.main_all_create_task'), 25);
     });
-   /* $('#shell').on('click', function () {
-        if ($('.main_all_create_task').attr('style') === 'z-index: 999; right: 0px;') {
-            $('.slider_button_create').trigger('click');
-        }
-    });*/
+    /* $('#shell').on('click', function () {
+         if ($('.main_all_create_task').attr('style') === 'z-index: 999; right: 0px;') {
+             $('.slider_button_create').trigger('click');
+         }
+     });*/
 
     $('.ctr_cell').on('click', function () {
         $(this).find('.ctr_div_active').removeClass('ctr_div_active').addClass('ctr_div_hidden');

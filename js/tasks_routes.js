@@ -1,5 +1,5 @@
 function initTasksRoutes() {
-    $.ajax({
+    /*$.ajax({
         type: "GET",
         url: "json/tasks_routes.json",
         dataType: "json",
@@ -36,7 +36,99 @@ function initTasksRoutes() {
         error: function (message) {
             console.log("Can't load the data");
         }
-    })
+    })*/
+
+    tasks_routes_AddEvent('task_routes_tree');
+    tasksRoutesMadeRoutes('task_routes_active_routes', 5);
+    tasksRoutesMadeRoutes('task_routes_ended_routes', 5);
+}
+
+function tasks_routes_AddEvent(id) {
+    let toggler = document.getElementById(id).getElementsByClassName("caret");
+
+    for (let i = 0; i < toggler.length; i++) {
+        toggler[i].addEventListener("click", function () {
+            this.parentElement.querySelector(".nested").classList.toggle("active");
+            this.classList.toggle("caret-down");
+        });
+    }
+}
+
+function tasksRoutesMadeRoutes(id, count) {
+    let $routes = $(`#${id}`);
+    let date = new Date();
+    for (let i = 0; i < count; i++) {
+        $routes.append(`<li>${makeRoute({
+            name: `Маршрут ${i + 1}`, info: generateInfoForRoute(
+                {
+                    name: `Маршрут ${i + 1}`,
+                    type: 'Тестовый тип',
+                    exist: id === 'task_routes_active_routes' ? 'Активный' : 'Завершенный',
+                    inits: 'The Man Who Sold The World',
+                    start: date.toDateString(),
+                    end: id === 'task_routes_active_routes' ? '-' : date.toDateString(),
+                    table: {
+                        number: i + 1,
+                        type: 'Тестовый вид',
+                        exist: id === 'task_routes_active_routes' ? 'Активный' : 'Завершенный',
+                        worker: currentName,
+                        inits: 'The Man Who Sold The World'
+                    }
+                }
+            )
+        })}</li>`);
+    }
+    tasks_routes_AddEvent(id);
+}
+
+function makeRoute(info) {
+    let route = '<ul>';
+    route += `<span class="caret">${info.name}</span>`;
+    route += '<ul class="nested">' +
+        `<li>${info.info}</li>` +
+        '</ul>';
+    route += '</ul>';
+    return route;
+}
+
+function generateInfoForRoute(infos) {
+    let info = '<ul>';
+    info += `<li><span>Название: ${infos.name}</span></li>`;
+    info += `<li><span>Тип: ${infos.type}</span></li>`;
+    info += `<li><span>Состояние: ${infos.exist}</span></li>`;
+    info += `<li><span>Инициализатор: ${infos.inits}</span></li>`;
+    info += `<li><span>Время запуска: ${infos.start}</span></li>`;
+    info += `<li><span>Время завершения: ${infos.end}</span></li>`;
+
+    info += '<li><span class="font-weight-bold">' +
+        'Состав маршрута' +
+        '</span></li>';
+    info += generateTableForRoutes(infos.table);
+    info += '</ul>';
+    return info;
+}
+
+function generateTableForRoutes(data) {
+    return '<table class="table table-bordered">' +
+        '<thead class="thead-light">' +
+        '<tr>' +
+        '<th>Порядковый номер задания</th>' +
+        '<th>Вид задания</th>' +
+        '<th>Состояние задания</th>' +
+        '<th>Исполнитель</th>' +
+        '<th>Инициатор</th>' +
+        '</tr>' +
+        '</thead>' +
+        '<tbody>' +
+        '<tr>' +
+        `<td>${data.number}</td>` +
+        `<td>${data.type}</td>` +
+        `<td>${data.exist}</td>` +
+        `<td>${data.worker}</td>` +
+        `<td>${data.inits}</td>` +
+        '</tr>' +
+        '</tbody>' +
+        '</table>';
 }
 
 function setTaskRoutes(json_list, type, accord_id) {

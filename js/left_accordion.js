@@ -11,27 +11,47 @@ function setAccordionPanels(json, add_data) {
     let availablePanels = json;
     let shell =  $("#shell");
     let availableSubscribers = shell.data("shellInterconnection").availableSubscribers;
-    availablePanels.forEach(function (elem) {
-        accordion.append("<p>" + elem.name + "</p><div class='left_accord_div' id='" + elem.ID + "'></div>");
+    availablePanels.forEach(function (elem, index) {
+        //accordion.append("<p>" + elem.name + "</p><div class='left_accord_div' id='" + elem.ID + "'></div>");
+        accordion.append(
+            `<div class="card">
+                    <div class="card-header bg-dark" id="header-${elem.ID}">
+                        <h5 class="mb-0">
+                            <button style="text-decoration: none; color: white;" class="btn btn-block btn-link collapsed" data-toggle="collapse" data-target="#collapse-${elem.ID}" aria-expanded="false" aria-controls="collapse-">
+                            ${elem.name}
+                            </button>
+                        </h5>
+                    </div>
+
+                <div id="collapse-${elem.ID}" class="collapse" aria-labelledby="header-${elem.ID}" data-parent="${accord_id}">
+                    <div id="${elem.ID}" class="card-body">
+                    </div>
+                </div>
+            </div>`
+        );
         setNotifyAndInitHandlers(elem);
         $("#"+ elem.ID).trigger("initialization");
         availableSubscribers.push(elem.ID);
     });
+
+    accordion.find(".collapsed").first().removeClass("collapsed").attr("aria-expanded", "true");
+    accordion.find(".collapse").first().addClass("show");
+
     shell.data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 
-    $(accord_id).accordion({
+   /* $(accord_id).accordion({
         classes:
             {
                 'ui-accordion': 'my_ui-accordion',
-                'ui-accordion-header': 'my_ui-accordion-header bg-primary',
-                'ui-accordion-header-collapsed': 'bg-secondary',
+                'ui-accordion-header': 'my_ui-accordion-header',
+                'ui-accordion-header-collapsed': 'my-accordion-header bg-dark',
                 'ui-accordion-content': 'my_ui-accordion-content',
                 'ui-accordion-header-active': 'myAccordionActive'
             },
         icons: false,
         animate: 200,
         heightStyle: "fill"
-    });
+    });*/
 }
 
 function chooseAvailablePanels(json) {

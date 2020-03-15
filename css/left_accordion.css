@@ -1,11 +1,17 @@
 .left-side{
-    height: 90vh;
-    min-height: 500px;
-    max-height: 1100px;
 }
 
 /*#left-accordion {
     box-shadow: 0px 0px 2px 1px #b7b7b7;
+}*/
+
+/*@media (min-width: 1200px) and (min-height: 900px){
+    .sticky-top-custom{
+        position: -webkit-sticky;
+        position: sticky;
+        top: 4rem;
+        z-index: 1020;
+    }
 }*/
 
 .my_ui-accordion {
@@ -139,7 +145,7 @@ fieldset p:hover{
 }
 
 .myAccordionActive{
-    //background-color: #f7aec2;
+    background-color: #2f2f2f  !important;
 }
 
 .left_accord_div{

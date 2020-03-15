@@ -1,4 +1,3 @@
-let login = "";
 let currentName = "";
 let Max_count_messages = 100;
 let Server_count;

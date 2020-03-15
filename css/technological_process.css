@@ -16,19 +16,20 @@ ul, #myUL {
     -moz-user-select: none; /* Firefox 2+ */
     -ms-user-select: none; /* IE 10+ */
     user-select: none;
-    font-weight: bold;
     display: block;
 }
 
 .caret::before {
-    content: "\f067";
+    content: "\f13a";
     color: black;
     display: inline-block;
     margin-right: 6px;
+    font-size: 0.85em;
 }
 
 .caret-down::before {
-    content: "\f068";
+    content: "\f139";
+    font-size: 0.85em;
 }
 
 .nested {
@@ -40,7 +41,7 @@ ul, #myUL {
 }
 
 .active li{
-    border-left-style: groove;
+    /*border-left-style: groove;*/
     padding: 0;
     color: #0c5460;
     border-color: #bee5eb;
@@ -51,7 +52,6 @@ ul, #myUL {
 
 .caret:hover{
     color: black;
-    background-color: #FFFFFF;
 }
 
 #esi_branch_body .caret:hover{
@@ -124,7 +124,7 @@ ul, #myUL {
 .operationNameDropArea{}
 
 .myNested{
-    min-height: 100px;
+    min-height: 35px;
 }
 
 .techNameDropped{

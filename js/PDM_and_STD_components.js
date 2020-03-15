@@ -39,12 +39,12 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
                             addNewComponent(elem, accordID, fieldID, true)
                             check = false;
                     }
-                    })
+                    });
                     if (check) addNewComponent(elem, accordID, fieldID, false);
-
                 }
             });
             //$("#left-accordion").accordion("refresh");
+            $(fieldID).trigger("endOfInitialization");
         },
         error: function (message) {
             //console.log("Error");
