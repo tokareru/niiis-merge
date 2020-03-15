@@ -107,7 +107,7 @@ async function updateShell(role, round, loginChange, dateChange){
     let shell = $("#shell");
     shell.addClass("blur-filter");
 
-    $("#change_role").attr("disabled", "disabled");
+    //$("#change_role").attr("disabled", "disabled");
     let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
 
     //обновляем данные
@@ -115,7 +115,7 @@ async function updateShell(role, round, loginChange, dateChange){
     Round = round;
     LoginChange = loginChange;
     DateChange = dateChange;
-    $("#current_round").text(Round);
+    //$("#current_round").text(Round);
 
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];

@@ -17,7 +17,7 @@
 <div class="col-xl-2 mb-4">
 <!--Левая сторона-->
     <div class="left-side">
-        <nav class="navbar-expand-xl nav navbar-light">
+        <nav class="mt-2 mt-xl-0 navbar-expand-xl nav navbar-light">
             <button class="navbar-toggler mb-2" type="button" data-toggle="collapse" data-target="#left-accordion-collapse" aria-controls="left-accordion-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>

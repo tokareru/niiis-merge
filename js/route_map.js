@@ -248,28 +248,32 @@ function initRouteMap() {
         saveTechProcessTable($table);
     });
 
-    let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
-    addNewRowButton.append("<span class='route_map_new_row_button'></span>");
-    addNewRowButton.find("span").click(function () {
-        $("#tech_process_table").find("tbody tr").last().before(
-        '<tr>' +
-            '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
-            '<i class="fa fa-times"></i></button></td><td colspan="4" class="tdBorderBlackLeft">' +
-            '</td>' +
-            '<td colspan="3" class="techProcessCell"></td>' +
-            '<td colspan="4" class="tdBorderBlackRight"></td>' +
-            '<td colspan="34" class="techProcessCell"><input class="input-group-sm routeMapInputName routeMapInput"></td>' +
-            '<td colspan="12" class="tdBorderBlackLeft techProcessCell"><input class="input-group-sm routeMapInputEquip routeMapInput"></td>' +
-            '<td colspan="12" class="techProcessCell"><input class="input-group-sm routeMapInputTool routeMapInput"></td>' +
-            '<td colspan="6" class="techProcessCell"></td>' +
-            '<td colspan="5" class="techProcessCell"></td>' +
-            '<td colspan="5" class="techProcessCell"></td>' +
-            '<td colspan="5" class="techProcessCell"></td>' +
-            '<td colspan="5" class="techProcessCell"></td>' +
-            '<td colspan="5" class="tdBorderBlackRight"></td>' +
-            '</tr>'
-        )
-    });
+    // кнопка "добавить новую строку"
+    if (Round !== 3){
+        let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
+        addNewRowButton.append("<span class='route_map_new_row_button'></span>");
+        addNewRowButton.find("span").click(function () {
+            $("#tech_process_table").find("tbody tr").last().before(
+                '<tr>' +
+                '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
+                '<i class="fa fa-times"></i></button></td><td colspan="4" class="tdBorderBlackLeft">' +
+                '</td>' +
+                '<td colspan="3" class="techProcessCell"></td>' +
+                '<td colspan="4" class="tdBorderBlackRight"></td>' +
+                '<td colspan="34" class="techProcessCell"><input class="input-group-sm routeMapInputName routeMapInput"></td>' +
+                '<td colspan="12" class="tdBorderBlackLeft techProcessCell"><input class="input-group-sm routeMapInputEquip routeMapInput"></td>' +
+                '<td colspan="12" class="techProcessCell"><input class="input-group-sm routeMapInputTool routeMapInput"></td>' +
+                '<td colspan="6" class="techProcessCell"></td>' +
+                '<td colspan="5" class="techProcessCell"></td>' +
+                '<td colspan="5" class="techProcessCell"></td>' +
+                '<td colspan="5" class="techProcessCell"></td>' +
+                '<td colspan="5" class="techProcessCell"></td>' +
+                '<td colspan="5" class="tdBorderBlackRight"></td>' +
+                '</tr>'
+            )
+        });
+    }
+
 
     if (Round === 3){
         if (Role !== "technologist"){
@@ -327,6 +331,16 @@ function saveTechProcessTable($table) {
         data: {save: saveObj},
         success: function (res) {
             console.log(res);
+            $.ajax({
+                type: "POST",
+                url: "/start_ajax/db_change_time",
+                data: {
+                    login: login
+                },
+                success: function (answer) {
+                    console.log(answer);
+                }
+            })
         }
     })
 }
