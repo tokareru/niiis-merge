@@ -285,6 +285,28 @@ function technologicalProcessInit() {
             json.techProcess.push(techName);
         });
         console.log(json);
+
+        $.ajax(
+            {
+                url: '',
+                type: 'POST',
+                data: json,
+                success: function (data) {
+                    console.log(data);
+
+                    setActionToBar({
+                        id: "saveTechProcess",
+                        type: "save",
+                        field: "Рабочий стол. Техпроцесс",
+                        text: `Сохранение техпроцесса`
+                    });
+                },
+                error: function (response) {
+                    console.log(response)
+                }
+            }
+        );
+
     }
 
     function setToggler() {

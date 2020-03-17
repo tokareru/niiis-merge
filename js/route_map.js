@@ -331,6 +331,14 @@ function saveTechProcessTable($table) {
         data: {save: saveObj},
         success: function (res) {
             console.log(res);
+
+            setActionToBar({
+                id: "saveRouteMapTable",
+                type: "save",
+                field: "Маршрутная карта",
+                text: `Сохранение маршрутной карты'`
+            })
+
             $.ajax({
                 type: "POST",
                 url: "/start_ajax/db_change_time",

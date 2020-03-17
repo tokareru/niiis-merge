@@ -221,6 +221,12 @@ function postDataFromTable(table_block, save_url) {
             },
             success: function (answer) {
                 console.log(answer);
+                setActionToBar({
+                    id: "saveSpecTable",
+                    type: "save",
+                    field: "Спецификация",
+                    text: `Сохранение таблицы 'Спецификация'`
+                })
             }
         })
     }

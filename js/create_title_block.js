@@ -533,6 +533,14 @@ function addToServerTitleBlock() {
             data: {body: serArr},
             success: function (data) {
                 console.log(data);
+
+                setActionToBar({
+                    id: "saveSchemeTable",
+                    type: "save",
+                    field: "Рабочий стол. Чертеж",
+                    text: `Сохранение основной надписи чертежа`
+                });
+
                 $.ajax({
                     type: "POST",
                     url: "/start_ajax/db_change_time",
