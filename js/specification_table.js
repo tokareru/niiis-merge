@@ -31,7 +31,7 @@ function generateTable(json, add_data) {
         .append('<table style="width: 100%" class="table_edit table table-hover">' +
             '</table>');
     $table_made.find('.table_edit').append('<thead></thead>');
-    $table_made.find('thead').append('<tr></tr>');
+    $table_made.find('thead').append('<tr row="-1"></tr>');
     //кнопка удаления строки
     $table_made.find('thead tr').append('<th style="border-right-color: transparent;"><div class="edit_cell_readonly">' /*+ "\№"*/ + '</div></th>');
     //кнопка "сделать строку редактируемой"
@@ -40,25 +40,25 @@ function generateTable(json, add_data) {
 
 
     if (json.thead > "") {
-        json.thead.forEach(function (elem) {
-            $table_made.find('thead tr').append('<th class="p-0"><div>' + elem.text + '</div></th>');
+        json.thead.forEach(function (elem, col) {
+            $table_made.find('thead tr').append('<th col="' + col + '" class="p-0"><div>' + elem.text + '</div></th>');
         });
     } else {
         for (let i = 0; i < 4; i++) {
-            $table_made.find('thead tr').append('<th class="p-0"><div></div></th>');
+            $table_made.find('thead tr').append('<th col="' + i + '" class="p-0"><div></div></th>');
         }
     }
 
 
     if (json.tbody > "") {
         json.tbody.forEach(function (curr_row, rows) {
-            $table_made.find('tbody').append('<tr></tr>');
+            $table_made.find('tbody').append('<tr row="' + rows + '"></tr>');
             //кнопка удаления строки
-            $table_made.find('tbody tr').last().append('<td col="" class="p-0"><div>' /*+ (rows + 1)*/ + '</div></td>');
+            $table_made.find('tbody tr').last().append('<td class="p-0"><div>' /*+ (rows + 1)*/ + '</div></td>');
             //кнопка "сделать строку редактируемой"
             $table_made.find('tbody tr').last().append('<td class="p-0"><div class="toRoPenCol editCol">' /*+ (rows + 1)*/ + '</div></td>');
             curr_row.row.forEach(function (curr_col, cols) {
-                $table_made.find('tbody').find('tr').last().append('<td class="p-0"><div>' + curr_col.text + '</div></td>');
+                $table_made.find('tbody').find('tr').last().append('<td col="' + cols + '" class="p-0"><div>' + curr_col.text + '</div></td>');
             })
         });
     }
@@ -84,17 +84,21 @@ function generateTable(json, add_data) {
         let field = "";
         let text = "";
         let id = "";
+        let subText = "";
         let pastValue = $this.attr("past-value");
         console.log(pastValue != value);
         if (table_block == "#specificationBlock "){
             id = "editCellOfSpecTable";
             field = "Спецификация";
-            text = `Значение ячейки ${findName("#specificationBlock", Number(col))} #${Number(row) + 1} было изменено с '${pastValue}' на '${value}'`
+            //${findName("#prod_task_table_block", Number(col))}
+            subText = (row >= 0) ? `Значение ячейки [${Number(row) + 1}, ${Number(col) + 1}]` : `Ячейка заголовка #${Number(col) + 1}`;
+            text = `${subText} было изменено с '${pastValue}' на '${value}'`
         }
-        else if (table_block == "#prod_task_table_block "){
+        if (table_block == "#prod_task_table_block "){
             id = 'editCellOfProdTable';
             field = "Задание на производство";
-            text = `Значение ячейки ${findName("#prod_task_table_block", Number(col))} #${Number(row) + 1} было изменено с '${pastValue}' на '${value}'`
+            subText = (row >= 0) ? `Значение ячейки [${Number(row) + 1}, ${Number(col) + 1}]` : `Ячейка заголовка #${Number(col) + 1}`;
+            text = `${subText} было изменено с '${pastValue}' на '${value}'`;
         }
 
         if (!(row === undefined || col === undefined) && (pastValue != value)){
@@ -148,7 +152,6 @@ function generateTable(json, add_data) {
         });
         rowToReadOnly(0, table_block + " ");
     }
-
 
     if (save_url === "spec_autoentered_table_ajax/save" && $("#pdm_field").length){
         setTableByPdmAndStd(table_block);
@@ -284,12 +287,12 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
             if (table_block == "#specificationBlock "){
                 id = "addNewRowToSpecTable";
                 field = "Спецификация";
-                text = `Удалена строка #${Number(tr.attr("row")) + 1} 'Спецификации'`;
+                text = `Удалена строка #${Number(tr.attr("row")) + 1} в 'Спецификации'`;
             }
             else if (table_block == "#prod_task_table_block "){
                 id = "addNewRowToProdTable";
                 field = "Задание на производство";
-                text = `Удалена строка #${Number(tr.attr("row")) + 1} 'Задание на производство'`;
+                text = `Удалена строка #${Number(tr.attr("row")) + 1} в 'Задании на производство'`;
             }
 
             setActionToBar({
@@ -325,7 +328,7 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
             else if (table_block == "#prod_task_table_block "){
                 id = "addNewRowToProdTable";
                 field = "Задание на производство";
-                text = "Добавлена новая строка в 'Задание на производство'";
+                text = "Добавлена новая строка в 'Задании на производство'";
             }
 
             setActionToBar({

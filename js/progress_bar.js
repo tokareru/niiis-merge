@@ -43,7 +43,7 @@ function setActionToBar(action = {id: "", type: "", field: "", text: ""}) {
         <li class="nav-item">
              <button type="button" data-trigger="hover" data-container="body" data-toggle="popover"
               data-placement="top" title="${action.field}" data-content="${action.text}"
-               class="btn btn-outline-dark mr-1 fas ${icon}">
+               class="btn btn-outline-dark mr-1 shadow-none fas ${icon}">
              </button>
         </li>
     `);

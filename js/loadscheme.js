@@ -35,7 +35,7 @@ async function triggerschemeInit() {
                 dataType: "json",
                 data: "json",
                 success: function (json) {
-                    console.log(json);
+                    //console.log(json);
                     if (json.isFull === "false"){
                         blockScheme();
                     }else {

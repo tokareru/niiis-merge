@@ -170,8 +170,8 @@ function esiGetDataFromServer() {
             let arr = [];
             json.tbody.forEach(function (row) {
                 arr.push([row.row[0].text, row.row[1].text, row.row[2].text, row.row[3].text]);
-            })
-            console.log(arr)
+            });
+            //console.log(arr)
             setESI(convertArray(arr), true)
         },
         error: function (message) {
