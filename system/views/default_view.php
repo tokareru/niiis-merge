@@ -107,7 +107,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         <button class="btn shadow-none navbar-toggler ml-auto" type="button" data-toggle="collapse"
                 data-target="#navbarTogglerNotification" aria-controls="navbarTogglerNotification" aria-expanded="false"
                 aria-label="Toggle navigation">
-            <span class="btn btn-sm shadow-none fa-bell-slash-o" tabindex="0" id="notificationBell"></span>
+            <span class="btn btn-sm shadow-none border rounded-pill bg-light fa-bell-slash-o" tabindex="0" id="notificationBell"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarTogglerNotification">
             <div id="toast-position" class="custom-toast-position"></div>

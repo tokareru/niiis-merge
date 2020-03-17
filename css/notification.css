@@ -17,6 +17,7 @@
 
 #notificationBell{
     font: normal normal normal 1.2em/1 FontAwesome;
+    width: 45px;
 }
 
 #toast-section{
