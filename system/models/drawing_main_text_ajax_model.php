@@ -109,9 +109,10 @@ class drawing_main_text_ajax_model extends model {
     }
     function save_is_full(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql = 'UPDATE sys_cnf SET cnfval = :isFull WHERE cnfname = "drawing_is_full"';
+            if ($_POST["isFull"] == "true") {$_POST["isFull"] = "true";}else{ $_POST["isFull"] = "false";}
+            $sql = "UPDATE sys_cnf SET cnfval = :isFull WHERE cnfname = 'drawing_is_full'";
             $q = sys::$PDO->prepare($sql);
-            $q->execute(array("isFull"=>($_POST["isFull"])?"true":"false"));
+            $q->execute(array("isFull"=> $_POST["isFull"]));
         }else {
             return array("response"=>"NOT FOUND POST REQUEST");
         }
