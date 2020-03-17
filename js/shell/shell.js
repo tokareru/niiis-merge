@@ -204,6 +204,7 @@ async function updateShell(){
 
     $("#change_role").removeAttr("disabled");
     initNotifications();
+    initProgressBar();
 
     shell.removeClass("blur-filter");
     tabs_fields_ul.removeClass("blur-filter");

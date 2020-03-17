@@ -1,3 +1,4 @@
+
 function createSpecificationTable() {
     //serializeTable();
     if(Round < 3){
@@ -11,7 +12,7 @@ function createSpecificationTable() {
 
         $("#left-accordion #pdm_field input").click(function () {
             setTableByPdmAndStd( "#specificationBlock");
-        })
+        });
 
         $("#left-accordion #std_field input").click(function () {
             setTableByPdmAndStd("#specificationBlock");
@@ -53,7 +54,7 @@ function generateTable(json, add_data) {
         json.tbody.forEach(function (curr_row, rows) {
             $table_made.find('tbody').append('<tr></tr>');
             //кнопка удаления строки
-            $table_made.find('tbody tr').last().append('<td class="p-0"><div>' /*+ (rows + 1)*/ + '</div></td>');
+            $table_made.find('tbody tr').last().append('<td col="" class="p-0"><div>' /*+ (rows + 1)*/ + '</div></td>');
             //кнопка "сделать строку редактируемой"
             $table_made.find('tbody tr').last().append('<td class="p-0"><div class="toRoPenCol editCol">' /*+ (rows + 1)*/ + '</div></td>');
             curr_row.row.forEach(function (curr_col, cols) {
@@ -62,12 +63,51 @@ function generateTable(json, add_data) {
         });
     }
 
-    $table_made.find('tbody').append("<tr><td class='p-0' style='width: 33px'><div class='firstColPlus'>+</div></td></tr>")
+    $table_made.find('tbody').append("<tr><td class='p-0' style='width: 33px'><div class='firstColPlus'>+</div></td></tr>");
 
     tableData(false, table_block, edit_mode_div, url, save_url);
     if (json.tbody === undefined) {
         $(table_block + " .post_data_button").attr("disabled", "disabled");
     }
+
+    $table_made.on('focus', '.input_text', function (event) {
+        $(this).attr("past-value", $(this).val().replace(/\s+/g,' ').trim())
+    });
+
+    $table_made.on('focusout', '.input_text', function (event) {
+        let $this = $(this);
+        let td = $this.parent();
+        let tr = td.parent();
+        let row = tr.attr("row");
+        let col = td.attr("col");
+        let value = $this.val().replace(/\s+/g,' ').trim();
+        let field = "";
+        let text = "";
+        let id = "";
+        let pastValue = $this.attr("past-value");
+        console.log(pastValue != value);
+        if (table_block == "#specificationBlock "){
+            id = "editCellOfSpecTable";
+            field = "Спецификация";
+            text = `Значение ячейки ${findName("#specificationBlock", Number(col))} #${Number(row) + 1} было изменено с '${pastValue}' на '${value}'`
+        }
+        else if (table_block == "#prod_task_table_block "){
+            id = 'editCellOfProdTable';
+            field = "Задание на производство";
+            text = `Значение ячейки ${findName("#prod_task_table_block", Number(col))} #${Number(row) + 1} было изменено с '${pastValue}' на '${value}'`
+        }
+
+        if (!(row === undefined || col === undefined) && (pastValue != value)){
+            setActionToBar({
+                id: id,
+                type: "edit",
+                field: field,
+                text: text
+            });
+            $this.attr("past-value", value);
+        }
+    });
+
     /*json.thead.forEach(function (elem, i) {
         if (elem.readonly) cellToReadOnly(0, i + 1, table_block);
     });
@@ -86,7 +126,7 @@ function generateTable(json, add_data) {
         || Role === "technologist" || Role === "production_master" || Role === "worker")){
         $(table_block).find("tbody tr").each(function (i) {
             $(this).find("td").eq(1).find("div").trigger("click");
-        })
+        });
         rowToReadOnly(0, table_block + " ");
         delZeroCol(table_block + " ");
         $("#specification_edit").remove();
@@ -189,6 +229,10 @@ function postDataFromTable(table_block, save_url) {
     })
 }
 
+function findName(fieldBlock, col) {
+    return  $(fieldBlock).find("thead .edit_cell").eq(col).text()
+}
+
 function addInputs(table_block) {
     let $table_edit = $(table_block + '.table_edit');
     $table_edit.find('tbody').find('td').addClass('edit_cell');
@@ -232,7 +276,30 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
 
         $table_edit.on('click', '.firstCol', function (event) {
             delRow(table_block);
-            $(this).parent().parent().remove();
+            let tr = $(this).parent().parent();
+
+            let field = "";
+            let text = "";
+            let id = "";
+            if (table_block == "#specificationBlock "){
+                id = "addNewRowToSpecTable";
+                field = "Спецификация";
+                text = `Удалена строка #${Number(tr.attr("row")) + 1} 'Спецификации'`;
+            }
+            else if (table_block == "#prod_task_table_block "){
+                id = "addNewRowToProdTable";
+                field = "Задание на производство";
+                text = `Удалена строка #${Number(tr.attr("row")) + 1} 'Задание на производство'`;
+            }
+
+            setActionToBar({
+                id: id,
+                type: "delete",
+                field: field,
+                text: text
+            });
+
+            tr.remove();
             if ($table_edit.find("tbody").find("tr").first().find("td").length < 2){
                 $(table_block + " .post_data_button").attr("disabled", "disabled")
             }
@@ -242,6 +309,32 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
             let t_edit = $(this).parents('.table_edit');
             addRow(table_block, t_edit.find("tr").length - 2);
             setRowsNumber(table_block);
+            let trs = $(table_block).find("tbody tr");
+            trs.eq(trs.length-2).find("td.edit_cell").each(function (index) {
+                $(this).attr("col", index)
+            });
+
+            let field = "";
+            let text = "";
+            let id = "";
+            if (table_block == "#specificationBlock "){
+                id = "addNewRowToSpecTable";
+                field = "Спецификация";
+                text = "Добавлена новая строка в 'Спецификацию'";
+            }
+            else if (table_block == "#prod_task_table_block "){
+                id = "addNewRowToProdTable";
+                field = "Задание на производство";
+                text = "Добавлена новая строка в 'Задание на производство'";
+            }
+
+            setActionToBar({
+                id: id,
+                type: "addNew",
+                field: field,
+                text: text
+            });
+
             $(table_block + " .post_data_button").removeAttr("disabled")
         });
 
@@ -257,7 +350,7 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
                         cellToEdit(i + 1, x, table_block);
                     }
                 }
-            })
+            });
             $this
                 .removeClass("toEditPenCol")
                 .addClass("toRoPenCol");
@@ -370,6 +463,7 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
 
         $table_edit.on('keydown', '.input_text', function (event) {
             modeOnTableBySomeKey(event, $(this), table_block);
+            //$("#progress-bar-body").find("li").last().remove();
         });
 
         $table_edit.on('click', '.edit_cell', function () {
@@ -458,7 +552,7 @@ function addRow(table_block, number) {
         $text_add_row.attr('placeholder', 'ошибка!');
         return;
     }
-    let $new_tr = '<tr>';
+    let $new_tr = '<tr row="' + number +'">';
     for (let i = 0; i < $td_count; i++) {
         $new_tr += '<td class="edit_cell p-0">' +
             '<div class="edit_cell_div"></div><input type="text"' +
@@ -472,7 +566,7 @@ function addRow(table_block, number) {
         $edit_div.find('div')
             .removeClass('edit_cell_div').addClass('edit_cell_div_hide');
         $edit_div.find('input')
-            .removeClass('edit_cell_input_hide').addClass('edit_cell_input').focus();
+            .removeClass('edit_cell_input_hide').addClass('edit_cell_input')//.focus()
     } else if ($index === $len_tr) {
         let neighbourElem = $tbody.find('tr').eq($index - 1);
         $($new_tr).insertAfter(neighbourElem);
@@ -480,7 +574,7 @@ function addRow(table_block, number) {
         $edit_div.find('div')
             .removeClass('edit_cell_div').addClass('edit_cell_div_hide');
         $edit_div.find('input')
-            .removeClass('edit_cell_input_hide').addClass('edit_cell_input').focus();
+            .removeClass('edit_cell_input_hide').addClass('edit_cell_input')//.focus();
     }
     if (isZeroRows) {
         $tbody.find('tr:first').remove();
@@ -616,6 +710,7 @@ function moveOnTableByEnter(event, $this) {
 
 function modeOnTableBySomeKey(event, $this, table_block) {
     if (event.which === 20) {
+
         let $index = 0;
         if ($this.parent().parent().html() === $(table_block + '.table_edit thead').find('tr').html()) {
             $this.addClass('temp_tab_input');
@@ -993,10 +1088,15 @@ function addRowByData(data, tableBlock) {
     let td = str.find("td");
     td.eq(2).find("div").text(tbody_lenght-1);
     td.eq(2).find("input").attr("value", tbody_lenght-1);
+    //td.eq(2).attr("col", "0");
     td.eq(3).find("div").text(designation);
+    //td.eq(3).attr("col", "1");
     td.eq(3).find("input").attr("value", designation);
     td.eq(4).find("div").text(name);
+    //td.eq(4).attr("col", "2");
     td.eq(4).find("input").attr("value", name);
     td.eq(5).find("div").text(number);
+    //td.eq(5).attr("col", "3");
     td.eq(5).find("input").attr("value", number);
+    $("#progress-bar-body").find("li").last().remove();
 }

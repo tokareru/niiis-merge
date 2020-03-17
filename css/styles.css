@@ -78,3 +78,7 @@ hr{
 .blur-filter{
     filter: blur(10px);
 }
+
+.font-family-fontAwesome{
+    font-family: FontAwesome;
+}

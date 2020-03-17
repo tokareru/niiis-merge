@@ -22,7 +22,7 @@
 #toast-section{
     position: fixed;
     right: 0rem;
-    bottom: 0;
+    bottom: 2.5rem;
     z-index: 1030;
     width: 6rem;
 }

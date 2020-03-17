@@ -1,0 +1,35 @@
+#progress-bar-body{
+    font-family: FontAwesome;
+    width: 40rem;
+    overflow: hidden;
+    scroll-behavior: smooth;
+}
+
+@media (max-width: 991px) {
+    .scroll-buttons{
+        display: none !important;
+    }
+
+    .nav-sm-to-lg{
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        width: 100% !important;
+    }
+}
+
+@media (min-width: 992px) {
+    .navbar-nav-lg{
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        padding-left: 0;
+        margin-bottom: 0;
+        list-style: none;
+        flex-direction: row;
+    }
+}
