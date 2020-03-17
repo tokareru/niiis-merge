@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-bottom pb-1" id="progress-bar-container">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#progress-bar-collapse-div" aria-controls="progress-bar-collapse-div" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler outline-none" type="button" data-toggle="collapse" data-target="#progress-bar-collapse-div" aria-controls="progress-bar-collapse-div" aria-expanded="false" aria-label="Toggle navigation">
         <span class="font-family-fontAwesome fas fa-tasks"></span>
     </button>
 

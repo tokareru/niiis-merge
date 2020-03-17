@@ -12,6 +12,10 @@
     height: 100% !important;*/
 }
 
+.outline-none{
+    outline: none !important;
+}
+
 #tabs li:hover{
     cursor: pointer;
 }

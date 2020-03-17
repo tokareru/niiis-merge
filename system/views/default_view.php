@@ -83,7 +83,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
 </head>
 <body class='bg-light'>
 <nav id="tabs" class="navbar navbar-expand-xl navbar-dark sticky-top mb-xl-2 bg-dark">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggler"
+    <button class="navbar-toggler outline-none" type="button" data-toggle="collapse" data-target="#navbarToggler"
             aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
