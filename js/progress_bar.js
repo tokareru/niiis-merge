@@ -1,4 +1,4 @@
-let CurrentProgress = [];
+var CurrentProgress = new Array();
 
 function initProgressBar(){
     $.ajax({
@@ -10,7 +10,6 @@ function initProgressBar(){
                 url: 'json/progress_bar_actions.json',
                 type: 'GET',
                 success: function (json) {
-                    CurrentProgress = json;
                     setActionBar(json)
                 }
             })
@@ -48,9 +47,9 @@ function setActionToBar(action = {id: "", type: "", field: "", text: ""}) {
         </li>
     `);
 
-    $("#progress-bar-body button").last().popover()
+    $("#progress-bar-body button").last().popover();
 
-    //CurrentProgress.push(action);
+    CurrentProgress.push(action);
 
     //$("button[data-toggle=\"tooltip\"]").tooltip();
 /*    $("#progress-bar-body button").last().tooltip({
@@ -63,7 +62,7 @@ function setActionToBar(action = {id: "", type: "", field: "", text: ""}) {
 }
 
 function chooseIconClassByType(type) {
-    if(type === "save"){
+    if (type === "save"){
         return "fa-save";
     }
     if (type === "choose"){
@@ -83,5 +82,8 @@ function chooseIconClassByType(type) {
     }
     if (type === "rowToRo"){
         return "fa-lock";
+    }
+    if (type === "open"){
+        return "fa-folder";
     }
 }

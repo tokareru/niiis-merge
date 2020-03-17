@@ -98,7 +98,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
     </div>
 </nav>
 
-<div id="shell" class="container-fluid myContainer mb-3">
+<div id="shell" class="container-fluid myContainer mb-5">
     <div class="row myRow">
     </div>
 </div>

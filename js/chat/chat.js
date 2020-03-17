@@ -185,6 +185,14 @@ function chatClick() {
         chat_main.removeAttr('style');
         chat_main.attr('style','z-index: 999');
         chat_but.children().attr('id', 'span_icon_right');
+
+        setActionToBar({
+            id: "openTab",
+            type: "open",
+            field: "Чат",
+            text: `Открыта вкладка 'Чат'`
+        })
+
     } else {
         chat_main.animate({
                 right: css_left

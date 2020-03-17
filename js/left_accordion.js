@@ -23,7 +23,7 @@ function setAccordionPanels(json, add_data) {
                         </h5>
                     </div>
 
-                <div id="collapse-${elem.ID}" class="collapse" aria-labelledby="header-${elem.ID}" data-parent="${accord_id}">
+                <div id="collapse-${elem.ID}" class="collapse" aria-labelledby="header-${elem.ID}" header-name="${elem.name}" data-parent="${accord_id}">
                     <div id="${elem.ID}" class="card-body">
                     </div>
                 </div>
@@ -34,8 +34,17 @@ function setAccordionPanels(json, add_data) {
         availableSubscribers.push(elem.ID);
     });
 
+    accordion.on('shown.bs.collapse', function (e) {
+        setActionToBar({
+            id: "openTab",
+            type: "open",
+            field: e.target.getAttribute("header-name"),
+            text: `Открыта вкладка '${e.target.getAttribute("header-name")}'`
+        })
+    });
+
     accordion.find(".collapsed").first().removeClass("collapsed").attr("aria-expanded", "true");
-    accordion.find(".collapse").first().addClass("show");
+    accordion.find(".collapse").first().addClass("show").trigger("shown.bs.collapse");
 
     shell.data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 

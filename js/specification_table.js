@@ -129,26 +129,31 @@ function generateTable(json, add_data) {
     if ((table_block === "#specificationBlock ") && (Role === "approver"
         || Role === "technologist" || Role === "production_master" || Role === "worker")){
         $(table_block).find("tbody tr").each(function (i) {
-            $(this).find("td").eq(1).find("div").trigger("click");
+            //$(this).find("td").eq(1).find("div").trigger("click");
+            rowToReadOnly(i, table_block + " ");
+            //$("#progress-bar-body").find("li").last().remove();
         });
         rowToReadOnly(0, table_block + " ");
         delZeroCol(table_block + " ");
         $("#specification_edit").remove();
+
     }
 
-    // маршрутная карта
+    /*// маршрутная карта
     if ((table_block === "#routeMapBlock ") && (Role === "approver" || Role === "production_master" || Role === "worker")){
         $(table_block).find("tbody tr").each(function (i) {
-            $(this).find("td").eq(1).find("div").trigger("click");
+            //$(this).find("td").eq(1).find("div").trigger("click");
+            rowToReadOnly(i, table_block + " ");
         });
         rowToReadOnly(0, table_block + " ");
         delZeroCol(table_block + " ");
-    }
+    }*/
 
     // маршруты заданий
     if (table_block === "#taskRoutesBlock "){
         $(table_block).find("tbody tr").each(function (i) {
-            $(this).find("td").eq(1).find("div").trigger("click");
+            //$(this).find("td").eq(1).find("div").trigger("click");
+            rowToReadOnly(i, table_block + " ");
         });
         rowToReadOnly(0, table_block + " ");
     }
@@ -308,7 +313,7 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
             }
         });
 
-        $table_edit.on('click', '.firstColPlus', function (event) {
+        $table_edit.on('click', '.firstColPlus', function (event, data) {
             let t_edit = $(this).parents('.table_edit');
             addRow(table_block, t_edit.find("tr").length - 2);
             setRowsNumber(table_block);
@@ -317,26 +322,28 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
                 $(this).attr("col", index)
             });
 
-            let field = "";
-            let text = "";
-            let id = "";
-            if (table_block == "#specificationBlock "){
-                id = "addNewRowToSpecTable";
-                field = "Спецификация";
-                text = "Добавлена новая строка в 'Спецификацию'";
-            }
-            else if (table_block == "#prod_task_table_block "){
-                id = "addNewRowToProdTable";
-                field = "Задание на производство";
-                text = "Добавлена новая строка в 'Задании на производство'";
-            }
+            if (data === undefined){
+                let field = "";
+                let text = "";
+                let id = "";
+                if (table_block == "#specificationBlock "){
+                    id = "addNewRowToSpecTable";
+                    field = "Спецификация";
+                    text = "Добавлена новая строка в 'Спецификацию'";
+                }
+                else if (table_block == "#prod_task_table_block "){
+                    id = "addNewRowToProdTable";
+                    field = "Задание на производство";
+                    text = "Добавлена новая строка в 'Задании на производство'";
+                }
 
-            setActionToBar({
-                id: id,
-                type: "addNew",
-                field: field,
-                text: text
-            });
+                setActionToBar({
+                    id: id,
+                    type: "addNew",
+                    field: field,
+                    text: text
+                });
+            }
 
             $(table_block + " .post_data_button").removeAttr("disabled")
         });
@@ -1132,7 +1139,7 @@ function addRowByData(data, tableBlock) {
     let name = data.name;
     let number = data.number;
     let tbody_lenght = Number($(tableBlock).find("table tr").length);
-    $(".firstColPlus ").trigger("click");
+    $(".firstColPlus ").trigger("click", {firstInit: true});
     let str =  $(tableBlock).find("tbody tr").eq(tbody_lenght-2);
     let td = str.find("td");
     td.eq(2).find("div").text(tbody_lenght-1);
@@ -1147,5 +1154,6 @@ function addRowByData(data, tableBlock) {
     td.eq(5).find("div").text(number);
     //td.eq(5).attr("col", "3");
     td.eq(5).find("input").attr("value", number);
-    $("#progress-bar-body").find("li").last().remove();
+    //$("#progress-bar-body").find("li").last().remove();
+    //CurrentProgress.pop();
 }

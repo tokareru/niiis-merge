@@ -212,7 +212,7 @@ function createTaskRouteEvents(settings) {
     }
 
     $('.slider_button_create').on('click', function () {
-        STDLibClick($('.slider_button_create'), $('.main_all_create_task'), 25);
+        STDLibClick($('.slider_button_create'), $('.main_all_create_task'), 25, "create_task_route");
     });
     /* $('#shell').on('click', function () {
          if ($('.main_all_create_task').attr('style') === 'z-index: 999; right: 0px;') {

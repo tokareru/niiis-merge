@@ -1,8 +1,8 @@
 function initESI() {
     esiGetDataFromServer();
 
-    $('.slider_button').on('click', function () {
-        STDLibClick($('.slider_button'), $('.slider_main'), 15);
+    $('.slider_button').on('click', function (event) {
+        STDLibClick($('.slider_button'), $('.slider_main'), 15, "esi");
     });
 
    /* $('#shell').on('click', function () {
@@ -200,7 +200,7 @@ function convertArray(arr) {
     return obj;
 }
 
-function STDLibClick($but, $main, z_index) {
+function STDLibClick($but, $main, z_index, target) {
     let css_left = -$main.width() + $but.width() + 'px';
     let css_right = '0px';
     if ($main.attr('style') !== ('z-index: 2147483647; right: ' + css_right + ';')) {
@@ -211,6 +211,18 @@ function STDLibClick($but, $main, z_index) {
         );
         $main.removeAttr('style');
         $main.attr('style', 'z-index: 2147483647');
+
+        let field = "";
+        if (target === "create_task_route") field = "Создание маршрута заданий";
+        if (target === "esi") field = "Электронный состав изделия";
+
+        setActionToBar({
+            id: "openTab",
+            type: "open",
+            field: field,
+            text: `Открыта вкладка '${field}'`
+        })
+
     } else {
         $main.animate({
                 right: css_left
