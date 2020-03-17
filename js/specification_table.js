@@ -86,7 +86,7 @@ function generateTable(json, add_data) {
         let id = "";
         let subText = "";
         let pastValue = $this.attr("past-value");
-        console.log(pastValue != value);
+        //console.log(pastValue != value);
         if (table_block == "#specificationBlock "){
             id = "editCellOfSpecTable";
             field = "Спецификация";
