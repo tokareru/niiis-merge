@@ -344,6 +344,29 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
         $table_edit.on('click', '.toEditPenCol', function (event) {
             let $this = $(this);
             let length = $(this).parents('.table_edit').find("tbody").find("tr").first().find("td").length;
+
+            let tr = $this.parent().parent();
+            let field = "";
+            let text = "";
+            let id = "";
+            if (table_block == "#specificationBlock "){
+                id = "rowOfSpecTableToEdit";
+                field = "Спецификация";
+                text = `Строка #${Number(tr.attr("row")) + 1} в 'Спецификации' разблокирована для редактирования`;
+            }
+            else if (table_block == "#prod_task_table_block "){
+                id = "rowOfProdTableToEdit";
+                field = "Задание на производство";
+                text = `Строка #${Number(tr.attr("row")) + 1} в 'Задании на производство' разблокирована для редактирования`;
+            }
+
+            setActionToBar({
+                id: id,
+                type: "rowToEdit",
+                field: field,
+                text: text
+            });
+
             $this.attr("current", "current")
             $(this).parents('.table_edit').find("tbody").find(".editCol").each(function (i) {
                 let check = $(this).attr("current");
@@ -361,6 +384,29 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
 
         $table_edit.on('click', '.toRoPenCol', function (event) {
             let $this = $(this);
+
+            let tr = $this.parent().parent();
+            let field = "";
+            let text = "";
+            let id = "";
+            if (table_block == "#specificationBlock "){
+                id = "rowOfSpecTableToRo";
+                field = "Спецификация";
+                text = `Строку #${Number(tr.attr("row")) + 1} в 'Спецификации' заблокировали для редактирования`;
+            }
+            else if (table_block == "#prod_task_table_block "){
+                id = "rowOfProdTableToRo";
+                field = "Задание на производство";
+                text = `Строку #${Number(tr.attr("row")) + 1} в 'Задании на производство' заблокировали для редактирования`;
+            }
+
+            setActionToBar({
+                id: id,
+                type: "rowToRo",
+                field: field,
+                text: text
+            });
+
             let length =$(this).parents('.table_edit').find("tbody").find("tr").first().find("td").length;
             $this.attr("current", "current");
             $(this).parents('.table_edit').find("tbody").find(".editCol").each(function (i) {

@@ -78,4 +78,10 @@ function chooseIconClassByType(type) {
     if (type === "delete"){
         return "fa-minus";
     }
+    if (type === "rowToEdit"){
+        return "fa-unlock";
+    }
+    if (type === "rowToRo"){
+        return "fa-lock";
+    }
 }
