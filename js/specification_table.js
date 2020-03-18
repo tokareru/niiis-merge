@@ -288,30 +288,33 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
             moveOnTableByEnter(event, $(this));
         });
 
-        $table_edit.on('click', '.firstCol', function (event) {
+        $table_edit.on('click', '.firstCol', function (event, data) {
             delRow(table_block);
+
             let tr = $(this).parent().parent();
 
-            let field = "";
-            let text = "";
-            let id = "";
-            if (table_block == "#specificationBlock "){
-                id = "addNewRowToSpecTable";
-                field = "Спецификация";
-                text = `Удалена строка #${Number(tr.attr("row")) + 1} в 'Спецификации'`;
-            }
-            else if (table_block == "#prod_task_table_block "){
-                id = "addNewRowToProdTable";
-                field = "Задание на производство";
-                text = `Удалена строка #${Number(tr.attr("row")) + 1} в 'Задании на производство'`;
-            }
+            if (data === undefined){
+                let field = "";
+                let text = "";
+                let id = "";
+                if (table_block == "#specificationBlock "){
+                    id = "addNewRowToSpecTable";
+                    field = "Спецификация";
+                    text = `Удалена строка #${Number(tr.attr("row")) + 1} в 'Спецификации'`;
+                }
+                else if (table_block == "#prod_task_table_block "){
+                    id = "addNewRowToProdTable";
+                    field = "Задание на производство";
+                    text = `Удалена строка #${Number(tr.attr("row")) + 1} в 'Задании на производство'`;
+                }
 
-            setActionToBar({
-                id: id,
-                type: "delete",
-                field: field,
-                text: text
-            });
+                setActionToBar({
+                    id: id,
+                    type: "delete",
+                    field: field,
+                    text: text
+                });
+            }
 
             tr.remove();
             if ($table_edit.find("tbody").find("tr").first().find("td").length < 2){
@@ -552,8 +555,14 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
 
     $('#spec_field_clear').on('click', function () {
         $table_edit.find('tbody .firstCol').each(function () {
-            $(this).click();
-        })
+            $(this).trigger("click", {isSave: false});
+        });
+        setActionToBar({
+            id: "clearSpecTable",
+            type: "clear",
+            field: "Спецификация",
+            text: "Очищена таблица 'Спецификации'"
+        });
     })
 }
 

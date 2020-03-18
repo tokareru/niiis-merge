@@ -54,9 +54,10 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
 
 function addNewComponent(data, accordID, fieldID, isChecked) {
     let field = $(accordID + " " + fieldID + " fieldset");
+    let detailType = (fieldID === "#pdm_field") ? "pdm" : "std";
     if (isChecked) {
         field.append(
-            "<p class='pdm_draggable'><label for=\"" + data.ID + "\">" +
+            "<p class='pdm_draggable'><label detail-type='" + detailType +"' for=\"" + data.ID + "\">" +
             "<img src=\"" + data.IMG + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
             " name=\"" + data.ID +
             "\" id=\"" + data.ID + "\">" + "</p>"
@@ -64,7 +65,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
         makeCheckbox(fieldID, isChecked);
     } else {
         field.append(
-            "<p class='pdm_draggable ui-draggable ui-draggable-handle'><label for=\"" + data.ID + "\">" +
+            "<p class='pdm_draggable ui-draggable ui-draggable-handle'><label detail-type='" + detailType +"' for=\"" + data.ID + "\">" +
             "<img src=\"" + data.IMG + "\">" + data.name + "</label><input type=\"checkbox\"" +
             " name=\"" + data.ID +
             "\" id=\"" + data.ID + "\">" + "</p>"
@@ -117,6 +118,17 @@ function makeCheckbox(fieldID, isChecked) {
             let $obj = $(obj);
             if ($obj.attr('for') === id) {
                 if (!($obj.hasClass('check_active'))) {
+
+                    let detailName = $obj.text();
+                    let detailType = $obj.attr("detail-type");
+                    let fieldName = (detailType === "pdm") ? "Изделия PDM" : "Стандартные изделия";
+                    setActionToBar({
+                        id: `select${detailType}`,
+                        type: "choose",
+                        field: fieldName,
+                        text: `Выбрана деталь '${detailName}'`
+                    });
+
                     $obj.removeClass('check_non-active');
                     $obj.addClass('check_active');
                     $obj.children().each(function (val, objspan) {
@@ -129,6 +141,15 @@ function makeCheckbox(fieldID, isChecked) {
                     });
                     $input.parent('p').draggable("destroy");
                 } else {
+                    let detailName = $obj.text();
+                    let detailType = $obj.attr("detail-type");
+                    let fieldName = (detailType === "pdm") ? "Изделия PDM" : "Стандартные изделия";
+                    setActionToBar({
+                        id: `unselect${detailType}`,
+                        type: "unselect",
+                        field: fieldName,
+                        text: `Убрана деталь '${detailName}'`
+                    });
                     $obj.removeClass('check_active');
                     $obj.addClass('check_non-active');
                     $obj.children().each(function (val, objspan) {

@@ -68,6 +68,9 @@ function chooseIconClassByType(type) {
     if (type === "choose"){
         return "fa-check-square";
     }
+    if (type === "unselect"){
+        return "fa-times-circle-o";
+    }
     if (type === "edit"){
         return "fa-edit";
     }
@@ -85,5 +88,8 @@ function chooseIconClassByType(type) {
     }
     if (type === "open"){
         return "fa-folder";
+    }
+    if (type === "clear"){
+        return "fa-trash-o";
     }
 }
