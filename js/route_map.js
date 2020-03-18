@@ -48,7 +48,7 @@ function initRouteMap() {
             drop: function (event, ui) {
 
                 function setCells(obj) {
-                    let text = obj.find(".operationNameField").text()
+                    let text = obj.find(".operationNameField").text();
                     let instruments = [];
                     let equipment = [];
                     obj.find(".operationInstrumentList li span").each(function () {
@@ -93,7 +93,8 @@ function initRouteMap() {
                 }
 
                 if ($(ui.draggable).hasClass("techName")) {
-                    console.log($(ui.draggable).attr("tech-lvl"));
+                    //console.log($(ui.draggable).attr("tech-lvl"));
+
                     if ($("#technological_process_field").find("tbody tr").length > 6)
                         $("<tr empty='empty'>" +
                             "<td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
@@ -106,6 +107,7 @@ function initRouteMap() {
                     let tr = '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
                         '<i class="fa fa-times"></i></button></td>';
                     let $lastTr = $table.find('tr:last');
+                    let techName = $(ui.draggable).find("span").first().text();
                     for (let i = 1; i < 13; i++) {
                         tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
                         if (i === 1 || i === 5) {
@@ -116,7 +118,7 @@ function initRouteMap() {
                             tr += 'class="techProcessCell">';
                         }
                         if (i === 4) {
-                            tr += $(ui.draggable).find("span").first().text();
+                            tr += techName;
                         }
 
                         tr += '</td>';
@@ -125,7 +127,24 @@ function initRouteMap() {
                     $(ui.draggable).find(".operationName").each(function () {
                         setCells($(this))
                     });
-                } else setCells($(ui.draggable));
+
+                    setActionToBar({
+                        id: "addTechNameToTechProcess",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлен узел '${techName}'`
+                    });
+
+                } else {
+                    setCells($(ui.draggable));
+
+                    setActionToBar({
+                        id: "addOperationNameToTechProcess",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлена операция '${$(ui.draggable).find(".operationNameField").text()}'`
+                    });
+                }
 
                 $table.on('click', '.tech_proc_del_td', function () {
                     $(this).parents('tr').remove();
@@ -302,7 +321,15 @@ function initRouteMap() {
         }
     }else {
         $table.on('click', '.tech_proc_del_td', function () {
-            $(this).parents('tr').remove();
+            let $this = $(this);
+            let name = $this.parent().parent().find("td").eq(4).text();
+            $this.parents('tr').remove();
+            setActionToBar({
+                id: "deleteNodeFromRouteMap",
+                type: "delete",
+                field: "Маршрутная карта",
+                text: `Из 'Маршрутной карты' удалён узел '${name}'`
+            });
         });
         $("#tech_process_table").find("tbody tr").last().find("td span").first().trigger("click");
     }
@@ -337,7 +364,7 @@ function saveTechProcessTable($table) {
                 type: "save",
                 field: "Маршрутная карта",
                 text: `Сохранение маршрутной карты'`
-            })
+            });
 
             $.ajax({
                 type: "POST",
@@ -367,11 +394,19 @@ function setTechProcessJson(json, res, $table) {
             attr += 'empty="empty"'
         }
         $(`<tr ${attr}>` + madeTr(proc, $lastTr) + '</tr>').insertBefore($lastTr);
-
-        $table.on('click', '.tech_proc_del_td', function () {
-            $(this).parents('tr').remove();
-        });
     }
+
+    $table.on('click', '.tech_proc_del_td', function () {
+        let $this = $(this);
+        let name = $this.parent().parent().find("td").eq(4).text();
+        $this.parents('tr').remove();
+        setActionToBar({
+            id: "deleteNodeFromRouteMap",
+            type: "delete",
+            field: "Маршрутная карта",
+            text: `Из 'Маршрутной карты' удалён узел '${name}'`
+        });
+    });
 }
 
 function findProcInJson(json, lvl, id) {
