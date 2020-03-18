@@ -49,6 +49,13 @@ function initAllUsersChat() {
         if (event.which === 13) {
             event.preventDefault();
             $('#chat_window_button').click();
+
+            setActionToBar({
+                id: "addTechNameToTechProcess",
+                type: "addNew",
+                field: "Чат",
+                text: `Отправлено новое сообщение`
+            });
         }
 
     });
