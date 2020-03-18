@@ -17,21 +17,52 @@ function technologicalProcessInit() {
         saveTechProcess();
     });
 
+    $("#tech_process_field_add_node_button").click(function () {
+        let $field = $("#tech_process_field_drop");
+        let length = $container.find(".techNameDropped").length + 1;
+        $field.append(`
+            <li class='techNameDropped' tech-id='${length}' tech-lvl='new'>
+                 <span class='caret'>Техпроцесс ${length}</span><span class='deleteNodeButtonRM'></span>
+                 <ul style='min-height: 35px;' class='nested myNested border-bottom pb-2 operationNameDropArea'>
+                 </ul>
+            </li>
+        `);
+
+        setActionToBar({
+            id: `addNewTechNameToTechProcess`,
+            type: "addNew",
+            field: "Рабочий стол. Техпроцесс",
+            text: `В техпроцесс добавлен корневой узел 'Техпроцесс ${length}'`
+        });
+
+        let $techNameDropped = $(".techNameDropped").last();
+        setDeleteButtonToTechName($techNameDropped);
+        setDropAreaForTechName($(".operationNameDropArea").last());
+
+        sortOperationNames();
+        setToggler();
+
+        $container.find(".techNameDropped").last().find(".caret").first().trigger("click");
+    });
+
+    $container.mousedown(function (event) {
+        event.preventDefault();
+        if (event.which === 2) $("#tech_process_field_add_node_button").trigger("click");
+    });
+
     $container.droppable(
         {
             tolerance: "touch",
-            accept: ".techName, .operationName",
+            accept: ".techName",
             drop: function (event, ui) {
 
                 let $draggable = $(ui.draggable);
 
                 if ($draggable.hasClass("techName")) {
                     setTechName($draggable);
-                    }else{
-                    setTechNameDefault($draggable)
-                }
-                setToggler();
-                $container.find(".techNameDropped").last().find(".caret").first().trigger("click");
+                    }
+                //setToggler();
+                //$container.find(".techNameDropped").last().find(".caret").first().trigger("click");
             }
         }
     );
@@ -44,20 +75,34 @@ function technologicalProcessInit() {
 
 
     function setTechName($draggable) {
+        let name = $draggable.find("span").first().text();
         $container.append(
             "<li tech-lvl='" + $draggable.attr("tech-lvl") + "' tech-id='" + $draggable.attr("tech-id") + "' class='techNameDropped'>" +
-            "<span class='caret'>" + $draggable.find("span").first().text() + "</span><span class='deleteNodeButtonRM'></span>" +
-            "<ul style='min-height: 35px;' class='nested myNested operationNameDropArea'></ul>" +
+            "<span class='caret'>" + name + "</span><span class='deleteNodeButtonRM'></span>" +
+            "<ul style='min-height: 35px;' class='nested myNested border-bottom pb-2 operationNameDropArea'></ul>" +
             "</li>"
         );
 
-        $(".deleteNodeButtonRM").last().click(function () {
-           $(this).parent().remove();
+        setActionToBar({
+            id: `addNewTechNameToTechProcess`,
+            type: "addNew",
+            field: "Рабочий стол. Техпроцесс",
+            text: `В техпроцесс добавлен корневой узел '${name}'`
         });
 
-        setDropAreaForTechName($container.find(".operationNameDropArea").last());
+        $(".deleteNodeButtonRM").last().click(function () {
+           $(this).parent().remove();
+           setActionToBar({
+               id: "deleteTechNameFromTechProcess",
+               type: "delete",
+               field: "Рабочий стол. Техпроцесс",
+               text: `Из техпроцесса удалён узел '${name}'`
+           })
+        });
 
+        setDropAreaForTechName($(".operationNameDropArea").last());
         sortOperationNames();
+        setToggler();
     }
 
     function sortOperationNames() {
@@ -67,7 +112,38 @@ function technologicalProcessInit() {
                 $(this).sortable({
                     items: ".tpLI",
                     axis: 'y',
-                    connectWith: ".operationNameDropArea"
+                    connectWith: ".operationNameDropArea",
+                    stop: function (event, ui) {
+                        let operationName = ui.item.find("span.caret").first().text();
+                        setActionToBar({
+                            id: `moveTechOperationInTechName`,
+                            type: "move",
+                            field: "Рабочий стол. Техпроцесс",
+                            text: `Техоперация '${operationName}' была перемещена`
+                        });
+
+                        /*let operationName = ui.item.find("span.caret").first().text();
+                        console.log(ui.placeholder)
+                        if (ui.sender !== null){
+                            // техоперация перемещена в другой узел
+                            let senderName = ui.sender.parent().find("span.caret").first().text();
+                            let placeHolderName = ui.placeholder.parent().find("span.caret").first().text();
+                            setActionToBar({
+                                id: `moveTechOperationToAnotherTechName`,
+                                type: "move",
+                                field: "Рабочий стол. Техпроцесс",
+                                text: `Техоперация '${operationName}' была перемещена из '${senderName}' в '${placeHolderName}'`
+                            });
+                        }else {
+                            let placeHolderName = ui.placeholder.parent().find("span.caret").first().text();
+                            setActionToBar({
+                                id: `moveTechOperationInTechName`,
+                                type: "move",
+                                field: "Рабочий стол. Техпроцесс",
+                                text: `Техоперация '${operationName}' была перемещена`
+                            });
+                        }*/
+                    }
                 });
                 $(this).disableSelection();
             });
@@ -76,7 +152,15 @@ function technologicalProcessInit() {
 
     function setDeleteButtonToTechName($parent) {
         $parent.find(".deleteNodeButtonRM").first().click(function () {
-            $(this).parent().remove();
+            let parent = $(this).parent()
+            let name = parent.find("span.caret").first().text();
+            parent.remove();
+            setActionToBar({
+                id: "deleteTechNameFromTechProcess",
+                type: "delete",
+                field: "Рабочий стол. Техпроцесс",
+                text: `Из техпроцесса удалён узел '${name}'`
+            })
         });
     }
     
@@ -89,16 +173,27 @@ function technologicalProcessInit() {
             "</li>"
         );
 
-        setDeleteButtonToTechName($(".techNameDropped").last());
+        /*setActionToBar({
+            id: `addNewTechNameToTechProcess`,
+            type: "addNew",
+            field: "Рабочий стол. Техпроцесс",
+            text: `В техпроцесс добавлен корневой узел 'Техпроцесс ${length}'`
+        });*/
 
-        setOperationNameToTechName( $container.find(".operationNameDropArea").last(), $draggableON);
+        let $this = $(".techNameDropped").last();
 
+        setDeleteButtonToTechName($this);
+
+        setOperationNameToTechName( $container.find(".operationNameDropArea").last(), $draggableON, $this);
+
+        //$container.find(".operationNameDropArea").last().droppable();
         setDropAreaForTechName($container.find(".operationNameDropArea").last());
 
         sortOperationNames()
     }
 
-    function setOperationNameToTechName( $this,$draggable) {
+    function setOperationNameToTechName( $this,$draggable, parent) {
+        let parentName = parent.parent().find("span.caret").first().text();
         let name = $draggable.find(".operationNameField").text();
         let equip = $draggable.find(".operationEquipList").find("li span").first().text();
         let tool = $draggable.find(".operationInstrumentList").find("li span").first().text();
@@ -120,6 +215,13 @@ function technologicalProcessInit() {
             "</li>"
         );
 
+        setActionToBar({
+            id: `addNewTechOperationToTechProcess`,
+            type: "addNew",
+            field: "Рабочий стол. Техпроцесс",
+            text: `В узел '${parentName}' добавлена операция '${name}'`
+        });
+
         setToggler();
 
         setDeleteButtonToOperationName($this.find(".deleteNodeButtonRM").last());
@@ -128,8 +230,24 @@ function technologicalProcessInit() {
     function setDeleteButtonToOperationName($target) {
         $target.click(function () {
             let parent =  $(this).parent();
-            parent.parent().css("min-height", (parent.parent().height() - 15) + "px");
+            let height = parent.parent().css("min-height");
+            if ((parent.parent().height() - 15) >= 35){
+                parent.parent().css("min-height", (parent.parent().height() - 15) + "px");
+            }
+
+            let techName = parent.parent().parent().find("span.caret").first().text();
+            let operationName = $target.parent().find("span.caret").first().text();
+            setActionToBar({
+                id: "deleteOperationNameFromTechProcess",
+                type: "delete",
+                field: "Рабочий стол. Техпроцесс",
+                text: `Из узла '${techName}' удалена операция '${operationName}'`
+            });
+
             parent.remove();
+
+
+
         })
     }
 
@@ -154,7 +272,7 @@ function technologicalProcessInit() {
                             $field.append(`
                             <li class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
                                 <span class='caret'>${name}</span><span class='deleteNodeButtonRM'></span>
-                                <ul style='min-height: 35px;' class='nested myNested operationNameDropArea'>
+                                <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested operationNameDropArea'>
                                     ${$operationNames}
                                 </ul>
                             </li>
@@ -252,9 +370,9 @@ function technologicalProcessInit() {
             drop: function (e, u) {
                 let $this = $(this);
                 //sortOperationNames();
-                setOperationNameToTechName( $this,$(u.draggable));
-                $container.find(".techNameDropped").last().remove();
-                $this.css("min-height", ($this.height() + 15) + "px");
+                setOperationNameToTechName( $this,$(u.draggable), $techName);
+                //$container.find(".techNameDropped").last().remove();
+                //$this.css("min-height", ($this.height() + 15) + "px");
             }
         });
     }

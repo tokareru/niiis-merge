@@ -17,7 +17,7 @@ function initNotifications() {
     setNotificationToFieldInitialization("technological_process_field", {
         mainHeader: "Рабочий стол. Техпроцесс",
         extraHeader: "",
-        text: "Чтобы создать техпроцесс, перетащите узлы \"Справочника технолога\" в центр рабочего стола"
+        text: "Чтобы создать техпроцесс, перетащите узлы \"Справочника технолога\" в центр рабочего стола. Вы можете создать новый узел техпроцесса, нажав на колёсико мышки в центре экрана."
     });
 
     setNotificationToField("scheme", "schemeBlock", {

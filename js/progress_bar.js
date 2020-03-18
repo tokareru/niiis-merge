@@ -92,4 +92,7 @@ function chooseIconClassByType(type) {
     if (type === "clear"){
         return "fa-trash-o";
     }
+    if (type === "move"){
+        return "fa-arrows";
+    }
 }
