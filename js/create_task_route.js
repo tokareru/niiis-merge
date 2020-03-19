@@ -5,9 +5,9 @@ let UsersLogins;
 
 function initCreate_task_route() {
     loginLength = getLoginNames().length;
-     UsersRoles = getLoginNames('role');
-     UsersNames = getLoginNames('short_name');
-     UsersLogins = getLoginNames();
+    UsersRoles = getLoginNames('role');
+    UsersNames = getLoginNames('short_name');
+    UsersLogins = getLoginNames();
     initCreateTaskRoute();
 }
 
@@ -15,7 +15,7 @@ function addRows(count_rows, addInputs, addRolesNames) {
 
     let $tbody = $('.table_create_task_route').find('tbody');
     $tbody.html(null);
-    let otherTaskInfo =  'привязать к '+ '<br/>' +
+    let otherTaskInfo = 'привязать к ' + '<br/>' +
         '<select class="form-control form-control-sm outline-none shadow-none">' +
         '<option value="3D-модель сборки">3D-модель сборки</option>' +
         '<option value="Сборочный чертеж">Сборочный чертеж</option>' +
@@ -79,8 +79,7 @@ function addRows(count_rows, addInputs, addRolesNames) {
                     '<option value="Утвердить">Утвердить</option>' +
                     '</select>' + otherTaskInfo)
             })
-        }
-        else if(select_task === 'Маршрут выдачи задания') {
+        } else if (select_task === 'Маршрут выдачи задания') {
             $tbody.find('.create_task_route_select').each(function () {
                 $(this).html(
                     '<select class="form-control form-control-sm outline-none shadow-none">' +
@@ -204,13 +203,7 @@ function createTaskRouteHandler(dataToAjax) {
 }
 
 function initCreateTaskRoute() {
-
-    if (login === 'designer' || login === 'approver' || currentName === 'Админ') {
-        createTaskRouteEvents([true, true]);
-    } else {
-        createTaskRouteEvents([false, false]);
-    }
-
+    createTaskRouteEvents([true, true]);
 }
 
 function createTaskRouteEvents(settings) {
@@ -249,22 +242,22 @@ function createTaskRouteEvents(settings) {
         $('#content_create_task_route_route option:first').prop('selected', true);
     })
 
-   /* $('.create_task_route_button').on('click', function () {
-        if (settings[1] === true) {
-            let arr = serializeCreateTaskRoute();
-            if (arr.length !== 0) {
-                createTaskRouteToServer(arr);
-                $('.table_create_task_route').find('tbody').children().remove();
-                addRows(getLoginNames().length, false, true);
-                $('.slider_button_create').trigger('click');
-            }
-        } else {
-            let arr = serializeCreateTaskRoute();
-            $('.table_create_task_route').find('tbody').children().remove();
-            initSingleTable();
-            createTaskRouteHandler(arr);
-            $('.slider_button_create').trigger('click');
-        }
+    /* $('.create_task_route_button').on('click', function () {
+         if (settings[1] === true) {
+             let arr = serializeCreateTaskRoute();
+             if (arr.length !== 0) {
+                 createTaskRouteToServer(arr);
+                 $('.table_create_task_route').find('tbody').children().remove();
+                 addRows(getLoginNames().length, false, true);
+                 $('.slider_button_create').trigger('click');
+             }
+         } else {
+             let arr = serializeCreateTaskRoute();
+             $('.table_create_task_route').find('tbody').children().remove();
+             initSingleTable();
+             createTaskRouteHandler(arr);
+             $('.slider_button_create').trigger('click');
+         }
 
-    });*/
+     });*/
 }
