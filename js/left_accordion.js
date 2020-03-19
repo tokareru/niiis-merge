@@ -38,34 +38,19 @@ function setAccordionPanels(json, add_data) {
 
     shell.data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 
-    if (Round === 3 && Role === "designer"){
-        setInterval(function () {
-            $.ajax({
-                type: "POST",
-                url: "spec_autoentered_table_ajax/save_product_checked",
-                data: {
-                    checked: collectDataLabels(".left-side")
-                },
-                success: function (answer) {
-                    //console.log(answer);
-                }
-            })
-        }, 10000)
-    }
-
-   /* $(accord_id).accordion({
-        classes:
-            {
-                'ui-accordion': 'my_ui-accordion',
-                'ui-accordion-header': 'my_ui-accordion-header',
-                'ui-accordion-header-collapsed': 'my-accordion-header bg-dark',
-                'ui-accordion-content': 'my_ui-accordion-content',
-                'ui-accordion-header-active': 'myAccordionActive'
-            },
-        icons: false,
-        animate: 200,
-        heightStyle: "fill"
-    });*/
+    /* $(accord_id).accordion({
+         classes:
+             {
+                 'ui-accordion': 'my_ui-accordion',
+                 'ui-accordion-header': 'my_ui-accordion-header',
+                 'ui-accordion-header-collapsed': 'my-accordion-header bg-dark',
+                 'ui-accordion-content': 'my_ui-accordion-content',
+                 'ui-accordion-header-active': 'myAccordionActive'
+             },
+         icons: false,
+         animate: 200,
+         heightStyle: "fill"
+     });*/
 }
 
 function chooseAvailablePanels(json) {
@@ -76,4 +61,3 @@ function chooseAvailablePanels(json) {
 
     return availablePanels;
 }
-
