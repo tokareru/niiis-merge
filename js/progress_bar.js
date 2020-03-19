@@ -2,17 +2,14 @@ let CurrentProgress = [];
 
 function initProgressBar(){
     $.ajax({
-        url: 'ajax/get_technologist_info',
+        url: 'ajax/get_progressbar_actions',
         type: 'GET',
-        success: function (techJson) {
-            techGuideJson = techJson;
-            $.ajax({
-                url: 'json/progress_bar_actions.json',
-                type: 'GET',
-                success: function (json) {
-                    setActionBar(json)
-                }
-            })
+        data: {
+            "login": login
+        },
+        dataType: "JSON",
+        success: function (json) {
+            setActionBar(json)
         }
     })
 }
@@ -109,6 +106,20 @@ function setActionToBar(action = {id: "", type: "", field: "", text: ""}) {
 
     // прокрутка прогресса до конца прогресса
     scrollToEndOfProgressBar();
+
+    $.ajax({
+        type: "POST",
+        url: "ajax/save_progressbar_actions",
+        dataType: "json",
+        data:
+            {
+                "login": login,
+                "action": action
+            },
+        success: function (answer) {
+            console.log(answer);
+        }
+    });
 
     CurrentProgress.push(action);
 

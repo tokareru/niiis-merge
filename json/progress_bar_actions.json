@@ -1,4 +1,16 @@
 {
   "progressBarActions": [
+    {
+      "id": "openTab",
+      "type": "open",
+      "field": "Рабочий стол. Чертеж",
+      "text": "Открыта вкладка 'Рабочий стол. Чертеж'"
+    },
+    {
+      "id": "openTab",
+      "type": "open",
+      "field": "Изделия PDM",
+      "text": "Открыта вкладка 'Изделия PDM'"
+    }
   ]
 }
