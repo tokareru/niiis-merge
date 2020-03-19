@@ -35,30 +35,40 @@ class ajax_model extends model {
     }
     function save_techproccess(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql = "DELETE FROM TECHPROCCESS";
+            $sql = "DELETE FROM TECHPROCESS";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql = "INSERT INTO TECHPROCCESS (id, id_parent) VALUES ";
+            $sql = "INSERT INTO TECHPROCESS (id, id_parent) VALUES ";
             foreach($_POST["techProcess"] as $row){
                 foreach($row["operationNames"] as $item){
                     $sql .= "(".$item["id"].", ".$row["id"]."),";
                 }
             }
+            $sql = substr($sql,0,-1);
+            echo $sql;
             $q = sys::$PDO->prepare($sql);
             $q->execute();
+            echo "success";
+            return array("response"=>"awdwd");
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }
     }
-//    function get_techproccess(){
-//        if($_SERVER["REQUEST_METHOD"]=="POST"){
-//            $sql = "SELECT * FROM ";
-//            $q = sys::$PDO->prepare($sql);
-//            $Q = $q->execute();
-//        }else{
-//            return array("response"=>"NOT FOUND POST REQUEST");
-//        }
-//    }
+    function get_techproccess(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "SELECT * FROM TECHPROCCESS ORDER BY id_parent";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $Q = $q->fetchAll();
+            $response = array();
+            $id = $Q["id_parent"];
+            foreach($Q as $row){
+                
+            }
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }
+    }
     function save_work_place_tech_process(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
             $sql = "DELETE FROM WORK_PLACE_TECH_PROCESS";

@@ -17,7 +17,7 @@ class ajax_controller extends Controller {
     $this->view->render('', 'ajax_view_json.php', $data);    
   }
   function save_techproccess(){
-    $data = $this->model->save_technologist_info();
+    $data = $this->model->save_techproccess();
     $this->view->render('', 'ajax_view_json.php', $data);    
   }
   function save_work_place_tech_process(){
