@@ -51,10 +51,8 @@ class ajax_model extends model {
                 }
             }
             $sql = substr($sql,0,-1);
-            echo $sql;
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            echo "success";
             return array("response"=>"awdwd");
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
@@ -66,12 +64,8 @@ class ajax_model extends model {
             $q->execute();
             $Q = $q->fetchAll();
             $id = 0;
-            
             $response = array("techProcess" => array());
-//            array_push($response["techProcess"], array("id"=>$id, "lvl" => ($Q[0]["is_new"])? "new" : 1, "operationNames"=>array()));
-//            print_r($Q);
             $i = -1;
-            
             foreach($Q as $row){
                 if($row["id_parent"] != $id){
                     $id = $row["id_parent"];
