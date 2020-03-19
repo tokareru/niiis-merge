@@ -9,16 +9,18 @@ class ajax_model extends model {
         $Q = $q->fetchAll();
         $response = array("progressBarActions" => array());
         foreach($Q as $row){
-            array_push($response, array("id" => $row["process_id"], "type" => $row["type"], 
+            array_push($response["progressBarActions"], array("id" => $row["operation_id"], "type" => $row["type"], 
                 "field" => $row["field"], "text" => $row["text"]));
         }
+        return $response;
         }else{
             return array("response"=>"NOT FOUND GET REQUEST");
         }
     }
     function save_progressbar_actions(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql = "INSERT INTO LOGS (login, process_id, type, field, text)
+            print_r($_POST);
+            $sql = "INSERT INTO LOGS (login, operation_id, type, field, text)
                     VALUES (:login, :id, :type, :field, :text)";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("login"=>$_POST["login"], "id" => $_POST["action"]["id"], 
