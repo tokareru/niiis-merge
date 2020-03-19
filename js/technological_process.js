@@ -251,7 +251,7 @@ function technologicalProcessInit() {
 
     function downloadTechProcess() {
         $.ajax({
-            url: 'json/tech_process.json',
+            url: 'ajax/get_techproccess',
             type: 'GET',
             success: function (json) {
                 let $field = $("#tech_process_field_drop");
