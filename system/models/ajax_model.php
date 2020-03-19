@@ -33,6 +33,32 @@ class ajax_model extends model {
        }
        return $result;
     }
+    function save_techproccess(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "DELETE FROM TECHPROCCESS";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $sql = "INSERT INTO TECHPROCCESS (id, id_parent) VALUES ";
+            foreach($_POST["techProcess"] as $row){
+                foreach($row["operationNames"] as $item){
+                    $sql .= "(".$item["id"].", ".$row["id"]."),";
+                }
+            }
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }
+    }
+//    function get_techproccess(){
+//        if($_SERVER["REQUEST_METHOD"]=="POST"){
+//            $sql = "SELECT * FROM ";
+//            $q = sys::$PDO->prepare($sql);
+//            $Q = $q->execute();
+//        }else{
+//            return array("response"=>"NOT FOUND POST REQUEST");
+//        }
+//    }
     function save_work_place_tech_process(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
             $sql = "DELETE FROM WORK_PLACE_TECH_PROCESS";
