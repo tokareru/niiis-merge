@@ -6,17 +6,7 @@ function createSpecificationTable() {
             {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
                 save_url: "spec_table_ajax/save"});
     }else {
-        getJsonByURL("spec_autoentered_table_ajax", generateTable,
-            {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
-                save_url: "spec_autoentered_table_ajax/save"});
-
-        $("#left-accordion #pdm_field input").click(function () {
-            setTableByPdmAndStd( "#specificationBlock");
-        });
-
-        $("#left-accordion #std_field input").click(function () {
-            setTableByPdmAndStd("#specificationBlock");
-        })
+        downloadSpecTableAt3dRound("#specificationBlock", false)
     }
 }
 
@@ -131,6 +121,7 @@ function generateTable(json, add_data) {
         $(table_block).find("tbody tr").each(function (i) {
             //$(this).find("td").eq(1).find("div").trigger("click");
             rowToReadOnly(i, table_block + " ");
+            downloadSpecTableAt3dRound(table_block, false)
             //$("#progress-bar-body").find("li").last().remove();
         });
         rowToReadOnly(0, table_block + " ");
@@ -158,9 +149,23 @@ function generateTable(json, add_data) {
         rowToReadOnly(0, table_block + " ");
     }
 
-    if (save_url === "spec_autoentered_table_ajax/save" && $("#pdm_field").length){
-        setTableByPdmAndStd(table_block);
+    if (save_url === "spec_autoentered_table_ajax/save" && Role !== "designer"){
+        setInterval(function () {
+            downloadSpecTableAt3dRound(table_block, false)
+        }, 10000)
     }
+}
+
+function downloadSpecTableAt3dRound(table_block, isInstrumentsNeeded) {
+    $.ajax({
+        type: "POST",
+        async: true,
+        url: "spec_autoentered_table_ajax/load_product_checked",
+        success: function (data) {
+            console.log(data.checked);
+            setTableByPdmAndStd(table_block, data.checked, false);
+        }
+    });
 }
 
 function postDataFromTable(table_block, save_url) {
@@ -1122,30 +1127,49 @@ let spec_table_info = [
         name: "Стд. деталь 3",
         number: 10
     }
-]
+];
 
-function setTableByPdmAndStd(tableBlock) {
+function setTableByPdmAndStd(tableBlock, checked, isInstrumentsNeeded) {
     let length = Number($(tableBlock).find("tbody tr").length);
-    $(tableBlock).find("tbody").find("tr").each(function (number) {
+    let $tbody = $(tableBlock).find("table tbody");
+    $tbody.find("tr").each(function (number) {
         if ((number < (length - 1)) && length > 1) {
             $(this).remove();
         }
     });
-    let array = collectDataLabels(".left-side");
-    //console.log(array)
 
-    array.forEach(function (component_id) {
-        spec_table_info.forEach(function (comp_info) {
-            if (comp_info.id === component_id) {
-                addRowByData({
-                    position: comp_info.position,
-                    designation: comp_info.designation,
-                    name: comp_info.name,
-                    number: comp_info.number
-                }, tableBlock);
-            }
+    if (!isInstrumentsNeeded) $tbody.find("tr").last().remove();
+
+    if (checked.length)
+        checked.forEach(function (component_id) {
+            spec_table_info.forEach(function (comp_info) {
+                if (comp_info.id === component_id) {
+                    addRowByDataWithoutUsingPlusButton( tableBlock, [
+                        comp_info.position,
+                        comp_info.designation,
+                        comp_info.name,
+                        comp_info.number
+                    ], isInstrumentsNeeded);
+                }
+            })
+        });
+}
+
+function addRowByDataWithoutUsingPlusButton(tableBlock, dataArray, isInstrumentsNeeded) {
+    let $tbody = $(tableBlock).find("table tbody");
+    let instruments = (isInstrumentsNeeded) ? `<td readonly="readonly" style="width: 33px;"><div class="edit_cell_div firstCol" readonly="readonly"></div></td><td class="p-0" readonly="readonly" style="width: 33px;"><div class="toRoPenCol editCol" readonly="readonly"></div></td>` : ``;
+    let row = ``;
+    if (dataArray.length){
+        dataArray.forEach(function (element, index) {
+            row += `<td col="${index}" class="p-0 edit_cell"><div class="edit_cell_div">${element}</div><input class="input_text edit_cell_input_hide" type="text" value="${element}"></td>`;
         })
-    })
+    }
+    $tbody.append(
+        `<tr row="${$tbody.find("td").length}">
+            ${instruments}
+            ${row}
+        </tr>`
+    )
 }
 
 function addRowByData(data, tableBlock) {

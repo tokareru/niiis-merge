@@ -407,7 +407,7 @@ function technologicalProcessInit() {
 
         $.ajax(
             {
-                url: '',
+                url: 'ajax/save_techproccess',
                 type: 'POST',
                 data: json,
                 success: function (data) {

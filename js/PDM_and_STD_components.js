@@ -14,42 +14,79 @@ function set_PDM_or_STD(imagesURL, accordID, fieldID) {
         url: imagesURL,
         dataType: "json",
         success: function (json) {
-            let div = $(accordID).find(fieldID);
-            div.append("<fieldset></fieldset>");
-            let field = $(accordID + " " + fieldID + " fieldset");
-            let array;
-            if (Round === 3) {
-                $.ajax({
-                    type: "POST",
-                    async: false,
-                    url: "spec_autoentered_table_ajax/load_product_checked",
-                    success: function (data) {
-                        array = data;
-                    }
-                })
-                //console.log(array)
-            }
-            json.images.forEach(function (elem, i) {
-                if (Round < 3) addNewComponent(elem, accordID, fieldID, true)
-                else {
-                    //addNewComponent(elem, accordID, fieldID, true);
-                    let check = true;
-                    array.checked.forEach(function (value) {
-                        if (elem.ID == value && check){
-                            addNewComponent(elem, accordID, fieldID, true)
-                            check = false;
-                    }
-                    });
-                    if (check) addNewComponent(elem, accordID, fieldID, false);
-                }
-            });
-            //$("#left-accordion").accordion("refresh");
-            $(fieldID).trigger("endOfInitialization");
+            setComponent(json, accordID, fieldID);
         },
         error: function (message) {
             //console.log("Error");
         },
     })
+}
+
+function setComponent(json, accordID, fieldID) {
+    let array = [];
+    if (Round === 3) {
+        $.ajax({
+            type: "POST",
+            async: true,
+            url: "spec_autoentered_table_ajax/load_product_checked",
+            success: function (data) {
+                array = data;
+                setComponentByJson(json, accordID, fieldID, array);
+                let div = $(accordID).find(fieldID);
+                div.append("<fieldset></fieldset>");
+                setComponentByJson(json, accordID, fieldID, array);
+            }
+        })
+        //console.log(array)
+    }else {
+        let div = $(accordID).find(fieldID);
+        div.append("<fieldset></fieldset>");
+        setComponentByJson(json, accordID, fieldID, array);
+    }
+}
+
+function setComponentByJson(json, accordID, fieldID, array) {
+    json.images.forEach(function (elem, i) {
+        if (Round < 3) addNewComponent(elem, accordID, fieldID, true)
+        else {
+            //addNewComponent(elem, accordID, fieldID, true);
+            let check = true;
+            array.checked.forEach(function (value) {
+                if (elem.ID == value && check){
+                    addNewComponent(elem, accordID, fieldID, true)
+                    check = false;
+                }
+            });
+            if (check) addNewComponent(elem, accordID, fieldID, false);
+        }
+    });
+    //$("#left-accordion").accordion("refresh");
+    $(fieldID).trigger("endOfInitialization");
+}
+
+function findArrayOfPdmOrStd(array, fieldID) {
+    let newArray = [];
+    let mask = (fieldID === "#pdm_field") ? "": "std_";
+    array.forEach(function (element) {
+        for (let i = 0; i < array.length; i++){
+            if (element === `${mask}component_${i+1}`) newArray.push(element)
+        }
+    });
+    //console.log(fieldID + ": " + newArray.toString())
+    return newArray;
+}
+
+function compareArrays(arr1, arr2) {
+    if(!arr1  || !arr2) return false;
+    if (arr1.length !== arr2.length) return false;
+
+    let result = true;
+    for (let i = 0; i < arr1.length; i++){
+        if (arr1[i] !== arr2[i]){
+            result = false;
+        }
+    }
+    return result;
 }
 
 function addNewComponent(data, accordID, fieldID, isChecked) {
@@ -75,6 +112,51 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
             helper: 'clone'
         });
     }
+
+    if (Round === 3)
+    {
+        $("#left-accordion " + fieldID + " input").last().click(function () {
+            setTableByPdmAndStd( "#specificationBlock", collectDataLabels(".left-side"), true);
+            let amountOfChecked = $("#left-accordion").find("input:checked").length;
+            let amountOfInputs = $("#left-accordion").find("input").length;
+            let field3D = $("#field3DAll");
+
+            if (Round === 3 && Role === 'designer'){
+                if (amountOfChecked !== amountOfInputs){
+                    blockScheme();
+                    $.ajax({
+                        type: "POST",
+                        url: "drawing_main_text_ajax/save_is_full",
+                        dataType: "json",
+                        data:
+                            {
+                                "isFull": false
+                            },
+                        success: function (answer) {
+                            console.log(answer);
+                        }
+                    });
+                }else {
+                    unlockScheme();
+                    $.ajax({
+                        type: "POST",
+                        url: "drawing_main_text_ajax/save_is_full",
+                        dataType: "json",
+                        data:
+                            {
+                                "isFull": true
+                            },
+                        success: function (answer) {
+                            console.log(answer);
+                        }
+                    });
+                }
+            }
+
+
+        });
+    }
+
 }
 
 
@@ -189,33 +271,6 @@ function collectDataLabels(id_div) {
     });
     //console.log(id_div + ":" + arr);
     esiNotifyHandler(arr);
-
-    if (Round === 3){
-        let amountOfChecked = $("#left-accordion").find("input:checked").length;
-        let amountOfInputs = $("#left-accordion").find("input").length;
-        let field3D = $("#field3DAll");
-
-        if (Round === 3 && Role === 'designer'){
-            if (amountOfChecked !== amountOfInputs){
-                blockScheme()
-            }else {
-                unlockScheme();
-                $.ajax({
-                    type: "POST",
-                    url: "drawing_main_text_ajax/save_is_full",
-                    dataType: "json",
-                    data:
-                        {
-                            "isFull": true
-                        },
-                    success: function (answer) {
-                        console.log(answer);
-                    }
-                });
-            }
-        }
-
-    }
 
     if (id_div === "#pdm_field") {
         sendMessage({

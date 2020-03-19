@@ -38,6 +38,21 @@ function setAccordionPanels(json, add_data) {
 
     shell.data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 
+    if (Round === 3 && Role === "designer"){
+        setInterval(function () {
+            $.ajax({
+                type: "POST",
+                url: "spec_autoentered_table_ajax/save_product_checked",
+                data: {
+                    checked: collectDataLabels(".left-side")
+                },
+                success: function (answer) {
+                    //console.log(answer);
+                }
+            })
+        }, 10000)
+    }
+
    /* $(accord_id).accordion({
         classes:
             {
