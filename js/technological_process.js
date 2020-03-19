@@ -11,7 +11,16 @@ function technologicalProcessInit() {
     $container.addClass("tech_process_table");
     tech_process_table.removeClass("tech_process_table");
 
-    downloadTechProcess();
+    if (Role !== "technologist")
+        $.ajax({
+            url: 'ajax/get_technologist_info',
+            type: 'GET',
+            success: function (techJson) {
+                techGuideJson = techJson;
+                downloadTechProcess();
+            }
+        });
+    else downloadTechProcess();
 
     $("#tech_process_field_save_button").click(function () {
         saveTechProcess();

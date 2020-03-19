@@ -8,7 +8,7 @@ function initProgressBar(){
             "login": login
         },
         success: function (json) {
-            console.log(json)
+            //console.log(json)
             setActionBar(json)
         }
     })
@@ -90,7 +90,7 @@ function scrollToEndOfProgressBar() {
     progress_bar.scrollTo( progress_bar.scrollWidth, 0);
 }
 
-function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit) {
+function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit = false) {
     let icon = chooseIconClassByType(action.type);
     let progress_bar_body = $("#progress-bar-body");
     progress_bar_body.append(`
@@ -107,20 +107,20 @@ function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit
     // прокрутка прогресса до конца прогресса
     scrollToEndOfProgressBar();
 
-
-    if (isInit === undefined) $.ajax({
-        type: "POST",
-        url: "ajax/save_progressbar_actions",
-        dataType: "json",
-        data:
-            {
-                "login": login,
-                "action": action
-            },
-        success: function (answer) {
-            console.log(answer);
-        }
-    });
+    if (!isInit)
+        $.ajax({
+            type: "POST",
+            url: "ajax/save_progressbar_actions",
+            dataType: "json",
+            data:
+                {
+                    "login": login,
+                    "action": action
+                },
+            success: function (answer) {
+                //console.log(answer);
+            }
+        });
 
     CurrentProgress.push(action);
 
