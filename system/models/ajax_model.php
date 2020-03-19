@@ -37,7 +37,7 @@ class ajax_model extends model {
         if($_SERVER["REQUEST_METHOD"]=="POST"){
             $sql = "INSERT INTO TECHPROCCESS (id, id_parent) VALUES ";
             foreach($_POST["techProcess"] as $row){
-                foreach($row as $item){
+                foreach($row["operationNames"] as $item){
                     $sql .= "(".$item["id"].", ".$row["id"]."),";
                 }
             }
