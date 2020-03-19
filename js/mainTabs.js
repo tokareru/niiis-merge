@@ -17,15 +17,7 @@ function setTabs(json, add_data) {
     let availableTabs = json;
     // добавляем области в #tabs и обновляем tabs
     addAvailableTabs(availableTabs, tabs_id);
-    $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-        setActionToBar({
-            id: "openTab",
-            type: "open",
-            field: e.target.text,
-            text: `Открыта вкладка '${e.target.text}'`
-        })
-    });
-    $(tabs_id).find(".nav-item").first().children().attr("aria-selected", "true").addClass("active").trigger("click").trigger("shown.bs.tab");
+    $(tabs_id).find(".nav-item").first().children().attr("aria-selected", "true").addClass("active").trigger("click");
 
     $("#tabs-content").find("div").first().addClass("active");
     //$(".left-side").hide()

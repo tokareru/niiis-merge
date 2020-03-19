@@ -49,13 +49,6 @@ function initAllUsersChat() {
         if (event.which === 13) {
             event.preventDefault();
             $('#chat_window_button').click();
-
-            setActionToBar({
-                id: "addTechNameToTechProcess",
-                type: "addNew",
-                field: "Чат",
-                text: `Отправлено новое сообщение`
-            });
         }
 
     });
@@ -143,6 +136,13 @@ function chatMessages($chat) {
         type: 'POST',
         data: objData,
         success: function (data) {
+            let text = (objData.type === 'ALL') ? "Отправлено новое сообщение в общий чат": "Отправлено новое личное сообщение";
+            setActionToBar({
+                id: "newMessage",
+                type: "addNew",
+                field: "Чат",
+                text: text
+            });
        /* for (let key in data)
         {
             console.log('key: '+ key + ' val: '+ data[key]);
@@ -193,13 +193,7 @@ function chatClick() {
         chat_main.attr('style','z-index: 999');
         chat_but.children().attr('id', 'span_icon_right');
 
-        setActionToBar({
-            id: "openTab",
-            type: "open",
-            field: "Чат",
-            text: `Открыта вкладка 'Чат'`
-        })
-
+        chat_main.trigger("chat-opened");
     } else {
         chat_main.animate({
                 right: css_left
