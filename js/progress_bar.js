@@ -2,23 +2,23 @@ let CurrentProgress = [];
 
 function initProgressBar(){
     $.ajax({
-        url: 'ajax/get_progressbar_actions',
         type: 'GET',
+        url: 'ajax/get_progressbar_actions',
         data: {
             "login": login
         },
-        dataType: "JSON",
         success: function (json) {
+            console.log(json)
             setActionBar(json)
         }
     })
 }
 
 function setActionBar(data) {
-    if (data !== undefined){
+    if (data !== null){
         if (data.progressBarActions !== undefined){
             data.progressBarActions.forEach(function (action) {
-                setActionToBar(action);
+                setActionToBar(action, true);
             });
         }
     }
@@ -90,7 +90,7 @@ function scrollToEndOfProgressBar() {
     progress_bar.scrollTo( progress_bar.scrollWidth, 0);
 }
 
-function setActionToBar(action = {id: "", type: "", field: "", text: ""}) {
+function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit) {
     let icon = chooseIconClassByType(action.type);
     let progress_bar_body = $("#progress-bar-body");
     progress_bar_body.append(`
@@ -107,7 +107,8 @@ function setActionToBar(action = {id: "", type: "", field: "", text: ""}) {
     // прокрутка прогресса до конца прогресса
     scrollToEndOfProgressBar();
 
-    $.ajax({
+
+    if (isInit === undefined) $.ajax({
         type: "POST",
         url: "ajax/save_progressbar_actions",
         dataType: "json",
