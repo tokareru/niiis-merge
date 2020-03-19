@@ -1,13 +1,32 @@
+let loginLength = 0;
+let UsersRoles;
+let UsersNames;
+let UsersLogins;
+
 function initCreate_task_route() {
+    loginLength = getLoginNames().length;
+     UsersRoles = getLoginNames('role');
+     UsersNames = getLoginNames('short_name');
+     UsersLogins = getLoginNames();
     initCreateTaskRoute();
 }
 
 function addRows(count_rows, addInputs, addRolesNames) {
-    let UsersRoles = getLoginNames('role');
-    let UsersNames = getLoginNames('short_name');
-    let UsersLogins = getLoginNames();
 
     let $tbody = $('.table_create_task_route').find('tbody');
+    $tbody.html(null);
+    let otherTaskInfo =  'привязать к '+ '<br/>' +
+        '<select class="form-control form-control-sm outline-none shadow-none">' +
+        '<option value="3D-модель сборки">3D-модель сборки</option>' +
+        '<option value="Сборочный чертеж">Сборочный чертеж</option>' +
+        '<option value="Спецификация">Спецификация</option>' +
+        '<option value="Техпроцесс">Техпроцесс</option>' +
+        '<option value="Маршрутная карта">Маршрутная карта</option>' +
+        '<option value="ЭСИ">ЭСИ</option>' +
+        '<option value="Задание на производство">Задание на производство</option>' +
+        '</select>' +
+        'с комментарием' + '<textarea class="form-control"></textarea>';
+
     for (let i = 0; i < count_rows; i++) {
         let input_div_roles = '';
         let input_div_names = '';
@@ -38,10 +57,10 @@ function addRows(count_rows, addInputs, addRolesNames) {
             '<td class="ctr_cell" style="width: 136px">' + input_div_names +
             '</td>' +
             '<td style="width: 156px" class="create_task_route_select">' +
-            '<select class="form-control form-control-sm">' +
+            '<select class="form-control form-control-sm outline-none shadow-none">' +
             '<option value="Согласовать">Согласовать</option>' +
             '<option value="Утвердить">Утвердить</option>' +
-            '</select>' +
+            '</select>' + otherTaskInfo +
             '</td>';
         $tbody.append('<tr>' + $td + '</tr>');
         $tbody.find('tr').eq(i).data({'login': UsersLogins[i]});
@@ -49,29 +68,23 @@ function addRows(count_rows, addInputs, addRolesNames) {
     }
 
     $('#content_create_task_route_route').on('change', function () {
+
         let select_task = $('#content_create_task_route_route option:selected').text();
         console.log(select_task);
         if (select_task === 'Маршрут согласования/утверждения') {
             $tbody.find('.create_task_route_select').each(function () {
                 $(this).html(
-                    '<select class="form-control form-control-sm">' +
+                    '<select class="form-control form-control-sm outline-none shadow-none">' +
                     '<option value="Согласовать">Согласовать</option>' +
                     '<option value="Утвердить">Утвердить</option>' +
-                    '</select>')
+                    '</select>' + otherTaskInfo)
             })
         }
         else if(select_task === 'Маршрут выдачи задания') {
             $tbody.find('.create_task_route_select').each(function () {
                 $(this).html(
-                    '<select class="form-control form-control-sm">' +
-                    '<option value="3D-модель сборки">3D-модель сборки</option>' +
-                    '<option value="Сборочный чертеж">Сборочный чертеж</option>' +
-                    '<option value="Спецификация">Спецификация</option>' +
-                    '<option value="Техпроцесс">Техпроцесс</option>' +
-                    '<option value="Маршрутная карта">Маршрутная карта</option>' +
-                    '<option value="ЭСИ">ЭСИ</option>' +
-                    '<option value="Задание на производство">Задание на производство</option>' +
-                    '</select>')
+                    '<select class="form-control form-control-sm outline-none shadow-none">' +
+                    '<option value="Выполнить">Выполнить</option></select>' + otherTaskInfo)
             })
         }
     });
@@ -81,12 +94,12 @@ function addRows(count_rows, addInputs, addRolesNames) {
             axis: 'y',
             placeholder: 'bg-secondary',
             update: function () {
-                console.log('change');
                 changeCounting('.table_create_task_route tbody', '.create_task_route_nunb');
             },
             classes: {
                 'ui-sortable-helper': 'bg-white'
-            }
+            },
+            handle: '.create_task_route_nunb'
         }
     );
 }
@@ -203,7 +216,7 @@ function initCreateTaskRoute() {
 function createTaskRouteEvents(settings) {
 
     if (settings[0] === true)
-        addRows(getLoginNames().length, false, true);
+        addRows(loginLength, false, true);
     else {
         initSingleTable(); //будет удалено
         setInterval(function () {
@@ -231,7 +244,12 @@ function createTaskRouteEvents(settings) {
         $(this).find('.ctr_div_active').text($(this).find('.ctr_input_hidden').val());
     });
 
-    $('.create_task_route_button').on('click', function () {
+    $('#create_task_route_clear').on('click', function () {
+        addRows(loginLength, false, true);
+        $('#content_create_task_route_route option:first').prop('selected', true);
+    })
+
+   /* $('.create_task_route_button').on('click', function () {
         if (settings[1] === true) {
             let arr = serializeCreateTaskRoute();
             if (arr.length !== 0) {
@@ -248,5 +266,5 @@ function createTaskRouteEvents(settings) {
             $('.slider_button_create').trigger('click');
         }
 
-    });
+    });*/
 }
