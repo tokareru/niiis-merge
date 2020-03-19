@@ -34,17 +34,7 @@ function setAccordionPanels(json, add_data) {
         availableSubscribers.push(elem.ID);
     });
 
-    accordion.on('shown.bs.collapse', function (e) {
-        setActionToBar({
-            id: "openTab",
-            type: "open",
-            field: e.target.getAttribute("header-name"),
-            text: `Открыта вкладка '${e.target.getAttribute("header-name")}'`
-        })
-    });
-
     accordion.find(".collapsed").first().removeClass("collapsed").attr("aria-expanded", "true");
-    accordion.find(".collapse").first().addClass("show").trigger("shown.bs.collapse");
 
     shell.data("shellInterconnection", {"availableSubscribers": availableSubscribers});
 

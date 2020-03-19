@@ -19,12 +19,13 @@
             <div class='font-weight-bold transformed'>Создание маршрута заданий</div>
             </div>
 		<div id='create_task_route_main' class='bg-light border border-info'>
-				<div class="create_task_route_header"></div>
+				<div class="create_task_route_header">
+					<select class="form-control bg-dark text-white outline-none shadow-none" id="content_create_task_route_route">
+					<option>Маршрут согласования/утверждения</option>
+					<option>Маршрут выдачи задания</option>
+				</select>
+				</div>
 					<div class="content_create_task_route">
-						<select class="form-control bg-dark text-white" id="content_create_task_route_route">
-							<option>Маршрут согласования/утверждения</option>
-							<option>Маршрут выдачи задания</option>
-						</select>
 						<table class="table table_create_task_route table-hover">
 					 	 	<thead>
 					  			<tr>
@@ -41,8 +42,12 @@
 						</table>
 
 					</div>
-					<div class="create_task_route_button"><input type="button" value="Отправить"
-                    							class="btn bg-dark text-white shadow-none"></div>
+					<div class="create_task_route_button">
+						<input type="button" id="create_task_route_clear"
+							   value="Очистить" class="btn bg-dark text-white shadow-none">
+						<input type="button"
+							   value="Отправить" class="btn bg-dark text-white shadow-none">
+					</div>
 			</div>
 	</div>
 

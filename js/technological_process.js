@@ -103,6 +103,7 @@ function technologicalProcessInit() {
         setDropAreaForTechName($(".operationNameDropArea").last());
         sortOperationNames();
         setToggler();
+        $container.find(".techNameDropped").last().find(".caret").first().trigger("click");
     }
 
     function sortOperationNames() {
@@ -245,9 +246,6 @@ function technologicalProcessInit() {
             });
 
             parent.remove();
-
-
-
         })
     }
 
@@ -291,6 +289,9 @@ function technologicalProcessInit() {
                         });
                         sortOperationNames();
                         setToggler();
+                        $container.find(".techNameDropped").each(function () {
+                            $(this).find(".caret").first().trigger("click");
+                        });
                     }
                 }
 

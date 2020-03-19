@@ -59,7 +59,8 @@
 .content_create_task_route {
     width: 100%;
     height: 80%;
-    overflow: auto;
+    max-height: 400px;
+    overflow-y: scroll;
 }
 
 .content_create_task_route::-webkit-scrollbar {

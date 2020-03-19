@@ -212,17 +212,8 @@ function STDLibClick($but, $main, z_index, target) {
         $main.removeAttr('style');
         $main.attr('style', 'z-index: 2147483647');
 
-        let field = "";
-        if (target === "create_task_route") field = "Создание маршрута заданий";
-        if (target === "esi") field = "Электронный состав изделия";
-
-        setActionToBar({
-            id: "openTab",
-            type: "open",
-            field: field,
-            text: `Открыта вкладка '${field}'`
-        })
-
+        if (target === "create_task_route") $("#create_task_route-side").trigger("create-task-route-opened");
+        if (target === "esi") $("#right-side").trigger("esi-opened");
     } else {
         $main.animate({
                 right: css_left

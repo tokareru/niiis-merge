@@ -14,7 +14,7 @@
     <title>Left-side</title>
 </head>
 <body>
-<div class="col-2 mb-4">
+<div class="col-xl-2 mb-4">
 <!--Левая сторона-->
     <div class="left-side">
         <nav class="mt-2 mt-xl-0 navbar-expand-xl nav navbar-light">
