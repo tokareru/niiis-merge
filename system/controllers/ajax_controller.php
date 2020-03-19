@@ -7,7 +7,14 @@ class ajax_controller extends Controller {
     $this->model = new ajax_model();
     $this->view = new View();
   }
-
+  function get_progressbar_actions(){
+    $data = $this->model->get_progressbar_actions();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function save_progressbar_actions(){
+    $data = $this->model->save_progressbar_actions();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
   function select_user(){
     $data = $this->model->select_user();
     $this->view->render('', 'ajax_view_json.php', $data);

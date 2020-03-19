@@ -1,6 +1,33 @@
 <?php
 
 class ajax_model extends model {
+    function get_progressbar_actions(){
+        if($_SERVER["REQUEST_METHOD"]=="GET"){
+        $sql = "SELECT * FROM LOGS WHERE login = :login";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_GET["login"]));
+        $Q = $q->fetchAll();
+        $response = array("progressBarActions" => array());
+        foreach($Q as $row){
+            array_push($response, array("id" => $row["process_id"], "type" => $row["type"], 
+                "field" => $row["field"], "text" => $row["text"]));
+        }
+        }else{
+            return array("response"=>"NOT FOUND GET REQUEST");
+        }
+    }
+    function save_progressbar_actions(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "INSERT INTO LOGS (login, process_id, type, field, text)
+                    VALUES (:login, :id, :type, :field, :text)";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("login"=>$_POST["login"], "id" => $_POST["action"]["id"], 
+                "type" => $_POST["action"]["type"], "field" => $_POST["action"]["field"], "text" => $_POST["action"]["text"]));
+            return array("response"=>200);
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }
+    }
     function get_technologist_info(){
         function get_array_from_string($string){
            $string = trim($string,' ');
