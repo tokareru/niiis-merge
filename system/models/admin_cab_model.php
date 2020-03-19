@@ -48,6 +48,10 @@ class admin_cab_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
+        $sql = "DELETE FROM LOGS";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
         $sql = "UPDATE DRAWING_MAIN_TEXT SET ";
         for ($i = 1; $i <= 50; $i++) {
             if ($i == 1) {
