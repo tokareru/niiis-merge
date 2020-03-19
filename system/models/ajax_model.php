@@ -35,6 +35,9 @@ class ajax_model extends model {
     }
     function save_techproccess(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "DELETE FROM TECHPROCCESS";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
             $sql = "INSERT INTO TECHPROCCESS (id, id_parent) VALUES ";
             foreach($_POST["techProcess"] as $row){
                 foreach($row["operationNames"] as $item){
@@ -42,19 +45,14 @@ class ajax_model extends model {
                 }
             }
             $q = sys::$PDO->prepare($sql);
-            $Q = $q->execute();
+            $q->execute();
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }
     }
-//    function save_technologist_info(){
+//    function get_techproccess(){
 //        if($_SERVER["REQUEST_METHOD"]=="POST"){
-//            $sql = "INSERT INTO TECHPROCCESS (id, id_parent) VALUES ";
-//            foreach($_POST["techProcess"] as $row){
-//                foreach($row["operationNames"] as $item){
-//                    $sql .= "(".$item["id"].", ".$row["id"]."),";
-//                }
-//            }
+//            $sql = "SELECT * FROM ";
 //            $q = sys::$PDO->prepare($sql);
 //            $Q = $q->execute();
 //        }else{
