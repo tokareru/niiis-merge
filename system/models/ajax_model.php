@@ -38,10 +38,16 @@ class ajax_model extends model {
             $sql = "DELETE FROM TECHPROCESS";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql = "INSERT INTO TECHPROCESS (id, id_parent) VALUES ";
+            $sql = "INSERT INTO TECHPROCESS (id, id_parent, is_new) VALUES ";
             foreach($_POST["techProcess"] as $row){
                 foreach($row["operationNames"] as $item){
-                    $sql .= "(".$item["id"].", ".$row["id"]."),";
+                    
+                    if ($row["lvl"] == "new"){
+                        $sql .= "(".$item["id"].", ".$row["id"].", '1'),";
+                    }
+                    else{
+                        $sql .= "(".$item["id"].", ".$row["id"].", '0'),";
+                    }
                 }
             }
             $sql = substr($sql,0,-1);
@@ -55,19 +61,28 @@ class ajax_model extends model {
         }
     }
     function get_techproccess(){
-        if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql = "SELECT * FROM TECHPROCCESS ORDER BY id_parent";
+            $sql = "SELECT * FROM TECHPROCESS";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $Q = $q->fetchAll();
-            $response = array();
-            $id = $Q["id_parent"];
+            $id = 0;
+            
+            $response = array("techProcess" => array());
+//            array_push($response["techProcess"], array("id"=>$id, "lvl" => ($Q[0]["is_new"])? "new" : 1, "operationNames"=>array()));
+//            print_r($Q);
+            $i = -1;
+            
             foreach($Q as $row){
-                
+                if($row["id_parent"] != $id){
+                    $id = $row["id_parent"];
+                    array_push($response["techProcess"], array("id"=>$id, "lvl" => ($row["is_new"])? "new" : 1, "operationNames"=>array()));
+                    array_push($response["techProcess"][++$i]["operationNames"], array("id" => $row["id"], "lvl" => 2));
+                }
+                else{
+                    array_push($response["techProcess"][$i]["operationNames"], array("id" => $row["id"], "lvl" => 2));
+                }
             }
-        }else{
-            return array("response"=>"NOT FOUND POST REQUEST");
-        }
+            return $response;
     }
     function save_work_place_tech_process(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
