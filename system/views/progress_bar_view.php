@@ -5,6 +5,9 @@
 
     <div class="collapse navbar-collapse" id="progress-bar-collapse-div">
         <div class="ml-auto text-center"><span class="navbar-brand">Прогресс</span></div>
+        <button class="btn fa-archive font-family-fontAwesome hidden mt-1 shadow-none" id="previous-actions-button"
+                data-toggle="popover" data-trigger="hover" data-placement="top" data-container="body"
+                data-content="Показать предыдущие действия "></button>
         <button id="left-scroll-button-progress-bar" class="font-family-fontAwesome scroll-buttons fas fa-angle-left mr-4 btn-outline-dark border-0 bold btn"></button>
         <ul class="nav-sm-to-lg navbar-nav-lg" id="progress-bar-body">
         </ul>
