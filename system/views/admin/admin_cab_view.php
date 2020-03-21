@@ -83,6 +83,11 @@ if ($_SERVER['REQUEST_URI'] == '/') {
                     <i class="fas fa-list"></i> Справочник технолога
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="<?php echo conf::$SITE_URL ?>admin_cab/progressbar">
+                    <i class="fas fa-list"></i> Прогресс пользователей
+                  </a>
+                </li>
               </ul>
           </div>
         </nav>
