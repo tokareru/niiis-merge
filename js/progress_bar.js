@@ -16,9 +16,11 @@ function initProgressBar(){
 }
 
 function setActionBar(data) {
+    let previous_actions_button = $("#previous-actions-button");
     if (data !== null){
         if (data.progressBarActions !== undefined){
-            $("#previous-actions-button").on("click", function () {
+            previous_actions_button.off("click");
+            previous_actions_button.on("click", function () {
                 $(".previousAction").toggle();
                 scrollToEndOfProgressBar();
             }).popover().removeClass("hidden");
@@ -27,8 +29,10 @@ function setActionBar(data) {
                 setActionToBar(action, true);
             });
         }else {
-            $("#previous-actions-button").remove();
+            previous_actions_button.remove();
         }
+    }else {
+        previous_actions_button.remove();
     }
 
     $(".previousAction").last().addClass("mr-2");
