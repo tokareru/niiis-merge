@@ -202,12 +202,19 @@ function postDataFromTable(table_block, save_url) {
         login: login
     };
     console.log(json);
-    $.ajax({
+    if (Round !== 3)
+        $.ajax({
         type: "POST",
         url: save_url,
         data: json,
         success: function (answer) {
             console.log(answer);
+            setActionToBar({
+                id: "saveSpecTable",
+                type: "save",
+                field: "Спецификация",
+                text: `Сохранение таблицы 'Спецификация'`
+            })
         }
     });
     if (Round === 3){
@@ -504,6 +511,7 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
 
         $edit_mode_div.on('click', '.post_data_button', function () {
             postDataFromTable(table_block, save_url);
+
         });
 
         $edit_mode_div.on('click', '.cell_to_edit_but', function () {
@@ -1075,50 +1083,50 @@ let spec_table_info = [
     {
         id: "component_1",
         position: 1,
-        designation: "Обоз. дет. 1",
-        name: "Деталь 1",
+        designation: "АБВГ.123456.102",
+        name: "Экран В",
         number: 1
     },
     {
         id: "component_2",
         position: 2,
-        designation: "Обоз. дет. 2",
-        name: "Деталь 2",
+        designation: "АБВГ.123456.103",
+        name: "Модуль",
         number: 1
     },
     {
         id: "component_3",
         position: 3,
-        designation: "Обоз. дет. 3",
-        name: "Деталь 3",
+        designation: "АБВГ.123456.101",
+        name: "Экран Н",
         number: 1
     },
     {
         id: "component_4",
         position: 4,
-        designation: "Обоз. дет. 4",
-        name: "Деталь 4",
+        designation: "АБВГ.123456.104",
+        name: "Крышка",
         number: 1
     },
     {
         id: "std_component_1",
         position: 5,
-        designation: "Обоз. стд. дет. 1",
-        name: "Стд. деталь 1",
+        designation: "",
+        name: "Винт ГОСТ Р ИСО 1207-М2x10",
         number: 4
     },
     {
         id: "std_component_2",
         position: 6,
-        designation: "Обоз. стд. дет. 2",
-        name: "Стд. деталь 2",
+        designation: "",
+        name: "Винт М2x8.99 ОСТ 92-0755-72",
         number: 4
     },
     {
         id: "std_component_3",
         position: 7,
-        designation: "Обоз. стд. дет. 3",
-        name: "Стд. деталь 3",
+        designation: "",
+        name: "Колодка клеммная ГОСТ 17557-88",
         number: 10
     }
 ]

@@ -35,6 +35,13 @@ function setActionBar(data) {
         previous_actions_button.remove();
     }
 
+    setActionToBar({
+       id: "signIn",
+       type: "signIn",
+       field: "Кабинет",
+       text: "Вход в систему"
+    });
+
     $(".previousAction").last().addClass("mr-2");
 
     $("#left-scroll-button-progress-bar").on("click", function () {
@@ -192,4 +199,8 @@ function chooseIconClassByType(type) {
     if (type === "move"){
         return "fa-arrows";
     }
+    if (type === "signIn"){
+        return "fa-sign-in";
+    }
+    return "fa-question"
 }
