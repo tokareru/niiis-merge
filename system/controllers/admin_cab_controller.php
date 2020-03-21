@@ -50,6 +50,11 @@ class admin_cab_controller extends Controller {
     $data = $this->model->technologist_guide_edit();
     $this->view->render('technologist_guide_edit.php', 'admin/admin_cab_view.php', $data);
   }
+  
+  function progressbar(){
+    $data = $this->model->progressbar();
+    $this->view->render('progressbar.php', 'admin/admin_cab_view.php', $data);
+   }
 
   function save_technologist_info() {
     $data = $this->model->save_technologist_info();

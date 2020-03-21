@@ -267,4 +267,12 @@ class admin_cab_model extends model {
         $q->execute(array("id" => $_POST["id"]));
         return array("response" => 200);
     }
+    function progressbar(){
+        $sql = "SELECT u.FIRST_NAME, u.LAST_NAME, u.OTC, l.operation_id, l.type, l.field, l.text, date_trunc('seconds',l.date_create) as date_create
+                FROM logs l LEFT JOIN
+                users u on l.login = u.login";
+        $q =  sys::$PDO->prepare($sql);
+        $q->execute();
+        return $q->fetchAll();
+    }
 }
