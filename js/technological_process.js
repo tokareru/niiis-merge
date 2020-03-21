@@ -11,16 +11,33 @@ function technologicalProcessInit() {
     $container.addClass("tech_process_table");
     tech_process_table.removeClass("tech_process_table");
 
-    downloadTechProcess();
+    if (Role !== "technologist")
+        $.ajax({
+            url: 'ajax/get_technologist_info',
+            type: 'GET',
+            success: function (techJson) {
+                techGuideJson = techJson;
+                downloadTechProcess();
+            }
+        });
+    else downloadTechProcess();
 
-    $("#tech_process_field_save_button").click(function () {
-        saveTechProcess();
-    });
+    let tech_process_field_save_button = $("#tech_process_field_save_button");
+    let tech_process_field_add_node_button = $("#tech_process_field_add_node_button");
 
-    $("#tech_process_field_add_node_button").click(function () {
-        let $field = $("#tech_process_field_drop");
-        let length = $container.find(".techNameDropped").length + 1;
-        $field.append(`
+    if (Role !== "technologist"){
+        tech_process_field_save_button.remove();
+        tech_process_field_add_node_button.remove();
+    }else {
+        tech_process_field_save_button.click(function () {
+            saveTechProcess();
+        });
+
+        // добавить новый techName
+        tech_process_field_add_node_button.click(function () {
+            let $field = $("#tech_process_field_drop");
+            let length = $container.find(".techNameDropped").length + 1;
+            $field.append(`
             <li class='techNameDropped' tech-id='${length}' tech-lvl='new'>
                  <span class='caret'>Техпроцесс ${length}</span><span class='deleteNodeButtonRM'></span>
                  <ul style='min-height: 35px;' class='nested myNested border-bottom pb-2 operationNameDropArea'>
@@ -28,51 +45,52 @@ function technologicalProcessInit() {
             </li>
         `);
 
-        setActionToBar({
-            id: `addNewTechNameToTechProcess`,
-            type: "addNew",
-            field: "Рабочий стол. Техпроцесс",
-            text: `В техпроцесс добавлен корневой узел 'Техпроцесс ${length}'`
+            setActionToBar({
+                id: `addNewTechNameToTechProcess`,
+                type: "addNew",
+                field: "Рабочий стол. Техпроцесс",
+                text: `В техпроцесс добавлен корневой узел 'Техпроцесс ${length}'`
+            });
+
+            let $techNameDropped = $(".techNameDropped").last();
+            setDeleteButtonToTechName($techNameDropped);
+            setDropAreaForTechName($(".operationNameDropArea").last());
+
+            sortOperationNames();
+            setToggler();
+
+            $container.find(".techNameDropped").last().find(".caret").first().trigger("click");
         });
 
-        let $techNameDropped = $(".techNameDropped").last();
-        setDeleteButtonToTechName($techNameDropped);
-        setDropAreaForTechName($(".operationNameDropArea").last());
+        // добавить новый techName по нажатию на среднею кнопку
+        $container.mousedown(function (event) {
+            event.preventDefault();
+            if (event.which === 2) $("#tech_process_field_add_node_button").trigger("click");
+        });
 
-        sortOperationNames();
-        setToggler();
+        $container.droppable(
+            {
+                tolerance: "touch",
+                accept: ".techName",
+                drop: function (event, ui) {
 
-        $container.find(".techNameDropped").last().find(".caret").first().trigger("click");
-    });
+                    let $draggable = $(ui.draggable);
 
-    $container.mousedown(function (event) {
-        event.preventDefault();
-        if (event.which === 2) $("#tech_process_field_add_node_button").trigger("click");
-    });
-
-    $container.droppable(
-        {
-            tolerance: "touch",
-            accept: ".techName",
-            drop: function (event, ui) {
-
-                let $draggable = $(ui.draggable);
-
-                if ($draggable.hasClass("techName")) {
-                    setTechName($draggable);
+                    if ($draggable.hasClass("techName")) {
+                        setTechName($draggable);
                     }
-                //setToggler();
-                //$container.find(".techNameDropped").last().find(".caret").first().trigger("click");
+                    //setToggler();
+                    //$container.find(".techNameDropped").last().find(".caret").first().trigger("click");
+                }
             }
-        }
-    );
+        );
 
-    $(".tech_process_table").sortable({
-        items: ".techNameDropped",
-        axis: 'y'
-    });
-    $(".tech_process_table").disableSelection();
-
+        $(".tech_process_table").sortable({
+            items: ".techNameDropped",
+            axis: 'y'
+        });
+        $(".tech_process_table").disableSelection();
+    }
 
     function setTechName($draggable) {
         let name = $draggable.find("span").first().text();
@@ -267,9 +285,10 @@ function technologicalProcessInit() {
                             }
 
                             let name = (techName.lvl.toString() == "new") ? ("Техпроцесс " + techName.id) : info.name;
+                            let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : ``;
                             $field.append(`
                             <li class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
-                                <span class='caret'>${name}</span><span class='deleteNodeButtonRM'></span>
+                                <span class='caret'>${name}</span>${deleteButton}
                                 <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested operationNameDropArea'>
                                     ${$operationNames}
                                 </ul>
@@ -277,18 +296,25 @@ function technologicalProcessInit() {
                         `);
 
                             let $techNameDropped = $(".techNameDropped").last();
-                            setDeleteButtonToTechName($techNameDropped);
+
+                            if (Role === "technologist")
+                                setDeleteButtonToTechName($techNameDropped);
                             setDropAreaForTechName($(".operationNameDropArea").last());
 
-                            let $li = $techNameDropped.find(".operationNameDropArea").find("li");
-                            if ($li.length){
-                                $li.each(function () {
-                                    setDeleteButtonToOperationName($(this).find(".deleteNodeButtonRM").last())
-                                })
+                            if (Role === "technologist") {
+                                let $li = $techNameDropped.find(".operationNameDropArea").find("li");
+                                if ($li.length){
+                                    $li.each(function () {
+                                        setDeleteButtonToOperationName($(this).find(".deleteNodeButtonRM").last())
+                                    })
+                                }
                             }
                         });
-                        sortOperationNames();
+
+                        if (Role === "technologist")
+                            sortOperationNames();
                         setToggler();
+
                         $container.find(".techNameDropped").each(function () {
                             $(this).find(".caret").first().trigger("click");
                         });
@@ -342,10 +368,11 @@ function technologicalProcessInit() {
 
         function combineOperationNames(operationNames) {
             let $operationNames = "";
+            let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : ``;
             operationNames.forEach(function (operationName) {
                 $operationNames += `
             <li tech-lvl='${operationName.lvl}' tech-id='${operationName.lvl}' class='tpLI'>
-            <span class='caret'>${operationName.name}</span><span class='deleteNodeButtonRM'></span>
+            <span class='caret'>${operationName.name}</span>${deleteButton}
             <ul class='nested'>
             <table>
             <tbody>

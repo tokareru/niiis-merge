@@ -1,6 +1,7 @@
 let CurrentProgress = [];
 
 function initProgressBar(){
+    $("#progress-bar-body").empty();
     $.ajax({
         type: 'GET',
         url: 'ajax/get_progressbar_actions',
@@ -8,27 +9,51 @@ function initProgressBar(){
             "login": login
         },
         success: function (json) {
-            console.log(json)
+            //console.log(json)
             setActionBar(json)
         }
     })
 }
 
 function setActionBar(data) {
+    let previous_actions_button = $("#previous-actions-button");
     if (data !== null){
         if (data.progressBarActions !== undefined){
+            previous_actions_button.off("click");
+            previous_actions_button.on("click", function () {
+                $(".previousAction").toggle();
+                scrollToEndOfProgressBar();
+            }).popover().removeClass("hidden");
+
             data.progressBarActions.forEach(function (action) {
                 setActionToBar(action, true);
             });
+        }else {
+            previous_actions_button.remove();
         }
+    }else {
+        previous_actions_button.remove();
     }
+
+    setActionToBar({
+       id: "signIn",
+       type: "signIn",
+       field: "Кабинет",
+       text: "Вход в систему"
+    });
+
+    $(".previousAction").last().addClass("mr-2");
 
     $("#left-scroll-button-progress-bar").on("click", function () {
         document.getElementById("progress-bar-body").scrollLeft -= 200;
+    }).dblclick(function () {
+       document.getElementById("progress-bar-body").scrollTo( 0, 0);
     });
 
     $("#right-scroll-button-progress-bar").on("click", function () {
         document.getElementById("progress-bar-body").scrollLeft += 200;
+    }).dblclick(function () {
+        scrollToEndOfProgressBar();
     });
 
     // инициализация центральных вкладок
@@ -90,37 +115,43 @@ function scrollToEndOfProgressBar() {
     progress_bar.scrollTo( progress_bar.scrollWidth, 0);
 }
 
-function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit) {
+function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit = false) {
     let icon = chooseIconClassByType(action.type);
     let progress_bar_body = $("#progress-bar-body");
+    let isPreviousLi = (isInit) ? `previousAction bg-white`: ``;
+    let isPreviousButton = (isInit) ? `btn-outline-info`: `btn-outline-dark`;
     progress_bar_body.append(`
-        <li class="nav-item">
+        <li class="nav-item ${isPreviousLi}">
              <button type="button" data-trigger="hover" data-container="body" data-toggle="popover"
               data-placement="top" title="${action.field}" data-content="${action.text}"
-               class="btn btn-outline-dark mr-1 shadow-none fas ${icon}">
+               class="btn mr-1 mt-1 ${isPreviousButton} shadow-none fas ${icon}">
              </button>
         </li>
     `);
 
     progress_bar_body.find("button").last().popover();
 
+    if (isInit)
+        progress_bar_body.find(".previousAction").last().hide();
+
+
     // прокрутка прогресса до конца прогресса
     scrollToEndOfProgressBar();
 
-
-    if (isInit === undefined) $.ajax({
-        type: "POST",
-        url: "ajax/save_progressbar_actions",
-        dataType: "json",
-        data:
-            {
-                "login": login,
-                "action": action
-            },
-        success: function (answer) {
-            console.log(answer);
-        }
-    });
+    if (!isInit)
+        $.ajax({
+            type: "POST",
+            url: "ajax/save_progressbar_actions",
+            dataType: "json",
+            data:
+                {
+                    "login": login,
+                    "action": action
+                },
+            success: function (answer) {
+                //console.log(answer);
+            }
+        });
 
     CurrentProgress.push(action);
 
@@ -168,4 +199,8 @@ function chooseIconClassByType(type) {
     if (type === "move"){
         return "fa-arrows";
     }
+    if (type === "signIn"){
+        return "fa-sign-in";
+    }
+    return "fa-question"
 }

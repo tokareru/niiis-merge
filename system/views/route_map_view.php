@@ -40,7 +40,7 @@
         </table>
     </div>
 
-    <button id='tech_process_save' class="btn bg-info text-white">Сохранить</button>
+    <button id='tech_process_save' class="btn bg-info text-white hidden">Сохранить</button>
 </div>
 
 </body>

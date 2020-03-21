@@ -65,8 +65,10 @@ function initRouteMap() {
                     //console.log(instruments);
                     //console.log(equipment);
 
-                    let tr = '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
-                        '<i class="fa fa-times"></i></button></td>';
+                    let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
+                    let delI = (Role === "technologist") ? "fa fa-times" : "";
+                    let tr = '<td><button class="' + delButton + ' bg-white p-0 btn">' +
+                        '<i class="' + delI + '"></i></button></td>';
                     let $lastTr = $table.find('tr:last');
                     for (let i = 1; i < 13; i++) {
                         tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
@@ -94,18 +96,20 @@ function initRouteMap() {
 
                 if ($(ui.draggable).hasClass("techName")) {
                     //console.log($(ui.draggable).attr("tech-lvl"));
-
-                    if ($("#technological_process_field").find("tbody tr").length > 6)
+                    let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
+                    let delI = (Role === "technologist") ? "fa fa-times" : "";
+                    if ($("#technological_process_field").find("tbody tr").length > 6){
                         $("<tr empty='empty'>" +
-                            "<td><button class=\"tech_proc_del_td bg-white p-0 btn\"><i class=\"fa fa-times\"></i></button>" +
-                            "</td><td colspan='4'" +
-                            " class='tdBorderBlackLeft'></td><td colspan='3'></td><td colspan='4' class='tdBorderBlackRight'></td>" +
-                            "<td colspan='34'></td><td colspan='12' class='tdBorderBlackLeft'></td><td colspan='12'></td>" +
-                            "<td colspan='6'></td><td colspan='5'></td><td colspan='5'></td><td colspan='5'></td>" +
-                            "<td colspan='5'></td><td colspan='5' class='tdBorderBlackRight'></td></tr>"
+                              "<td><button class='" + delButton + " bg-white p-0 btn'><i class='" + delI + "'></i></button>" +
+                                "</td><td colspan='4'" +
+                                " class='tdBorderBlackLeft'></td><td colspan='3'></td><td colspan='4' class='tdBorderBlackRight'></td>" +
+                                "<td colspan='34'></td><td colspan='12' class='tdBorderBlackLeft'></td><td colspan='12'></td>" +
+                                "<td colspan='6'></td><td colspan='5'></td><td colspan='5'></td><td colspan='5'></td>" +
+                                "<td colspan='5'></td><td colspan='5' class='tdBorderBlackRight'></td></tr>"
                         ).insertBefore($table.find('tr:last'));
-                    let tr = '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
-                        '<i class="fa fa-times"></i></button></td>';
+                    }
+                    let tr = '<td><button class="' + delButton + ' bg-white p-0 btn">' +
+                        '<i class="' + delI + '"></i></button></td>';
                     let $lastTr = $table.find('tr:last');
                     let techName = $(ui.draggable).find("span").first().text();
                     for (let i = 1; i < 13; i++) {
@@ -254,28 +258,34 @@ function initRouteMap() {
     }
 
     $table.find('tr').each(function (index) {
+        let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
+        let delI = (Role === "technologist") ? "fa fa-times" : "";
         if (index > 0 && index < 3)
             return;
         $(this).find('td:first').before(`<td ${index === 0 ?
             'rowspan="3"' : ''}>${index > 4 && index + 1 !== $table.find('tr').length ? '' +
-            '<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>' : ''}</td>`);
+            '<button class="' + delButton + ' bg-white p-0 btn"><i class="' + delI + '"></i></button>' : ''}</td>`);
     });
     $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>');
 
-
-    $('#tech_process_save').on('click', function () {
-        saveTechProcessTable($table);
-    });
+    let saveButton = $('#tech_process_save');
+    if (Role === "technologist")
+        saveButton.show().on('click', function () {
+            saveTechProcessTable($table);
+        });
+    else saveButton.remove();
 
     // кнопка "добавить новую строку"
     if (Round !== 3){
+        let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
+        let delI = (Role === "technologist") ? "fa fa-times" : "";
         let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
         addNewRowButton.append("<span class='route_map_new_row_button'></span>");
         addNewRowButton.find("span").click(function () {
             $("#tech_process_table").find("tbody tr").last().before(
                 '<tr>' +
-                '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
-                '<i class="fa fa-times"></i></button></td><td colspan="4" class="tdBorderBlackLeft">' +
+                '<td><button class="' + delButton + ' bg-white p-0 btn">' +
+                '<i class="' + delI + '"></i></button></td><td colspan="4" class="tdBorderBlackLeft">' +
                 '</td>' +
                 '<td colspan="3" class="techProcessCell"></td>' +
                 '<td colspan="4" class="tdBorderBlackRight"></td>' +
@@ -441,8 +451,10 @@ function findProcInJson(json, lvl, id) {
 }
 
 function madeTr(vals, $lastTr) {
-    let tr = '<td><button class="tech_proc_del_td bg-white p-0 btn">' +
-        '<i class="fa fa-times"></i></button></td>';
+    let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
+    let delI = (Role === "technologist") ? "fa fa-times" : "";
+    let tr = '<td><button class="' + delButton + ' bg-white p-0 btn">' +
+        '<i class="' + delI + '"></i></button></td>';
     if (vals === undefined) {
         vals = {name: undefined, tools: undefined, equipment: undefined};
     }
