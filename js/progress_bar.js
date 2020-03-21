@@ -20,6 +20,7 @@ function setActionBar(data) {
         if (data.progressBarActions !== undefined){
             $("#previous-actions-button").on("click", function () {
                 $(".previousAction").toggle();
+                scrollToEndOfProgressBar();
             }).popover().removeClass("hidden");
 
             data.progressBarActions.forEach(function (action) {
