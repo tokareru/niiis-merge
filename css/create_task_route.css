@@ -116,13 +116,13 @@
 }
 
 #create_task_route_mainModel{
-    margin-left: -19%!important;
-    width: 700px!important;
+    margin-left: -34%!important;
+    width: 850px!important;
 }
 
 #create_task_route_RouteList{
     border: black solid 3px;
-    width: 660px;
+    width: 800px;
 }
 
 #create_task_route_RouteListAdd{

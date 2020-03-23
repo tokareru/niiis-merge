@@ -37,6 +37,7 @@
                                 <th>Должность</th>
                                 <th>Пользователь</th>
                                 <th>Задание</th>
+                                <th>Комментарий</th>
                             </tr>
                             </thead>
                             <tbody id="create_task_route_tbody">

@@ -253,7 +253,9 @@ function addTaskToTable() {
             '<option>Утвердить</option>' +
             '<option>Выполнить</option>' +
             '</select>' +
-            '<textarea class="form-control border-dark" rows="1"></textarea>' +
+            '</td>' +
+            '<td style="width: 200px">' +
+            '<textarea class="form-control border-dark" rows="2"></textarea>' +
             '</td>';
         $('#create_task_route_RouteListAddTr').before(`<tr>${route}</tr>`);
         $('.create_task_route_selectNames').on('change', function () {
