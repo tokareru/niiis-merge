@@ -41,6 +41,7 @@ function initTasksRoutes() {
     tasks_routes_AddEvent('task_routes_tree');
     tasksRoutesMadeRoutes('task_routes_active_routes', 5);
     tasksRoutesMadeRoutes('task_routes_ended_routes', 5);
+    addTaskToTable();
 }
 
 function tasks_routes_AddEvent(id) {
@@ -221,4 +222,50 @@ function delZeroCol(table_block) {
     let $thead = $(table_block + '.table_edit thead');
     $thead.find('th').eq($number).remove();
     $thead.find('th').eq($number).remove();
+}
+
+function addTaskToTable() {
+
+    let loginLength = getLoginNames().length;
+    let UsersRoles = getLoginNames('role');
+    let UsersNames = getLoginNames('short_name');
+    let UsersLogins = getLoginNames();
+
+    let option = '<option disabled selected value>Выберите работника...</option>';
+
+    UsersNames.forEach(function (value, index) {
+        option += `<option task-user-name-id="${index}">${value}</option>`;
+    });
+
+    $('#create_task_route_RouteListAdd').on('click', function () {
+        let route =
+            '<td></td>' +
+            '<td style="width: 36px" class="create_task_route_listId"></td>' +
+            '<td class="create_task_route_selectSpec" style="width: 200px"></td>' +
+            '<td style="width: 200px">' +
+            '<select class="create_task_route_selectNames form-control form-control-sm outline-none shadow-none">' +
+            option +
+            '</select>' +
+            '</td>' +
+            '<td style="width: 195px">' +
+            '<select class="form-control form-control-sm outline-none shadow-none">' +
+            '<option>Согласовать</option>' +
+            '<option>Утвердить</option>' +
+            '<option>Выполнить</option>' +
+            '</select>' +
+            '<textarea class="form-control border-dark" rows="1"></textarea>' +
+            '</td>';
+        $('#create_task_route_RouteListAddTr').before(`<tr>${route}</tr>`);
+        $('.create_task_route_selectNames').on('change', function () {
+           let id = $(this).find('option:selected').attr('task-user-name-id');
+           $(this).parents('tr').find('.create_task_route_selectSpec').text(UsersRoles[id]);
+        });
+        recountListId();
+    });
+}
+
+function recountListId() {
+    $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').each(function (index) {
+        $(this).find('.create_task_route_listId').text(index + 1);
+    });
 }
