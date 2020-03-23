@@ -268,11 +268,64 @@ class admin_cab_model extends model {
         return array("response" => 200);
     }
     function progressbar(){
-        $sql = "SELECT u.FIRST_NAME, u.LAST_NAME, u.OTC, l.operation_id, l.type, l.field, l.text, date_trunc('seconds',l.date_create) as date_create
-                FROM logs l LEFT JOIN
-                users u on l.login = u.login";
+        $sql = "SELECT FIRST_NAME, LAST_NAME, OTC, LOGIN
+                FROM users
+                WHERE active_sign = true and group_user_id <> 99";
         $q =  sys::$PDO->prepare($sql);
         $q->execute();
         return $q->fetchAll();
+    }
+    function get_logs(){
+        $sql = "SELECT operation_id, type, field, text, date_trunc('seconds',date_create) as date_create
+                FROM logs
+                WHERE login = :login";
+        $q =  sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_REQUEST["login"]));
+        $data = $q->fetchAll();
+        $response = '<table class="table table-bordered table-condensed table-hover table-sm">
+        <thead>
+        <tr>
+            <th>
+                id операции
+            </th>
+            <th>
+                Тип операции
+            </th>
+            <th>
+                Вкладка операции
+            </th>
+            <th>
+                Текст операции
+            </th>
+            <th>
+                Дата операции
+            </th>
+        </tr>
+        </thead>
+        <tbody>';
+        foreach($data as $row){
+        $response .= '<tr>
+            <td>
+                '.$row["operation_id"].'
+            </td>
+            <td>
+                '.$row["type"].'
+            </td>
+            <td>
+                '.$row["field"].'
+            </td>
+            <td>
+                '.$row["text"].'
+            </td>
+            <td>
+                '.sys::strtodatetime($row["date_create"]).'
+            </td> 
+        </tr>
+        ';
+        
+        }
+        $response.= '</tbody>
+        </table>';
+        return $response;
     }
 }
