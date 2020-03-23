@@ -55,6 +55,11 @@ class admin_cab_controller extends Controller {
     $data = $this->model->progressbar();
     $this->view->render('progressbar.php', 'admin/admin_cab_view.php', $data);
    }
+   
+  function get_logs(){
+    $data = $this->model->get_logs();
+    $this->view->render('', 'ajax_view.php', $data);
+  }
 
   function save_technologist_info() {
     $data = $this->model->save_technologist_info();
