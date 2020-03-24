@@ -47,7 +47,7 @@ function initTasksRoutes() {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
     });
     $('#create_task_route_saveBtn').on('click', function () {
-        serializeCreateTaskRoute();
+        addTaskToDB();
     });
 }
 
@@ -306,4 +306,15 @@ function serializeCreateTaskRoute() {
     }
     console.log(data);
     return data;
+}
+
+function addTaskToDB() {
+    $.ajax({
+        type: 'POST',
+        url: '',
+        data: {task: serializeCreateTaskRoute()},
+        success: function (res) {
+            //console.log(res);
+        }
+    })
 }
