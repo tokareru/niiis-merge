@@ -309,10 +309,13 @@ function serializeCreateTaskRoute() {
 }
 
 function addTaskToDB() {
+    let task = serializeCreateTaskRoute();
+    if( task === undefined || task.length === 0)
+        return;
     $.ajax({
         type: 'POST',
         url: '',
-        data: {task: serializeCreateTaskRoute()},
+        data: {task: task, master: login},
         success: function (res) {
             //console.log(res);
         }
