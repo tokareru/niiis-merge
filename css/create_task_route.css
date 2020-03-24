@@ -117,12 +117,14 @@
 
 #create_task_route_mainModel{
     margin-left: -34%!important;
-    width: 850px!important;
+    width: 900px!important;
 }
 
 #create_task_route_RouteList{
     border: black solid 3px;
-    width: 800px;
+    width: 850px;
+    margin-right: auto;
+    margin-left: auto;
 }
 
 #create_task_route_RouteListAdd{
@@ -134,4 +136,8 @@
 #create_task_route_tbody td{
     border: black solid 3px;
     text-align: center;
+}
+
+.create_task_route_delCol{
+ cursor: pointer;
 }

@@ -32,12 +32,12 @@
                         <table id="create_task_route_RouteList">
                             <thead>
                             <tr>
-                                <th></th>
-                                <th>№</th>
-                                <th>Должность</th>
-                                <th>Пользователь</th>
-                                <th>Задание</th>
-                                <th>Комментарий</th>
+                                <th style="width: 25px; max-width: 25px; min-width: 25px;"></th>
+                                <th style="width: 36px; max-width: 36px; min-width: 36px">№</th>
+                                <th style="width: 210px; max-width: 210px; min-width: 210px">Должность</th>
+                                <th style="width: 200px; max-width: 200px; min-width: 200px">Пользователь</th>
+                                <th style="width: 195px; max-width: 195px; min-width: 195px">Задание</th>
+                                <th style="width: 200px; max-width: 200px; min-width: 200px">Комментарий</th>
                             </tr>
                             </thead>
                             <tbody id="create_task_route_tbody">
@@ -48,6 +48,7 @@
                         </table>
                     </div>
                     <div class="modal-footer">
+                        <button id="create_task_route_clearBtn" type="button" class="btn bg-danger text-white">Очистить</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
                         <button type="button" class="btn bg-dark text-white">Сохранить</button>
                     </div>

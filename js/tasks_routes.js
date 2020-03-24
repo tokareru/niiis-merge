@@ -42,6 +42,10 @@ function initTasksRoutes() {
     tasksRoutesMadeRoutes('task_routes_active_routes', 5);
     tasksRoutesMadeRoutes('task_routes_ended_routes', 5);
     addTaskToTable();
+
+    $('#create_task_route_clearBtn').on('click', function () {
+        $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
+    });
 }
 
 function tasks_routes_AddEvent(id) {
@@ -239,30 +243,35 @@ function addTaskToTable() {
 
     $('#create_task_route_RouteListAdd').on('click', function () {
         let route =
-            '<td></td>' +
-            '<td style="width: 36px" class="create_task_route_listId"></td>' +
-            '<td class="create_task_route_selectSpec" style="width: 200px"></td>' +
-            '<td style="width: 200px">' +
+            '<td style="width: 25px; max-width: 25px; min-width: 25px" class="create_task_route_delCol text-dark">' +
+            '<i class="fa fa-times"></i></td>' +
+            '<td style="width: 36px; max-width: 36px; min-width: 36px" class=""></td>' +
+            '<td class="create_task_route_selectSpec" style="width: 210px; max-width: 210px; min-width: 210px"></td>' +
+            '<td style="width: 200px; max-width: 200px; min-width: 200px">' +
             '<select class="create_task_route_selectNames form-control form-control-sm outline-none shadow-none">' +
             option +
             '</select>' +
             '</td>' +
-            '<td style="width: 195px">' +
+            '<td style="width: 195px; max-width: 195px; min-width: 195px">' +
             '<select class="form-control form-control-sm outline-none shadow-none">' +
             '<option>Согласовать</option>' +
             '<option>Утвердить</option>' +
             '<option>Выполнить</option>' +
             '</select>' +
             '</td>' +
-            '<td style="width: 200px">' +
+            '<td style="width: 200px; max-width: 200px; min-width: 200px">' +
             '<textarea class="form-control border-dark" rows="2"></textarea>' +
             '</td>';
         $('#create_task_route_RouteListAddTr').before(`<tr>${route}</tr>`);
         $('.create_task_route_selectNames').on('change', function () {
            let id = $(this).find('option:selected').attr('task-user-name-id');
            $(this).parents('tr').find('.create_task_route_selectSpec').text(UsersRoles[id]);
+           $(this).parents('tr').data({user: UsersLogins[id]});
         });
         recountListId();
+        $('.create_task_route_delCol').on('click', function () {
+            $(this).parents('tr').remove();
+        });
     });
 }
 
@@ -270,4 +279,8 @@ function recountListId() {
     $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').each(function (index) {
         $(this).find('.create_task_route_listId').text(index + 1);
     });
+}
+
+function serializeCreateTaskRoute() {
+
 }
