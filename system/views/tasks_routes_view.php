@@ -50,7 +50,7 @@
                     <div class="modal-footer">
                         <button id="create_task_route_clearBtn" type="button" class="btn bg-danger text-white">Очистить</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        <button type="button" class="btn bg-dark text-white">Сохранить</button>
+                        <button id="create_task_route_saveBtn" type="button" class="btn bg-dark text-white">Сохранить</button>
                     </div>
                 </div>
             </div>
