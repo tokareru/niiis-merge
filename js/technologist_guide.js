@@ -97,7 +97,7 @@ function createTechGuideNodes(tech) {
         });
 
         inp +=
-            "<il tech-type='" + child.type + "' tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
+            "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
                 "<span class='caret'>" + child.name + "</span>" +
                 "<ul class='nested pl-3 operationNameUl'>" +
                     fields +

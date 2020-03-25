@@ -3,8 +3,6 @@
     width: 40rem;
     overflow: hidden;
     scroll-behavior: smooth;
-    max-height: 30rem;
-    overflow-y: auto;
 }
 
 @media (max-width: 991px) {
@@ -22,6 +20,12 @@
         list-style: none;
         width: 100% !important;
     }
+
+    #progress-bar-body{
+        max-height: 30rem;
+        min-height: 12rem;
+        overflow-y: auto;
+     }
 }
 
 @media (min-width: 992px) {
