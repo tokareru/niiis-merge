@@ -85,7 +85,7 @@ class ajax_model extends model {
            }
            return $result;
         }
-       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.EQUIPMENT, t.TOOLS
+       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.id as third_id, t.FIELDS
                FROM technologist_info_1_layout f LEFT JOIN
                technologist_info_2_layout s on f.id = s.id_1_layout LEFT JOIN
                technologist_info_3_layout t on s.id = t.id_2_layout"; 
@@ -93,16 +93,25 @@ class ajax_model extends model {
        $q->execute();
        $Q = $q->fetchAll();
        $name = "t";
+       $child_name = "";
        $result;
        $i = -1;
        foreach($Q as $row){
            if($name != $row["name"]){
                $i++;
                $name = $row["name"];
-               $result[$i] = array("name"=>$name, "lvl"=>1, "id"=>$row["first_id"], "children" => array(array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "tools"=>get_array_from_string($row["tools"]), "equipment" => get_array_from_string($row["equipment"]))));
-               
+               $result[$i] = array("name"=>$name, "lvl"=>1, "id"=>$row["first_id"], "children" => array(array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields" => array(array("name" => $row["fields"], "lvl" => 3, "id" => $row["third_id"])))));
+               $child_name = $row["child_name"];
            }else{
-               array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "tools"=>array(array("name"=>$row["tools"])), "equipment" => array(array("name"=>$row["equipment"]))));
+               if($child_name != $row["name"])
+               {
+                   $child_name = $row["child_name"];
+                   array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
+               }
+               else{
+                   array_push($result[$i]["children"][-1], array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]));
+               }
+               
            }
        }
        return $result;

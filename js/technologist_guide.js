@@ -1,9 +1,9 @@
 function initTechnologistGuide() {
     //getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
-    getJsonByURL("json/technologist_guide.json", setTechnologistGuide, {})
-    getJsonByURL("ajax/get_technologist_info", function (json) {
+    getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
+    /*getJsonByURL("ajax/get_technologist_info", function (json) {
         console.log(json)
-    }, {})
+    }, {})*/
 }
 
 let techGuideJson;
@@ -97,7 +97,7 @@ function createTechGuideNodes(tech) {
         });
 
         inp +=
-            "<il tech-type='" + child.type + "' tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
+            "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
                 "<span class='caret'>" + child.name + "</span>" +
                 "<ul class='nested pl-3 operationNameUl'>" +
                     fields +
