@@ -3,16 +3,18 @@
 class ajax_model extends model {
     function save_route(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+//            print_r($_POST);
             foreach($_POST["task"] as $row){
                 $sql = "INSERT INTO ROUTE (login, role, name, task, master)
                         VALUES (:login, :role, :name, :task, :master)";
                 $q = sys::$PDO->prepare($sql);
-                $q->execute(array("login" => $row["user"], "role" => $row["name"], "task" => $row["task"], "master" => $_POST["master"]));
+                $q->execute(array("login" => $row["user"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "master" => $_POST["master"]));
+                return $q->fetchAll();
+                
             }
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
-        }
-        
+        }    
     }
     function get_routes_by_type(){
         $sql = "SELECT * FROM ROUTE_TYPE WHERE ACTIVE_SIGN = '1'";
