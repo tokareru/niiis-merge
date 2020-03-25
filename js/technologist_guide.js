@@ -1,9 +1,9 @@
 function initTechnologistGuide() {
     //getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
-    getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
-    /*getJsonByURL("ajax/get_technologist_info", function (json) {
+    getJsonByURL("json/technologist_guide.json", setTechnologistGuide, {})
+    getJsonByURL("ajax/get_technologist_info", function (json) {
         console.log(json)
-    }, {})*/
+    }, {})
 }
 
 let techGuideJson;
@@ -44,6 +44,7 @@ function setTechnologistGuide(json, add_data) {
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
             let $helper =$ (ui.helper);
+            $helper.find("ul").hide();
             $helper.find("span").first().css("color", "black !important");
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");

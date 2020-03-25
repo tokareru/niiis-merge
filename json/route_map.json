@@ -1,114 +1,28 @@
-{
-  "thead": [
-    {
-      "text": "",
-      "readonly": false
+[
+  {
+    "name": {
+      "id": "1",
+      "lvl": "1"
     },
-    {
-      "text": "",
-      "readonly": false
+    "equipment": [],
+    "tools": []
+  },
+  {
+    "name": {
+      "id": "1",
+      "lvl": "3"
     },
-    {
-      "text": "",
-      "readonly": false
-    },
-    {
-      "text": "",
-      "readonly": false
-    },
-    {
-      "text": "",
-      "readonly": false
-    },
-    {
-      "text": "",
-      "readonly": false
-    }
-  ],
-  "tbody": [
-    {
-      "row": [
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        }
-      ]
-    },
-    {
-      "row": [
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        }
-      ]
-    },
-    {
-      "row": [
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        },
-        {
-          "text": "",
-          "readonly": false
-        }
-      ]
-    }
-  ]
-}
+    "equipment": [
+      {
+        "id": "14",
+        "lvl": "3"
+      }
+    ],
+    "tools": [
+      {
+        "id": "20",
+        "lvl": "3"
+      }
+    ]
+  }
+]
