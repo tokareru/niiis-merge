@@ -46,6 +46,9 @@ function initTasksRoutes() {
     $('#create_task_route_clearBtn').on('click', function () {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
     });
+    $('#create_task_route_saveBtn').on('click', function () {
+        addTaskToDB();
+    });
 }
 
 function tasks_routes_AddEvent(id) {
@@ -253,7 +256,7 @@ function addTaskToTable() {
             '</select>' +
             '</td>' +
             '<td style="width: 195px; max-width: 195px; min-width: 195px">' +
-            '<select class="form-control form-control-sm outline-none shadow-none">' +
+            '<select class="form-control form-control-sm outline-none shadow-none create_task_route_task">' +
             '<option>Согласовать</option>' +
             '<option>Утвердить</option>' +
             '<option>Выполнить</option>' +
@@ -264,9 +267,10 @@ function addTaskToTable() {
             '</td>';
         $('#create_task_route_RouteListAddTr').before(`<tr>${route}</tr>`);
         $('.create_task_route_selectNames').on('change', function () {
-           let id = $(this).find('option:selected').attr('task-user-name-id');
-           $(this).parents('tr').find('.create_task_route_selectSpec').text(UsersRoles[id]);
-           $(this).parents('tr').data({user: UsersLogins[id]});
+            let id = $(this).find('option:selected').attr('task-user-name-id');
+            $(this).parents('tr').find('.create_task_route_selectSpec').text(UsersRoles[id]);
+            $(this).parents('tr').data({user: UsersLogins[id]});
+            $(this).parents('tr').removeClass('bg-danger');
         });
         recountListId();
         $('.create_task_route_delCol').on('click', function () {
@@ -282,5 +286,38 @@ function recountListId() {
 }
 
 function serializeCreateTaskRoute() {
+    let data = [];
+    let ret = false;
+    $('#create_task_route_RouteList tbody').find('tr:not(#create_task_route_RouteListAddTr)').each(function () {
+        let login = $(this).data('user');
+        if (login === undefined) {
+            $(this).addClass('bg-danger');
+            ret = true;
+        }
+        data.push({
+            user: $(this).data('user'),
+            role: $(this).find('.create_task_route_selectSpec').text(),
+            name: $(this).find('.create_task_route_selectNames option:selected').text(),
+            task: $(this).find('.create_task_route_task option:selected').text()
+        })
+    });
+    if (ret) {
+        return;
+    }
+    console.log(data);
+    return data;
+}
 
+function addTaskToDB() {
+    let task = serializeCreateTaskRoute();
+    if( task === undefined || task.length === 0)
+        return;
+    $.ajax({
+        type: 'POST',
+        url: '',
+        data: {task: task, master: login},
+        success: function (res) {
+            //console.log(res);
+        }
+    })
 }
