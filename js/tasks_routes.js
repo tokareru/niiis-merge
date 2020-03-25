@@ -41,6 +41,14 @@ function initTasksRoutes() {
     tasks_routes_AddEvent('task_routes_tree');
     tasksRoutesMadeRoutes('task_routes_active_routes', 5);
     tasksRoutesMadeRoutes('task_routes_ended_routes', 5);
+    addTaskToTable();
+
+    $('#create_task_route_clearBtn').on('click', function () {
+        $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
+    });
+    $('#create_task_route_saveBtn').on('click', function () {
+        addTaskToDB();
+    });
 }
 
 function tasks_routes_AddEvent(id) {
@@ -221,4 +229,95 @@ function delZeroCol(table_block) {
     let $thead = $(table_block + '.table_edit thead');
     $thead.find('th').eq($number).remove();
     $thead.find('th').eq($number).remove();
+}
+
+function addTaskToTable() {
+
+    let loginLength = getLoginNames().length;
+    let UsersRoles = getLoginNames('role');
+    let UsersNames = getLoginNames('short_name');
+    let UsersLogins = getLoginNames();
+
+    let option = '<option disabled selected value>Выберите работника...</option>';
+
+    UsersNames.forEach(function (value, index) {
+        option += `<option task-user-name-id="${index}">${value}</option>`;
+    });
+
+    $('#create_task_route_RouteListAdd').on('click', function () {
+        let route =
+            '<td style="width: 25px; max-width: 25px; min-width: 25px" class="create_task_route_delCol text-dark">' +
+            '<i class="fa fa-times"></i></td>' +
+            '<td style="width: 36px; max-width: 36px; min-width: 36px" class=""></td>' +
+            '<td class="create_task_route_selectSpec" style="width: 210px; max-width: 210px; min-width: 210px"></td>' +
+            '<td style="width: 200px; max-width: 200px; min-width: 200px">' +
+            '<select class="create_task_route_selectNames form-control form-control-sm outline-none shadow-none">' +
+            option +
+            '</select>' +
+            '</td>' +
+            '<td style="width: 195px; max-width: 195px; min-width: 195px">' +
+            '<select class="form-control form-control-sm outline-none shadow-none create_task_route_task">' +
+            '<option>Согласовать</option>' +
+            '<option>Утвердить</option>' +
+            '<option>Выполнить</option>' +
+            '</select>' +
+            '</td>' +
+            '<td style="width: 200px; max-width: 200px; min-width: 200px">' +
+            '<textarea class="form-control border-dark" rows="2"></textarea>' +
+            '</td>';
+        $('#create_task_route_RouteListAddTr').before(`<tr>${route}</tr>`);
+        $('.create_task_route_selectNames').on('change', function () {
+            let id = $(this).find('option:selected').attr('task-user-name-id');
+            $(this).parents('tr').find('.create_task_route_selectSpec').text(UsersRoles[id]);
+            $(this).parents('tr').data({user: UsersLogins[id]});
+            $(this).parents('tr').removeClass('bg-danger');
+        });
+        recountListId();
+        $('.create_task_route_delCol').on('click', function () {
+            $(this).parents('tr').remove();
+        });
+    });
+}
+
+function recountListId() {
+    $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').each(function (index) {
+        $(this).find('.create_task_route_listId').text(index + 1);
+    });
+}
+
+function serializeCreateTaskRoute() {
+    let data = [];
+    let ret = false;
+    $('#create_task_route_RouteList tbody').find('tr:not(#create_task_route_RouteListAddTr)').each(function () {
+        let login = $(this).data('user');
+        if (login === undefined) {
+            $(this).addClass('bg-danger');
+            ret = true;
+        }
+        data.push({
+            user: $(this).data('user'),
+            role: $(this).find('.create_task_route_selectSpec').text(),
+            name: $(this).find('.create_task_route_selectNames option:selected').text(),
+            task: $(this).find('.create_task_route_task option:selected').text()
+        })
+    });
+    if (ret) {
+        return;
+    }
+    console.log(data);
+    return data;
+}
+
+function addTaskToDB() {
+    let task = serializeCreateTaskRoute();
+    if( task === undefined || task.length === 0)
+        return;
+    $.ajax({
+        type: 'POST',
+        url: '',
+        data: {task: task, master: login},
+        success: function (res) {
+            //console.log(res);
+        }
+    })
 }

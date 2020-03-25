@@ -10,7 +10,7 @@
 }
 
 .instruments_list_li{
-    list-style: circle;
+    list-style: disc inside;
     margin-left: 2rem !important;
 }
 
@@ -19,7 +19,6 @@
     box-shadow: none !important;
     color: #606469;
     background-color: transparent;
-    list-style-type: none;
 }
 
 #technologist_guide_field .caret:hover{

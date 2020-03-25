@@ -135,7 +135,7 @@ function initSingleTable() {
 
 }
 
-function serializeCreateTaskRoute() {
+/*function serializeCreateTaskRoute() {
     let $table = $('.table_create_task_route');
     let count_rows = $table.find('tr').length - 1;
     let count_cols = $table.find('tr').eq(0).find('th').length;
@@ -153,7 +153,7 @@ function serializeCreateTaskRoute() {
     }
     console.log(data);
     return data;
-}
+}*/
 
 function createTaskRouteToServer(dataToAjax) {
     $.ajax(
