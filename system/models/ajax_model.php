@@ -1,6 +1,51 @@
 <?php
 
 class ajax_model extends model {
+    function save_route(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            foreach($_POST["task"] as $row){
+                $sql = "INSERT INTO ROUTE (login, role, name, task, master)
+                        VALUES (:login, :role, :name, :task, :master)";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute(array("login" => $row["user"], "role" => $row["name"], "task" => $row["task"], "master" => $_POST["master"]));
+            }
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }
+        
+    }
+    function get_routes_by_type(){
+        $sql = "SELECT * FROM ROUTE_TYPE WHERE ACTIVE_SIGN = '1'";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $response = array();
+        foreach($Q as $row){
+            $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and TASK = :task";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("task" => $row["name"]));
+            $Q1 = $q->fetchAll();
+            array_push($response, array("master" => $Q1[0]["master"],"type" => $row["name"], "task" => array()));
+            foreach($Q1 as $row1){
+                array_push($response["task"], array("user" => $row1["login"], "role" => $row1["role"], "name" => $row1["name"]));
+            }
+        }
+        return array("response"=>$response);
+    }
+    function get_routes_by_login(){
+
+        $response = array();
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and login = :login";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_GET["login"]));
+        $Q = $q->fetchAll();
+        array_push($response, array("master" => $_GET["login"], "task" => array()));
+        foreach($Q as $row){
+            array_push($response["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+        }
+        
+        return array("response"=>$response);
+    }
     function get_progressbar_actions(){
         if($_SERVER["REQUEST_METHOD"]=="GET"){
         $sql = "SELECT * FROM LOGS WHERE login = :login";
