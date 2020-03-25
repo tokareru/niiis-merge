@@ -173,13 +173,14 @@ function initRouteMap() {
     // инициализация
     if (Round === 3){
         if (Role !== "technologist"){
+            // ajax/get_technologist_info
             $.ajax({
-                url: 'ajax/get_technologist_info',
+                url: 'json/technologist_guide.json',
                 type: 'GET',
                 success: function (techJson) {
                     techGuideJson = techJson;
                     $.ajax({
-                        url: 'ajax/get_work_place_tech_process',
+                        url: 'json/route_map.json',
                         type: 'GET',
                         success: function (res) {
                             setTechProcessJson(techGuideJson, res, $table);
@@ -484,7 +485,7 @@ function combineTechProcessCellTools(data = {name: "", lvl: "", id: ""}) {
 }
 
 function setTechProcessJson(json, res, $table) {
-    //console.log(res);
+    console.log(res);
     if (res.length)
         res.forEach(function (_row) {
             // находим название
