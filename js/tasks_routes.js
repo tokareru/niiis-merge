@@ -49,6 +49,16 @@ function initTasksRoutes() {
     $('#create_task_route_saveBtn').on('click', function () {
         addTaskToDB();
     });
+    $('#create_task_route_testBtn').on('click', function () {
+        $.ajax({
+            type: 'GET',
+            url: 'ajax/get_routes_by_type',
+            success: function (res) {
+                console.log(res);
+            }
+        })
+    });
+
 }
 
 function tasks_routes_AddEvent(id) {
@@ -314,10 +324,10 @@ function addTaskToDB() {
         return;
     $.ajax({
         type: 'POST',
-        url: '',
+        url: 'ajax/save_route',
         data: {task: task, master: login},
         success: function (res) {
-            //console.log(res);
+            console.log(res);
         }
     })
 }
