@@ -3,6 +3,8 @@
     width: 40rem;
     overflow: hidden;
     scroll-behavior: smooth;
+    max-height: 30rem;
+    overflow-y: auto;
 }
 
 @media (max-width: 991px) {

@@ -50,6 +50,10 @@ ul, #myUL {
     margin-bottom: -3px;
 }
 
+.techField{
+    list-style: disc;
+}
+
 .caret:hover{
     color: black;
 }
