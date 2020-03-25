@@ -162,13 +162,20 @@ function initRouteMap() {
     else saveButton.remove();
 
     // кнопка "добавить новую строку"
-    let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
-    let delI = (Role === "technologist") ? "fa fa-times" : "";
-    let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
-    addNewRowButton.append("<span class='route_map_new_row_button'></span>");
-    addNewRowButton.find("span").click(function () {
-        setRouteMapRow()
-    });
+    if (Role === "technologist"){
+        let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
+        addNewRowButton.append("<span class='route_map_new_row_button'></span>");
+        addNewRowButton.find("span").click(function () {
+            setRouteMapRow();
+            setActionToBar({
+                id: "addTechRow",
+                type: "addNew",
+                field: "Маршрутная карта",
+                text: `В 'Маршрутную карту' добавлена новая строка`
+            });
+        });
+    }
+
 
     // инициализация
     if (Round === 3){
@@ -296,9 +303,10 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
             toolsStr += combineTechProcessCellTools(getTechField(tool.id, tool.lvl));
         });
 
+    let deleteButton = (Role === "technologist") ? `<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>`: "";
     $(`
         <tr>
-            <td><button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button></td>
+            <td>${deleteButton}</td>
             <td colspan="4" class="tdBorderBlackLeft"></td>
             <td colspan="3" class=""></td>
             <td colspan="4" class="tdBorderBlackRight"></td>
@@ -345,7 +353,13 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
                             id: $draggable_id,
                             lvl: $draggable_lvl
                         })
-                    )
+                    );
+                    setActionToBar({
+                        id: "addTechField",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлено название '${$draggable_name}'`
+                    });
                 }/*else if ($draggable_lvl == "2"){
                     $this.append(
                         combineTechProcessCell({
@@ -362,25 +376,14 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
                             id: $draggable_id,
                             lvl: $draggable_lvl
                         })
-                    )
+                    );
+                    setActionToBar({
+                        id: "addTechProcess",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлено название '${$draggable_name}'`
+                    });
                 }
-                /*setActionToBar({
-                    id: "addOperationNameToTechProcess",
-                    type: "addNew",
-                    field: "Маршрутная карта",
-                    text: `В 'Маршрутную карту' добавлена операция '${$(ui.draggable).find(".operationNameField").text()}'`
-                });*/
-
-                /*setActionToBar({
-                    id: "addTechNameToTechProcess",
-                    type: "addNew",
-                    field: "Маршрутная карта",
-                    text: `В 'Маршрутную карту' добавлен узел '${techName}'`
-                });*/
-
-                /*$table.on('click', '.tech_proc_del_td', function () {
-                    $(this).parents('tr').remove();
-                });*/
             }
         }
     );
@@ -405,25 +408,14 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
                             id: $draggable_id,
                             lvl: $draggable_lvl
                         })
-                    )
+                    );
+                    setActionToBar({
+                        id: "addTechField",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлено оборудование '${$draggable_name}'`
+                    });
                 }
-                /*setActionToBar({
-                    id: "addOperationNameToTechProcess",
-                    type: "addNew",
-                    field: "Маршрутная карта",
-                    text: `В 'Маршрутную карту' добавлена операция '${$(ui.draggable).find(".operationNameField").text()}'`
-                });*/
-
-                /*setActionToBar({
-                    id: "addTechNameToTechProcess",
-                    type: "addNew",
-                    field: "Маршрутная карта",
-                    text: `В 'Маршрутную карту' добавлен узел '${techName}'`
-                });*/
-
-                /*$table.on('click', '.tech_proc_del_td', function () {
-                    $(this).parents('tr').remove();
-                });*/
             }
         }
     );
@@ -448,7 +440,13 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
                             id: $draggable_id,
                             lvl: $draggable_lvl
                         })
-                    )
+                    );
+                    setActionToBar({
+                        id: "addTechField",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлен инструмент '${$draggable_name}'`
+                    });
                 }
             }
         }
@@ -527,12 +525,13 @@ function setTechProcessJson(json, res, $table) {
     $table.on('click', '.tech_proc_del_td', function () {
         let $this = $(this);
         let name = $this.parent().parent().find("td").eq(4).text();
+        let text = (name === "") ? `Из 'Маршрутной карты' удалён узел` : `Из 'Маршрутной карты' удалён узел '${name}'`;
         $this.parents('tr').remove();
         setActionToBar({
             id: "deleteNodeFromRouteMap",
             type: "delete",
             field: "Маршрутная карта",
-            text: `Из 'Маршрутной карты' удалён узел '${name}'`
+            text: text
         });
     });
 }
