@@ -26,11 +26,12 @@ function technologicalProcessInit() {
 }
 
 function downloadTechProcess($container) {
+    // json/tech_process.json
     $.ajax({
         url: 'ajax/get_techproccess',
         type: 'GET',
         success: function (json) {
-            //console.log(json);
+            console.log(json);
             let $field = $("#tech_process_field_drop");
             if (json.techProcess != undefined){
                 if (json.techProcess.length){
@@ -483,7 +484,7 @@ function saveTechProcess() {
     });
     console.log(json);
 
-    /*$.ajax(
+    $.ajax(
         {
             url: 'ajax/save_techproccess',
             type: 'POST',
@@ -502,7 +503,7 @@ function saveTechProcess() {
                 console.log(response)
             }
         }
-    );*/
+    );
 }
 
 function setToggler() {
