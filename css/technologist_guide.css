@@ -39,6 +39,15 @@
     padding: 2% 4% 6% 2% !important;
 }
 
+#collapse-technologist_guide_field{
+    max-height: 45rem;
+    overflow-y: auto;
+}
+
+#collapse-technologist_guide_field::-webkit-scrollbar {
+    width: 0px;
+}
+
 .tg_header {
     user-select: none;
     background-color: #455a64;
