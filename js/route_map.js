@@ -182,7 +182,7 @@ function initRouteMap() {
         if (Role !== "technologist"){
             // ajax/get_technologist_info
             $.ajax({
-                url: 'json/technologist_guide.json',
+                url: 'ajax/get_technologist_info',
                 type: 'GET',
                 success: function (techJson) {
                     techGuideJson = techJson;

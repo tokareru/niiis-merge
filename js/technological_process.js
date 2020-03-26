@@ -13,7 +13,7 @@ function technologicalProcessInit() {
         $("#tech_process_field_add_node_button").remove();
         $.ajax({
             // ajax/get_technologist_info
-            url: 'json/technologist_guide.json',
+            url: 'ajax/get_technologist_info',
             type: 'GET',
             success: function (json) {
                 techGuideJson = json;

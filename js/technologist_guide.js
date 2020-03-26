@@ -1,6 +1,6 @@
 function initTechnologistGuide() {
     //getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
-    getJsonByURL("json/technologist_guide.json", setTechnologistGuide, {})
+    getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
     getJsonByURL("ajax/get_technologist_info", function (json) {
         console.log(json)
     }, {})
@@ -82,37 +82,39 @@ function setTechnologistGuide(json, add_data) {
 function createTechGuideNodes(tech) {
     let node = '';
     let isDisabled = "disabled";
-    //console.log(tech);
 
     let inp = '';
+    console.log(tech.children.length)
+    if (tech.children.length){
+        tech.children.forEach(function (child, i) {
+            //console.log(child);
 
-    tech.children.forEach(function (child, i) {
-        //console.log(child);
-
-        let fields = '';
-        child.fields.forEach(function (ins) {
-            fields +=
-                "<li tech-lvl='" + ins.lvl + "' tech-id='" + ins.id + "' class='lastChild instruments_list_li'>" +
+            let fields = '';
+            child.fields.forEach(function (ins) {
+                fields +=
+                    "<li tech-lvl='" + ins.lvl + "' tech-id='" + ins.id + "' class='lastChild instruments_list_li'>" +
                     "<span>" + ins.name + "</span>" +
-                "</li>";
-        });
+                    "</li>";
+            });
 
-        inp +=
-            "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
+            inp +=
+                "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
                 "<span class='caret'>" + child.name + "</span>" +
                 "<ul class='nested pl-3 operationNameUl'>" +
-                    fields +
+                fields +
                 "</ul>" +
-            "</il>";
-    });
+                "</il>";
+        });
 
-    node =
-        "<li tech-lvl='" + tech.lvl + "' tech-id='" + tech.id + "' class='techName'>" +
+        node =
+            "<li tech-lvl='" + tech.lvl + "' tech-id='" + tech.id + "' class='techName'>" +
             "<span class='caret detailChildren'>" + tech.name + "</span>" +
             "<ul class='nested pl-3'>" +
-                inp +
+            inp +
             "</ul>" +
-        "</li>";
+            "</li>";
+    }
+
 
     return node;
 }
