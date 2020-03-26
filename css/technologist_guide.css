@@ -32,6 +32,21 @@
     background-color: #515356;
 }
 
+@media (max-width: 1400px) and (min-width: 1200px){
+    #technologist_guide_field .caret{
+        font: normal normal normal 0.95em/1 FontAwesome;
+    }
+
+    .left-side{
+        min-width: 200px;
+    }
+
+    #technologist_guide_field .lastChild{
+        font-size: 0.85em;
+    }
+
+}
+
 .detailChildren:hover{
     background-color: black;
     color: white;

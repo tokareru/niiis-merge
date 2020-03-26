@@ -98,12 +98,6 @@ function createNodes(children) {
             "</td>" +
             "<td>" + "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
             "</tr>" +
-            "<tr>" +
-            "<td>" +
-            "<div>Позиция:</div>" +
-            "</td>" +
-            "<td>" + "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
-            "</tr>" +
             "</tbody>" +
             "</table>" +
             "</li>" +

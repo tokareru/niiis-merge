@@ -25,7 +25,7 @@ function setTechnologistGuide(json, add_data) {
     });
 
     $("#technologist_guide_accordion").append(
-        "<ul class='col-12 pl-0'>" +
+        "<ul class='col-12 pl-0 pr-0'>" +
             techs +
         "</ul>"
     );
