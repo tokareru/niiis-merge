@@ -64,6 +64,7 @@ function esiSetBranchesNestedFunc() {
             this.classList.toggle("caret-down");
         });
     }
+    $("#esi_branch_body_header_span").trigger("click");
 }
 
 function createNodes(children) {
