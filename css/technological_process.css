@@ -63,6 +63,11 @@ ul, #myUL {
     background-color: #515356;
 }
 
+#esi_branch_body_header_span:hover{
+    color: white !important;
+    background-color: #515356 !important;
+}
+
 .techProcessCellEquipment ul{
     font-size: 1.3em;
     min-height: 40px;
