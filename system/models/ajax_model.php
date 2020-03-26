@@ -18,16 +18,26 @@ class ajax_model extends model {
     }
     function get_routes_by_type(){
         $response = array();
-            $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1'";
-            $q = sys::$PDO->prepare($sql);
-            $q->execute();
-            $Q = $q->fetchAll();
-            $response["active"] = array();
-            $response["finished"] = array();
-            foreach($Q as $row){
-                array_push($response["active"], array("master" => $row["master"]));
-            }
-            
+        $response["active"] = array();
+        $response["finished"] = array();
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1'";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+
+        foreach($Q as $row){
+            array_push($response["active"], array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+        }
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0'";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+
+        foreach($Q as $row){
+            array_push($response["finished"], array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+        }
         return array("response"=>$response);
     }
     function get_routes_by_login(){
