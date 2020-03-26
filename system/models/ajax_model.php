@@ -132,22 +132,22 @@ ORDER BY third_id";
             $sql = "DELETE FROM TECHPROCESS";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql = "INSERT INTO TECHPROCESS (id, id_parent, is_new) VALUES ";
+            $sql = "INSERT INTO TECHPROCESS (id, id_parent, fields, is_new) VALUES ";
             foreach($_POST["techProcess"] as $row){
-                foreach($row["operationNames"] as $item){
-                    
+                foreach($row["children"] as $child){
+                        foreach($child["fields"] as $item)
                     if ($row["lvl"] == "new"){
-                        $sql .= "(".$item["id"].", ".$row["id"].", '1'),";
+                        $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '1'),";
                     }
                     else{
-                        $sql .= "(".$item["id"].", ".$row["id"].", '0'),";
+                        $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '0'),";
                     }
                 }
             }
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            return array("response"=>"awdwd");
+            return array("response"=>200);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }
