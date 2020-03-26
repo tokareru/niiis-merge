@@ -391,7 +391,7 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
     new_tr.find(".techProcessCellEquipment ul").droppable(
         {
             tolerance: "pointer",
-            accept: ".instruments_list_li",
+            accept: ".instruments_list_li, .operationName",
             greedy: true,
             drop: function (event, ui) {
                 let $draggable = $(ui.draggable);
@@ -415,6 +415,26 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
                         field: "Маршрутная карта",
                         text: `В 'Маршрутную карту' добавлено оборудование '${$draggable_name}'`
                     });
+                }else if ($draggable_lvl == "2"){
+                    let fieldsLi = $draggable.find(".instruments_list_li");
+                    if (fieldsLi.length)
+                        fieldsLi.each(function () {
+                            let $li = $(this);
+                            let liName = $li.find("span").first().text();
+                            $this.append(
+                                combineTechProcessCellTools({
+                                    name: liName,
+                                    id: $li.attr("tech-id"),
+                                    lvl: $li.attr("tech-lvl")
+                                })
+                            );
+                            setActionToBar({
+                                id: "addTechField",
+                                type: "addNew",
+                                field: "Маршрутная карта",
+                                text: `В 'Маршрутную карту' добавлено оборудование '${liName}'`
+                            });
+                        });
                 }
             }
         }
@@ -423,7 +443,7 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
     new_tr.find(".techProcessCellTools ul").droppable(
         {
             tolerance: "pointer",
-            accept: ".instruments_list_li",
+            accept: ".instruments_list_li, .operationName",
             greedy: true,
             drop: function (event, ui) {
                 let $draggable = $(ui.draggable);
@@ -447,6 +467,26 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
                         field: "Маршрутная карта",
                         text: `В 'Маршрутную карту' добавлен инструмент '${$draggable_name}'`
                     });
+                }else if ($draggable_lvl == "2"){
+                    let fieldsLi = $draggable.find(".instruments_list_li");
+                    if (fieldsLi.length)
+                        fieldsLi.each(function () {
+                            let $li = $(this);
+                            let liName = $li.find("span").first().text();
+                            $this.append(
+                                combineTechProcessCellTools({
+                                    name: liName,
+                                    id: $li.attr("tech-id"),
+                                    lvl: $li.attr("tech-lvl")
+                                })
+                            );
+                            setActionToBar({
+                                id: "addTechField",
+                                type: "addNew",
+                                field: "Маршрутная карта",
+                                text: `В 'Маршрутную карту' добавлен инструмент '${liName}'`
+                            });
+                        });
                 }
             }
         }
