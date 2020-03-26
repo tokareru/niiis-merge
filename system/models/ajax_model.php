@@ -90,7 +90,7 @@ class ajax_model extends model {
        $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.id as third_id, t.FIELDS
 FROM technologist_info_3_layout as t left join
 technologist_info_2_layout as s on s.id = t.id_2_layout left join
-technologist_info_2_layout as f on f.id = t.id_1_layout
+technologist_info_1_layout as f on f.id = t.id_1_layout
 ORDER BY third_id"; 
        $q = sys::$PDO->prepare($sql);
        $q->execute();
@@ -102,6 +102,7 @@ ORDER BY third_id";
        $j = 0;
        foreach($Q as $row){
            if($name != $row["name"]){
+               $j = 0;
                $name = $row["name"];
                array_push($result,array("name"=>$name, "lvl"=>1, "id"=>$row["first_id"], "children" => array(array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields" => array(array("name" => $row["fields"], "lvl" => 3, "id" => $row["third_id"]))))));
                $child_name = $row["child_name"];
@@ -109,6 +110,7 @@ ORDER BY third_id";
            }else{
                if($child_name != $row["child_name"])
                {
+                   $j = 0;
                    $child_name = $row["child_name"];
                    array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
                    $j++;
