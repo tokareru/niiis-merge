@@ -17,21 +17,17 @@ class ajax_model extends model {
         }    
     }
     function get_routes_by_type(){
-        $sql = "SELECT * FROM ROUTE_TYPE WHERE ACTIVE_SIGN = '1'";
-        $q = sys::$PDO->prepare($sql);
-        $q->execute();
-        $Q = $q->fetchAll();
         $response = array();
-        foreach($Q as $row){
-            $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and TASK = :task";
+            $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1'";
             $q = sys::$PDO->prepare($sql);
-            $q->execute(array("task" => $row["name"]));
-            $Q1 = $q->fetchAll();
-            array_push($response, array("master" => $Q1[0]["master"],"type" => $row["name"], "task" => array()));
-            foreach($Q1 as $row1){
-                array_push($response["task"], array("user" => $row1["login"], "role" => $row1["role"], "name" => $row1["name"]));
+            $q->execute();
+            $Q = $q->fetchAll();
+            $response["active"] = array();
+            $response["finished"] = array();
+            foreach($Q as $row){
+                
             }
-        }
+            
         return array("response"=>$response);
     }
     function get_routes_by_login(){
@@ -112,9 +108,8 @@ ORDER BY third_id";
                {
                    $j = 0;
                    $child_name = $row["child_name"];
-                   array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
-                   $j++;
-                   
+                   array_push($result[++$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
+                   $j++;  
                }
                else{
                    array_push($result[$i]["children"][$j]["fields"], array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]));
