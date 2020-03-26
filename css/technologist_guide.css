@@ -10,8 +10,14 @@
 }
 
 .instruments_list_li{
-    list-style: disc inside;
+    cursor: pointer;
+    list-style: disc;
     margin-left: 2rem !important;
+}
+
+.instruments_list_li:hover{
+    color: white !important;
+    background-color: #515356 !important;
 }
 
 #technologist_guide_field .lastChild{
