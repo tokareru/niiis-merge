@@ -1,9 +1,9 @@
 function initTechnologistGuide() {
     //getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
     getJsonByURL(techGuideURL, setTechnologistGuide, {})
-    getJsonByURL("ajax/get_technologist_info", function (json) {
+    /*getJsonByURL("ajax/get_technologist_info", function (json) {
         console.log(json)
-    }, {})
+    }, {})*/
 }
 
 let techGuideJson;
