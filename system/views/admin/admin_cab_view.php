@@ -11,6 +11,7 @@ if ($_SERVER['REQUEST_URI'] == '/') {
   $arr = parse_url($CURRENT_PAGE);
   $CURRENT_PAGE_HARD = $CURRENT_PAGE; // сохраняем для жестких ссылок прописанных с учетом параметров в запросе
   $CURRENT_PAGE = $arr['path']; // получаем конечный адрес
+  
 }
 ?>
 
@@ -56,7 +57,7 @@ if ($_SERVER['REQUEST_URI'] == '/') {
           <div class="sidebar-sticky">
             <ul class="nav flex-column">
               <li class="nav-item">
-                <a class="nav-link" href="<?=conf::$SITE_URL?>"><span data-feather="home"></span>
+                <a class="nav-link <?=($CURRENT_PAGE=='admin'?'active':'')?>" href="<?=conf::$SITE_URL?>"><span data-feather="home"></span>
                   <i class="fas fa-cogs"></i> Настройки         
                 </a>
               </li>
@@ -69,22 +70,22 @@ if ($_SERVER['REQUEST_URI'] == '/') {
               </h6>
               <ul class="nav flex-column mb-2">
                 <li class="nav-item">
-                  <a class="nav-link" href="<?=conf::$SITE_URL?>admin_cab/change_users">
+                  <a class="nav-link <?=($CURRENT_PAGE=='change_users'?'active':'')?>" href="<?=conf::$SITE_URL?>admin_cab/change_users">
                     <i class="fas fa-user-edit"></i> Пользователи
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="<?=conf::$SITE_URL?>admin_cab/change_groups_users">
+                  <a class="nav-link <?=($CURRENT_PAGE=='change_groups_users'?'active':'')?>" href="<?=conf::$SITE_URL?>admin_cab/change_groups_users">
                     <i class="fas fa-user-friends"></i> Группы пользователей
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="<?php echo conf::$SITE_URL ?>admin_cab/technologist_guide_edit">
+                  <a class="nav-link <?=($CURRENT_PAGE=='technologist_guide_edit'?'active':'')?>" href="<?php echo conf::$SITE_URL ?>admin_cab/technologist_guide_edit">
                     <i class="fas fa-list"></i> Справочник технолога
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="<?php echo conf::$SITE_URL ?>admin_cab/progressbar">
+                  <a class="nav-link <?=($CURRENT_PAGE=='progressbar'?'active':'')?>" href="<?php echo conf::$SITE_URL ?>admin_cab/progressbar">
                     <i class="fas fa-list"></i> Прогресс пользователей
                   </a>
                 </li>
