@@ -153,21 +153,33 @@ ORDER BY third_id";
         }
     }
     function get_techproccess(){
-            $sql = "SELECT * FROM TECHPROCESS";
+            $sql = "SELECT * FROM TECHPROCESS ORDER BY id_techprocess";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $Q = $q->fetchAll();
             $id = 0;
             $response = array("techProcess" => array());
             $i = -1;
+            $j = -1;
+            $children_id = 0;
             foreach($Q as $row){
                 if($row["id_parent"] != $id){
+                    $j = -1;
                     $id = $row["id_parent"];
-                    array_push($response["techProcess"], array("id"=>$id, "lvl" => ($row["is_new"])? "new" : 1, "operationNames"=>array()));
-                    array_push($response["techProcess"][++$i]["operationNames"], array("id" => $row["id"], "lvl" => 2));
+                    array_push($response["techProcess"], array("id"=>$id, "lvl" => ($row["is_new"])? "new" : 1, "children"=>array()));
+                    array_push($response["techProcess"][++$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                    array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                    $children_id = $row["id"];
                 }
                 else{
-                    array_push($response["techProcess"][$i]["operationNames"], array("id" => $row["id"], "lvl" => 2));
+                    if($children_id != $row["id"]){
+                        $children_id = $row["id"];
+                        array_push($response["techProcess"][$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                        array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                    }
+                    else{
+                        array_push($response["techProcess"][$i]["children"][$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                    }
                 }
             }
             return $response;
