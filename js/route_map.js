@@ -637,7 +637,7 @@ function combineTechProcessCellTools(data = {name: "", lvl: "", id: ""}) {
 }
 
 function setTechProcessJson(json, res, $table) {
-    console.log(res);
+    //console.log(res);
     if (res.length)
         res.forEach(function (_row) {
             // находим название
@@ -692,7 +692,7 @@ function setTechProcessJson(json, res, $table) {
 }
 
 function setTechProcessJsonRounds_1_2(res, $table) {
-    console.log(res);
+    //console.log(res);
     let $tbody = $("#tech_process_table tbody");
     let $lastTr = $tbody.find('tr:last');
     if (res.length){
