@@ -8,7 +8,7 @@ function initTechnologistGuide() {
 
 let techGuideJson;
 // ajax/get_technologist_info
-const techGuideURL = "json/technologist_guide.json";
+const techGuideURL = "ajax/get_technologist_info";
 
 function setTechnologistGuide(json, add_data) {
     techGuideJson = json;
