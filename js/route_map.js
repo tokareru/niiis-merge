@@ -184,9 +184,8 @@ function initRouteMap() {
     // инициализация
     if (Round === 3){
         if (Role !== "technologist"){
-            // ajax/get_technologist_info
             $.ajax({
-                url: 'ajax/get_technologist_info',
+                url: techGuideURL,
                 type: 'GET',
                 success: function (techJson) {
                     techGuideJson = techJson;

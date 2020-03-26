@@ -13,7 +13,7 @@ function technologicalProcessInit() {
         $("#tech_process_field_add_node_button").remove();
         $.ajax({
             // ajax/get_technologist_info
-            url: 'ajax/get_technologist_info',
+            url: techGuideURL,
             type: 'GET',
             success: function (json) {
                 techGuideJson = json;
@@ -663,9 +663,10 @@ function technologicalProcessInit1() {
     $container.addClass("tech_process_table");
     tech_process_table.removeClass("tech_process_table");
 
+    //ajax/get_technologist_info
     if (Role !== "technologist")
         $.ajax({
-            url: 'ajax/get_technologist_info',
+            url: techGuideURL,
             type: 'GET',
             success: function (techJson) {
                 techGuideJson = techJson;

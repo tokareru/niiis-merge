@@ -1,12 +1,14 @@
 function initTechnologistGuide() {
     //getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
-    getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
+    getJsonByURL(techGuideURL, setTechnologistGuide, {})
     getJsonByURL("ajax/get_technologist_info", function (json) {
         console.log(json)
     }, {})
 }
 
 let techGuideJson;
+// ajax/get_technologist_info
+const techGuideURL = "json/technologist_guide.json";
 
 function setTechnologistGuide(json, add_data) {
     techGuideJson = json;
