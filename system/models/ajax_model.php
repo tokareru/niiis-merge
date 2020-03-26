@@ -25,7 +25,7 @@ class ajax_model extends model {
             $response["active"] = array();
             $response["finished"] = array();
             foreach($Q as $row){
-                
+                array_push($response["active"], array("master" => $row["master"]));
             }
             
         return array("response"=>$response);
@@ -106,9 +106,8 @@ ORDER BY third_id";
            }else{
                if($child_name != $row["child_name"])
                {
-                   $j = 0;
                    $child_name = $row["child_name"];
-                   array_push($result[++$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
+                   array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
                    $j++;  
                }
                else{
