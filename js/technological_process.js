@@ -1,3 +1,5 @@
+const diffOfTechProcess = 1000;
+
 function technologicalProcessInit() {
     let $container = $("#tech_process_field_drop");
     let tech_process_table = $("#tech_process_table");
@@ -357,7 +359,7 @@ function getTechName(id, lvl) {
         tchNm = {
             id: id,
             lvl: "new",
-            name: `Техпроцесс ${id}`,
+            name: `Техпроцесс ${id - diffOfTechProcess}`,
             operationNames: []
         };
 
@@ -425,7 +427,7 @@ function addNewTechProcess() {
     let id = techNameDropped.length + 1;
     setTechProcess(tech_process_field_drop, {
         name: `Техпроцесс ${id}`,
-        id: id.toString(),
+        id: (Number(id) + diffOfTechProcess).toString(),
         lvl: "new",
         children: []
     });
