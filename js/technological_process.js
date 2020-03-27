@@ -26,47 +26,47 @@ function technologicalProcessInit() {
 }
 
 function downloadTechProcess($container) {
+    // json/tech_process.json
     $.ajax({
         url: 'ajax/get_techproccess',
         type: 'GET',
         success: function (json) {
-            //console.log(json);
+            console.log(json);
             let $field = $("#tech_process_field_drop");
             if (json.techProcess != undefined){
                 if (json.techProcess.length){
                     setAllTechProcess(json);
-                    if (Role === "technologist"){
-                        setDropAreaForTechName($("#tech_process_field_drop"));
-                        $(".techNodesDropArea").each(function () {
-                            setDropAreaForTechNode($(this))
-                        });
-
-                        $(".techFieldsDropArea").each(function () {
-                            setDropAreaForTechFields($(this))
-                        });
-
-                        $(".deleteNodeButtonRM").click(function () {
-                            deleteKnot($(this))
-                        });
-
-                        $("#tech_process_field_add_node_button").click(function () {
-                            addNewTechProcess();
-                        });
-
-                        $container.mousedown(function (event) {
-                            event.preventDefault();
-                            if (event.which === 2 && Role === "technologist") addNewTechProcess();
-                        });
-
-                        $("#tech_process_field_save_button").click(function () {
-                            saveTechProcess();
-                        })
-                    }
-
                     /*$container.find(".techNameDropped").each(function () {
                         $(this).find(".caret").first().trigger("click");
                     });*/
                 }
+            }
+            if (Role === "technologist"){
+                setDropAreaForTechName($("#tech_process_field_drop"));
+                $(".techNodesDropArea").each(function () {
+                    setDropAreaForTechNode($(this))
+                });
+
+                $(".techFieldsDropArea").each(function () {
+                    setDropAreaForTechFields($(this))
+                });
+
+                $(".deleteNodeButtonRM").click(function () {
+                    deleteKnot($(this))
+                });
+
+                $("#tech_process_field_add_node_button").click(function () {
+                    addNewTechProcess();
+                });
+
+                $container.mousedown(function (event) {
+                    event.preventDefault();
+                    if (event.which === 2 && Role === "technologist") addNewTechProcess();
+                });
+
+                $("#tech_process_field_save_button").click(function () {
+                    saveTechProcess();
+                })
             }
 
         }
@@ -483,7 +483,7 @@ function saveTechProcess() {
     });
     console.log(json);
 
-    /*$.ajax(
+    $.ajax(
         {
             url: 'ajax/save_techproccess',
             type: 'POST',
@@ -502,7 +502,7 @@ function saveTechProcess() {
                 console.log(response)
             }
         }
-    );*/
+    );
 }
 
 function setToggler() {
