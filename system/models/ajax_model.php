@@ -46,9 +46,17 @@ class ajax_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
-        array_push($response["active"], array("master" => $_GET["login"], "task" => array()));
+        $response["active"] = array("master" => $_GET["login"], "task" => array());
         foreach($Q as $row){
             array_push($response["active"]["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+        }
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0' and login = :login";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_GET["login"]));
+        $Q = $q->fetchAll();
+        $response["finished"] = array("master" => $_GET["login"], "task" => array());
+        foreach($Q as $row){
+            array_push($response["finished"]["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
         }
         
         return array("response"=>$response);
