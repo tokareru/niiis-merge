@@ -134,13 +134,32 @@ ORDER BY third_id";
             $q->execute();
             $sql = "INSERT INTO TECHPROCESS (id, id_parent, fields, is_new) VALUES ";
             foreach($_POST["techProcess"] as $row){
-                foreach($row["children"] as $child){
-                        foreach($child["fields"] as $item)
+                if(count($row["children"]) > 0){
+                    foreach($row["children"] as $child){
+                        if(count($child["fields"]) > 0){
+                            foreach($child["fields"] as $item)
+                                if ($row["lvl"] == "new"){
+                                    $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '1'),";
+                                }
+                                else{
+                                    $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '0'),";
+                                }
+                        }else{
+                            if ($row["lvl"] == "new"){
+                                $sql .= "(".$child["id"].", ".$row["id"].", null, '1'),";
+                            }
+                            else{
+                                $sql .= "(".$child["id"]." , ".$row["id"].", null , '0'),";
+                            }
+                        }
+                    }
+                }
+                else{
                     if ($row["lvl"] == "new"){
-                        $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '1'),";
+                        $sql .= "(null, ".$row["id"].", null, '1'),";
                     }
                     else{
-                        $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '0'),";
+                        $sql .= "(null , ".$row["id"].", null , '0'),";
                     }
                 }
             }
