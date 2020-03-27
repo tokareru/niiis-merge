@@ -234,6 +234,15 @@ function postDataFromTable(table_block, save_url) {
                     text: `Сохранение таблицы 'Спецификация'`
                 })
             }
+        });
+
+        $.ajax({
+            type: "POST",
+            url: save_url,
+            data: json,
+            success: function (answer) {
+                console.log(answer);
+            }
         })
     }
 
@@ -973,7 +982,7 @@ function setRowsNumber(table_block) {
                 .attr("readonly", "readonly")
                 .removeClass("edit_cell");
         }
-    })
+    });
 
 
     let $secondCol_div = $tbody.find(".editCol").last();

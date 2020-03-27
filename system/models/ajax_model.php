@@ -1,6 +1,74 @@
 <?php
 
 class ajax_model extends model {
+    function save_route(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+//            print_r($_POST);
+            foreach($_POST["task"] as $row){
+                $sql = "INSERT INTO ROUTE (login, role, name, task, master)
+                        VALUES (:login, :role, :name, :task, :master)";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute(array("login" => $row["user"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "master" => $_POST["master"]));  
+            }
+            return array("response" => 200);
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }    
+    }
+    function get_routes_by_type(){
+        $response = array();
+        $response["active"] = array();
+        $response["finished"] = array();
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' ORDER BY task_id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $task_id = -1;
+        $i = -1;
+        foreach($Q as $row){
+            if($task_id != ($row["task_id"]-1)){
+                $task_id = $row["task_id"]-1;
+                $response["active"][++$i] = array(array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+            }
+            else{
+            array_push($response["active"][$i], array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+            }
+        }
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0'";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+
+        foreach($Q as $row){
+            array_push($response["finished"][$row["task_id"]], array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+        }
+        return array("response"=>$response);
+    }
+    function get_routes_by_login(){
+
+        $response = array();
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and login = :login";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_GET["login"]));
+        $Q = $q->fetchAll();
+        $response["active"] = array("master" => $_GET["login"], "task" => array());
+        foreach($Q as $row){
+            array_push($response["active"]["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+        }
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0' and login = :login";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_GET["login"]));
+        $Q = $q->fetchAll();
+        $response["finished"] = array("master" => $_GET["login"], "task" => array());
+        foreach($Q as $row){
+            array_push($response["finished"]["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+        }
+        
+        return array("response"=>$response);
+    }
     function get_progressbar_actions(){
         if($_SERVER["REQUEST_METHOD"]=="GET"){
         $sql = "SELECT * FROM LOGS WHERE login = :login";
@@ -40,24 +108,36 @@ class ajax_model extends model {
            }
            return $result;
         }
-       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.EQUIPMENT, t.TOOLS
-               FROM technologist_info_1_layout f LEFT JOIN
-               technologist_info_2_layout s on f.id = s.id_1_layout LEFT JOIN
-               technologist_info_3_layout t on s.id = t.id_2_layout"; 
+       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.id as third_id, t.FIELDS
+FROM technologist_info_3_layout as t left join
+technologist_info_2_layout as s on s.id = t.id_2_layout left join
+technologist_info_1_layout as f on f.id = t.id_1_layout
+ORDER BY third_id"; 
        $q = sys::$PDO->prepare($sql);
        $q->execute();
        $Q = $q->fetchAll();
-       $name = "t";
-       $result;
+       $name = "";
+       $child_name = "";
+       $result = array();
        $i = -1;
+       $j = 0;
        foreach($Q as $row){
            if($name != $row["name"]){
-               $i++;
+               $j = 0;
                $name = $row["name"];
-               $result[$i] = array("name"=>$name, "lvl"=>1, "id"=>$row["first_id"], "children" => array(array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "tools"=>get_array_from_string($row["tools"]), "equipment" => get_array_from_string($row["equipment"]))));
-               
+               array_push($result,array("name"=>$name, "lvl"=>1, "id"=>$row["first_id"], "children" => array(array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields" => array(array("name" => $row["fields"], "lvl" => 3, "id" => $row["third_id"]))))));
+               $child_name = $row["child_name"];
+               $i++;
            }else{
-               array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "tools"=>array(array("name"=>$row["tools"])), "equipment" => array(array("name"=>$row["equipment"]))));
+               if($child_name != $row["child_name"])
+               {
+                   $child_name = $row["child_name"];
+                   array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
+                   $j++;  
+               }
+               else{
+                   array_push($result[$i]["children"][$j]["fields"], array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]));
+               }      
            }
        }
        return $result;
@@ -67,42 +147,84 @@ class ajax_model extends model {
             $sql = "DELETE FROM TECHPROCESS";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql = "INSERT INTO TECHPROCESS (id, id_parent, is_new) VALUES ";
+            $sql = "INSERT INTO TECHPROCESS (id, id_parent, fields, is_new) VALUES ";
             foreach($_POST["techProcess"] as $row){
-                foreach($row["operationNames"] as $item){
-                    
+                if(count($row["children"]) > 0){
+                    foreach($row["children"] as $child){
+                        if(count($child["fields"]) > 0){
+                            foreach($child["fields"] as $item)
+                                if ($row["lvl"] == "new"){
+                                    $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '1'),";
+                                }
+                                else{
+                                    $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '0'),";
+                                }
+                        }else{
+                            if ($row["lvl"] == "new"){
+                                $sql .= "(".$child["id"].", ".$row["id"].", null, '1'),";
+                            }
+                            else{
+                                $sql .= "(".$child["id"]." , ".$row["id"].", null , '0'),";
+                            }
+                        }
+                    }
+                }
+                else{
                     if ($row["lvl"] == "new"){
-                        $sql .= "(".$item["id"].", ".$row["id"].", '1'),";
+                        $sql .= "(null, ".$row["id"].", null, '1'),";
                     }
                     else{
-                        $sql .= "(".$item["id"].", ".$row["id"].", '0'),";
+                        $sql .= "(null , ".$row["id"].", null , '0'),";
                     }
                 }
             }
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            return array("response"=>"awdwd");
+            return array("response"=>200);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }
     }
     function get_techproccess(){
-            $sql = "SELECT * FROM TECHPROCESS";
+            $sql = "SELECT * FROM TECHPROCESS ORDER BY id_techprocess";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $Q = $q->fetchAll();
             $id = 0;
             $response = array("techProcess" => array());
             $i = -1;
+            $j = -1;
+            $children_id = 0;
             foreach($Q as $row){
                 if($row["id_parent"] != $id){
+                    $j = -1;
                     $id = $row["id_parent"];
-                    array_push($response["techProcess"], array("id"=>$id, "lvl" => ($row["is_new"])? "new" : 1, "operationNames"=>array()));
-                    array_push($response["techProcess"][++$i]["operationNames"], array("id" => $row["id"], "lvl" => 2));
+                    array_push($response["techProcess"], array("id"=>$id, "lvl" => ($row["is_new"])? "new" : 1, "children"=>array()));
+                    ++$i;
+                    if($row["id"] != null){
+                        array_push($response["techProcess"][$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                    }
+                    if($row["fields"] != null){
+                        array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                    }
+                    $children_id = $row["id"];
                 }
                 else{
-                    array_push($response["techProcess"][$i]["operationNames"], array("id" => $row["id"], "lvl" => 2));
+                    if($children_id != $row["id"]){
+                        $children_id = $row["id"];
+                        if($row["id"] != null){
+                            array_push($response["techProcess"][$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                        }
+                        if($row["fields"] != null){
+                            array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        }
+                    }
+                    else{
+                        if($row["fields"] != null){
+                            array_push($response["techProcess"][$i]["children"][$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        }
+                    }
                 }
             }
             return $response;

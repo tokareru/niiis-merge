@@ -42,121 +42,6 @@ function initRouteMap() {
 
     generateTableRow($table, arrProcess);
 
-    $('#tech_process_table').droppable(
-        {
-            tolerance: "touch",
-            drop: function (event, ui) {
-
-                function setCells(obj) {
-                    let text = obj.find(".operationNameField").text();
-                    let instruments = [];
-                    let equipment = [];
-                    obj.find(".operationInstrumentList li span").each(function () {
-                        instruments.push($(this).text())
-                    });
-                    instruments = instruments.join(", ");
-
-                    obj.find(".operationEquipList li span").each(function () {
-                        equipment.push($(this).text())
-                    });
-                    equipment = equipment.join(", ");
-
-                    //console.log(text);
-                    //console.log(instruments);
-                    //console.log(equipment);
-
-                    let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
-                    let delI = (Role === "technologist") ? "fa fa-times" : "";
-                    let tr = '<td><button class="' + delButton + ' bg-white p-0 btn">' +
-                        '<i class="' + delI + '"></i></button></td>';
-                    let $lastTr = $table.find('tr:last');
-                    for (let i = 1; i < 13; i++) {
-                        tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
-                        if (i === 1 || i === 5) {
-                            tr += 'class="tdBorderBlackLeft techProcessCell">';
-                        } else if (i === 3 || i === 12) {
-                            tr += 'class="tdBorderBlackRight">';
-                        } else {
-                            tr += 'class="techProcessCell">';
-                        }
-
-                        if (i === 4) {
-                            tr += text;
-                        }
-                        if (i === 5) {
-                            tr += equipment;
-                        }
-                        if (i === 6) {
-                            tr += instruments;
-                        }
-                        tr += '</td>';
-                    }
-                    $("<tr tech-lvl='" + $(obj).attr("tech-lvl") + "' tech-id='" + $(obj).attr("tech-id") + "'>" + tr + '</tr>').insertBefore($table.find('tr:last'));
-                }
-
-                if ($(ui.draggable).hasClass("techName")) {
-                    //console.log($(ui.draggable).attr("tech-lvl"));
-                    let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
-                    let delI = (Role === "technologist") ? "fa fa-times" : "";
-                    if ($("#technological_process_field").find("tbody tr").length > 6){
-                        $("<tr empty='empty'>" +
-                              "<td><button class='" + delButton + " bg-white p-0 btn'><i class='" + delI + "'></i></button>" +
-                                "</td><td colspan='4'" +
-                                " class='tdBorderBlackLeft'></td><td colspan='3'></td><td colspan='4' class='tdBorderBlackRight'></td>" +
-                                "<td colspan='34'></td><td colspan='12' class='tdBorderBlackLeft'></td><td colspan='12'></td>" +
-                                "<td colspan='6'></td><td colspan='5'></td><td colspan='5'></td><td colspan='5'></td>" +
-                                "<td colspan='5'></td><td colspan='5' class='tdBorderBlackRight'></td></tr>"
-                        ).insertBefore($table.find('tr:last'));
-                    }
-                    let tr = '<td><button class="' + delButton + ' bg-white p-0 btn">' +
-                        '<i class="' + delI + '"></i></button></td>';
-                    let $lastTr = $table.find('tr:last');
-                    let techName = $(ui.draggable).find("span").first().text();
-                    for (let i = 1; i < 13; i++) {
-                        tr += '<td colspan="' + $lastTr.find('td').eq(i).attr('colspan') + '"';
-                        if (i === 1 || i === 5) {
-                            tr += 'class="tdBorderBlackLeft">';
-                        } else if (i === 3 || i === 12) {
-                            tr += 'class="tdBorderBlackRight">';
-                        } else {
-                            tr += 'class="techProcessCell">';
-                        }
-                        if (i === 4) {
-                            tr += techName;
-                        }
-
-                        tr += '</td>';
-                    }
-                    $("<tr tech-lvl='" + $(ui.draggable).attr("tech-lvl") + "' tech-id='" + $(ui.draggable).attr("tech-id") + "'>" + tr + '</tr>').insertBefore($table.find('tr:last'));
-                    $(ui.draggable).find(".operationName").each(function () {
-                        setCells($(this))
-                    });
-
-                    setActionToBar({
-                        id: "addTechNameToTechProcess",
-                        type: "addNew",
-                        field: "Маршрутная карта",
-                        text: `В 'Маршрутную карту' добавлен узел '${techName}'`
-                    });
-
-                } else {
-                    setCells($(ui.draggable));
-
-                    setActionToBar({
-                        id: "addOperationNameToTechProcess",
-                        type: "addNew",
-                        field: "Маршрутная карта",
-                        text: `В 'Маршрутную карту' добавлена операция '${$(ui.draggable).find(".operationNameField").text()}'`
-                    });
-                }
-
-                $table.on('click', '.tech_proc_del_td', function () {
-                    $(this).parents('tr').remove();
-                });
-            }
-        }
-    );
-
     let $tbody_tr = $table.find('tbody tr');
 
     //генерируются надписи
@@ -257,6 +142,7 @@ function initRouteMap() {
             [4, 3, 4, 34, 12, 12, 6, 5, 5, 5, 5, 5], $table, 100);
     }
 
+    // добавить кнопку удаления
     $table.find('tr').each(function (index) {
         let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
         let delI = (Role === "technologist") ? "fa fa-times" : "";
@@ -271,48 +157,40 @@ function initRouteMap() {
     let saveButton = $('#tech_process_save');
     if (Role === "technologist")
         saveButton.show().on('click', function () {
-            saveTechProcessTable($table);
+            if (Round === 3) saveTechProcessTableRound3($table);
+            else saveTechProcessTableRound_1_2($table)
         });
     else saveButton.remove();
 
     // кнопка "добавить новую строку"
-    if (Round !== 3){
-        let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
-        let delI = (Role === "technologist") ? "fa fa-times" : "";
+    if (Role === "technologist"){
         let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
         addNewRowButton.append("<span class='route_map_new_row_button'></span>");
         addNewRowButton.find("span").click(function () {
-            $("#tech_process_table").find("tbody tr").last().before(
-                '<tr>' +
-                '<td><button class="' + delButton + ' bg-white p-0 btn">' +
-                '<i class="' + delI + '"></i></button></td><td colspan="4" class="tdBorderBlackLeft">' +
-                '</td>' +
-                '<td colspan="3" class="techProcessCell"></td>' +
-                '<td colspan="4" class="tdBorderBlackRight"></td>' +
-                '<td colspan="34" class="techProcessCell"><input class="input-group-sm routeMapInputName routeMapInput"></td>' +
-                '<td colspan="12" class="tdBorderBlackLeft techProcessCell"><input class="input-group-sm routeMapInputEquip routeMapInput"></td>' +
-                '<td colspan="12" class="techProcessCell"><input class="input-group-sm routeMapInputTool routeMapInput"></td>' +
-                '<td colspan="6" class="techProcessCell"></td>' +
-                '<td colspan="5" class="techProcessCell"></td>' +
-                '<td colspan="5" class="techProcessCell"></td>' +
-                '<td colspan="5" class="techProcessCell"></td>' +
-                '<td colspan="5" class="techProcessCell"></td>' +
-                '<td colspan="5" class="tdBorderBlackRight"></td>' +
-                '</tr>'
-            )
+            if (Round === 3) setRouteMapRow();
+            else {
+                setTechProcessJsonRounds_1_2( [{}], $table)
+            }
+            setActionToBar({
+                id: "addTechRow",
+                type: "addNew",
+                field: "Маршрутная карта",
+                text: `В 'Маршрутную карту' добавлена новая строка`
+            });
         });
     }
 
 
+    // инициализация
     if (Round === 3){
         if (Role !== "technologist"){
             $.ajax({
-                url: 'ajax/get_technologist_info',
+                url: techGuideURL,
                 type: 'GET',
                 success: function (techJson) {
                     techGuideJson = techJson;
                     $.ajax({
-                        url: 'ajax/get_work_place_tech_process',
+                        url: 'json/route_map.json',
                         type: 'GET',
                         success: function (res) {
                             setTechProcessJson(techGuideJson, res, $table);
@@ -321,8 +199,9 @@ function initRouteMap() {
                 }
             })
         }else {
+            // ajax/get_work_place_tech_process
             $.ajax({
-                url: 'ajax/get_work_place_tech_process',
+                url: 'json/route_map.json',
                 type: 'GET',
                 success: function (res) {
                     setTechProcessJson(techGuideJson, res, $table);
@@ -330,37 +209,160 @@ function initRouteMap() {
             })
         }
     }else {
-        $table.on('click', '.tech_proc_del_td', function () {
-            let $this = $(this);
-            let name = $this.parent().parent().find("td").eq(4).text();
-            $this.parents('tr').remove();
-            setActionToBar({
-                id: "deleteNodeFromRouteMap",
-                type: "delete",
-                field: "Маршрутная карта",
-                text: `Из 'Маршрутной карты' удалён узел '${name}'`
-            });
+        // инициализация на 1,2 раундах
+            // ajax/get_work_place_tech_process
+            $.ajax({
+                url: 'json/route_map_1_2.json',
+                type: 'GET',
+                success: function (res) {
+                    setTechProcessJsonRounds_1_2(res, $table);
+                }
+            })
+        }
+
+    $table.on('click', '.tech_proc_del_td', function () {
+        let $this = $(this);
+        let name;
+        if (Round === 3)
+            name = $this.parent().parent().find("td").eq(4).text();
+        else name = $this.parent().parent().find("td").eq(4).find("input").val();
+        let text = (name === "") ? `Из 'Маршрутной карты' удалён узел` : `Из 'Маршрутной карты' удалён узел '${name}'`;
+        $this.parents('tr').remove();
+        setActionToBar({
+            id: "deleteNodeFromRouteMap",
+            type: "delete",
+            field: "Маршрутная карта",
+            text: text
         });
-        $("#tech_process_table").find("tbody tr").last().find("td span").first().trigger("click");
-    }
+    });
+
+    //$("#tech_process_table").find("tbody tr").last().find("td span").first().trigger("click");
+
+
+    $table.on("click", ".deleteNodeButtonRM", function () {
+        let $this = $(this);
+        let $td = $this.parent().parent();
+        if ($td.hasClass("techProcessCell")){
+            deleteKnot($this);
+            $td.append(`
+                <div style="height: 100%;" tech-lvl="0" tech-id="0"></div>
+            `)
+        }else {
+            deleteKnot($this);
+        }
+    })
 }
 
 function addStyleTd($table, coords, style) {
     $table.find('tr').eq(coords[1]).children().eq(coords[0]).addClass(style);
 }
 
-function saveTechProcessTable($table) {
+function saveTechProcessTableRound_1_2($table) {
     let saveObj = [];
-    $table.find('tr').each(function () {
-        let attrLvl = $(this).attr('tech-lvl');
-        if (attrLvl === undefined) {
-            if ($(this).attr('empty') !== undefined) {
-                saveObj.push({empty: true});
-                return;
-            } else return;
-        }
-        saveObj.push({lvl: attrLvl, id: $(this).attr('tech-id')});
+    let $trs = $table.find('tr.newRouteMapRow');
+    $trs.each(function () {
+        let $tr = $(this);
+        let name = $tr.find("td").eq(4).find("input").val();
+        let eq = $tr.find("td").eq(5).find("input").val();
+        let tools = $tr.find("td").eq(6).find("input").val();
+
+        saveObj.push({
+            name: name,
+            equipment: eq,
+            tools: tools
+        })
+
     });
+
+    console.log(saveObj);
+
+    $.ajax({
+        url: 'ajax/save_work_place_tech_process',
+        type: 'POST',
+        data: {save: saveObj},
+        success: function (res) {
+            console.log(res);
+
+            setActionToBar({
+                id: "saveRouteMapTable",
+                type: "save",
+                field: "Маршрутная карта",
+                text: `Сохранение маршрутной карты'`
+            });
+
+            $.ajax({
+                type: "POST",
+                url: "/start_ajax/db_change_time",
+                data: {
+                    login: login
+                },
+                success: function (answer) {
+                    console.log(answer);
+                }
+            })
+        }
+    })
+
+}
+
+function saveTechProcessTableRound3($table) {
+    let saveObj = [];
+    let $trs = $table.find('tr.newRouteMapRow');
+    if ($trs.length){
+        $trs.each(function () {
+            let $tr = $(this);
+            let row = {
+                name: {
+                    "id": "0",
+                    "lvl": "0"
+                },
+                equipment: [],
+                tools: []
+            };
+
+            // находим название
+            let $name = $tr.find("td").eq(4).find("div");
+            let nameId = $name.first().attr("tech-id");
+            let nameLvl = $name.first().attr("tech-lvl");
+            row.name.lvl = nameLvl;
+            row.name.id = nameId;
+            //console.log(name, nameId, nameLvl)
+
+            // находим оборудование
+            let $eq = $tr.find("td").eq(5).find("ul");
+            let equipment = [];
+            let $eqLi = $eq.find("li");
+            if ($eqLi.length){
+                $eqLi.each(function () {
+                    let $this = $(this);
+                    equipment.push({
+                        id: $this.attr("tech-id"),
+                        lvl: $this.attr("tech-lvl")
+                    })
+                })
+            }
+            row.equipment = equipment;
+            //console.log(equipment);
+
+            // находим инструменты
+            let $tool = $tr.find("td").eq(6).find("ul");
+            let tools = [];
+            let $toolsLi = $tool.find("li");
+            if ($toolsLi.length){
+                $toolsLi.each(function () {
+                    let $this = $(this);
+                    tools.push({
+                        id: $this.attr("tech-id"),
+                        lvl: $this.attr("tech-lvl")
+                    })
+                })
+            }
+            row.tools = tools;
+            //console.log(tools);
+            saveObj.push(row);
+
+        });
+    }
     console.log(saveObj);
     $.ajax({
         url: 'ajax/save_work_place_tech_process',
@@ -390,36 +392,354 @@ function saveTechProcessTable($table) {
     })
 }
 
-function setTechProcessJson(json, res, $table) {
-    let $lastTr = $table.find('tr:last');
-    for (let lvl in res) {
-        let level = res[lvl].lvl;
-        let idProc = res[lvl].id;
-        //console.log(`${level} ${idProc}`);
-        let proc = findProcInJson(json, level, idProc);
-        let attr = '';
-        if (proc !== undefined) {
-            attr += `tech-lvl="${level}" tech-id="${idProc}"`;
-        } else {
-            attr += 'empty="empty"'
-        }
-        $(`<tr ${attr}>` + madeTr(proc, $lastTr) + '</tr>').insertBefore($lastTr);
-    }
+function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools: []}) {
+    let $tbody = $("#tech_process_table tbody");
+    let $lastTr = $tbody.find('tr:last');
+    let name = data.name;
+    let equipment = data.equipment;
+    let tools = data.tools;
 
-    $table.on('click', '.tech_proc_del_td', function () {
+    let nameStr = "";
+    if (name.lvl == "0")
+        nameStr = `<div tech-id="0" tech-lvl="0" style="height: 100%;"></div>`;
+    else nameStr = combineTechProcessCell(name);
+
+    let equipmentStr = "";
+    if (equipment.length)
+        equipment.forEach(function (eq) {
+            equipmentStr += combineTechProcessCellEquipment(getTechField(eq.id, eq.lvl));
+        });
+
+    let toolsStr = "";
+    if (tools.length)
+        tools.forEach(function (tool) {
+            toolsStr += combineTechProcessCellTools(getTechField(tool.id, tool.lvl));
+        });
+
+    let deleteButton = (Role === "technologist") ? `<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>`: "";
+    $(`
+        <tr class="newRouteMapRow">
+            <td>${deleteButton}</td>
+            <td colspan="4" class="tdBorderBlackLeft"></td>
+            <td colspan="3" class=""></td>
+            <td colspan="4" class="tdBorderBlackRight"></td>
+            <td colspan="34" class="techProcessCell">${nameStr}</td>
+            <td colspan="12" class="tdBorderBlackLeft techProcessCellEquipment">
+               <ul class="horizontal-full mb-1 mt-1">
+                    ${equipmentStr}
+                </ul> 
+            </td>
+            <td colspan="12" class="techProcessCellTools">
+                <ul class="horizontal-full mb-1 mt-1">
+                    ${toolsStr}
+                </ul> 
+            </td>
+            <td colspan="6" class=""></td>
+            <td colspan="5" class=""></td>
+            <td colspan="5" class=""></td>
+            <td colspan="5" class=""></td>
+            <td colspan="5" class=""></td>
+            <td colspan="5" class="tdBorderBlackRight"></td>
+        </tr>
+    `).insertBefore($lastTr);
+
+    let $trs = $tbody.find("tr");
+    let new_tr = $trs.eq($trs.length - 2);
+    new_tr.find('.techProcessCell').droppable(
+        {
+            tolerance: "pointer",
+            accept: ".instruments_list_li, .techName",
+            greedy: true,
+            drop: function (event, ui) {
+                let $draggable = $(ui.draggable);
+                let $this = $(this);
+
+                let $draggable_lvl = $draggable.attr("tech-lvl");
+                let $draggable_id = $draggable.attr("tech-id");
+                let $draggable_name = $draggable.find("span").first().text();
+
+                $this.empty();
+                if ($draggable_lvl == "3"){
+                    $this.append(
+                        combineTechProcessCell({
+                            name: $draggable_name,
+                            id: $draggable_id,
+                            lvl: $draggable_lvl
+                        })
+                    );
+                    setActionToBar({
+                        id: "addTechField",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлено название '${$draggable_name}'`
+                    });
+                }/*else if ($draggable_lvl == "2"){
+                    $this.append(
+                        combineTechProcessCell({
+                            name: $draggable_name,
+                            id: $draggable_id,
+                            lvl: $draggable_lvl
+                        })
+                    )
+                }*/
+                else if ($draggable_lvl == "1"){
+                    $this.append(
+                        combineTechProcessCell({
+                            name: $draggable_name,
+                            id: $draggable_id,
+                            lvl: $draggable_lvl
+                        })
+                    );
+                    setActionToBar({
+                        id: "addTechProcess",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлено название '${$draggable_name}'`
+                    });
+                }
+            }
+        }
+    );
+
+    new_tr.find(".techProcessCellEquipment ul").droppable(
+        {
+            tolerance: "pointer",
+            accept: ".instruments_list_li, .operationName",
+            greedy: true,
+            drop: function (event, ui) {
+                let $draggable = $(ui.draggable);
+                let $this = $(this);
+
+                let $draggable_lvl = $draggable.attr("tech-lvl");
+                let $draggable_id = $draggable.attr("tech-id");
+                let $draggable_name = $draggable.find("span").first().text();
+
+                if ($draggable_lvl == "3"){
+                    $this.append(
+                        combineTechProcessCellEquipment({
+                            name: $draggable_name,
+                            id: $draggable_id,
+                            lvl: $draggable_lvl
+                        })
+                    );
+                    setActionToBar({
+                        id: "addTechField",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлено оборудование '${$draggable_name}'`
+                    });
+                }else if ($draggable_lvl == "2"){
+                    let fieldsLi = $draggable.find(".instruments_list_li");
+                    if (fieldsLi.length)
+                        fieldsLi.each(function () {
+                            let $li = $(this);
+                            let liName = $li.find("span").first().text();
+                            $this.append(
+                                combineTechProcessCellTools({
+                                    name: liName,
+                                    id: $li.attr("tech-id"),
+                                    lvl: $li.attr("tech-lvl")
+                                })
+                            );
+                            setActionToBar({
+                                id: "addTechField",
+                                type: "addNew",
+                                field: "Маршрутная карта",
+                                text: `В 'Маршрутную карту' добавлено оборудование '${liName}'`
+                            });
+                        });
+                }
+            }
+        }
+    );
+
+    new_tr.find(".techProcessCellTools ul").droppable(
+        {
+            tolerance: "pointer",
+            accept: ".instruments_list_li, .operationName",
+            greedy: true,
+            drop: function (event, ui) {
+                let $draggable = $(ui.draggable);
+                let $this = $(this);
+
+                let $draggable_lvl = $draggable.attr("tech-lvl");
+                let $draggable_id = $draggable.attr("tech-id");
+                let $draggable_name = $draggable.find("span").first().text();
+
+                if ($draggable_lvl == "3"){
+                    $this.append(
+                        combineTechProcessCellTools({
+                            name: $draggable_name,
+                            id: $draggable_id,
+                            lvl: $draggable_lvl
+                        })
+                    );
+                    setActionToBar({
+                        id: "addTechField",
+                        type: "addNew",
+                        field: "Маршрутная карта",
+                        text: `В 'Маршрутную карту' добавлен инструмент '${$draggable_name}'`
+                    });
+                }else if ($draggable_lvl == "2"){
+                    let fieldsLi = $draggable.find(".instruments_list_li");
+                    if (fieldsLi.length)
+                        fieldsLi.each(function () {
+                            let $li = $(this);
+                            let liName = $li.find("span").first().text();
+                            $this.append(
+                                combineTechProcessCellTools({
+                                    name: liName,
+                                    id: $li.attr("tech-id"),
+                                    lvl: $li.attr("tech-lvl")
+                                })
+                            );
+                            setActionToBar({
+                                id: "addTechField",
+                                type: "addNew",
+                                field: "Маршрутная карта",
+                                text: `В 'Маршрутную карту' добавлен инструмент '${liName}'`
+                            });
+                        });
+                }
+            }
+        }
+    );
+
+}
+
+function combineTechProcessCell(data = {name: "", lvl: "", id: ""}) {
+    let deleteButton = (Role === "technologist") ? `<span class="deleteNodeButtonRM"></span>` : "";
+    return `
+        <div style="height: 100%;" tech-id="${data.id}" tech-lvl="${data.lvl}">
+           <span>${data.name}</span>
+            ${deleteButton}
+        </div>
+    `
+}
+
+function combineTechProcessCellEquipment(data = {name: "", lvl: "", id: ""}) {
+    let deleteButton = (Role === "technologist") ? `<span class="deleteNodeButtonRM"></span>` : "";
+    return `
+            <li tech-id='${data.id}' tech-lvl="${data.lvl}">
+                <span class="mr-2">${data.name}</span>${deleteButton}
+            </li>
+        `
+}
+
+function combineTechProcessCellTools(data = {name: "", lvl: "", id: ""}) {
+    let deleteButton = (Role === "technologist") ? `<span class="deleteNodeButtonRM"></span>` : "";
+    return `
+            <li tech-id='${data.id}' tech-lvl="${data.lvl}">
+                <span class="mr-2">${data.name}</span>${deleteButton}
+            </li>
+        `
+}
+
+function setTechProcessJson(json, res, $table) {
+    //console.log(res);
+    if (res.length)
+        res.forEach(function (_row) {
+            // находим название
+            let name = "";
+            if (_row.name.lvl == "1"){
+                name = getTechName(_row.name.id, _row.name.lvl);
+            }else if (_row.name.lvl == "2"){
+                name = getTechNode(_row.name.id, _row.name.lvl);
+
+            }else if (_row.name.lvl == "3"){
+                name = getTechField(_row.name.id, _row.name.lvl);
+            }else {
+                name = {name: "", lvl: "0", id: "0"}
+            }
+
+            // находим оборудование
+            let equipment = [];
+            if (_row.equipment.length){
+                _row.equipment.forEach(function (eq) {
+                    equipment.push(getTechField(eq.id, eq.lvl));
+                });
+            }
+
+            // находим инструменты
+            let tools = [];
+            if (_row.tools.length){
+                _row.tools.forEach(function (tool) {
+                    tools.push(getTechField(tool.id, tool.lvl));
+                })
+            }
+
+            setRouteMapRow({
+                name: name,
+                equipment: equipment,
+                tools: tools
+            })
+        });
+
+    /*$table.on('click', '.tech_proc_del_td', function () {
+        alert("qw")
         let $this = $(this);
         let name = $this.parent().parent().find("td").eq(4).text();
+        let text = (name === "") ? `Из 'Маршрутной карты' удалён узел` : `Из 'Маршрутной карты' удалён узел '${name}'`;
         $this.parents('tr').remove();
         setActionToBar({
             id: "deleteNodeFromRouteMap",
             type: "delete",
             field: "Маршрутная карта",
-            text: `Из 'Маршрутной карты' удалён узел '${name}'`
+            text: text
         });
-    });
+    });*/
 }
 
-function findProcInJson(json, lvl, id) {
+function setTechProcessJsonRounds_1_2(res, $table) {
+    //console.log(res);
+    let $tbody = $("#tech_process_table tbody");
+    let $lastTr = $tbody.find('tr:last');
+    if (res.length){
+        res.forEach(function (row) {
+            $(combineRowFor_1_2Rounds({name: row.name, equipment: row.equipment, tools: row.tools})).insertBefore($lastTr);
+        })
+    }
+}
+
+
+function combineRowFor_1_2Rounds(data = {name: "", equipment: "", tools: ""}) {
+    let deleteButton = (Role === "technologist") ? `<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>`: "";
+    if (data.name === null || data.name === undefined)
+        data.name = "";
+    if (data.equipment === null || data.equipment === undefined)
+        data.equipment = "";
+    if (data.tools === null || data.tools === undefined)
+        data.tools = "";
+    let disabled = (Role !== "technologist") ? "disabled" : "";
+
+    return `
+        <tr class="newRouteMapRow">
+            <td>${deleteButton}</td>
+            <td colspan="4" class="tdBorderBlackLeft"></td>
+            <td colspan="3" class=""></td>
+            <td colspan="4" class="tdBorderBlackRight"></td>
+            <td colspan="34" class="">
+                <input class="border-0 outline-none" style="font-size: 1.5em;" ${disabled} value="${data.name}">
+            </td>
+            <td colspan="12" class="tdBorderBlackLeft">
+               <input class="border-0 outline-none" style="font-size: 1.5em;" ${disabled} value="${data.equipment}">
+            </td>
+            <td colspan="12" class="">
+                <input class="border-0 outline-none" style="font-size: 1.5em;" ${disabled} value="${data.tools}">
+            </td>
+            <td colspan="6" class=""></td>
+            <td colspan="5" class=""></td>
+            <td colspan="5" class=""></td>
+            <td colspan="5" class=""></td>
+            <td colspan="5" class=""></td>
+            <td colspan="5" class="tdBorderBlackRight"></td>
+        </tr>
+    `
+}
+
+
+
+/*function findProcInJson(json, lvl, id) {
     for (let proc in json) {
         if (json[proc].id === id && json[proc].lvl === lvl) {
             return {name: json[proc].name};
@@ -448,8 +768,9 @@ function findProcInJson(json, lvl, id) {
             }
         }
     }
-}
+}*/
 
+/*
 function madeTr(vals, $lastTr) {
     let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
     let delI = (Role === "technologist") ? "fa fa-times" : "";
@@ -483,3 +804,4 @@ function madeTr(vals, $lastTr) {
 
     return tr;
 }
+*/

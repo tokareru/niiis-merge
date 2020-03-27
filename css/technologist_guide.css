@@ -10,8 +10,14 @@
 }
 
 .instruments_list_li{
-    list-style: circle;
+    cursor: pointer;
+    list-style: disc;
     margin-left: 2rem !important;
+}
+
+.instruments_list_li:hover{
+    color: white !important;
+    background-color: #515356 !important;
 }
 
 #technologist_guide_field .lastChild{
@@ -19,12 +25,26 @@
     box-shadow: none !important;
     color: #606469;
     background-color: transparent;
-    list-style-type: none;
 }
 
 #technologist_guide_field .caret:hover{
     color: white !important;
     background-color: #515356;
+}
+
+@media (max-width: 1400px) and (min-width: 1200px){
+    #technologist_guide_field .caret{
+        font: normal normal normal 0.95em/1 FontAwesome;
+    }
+
+    .left-side{
+        min-width: 200px;
+    }
+
+    #technologist_guide_field .lastChild{
+        font-size: 0.85em;
+    }
+
 }
 
 .detailChildren:hover{
@@ -38,6 +58,15 @@
 
 #technologist_guide_accordion {
     padding: 2% 4% 6% 2% !important;
+}
+
+#collapse-technologist_guide_field{
+    max-height: 45rem;
+    overflow-y: auto;
+}
+
+#collapse-technologist_guide_field::-webkit-scrollbar {
+    width: 0px;
 }
 
 .tg_header {

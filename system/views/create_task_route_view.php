@@ -14,7 +14,7 @@
 <body>
 <div id='create_task_route-side' >
 
-	<div class="main_all_create_task">
+	<!--<div class="main_all_create_task">
 		<div class='slider_button_create border border-info bg-dark'>
             <div class='font-weight-bold transformed'>Создание маршрута заданий</div>
             </div>
@@ -49,7 +49,7 @@
 							   value="Отправить" class="btn bg-dark text-white shadow-none">
 					</div>
 			</div>
-	</div>
+	</div>-->
 
 </div>
 

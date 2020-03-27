@@ -1,8 +1,6 @@
-<?php sys::inc_no_cache('css', 'css/bootstrap.css');
-      sys::inc_no_cache('css', 'css/font-awesome.css');
-?>
-
-<?php sys::inc_no_cache('javascript', 'js/admin/change_groups_users.js');
+<?php 
+    sys::inc_no_cache('css', 'css/font-awesome.css');
+    sys::inc_no_cache('javascript', 'js/admin/change_groups_users.js');
     sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
     sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');
     sys::inc_no_cache('javascript', 'js/libraries/bootstrap.min.js');

@@ -31,12 +31,12 @@
 
 .main_all_create_task {
 
-    z-index: 30;
+  /*  z-index: 30;
     position: fixed;
     right: -583.4px;
     width: 680px;
     max-height: 400px;
-    top: 32%;
+    top: 32%;*/
 }
 
 .slider_button_create {
@@ -113,4 +113,37 @@
 
 .ctr_input_hidden {
     display: none;
+}
+
+#create_task_route_mainModel{
+    margin-left: -34%!important;
+    width: 900px!important;
+}
+
+#create_task_route_RouteList{
+    border: black solid 3px;
+    width: 850px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+#create_task_route_RouteListAdd{
+    text-align: center;
+    border-right: black solid 3px;
+    cursor: pointer;
+}
+
+#create_task_route_tbody td{
+    border: black solid 3px;
+    text-align: center;
+}
+
+.create_task_route_delCol{
+ cursor: pointer;
+}
+
+.tasks_routes_routeTable{
+    width: 600px;
+    max-width: 600px;
+    min-width: 600px;
 }

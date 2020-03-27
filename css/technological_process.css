@@ -50,6 +50,10 @@ ul, #myUL {
     margin-bottom: -3px;
 }
 
+.techField{
+    list-style: disc;
+}
+
 .caret:hover{
     color: black;
 }
@@ -57,6 +61,21 @@ ul, #myUL {
 #esi_branch_body .caret:hover{
     color: white;
     background-color: #515356;
+}
+
+#esi_branch_body_header_span:hover{
+    color: white !important;
+    background-color: #515356 !important;
+}
+
+.techProcessCellEquipment ul{
+    font-size: 1.3em;
+    min-height: 40px;
+}
+
+.techProcessCellTools ul{
+    font-size: 1.3em;
+    min-height: 40px;
 }
 
 #esi_branch_body .active li{
@@ -83,6 +102,14 @@ ul, #myUL {
     vertical-align: middle;
     height: 50px;
     min-height: 100px!important;
+}
+
+#tech_process_table input{
+    background-color: #f8f9fa;
+    font-style: italic;
+    font-weight: 500;
+    width: 100%;
+    height: 100%
 }
 
 .rotateText90 >*{

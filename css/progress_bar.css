@@ -20,6 +20,12 @@
         list-style: none;
         width: 100% !important;
     }
+
+    #progress-bar-body{
+        max-height: 30rem;
+        min-height: 12rem;
+        overflow-y: auto;
+     }
 }
 
 @media (min-width: 992px) {

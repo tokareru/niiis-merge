@@ -64,6 +64,7 @@ function esiSetBranchesNestedFunc() {
             this.classList.toggle("caret-down");
         });
     }
+    $("#esi_branch_body_header_span").trigger("click");
 }
 
 function createNodes(children) {
@@ -90,12 +91,6 @@ function createNodes(children) {
             "<div>Обозначение:</div>" +
             "</td>" +
             "<td>" + "<input " + isDisabled + " value='" + child.description + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
-            "</tr>" +
-            "<tr>" +
-            "<td>" +
-            "<div>Позиция:</div>" +
-            "</td>" +
-            "<td>" + "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
             "</tr>" +
             "<tr>" +
             "<td>" +

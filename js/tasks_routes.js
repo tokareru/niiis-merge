@@ -1,4 +1,4 @@
-function initTasksRoutes() {
+async function initTasksRoutes() {
     /*$.ajax({
         type: "GET",
         url: "json/tasks_routes.json",
@@ -38,9 +38,32 @@ function initTasksRoutes() {
         }
     })*/
 
+    let data;
+    await getRoutesFromDB().then(res => {
+        data = res;
+    });
     tasks_routes_AddEvent('task_routes_tree');
-    tasksRoutesMadeRoutes('task_routes_active_routes', 5);
-    tasksRoutesMadeRoutes('task_routes_ended_routes', 5);
+    tasksRoutesMadeRoutes('task_routes_active_routes', data.response.active);
+    tasksRoutesMadeRoutes('task_routes_ended_routes', data.response.finished);
+    addTaskToTable();
+
+    $('#create_task_route_clearBtn').on('click', function () {
+        $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
+    });
+    $('#create_task_route_saveBtn').on('click', function () {
+        addTaskToDB();
+    });
+
+    $.ajax({
+        type: 'POST',
+        url: 'ajax/get_routes_by_login',
+        data: {login: 'productionmaster'},
+        success: function (res) {
+            console.log("test get_routes_by_login");
+            console.log(res);
+        }
+    })
+
 }
 
 function tasks_routes_AddEvent(id) {
@@ -54,29 +77,11 @@ function tasks_routes_AddEvent(id) {
     }
 }
 
-function tasksRoutesMadeRoutes(id, count) {
+function tasksRoutesMadeRoutes(id, data) {
     let $routes = $(`#${id}`);
-    let date = new Date();
-    for (let i = 0; i < count; i++) {
-        $routes.append(`<li>${makeRoute({
-            name: `Маршрут ${i + 1}`, info: generateInfoForRoute(
-                {
-                    name: `Маршрут ${i + 1}`,
-                    type: 'Тестовый тип',
-                    exist: id === 'task_routes_active_routes' ? 'Активный' : 'Завершенный',
-                    inits: 'The Man Who Sold The World',
-                    start: date.toDateString(),
-                    end: id === 'task_routes_active_routes' ? '-' : date.toDateString(),
-                    table: {
-                        number: i + 1,
-                        type: 'Тестовый вид',
-                        exist: id === 'task_routes_active_routes' ? 'Активный' : 'Завершенный',
-                        worker: currentName,
-                        inits: 'The Man Who Sold The World'
-                    }
-                }
-            )
-        })}</li>`);
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+        $routes.append(generateTableForRoutes(data[i]));
     }
     tasks_routes_AddEvent(id);
 }
@@ -109,26 +114,31 @@ function generateInfoForRoute(infos) {
 }
 
 function generateTableForRoutes(data) {
-    return '<table class="table table-bordered">' +
+    let table = '';
+    let tr = '';
+    data.forEach(function (value, index) {
+        let task = value.task;
+         tr += '<tr>' +
+            `<td>${index + 1}</td>` +
+            `<td>${task.role}</td>` +
+            `<td>${task.name}</td>` +
+            `<td>${task.task}</td>` +
+            '</tr>';
+    });
+    table = '<table class="table table-bordered tasks_routes_routeTable">' +
         '<thead class="thead-light">' +
         '<tr>' +
-        '<th>Порядковый номер задания</th>' +
-        '<th>Вид задания</th>' +
-        '<th>Состояние задания</th>' +
-        '<th>Исполнитель</th>' +
-        '<th>Инициатор</th>' +
+        '<th>№</th>' +
+        '<th>Должность</th>' +
+        '<th>Пользователь</th>' +
+        '<th>Задание</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>' +
-        '<tr>' +
-        `<td>${data.number}</td>` +
-        `<td>${data.type}</td>` +
-        `<td>${data.exist}</td>` +
-        `<td>${data.worker}</td>` +
-        `<td>${data.inits}</td>` +
-        '</tr>' +
+        tr +
         '</tbody>' +
         '</table>';
+    return table;
 }
 
 function setTaskRoutes(json_list, type, accord_id) {
@@ -221,4 +231,107 @@ function delZeroCol(table_block) {
     let $thead = $(table_block + '.table_edit thead');
     $thead.find('th').eq($number).remove();
     $thead.find('th').eq($number).remove();
+}
+
+function addTaskToTable() {
+
+    let loginLength = getLoginNames().length;
+    let UsersRoles = getLoginNames('role');
+    let UsersNames = getLoginNames('short_name');
+    let UsersLogins = getLoginNames();
+
+    let option = '<option disabled selected value>Выберите работника...</option>';
+
+    UsersNames.forEach(function (value, index) {
+        option += `<option task-user-name-id="${index}">${value}</option>`;
+    });
+
+    $('#create_task_route_RouteListAdd').on('click', function () {
+        let route =
+            '<td style="width: 25px; max-width: 25px; min-width: 25px" class="create_task_route_delCol text-dark">' +
+            '<i class="fa fa-times"></i></td>' +
+            '<td style="width: 36px; max-width: 36px; min-width: 36px" class=""></td>' +
+            '<td class="create_task_route_selectSpec" style="width: 210px; max-width: 210px; min-width: 210px"></td>' +
+            '<td style="width: 200px; max-width: 200px; min-width: 200px">' +
+            '<select class="create_task_route_selectNames form-control form-control-sm outline-none shadow-none">' +
+            option +
+            '</select>' +
+            '</td>' +
+            '<td style="width: 195px; max-width: 195px; min-width: 195px">' +
+            '<select class="form-control form-control-sm outline-none shadow-none create_task_route_task">' +
+            '<option>Согласовать</option>' +
+            '<option>Утвердить</option>' +
+            '<option>Выполнить</option>' +
+            '</select>' +
+            '</td>' +
+            '<td style="width: 200px; max-width: 200px; min-width: 200px">' +
+            '<textarea class="form-control border-dark" rows="2"></textarea>' +
+            '</td>';
+        $('#create_task_route_RouteListAddTr').before(`<tr>${route}</tr>`);
+        $('.create_task_route_selectNames').on('change', function () {
+            let id = $(this).find('option:selected').attr('task-user-name-id');
+            $(this).parents('tr').find('.create_task_route_selectSpec').text(UsersRoles[id]);
+            $(this).parents('tr').data({user: UsersLogins[id]});
+            $(this).parents('tr').removeClass('bg-danger');
+        });
+        recountListId();
+        $('.create_task_route_delCol').on('click', function () {
+            $(this).parents('tr').remove();
+        });
+    });
+}
+
+function recountListId() {
+    $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').each(function (index) {
+        $(this).find('.create_task_route_listId').text(index + 1);
+    });
+}
+
+function serializeCreateTaskRoute() {
+    let data = [];
+    let ret = false;
+    $('#create_task_route_RouteList tbody').find('tr:not(#create_task_route_RouteListAddTr)').each(function () {
+        let login = $(this).data('user');
+        if (login === undefined) {
+            $(this).addClass('bg-danger');
+            ret = true;
+        }
+        data.push({
+            user: $(this).data('user'),
+            role: $(this).find('.create_task_route_selectSpec').text(),
+            name: $(this).find('.create_task_route_selectNames option:selected').text(),
+            task: $(this).find('.create_task_route_task option:selected').text()
+        })
+    });
+    if (ret) {
+        return;
+    }
+    console.log(data);
+    return data;
+}
+
+function addTaskToDB() {
+    let task = serializeCreateTaskRoute();
+    if (task === undefined || task.length === 0)
+        return;
+    $.ajax({
+        type: 'POST',
+        url: 'ajax/save_route',
+        data: {task: task, master: login},
+        success: function (res) {
+            console.log(res);
+        }
+    })
+}
+
+async function getRoutesFromDB() {
+    let data;
+    await $.ajax({
+        type: 'GET',
+        url: 'ajax/get_routes_by_type',
+        success: function (res) {
+            data = res;
+        }
+    });
+    return data;
 }

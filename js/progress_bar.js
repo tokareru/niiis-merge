@@ -39,7 +39,7 @@ function setActionBar(data) {
        id: "signIn",
        type: "signIn",
        field: "Кабинет",
-       text: "Вход в систему"
+       text: `Вход в систему. Раунд: ${Round}`
     });
 
     $(".previousAction").last().addClass("mr-2");

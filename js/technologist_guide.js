@@ -1,8 +1,14 @@
 function initTechnologistGuide() {
-    getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
+    //getJsonByURL("ajax/get_technologist_info", setTechnologistGuide, {})
+    getJsonByURL(techGuideURL, setTechnologistGuide, {})
+    /*getJsonByURL("ajax/get_technologist_info", function (json) {
+        console.log(json)
+    }, {})*/
 }
 
 let techGuideJson;
+// ajax/get_technologist_info
+const techGuideURL = "ajax/get_technologist_info";
 
 function setTechnologistGuide(json, add_data) {
     techGuideJson = json;
@@ -16,10 +22,10 @@ function setTechnologistGuide(json, add_data) {
 
     json.forEach(function (child) {
         techs += createTechGuideNodes(child);
-    })
+    });
 
     $("#technologist_guide_accordion").append(
-        "<ul class='col-12 pl-0'>" +
+        "<ul class='col-12 pl-0 pr-0'>" +
             techs +
         "</ul>"
     );
@@ -40,6 +46,7 @@ function setTechnologistGuide(json, add_data) {
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
             let $helper =$ (ui.helper);
+            $helper.find("ul").hide();
             $helper.find("span").first().css("color", "black !important");
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
@@ -59,6 +66,17 @@ function setTechnologistGuide(json, add_data) {
             $helper.find("ul").css("background-color", "#dbf4ff");
         }
     });
+
+    $(".instruments_list_li").draggable({
+        helper: 'clone',
+        appendTo: ".tech_process_table",
+        drag: function (event, ui) {
+            let $helper =$ (ui.helper);
+            $helper.css("list-style-type", "none");
+        }
+    });
+
+
     field.trigger("endOfInitialization");
 }
 
@@ -66,63 +84,39 @@ function setTechnologistGuide(json, add_data) {
 function createTechGuideNodes(tech) {
     let node = '';
     let isDisabled = "disabled";
-    //console.log(tech);
 
     let inp = '';
+    console.log(tech.children.length)
+    if (tech.children.length){
+        tech.children.forEach(function (child, i) {
+            //console.log(child);
 
-    tech.children.forEach(function (child, i) {
-        //console.log(child);
-        let equip = '';
-        child.equipment.forEach(function (eq) {
-            equip +=
-                "<li class='lastChild instruments_list_li'>" +
-                "<span>" + eq.name + "</span>" +
-                "</li>";
-        });
-
-        let instr = '';
-        child.tools.forEach(function (ins) {
-            instr +=
-                "<li class='lastChild instruments_list_li'>" +
+            let fields = '';
+            child.fields.forEach(function (ins) {
+                fields +=
+                    "<li tech-lvl='" + ins.lvl + "' tech-id='" + ins.id + "' class='lastChild instruments_list_li'>" +
                     "<span>" + ins.name + "</span>" +
-                "</li>";
+                    "</li>";
+            });
+
+            inp +=
+                "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
+                "<span class='caret'>" + child.name + "</span>" +
+                "<ul class='nested pl-3 operationNameUl'>" +
+                fields +
+                "</ul>" +
+                "</il>";
         });
 
-        inp +=
-            "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
-                "<span class='caret'>" + (i + 1).toString() + "." + child.name + "</span>" +
-                "<ul class='nested pl-3'>" +
-                    "<li>" +
-                        "<span class='caret '>Название</span>" +
-                        "<ul class='nested pl-2'>" +
-                            "<li class='lastChild instruments_list_li'>" +
-                                "<span class='operationNameField'>" + child.name + "</span>" +
-                            "</li>" +
-                        "</ul>" +
-                    "</li>" +
-                    "<li>" +
-                        "<span class='caret'>Оборудование</span>" +
-                        "<ul class='nested pl-2 operationEquipList'>" +
-                            equip +
-                        "</ul>" +
-                    "</li>" +
-                    "<li>" +
-                        "<span class='caret'>Инструменты</span>" +
-                        "<ul class='nested pl-2 operationInstrumentList'>" +
-                            instr +
-                        "</ul>" +
-                    "</li>" +
-                "</ul>" +
-            "</il>";
-    });
-
-    node =
-        "<li tech-lvl='" + tech.lvl + "' tech-id='" + tech.id + "' class='techName'>" +
+        node =
+            "<li tech-lvl='" + tech.lvl + "' tech-id='" + tech.id + "' class='techName'>" +
             "<span class='caret detailChildren'>" + tech.name + "</span>" +
             "<ul class='nested pl-3'>" +
-                inp +
+            inp +
             "</ul>" +
-        "</li>";
+            "</li>";
+    }
+
 
     return node;
 }

@@ -23,8 +23,11 @@
         <div id="esi_field" class='bg-light border border-info'>
             <div class='spec_header' style="text-align: center;"><span>Электронный состав изделия</span></div>
             <div class="esi_branch_body">
-                <ul id="esi_branch_body" class="bg-light col-12">
-                </ul>
+                <li style="list-style: none">
+                    <span class="caret" id="esi_branch_body_header_span">Прибор АБР</span>
+                    <ul id="esi_branch_body" class="bg-light col-12 nested">
+                    </ul>
+                </li>
             </div>
         </div>
     </div>
