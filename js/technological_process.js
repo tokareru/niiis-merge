@@ -36,38 +36,37 @@ function downloadTechProcess($container) {
             if (json.techProcess != undefined){
                 if (json.techProcess.length){
                     setAllTechProcess(json);
-                    if (Role === "technologist"){
-                        setDropAreaForTechName($("#tech_process_field_drop"));
-                        $(".techNodesDropArea").each(function () {
-                            setDropAreaForTechNode($(this))
-                        });
-
-                        $(".techFieldsDropArea").each(function () {
-                            setDropAreaForTechFields($(this))
-                        });
-
-                        $(".deleteNodeButtonRM").click(function () {
-                            deleteKnot($(this))
-                        });
-
-                        $("#tech_process_field_add_node_button").click(function () {
-                            addNewTechProcess();
-                        });
-
-                        $container.mousedown(function (event) {
-                            event.preventDefault();
-                            if (event.which === 2 && Role === "technologist") addNewTechProcess();
-                        });
-
-                        $("#tech_process_field_save_button").click(function () {
-                            saveTechProcess();
-                        })
-                    }
-
                     /*$container.find(".techNameDropped").each(function () {
                         $(this).find(".caret").first().trigger("click");
                     });*/
                 }
+            }
+            if (Role === "technologist"){
+                setDropAreaForTechName($("#tech_process_field_drop"));
+                $(".techNodesDropArea").each(function () {
+                    setDropAreaForTechNode($(this))
+                });
+
+                $(".techFieldsDropArea").each(function () {
+                    setDropAreaForTechFields($(this))
+                });
+
+                $(".deleteNodeButtonRM").click(function () {
+                    deleteKnot($(this))
+                });
+
+                $("#tech_process_field_add_node_button").click(function () {
+                    addNewTechProcess();
+                });
+
+                $container.mousedown(function (event) {
+                    event.preventDefault();
+                    if (event.which === 2 && Role === "technologist") addNewTechProcess();
+                });
+
+                $("#tech_process_field_save_button").click(function () {
+                    saveTechProcess();
+                })
             }
 
         }
