@@ -1,111 +1,261 @@
-<?php sys::inc_no_cache('css', 'css/bootstrap.css');
-?>
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-    <h1 class="h2"><?php echo 'Справочник технолога' ?></h1>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script>
+  /* $( function() {
+    $( "#tabs" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix" );
+    $( "#tabs li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+  } ); */
+  $( function() {
+    $( "#tabs" ).tabs({
+      event: "mouseover"
+    });
+
+	$( "#tabs-1" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix");
+	$( "#tabs-1 li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+	$( "#tabs-1" ).removeClass( "ui-widget-content" );
+	$(".ui-tabs .ui-tabs-panel").css("padding", "inherit");
+	$(".ui-tabs .ui-tabs-panel").css("width", "auto");
+	$(".ui-tabs .ui-tabs-panel").css("float", "none");
+	$("#tabs-1").css({ marginLeft: '-0.2em' });
+	$("#tabs-1").css({ marginTop: '0.5em' });
+	$("#tabs-1").css({ marginBottom: '0.5em' });
+	$("#tabs-1").css({ marginBottom: '0.5em' });
+
+	$( "#tabs-2" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix");
+	$( "#tabs-2 li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+	$( "#tabs-2" ).removeClass( "ui-widget-content" );
+	$("#tabs-2").css({ marginLeft: '-0.2em' });
+	$("#tabs-2").css({ marginTop: '0.5em' });
+	$("#tabs-2").css({ marginBottom: '0.5em' });
+	$("#tabs-2").css({ marginBottom: '0.5em' });
+
+	$( "#tabs-3" ).tabs().addClass( "ui-tabs-vertical ui-helper-clearfix");
+	$( "#tabs-3 li" ).removeClass( "ui-corner-top" ).addClass( "ui-corner-left" );
+	$( "#tabs-3" ).removeClass( "ui-widget-content" );
+	$("#tabs-3").css({ marginLeft: '-0.2em' });
+	$("#tabs-3").css({ marginTop: '0.5em' });
+	$("#tabs-3").css({ marginBottom: '0.5em' });
+	$("#tabs-3").css({ marginBottom: '0.5em' });
+
+
+	$( "#addItemList" ).click(function() {
+		//проход верхней менюшки
+		let count = $("#tabs")[0].children[1].children.length;
+		let first, second;
+		for (let i=0; i<count; i++)
+		{
+			if ($("#tabs ul li")[i].attributes.tabindex.value == 0) {first = i+1; break;}
+		}
+
+		//проход нижней менюшки
+		//let scount = $("#tabs ul li").length - count;
+		for (let j=count; j<$("#tabs ul li").length ; j++)
+		{
+			if ($("#tabs ul li a")[j].hash.substr(6,1) == first && $("#tabs ul li")[j].attributes.tabindex.value == 0)
+			{
+				second = $("#tabs ul li a")[j].hash.substr(8,1);
+				break;
+			}
+		}
+		console.log(first+"f"+second);
+		$( "#tabs-"+first+"-"+second ).append( "<input disabled value='"+$(".form-control").val()+"' class='form-control'>" );
+		//Send(first-1, second-1);
+	});
+
+	function Send(f, s) {
+		let arr1 = ["MechObr", "Pokritie", "Sborka"];
+
+		let arr2 =
+		[
+			"TechOp",
+			"TechP",
+			"Defence",
+			"Prisp",
+			"Equipment",
+			"Rig",
+			"Tools",
+			"Izmer",
+			"Prof"
+		];
+
+		let obj =
+		{
+			"MechObr":
+			{
+				"TechOp":[],
+				"TechP":[],
+				"Defence":[],
+				"Prisp":[],
+				"Equipment":[],
+				"Rig":[],
+				"Tools":[],
+				"Izmer":[],
+				"Prof":[]
+			},
+
+			"Pokritie":
+			{
+				"TechOp":[],
+				"TechP":[],
+				"Defence":[],
+				"Prisp":[],
+				"Equipment":[],
+				"Rig":[],
+				"Tools":[],
+				"Izmer":[],
+				"Prof":[]
+			},
+
+			"Sborka":
+			{
+				"TechOp":[],
+				"TechP":[],
+				"Defence":[],
+				"Prisp":[],
+				"Equipment":[],
+				"Rig":[],
+				"Tools":[],
+				"Izmer":[],
+				"Prof":[]
+			}
+		};
+
+
+	}
+
+  } );
+
+  </script>
+  <style>
+  .ui-tabs-vertical { width: 55em; }
+  .ui-tabs-vertical .ui-tabs-nav { padding: .2em .1em .2em .2em; float: left; width: 12em; }
+  .ui-tabs-vertical .ui-tabs-nav li { clear: left; width: 100%; border-bottom-width: 1px !important; border-right-width: 0 !important; margin: 0 -1px .2em 0; }
+  .ui-tabs-vertical .ui-tabs-nav li a { display:block; }
+  .ui-tabs-vertical .ui-tabs-nav li.ui-tabs-active { padding-bottom: 0; padding-right: .1em; border-right-width: 1px; }
+  .ui-tabs-vertical .ui-tabs-panel { padding: inherit; float: none; width: auto;}
+  #listInput input {width: 100px; margin-bottom: 0.3em;}
+  #listInput {
+  float: right;
+    position: absolute;
+    top: 53;
+    right: 2;
+	z-index: 1;
+	width: 100px;
+	}
+
+	#tabs div div div {
+		word-break: break-word;
+	}
+
+	.list-tabs {
+
+	}
+
+	#tabs div div input {
+		width: auto;
+		position: relative;
+		margin-left: 170px;
+		margin-top: 5px;
+	}
+  </style>
+</head>
+<body>
+
+<div id="tabs">
+	<div id="listInput">
+		<input class="form-control">
+		<button class="btn btn-primary" id="addItemList">Добавить элемент</button>
+	</div>
+  <ul>
+    <li><a href="#tabs-1">Механообработка</a></li>
+    <li><a href="#tabs-2">Покрытие</a></li>
+    <li><a href="#tabs-3">Сборка</a></li>
+  </ul>
+  <div id="tabs-1">
+  <ul>
+	<li><a href="#tabs-1-1">Техоперации</a></li>
+	<li><a href="#tabs-1-2">Техпереходы</a></li>
+	<li><a href="#tabs-1-3">Средства защиты</a></li>
+	<li><a href="#tabs-1-4">Приспособления</a></li>
+	<li><a href="#tabs-1-5">Оборудование</a></li>
+	<li><a href="#tabs-1-6">Оснастка</a></li>
+	<li><a href="#tabs-1-7">Инструменты</a></li>
+	<li><a href="#tabs-1-8">Средства измерения</a></li>
+	<li><a href="#tabs-1-9">Профессии</a></li>
+  </ul>
+
+  <div id="tabs-1-1">
+	<div class="list-tabs" id="list-tabs-1-1"></div>
+  </div>
+  <div id="tabs-1-2">
+	<div class="list-tabs" id="list-tabs-1-2"></div>
+  </div>
+  <div id="tabs-1-3"></div>
+  <div id="tabs-1-4"></div>
+  <div id="tabs-1-5"></div>
+  <div id="tabs-1-6"></div>
+  <div id="tabs-1-7"></div>
+  <div id="tabs-1-8"></div>
+  <div id="tabs-1-9"></div>
+
+  </div>
+
+  <div id="tabs-2">
+  <ul>
+	<li><a href="#tabs-2-1">Техоперации</a></li>
+	<li><a href="#tabs-2-2">Техпереходы</a></li>
+	<li><a href="#tabs-2-3">Средства защиты</a></li>
+	<li><a href="#tabs-2-4">Приспособления</a></li>
+	<li><a href="#tabs-2-5">Оборудование</a></li>
+	<li><a href="#tabs-2-6">Оснастка</a></li>
+	<li><a href="#tabs-2-7">Инструменты</a></li>
+	<li><a href="#tabs-2-8">Средства измерения</a></li>
+	<li><a href="#tabs-2-9">Профессии</a></li>
+  </ul>
+
+  <div id="tabs-2-1">
+	<div class="list-tabs" id="list-tabs-2-1"></div>
+  </div>
+  <div id="tabs-2-2"></div>
+  <div id="tabs-2-3"></div>
+  <div id="tabs-2-4"></div>
+  <div id="tabs-2-5"></div>
+  <div id="tabs-2-6"></div>
+  <div id="tabs-2-7"></div>
+  <div id="tabs-2-8"></div>
+  <div id="tabs-2-9"></div>
+  </div>
+
+  <div id="tabs-3">
+  <ul>
+	<li><a href="#tabs-3-1">Техоперации</a></li>
+	<li><a href="#tabs-3-2">Техпереходы</a></li>
+	<li><a href="#tabs-3-3">Средства защиты</a></li>
+	<li><a href="#tabs-3-4">Приспособления</a></li>
+	<li><a href="#tabs-3-5">Оборудование</a></li>
+	<li><a href="#tabs-3-6">Оснастка</a></li>
+	<li><a href="#tabs-3-7">Инструменты</a></li>
+	<li><a href="#tabs-3-8">Средства измерения</a></li>
+	<li><a href="#tabs-3-9">Профессии</a></li>
+  </ul>
+
+  <div id="tabs-3-1">
+	<div class="list-tabs" id="list-tabs-3-1"></div>
+  </div>
+  <div id="tabs-3-2"></div>
+  <div id="tabs-3-3"></div>
+  <div id="tabs-3-4"></div>
+  <div id="tabs-3-5"></div>
+  <div id="tabs-3-6"></div>
+  <div id="tabs-3-7"></div>
+  <div id="tabs-3-8"></div>
+  <div id="tabs-3-9"></div>
+  </div>
 </div>
-<div class="mb-md-0">
-    <div id="technologist_guide_field">
-        <table border="bordered">
-            <?php
-            function inputStr($str){
-                $str = str_replace(' ','',$str);
-                $str = explode(",",$str);
-                return $str;
-            }
-            $id_1_layout = 0;
-            $id_2_layout = 0;
-            echo '<div class="accordion" id="accordionTechGuide">';
-            foreach ($data as $row) {
-                echo '<div class="card" id="card' . ++$id_1_layout . '">
-    <div class="card-header" id="lvl1' . $id_1_layout . '">
-      <h5 class="mb-0">
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapse' . $id_1_layout . '" aria-expanded="true" aria-controls="collapse' . $id_1_layout . '">
-          ' . $row["name"] . '
-        </button>
-      </h5>
-    </div>
 
-    <div id="collapse' . $id_1_layout . '" class="collapse show" aria-labelledby="lvl1' . $id_1_layout . '" data-parent="#accordionTechGuide">
-        <div class="card-body">';
-
-                foreach ($row["children"] as $item) {
-                    echo '<div class="card" id="card2lvl' . ++$id_2_layout . '">
-        <div class="card-header" id="lvl2' . $id_2_layout . '">
-            <h5 class="mb-0">
-              <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapse2lvl' . $id_2_layout . '" aria-expanded="true" aria-controls="collapse2lvl' . $id_2_layout . '">
-                ' . $item["name"] . '
-              </button>
-            </h5>
-        </div>
-
-        <div id="collapse2lvl' . $id_2_layout . '" class="collapse show" aria-labelledby="lvl2' . $id_2_layout . '" data-parent="#card' . $id_1_layout . '">
-          <div class="card-body">';
-
-    echo '<div class="card" id="cardtools' . $id_2_layout . '">
-        <div class="card-header" id="tools' . $id_2_layout . '">
-      <h5 class="mb-0">
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseTools' . $id_2_layout . '" aria-expanded="true" aria-controls="collapseTools' . $id_2_layout . '">
-          Инструменты
-        </button>
-      </h5>
-    </div>
-    
-    
-    <div id="collapseTools' . $id_2_layout . '" class="collapse show" aria-labelledby="tools' . $id_2_layout . '" data-parent="#card2lvl' . $id_2_layout . '">
-      <div class="card-body">';
-                    $tools = inputStr($item["tools"][0]["name"]);
-                    foreach($tools as $name){
-                        echo '<input class="form-control" value="'.$name.'"/>';
-                    }
-                    echo '  </div>
-                            </div>
-                            </div>'
-                    ;
-echo '<div class="card" id="cardequipment' . $id_2_layout . '">
-        <div class="card-header" id="equipment' . $id_2_layout . '">
-      <h5 class="mb-0">
-        <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseEquipment' . $id_2_layout . '" aria-expanded="true" aria-controls="collapseEquipment' . $id_2_layout . '">
-          Приборы
-        </button>
-      </h5>
-    </div>
-    
-    
-    <div id="collapseEquipment' . $id_2_layout . '" class="collapse show" aria-labelledby="equipment' . $id_2_layout . '" data-parent="#card2lvl' . $id_2_layout . '">
-      <div class="card-body">';
-                    $equipment = inputStr($item["equipment"][0]["name"]);
-                    foreach($equipment as $name){
-                        echo '<input class="form-control" value="'.$name.'"/>';
-                    }
-                    echo '  </div>
-                            </div>
-                            </div>'
-                    ;
-
-                    echo '</div>
-        </div>
-        </div>'
-                    ;
-                }
-                echo ' </div>
-    </div>
-  </div>';
-//        echo "<tr><td><input class='1lvl' id=" . ++$id_1_layout . " value='" . $row["name"] . "'></td><td></td><td></td><td></td></tr>";
-//        foreach ($row["children"] as $item) {
-//          echo "<tr><td></td><td><input class='2lvl' name=" . $id_1_layout . " id=" . ++$id_2_layout . " value='" . $item["name"] . "'></td><td></td><td></td></tr>";
-//          echo "<tr><td></td><td></td><td>Инструменты:</td><td></td></tr>";
-//          foreach ($item["tools"] as $tools) {
-//            echo "<tr><td></td><td></td><td></td><td><input class='tools' name=" . $id_2_layout . " value='" . $tools["name"] . "'></td></tr>";
-//          }
-//          echo "<tr><td></td><td></td><td>Приборы:</td><td></td></tr>";
-//          foreach ($item["equipment"] as $equipment) {
-//            echo "<tr><td></td><td></td><td></td><td><input class='equipment' name=" . $id_2_layout . " value='" . $equipment["name"] . "'></td></tr>";
-//          }
-//        }
-            }
-            ?>
-    </div>
-</table>
-<button class="btn btn-default" id="save">Сохранить</button>
-</div>
-</div>
+</body>
+</html>
