@@ -19,14 +19,22 @@ class ajax_model extends model {
         $response = array();
         $response["active"] = array();
         $response["finished"] = array();
-        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1'";
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' ORDER BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
-
+        $task_id = -1;
+        $i = -1;
         foreach($Q as $row){
-            array_push($response["active"], array("master" => $row["master"], 
+            if($task_id != ($row["task_id"]-1)){
+                $task_id = $row["task_id"]-1;
+                $response["active"][++$i] = array(array("master" => $row["master"], 
                 "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+            }
+            else{
+            array_push($response["active"][$i], array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+            }
         }
         $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0'";
         $q = sys::$PDO->prepare($sql);
@@ -34,7 +42,7 @@ class ajax_model extends model {
         $Q = $q->fetchAll();
 
         foreach($Q as $row){
-            array_push($response["finished"], array("master" => $row["master"], 
+            array_push($response["finished"][$row["task_id"]], array("master" => $row["master"], 
                 "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
         }
         return array("response"=>$response);
