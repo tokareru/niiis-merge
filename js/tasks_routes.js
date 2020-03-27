@@ -54,15 +54,15 @@ async function initTasksRoutes() {
         addTaskToDB();
     });
 
-        $.ajax({
-            type: 'POST',
-            url: 'ajax/get_routes_by_login',
-            data: {login: 'productionmaster'} ,
-            success: function (res) {
-                console.log("test get_routes_by_login");
-                console.log(res);
-            }
-        })
+    $.ajax({
+        type: 'POST',
+        url: 'ajax/get_routes_by_login',
+        data: {login: 'productionmaster'},
+        success: function (res) {
+            console.log("test get_routes_by_login");
+            console.log(res);
+        }
+    })
 
 }
 
@@ -114,9 +114,18 @@ function generateInfoForRoute(infos) {
 }
 
 function generateTableForRoutes(data) {
-    console.log(data);
-    let task = data.task;
-    let str = '<table class="table table-bordered tasks_routes_routeTable">' +
+    let table = '';
+    let tr = '';
+    data.forEach(function (value, index) {
+        let task = value.task;
+         tr += '<tr>' +
+            `<td>${index + 1}</td>` +
+            `<td>${task.role}</td>` +
+            `<td>${task.name}</td>` +
+            `<td>${task.task}</td>` +
+            '</tr>';
+    });
+    table = '<table class="table table-bordered tasks_routes_routeTable">' +
         '<thead class="thead-light">' +
         '<tr>' +
         '<th>№</th>' +
@@ -125,15 +134,11 @@ function generateTableForRoutes(data) {
         '<th>Задание</th>' +
         '</tr>' +
         '</thead>' +
-        '<tbody>';
-    return str +  '<tr>' +
-        `<td>${1}</td>` +
-        `<td>${task.role}</td>` +
-        `<td>${task.name}</td>` +
-        `<td>${task.task}</td>` +
-        '</tr>' +
+        '<tbody>' +
+        tr +
         '</tbody>' +
         '</table>';
+    return table;
 }
 
 function setTaskRoutes(json_list, type, accord_id) {
