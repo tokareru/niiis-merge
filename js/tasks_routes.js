@@ -1,4 +1,4 @@
-function initTasksRoutes() {
+async function initTasksRoutes() {
     /*$.ajax({
         type: "GET",
         url: "json/tasks_routes.json",
@@ -38,9 +38,13 @@ function initTasksRoutes() {
         }
     })*/
 
+    let data;
+    await getRoutesFromDB().then(res => {
+        data = res;
+    });
     tasks_routes_AddEvent('task_routes_tree');
-    tasksRoutesMadeRoutes('task_routes_active_routes', 5);
-    tasksRoutesMadeRoutes('task_routes_ended_routes', 5);
+    tasksRoutesMadeRoutes('task_routes_active_routes', data.response.active);
+    tasksRoutesMadeRoutes('task_routes_ended_routes', data.response.finished);
     addTaskToTable();
 
     $('#create_task_route_clearBtn').on('click', function () {
@@ -49,15 +53,16 @@ function initTasksRoutes() {
     $('#create_task_route_saveBtn').on('click', function () {
         addTaskToDB();
     });
-    $('#create_task_route_testBtn').on('click', function () {
+
         $.ajax({
-            type: 'GET',
-            url: 'ajax/get_routes_by_type',
+            type: 'POST',
+            url: 'ajax/get_routes_by_login',
+            data: {login: 'productionmaster'} ,
             success: function (res) {
+                console.log("test get_routes_by_login");
                 console.log(res);
             }
         })
-    });
 
 }
 
@@ -72,29 +77,11 @@ function tasks_routes_AddEvent(id) {
     }
 }
 
-function tasksRoutesMadeRoutes(id, count) {
+function tasksRoutesMadeRoutes(id, data) {
     let $routes = $(`#${id}`);
-    let date = new Date();
-    for (let i = 0; i < count; i++) {
-        $routes.append(`<li>${makeRoute({
-            name: `Маршрут ${i + 1}`, info: generateInfoForRoute(
-                {
-                    name: `Маршрут ${i + 1}`,
-                    type: 'Тестовый тип',
-                    exist: id === 'task_routes_active_routes' ? 'Активный' : 'Завершенный',
-                    inits: 'The Man Who Sold The World',
-                    start: date.toDateString(),
-                    end: id === 'task_routes_active_routes' ? '-' : date.toDateString(),
-                    table: {
-                        number: i + 1,
-                        type: 'Тестовый вид',
-                        exist: id === 'task_routes_active_routes' ? 'Активный' : 'Завершенный',
-                        worker: currentName,
-                        inits: 'The Man Who Sold The World'
-                    }
-                }
-            )
-        })}</li>`);
+    console.log(data);
+    for (let i = 0; i < data.length; i++) {
+        $routes.append(generateTableForRoutes(data[i]));
     }
     tasks_routes_AddEvent(id);
 }
@@ -127,23 +114,23 @@ function generateInfoForRoute(infos) {
 }
 
 function generateTableForRoutes(data) {
-    return '<table class="table table-bordered">' +
+    console.log(data);
+    let task = data.task;
+    let str = '<table class="table table-bordered tasks_routes_routeTable">' +
         '<thead class="thead-light">' +
         '<tr>' +
-        '<th>Порядковый номер задания</th>' +
-        '<th>Вид задания</th>' +
-        '<th>Состояние задания</th>' +
-        '<th>Исполнитель</th>' +
-        '<th>Инициатор</th>' +
+        '<th>№</th>' +
+        '<th>Должность</th>' +
+        '<th>Пользователь</th>' +
+        '<th>Задание</th>' +
         '</tr>' +
         '</thead>' +
-        '<tbody>' +
-        '<tr>' +
-        `<td>${data.number}</td>` +
-        `<td>${data.type}</td>` +
-        `<td>${data.exist}</td>` +
-        `<td>${data.worker}</td>` +
-        `<td>${data.inits}</td>` +
+        '<tbody>';
+    return str +  '<tr>' +
+        `<td>${1}</td>` +
+        `<td>${task.role}</td>` +
+        `<td>${task.name}</td>` +
+        `<td>${task.task}</td>` +
         '</tr>' +
         '</tbody>' +
         '</table>';
@@ -320,7 +307,7 @@ function serializeCreateTaskRoute() {
 
 function addTaskToDB() {
     let task = serializeCreateTaskRoute();
-    if( task === undefined || task.length === 0)
+    if (task === undefined || task.length === 0)
         return;
     $.ajax({
         type: 'POST',
@@ -330,4 +317,16 @@ function addTaskToDB() {
             console.log(res);
         }
     })
+}
+
+async function getRoutesFromDB() {
+    let data;
+    await $.ajax({
+        type: 'GET',
+        url: 'ajax/get_routes_by_type',
+        success: function (res) {
+            data = res;
+        }
+    });
+    return data;
 }

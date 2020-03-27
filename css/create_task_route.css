@@ -141,3 +141,9 @@
 .create_task_route_delCol{
  cursor: pointer;
 }
+
+.tasks_routes_routeTable{
+    width: 600px;
+    max-width: 600px;
+    min-width: 600px;
+}
