@@ -8,10 +8,9 @@ class ajax_model extends model {
                 $sql = "INSERT INTO ROUTE (login, role, name, task, master)
                         VALUES (:login, :role, :name, :task, :master)";
                 $q = sys::$PDO->prepare($sql);
-                $q->execute(array("login" => $row["user"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "master" => $_POST["master"]));
-                return $q->fetchAll();
-                
+                $q->execute(array("login" => $row["user"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "master" => $_POST["master"]));  
             }
+            return array("response" => 200);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }    
@@ -47,9 +46,9 @@ class ajax_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
-        array_push($response, array("master" => $_GET["login"], "task" => array()));
+        array_push($response["active"], array("master" => $_GET["login"], "task" => array()));
         foreach($Q as $row){
-            array_push($response["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+            array_push($response["active"]["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
         }
         
         return array("response"=>$response);
@@ -186,18 +185,29 @@ ORDER BY third_id";
                     $j = -1;
                     $id = $row["id_parent"];
                     array_push($response["techProcess"], array("id"=>$id, "lvl" => ($row["is_new"])? "new" : 1, "children"=>array()));
-                    array_push($response["techProcess"][++$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
-                    array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                    ++$i;
+                    if($row["id"] != null){
+                        array_push($response["techProcess"][$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                    }
+                    if($row["fields"] != null){
+                        array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                    }
                     $children_id = $row["id"];
                 }
                 else{
                     if($children_id != $row["id"]){
                         $children_id = $row["id"];
-                        array_push($response["techProcess"][$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
-                        array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        if($row["id"] != null){
+                            array_push($response["techProcess"][$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                        }
+                        if($row["fields"] != null){
+                            array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        }
                     }
                     else{
-                        array_push($response["techProcess"][$i]["children"][$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        if($row["fields"] != null){
+                            array_push($response["techProcess"][$i]["children"][$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        }
                     }
                 }
             }
