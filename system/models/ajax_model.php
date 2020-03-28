@@ -1,13 +1,54 @@
 <?php
 
 class ajax_model extends model {
+    
+    function get_route_map_1_2(){
+        $sql = "SELECT * FROM route_map_1_2";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $response = array();
+        foreach($Q as $row){
+            array_push($response, array("name" => $row["name"], "equipment" => $row["equipment"], "tools" => $row["tools"]));
+        }
+        return array("response" => $response);
+    }
+    function save_route_map_1_2(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql ="INSERT INTO route_map_1_2 (name,equipment,tools) VALUES ";
+            foreach($_POST as $row){
+                $sql .= "(".$row["name"].",".$row["equipment"].",".$row["tools"]."),";
+            }
+            $sql = substr($sql,0,-1);
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }  
+    }
+    function get_route_map_3(){
+        
+    }
+    function save_route_map_3(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql ="INSERT INTO route_map_3 (name,equipment,tools) VALUES ";
+            foreach($_POST as $row){
+                $sql .= "(".$row["name"].",".$row["equipment"].",".$row["tools"]."),";
+            }
+            $sql = substr($sql,0,-1);
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }
+    }
     function save_route(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
 //            print_r($_POST);
              $sql = "SELECT max(task_id) from ROUTE";
                 $q = sys::$PDO->prepare($sql);
                 $q->execute();
-                $task_id = $q->fetchAll()[0][0];
+                $task_id = ++$q->fetchAll()[0][0];
             foreach($_POST["task"] as $row){
                 $sql = "INSERT INTO ROUTE (login, role, name, task, master, task_id)
                         VALUES (:login, :role, :name, :task, :master, :task_id)";
@@ -92,7 +133,6 @@ class ajax_model extends model {
     }
     function save_progressbar_actions(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            print_r($_POST);
             $sql = "INSERT INTO LOGS (login, operation_id, type, field, text)
                     VALUES (:login, :id, :type, :field, :text)";
             $q = sys::$PDO->prepare($sql);
