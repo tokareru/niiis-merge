@@ -16,6 +16,10 @@
     outline: none !important;
 }
 
+.opacity-98{
+    opacity: 0.98;
+}
+
 #tabs li:hover{
     cursor: pointer;
 }
