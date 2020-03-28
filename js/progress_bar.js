@@ -87,7 +87,7 @@ function setActionBar(data) {
             field: "Чат",
             text: `Открыта вкладка 'Чат'`
         });
-    })
+    });
 
     // инициализация ЭСИ
     $("#right-side").on("esi-opened", function () {
@@ -136,7 +136,8 @@ function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit
 
 
     // прокрутка прогресса до конца прогресса
-    scrollToEndOfProgressBar();
+    if (!isInit)
+        scrollToEndOfProgressBar();
 
     if (!isInit)
         $.ajax({
