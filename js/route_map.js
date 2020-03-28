@@ -243,12 +243,12 @@ function initRouteMap() {
         let $this = $(this);
         let $td = $this.parent().parent();
         if ($td.hasClass("techProcessCell")){
-            deleteKnot($this);
+            deleteKnot($this, true);
             $td.append(`
                 <div style="height: 100%;" tech-lvl="0" tech-id="0"></div>
             `)
         }else {
-            deleteKnot($this);
+            deleteKnot($this, true);
         }
     })
 }
@@ -610,7 +610,7 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
 function combineTechProcessCell(data = {name: "", lvl: "", id: ""}) {
     let deleteButton = (Role === "technologist") ? `<span class="deleteNodeButtonRM"></span>` : "";
     return `
-        <div style="height: 100%;" tech-id="${data.id}" tech-lvl="${data.lvl}">
+        <div tech-id="${data.id}" tech-lvl="${data.lvl}">
            <span>${data.name}</span>
             ${deleteButton}
         </div>

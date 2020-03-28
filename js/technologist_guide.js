@@ -86,7 +86,7 @@ function createTechGuideNodes(tech) {
     let isDisabled = "disabled";
 
     let inp = '';
-    console.log(tech.children.length)
+    //console.log(tech.children.length)
     if (tech.children.length){
         tech.children.forEach(function (child, i) {
             //console.log(child);
