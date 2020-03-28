@@ -4,11 +4,16 @@ class ajax_model extends model {
     function save_route(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
 //            print_r($_POST);
-            foreach($_POST["task"] as $row){
-                $sql = "INSERT INTO ROUTE (login, role, name, task, master)
-                        VALUES (:login, :role, :name, :task, :master)";
+             $sql = "SELECT max(task_id) from ROUTE";
                 $q = sys::$PDO->prepare($sql);
-                $q->execute(array("login" => $row["user"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "master" => $_POST["master"]));  
+                $q->execute();
+                $task_id = $q->fetchAll()[0][0];
+            foreach($_POST["task"] as $row){
+                $sql = "INSERT INTO ROUTE (login, role, name, task, master, task_id)
+                        VALUES (:login, :role, :name, :task, :master, :task_id)";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute(array("login" => $row["user"], "role" => $row["role"], "name" => $row["name"], 
+                    "task" => $row["task"], "master" => $_POST["master"], "task_id" => $task_id));  
             }
             return array("response" => 200);
         }else{
@@ -23,11 +28,11 @@ class ajax_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
-        $task_id = -1;
+        $task_id = 0;
         $i = -1;
         foreach($Q as $row){
-            if($task_id != ($row["task_id"]-1)){
-                $task_id = $row["task_id"]-1;
+            if($task_id != ($row["task_id"])){
+                $task_id = $row["task_id"];
                 $response["active"][++$i] = array(array("master" => $row["master"], 
                 "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
             }
