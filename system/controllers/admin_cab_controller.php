@@ -31,6 +31,10 @@ class admin_cab_controller extends Controller {
     $this->view->render('table_users_view.php', 'admin/admin_cab_view.php', $data);
   }
   
+  function change_products(){
+      
+  }
+  
   function change_groups_users(){
     $data = $this->model->change_groups_users();
     $this->view->render('change_groups_users_view.php', 'admin/admin_cab_view.php', $data);
@@ -49,6 +53,16 @@ class admin_cab_controller extends Controller {
   function technologist_guide_edit() {
     $data = $this->model->technologist_guide_edit();
     $this->view->render('technologist_guide_edit.php', 'admin/admin_cab_view.php', $data);
+  }
+  
+  function get_fields(){
+    $data = $this->model->get_fields();
+    $this->view->render('', 'ajax_view.php', $data);
+  }
+  
+  function get_technologist_info(){
+    $data = $this->model->get_technologist_info();
+    $this->view->render('', 'ajax_view_json.php', $data);    
   }
   
   function progressbar(){
