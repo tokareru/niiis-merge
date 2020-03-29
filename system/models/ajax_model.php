@@ -11,7 +11,7 @@ class ajax_model extends model {
         foreach($Q as $row){
             array_push($response, array("name" => $row["name"], "equipment" => $row["equipment"], "tools" => $row["tools"]));
         }
-        return array("response" => $response);
+        return $response;
     }
     function save_route_map_1_2(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
