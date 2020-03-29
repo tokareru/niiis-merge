@@ -169,7 +169,7 @@ function initRouteMap() {
         addNewRowButton.find("span").click(function () {
             if (Round === 3) setRouteMapRow();
             else {
-                setTechProcessJsonRounds_1_2( {response: [{}]}, $table)
+                setTechProcessJsonRounds_1_2( [{}], $table)
             }
             setActionToBar({
                 id: "addTechRow",
@@ -190,7 +190,7 @@ function initRouteMap() {
                 success: function (techJson) {
                     techGuideJson = techJson;
                     $.ajax({
-                        url: 'json/route_map.json',
+                        url: 'ajax/get_route_map_3',
                         type: 'GET',
                         success: function (res) {
                             setTechProcessJson(techGuideJson, res, $table);
@@ -201,7 +201,7 @@ function initRouteMap() {
         }else {
             // ajax/get_work_place_tech_process
             $.ajax({
-                url: 'json/route_map.json',
+                url: 'ajax/get_route_map_3 ',
                 type: 'GET',
                 success: function (res) {
                     setTechProcessJson(techGuideJson, res, $table);
@@ -365,9 +365,9 @@ function saveTechProcessTableRound3($table) {
     }
     console.log(saveObj);
     $.ajax({
-        url: 'ajax/save_work_place_tech_process',
+        url: 'ajax/save_route_map_3',
         type: 'POST',
-        data: {save: saveObj},
+        data: saveObj,
         success: function (res) {
             console.log(res);
 
@@ -636,7 +636,7 @@ function combineTechProcessCellTools(data = {name: "", lvl: "", id: ""}) {
 }
 
 function setTechProcessJson(json, res, $table) {
-    //console.log(res);
+    console.log(res);
     if (res.length)
         res.forEach(function (_row) {
             // находим название
@@ -694,9 +694,8 @@ function setTechProcessJsonRounds_1_2(res, $table) {
     console.log(res);
     let $tbody = $("#tech_process_table tbody");
     let $lastTr = $tbody.find('tr:last');
-    if (res.response.length){
-        console.log("qwe")
-        res.response.forEach(function (row) {
+    if (res.length){
+        res.forEach(function (row) {
             $(combineRowFor_1_2Rounds({name: row.name, equipment: row.equipment, tools: row.tools})).insertBefore($lastTr);
         })
     }
