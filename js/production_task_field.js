@@ -30,6 +30,7 @@ function initProductionTask_3_Rounds() {
     });
 
     setToggler("workers_drop_area");
+    $workers_drop.find("span.caret").trigger("click");
 }
 
 function combineWorkerTaskNode(data = { name: "", lvl: "", id: ""}) {
@@ -75,12 +76,14 @@ function setTechProcessForProductionTask() {
             //console.log(json);
             let $field = $("#product_tech_process_field_drop");
             setAllTechProcess(json, $field, "product_tech_process_field_drop");
+
             $(".techField").draggable({
                 helper: 'clone',
                 items: "li",
                 drag: function (event, ui) {
                     let $helper =$ (ui.helper);
                     $helper.css("list-style-type", "none");
+                    $helper.addClass("w-100")
                 }
             })
         }

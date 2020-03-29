@@ -36,6 +36,7 @@
         </div>
       </div>
       <div class="col-6">
+        <div class="h4">Список рабочих</div>
         <div id="workers_drop_area" style="list-style: none">
 
         </div>
