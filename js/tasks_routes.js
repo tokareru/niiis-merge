@@ -345,9 +345,10 @@ function addTaskToDB() {
         data: {task: task, master: login},
         success: function (res) {
             let taskTA = serializeCreateTaskRoute(true);
-            let message = `Пользователь "${currentName}" создал маршрут со следующими указаниями: `;
+            let message = `Пользователь <span class="font-weight-bold">${currentName}</span> создал маршрут со следующими указаниями: <br/>`;
             taskTA.forEach(function (value, index) {
-                message += `${index !== 0? '; ': ''}${value.role} -> ${value.task.toLocaleLowerCase()}: ${value.textarea}`
+                message += `${index !== 0 ? '; <br/>' : ''}<span class="font-weight-bold">` +
+                    `${value.role}</span> -> <span class="font-italic">${value.task.toLocaleLowerCase()}</span>: ${value.textarea}`
             });
             message += '.';
             console.log(message);
@@ -357,12 +358,12 @@ function addTaskToDB() {
                 data: {type: 'ALL', time: Date.now(), current_login: login, comment: message, function: 'add_comment'},
                 success: function (data) {
                     //console.log(data);
+                    $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
                 },
                 error: function () {
                     $('#chat_window_text').val('Ошибка загрузки');
                 }
             });
-            $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
         }
     })
 }
