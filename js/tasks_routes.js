@@ -1,3 +1,5 @@
+let ownTasks = [];
+
 async function initTasksRoutes() {
     /*$.ajax({
         type: "GET",
@@ -46,6 +48,7 @@ async function initTasksRoutes() {
     tasksRoutesMadeRoutes('task_routes_active_routes', data.response.active);
     tasksRoutesMadeRoutes('task_routes_ended_routes', data.response.finished);
     addTaskToTable();
+    generateOwnTasks('task_routes_own_routes');
 
     $('#create_task_route_clearBtn').on('click', function () {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
@@ -54,15 +57,15 @@ async function initTasksRoutes() {
         addTaskToDB();
     });
 
-    $.ajax({
-        type: 'POST',
-        url: 'ajax/get_routes_by_login',
-        data: {login: 'productionmaster'},
-        success: function (res) {
-            console.log("test get_routes_by_login");
-            console.log(res);
-        }
-    })
+    /*   $.ajax({
+           type: 'POST',
+           url: 'ajax/get_routes_by_login',
+           data: {login: 'productionmaster'},
+           success: function (res) {
+               console.log("test get_routes_by_login");
+               console.log(res);
+           }
+       })*/
 
 }
 
@@ -96,21 +99,29 @@ function makeRoute(info) {
     return route;
 }
 
-function generateInfoForRoute(infos) {
-    let info = '<ul>';
-    info += `<li><span>Название: ${infos.name}</span></li>`;
-    info += `<li><span>Тип: ${infos.type}</span></li>`;
-    info += `<li><span>Состояние: ${infos.exist}</span></li>`;
-    info += `<li><span>Инициализатор: ${infos.inits}</span></li>`;
-    info += `<li><span>Время запуска: ${infos.start}</span></li>`;
-    info += `<li><span>Время завершения: ${infos.end}</span></li>`;
-
-    info += '<li><span class="font-weight-bold">' +
-        'Состав маршрута' +
-        '</span></li>';
-    info += generateTableForRoutes(infos.table);
-    info += '</ul>';
-    return info;
+function generateOwnTasks(selector) {
+    let $routes = $(`#${selector}`);
+    let $table = $('<table class="table table-bordered tasks_routes_routeTable"></table>');
+    $table.append('<thead class="thead-light">' +
+        '<tr>' +
+        '<th>№</th>' +
+        '<th>Задание</th>' +
+        '<th>Статус</th>' +
+        '</tr>' +
+        '</thead><tbody></tbody>');
+    ownTasks.forEach(function (value, index) {
+        $table.find('tbody').append(
+            '<tr>' +
+            `<td style="width: 30px">${index + 1}</td>` +
+            `<td style="width: 300px">${value.task}</td>` +
+            '<td style="width: 300px" class="p-1">' +
+            '<button class="btn bg-dark text-white float-left">Принять</button>' +
+            '<button class="btn bg-danger text-white float-right">Отклонить</button>' +
+            '</td>' +
+            '</tr>'
+        )
+    });
+    $routes.append($table);
 }
 
 function generateTableForRoutes(data) {
@@ -118,7 +129,10 @@ function generateTableForRoutes(data) {
     let tr = '';
     data.forEach(function (value, index) {
         let task = value.task;
-         tr += '<tr>' +
+        if (task.user === login) {
+            ownTasks.push(task);
+        }
+        tr += '<tr>' +
             `<td>${index + 1}</td>` +
             `<td>${task.role}</td>` +
             `<td>${task.name}</td>` +
@@ -250,7 +264,7 @@ function addTaskToTable() {
         let route =
             '<td style="width: 25px; max-width: 25px; min-width: 25px" class="create_task_route_delCol text-dark">' +
             '<i class="fa fa-times"></i></td>' +
-            '<td style="width: 36px; max-width: 36px; min-width: 36px" class=""></td>' +
+            `<td style="width: 36px; max-width: 36px; min-width: 36px" class="">${$('#create_task_route_tbody tr').length}</td>` +
             '<td class="create_task_route_selectSpec" style="width: 210px; max-width: 210px; min-width: 210px"></td>' +
             '<td style="width: 200px; max-width: 200px; min-width: 200px">' +
             '<select class="create_task_route_selectNames form-control form-control-sm outline-none shadow-none">' +
@@ -287,7 +301,7 @@ function recountListId() {
     });
 }
 
-function serializeCreateTaskRoute() {
+function serializeCreateTaskRoute(addTextarea = false) {
     let data = [];
     let ret = false;
     $('#create_task_route_RouteList tbody').find('tr:not(#create_task_route_RouteListAddTr)').each(function () {
@@ -296,12 +310,23 @@ function serializeCreateTaskRoute() {
             $(this).addClass('bg-danger');
             ret = true;
         }
-        data.push({
-            user: $(this).data('user'),
-            role: $(this).find('.create_task_route_selectSpec').text(),
-            name: $(this).find('.create_task_route_selectNames option:selected').text(),
-            task: $(this).find('.create_task_route_task option:selected').text()
-        })
+        if (!addTextarea) {
+            data.push({
+                user: $(this).data('user'),
+                role: $(this).find('.create_task_route_selectSpec').text(),
+                name: $(this).find('.create_task_route_selectNames option:selected').text(),
+                task: $(this).find('.create_task_route_task option:selected').text()
+            })
+        } else {
+            data.push({
+                user: $(this).data('user'),
+                role: $(this).find('.create_task_route_selectSpec').text(),
+                name: $(this).find('.create_task_route_selectNames option:selected').text(),
+                task: $(this).find('.create_task_route_task option:selected').text(),
+                textarea: $(this).find('textarea').val()
+            })
+        }
+
     });
     if (ret) {
         return;
@@ -316,10 +341,28 @@ function addTaskToDB() {
         return;
     $.ajax({
         type: 'POST',
-        url: 'ajax/save_route',
+        url: 'ajax/save_route',//ajax/save_route
         data: {task: task, master: login},
         success: function (res) {
-            console.log(res);
+            let taskTA = serializeCreateTaskRoute(true);
+            let message = `Пользователь "${currentName}" создал маршрут со следующими указаниями: `;
+            taskTA.forEach(function (value, index) {
+                message += `${index !== 0? '; ': ''}${value.role} -> ${value.task.toLocaleLowerCase()}: ${value.textarea}`
+            });
+            message += '.';
+            console.log(message);
+            $.ajax({
+                url: 'chat_ajax',//chat_ajax
+                type: 'POST',
+                data: {type: 'ALL', time: Date.now(), current_login: login, comment: message, function: 'add_comment'},
+                success: function (data) {
+                    //console.log(data);
+                },
+                error: function () {
+                    $('#chat_window_text').val('Ошибка загрузки');
+                }
+            });
+            $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
         }
     })
 }
