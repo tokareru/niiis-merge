@@ -15,6 +15,9 @@ class ajax_model extends model {
     }
     function save_route_map_1_2(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "DELETE FROM route_map_1_2";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
             $sql ="INSERT INTO route_map_1_2 (name,equipment,tools) VALUES ";
             foreach($_POST["data"] as $row){
                 $sql .= "('".$row["name"]."','".$row["equipment"]."','".$row["tools"]."'),";
@@ -62,6 +65,9 @@ class ajax_model extends model {
     }
     function save_route_map_3(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "DELETE FROM route_map_3";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
             $sql ="INSERT INTO route_map_3 (name,dop_id,dop_type) VALUES ";
             foreach($_POST["data"] as $row){
                 foreach($row["equipment"] as $eq){
