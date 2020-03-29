@@ -32,7 +32,6 @@ class ajax_model extends model {
     }
     function get_route_map_3(){
         function get_lvl_id($str){
-            echo $str;
             $result = array("id" => substr($str,6,strlen($str)), "lvl" => substr($str,3,stripos($str,'id')-3));
             return $result;
         }
