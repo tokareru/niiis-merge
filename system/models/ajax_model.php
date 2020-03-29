@@ -39,13 +39,13 @@ class ajax_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
-        $lvl_id_test = array("id" => -1, "lvl" => -1);
+        $group_id = 0;
         $result = array();
         $i = -1;
         foreach($Q as $row){
             $lvl_id = get_lvl_id($row["name"]);
-            if($lvl_id_test["lvl"] != $lvl_id["lvl"] || $lvl_id_test["id"] != $lvl_id["id"]){
-                $lvl_id_test = $lvl_id;
+            if($group_id != $row["group_id"]){
+                $group_id = $row["group_id"];
                 $result[++$i] = array("name" => $lvl_id, "equipment" => array(), "tools" => array());
                 if($row["dop_type"] == "equipment"){
                     array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3));
