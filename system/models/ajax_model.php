@@ -11,10 +11,11 @@ class ajax_model extends model {
         foreach($Q as $row){
             array_push($response, array("name" => $row["name"], "equipment" => $row["equipment"], "tools" => $row["tools"]));
         }
-        return $response;
+        return array("response" => $response);
     }
     function save_route_map_1_2(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+            return $_POST;
             $sql ="INSERT INTO route_map_1_2 (name,equipment,tools) VALUES ";
             foreach($_POST as $row){
                 $sql .= "(".$row["name"].",".$row["equipment"].",".$row["tools"]."),";
@@ -22,18 +23,56 @@ class ajax_model extends model {
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
+            return array("response" => $sql);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }  
     }
     function get_route_map_3(){
-        
+        function get_lvl_id($str){
+            $result = array("id" => substr($str,-1,strlen($str) - stripos($str,'id')-2), "lvl" => substr($str,3,stripos($str,';')-3));
+            return $result;
+        }
+        $sql = "SELECT * FROM route_map_3 ORDER BY id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $lvl_id_test = array("lvl" => -1, "id" => -1);
+        $result = array();
+        $i = -1;
+        foreach($Q as $row){
+            $lvl_id = get_lvl_id($row["name"]);
+            if($lvl_id_test["lvl"] != $lvl_id["lvl"] || $lvl_id_test["id"] != $lvl_id["id"]){
+                $lvl_id_test = $lvl_id;
+                $result[++$i] = array("name" => $lvl_id, "equipment" => array(), "tools" => array());
+                if($row["dop_type"] == "equipment"){
+                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3));
+                }elseif($row["dop_type"] == "tools"){
+                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3));
+                }
+            }
+            else{
+                if($row["dop_type"] == "equipment"){
+                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3));
+                }elseif($row["dop_type"] == "tools"){
+                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3));
+                }
+            }
+        }
+        return $result;
     }
     function save_route_map_3(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
             $sql ="INSERT INTO route_map_3 (name,equipment,tools) VALUES ";
             foreach($_POST as $row){
-                $sql .= "(".$row["name"].",".$row["equipment"].",".$row["tools"]."),";
+                foreach($row["equipment"] as $eq){
+                    $name = "lvl".$eq["lvl"]."id".$eq["id"];
+                    $sql .= "(".$name.",".$eq["id"].",'equipment'),";
+                }
+                foreach($row["tools"] as $tool){
+                    $name = "lvl".$tool["lvl"]."id".$tool["id"];
+                    $sql .= "(".$name.",".$tool["id"].",'tools'),";
+                }
             }
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
