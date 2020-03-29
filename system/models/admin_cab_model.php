@@ -180,16 +180,20 @@ ORDER BY third_id";
     
     function save_technologist_info() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $save = $_POST["save"];
-//            $sql = "DELETE FROM technologist_info_3_layout";
-//            $q = sys::$PDO->prepare($sql);
-//            $q->execute();
-            foreach ($_POST as $row) {
-                $sql = "INSERT INTO technologist_info_3_layout (id_1_layout, id_2_layout, fields)
-                         VALUES (:id_1, :id_2, :fields)";
+            $sql = "DELETE FROM technologist_info_3_layout";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $i = 1;
+            echo $_POST["data"];
+            foreach ($_POST["data"] as $row) {
+                echo "a";
+                $sql = "INSERT INTO technologist_info_3_layout (id, id_1_layout, id_2_layout, fields)
+                         VALUES (".$i++." ,:id_1, :id_2, :fields)";
                 $q = sys::$PDO->prepare($sql);
-                $q->execute(array("id_1" => $row["id1"], "id_2" => $row["id2"], "fields" => $row["fields"]));
+                $q->execute(array("id_1" => $row["id1"], "id_2" => $row["id2"], "fields" => $row["name"]));
+                print($sql);
             }
+            return array("response" => 200);
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
         }
