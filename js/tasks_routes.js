@@ -133,10 +133,10 @@ function generateTableForRoutes(data) {
             ownTasks.push(task);
         }
         tr += '<tr>' +
-            `<td>${index + 1}</td>` +
-            `<td>${task.role}</td>` +
-            `<td>${task.name}</td>` +
-            `<td>${task.task}</td>` +
+            `<td style="width: 55px">${index + 1}</td>` +
+            `<td style="width: 230px">${task.role}</td>` +
+            `<td style="width: 190px">${task.name}</td>` +
+            `<td style="width: 125px">${task.task}</td>` +
             '</tr>';
     });
     table = '<table class="table table-bordered tasks_routes_routeTable">' +
