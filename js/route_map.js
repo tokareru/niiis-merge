@@ -169,7 +169,7 @@ function initRouteMap() {
         addNewRowButton.find("span").click(function () {
             if (Round === 3) setRouteMapRow();
             else {
-                setTechProcessJsonRounds_1_2( {response: [{}]}, $table)
+                setTechProcessJsonRounds_1_2( [{}], $table)
             }
             setActionToBar({
                 id: "addTechRow",
@@ -274,7 +274,7 @@ function saveTechProcessTableRound_1_2($table) {
 
     });
 
-    console.log(saveObj.toString());
+    console.log(saveObj);
 
     $.ajax({
         url: 'ajax/save_route_map_1_2',
@@ -694,8 +694,8 @@ function setTechProcessJsonRounds_1_2(res, $table) {
     console.log(res);
     let $tbody = $("#tech_process_table tbody");
     let $lastTr = $tbody.find('tr:last');
-    if (res.response.length){
-        res.response.forEach(function (row) {
+    if (res.length){
+        res.forEach(function (row) {
             $(combineRowFor_1_2Rounds({name: row.name, equipment: row.equipment, tools: row.tools})).insertBefore($lastTr);
         })
     }
