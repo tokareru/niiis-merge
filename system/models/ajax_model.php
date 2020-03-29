@@ -15,15 +15,14 @@ class ajax_model extends model {
     }
     function save_route_map_1_2(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            return $_POST;
             $sql ="INSERT INTO route_map_1_2 (name,equipment,tools) VALUES ";
-            foreach($_POST as $row){
-                $sql .= "(".$row["name"].",".$row["equipment"].",".$row["tools"]."),";
+            foreach($_POST["data"] as $row){
+                $sql .= "('".$row["name"]."','".$row["equipment"]."','".$row["tools"]."'),";
             }
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            return array("response" => $sql);
+            return array("response" => 200);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }  
