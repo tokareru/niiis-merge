@@ -103,7 +103,7 @@ $( function() {
 			let id2 = $("#tabs div div div ")[i].parentElement.id.substr(7,1);
 			arr.push({name: name, id1: parseInt(id1), id2: parseInt(id2)});
 		}
-		Send(JSON.stringify(arr));
+		Send(arr);
 		//save_technologist_info
 	});
 
@@ -114,7 +114,7 @@ $( function() {
 			type: "POST",
 			url: "save_technologist_info",
 			dataType: "json",
-			data:{data},
+			data:{data:data},
 			success: function (answer) {
 				console.log(answer);
 			}

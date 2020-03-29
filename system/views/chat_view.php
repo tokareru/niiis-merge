@@ -14,7 +14,7 @@
     </div>
     <div id="chat_window" class='bg-white border border-info'>
         <div id="chat_dm">
-        <div class="chats_header bg-light"><span class="font-weight-bold">Общий чат</span></div>
+        <div class="chats_header bg-light"><span class="font-weight-bold">Системный чат</span></div>
         <div class="chat_dm_ul_div bg-dark">
             <ul class="chat_dm_ul">
 
@@ -26,7 +26,7 @@
 
                 </div>
                 <div class='bg-light' id="chat_text_button">
-                            <textarea placeholder="пиши сюда" id="chat_window_text" class="form-control-sm"></textarea>
+                            <textarea placeholder="Введите сообщение..." id="chat_window_text" class="form-control-sm"></textarea>
                             <input id="chat_window_button" role="button" type="button" class="btn-sm btn-primary">
                         </div>
         </div>

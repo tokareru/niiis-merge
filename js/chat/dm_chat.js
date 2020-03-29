@@ -2,6 +2,8 @@ function initChats() {
     initAllUsersChat();
     initDMChat(getLoginNames().length);
     Server_count = initServerCount();
+    $('#chat_text_button').hide(0);
+    $('#dm_user_0').css({"height": '110%'})
 
     //console.log('cur login: ' + login);
     /*setInterval(function () {
@@ -155,6 +157,7 @@ function initDMChat(count_users) {
     });*/
 
     $('.chat_dm_ul').on('click', 'li', function () {
+
         let $this = $(this);
         $('.chat_dm_ul').find('.dm_tabs_links_li').each(function () {
             if ($this !== this) {
@@ -170,12 +173,19 @@ function initDMChat(count_users) {
             $('#chat_dm').find($attr).scrollTop($('#chat_dm').find($attr)[0].scrollHeight);
         }
         if ($attr !== '#dm_user_0')
+        {
             $('.chats_header').html('<span class="font-italic font-weight-light" ' +
                 '">Чат с пользователем </span>' +
                 '<span class="font-weight-bold">'
                 + $('#chat_dm').find($attr).data('name_user') + '</span>');
-        else $('.chats_header').html('<span class="font-weight-bold">Общий чат</span>');
-        $('#chat_window').data({'name': $attr});
+            $('#chat_text_button').show(0);
+        }
+
+        else{
+            $('.chats_header').html('<span class="font-weight-bold">Системный чат</span>');
+            $('#chat_window').data({'name': $attr});
+            $('#chat_text_button').hide(0);
+        }
     });
 
 }
@@ -192,7 +202,7 @@ function generateDMChat(count_users) {
         if (!i) {
             $dm_li.append('<li class="dm_tabs_links_li bg-info"></li>');
             $dm_li.find('li').eq(i).append('<div class="dm_tabs_links"><a href="#dm_user_0">' +
-                'Общий чат</a></div>');
+                'Системный чат</a></div>');
             continue;
         }
         $dm_li.append('<li class="dm_tabs_links_li bg-dark"></li>');
