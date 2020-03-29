@@ -15,6 +15,9 @@ class ajax_model extends model {
     }
     function save_route_map_1_2(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "DELETE FROM route_map_1_2";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
             $sql ="INSERT INTO route_map_1_2 (name,equipment,tools) VALUES ";
             foreach($_POST["data"] as $row){
                 $sql .= "('".$row["name"]."','".$row["equipment"]."','".$row["tools"]."'),";
@@ -32,17 +35,17 @@ class ajax_model extends model {
             $result = array("id" => substr($str,-1,strlen($str) - stripos($str,'id')-2), "lvl" => substr($str,3,stripos($str,';')-3));
             return $result;
         }
-        $sql = "SELECT * FROM route_map_3 ORDER BY id";
+        $sql = "SELECT * FROM route_map_3 ORDER BY group_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
-        $lvl_id_test = array("lvl" => -1, "id" => -1);
+        $group_id = 0;
         $result = array();
         $i = -1;
         foreach($Q as $row){
             $lvl_id = get_lvl_id($row["name"]);
-            if($lvl_id_test["lvl"] != $lvl_id["lvl"] || $lvl_id_test["id"] != $lvl_id["id"]){
-                $lvl_id_test = $lvl_id;
+            if($group_id != $row["group_id"]){
+                $group_id = $row["group_id"];
                 $result[++$i] = array("name" => $lvl_id, "equipment" => array(), "tools" => array());
                 if($row["dop_type"] == "equipment"){
                     array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3));
@@ -62,20 +65,30 @@ class ajax_model extends model {
     }
     function save_route_map_3(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql ="INSERT INTO route_map_3 (name,equipment,tools) VALUES ";
-            foreach($_POST as $row){
+            $sql = "DELETE FROM route_map_3";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $i = 1;
+            $sql ="INSERT INTO route_map_3 (name,dop_id,dop_type, group_id) VALUES ";
+            foreach($_POST["data"] as $row){
                 foreach($row["equipment"] as $eq){
-                    $name = "lvl".$eq["lvl"]."id".$eq["id"];
-                    $sql .= "(".$name.",".$eq["id"].",'equipment'),";
+                    $name = "lvl".$row["name"]["lvl"]."id".$row["name"]["id"];
+                    $sql .= "('".$name."',".$eq["id"].",'equipment', ".$i."),";
                 }
                 foreach($row["tools"] as $tool){
-                    $name = "lvl".$tool["lvl"]."id".$tool["id"];
-                    $sql .= "(".$name.",".$tool["id"].",'tools'),";
+                    $name = "'lvl".$row["name"]["lvl"]."id".$row["name"]["id"]."'";
+                    $sql .= "(".$name.",".$tool["id"].",'tools', ".$i."),";
                 }
+                if(!$row["tools"] && !$row["equipment"]){
+                    $name = "'lvl".$row["name"]["lvl"]."id".$row["name"]["id"]."'";
+                    $sql .= "(".$name.",null,'',".$i."),";
+                }
+                $i++;
             }
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
+            return array("response" => 200);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }
