@@ -155,11 +155,13 @@
 
 .spanTextLogin {
     /*font-weight: bold;*/
+    font-size: 14px;
 }
 
 .spanTextDate {
     /*font-style: italic;
     font-weight: lighter;*/
+    font-size: 12px;
 }
 
 .my_ui-tabs-tab {
