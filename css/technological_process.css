@@ -73,6 +73,10 @@ ul, #myUL {
     min-height: 40px;
 }
 
+.techField{
+    cursor: pointer;
+}
+
 .techProcessCellTools ul{
     font-size: 1.3em;
     min-height: 40px;

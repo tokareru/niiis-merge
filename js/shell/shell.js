@@ -8,6 +8,7 @@ let LoginChange;
 window.namerole;
 let prepareShellIsFinished = false;
 let FirstInit = true;
+let AllInfo = [];
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});
@@ -88,6 +89,8 @@ async function prepareShell(json_role_and_round, add_data) {
     Round = round;
     LoginChange = loginChange;
     DateChange = dateChange;
+    AllInfo = getLoginNames("allInfo");
+    console.log(AllInfo)
 
     if (FirstInit) $("#shell").on("updateShell", function () {
         updateShell();
