@@ -32,7 +32,7 @@ class ajax_model extends model {
     }
     function get_route_map_3(){
         function get_lvl_id($str){
-            $result = array("id" => substr($str,-1,strlen($str) - stripos($str,'id')-2), "lvl" => substr($str,3,stripos($str,';')-3));
+            $result = array("id" => substr($str,-1,strlen($str) - stripos($str,'id')-2), "lvl" => substr($str,3,stripos($str,'id')-3));
             return $result;
         }
         $sql = "SELECT * FROM route_map_3 ORDER BY group_id";
