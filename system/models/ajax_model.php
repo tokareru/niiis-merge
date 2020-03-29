@@ -76,7 +76,7 @@ class ajax_model extends model {
                     $sql .= "('".$name."',".$eq["id"].",'equipment', ".$i."),";
                 }
                 foreach($row["tools"] as $tool){
-                    $name = "'lvl".$tool["lvl"]."id".$tool["id"]."'";
+                    $name = "'lvl".$row["name"]["lvl"]."id".$row["name"]["id"]."'";
                     $sql .= "(".$name.",".$tool["id"].",'tools', ".$i."),";
                 }
                 if(!$row["tools"] && !$row["equipment"]){
