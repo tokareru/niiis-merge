@@ -13,7 +13,7 @@ function initProductionTaskField () {
 
             let tableInfo = json.table;
 
-            let html = downloadHTML("pages/production_task_field_table")
+            let html = downloadHTML("pages/production_task_field_table");
             $("#prod_task_table_container").append(html);
             generateTable(tableInfo, {
                 table_block: "#prod_task_table_block",
