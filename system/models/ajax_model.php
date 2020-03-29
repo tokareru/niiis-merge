@@ -62,20 +62,25 @@ class ajax_model extends model {
     }
     function save_route_map_3(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql ="INSERT INTO route_map_3 (name,equipment,tools) VALUES ";
-            foreach($_POST as $row){
+            $sql ="INSERT INTO route_map_3 (name,dop_id,dop_type) VALUES ";
+            foreach($_POST["data"] as $row){
                 foreach($row["equipment"] as $eq){
                     $name = "lvl".$eq["lvl"]."id".$eq["id"];
-                    $sql .= "(".$name.",".$eq["id"].",'equipment'),";
+                    $sql .= "('".$name."',".$eq["id"].",'equipment'),";
                 }
                 foreach($row["tools"] as $tool){
-                    $name = "lvl".$tool["lvl"]."id".$tool["id"];
+                    $name = "'lvl".$tool["lvl"]."id".$tool["id"]."'";
                     $sql .= "(".$name.",".$tool["id"].",'tools'),";
+                }
+                if(!$row["tools"] && !$row["equipment"]){
+                    $name = "'lvl".$tool["lvl"]."id".$tool["id"]."'";
+                    $sql .= "(".$name.",null,''),";
                 }
             }
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
+            return array("response" => 200);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }
