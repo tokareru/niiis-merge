@@ -35,11 +35,11 @@ class ajax_model extends model {
             $result = array("id" => substr($str,-1,strlen($str) - stripos($str,'id')-2), "lvl" => substr($str,3,stripos($str,';')-3));
             return $result;
         }
-        $sql = "SELECT * FROM route_map_3 ORDER BY id";
+        $sql = "SELECT * FROM route_map_3 ORDER BY group_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
-        $lvl_id_test = array("lvl" => -1, "id" => -1);
+        $lvl_id_test = array("id" => -1, "lvl" => -1);
         $result = array();
         $i = -1;
         foreach($Q as $row){
@@ -68,20 +68,22 @@ class ajax_model extends model {
             $sql = "DELETE FROM route_map_3";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql ="INSERT INTO route_map_3 (name,dop_id,dop_type) VALUES ";
+            $i = 1;
+            $sql ="INSERT INTO route_map_3 (name,dop_id,dop_type, group_id) VALUES ";
             foreach($_POST["data"] as $row){
                 foreach($row["equipment"] as $eq){
-                    $name = "lvl".$eq["lvl"]."id".$eq["id"];
-                    $sql .= "('".$name."',".$eq["id"].",'equipment'),";
+                    $name = "lvl".$row["name"]["lvl"]."id".$row["name"]["id"];
+                    $sql .= "('".$name."',".$eq["id"].",'equipment', ".$i."),";
                 }
                 foreach($row["tools"] as $tool){
-                    $name = "'lvl".$tool["lvl"]."id".$tool["id"]."'";
-                    $sql .= "(".$name.",".$tool["id"].",'tools'),";
+                    $name = "'lvl".$row["name"]["lvl"]."id".$row["name"]["id"]."'";
+                    $sql .= "(".$name.",".$tool["id"].",'tools', ".$i."),";
                 }
                 if(!$row["tools"] && !$row["equipment"]){
-                    $name = "'lvl".$tool["lvl"]."id".$tool["id"]."'";
-                    $sql .= "(".$name.",null,''),";
+                    $name = "'lvl".$row["name"]["lvl"]."id".$row["name"]["id"]."'";
+                    $sql .= "(".$name.",null,'',".$i."),";
                 }
+                $i++;
             }
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
