@@ -109,12 +109,12 @@ $( function() {
 
 
 
-	function Send(arr) {
+	function Send(data) {
 		$.ajax({
 			type: "POST",
 			url: "save_technologist_info",
 			dataType: "json",
-			data:arr,
+			data:{data},
 			success: function (answer) {
 				console.log(answer);
 			}
