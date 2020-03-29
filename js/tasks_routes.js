@@ -362,7 +362,7 @@ function addTaskToDB() {
                     $('#chat_window_text').val('Ошибка загрузки');
                 }
             });
-            //$('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
+            $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
         }
     })
 }
