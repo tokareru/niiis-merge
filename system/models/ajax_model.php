@@ -72,7 +72,7 @@ class ajax_model extends model {
             $sql ="INSERT INTO route_map_3 (name,dop_id,dop_type, group_id) VALUES ";
             foreach($_POST["data"] as $row){
                 foreach($row["equipment"] as $eq){
-                    $name = "lvl".$row["lvl"]."id".$row["id"];
+                    $name = "lvl".$row["name"]["lvl"]."id".$row["name"]["id"];
                     $sql .= "('".$name."',".$eq["id"].",'equipment', ".$i."),";
                 }
                 foreach($row["tools"] as $tool){
@@ -80,7 +80,7 @@ class ajax_model extends model {
                     $sql .= "(".$name.",".$tool["id"].",'tools', ".$i."),";
                 }
                 if(!$row["tools"] && !$row["equipment"]){
-                    $name = "'lvl".$row["lvl"]."id".$row["id"]."'";
+                    $name = "'lvl".$row["name"]["lvl"]."id".$row["name"]["id"]."'";
                     $sql .= "(".$name.",null,'',".$i."),";
                 }
                 $i++;
