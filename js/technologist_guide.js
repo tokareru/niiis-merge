@@ -76,6 +76,15 @@ function setTechnologistGuide(json, add_data) {
         }
     });
 
+    $(".techOperationsGuide").draggable({
+        helper: 'clone',
+        appendTo: ".tech_process_table",
+        drag: function (event, ui) {
+            let $helper =$ (ui.helper);
+            $helper.css("list-style-type", "none");
+        }
+    });
+
 
     field.trigger("endOfInitialization");
 }
@@ -92,9 +101,15 @@ function createTechGuideNodes(tech) {
             //console.log(child);
 
             let fields = '';
+            let fieldType = "instruments_list_li";
+            if (child.name === "Техоперации"){
+                fieldType = "techOperationsGuide";
+            }
+
             child.fields.forEach(function (ins) {
+
                 fields +=
-                    "<li tech-lvl='" + ins.lvl + "' tech-id='" + ins.id + "' class='lastChild instruments_list_li'>" +
+                    "<li tech-lvl='" + ins.lvl + "' tech-id='" + ins.id + "' class='lastChild " + fieldType + "'>" +
                     "<span>" + ins.name + "</span>" +
                     "</li>";
             });

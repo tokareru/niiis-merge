@@ -109,8 +109,9 @@ function initTechProcessForProductionTask() {
 }
 
 function setTechProcessForProductionTask() {
+    //ajax/get_techproccess
     $.ajax({
-        url: 'ajax/get_techproccess',
+        url: 'json/tech_process.json',
         type: 'GET',
         success: function (json) {
             //console.log(json);
@@ -176,7 +177,7 @@ function initProductionTask_1_2_Rounds() {
     nameUsers.forEach(function (user, index) {
         $.ajax({
             type: "GET",
-            url: "json/production_task.json",
+            url: "ajax/get_production_task_1_2",
             dataType: "json",
             data: {
                 login: user.login
@@ -285,7 +286,7 @@ function saveProductionTable_1_2_Rounds($table) {
 
     $.ajax({
         type: 'POST',
-        url: '',
+        url: 'ajax/save_production_task_1_2',
         data: {
             productTasks: saveData,
             login: userLogin
