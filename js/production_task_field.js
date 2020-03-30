@@ -154,7 +154,6 @@ function setTechProcessForProductionTask() {
                 $(".techOperation").draggable({
                     helper: 'clone',
                     items: "li",
-                    appendTo: "#workers_drop_area",
                     drag: function (event, ui) {
                         let $helper =$ (ui.helper);
                         $helper.css("list-style-type", "none");
