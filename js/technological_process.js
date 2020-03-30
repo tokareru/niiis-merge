@@ -177,8 +177,8 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
                     let $this = $(this);
                     fields.push({
                         name: $this.find("span").first().text(),
-                        id: $this.attr("tech-lvl"),
-                        lvl: $this.attr("tech-id")
+                        id: $this.attr("tech-id"),
+                        lvl: $this.attr("tech-lvl")
                     })
                 });
                 nodes.push({
