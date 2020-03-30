@@ -73,7 +73,7 @@ function initProductionTask_3_Rounds() {
             });
     } else{
         $.ajax({
-            url: "json/production_task_3.json",
+            url: "ajax/get_production_task_3",
             type: 'GET',
             data:{
                 login: login
@@ -356,15 +356,16 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
             });
 
             console.log(saveData);
+            console.log(user.login);
             $.ajax({
                 type: 'POST',
-                url: '',
+                url: 'ajax/save_production_task_3',
                 data: {
                     tasks: saveData,
                     login: user.login
                 },
                 success: function (res) {
-                    //console.log(res)
+                    console.log(res)
                 }
             })
 
