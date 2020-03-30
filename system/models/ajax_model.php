@@ -195,10 +195,12 @@ class ajax_model extends model {
     }
     function save_route_type(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            foreach($_POST as $row){
-                $sql = "UPDATE ROUTE set active_sign = :active_sign where id = :id";
+            foreach($_POST["data"] as $row){
+                $acive_sign = ($row["status"] == 'finished') ? 0 : 1;
+                $sql = "UPDATE ROUTE set active_sign = '".$acive_sign."' where id = ".$row["id"];
                 $q = sys::$PDO->prepare($sql);
-                $q->execute(array("active_sign" => ($row["status"] == 'finished') ? "'0'" : "'1'", "id" => $row["id"]));
+                $q->execute();
+                echo $sql;
             }
             
         }else{
