@@ -81,7 +81,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
     </style>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
-<body class='bg-light' style="overflow-y: scroll">
+<body class='bg-light'>
 <nav id="tabs" class="navbar navbar-expand-xl navbar-dark sticky-top mb-xl-2 bg-dark opacity-98">
     <button class="navbar-toggler outline-none" type="button" data-toggle="collapse" data-target="#navbarToggler"
             aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
