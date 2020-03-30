@@ -362,7 +362,7 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                 type: 'POST',
                 url: 'ajax/save_production_task_3',
                 data: {
-                    tasks: saveData,
+                    productTasks: saveData,
                     login: user.login
                 },
                 success: function (res) {
