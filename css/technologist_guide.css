@@ -47,6 +47,17 @@
 
 }
 
+.techOperationsGuide{
+    cursor: pointer;
+    list-style: disc;
+    margin-left: 2rem !important;
+}
+
+.techOperationsGuide:hover{
+    color: white !important;
+    background-color: #515356 !important;
+}
+
 .detailChildren:hover{
     background-color: black;
     color: white;
