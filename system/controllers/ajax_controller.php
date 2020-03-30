@@ -23,6 +23,10 @@ class ajax_controller extends Controller {
     $data = $this->model->save_route_map_3();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
+  function save_route_type(){
+    $data = $this->model->save_route_type();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
   function save_route(){
     $data = $this->model->save_route();
     $this->view->render('', 'ajax_view_json.php', $data);

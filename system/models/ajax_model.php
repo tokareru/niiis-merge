@@ -193,6 +193,18 @@ class ajax_model extends model {
             return array("response"=>"NOT FOUND GET REQUEST");
         }
     }
+    function save_route_type(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            foreach($_POST as $row){
+                $sql = "UPDATE ROUTE set active_sign = :active_sign where id = :id";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute(array("active_sign" => ($row["status"] == 'finished') ? "'1'" : "'0'", "id" => $row["id"]));
+            }
+            
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }
+    }
     function save_progressbar_actions(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
             $sql = "INSERT INTO LOGS (login, operation_id, type, field, text)
