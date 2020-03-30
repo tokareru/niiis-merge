@@ -21,8 +21,6 @@
     <div id="prod_task_table_container">
 
     </div>
-
-    <input type="button" class="btn-dark btn" value="Сохранить" id="product_task_save_button">
   </div>
   <div id="production_task_body_round_3">
     <div class='spec_header'>Задание на производство</div>

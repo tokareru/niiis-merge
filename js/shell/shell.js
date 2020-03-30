@@ -3,6 +3,7 @@
 let Round;
 let login = "";
 let Role;
+let Name = "";
 let DateChange;
 let LoginChange;
 window.namerole;

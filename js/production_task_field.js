@@ -4,6 +4,7 @@ function initProductionTaskField () {
         initProductionTask_1_2_Rounds();
     else{
         $("#production_task_body_round_1_2").remove();
+        if (Role !== "production_master") $("#product_task_save_button").remove();
         getJsonByURL(techGuideURL, function (json) {
             techGuideJson = json;
             initProductionTask_3_Rounds();
@@ -72,10 +73,10 @@ function initProductionTask_3_Rounds() {
 }
 
 function combineWorkerTaskNode(data = { name: "", lvl: "", id: ""}) {
-
+    let deleteButton = (Role === "production_master") ? `<span class="deleteNodeButtonRM"></span>` : ``;
     return `
         <li tech-id="${data.id}" tech-lvl="${data.lvl}">
-            <span class="mr-2">${data.name}</span><span class="deleteNodeButtonRM"></span>
+            <span class="mr-2">${data.name}</span>${deleteButton}
         </li>
     `
 }
@@ -116,15 +117,16 @@ function setTechProcessForProductionTask() {
             let $field = $("#product_tech_process_field_drop");
             setAllTechProcess(json, $field, "product_tech_process_field_drop");
 
-            $(".techField").draggable({
-                helper: 'clone',
-                items: "li",
-                drag: function (event, ui) {
-                    let $helper =$ (ui.helper);
-                    $helper.css("list-style-type", "none");
-                    $helper.addClass("w-100");
-                }
-            })
+            if (Role === "production_master")
+                $(".techField").draggable({
+                    helper: 'clone',
+                    items: "li",
+                    appendTo: "#workers_drop_area",
+                    drag: function (event, ui) {
+                        let $helper =$ (ui.helper);
+                        $helper.css("list-style-type", "none");
+                    }
+                })
         }
     });
 }
@@ -136,12 +138,23 @@ function initProductionTask_1_2_Rounds() {
 
     let selectUserBody = $("#productionTaskSelectUserBody");
     let nameUsers = [];
-    AllInfo.forEach(function (user) {
-        if (user.role === "worker") nameUsers.push(user)
-    });
+    if (Role === "production_master")
+        AllInfo.forEach(function (user) {
+            if (user.role === "worker") nameUsers.push(user)
+        });
+    else{
+        selectUserBody.attr("disabled", "disabled");
+        $("#product_task_save_button").remove();
+        nameUsers.push({
+            name: login,
+            login: login,
+            role: Role,
+            roleName: "Мастер производства"
+        })
+    }
 
     nameUsers.forEach(function (user,index) {
-        selectUserBody.append(`<option value='production-current-user-${index}'>${user.name}</option>`);
+        selectUserBody.append(`<option value='production-current-user-${index}'>${user.login}</option>`);
     });
 
     selectUserBody.change(function (e) {
@@ -169,6 +182,7 @@ function initProductionTask_1_2_Rounds() {
                 login: user.login
             },
             success: function (json) {
+
                 setProductionTable_1_2_Rounds($tableBlock, `production-current-user-${index}`, json, user.login);
                 if (index)
                     $(`#production-current-user-${index}`).hide();
@@ -182,16 +196,28 @@ function initProductionTask_1_2_Rounds() {
         })
     });
 
-    $tableBlock.on("click", "#addNewRowToProdTableButton", function () {
+    $tableBlock.on("click", ".addNewRowToProdTableButton", function () {
         let $trs = $("#prod_task_table_container").find(`#${$("#productionTaskSelectUserBody").val()}`).find("tbody tr");
         let lastTr = $trs.last();
-        $(combineRowForProdTable()).insertBefore(lastTr)
+        $(combineRowForProdTable()).insertBefore(lastTr);
+        setActionToBar({
+            id: "addNewRowToProductTable",
+            type: "addNew",
+            field: "Задание на производство",
+            text: "Добавлена новая строка в таблицу"
+        })
     });
 
     $tableBlock.on("click", ".deleteNodeButtonRM", function () {
         let $this = $(this);
         let row = $this.parent().parent();
         row.remove();
+        setActionToBar({
+            id: "deleteRowToProductTable",
+            type: "delete",
+            field: "Задание на производство",
+            text: "Удалена строка из таблицы"
+        })
     });
 
     $(`#production_task_body`).on("click", "#product_task_save_button", function () {
@@ -216,18 +242,24 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
             trs = combineRowForProdTable({name: "", job: "", techOperation: "", task: ""});
         }
     //console.log(trs)
+    let emptyTd = '';
+    let newButton = "";
+    if (Role === "production_master"){
+       emptyTd = `<td></td>`;
+       newButton = `<tr style="width: 45px;">
+                        <td style="padding-left: 14px;" class="font-family-fontAwesome font-size-12-em fa-plus addNewRowToProdTableButton"></td>
+                    </tr>`
+    }
+
     $tableBlock.append(`
         <div id="${id}" user-login="${userLogin}">
             <table class="table table-bordered table-hover">
                 <thead>
-                    <tr class="font-weight-bold"><td></td><td>ФИО</td><td>Должность</td><td>Техоперации</td><td>Задание</td></tr>
+                    <tr class="font-weight-bold">${emptyTd}<td>ФИО</td><td>Должность</td><td>Техоперации</td><td>Задание</td></tr>
                 </thead>
                 <tbody>
                     ${trs}
-                    <tr style="width: 45px;">
-                        <td style="padding-left: 14px;" class="font-family-fontAwesome font-size-12-em fa-plus" 
-                        id="addNewRowToProdTableButton"></tdclass></td>
-                    </tr>
+                    ${newButton}
                 </tbody>
             </table>
         </div>
@@ -259,7 +291,13 @@ function saveProductionTable_1_2_Rounds($table) {
             login: userLogin
         },
         success: function (res) {
-
+            //console.log(res)
+            setActionToBar({
+                id: "saveWorkerTaskRound3",
+                type: "save",
+                field: "Задание на производство",
+                text: "Задания сохранены"
+            })
         }
     })
 }
@@ -286,11 +324,17 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                     login: user.login
                 },
                 success: function (res) {
-
+                    //console.log(res)
                 }
             })
 
         });
+    setActionToBar({
+        id: "saveWorkerTaskRound3",
+        type: "save",
+        field: "Задание на производство",
+        text: "Задания сохранены"
+    })
 }
 
 function deleteWorkerTask($span) {
@@ -308,9 +352,10 @@ function deleteWorkerTask($span) {
 
 function combineRowForProdTable(row = {name: "", job: "", techOperation: "", task: ""}) {
     let disabled = (Role !== "production_master") ? `disabled` : ``;
+    let deleteButton = (Role === "production_master") ? `<td><span class="font-family-fontAwesome font-size-12-em deleteNodeButtonRM"></span></td>` : ``;
     return `
         <tr class="prodRows">
-            <td><span class="font-family-fontAwesome font-size-12-em deleteNodeButtonRM"></span></td>
+            ${deleteButton}
             <td><input ${disabled} class="bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.name}"></td>
             <td><input ${disabled} class="bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.job}"</td>
             <td><input ${disabled} class="bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.techOperation}"</td>
