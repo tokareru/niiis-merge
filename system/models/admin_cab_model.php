@@ -86,9 +86,49 @@ class admin_cab_model extends model {
     }
 
     function pdm_edit() {
-        return array("content" => array("page" => "pdm_edit"));
+        $sql = "SELECT id, model_name FROM PRODUCT";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        return $q->fetchAll();
     }
-
+    
+    function get_pdm_edit() {
+        $sql = "SELECT p.model_name, p.path_3d, p.description, u.login, t.type, t.id as type_id FROM PRODUCT as p LEFT JOIN
+                USERS as u on u.id = p.user_id LEFT JOIN
+                product_type as t on t.id = p.type_id
+                WHERE p.id = :id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("id" => $_REQUEST["id"]));
+        $Q = $q->fetchAll();
+        $product = $Q[0];
+        
+        $sql = "SELECT id, type FROM product_type"; 
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $type = $q->fetchAll();
+        $type_options = "";
+        foreach ($type as $row) {
+            $type_options.= '<option value="'.$row["id"].'" ';
+            if($row["id"] == $product["type_id"])
+            {
+                $user_options.="selected";
+            }
+            $type_options.= ' >'.$row["type"].'</option>';
+        }
+            $result = ' <div class="row">
+                        <div class="col-2">Название</div> 
+                        <div class="col-3"><input class="form-control form-control-sm" id = "model_name" value="'.$product["model_name"].'"></div></div>
+                        <div class="row">
+                        <div class="col-2">Путь к 3Д моделе</div>
+                        <div class="col-3"><textarea class="form-control form-control-sm" id = "path_3d" rows = "3">'.$product["path_3d"].'</textarea></div></div>
+                        <div class="row">
+                        <div class="col-2">Описание</div>    
+                        <div class="col-3"><input class="form-control form-control-sm" id = "description" value="'.$product["description"].'"></div></div>
+                        <div class="row">
+                        <div class="col-2">Тип детали </div>    
+                        <div class="col-3"><select class="form-control form-control-sm" id = "type">'.$type_options.'</select></div></div>';
+        return $result;
+    }
     function technologist_guide_edit() {
 
 //        function get_array_from_string($string) {
