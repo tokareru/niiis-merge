@@ -15,6 +15,9 @@ class ajax_model extends model {
     }
     function save_production_task_1_2(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "delete from production_task_1_2 where login = :login";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("login" => $_POST["login"]));
            $sql = "INSERT INTO production_task_1_2 (login, name, job, techoperation, task) VALUES ";
            foreach($_POST["productTasks"] as $row){
                $sql .= "('".$_POST["login"]."', '".$row["name"]."', '".$row["job"]."', '".$row["techOperation"]."', '".$row["task"]."'),";
