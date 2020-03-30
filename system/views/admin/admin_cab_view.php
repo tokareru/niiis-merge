@@ -80,6 +80,11 @@ if ($_SERVER['REQUEST_URI'] == '/') {
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link <?=($CURRENT_PAGE=='pdm_edit'?'active':'')?>" href="<?=conf::$SITE_URL?>admin_cab/pdm_edit">
+                    <i class="fas fa-user-friends"></i> Изделия
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link <?=($CURRENT_PAGE=='technologist_guide_edit'?'active':'')?>" href="<?php echo conf::$SITE_URL ?>admin_cab/technologist_guide_edit">
                     <i class="fas fa-list"></i> Справочник технолога
                   </a>
