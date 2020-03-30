@@ -147,21 +147,23 @@ class ajax_model extends model {
     function get_routes_by_login(){
 
         $response = array();
-        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and login = :login GROUP BY task_id";
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and master = :login ORDER BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
-        $response["active"] = array("master" => $_GET["login"], "task" => array());
+        $response = array();
+        $response["active"] = array();
         $task_id = 0;
         $i = -1;
         foreach($Q as $row){
             if($task_id != ($row["task_id"])){
                 $task_id = $row["task_id"];
-                $response["active"][++$i]["task"] = array(array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
-                
-            }else{
-                array_push($response["active"][$i]["task"],array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
-
+                $response["active"][++$i] = array(array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+            }
+            else{
+            array_push($response["active"][$i], array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
             }
         }
         $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0' and login = :login GROUP BY task_id";
