@@ -47,8 +47,9 @@ class ajax_model extends model {
             $q->execute(array("login" => $_POST["login"]));
             $sql = "INSERT INTO production_task_3 (login, task_id) VALUES ";
             foreach($_POST["productTasks"] as $row){
-                 $sql.= "(".$_POST["login"].", ".$row["id"]."),";
+                 $sql.= "('".$_POST["login"]."', ".$row["id"]."),";
             }
+            echo $sql;
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
