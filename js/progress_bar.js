@@ -203,5 +203,11 @@ function chooseIconClassByType(type) {
     if (type === "signIn"){
         return "fa-sign-in";
     }
+    if (type === "approve"){
+        return "fa-check";
+    }
+    if (type === "cancel"){
+        return "fa-times";
+    }
     return "fa-question"
 }

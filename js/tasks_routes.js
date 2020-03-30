@@ -70,7 +70,7 @@ async function initTasksRoutes() {
                     `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`);
                 setActionToBar({
                     id: 'eventApproveTask',
-                    type: "changeStatus",
+                    type: "approve",
                     field: "Маршруты заданий",
                     text: 'Принято задание'
                 });
@@ -91,7 +91,7 @@ async function initTasksRoutes() {
                     `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`);
                 setActionToBar({
                     id: 'eventCancelTask',
-                    type: "changeStatus",
+                    type: "cancel",
                     field: "Маршруты заданий",
                     text: 'Отклонил задание'
                 });
