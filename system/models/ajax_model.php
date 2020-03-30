@@ -15,9 +15,6 @@ class ajax_model extends model {
     }
     function save_production_task_1_2(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql = "delete from production_task_1_2 where login = :login";
-            $q = sys::$PDO->prepare($sql);
-            $q->execute(array("login" => $_POST["login"]));
            $sql = "INSERT INTO production_task_1_2 (login, name, job, techoperation, task) VALUES ";
            foreach($_POST["productTasks"] as $row){
                $sql .= "('".$_POST["login"]."', '".$row["name"]."', '".$row["job"]."', '".$row["techOperation"]."', '".$row["task"]."'),";
@@ -150,7 +147,7 @@ class ajax_model extends model {
         $response = array();
         $response["active"] = array();
         $response["finished"] = array();
-        $sql = "SELECT * FROM ROUTE WHERE status = 'active' ORDER BY task_id";
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' ORDER BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
@@ -160,45 +157,28 @@ class ajax_model extends model {
             if($task_id != ($row["task_id"])){
                 $task_id = $row["task_id"];
                 $response["active"][++$i] = array(array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
             else{
             array_push($response["active"][$i], array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
         }
-        $sql = "SELECT * FROM ROUTE WHERE status = 'finished'";
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0'";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
-
-       $i = -1;
-        foreach($Q as $row){
-            if($task_id != ($row["task_id"])){
-                $task_id = $row["task_id"];
-                $response["finished"][++$i] = array(array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
-            }
-            else{
-            array_push($response["finished"][$i], array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
-            }
-        }
-        $sql = "SELECT * FROM ROUTE WHERE status = 'nonactive'";
-        $q = sys::$PDO->prepare($sql);
-        $q->execute();
-        $Q = $q->fetchAll();
-
+        $task_id = 0;
         $i = -1;
         foreach($Q as $row){
             if($task_id != ($row["task_id"])){
                 $task_id = $row["task_id"];
-                $response["nonactive"][++$i] = array(array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+                $response["finished"][++$i] = array(array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
             else{
-            array_push($response["nonactive"][$i], array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+            array_push($response["finished"][$i], array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
         }
         return array("response"=>$response);
@@ -206,7 +186,7 @@ class ajax_model extends model {
     function get_routes_by_login(){
 
         $response = array();
-        $sql = "SELECT * FROM ROUTE WHERE status = 'active' and master = :login ORDER BY task_id";
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and master = :login ORDER BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
@@ -218,45 +198,29 @@ class ajax_model extends model {
             if($task_id != ($row["task_id"])){
                 $task_id = $row["task_id"];
                 $response["active"][++$i] = array(array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
             else{
             array_push($response["active"][$i], array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
         }
-        $sql = "SELECT * FROM ROUTE WHERE status = 'finished' and login = :login GROUP BY task_id";
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0' and login = :login GROUP BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
         $response["finished"] = array("master" => $_GET["login"], "task" => array());
-         $i = -1;
+        $task_id = 0;
+        $i = -1;
         foreach($Q as $row){
             if($task_id != ($row["task_id"])){
                 $task_id = $row["task_id"];
                 $response["finished"][++$i] = array(array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
             else{
             array_push($response["finished"][$i], array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
-            }
-        }
-        $sql = "SELECT * FROM ROUTE WHERE status = 'nonactive' and login = :login GROUP BY task_id";
-        $q = sys::$PDO->prepare($sql);
-        $q->execute(array("login" => $_GET["login"]));
-        $Q = $q->fetchAll();
-        $response["nonactive"] = array("master" => $_GET["login"], "task" => array());
-         $i = -1;
-        foreach($Q as $row){
-            if($task_id != ($row["task_id"])){
-                $task_id = $row["task_id"];
-                $response["nonactive"][++$i] = array(array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
-            }
-            else{
-            array_push($response["nonactive"][$i], array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
         }
         
