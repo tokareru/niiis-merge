@@ -7,6 +7,14 @@ class ajax_controller extends Controller {
     $this->model = new ajax_model();
     $this->view = new View();
   }
+  function get_production_task_1_2(){
+    $data = $this->model->get_production_task_1_2();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function save_production_task_1_2(){
+    $data = $this->model->save_production_task_1_2();
+    $this->view->render('', 'ajax_view_json.php', $data); 
+  }
   function get_route_map_1_2(){
     $data = $this->model->get_route_map_1_2();
     $this->view->render('', 'ajax_view_json.php', $data);
