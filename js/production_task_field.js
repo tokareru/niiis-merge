@@ -2,11 +2,17 @@
 function initProductionTaskField () {
     if (Round < 3)
         initProductionTask_1_2_Rounds();
-    else initProductionTask_3_Rounds();
+    else{
+        $("#production_task_body_round_1_2").remove();
+        getJsonByURL(techGuideURL, function (json) {
+            techGuideJson = json;
+            initProductionTask_3_Rounds();
+        }, {});
+    }
+
 }
 
 function initProductionTask_3_Rounds() {
-    $("#production_task_body_round_1_2").remove();
     initTechProcessForProductionTask();
     let $workers_drop = $("#workers_drop_area");
     let nameUsers = [];
@@ -16,35 +22,67 @@ function initProductionTask_3_Rounds() {
 
     if (nameUsers.length)
         nameUsers.forEach(function (user) {
-            $workers_drop.append(combineWorkerNode(user));
+            $.ajax({
+                url: "json/production_task_3.json",
+                type: 'GET',
+                data:{
+                    login: user.login
+                },
+                success: function (json) {
+                    $workers_drop.append(combineWorkerNode(user));
+                    let lastOperations = "";
+                    if (json !== null)
+                        if (json.tasks.length)
+                            json.tasks.forEach(function (task) {
+                                lastOperations += combineWorkerTaskNode(getTechField(task.id, 3));
+                            });
+                    let $operationsForWorker = $workers_drop.find(".operationsForWorker").last();
+                    $operationsForWorker.append(lastOperations);
+
+                    setToggler("workers_drop_area");
+                    $workers_drop.find(".operationsForWorker").droppable({
+                        tolerance: "touch",
+                        drop: function (e, ui) {
+                            let $draggable = $(ui.draggable);
+                            let $this = $(this);
+                            $this.append(combineWorkerTaskNode(getTechField( $draggable.attr("tech-id"), $draggable.attr("tech-lvl"))));
+                            let userName = $this.parent().attr("user-login");
+                            let operationName = $draggable.find("span").first().text();
+
+                            setActionToBar({
+                                id: "addTaskForWorker",
+                                type: "addNew",
+                                field: "Задание на производство",
+                                text: `Пользователю '${userName}' добавили оперецию '${operationName}'`
+                            })
+
+                        }
+                    });
+                    $workers_drop.find("span.caret").not(".caret-down").trigger("click");
+                }
+            });
         });
 
-    $workers_drop.find(".operationsForWorker").droppable({
-        tolerance: "touch",
-        drop: function (e, ui) {
-            let $draggable = $(ui.draggable);
-            let $this = $(this);
-            console.log(getTechField( $draggable.attr("tech-id"), $draggable.attr("tech-lvl")))
-            $this.append(combineWorkerTaskNode(getTechField( $draggable.attr("tech-id"), $draggable.attr("tech-lvl"))))
-        }
-    });
-
-    setToggler("workers_drop_area");
-    $workers_drop.find("span.caret").trigger("click");
+    $(`#production_task_body`).on("click", "#product_task_save_button", function () {
+        saveProductionTable_3_Round(nameUsers);
+    })
+        .on("click", ".deleteNodeButtonRM", function () {
+        deleteWorkerTask($(this));
+    })
 }
 
 function combineWorkerTaskNode(data = { name: "", lvl: "", id: ""}) {
 
     return `
         <li tech-id="${data.id}" tech-lvl="${data.lvl}">
-            <span>${data.name}</span>
+            <span class="mr-2">${data.name}</span><span class="deleteNodeButtonRM"></span>
         </li>
     `
 }
 
 function combineWorkerNode(user = {name: "", login: "", role: "", roleName: ""}) {
     return `
-        <li>
+        <li user-login="${user.login}">
             <span class="caret">${user.name}</span>
             <ul  style='min-height: 35px;' class='nested border-bottom pb-2 operationsForWorker'>
                 
@@ -54,7 +92,7 @@ function combineWorkerNode(user = {name: "", login: "", role: "", roleName: ""})
 }
 
 function initTechProcessForProductionTask() {
-    if (Role !== "technologist"){
+    /*if (Role !== "technologist"){
         $.ajax({
             url: techGuideURL,
             type: 'GET',
@@ -65,7 +103,8 @@ function initTechProcessForProductionTask() {
         });
     }else {
         setTechProcessForProductionTask();
-    }
+    }*/
+    setTechProcessForProductionTask();
 }
 
 function setTechProcessForProductionTask() {
@@ -83,7 +122,7 @@ function setTechProcessForProductionTask() {
                 drag: function (event, ui) {
                     let $helper =$ (ui.helper);
                     $helper.css("list-style-type", "none");
-                    $helper.addClass("w-100")
+                    $helper.addClass("w-100");
                 }
             })
         }
@@ -156,7 +195,7 @@ function initProductionTask_1_2_Rounds() {
     });
 
     $(`#production_task_body`).on("click", "#product_task_save_button", function () {
-        saveProductionTable_1_2_Rounds($("#prod_task_table_container").find(`#${$("#productionTaskSelectUserBody").val()}`))
+        saveProductionTable_1_2_Rounds($("#prod_task_table_container").find(`#${$("#productionTaskSelectUserBody").val()}`));
     })
 
     /*generateTable(tableInfo, {
@@ -214,7 +253,7 @@ function saveProductionTable_1_2_Rounds($table) {
 
     $.ajax({
         type: 'POST',
-        url: 'ajax/save_route',
+        url: '',
         data: {
             productTasks: saveData,
             login: userLogin
@@ -223,7 +262,48 @@ function saveProductionTable_1_2_Rounds($table) {
 
         }
     })
+}
 
+function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", roleName: ""}]) {
+    let $workers_drop = $("#workers_drop_area");
+    //console.log(users)
+    if (users.length)
+        users.forEach(function (user = {name: "", login: "", role: "", roleName: ""}) {
+            let userLi = $workers_drop.find(`li[user-login='${user.login}']`);
+            let saveData = [];
+            userLi.find("ul li").each(function () {
+                saveData.push({
+                    id: $(this).attr("tech-id")
+                })
+            });
+
+            console.log(saveData);
+            $.ajax({
+                type: 'POST',
+                url: '',
+                data: {
+                    tasks: saveData,
+                    login: user.login
+                },
+                success: function (res) {
+
+                }
+            })
+
+        });
+}
+
+function deleteWorkerTask($span) {
+    let parent = $span.parent();
+    let userName = parent.parent().parent().attr("user-login");
+    let operationName = parent.find("span").first().text();
+    setActionToBar({
+        id: "deleteOperationForWorker",
+        type: "delete",
+        field: "Задание на производство",
+        text: `У пользователя '${userName}' удалили операцию '${operationName}'`
+    });
+    parent.remove();
 }
 
 function combineRowForProdTable(row = {name: "", job: "", techOperation: "", task: ""}) {
