@@ -66,8 +66,14 @@ async function initTasksRoutes() {
             data: {id: $id, status: 'active'},
             success: function (data) {
                 but.parents('td').html('Принято');
-                addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">принял</span> задание от пользователя `+
-                `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`)
+                addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">принял</span> задание от пользователя ` +
+                    `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`);
+                setActionToBar({
+                    id: 'eventApproveTask',
+                    type: "changeStatus",
+                    field: "Маршруты заданий",
+                    text: 'Принято задание'
+                });
             }
         })
     });
@@ -81,8 +87,14 @@ async function initTasksRoutes() {
             data: {id: $id, status: 'finished'},
             success: function (data) {
                 but.parents('td').html('Отклонено');
-                addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">отклонил</span> задание от пользователя `+
-                    `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`)
+                addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">отклонил</span> задание от пользователя ` +
+                    `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`);
+                setActionToBar({
+                    id: 'eventCancelTask',
+                    type: "changeStatus",
+                    field: "Маршруты заданий",
+                    text: 'Отклонил задание'
+                });
             }
         })
     })
@@ -141,11 +153,11 @@ function generateOwnTasks(selector) {
     let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
         '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask">Отклонить</button>';
     ownTasks.sort(function (a, b) {
-       if (a.status === "nonactive" && b.status !== 'nonactive')
-           return 1;
-       if (b.status === "nonactive" && a.status !== 'nonactive')
-           return -1;
-       return 0;
+        if (a.status === "nonactive" && b.status !== 'nonactive')
+            return 1;
+        if (b.status === "nonactive" && a.status !== 'nonactive')
+            return -1;
+        return 0;
     });
     ownTasks.reverse();
     ownTasks.forEach(function (value, index) {
@@ -154,7 +166,7 @@ function generateOwnTasks(selector) {
             `<td style="width: 30px">${index + 1}</td>` +
             `<td style="width: 300px">${value.task}</td>` +
             '<td style="width: 300px">' +
-            `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active'? 'Принят': 'Отклонен'}` +
+            `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? 'Принят' : 'Отклонен'}` +
             '</td>' +
             '</tr>');
         $tr.data({'id': value.id, 'master': value.master});
@@ -173,7 +185,7 @@ function generateTableForRoutes(data) {
         let task = value.task;
         if (task.user === login) {
             AllInfo.forEach(function (allInfo) {
-                if (value.master === allInfo.login){
+                if (value.master === allInfo.login) {
                     task.master = allInfo.roleName;
                 }
             });
@@ -184,7 +196,7 @@ function generateTableForRoutes(data) {
             `<td style="width: 230px">${task.role}</td>` +
             `<td style="width: 230px">${task.name}</td>` +
             `<td style="width: 125px">${task.task}</td>` +
-            `<td style="width: 125px">${task.status === 'nonactive' ? 'В процессе' :task.status === 'active'? 'Принято': 'Отклонено'}</td>` +
+            `<td style="width: 125px">${task.status === 'nonactive' ? 'В процессе' : task.status === 'active' ? 'Принято' : 'Отклонено'}</td>` +
             '</tr>';
     });
     table = '<table class="table table-bordered tasks_routes_routeTable">' +
@@ -338,6 +350,12 @@ function addTaskToDB() {
                 error: function () {
                     $('#chat_window_text').val('Ошибка загрузки');
                 }
+            });
+            setActionToBar({
+                id: 'addTaskToDB',
+                type: "addNew",
+                field: "Маршруты заданий",
+                text: 'Добавлен новый маршрут заданий'
             });
         }
     })
