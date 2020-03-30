@@ -139,7 +139,7 @@ function generateOwnTasks(selector) {
             `<td style="width: 30px">${index + 1}</td>` +
             `<td style="width: 300px">${value.task}</td>` +
             '<td style="width: 300px">' +
-            `${value.status === 'active' ? buttonActiveTask : 'Завершен'}` +
+            `${value.status === 'nonactive' ? buttonActiveTask : value.status}` +
             '</td>' +
             '</tr>');
         $tr.data({'id': value.id});
@@ -164,7 +164,7 @@ function generateTableForRoutes(data) {
             `<td style="width: 230px">${task.role}</td>` +
             `<td style="width: 230px">${task.name}</td>` +
             `<td style="width: 125px">${task.task}</td>` +
-            `<td style="width: 125px">${task.status === 'active' ? 'Активный' : 'Завершенный'}</td>` +
+            `<td style="width: 125px">${task.status === 'nonactive' ? 'В процессе' :task.status === 'active'? 'Принято': 'Октлонено'}</td>` +
             '</tr>';
     });
     table = '<table class="table table-bordered tasks_routes_routeTable">' +
