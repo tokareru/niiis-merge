@@ -244,10 +244,24 @@ class ajax_model extends model {
     }
     function save_route_type(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $acive_sign = ($row["status"] == 'finished') ? 0 : 1;
-            $sql = "UPDATE ROUTE set active_sign = '".$acive_sign."' where id = ".$row["id"];
+            $sql = "UPDATE ROUTE set status = '".$_POST["status"]."' where id = ".$_POST["id"];
             $q = sys::$PDO->prepare($sql);
-            $q->execute();  
+            $q->execute();
+            $sql = "SELECT STATUS FROM ROUTE WHERE TASK_ID = (SELECT TASK_ID FROM ROUTE WHERE id = :id)";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("id"=>$_POST["id"]));
+            $Q = $q->fetchAll();
+            $is_change = True;
+            foreach($Q as $row){
+                if($Q[0][0] == "nonactive"){
+                    $is_change = False;
+                }
+            }
+            if($is_change){
+                 $sql = "UPDATE ROUTE set active_sign = '0' where id = ".$_POST["id"];
+                $q = sys::$PDO->prepare($sql);
+                $q->execute();
+            }
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
         }
