@@ -24,6 +24,10 @@
     opacity: 0.98;
 }
 
+.list-style-disk{
+    list-style: disc !important;
+}
+
 #tabs li:hover{
     cursor: pointer;
 }

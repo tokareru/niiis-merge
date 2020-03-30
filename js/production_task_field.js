@@ -4,7 +4,15 @@ function initProductionTaskField () {
         initProductionTask_1_2_Rounds();
     else{
         $("#production_task_body_round_1_2").remove();
-        if (Role !== "production_master") $("#product_task_save_button").remove();
+        let $header = $("#worker_product_list_header");
+        if (Role !== "production_master"){
+            $("#product_task_save_button").remove();
+            $("#product_tech_process_field_container").parent().remove();
+            $header.text("Ваши задачи")
+        }else{
+            $header.text("Список рабочих");
+        }
+
         getJsonByURL(techGuideURL, function (json) {
             techGuideJson = json;
             initProductionTask_3_Rounds();
@@ -14,55 +22,79 @@ function initProductionTaskField () {
 }
 
 function initProductionTask_3_Rounds() {
-    initTechProcessForProductionTask();
     let $workers_drop = $("#workers_drop_area");
     let nameUsers = [];
-    AllInfo.forEach(function (user) {
-        if (user.role === "worker") nameUsers.push(user)
-    });
-
-    if (nameUsers.length)
-        nameUsers.forEach(function (user) {
-            $.ajax({
-                url: "json/production_task_3.json",
-                type: 'GET',
-                data:{
-                    login: user.login
-                },
-                success: function (json) {
-                    $workers_drop.append(combineWorkerNode(user));
-                    let lastOperations = "";
-                    if (json !== null)
-                        if (json.tasks.length)
-                            json.tasks.forEach(function (task) {
-                                lastOperations += combineWorkerTaskNode(getTechField(task.id, 3));
-                            });
-                    let $operationsForWorker = $workers_drop.find(".operationsForWorker").last();
-                    $operationsForWorker.append(lastOperations);
-
-                    setToggler("workers_drop_area");
-                    $workers_drop.find(".operationsForWorker").droppable({
-                        tolerance: "touch",
-                        drop: function (e, ui) {
-                            let $draggable = $(ui.draggable);
-                            let $this = $(this);
-                            $this.append(combineWorkerTaskNode(getTechField( $draggable.attr("tech-id"), $draggable.attr("tech-lvl"))));
-                            let userName = $this.parent().attr("user-login");
-                            let operationName = $draggable.find("span").first().text();
-
-                            setActionToBar({
-                                id: "addTaskForWorker",
-                                type: "addNew",
-                                field: "Задание на производство",
-                                text: `Пользователю '${userName}' добавили оперецию '${operationName}'`
-                            })
-
-                        }
-                    });
-                    $workers_drop.find("span.caret").not(".caret-down").trigger("click");
-                }
-            });
+    if (Role === "production_master"){
+        initTechProcessForProductionTask();
+        AllInfo.forEach(function (user) {
+            if (user.role === "worker") nameUsers.push(user)
         });
+        if (nameUsers.length)
+            nameUsers.forEach(function (user) {
+                $.ajax({
+                    url: "json/production_task_3.json",
+                    type: 'GET',
+                    data:{
+                        login: user.login
+                    },
+                    success: function (json) {
+                        $workers_drop.append(combineWorkerNode(user));
+                        let lastOperations = "";
+                        if (json !== null)
+                            if (json.tasks.length)
+                                json.tasks.forEach(function (task) {
+                                    lastOperations += combineWorkerTaskNode(getTechField(task.id, 3));
+                                });
+                        let $operationsForWorker = $workers_drop.find(".operationsForWorker").last();
+                        $operationsForWorker.append(lastOperations);
+
+                        setToggler("workers_drop_area");
+                        $workers_drop.find(".operationsForWorker").droppable({
+                            tolerance: "touch",
+                            drop: function (e, ui) {
+                                let $draggable = $(ui.draggable);
+                                let $this = $(this);
+                                $this.append(combineWorkerTaskNode(getTechField( $draggable.attr("tech-id"), $draggable.attr("tech-lvl"))));
+                                let userName = $this.parent().attr("user-login");
+                                let operationName = $draggable.find("span").first().text();
+
+                                setActionToBar({
+                                    id: "addTaskForWorker",
+                                    type: "addNew",
+                                    field: "Задание на производство",
+                                    text: `Пользователю '${userName}' добавили оперецию '${operationName}'`
+                                })
+
+                            }
+                        });
+                        $workers_drop.find("span.caret").not(".caret-down").trigger("click");
+                    }
+                });
+            });
+    } else{
+        $.ajax({
+            url: "json/production_task_3.json",
+            type: 'GET',
+            data:{
+                login: login
+            },
+            success: function (json) {
+                //$workers_drop.append(combineWorkerNode({login: login, role: Role, roleName: "Исполнитель", name: login}));
+                let lastOperations = "";
+                if (json !== null)
+                    if (json.tasks.length)
+                        json.tasks.forEach(function (task) {
+                            lastOperations += combineWorkerTaskNode(getTechField(task.id, 3));
+                        });
+                //let $operationsForWorker = $workers_drop.find(".operationsForWorker").last();
+                $workers_drop.append(lastOperations);
+                $workers_drop.find("li").addClass("list-style-disk");
+
+                setToggler("workers_drop_area");
+                $workers_drop.find("span.caret").not(".caret-down").trigger("click");
+            }
+        });
+    }
 
     $(`#production_task_body`).on("click", "#product_task_save_button", function () {
         saveProductionTable_3_Round(nameUsers);
@@ -131,8 +163,6 @@ function setTechProcessForProductionTask() {
         }
     });
 }
-
-
 
 function initProductionTask_1_2_Rounds() {
     $("#production_task_body_round_3").remove();
