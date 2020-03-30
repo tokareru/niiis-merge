@@ -270,7 +270,7 @@ class ajax_model extends model {
             $sql = "UPDATE ROUTE set status = '".$_POST["status"]."' where id = ".$_POST["id"];
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql = "SELECT STATUS FROM ROUTE WHERE TASK_ID = (SELECT TASK_ID FROM ROUTE WHERE id = :id)";
+            $sql = "SELECT STATUS, TASK_ID FROM ROUTE WHERE TASK_ID = (SELECT TASK_ID FROM ROUTE WHERE id = :id)";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("id"=>$_POST["id"]));
             $Q = $q->fetchAll();
@@ -281,7 +281,7 @@ class ajax_model extends model {
                 }
             }
             if($is_change){
-                 $sql = "UPDATE ROUTE set active_sign = '0' where id = ".$_POST["id"];
+                $sql = "UPDATE ROUTE set active_sign = '0' where task_id = ".$Q[0]["task_id"];
                 $q = sys::$PDO->prepare($sql);
                 $q->execute();
             }
