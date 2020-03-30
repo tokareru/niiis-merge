@@ -147,7 +147,7 @@ class ajax_model extends model {
         $response = array();
         $response["active"] = array();
         $response["finished"] = array();
-        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' ORDER BY task_id";
+        $sql = "SELECT * FROM ROUTE WHERE status = 'active' ORDER BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
@@ -164,7 +164,7 @@ class ajax_model extends model {
                 "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
             }
         }
-        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0'";
+        $sql = "SELECT * FROM ROUTE WHERE status = 'finished'";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
@@ -173,12 +173,21 @@ class ajax_model extends model {
             array_push($response["finished"][$row["task_id"]], array("master" => $row["master"], 
                 "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "finished")));
         }
+        $sql = "SELECT * FROM ROUTE WHERE status = 'nonactive'";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+
+        foreach($Q as $row){
+            array_push($response["nonactive"][$row["task_id"]], array("master" => $row["master"], 
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "finished")));
+        }
         return array("response"=>$response);
     }
     function get_routes_by_login(){
 
         $response = array();
-        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and master = :login ORDER BY task_id";
+        $sql = "SELECT * FROM ROUTE WHERE status = 'active' and master = :login ORDER BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
@@ -197,7 +206,15 @@ class ajax_model extends model {
                 "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
             }
         }
-        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0' and login = :login GROUP BY task_id";
+        $sql = "SELECT * FROM ROUTE WHERE status = 'finished' and login = :login GROUP BY task_id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_GET["login"]));
+        $Q = $q->fetchAll();
+        $response["finished"] = array("master" => $_GET["login"], "task" => array());
+        foreach($Q as $row){
+            array_push($response["finished"]["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+        }
+        $sql = "SELECT * FROM ROUTE WHERE status = 'nonactive' and login = :login GROUP BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
