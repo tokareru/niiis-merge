@@ -261,6 +261,26 @@ function getLoginNames(loginChoice = "login") {
             console.log('error');
         }
     });
+    if (loginChoice == "allInfo"){
+        let allInfo = [];
+        if (loginUsers.length)
+            loginUsers.forEach(function (login, index) {
+                let role = "";
+                if (roleUsers[index] === "Конструктор") role = "designer";
+                else if (roleUsers[index] === "Согласующий") role = "approver";
+                else if (roleUsers[index] === "Мастер производства") role = "production_master";
+                else if (roleUsers[index] === "Исполнитель") role = "worker";
+                else if (roleUsers[index] === "Технолог") role = "technologist";
+                allInfo.push({
+                    login: login,
+                    role: role,
+                    roleName: roleUsers[index],
+                    name: nameUsers[index]
+                })
+            });
+        return allInfo;
+    }
+
     if(loginChoice === "login")
     return loginUsers;
     else if(loginChoice === "short_name" || loginChoice === "long_name")
