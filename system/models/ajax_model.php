@@ -126,11 +126,11 @@ class ajax_model extends model {
             if($task_id != ($row["task_id"])){
                 $task_id = $row["task_id"];
                 $response["active"][++$i] = array(array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
             }
             else{
             array_push($response["active"][$i], array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "active")));
             }
         }
         $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0'";
@@ -140,22 +140,31 @@ class ajax_model extends model {
 
         foreach($Q as $row){
             array_push($response["finished"][$row["task_id"]], array("master" => $row["master"], 
-                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"])));
+                "task"=>array("user"=>$row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => "finished")));
         }
         return array("response"=>$response);
     }
     function get_routes_by_login(){
 
         $response = array();
-        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and login = :login";
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '1' and login = :login GROUP BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
         $response["active"] = array("master" => $_GET["login"], "task" => array());
+        $task_id = 0;
+        $i = -1;
         foreach($Q as $row){
-            array_push($response["active"]["task"], array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+            if($task_id != ($row["task_id"])){
+                $task_id = $row["task_id"];
+                $response["active"][++$i]["task"] = array(array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+                
+            }else{
+                array_push($response["active"][$i]["task"],array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"]));
+
+            }
         }
-        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0' and login = :login";
+        $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0' and login = :login GROUP BY task_id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_GET["login"]));
         $Q = $q->fetchAll();
