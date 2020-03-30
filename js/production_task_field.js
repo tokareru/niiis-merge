@@ -175,6 +175,7 @@ function initProductionTask_1_2_Rounds() {
     let $tableBlock = $("#prod_task_table_container");
 
     nameUsers.forEach(function (user, index) {
+        //console.log(user.login)
         $.ajax({
             type: "GET",
             url: "ajax/get_production_task_1_2",
@@ -234,6 +235,7 @@ function initProductionTask_1_2_Rounds() {
 
 function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: "", techOperation: "", task: ""}], userLogin) {
     let trs = "";
+    //console.log(data)
     if (data !== null)
         if (data.length){
             data.forEach(function (row) {
