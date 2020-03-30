@@ -2,6 +2,31 @@
 
 class ajax_model extends model {
     
+    function get_production_task_1_2(){
+        $sql = "SELECT * FROM production_task_1_2 where login = :login";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_REQUEST["login"]));
+        $Q = $q->fetchAll();
+        $response = [];
+        foreach($Q as $row){
+            array_push($response, array("name" => $row["name"], "job" => $row["job"], "techOperation" => $row["techoperation"], "task" => $row["task"]));
+        }
+        return $response;
+    }
+    function save_production_task_1_2(){
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+           $sql = "INSERT INTO production_task_1_2 (login, name, job, techoperation, task) VALUES ";
+           foreach($_POST["productTasks"] as $row){
+               $sql .= "('".$_POST["login"]."', '".$row["name"]."', '".$row["job"]."', '".$row["techOperation"]."', '".$row["task"]."'),";
+           }
+            $sql = substr($sql,0,-1);
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            return array("response" => 200);
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }  
+    }
     function get_route_map_1_2(){
         $sql = "SELECT * FROM route_map_1_2";
         $q = sys::$PDO->prepare($sql);
