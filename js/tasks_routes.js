@@ -174,7 +174,7 @@ function generateTableForRoutes(data) {
             `<td style="width: 230px">${task.role}</td>` +
             `<td style="width: 230px">${task.name}</td>` +
             `<td style="width: 125px">${task.task}</td>` +
-            `<td style="width: 125px">${task.status === 'nonactive' ? 'В процессе' :task.status === 'active'? 'Принято': 'Октлонено'}</td>` +
+            `<td style="width: 125px">${task.status === 'nonactive' ? 'В процессе' :task.status === 'active'? 'Принято': 'Отклонено'}</td>` +
             '</tr>';
     });
     table = '<table class="table table-bordered tasks_routes_routeTable">' +
