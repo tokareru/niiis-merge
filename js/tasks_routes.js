@@ -56,6 +56,28 @@ async function initTasksRoutes() {
     $('#create_task_route_saveBtn').on('click', function () {
         addTaskToDB();
     });
+    $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
+        let $id = $(this).parents('tr').data('id');
+        $.ajax({
+            url: 'ajax/save_route_type',
+            type: 'POST',
+            data: {id: $id, status: 'active'},
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
+    $('#tasks_routes').on('click', '.tasks_routes_finishedTask', function () {
+        let $id = $(this).parents('tr').data('id');
+        $.ajax({
+            url: 'ajax/save_route_type',
+            type: 'POST',
+            data: {id: $id, status: 'finished'},
+            success: function (data) {
+                console.log(data);
+            }
+        })
+    })
 
     /*   $.ajax({
            type: 'POST',
@@ -109,19 +131,24 @@ function generateOwnTasks(selector) {
         '<th>Статус</th>' +
         '</tr>' +
         '</thead><tbody></tbody>');
+    let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
+        '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask">Отклонить</button>';
     ownTasks.forEach(function (value, index) {
-        $table.find('tbody').append(
-            '<tr>' +
+        let $tr = $(
+            '<tr class="' + `${value.status !== 'active' ? 'disabled' : ''}">` +
             `<td style="width: 30px">${index + 1}</td>` +
             `<td style="width: 300px">${value.task}</td>` +
-            '<td style="width: 300px" class="p-1">' +
-            '<button class="btn bg-dark text-white float-left">Принять</button>' +
-            '<button class="btn bg-danger text-white float-right">Отклонить</button>' +
+            '<td style="width: 300px">' +
+            `${value.status === 'active' ? buttonActiveTask : 'Завершен'}` +
             '</td>' +
-            '</tr>'
+            '</tr>');
+        $tr.data({'id': value.id});
+        $table.find('tbody').append(
+            $tr
         )
     });
     $routes.append($table);
+
 }
 
 function generateTableForRoutes(data) {
@@ -132,20 +159,22 @@ function generateTableForRoutes(data) {
         if (task.user === login) {
             ownTasks.push(task);
         }
-        tr += '<tr>' +
+        tr += '<tr style="width: 700px">' +
             `<td style="width: 55px">${index + 1}</td>` +
             `<td style="width: 230px">${task.role}</td>` +
-            `<td style="width: 190px">${task.name}</td>` +
+            `<td style="width: 230px">${task.name}</td>` +
             `<td style="width: 125px">${task.task}</td>` +
+            `<td style="width: 125px">${task.status === 'active' ? 'Активный' : 'Завершенный'}</td>` +
             '</tr>';
     });
     table = '<table class="table table-bordered tasks_routes_routeTable">' +
         '<thead class="thead-light">' +
         '<tr>' +
-        '<th>№</th>' +
-        '<th>Должность</th>' +
-        '<th>Пользователь</th>' +
-        '<th>Задание</th>' +
+        '<th style="width: 55px">№</th>' +
+        '<th style="width: 230px">Должность</th>' +
+        '<th style="width: 230px">Пользователь</th>' +
+        '<th style="width: 125px">Задание</th>' +
+        '<th style="width: 125px">Статус</th>' +
         '</tr>' +
         '</thead>' +
         '<tbody>' +
@@ -155,80 +184,6 @@ function generateTableForRoutes(data) {
     return table;
 }
 
-function setTaskRoutes(json_list, type, accord_id) {
-    //console.log(json_list)
-    json_list.forEach(function (elem, i) {
-        let $div = $(accord_id);
-        $div.append(
-            "<p class='tasks_routes_button_h'>" + elem.name + "</p>" +
-            "<button class='btn btn-light tasks_routes_button' id='" + type + i.toString() + "'>" +
-            "<p><span class='tasks_routes_span_h'>Тип:</span><span class='tasks_routes_span_t'>" + elem.type + "</span></p>" +
-            "<p><span class='tasks_routes_span_h'>Состояние:</span><span class='tasks_routes_span_t'>" + elem.state + "</span></p>" +
-            "<p><span class='tasks_routes_span_h'>Инициатор:</span><span class='tasks_routes_span_t'>" + elem.initiator + "</span></p>" +
-            "<p><span class='tasks_routes_span_h'>Вр. начала:</span><span class='tasks_routes_span_t'>" + elem.start_time + "</span></p>" +
-            "<p><span class='tasks_routes_span_h'>Вр. окончания:</span><span class='tasks_routes_span_t'>" + elem.completion_time + "</span></p>" +
-            "</button>");
-        $("#" + type + i.toString()).click(function () {
-            let $composition = $("#tasks_composition").find("div")
-            $("#tasks_composition_div .table_made").empty();
-            let tbody = [];
-
-            elem.tasks.forEach(function (tasks) {
-                let row = []
-                row.push({
-                    text: tasks.number,
-                    readonly: true
-                });
-                row.push({
-                    text: tasks.type,
-                    readonly: true
-                });
-                row.push({
-                    text: tasks.task_state,
-                    readonly: true
-                });
-                row.push({
-                    text: tasks.executor,
-                    readonly: true
-                });
-                row.push({
-                    text: tasks.initiator,
-                    readonly: true
-                });
-                tbody.push({
-                    row: row
-                });
-            });
-
-            let table_info = {
-                thead: [{text: "Номер", readonly: true}, {text: "Вид", readonly: true}, {
-                    text: "Состояние",
-                    readonly: true
-                }, {text: "Исполнитель", readonly: true}, {text: "Инициатор", readonly: true}],
-                tbody: tbody
-            };
-            //console.log(table_info);
-            generateTable(table_info, {
-                table_block: "#taskRoutesBlock",
-                edit_mode_div: "#taskRoutes_edit",
-                url: "",
-                save_url: ""
-            });
-            delZeroCol("#taskRoutesBlock ");
-            //$("#taskRoutesBlock " + '.table_edit thead').find('th').first().remove();
-            /*getJsonByURL("spec_table_ajax", generateTable,
-                {table_block : "#taskRoutesBlock", edit_mode_div: "#taskRoutes_edit", url: "pages/edit_field"});*/
-        })
-
-    })
-    $(accord_id).accordion({
-        active: false,
-        collapsible: true,
-        icons: false,
-        animate: 200,
-        heightStyle: "content"
-    });
-}
 
 function delZeroCol(table_block) {
     let $text = $(table_block + '.del_col_text');
