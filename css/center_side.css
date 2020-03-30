@@ -17,6 +17,10 @@
     }
 }
 
+body{
+     overflow-y: scroll;
+ }
+
 #tabs ul li a {
     cursor: inherit !important;
     color: #fff;

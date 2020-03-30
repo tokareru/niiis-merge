@@ -58,23 +58,25 @@ async function initTasksRoutes() {
     });
     $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
         let $id = $(this).parents('tr').data('id');
+        let but = $(this);
         $.ajax({
-            url: 'ajax/save_route_type',
+            url: 'ajax/save_route_type',//ajax/save_route_type
             type: 'POST',
             data: {id: $id, status: 'active'},
             success: function (data) {
-                console.log(data);
+                but.parents('td').html('Принято');
             }
         })
     })
     $('#tasks_routes').on('click', '.tasks_routes_finishedTask', function () {
         let $id = $(this).parents('tr').data('id');
+        let but = $(this);
         $.ajax({
-            url: 'ajax/save_route_type',
+            url: 'ajax/save_route_type',//ajax/save_route_type
             type: 'POST',
             data: {id: $id, status: 'finished'},
             success: function (data) {
-                console.log(data);
+                but.parents('td').html('Отклонено');
             }
         })
     })
@@ -133,13 +135,21 @@ function generateOwnTasks(selector) {
         '</thead><tbody></tbody>');
     let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
         '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask">Отклонить</button>';
+    ownTasks.sort(function (a, b) {
+       if (a.status === "nonactive" && b.status !== 'nonactive')
+           return 1;
+       if (b.status === "nonactive" && a.status !== 'nonactive')
+           return -1;
+       return 0;
+    });
+    ownTasks.reverse();
     ownTasks.forEach(function (value, index) {
         let $tr = $(
-            '<tr class="' + `${value.status !== 'active' ? 'disabled' : ''}">` +
+            '<tr class="' + `${value.status !== 'nonactive' ? 'bg-light' : ''}">` +
             `<td style="width: 30px">${index + 1}</td>` +
             `<td style="width: 300px">${value.task}</td>` +
             '<td style="width: 300px">' +
-            `${value.status === 'nonactive' ? buttonActiveTask : value.status}` +
+            `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active'? 'Принят': 'Отклонен'}` +
             '</td>' +
             '</tr>');
         $tr.data({'id': value.id});
@@ -164,7 +174,7 @@ function generateTableForRoutes(data) {
             `<td style="width: 230px">${task.role}</td>` +
             `<td style="width: 230px">${task.name}</td>` +
             `<td style="width: 125px">${task.task}</td>` +
-            `<td style="width: 125px">${task.status === 'nonactive' ? 'В процессе' :task.status === 'active'? 'Принято': 'Октлонено'}</td>` +
+            `<td style="width: 125px">${task.status === 'nonactive' ? 'В процессе' :task.status === 'active'? 'Принято': 'Отклонено'}</td>` +
             '</tr>';
     });
     table = '<table class="table table-bordered tasks_routes_routeTable">' +

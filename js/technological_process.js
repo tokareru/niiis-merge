@@ -63,12 +63,12 @@ function downloadTechProcess($container, fieldId) {
                 });
 
                 $("#tech_process_field_add_node_button").click(function () {
-                    addNewTechProcess("#tech_process_field_drop");
+                    addNewTechProcess(fieldId);
                 });
 
                 $container.mousedown(function (event) {
                     event.preventDefault();
-                    if (event.which === 2 && Role === "technologist") addNewTechProcess("#tech_process_field_drop");
+                    if (event.which === 2 && Role === "technologist") addNewTechProcess(fieldId);
                 });
 
                 $("#tech_process_field_save_button").click(function () {
@@ -515,9 +515,9 @@ function addNewTechProcess(fieldId) {
         name: `Техпроцесс ${id}`,
         id: (Number(id) + diffOfTechProcess).toString(),
         lvl: "new",
-        children: []
+        operations: []
     });
-    setDropAreaForTechNode(tech_process_field_drop.find(".techNameDropped").last().find(".techNodesDropArea"), fieldId);
+    setDropAreaForTechOperation(tech_process_field_drop.find(".techNameDropped").last().find(".techOperationsDropArea"), fieldId);
     setToggler(fieldId);
 
     setActionToBar({
