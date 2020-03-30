@@ -139,12 +139,19 @@ function initProductionTask_1_2_Rounds() {
 
     let selectUserBody = $("#productionTaskSelectUserBody");
     let nameUsers = [];
-    if (Role === "production_master")
+    if (Role === "production_master"){
         AllInfo.forEach(function (user) {
             if (user.role === "worker") nameUsers.push(user)
         });
+    }
     else{
         selectUserBody.attr("disabled", "disabled");
+        let production_task_body_round_1_2 = $("#production_task_body_round_1_2");
+        production_task_body_round_1_2.find("form").remove();
+        $(`
+            <div class="h4">Ваше задание</div>
+        `).insertAfter(production_task_body_round_1_2.find(".spec_header").first());
+
         $("#product_task_save_button").remove();
         nameUsers.push({
             name: login,
@@ -175,6 +182,7 @@ function initProductionTask_1_2_Rounds() {
     let $tableBlock = $("#prod_task_table_container");
 
     nameUsers.forEach(function (user, index) {
+        //console.log(user.login)
         $.ajax({
             type: "GET",
             url: "ajax/get_production_task_1_2",
@@ -234,6 +242,7 @@ function initProductionTask_1_2_Rounds() {
 
 function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: "", techOperation: "", task: ""}], userLogin) {
     let trs = "";
+    //console.log(data)
     if (data !== null)
         if (data.length){
             data.forEach(function (row) {
