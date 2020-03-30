@@ -59,24 +59,30 @@ async function initTasksRoutes() {
     $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
         let $id = $(this).parents('tr').data('id');
         let but = $(this);
+        let $master = $(this).parents('tr').data('master');
         $.ajax({
             url: 'ajax/save_route_type',//ajax/save_route_type
             type: 'POST',
             data: {id: $id, status: 'active'},
             success: function (data) {
                 but.parents('td').html('Принято');
+                addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">принял</span> задание от пользователя `+
+                `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`)
             }
         })
-    })
+    });
     $('#tasks_routes').on('click', '.tasks_routes_finishedTask', function () {
         let $id = $(this).parents('tr').data('id');
         let but = $(this);
+        let $master = $(this).parents('tr').data('master');
         $.ajax({
             url: 'ajax/save_route_type',//ajax/save_route_type
             type: 'POST',
             data: {id: $id, status: 'finished'},
             success: function (data) {
                 but.parents('td').html('Отклонено');
+                addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">отклонил</span> задание от пользователя `+
+                    `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`)
             }
         })
     })
@@ -84,7 +90,6 @@ async function initTasksRoutes() {
     /*   $.ajax({
            type: 'POST',
            url: 'ajax/get_routes_by_login',
-           data: {login: 'productionmaster'},
            success: function (res) {
                console.log("test get_routes_by_login");
                console.log(res);
@@ -152,7 +157,7 @@ function generateOwnTasks(selector) {
             `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active'? 'Принят': 'Отклонен'}` +
             '</td>' +
             '</tr>');
-        $tr.data({'id': value.id});
+        $tr.data({'id': value.id, 'master': value.master});
         $table.find('tbody').append(
             $tr
         )
@@ -167,6 +172,11 @@ function generateTableForRoutes(data) {
     data.forEach(function (value, index) {
         let task = value.task;
         if (task.user === login) {
+            AllInfo.forEach(function (allInfo) {
+                if (value.master === allInfo.login){
+                    task.master = allInfo.roleName;
+                }
+            });
             ownTasks.push(task);
         }
         tr += '<tr style="width: 700px">' +
@@ -313,7 +323,7 @@ function addTaskToDB() {
             let message = `Пользователь <span class="font-weight-bold">${currentName}</span> создал маршрут со следующими указаниями: <br/>`;
             taskTA.forEach(function (value, index) {
                 message += `${index !== 0 ? '; <br/>' : ''}<span class="font-weight-bold">` +
-                    `${value.role}</span> -> <span class="font-italic">${value.task.toLocaleLowerCase()}</span>: ${value.textarea}`
+                    `${value.role.toLocaleLowerCase()}</span> -> <span class="font-italic">${value.task.toLocaleLowerCase()}</span>: ${value.textarea}`
             });
             message += '.';
             console.log(message);

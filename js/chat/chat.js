@@ -344,3 +344,18 @@ function dateToStr(date) {
     str += date.getFullYear();
     return str;
 }
+
+function addMessageToAllDB(message) {
+    console.log(message);
+    $.ajax({
+        url: 'chat_ajax',//chat_ajax
+        type: 'POST',
+        data: {type: 'ALL', time: Date.now(), current_login: login, comment: message, function: 'add_comment'},
+        success: function (data) {
+
+        },
+        error: function () {
+            $('#chat_window_text').val('Ошибка загрузки');
+        }
+    });
+}

@@ -539,35 +539,48 @@ function saveTechProcess() {
         let techName = {
             id: this_tech_name.attr("tech-id"),
             lvl: this_tech_name.attr("tech-lvl"),
-            children: []
+            operations: []
         };
-        let nodes = this_tech_name.find(".techNode");
-        if (nodes.length){
-            nodes.each(function () {
-                let this_node = $(this);
-                let newNode = {
-                    id: this_node.attr("tech-id"),
-                    lvl: this_node.attr("tech-lvl"),
-                    fields: []
+        let operations = this_tech_name.find(".techOperation");
+        if (operations.length)
+            operations.each(function () {
+                let this_operation = $(this);
+                let newOperation = {
+                    id: this_operation.attr("tech-id"),
+                    lvl: this_operation.attr("tech-lvl"),
+                    nodes: []
                 };
+                let nodes = this_operation.find(".techNode");
+                if (nodes.length){
+                    nodes.each(function () {
+                        let this_node = $(this);
+                        let newNode = {
+                            id: this_node.attr("tech-id"),
+                            lvl: this_node.attr("tech-lvl"),
+                            fields: []
+                        };
 
-                let fields = this_node.find(".techField");
-                if (fields.length)
-                    fields.each(function () {
-                        let this_field = $(this);
-                        newNode.fields.push({
-                           id: this_field.attr("tech-id"),
-                           lvl: this_field.attr("tech-lvl")
-                       })
-                    });
+                        let fields = this_node.find(".techField");
+                        if (fields.length)
+                            fields.each(function () {
+                                let this_field = $(this);
+                                newNode.fields.push({
+                                    id: this_field.attr("tech-id"),
+                                    lvl: this_field.attr("tech-lvl")
+                                })
+                            });
 
-                techName.children.push(newNode)
-            })
-        }
+                        newOperation.nodes.push(newNode)
+                    })
+                }
+                techName.operations.push(newOperation);
+            });
+
         json.techProcess.push(techName);
     });
     console.log(json);
 
+    return;
     $.ajax(
         {
             url: 'ajax/save_techproccess',
