@@ -15,6 +15,9 @@ class ajax_model extends model {
     }
     function save_production_task_1_2(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
+           $sql = "DELETE FROM production_task_1_2 where login = :login";
+           $q = sys::$PDO->prepare($sql);
+           $q->execute(array("login" => $_POST["login"]));
            $sql = "INSERT INTO production_task_1_2 (login, name, job, techoperation, task) VALUES ";
            foreach($_POST["productTasks"] as $row){
                $sql .= "('".$_POST["login"]."', '".$row["name"]."', '".$row["job"]."', '".$row["techOperation"]."', '".$row["task"]."'),";
@@ -28,10 +31,30 @@ class ajax_model extends model {
         }  
     }
     function get_production_task_3(){
-    
+        $sql = "SELECT * FROM production_task_3 where login = :login";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("login" => $_REQUEST["login"]));
+        $Q = $q->fetchAll();
+        $response = array("login" => $_REQUEST["login"], "tasks" => array());
+        foreach($Q as $row){
+            array_push($response["tasks"], array("id" => $row["id"]));
+        }
     }
     function save_production_task_3(){
-      
+        if($_SERVER["REQUEST_METHOD"]=="POST"){
+            $sql = "DELETE FROM production_task_3 where login = :login";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("login" => $_POST["login"]));
+            $sql = "INSERT INTO production_task_3 (login, task_id) VALUES ";
+            foreach($_POST["tasks"] as $row){
+                 $sql.= "(".$_POST["login"].", ".$row["id"]."),";
+            }
+            $sql = substr($sql,0,-1);
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+        }else{
+            return array("response"=>"NOT FOUND POST REQUEST");
+        }  
     }
     function get_route_map_1_2(){
         $sql = "SELECT * FROM route_map_1_2";
