@@ -32,12 +32,13 @@ function initProductionTask_3_Rounds() {
         if (nameUsers.length)
             nameUsers.forEach(function (user) {
                 $.ajax({
-                    url: "json/production_task_3.json",
+                    url: "ajax/get_production_task_3",
                     type: 'GET',
                     data:{
                         login: user.login
                     },
                     success: function (json) {
+                        console.log(json);
                         $workers_drop.append(combineWorkerNode(user));
                         let lastOperations = "";
                         if (json !== null)
