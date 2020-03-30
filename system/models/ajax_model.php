@@ -35,9 +35,9 @@ class ajax_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_REQUEST["login"]));
         $Q = $q->fetchAll();
-        $response = array("login" => $_REQUEST["login"], "tasks" => array());
+        $response = array("login" => $_REQUEST["login"], "productTasks" => array());
         foreach($Q as $row){
-            array_push($response["tasks"], array("id" => $row["id"]));
+            array_push($response["productTasks"], array("id" => $row["id"]));
         }
     }
     function save_production_task_3(){
@@ -46,7 +46,7 @@ class ajax_model extends model {
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("login" => $_POST["login"]));
             $sql = "INSERT INTO production_task_3 (login, task_id) VALUES ";
-            foreach($_POST["tasks"] as $row){
+            foreach($_POST["productTasks"] as $row){
                  $sql.= "(".$_POST["login"].", ".$row["id"]."),";
             }
             $sql = substr($sql,0,-1);
