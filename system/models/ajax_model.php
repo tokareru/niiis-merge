@@ -198,7 +198,7 @@ class ajax_model extends model {
             foreach($_POST as $row){
                 $sql = "UPDATE ROUTE set active_sign = :active_sign where id = :id";
                 $q = sys::$PDO->prepare($sql);
-                $q->execute(array("active_sign" => ($row["status"] == 'finished') ? "'1'" : "'0'", "id" => $row["id"]));
+                $q->execute(array("active_sign" => ($row["status"] == 'finished') ? "'0'" : "'1'", "id" => $row["id"]));
             }
             
         }else{
