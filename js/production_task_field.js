@@ -151,13 +151,14 @@ function setTechProcessForProductionTask() {
             setAllTechProcess(json, $field, "product_tech_process_field_drop");
 
             if (Role === "production_master")
-                $(".techField").draggable({
+                $(".techOperation").draggable({
                     helper: 'clone',
                     items: "li",
                     appendTo: "#workers_drop_area",
                     drag: function (event, ui) {
                         let $helper =$ (ui.helper);
                         $helper.css("list-style-type", "none");
+                        $helper.find("ul").first().hide();
                     }
                 })
         }
