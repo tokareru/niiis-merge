@@ -4,7 +4,7 @@
   } ); */
 $( function() {
 	$( "#tabs" ).tabs({
-		event: "mouseover"
+		event: "click"
 	});
 
 	/* $('#listInput input').popover({
