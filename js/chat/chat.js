@@ -346,7 +346,6 @@ function dateToStr(date) {
 }
 
 function addMessageToAllDB(message) {
-    console.log(message);
     $.ajax({
         url: 'chat_ajax',//chat_ajax
         type: 'POST',
