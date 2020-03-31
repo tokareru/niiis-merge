@@ -81,7 +81,12 @@ if ($_SERVER['REQUEST_URI'] == '/') {
                 </li>
                 <li class="nav-item">
                   <a class="nav-link <?=($CURRENT_PAGE=='pdm_edit'?'active':'')?>" href="<?=conf::$SITE_URL?>admin_cab/pdm_edit">
-                    <i class="fas fa-user-friends"></i> Изделия
+                    <i class="fas fa-user-friends"></i> Детали
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link <?=($CURRENT_PAGE=='esi_edit'?'active':'')?>" href="<?=conf::$SITE_URL?>admin_cab/esi_edit">
+                    <i class="fas fa-user-friends"></i> Изделия ЭСИ
                   </a>
                 </li>
                 <li class="nav-item">

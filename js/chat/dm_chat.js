@@ -193,7 +193,8 @@ function initDMChat(count_users) {
 function generateDMChat(count_users) {
     //count_users -= 1;
     let loginUsers = getLoginNames();
-    let roleUsers = getLoginNames('role');
+    let roleUsers = getLoginNames('fio');
+    console.log(roleUsers);
     let $chat_dm = $('#chat_dm');
     let $dm_li = $chat_dm.find('.chat_dm_ul').eq(0);
 
@@ -250,11 +251,16 @@ function getLoginNames(loginChoice = "login") {
                 let name = '';
                 if (loginChoice === 'long_name')
                      name = data[login].first_name + " " + data[login].last_name + " " + data[login].otc;
-                else if('short_name')
+                else if(loginChoice ==='short_name')
                     name = data[login].first_name + " " + data[login].last_name[0] + "." + data[login].otc[0] +'.';
+                else if (loginChoice === 'fio'){
+                    name = `${data[login].last_name} ${data[login].first_name[0]}. ${data[login].otc[0]}.`;
+                    console.log('fio ' + name);
+                }
                     loginUsers.push(data[login].login);
                     nameUsers.push(name);
                     roleUsers.push(data[login].role);
+
             }
         },
         error: function (data) {
@@ -283,7 +289,7 @@ function getLoginNames(loginChoice = "login") {
 
     if(loginChoice === "login")
     return loginUsers;
-    else if(loginChoice === "short_name" || loginChoice === "long_name")
+    else if(loginChoice === "short_name" || loginChoice === "long_name" || loginChoice === 'fio')
         return nameUsers;
     else return roleUsers;
 }

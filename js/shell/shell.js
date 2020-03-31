@@ -91,7 +91,7 @@ async function prepareShell(json_role_and_round, add_data) {
     LoginChange = loginChange;
     DateChange = dateChange;
     AllInfo = getLoginNames("allInfo");
-    console.log(AllInfo)
+    console.log(AllInfo);
 
     if (FirstInit) $("#shell").on("updateShell", function () {
         updateShell();

@@ -49,6 +49,21 @@ async function initTasksRoutes() {
     tasksRoutesMadeRoutes('task_routes_ended_routes', data.response.finished);
     addTaskToTable();
     generateOwnTasks('task_routes_own_routes');
+   /* setInterval( async function () {
+        getRoutesFromDB().then(res => {
+            ownTasks = [];
+            tasks_routes_AddEvent('task_routes_tree');
+            setTimeout(function () {
+                tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
+            }, 100);
+            setTimeout(function () {
+                tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
+            }, 100);
+            setTimeout(function () {
+                generateOwnTasks('task_routes_own_routes');
+            }, 100);
+        });
+    }, 20000);*/
 
     $('#create_task_route_clearBtn').on('click', function () {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
@@ -123,7 +138,7 @@ function tasks_routes_AddEvent(id) {
 
 function tasksRoutesMadeRoutes(id, data) {
     let $routes = $(`#${id}`);
-    console.log(data);
+    $routes.find('table').remove();
     for (let i = 0; i < data.length; i++) {
         $routes.append(generateTableForRoutes(data[i]));
     }
@@ -142,6 +157,7 @@ function makeRoute(info) {
 
 function generateOwnTasks(selector) {
     let $routes = $(`#${selector}`);
+    $routes.find('table').remove();
     let $table = $('<table class="table table-bordered tasks_routes_routeTable"></table>');
     $table.append('<thead class="thead-light">' +
         '<tr>' +
@@ -235,10 +251,8 @@ function delZeroCol(table_block) {
 }
 
 function addTaskToTable() {
-
-    let loginLength = getLoginNames().length;
-    let UsersRoles = getLoginNames('role');
-    let UsersNames = getLoginNames('short_name');
+    let UsersNames = getLoginNames('fio');
+    console.log(UsersNames);
     let UsersLogins = getLoginNames();
 
     let option = '<option disabled selected value>Выберите работника...</option>';
@@ -271,7 +285,7 @@ function addTaskToTable() {
         $('#create_task_route_RouteListAddTr').before(`<tr>${route}</tr>`);
         $('.create_task_route_selectNames').on('change', function () {
             let id = $(this).find('option:selected').attr('task-user-name-id');
-            $(this).parents('tr').find('.create_task_route_selectSpec').text(UsersRoles[id]);
+            $(this).parents('tr').find('.create_task_route_selectSpec').text(AllInfo[id].roleName);
             $(this).parents('tr').data({user: UsersLogins[id]});
             $(this).parents('tr').removeClass('bg-danger');
         });
