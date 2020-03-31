@@ -37,7 +37,7 @@ class ajax_model extends model {
         $Q = $q->fetchAll();
         $response = array("login" => $_REQUEST["login"], "productTasks" => array());
         foreach($Q as $row){
-            array_push($response["productTasks"], array("id" => $row["id"]));
+            array_push($response["productTasks"], array("id" => $row["task_id"]));
         }
         return $response;
     }
