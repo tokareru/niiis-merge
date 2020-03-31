@@ -49,7 +49,7 @@ function initProductionTask_3_Rounds() {
                         login: user.login
                     },
                     success: function (json) {
-                        console.log(json);
+                        //console.log(json);
                         $workers_drop.append(combineWorkerNode(user));
                         let lastOperations = "";
                         if (json !== null)
@@ -215,7 +215,7 @@ function getTechNameFromTechProcess(techProcess, position) {
             }
 
         });
-    console.log(techOperation)
+    //console.log(techOperation)
     return techOperation;
 }
 
@@ -470,19 +470,15 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
     if (users.length)
         users.forEach(function (user = {name: "", login: "", role: "", roleName: ""}) {
             let userLi = $workers_drop.find(`li[user-login='${user.login}']`);
-            console.log(userLi)
-
             let saveData = [];
             userLi.find(".techNameDropped").each(function () {
-                console.log($(this))
                 saveData.push({
                     id: $(this).attr("tech-shift")
                 })
             });
 
-
-            console.log(saveData);
-            console.log(user.login);
+            //console.log(saveData);
+            //console.log(user.login);
             $.ajax({
                 type: 'POST',
                 url: 'ajax/save_production_task_3',
