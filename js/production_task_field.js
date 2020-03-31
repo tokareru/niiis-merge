@@ -42,8 +42,8 @@ function initProductionTask_3_Rounds() {
                         $workers_drop.append(combineWorkerNode(user));
                         let lastOperations = "";
                         if (json !== null)
-                            if (json.tasks.length)
-                                json.tasks.forEach(function (task) {
+                            if (json.productTasks.length)
+                                json.productTasks.forEach(function (task) {
                                     lastOperations += combineWorkerTaskNode(getTechField(task.id, 3));
                                 });
                         let $operationsForWorker = $workers_drop.find(".operationsForWorker").last();
@@ -83,8 +83,8 @@ function initProductionTask_3_Rounds() {
                 //$workers_drop.append(combineWorkerNode({login: login, role: Role, roleName: "Исполнитель", name: login}));
                 let lastOperations = "";
                 if (json !== null)
-                    if (json.tasks.length)
-                        json.tasks.forEach(function (task) {
+                    if (json.productTasks.length)
+                        json.productTasks.forEach(function (task) {
                             lastOperations += combineWorkerTaskNode(getTechField(task.id, 3));
                         });
                 //let $operationsForWorker = $workers_drop.find(".operationsForWorker").last();
@@ -157,7 +157,8 @@ function setTechProcessForProductionTask() {
                     items: "li",
                     drag: function (event, ui) {
                         let $helper =$ (ui.helper);
-                        $helper.css("list-style-type", "none");
+                        $helper.css("list-style-type", "none !important");
+                        $helper.find("span").first().removeClass("caret");
                         $helper.find("ul").first().hide();
                     }
                 })
@@ -362,8 +363,8 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                 type: 'POST',
                 url: 'ajax/save_production_task_3',
                 data: {
-                    productTasks: saveData,
-                    login: user.login
+                    login: user.login,
+                    productTasks: saveData
                 },
                 success: function (res) {
                     console.log(res)
