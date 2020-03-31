@@ -448,7 +448,7 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
     new_tr.find('.techProcessCell').droppable(
         {
             tolerance: "pointer",
-            accept: ".instruments_list_li, .techName",
+            accept: ".instruments_list_li, .techName, .techOperationsGuide",
             greedy: true,
             drop: function (event, ui) {
                 let $draggable = $(ui.draggable);
