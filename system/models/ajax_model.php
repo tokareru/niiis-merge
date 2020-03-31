@@ -366,10 +366,10 @@ ORDER BY third_id";
             foreach($_POST["techProcess"] as $row){
                 if(count($row["operations"]) > 0){
                     foreach($row["operations"] as $operation){
-                        if(count($row["nodes"]) > 0){
-                            foreach($row["nodes"] as $node){
-                                if(count($child["fields"]) > 0){
-                                    foreach($child["fields"] as $item)
+                        if(count($operation["nodes"]) > 0){
+                            foreach($operation["nodes"] as $node){
+                                if(count($node["fields"]) > 0){
+                                    foreach($node["fields"] as $item)
                                         if ($row["lvl"] == "new"){
                                             $sql .= "(".$node["id"].", ".$operation["id"].", ".$row["id"].", ".$item["id"].", '1'),";
                                         }
@@ -408,6 +408,7 @@ ORDER BY third_id";
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
+            echo $sql;
             return array("response"=>200);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
@@ -422,36 +423,58 @@ ORDER BY third_id";
             $response = array("techProcess" => array());
             $i = -1;
             $j = -1;
+            $k = -1;
             $children_id = 0;
+            $operation_id = 0;
             foreach($Q as $row){
                 if($row["id_parent"] != $id){
                     $j = -1;
+                    $k = -1;
                     $id = $row["id_parent"];
-                    array_push($response["techProcess"], array("id"=>$id, "lvl" => ($row["is_new"])? "new" : 1, "children"=>array()));
+                    array_push($response["techProcess"], array("id"=>$id, "lvl" => ($row["is_new"])? "new" : 1, "operations"=>array()));
                     ++$i;
+                    if($row["id_operations"] != null){
+                        array_push($response["techProcess"][$i]["operations"], array("id" => $row["id_operations"], "lvl" => 3, "nodes" => array()));
+                    }
                     if($row["id"] != null){
-                        array_push($response["techProcess"][$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                        array_push($response["techProcess"][$i]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
                     }
                     if($row["fields"] != null){
-                        array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        array_push($response["techProcess"][$i]["operations"][++$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
                     }
-                    $children_id = $row["id"];
+                    $operations_id = $row["id_operations"];
                 }
                 else{
-                    if($children_id != $row["id"]){
-                        $children_id = $row["id"];
+                    if($operations_id != $row["operations_id"]){
+                        $k = -1;
+                        $operations_id = $row["id_operations"];
+                        array_push($response["techProcess"][$i]["operations"], array("id" => $row["id_operations"], "lvl" => 3, "nodes" => array()));
                         if($row["id"] != null){
-                            array_push($response["techProcess"][$i]["children"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                            array_push($response["techProcess"][$i]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
                         }
                         if($row["fields"] != null){
-                            array_push($response["techProcess"][$i]["children"][++$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                            array_push($response["techProcess"][$i]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
                         }
                     }
                     else{
+                        if($children_id != $row["id"]){
+                        $children_id = $row["id"];
+                        if($row["id"] != null){
+                            array_push($response["techProcess"][$i]["operations"][$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                        }
                         if($row["fields"] != null){
-                            array_push($response["techProcess"][$i]["children"][$j]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                            array_push($response["techProcess"][$i]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        }
+                        }
+                        else{
+                            if($row["fields"] != null){
+                                array_push($response["techProcess"][$i]["operations"][$j]["nodes"][$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                            }
                         }
                     }
+                    
+                    
+                    
                 }
             }
             return $response;
