@@ -138,6 +138,10 @@ function setTechProcess($container, data = {name: "", operations: []}) {
 
 function combineTechName(techName = {name: "", id: "", lvl: "", operations: []}, isDeleted) {
     let operations = "";
+    let shift = "";
+    if (techName.shift !== undefined)
+        shift = `tech-shift="${techName.shift}"`;
+
     if (techName.operations.length)
         techName.operations.forEach(function (_operataion) {
             operations += combineTechOperation(_operataion, isDeleted);
@@ -146,7 +150,7 @@ function combineTechName(techName = {name: "", id: "", lvl: "", operations: []},
     let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : "";
 
     return `
-        <li class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
+        <li ${shift} class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
             <span class='caret'>${techName.name}</span>${deleteButton}
             <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested techOperationsDropArea'>
                 ${operations}

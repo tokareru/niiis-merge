@@ -49,7 +49,7 @@ function initProductionTask_3_Rounds() {
                         login: user.login
                     },
                     success: function (json) {
-                        //console.log(json)
+                        console.log(json);
                         $workers_drop.append(combineWorkerNode(user));
                         let lastOperations = "";
                         if (json !== null)
@@ -61,6 +61,7 @@ function initProductionTask_3_Rounds() {
                                     lastOperations += combineTechName({
                                         id: _techName.techNameId,
                                         lvl: _techName.techNameLvl,
+                                        shift: _techName.lvl,
                                         name: _techName.techNameName,
                                         operations: [_techName]
                                     }, true);
@@ -123,6 +124,7 @@ function initProductionTask_3_Rounds() {
                                     id: $parent.attr("tech-id"),
                                     lvl: $parent.attr("tech-lvl"),
                                     name: $parent.find("span").first().text(),
+                                    shift: $draggable.attr("tech-shift"),
                                     operations: [workerNode]
                                 }, true));
 
@@ -168,6 +170,7 @@ function initProductionTask_3_Rounds() {
                             id: _techName.techNameId,
                             lvl: _techName.techNameLvl,
                             name: _techName.techNameName,
+                            shift: _techName.lvl,
                             operations: [_techName]
                         }, false);
                     });
@@ -201,18 +204,18 @@ function getTechNameFromTechProcess(techProcess, position) {
     });
     if (techOperations.length)
         techOperations.forEach(function (_techOperation, index) {
-            if ((index + 1) === Number(position)){
+            if ((index + 0) === Number(position)){
                 techOperation = _techOperation;
                 techOperation.lvl = index;
                 techOperation.name = getTechField(techOperation.id, 3).name;
                 if (techOperation.nodes.length)
                     techOperation.nodes.forEach(function (_node) {
-                        _node.name = getTechNode(_node.id, 2).name
+                        _node.name = getTechNode(_node.id, 2).name;
                     })
             }
 
         });
-    //console.log(techOperation)
+    console.log(techOperation)
     return techOperation;
 }
 
@@ -262,6 +265,10 @@ function setTechProcessForProductionTask(techProcess) {
 
     $(".techNameDropped").each(function () {
         $(this).find("span.caret").first().trigger("click");
+    });
+
+    $(".techOperation").each(function (index) {
+        $(this).attr("tech-shift", (index))
     });
 
     if (Role === "production_master")
@@ -463,16 +470,19 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
     if (users.length)
         users.forEach(function (user = {name: "", login: "", role: "", roleName: ""}) {
             let userLi = $workers_drop.find(`li[user-login='${user.login}']`);
+            console.log(userLi)
+
             let saveData = [];
-            userLi.find(".techOperation").each(function () {
+            userLi.find(".techNameDropped").each(function () {
+                console.log($(this))
                 saveData.push({
-                    id: $(this).attr("tech-id")
+                    id: $(this).attr("tech-shift")
                 })
             });
 
+
             console.log(saveData);
             console.log(user.login);
-
             $.ajax({
                 type: 'POST',
                 url: 'ajax/save_production_task_3',
