@@ -362,34 +362,46 @@ ORDER BY third_id";
             $sql = "DELETE FROM TECHPROCESS";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql = "INSERT INTO TECHPROCESS (id, id_parent, fields, is_new) VALUES ";
+            $sql = "INSERT INTO TECHPROCESS (id, id_operations, id_parent, fields, is_new) VALUES ";
             foreach($_POST["techProcess"] as $row){
-                if(count($row["children"]) > 0){
-                    foreach($row["children"] as $child){
-                        if(count($child["fields"]) > 0){
-                            foreach($child["fields"] as $item)
-                                if ($row["lvl"] == "new"){
-                                    $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '1'),";
+                if(count($row["operations"]) > 0){
+                    foreach($row["operations"] as $operation){
+                        if(count($row["nodes"]) > 0){
+                            foreach($row["nodes"] as $node){
+                                if(count($child["fields"]) > 0){
+                                    foreach($child["fields"] as $item)
+                                        if ($row["lvl"] == "new"){
+                                            $sql .= "(".$node["id"].", ".$operation["id"].", ".$row["id"].", ".$item["id"].", '1'),";
+                                        }
+                                        else{
+                                            $sql .= "(".$node["id"].", ".$operation["id"].", ".$row["id"].", ".$item["id"].", '0'),";
+                                        }
+                                }else{
+                                    if ($row["lvl"] == "new"){
+                                        $sql .= "(".$node["id"].", ".$operation["id"].", ".$row["id"].", null, '1'),";
+                                    }
+                                    else{
+                                        $sql .= "(".$node["id"].", ".$operation["id"].", ".$row["id"].", null , '0'),";
+                                    }
                                 }
-                                else{
-                                    $sql .= "(".$child["id"].", ".$row["id"].", ".$item["id"].", '0'),";
-                                }
-                        }else{
+                            }
+                        }
+                        else{
                             if ($row["lvl"] == "new"){
-                                $sql .= "(".$child["id"].", ".$row["id"].", null, '1'),";
+                                $sql .= "(null, ".$operation["id"].", ".$row["id"].", null, '1'),";
                             }
                             else{
-                                $sql .= "(".$child["id"]." , ".$row["id"].", null , '0'),";
+                                $sql .= "(null , ".$operation["id"].", ".$row["id"].", null , '0'),";
                             }
                         }
                     }
                 }
                 else{
                     if ($row["lvl"] == "new"){
-                        $sql .= "(null, ".$row["id"].", null, '1'),";
+                        $sql .= "(null, null, ".$row["id"].", null, '1'),";
                     }
                     else{
-                        $sql .= "(null , ".$row["id"].", null , '0'),";
+                        $sql .= "(null , null, ".$row["id"].", null , '0'),";
                     }
                 }
             }
