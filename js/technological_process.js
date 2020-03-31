@@ -35,7 +35,7 @@ function technologicalProcessInit() {
 function downloadTechProcess($container, fieldId) {
     // json/tech_process.json
     $.ajax({
-        url: 'json/tech_process.json',
+        url: 'ajax/get_techproccess',
         type: 'GET',
         success: function (json) {
             console.log(json);
