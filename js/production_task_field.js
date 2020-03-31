@@ -68,7 +68,11 @@ function initProductionTask_3_Rounds() {
                         $operationsForWorker.append(lastOperations);
 
                         setToggler("workers_drop_area");
-                        $workers_drop.find(".user-login-node-li").last().find("span.caret").not(".caret-down").first().trigger("click");
+                        $workers_drop.find(".user-login-node-li").last().each(function () {
+                            $(this).find(".techNameDropped").each(function () {
+                                $(this).find("span.caret").not(".caret-down").first().trigger("click");
+                            })
+                        }).find("span.caret").not(".caret-down").first().trigger("click");
 
                         $workers_drop.find(".operationsForWorker").droppable({
                             tolerance: "pointer",
@@ -269,6 +273,7 @@ function setTechProcessForProductionTask(techProcess) {
                 $helper.css("list-style-type", "none !important");
                 $helper.find("ul").first().hide();
                 $helper.css("z-index", "99999");
+                $helper.css("width", "270px");
             }
         })
 }

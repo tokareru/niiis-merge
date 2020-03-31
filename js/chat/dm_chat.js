@@ -251,11 +251,11 @@ function getLoginNames(loginChoice = "login") {
                 let name = '';
                 if (loginChoice === 'long_name')
                      name = data[login].first_name + " " + data[login].last_name + " " + data[login].otc;
-                else if(loginChoice ==='short_name')
+                else if(loginChoice ==='short_name' || loginChoice === "allInfo")
                     name = data[login].first_name + " " + data[login].last_name[0] + "." + data[login].otc[0] +'.';
                 else if (loginChoice === 'fio'){
                     name = `${data[login].last_name} ${data[login].first_name[0]}. ${data[login].otc[0]}.`;
-                    console.log('fio ' + name);
+                    //console.log('fio ' + name);
                 }
                     loginUsers.push(data[login].login);
                     nameUsers.push(name);
@@ -281,7 +281,7 @@ function getLoginNames(loginChoice = "login") {
                     login: login,
                     role: role,
                     roleName: roleUsers[index],
-                    name: nameUsers[index]
+                    name: loginUsers[index]
                 })
             });
         return allInfo;
