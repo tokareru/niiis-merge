@@ -53,7 +53,7 @@ class admin_cab_controller extends Controller {
 
   function save_pdm_edit(){
     $data = $this->model->save_pdm_edit();
-    $this->view->render('', 'ajax_view.php', $data);
+    $this->view->render('', 'ajax_view_json.php', $data);
   }
   function esi_edit() {
     $data = $this->model->esi_edit();
