@@ -27,7 +27,7 @@ function initProductionTask_3_Rounds() {
     let techProcess;
 
     $.ajax({
-        url: 'json/tech_process.json',
+        url: 'ajax/get_techproccess',
         type: 'GET',
         async: false,
         success: function (json) {
