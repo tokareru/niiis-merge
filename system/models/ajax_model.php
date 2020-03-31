@@ -39,6 +39,7 @@ class ajax_model extends model {
         foreach($Q as $row){
             array_push($response["productTasks"], array("id" => $row["id"]));
         }
+        return $response;
     }
     function save_production_task_3(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
