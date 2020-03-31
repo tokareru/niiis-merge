@@ -246,10 +246,7 @@ function delZeroCol(table_block) {
 }
 
 function addTaskToTable() {
-
-    let loginLength = getLoginNames().length;
-    let UsersRoles = getLoginNames('role');
-    let UsersNames = getLoginNames('short_name');
+    let UsersNames = getLoginNames('fio');
     let UsersLogins = getLoginNames();
 
     let option = '<option disabled selected value>Выберите работника...</option>';
@@ -282,7 +279,7 @@ function addTaskToTable() {
         $('#create_task_route_RouteListAddTr').before(`<tr>${route}</tr>`);
         $('.create_task_route_selectNames').on('change', function () {
             let id = $(this).find('option:selected').attr('task-user-name-id');
-            $(this).parents('tr').find('.create_task_route_selectSpec').text(UsersRoles[id]);
+            $(this).parents('tr').find('.create_task_route_selectSpec').text(AllInfo[id].roleName);
             $(this).parents('tr').data({user: UsersLogins[id]});
             $(this).parents('tr').removeClass('bg-danger');
         });

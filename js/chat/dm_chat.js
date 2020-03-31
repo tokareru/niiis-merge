@@ -252,9 +252,13 @@ function getLoginNames(loginChoice = "login") {
                      name = data[login].first_name + " " + data[login].last_name + " " + data[login].otc;
                 else if('short_name')
                     name = data[login].first_name + " " + data[login].last_name[0] + "." + data[login].otc[0] +'.';
+                else if ('fio'){
+                    name = `${data[login].last_name} ${data[login].first_name}. ${data[login].otc[0]}.`;
+                }
                     loginUsers.push(data[login].login);
                     nameUsers.push(name);
                     roleUsers.push(data[login].role);
+
             }
         },
         error: function (data) {
@@ -283,7 +287,7 @@ function getLoginNames(loginChoice = "login") {
 
     if(loginChoice === "login")
     return loginUsers;
-    else if(loginChoice === "short_name" || loginChoice === "long_name")
+    else if(loginChoice === "short_name" || loginChoice === "long_name" || 'fio')
         return nameUsers;
     else return roleUsers;
 }
