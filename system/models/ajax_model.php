@@ -408,7 +408,16 @@ ORDER BY third_id";
             $sql = substr($sql,0,-1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            echo $sql;
+            $sql = "SELECT login FROM USERS WHERE group_user_id = :id";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("id" => 5));
+            $Q = $q->fetchAll();
+            foreach($Q as $row){
+                $sql = "DELETE FROM production_task_3 where login = :login";
+                $q = sys::$PDO->prepare($sql);
+                $q->execute(array("login" => $row["login"]));
+            }
+            
             return array("response"=>200);
         }else{
             return array("response"=>"NOT FOUND POST REQUEST");
