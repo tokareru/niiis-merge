@@ -599,7 +599,6 @@ function saveTechProcess() {
     });
     console.log(json);
 
-    return;
     $.ajax(
         {
             url: 'ajax/save_techproccess',
