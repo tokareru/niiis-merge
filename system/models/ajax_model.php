@@ -435,13 +435,13 @@ ORDER BY third_id";
                     
                     ++$i;
                     if($row["id_operations"] != null){
-                        array_push($response["techProcess"][0]["operations"], array("id" => $row["id_operations"], "lvl" => 3, "nodes" => array()));
+                        array_push($response["techProcess"][$i]["operations"], array("id" => $row["id_operations"], "lvl" => 3, "nodes" => array()));
                     }
                     if($row["id"] != null){
-                        array_push($response["techProcess"][0]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                        array_push($response["techProcess"][$i]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
                     }
                     if($row["fields"] != null){
-                        array_push($response["techProcess"][0]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        array_push($response["techProcess"][$i]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
                     }
                     $operations_id = $row["id_operations"];
                     $children_id = $row["id"];
@@ -450,12 +450,12 @@ ORDER BY third_id";
                     if($operations_id != $row["id_operations"]){
                         $k = -1;
                         $operations_id = $row["id_operations"];
-                        array_push($response["techProcess"][0]["operations"], array("id" => $row["id_operations"], "lvl" => 3, "nodes" => array()));
+                        array_push($response["techProcess"][$i]["operations"], array("id" => $row["id_operations"], "lvl" => 3, "nodes" => array()));
                         if($row["id"] != null){
-                            array_push($response["techProcess"][0]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
+                            array_push($response["techProcess"][$i]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
                         }
                         if($row["fields"] != null){
-                            array_push($response["techProcess"][0]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                            array_push($response["techProcess"][$i]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
                         }
                         $children_id = $row["id"];
                     }
