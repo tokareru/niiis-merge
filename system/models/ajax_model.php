@@ -1,7 +1,17 @@
 <?php
 
 class ajax_model extends model {
-    
+    function get_products_esi(){
+        $sql = "SELECT * FROM PRODUCTS_ESI ORDER BY id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $response = array();
+        foreach($Q as $row){
+            array_push($response, array("name" => $row["name"], "designation" => $row["designation"], "position" => $row["position"]));
+        }
+        return $response;
+    }
     function get_production_task_1_2(){
         $sql = "SELECT * FROM production_task_1_2 where login = :login";
         $q = sys::$PDO->prepare($sql);

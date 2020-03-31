@@ -129,6 +129,42 @@ class admin_cab_model extends model {
                         <div class="col-3"><select class="form-control form-control-sm" id = "type">'.$type_options.'</select></div></div>';
         return $result;
     }
+    function esi_edit() {
+        $sql = "SELECT id, name FROM PRODUCTS_ESI ORDER BY id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        return $q->fetchAll();
+    }
+    
+    function get_esi_edit() {
+        $sql = "SELECT name, designation, position FROM PRODUCTS_ESI 
+                WHERE id = :id";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute(array("id" => $_REQUEST["id"]));
+        $Q = $q->fetchAll();
+        $product = $Q[0];
+            $result = ' <div class="row">
+                        <div class="col-2">Название</div> 
+                        <div class="col-3"><input class="form-control form-control-sm" id = "name" value="'.$product["name"].'"></div></div>
+                        <div class="row">
+                        <div class="col-2">Путь к 3Д моделе</div>
+                        <div class="col-3"><input class="form-control form-control-sm" id = "designation" value="'.$product["designation"].'"></div></div>
+                        <div class="row">
+                        <div class="col-2">Описание</div>    
+                        <div class="col-3"><input class="form-control form-control-sm" id = "position" value="'.$product["position"].'"></div></div>
+                        <button type="submit" class="btn btn-secondary" id="esi_save">Сохранить</button>';
+        return $result;
+    }
+    function save_esi_edit(){
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $sql = "UPDATE PRODUCTS_ESI SET name = :name, designation = :designation, position = :position WHERE id = :id";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("name" => $_POST["name"], "designation" => $_POST["designation"], "position" => $_POST["position"], "id" => $_POST["id"])); 
+            return array("response" => 200);
+        }else {
+            return array("response" => "NOT FOUND POST REQUEST");
+        }
+    }
     function technologist_guide_edit() {
 
 //        function get_array_from_string($string) {
