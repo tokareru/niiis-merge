@@ -440,7 +440,7 @@ ORDER BY third_id";
                         array_push($response["techProcess"][$i]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
                     }
                     if($row["fields"] != null){
-                        array_push($response["techProcess"][$i]["operations"][++$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
+                        array_push($response["techProcess"][$i]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
                     }
                     $operations_id = $row["id_operations"];
                 }
