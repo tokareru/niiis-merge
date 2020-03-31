@@ -12,7 +12,7 @@
 </div>
 <div class="mb-md-0"> 
     <div class="row">
-        <select class="form-control col-3" id="pdm">
+        <select class="form-control col-3" id="change_pdm">
             <option></option>
             <?php 
             foreach ($data as $row) {
@@ -21,7 +21,7 @@
         </select>
     </div>
     <br/>
-    <div id="change_pdm">
+    <div id="pdm">
         
     </div>
 </div>

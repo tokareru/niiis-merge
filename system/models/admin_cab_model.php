@@ -56,6 +56,10 @@ class admin_cab_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
+        $sql = "DELETE FROM ROUTE";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
         $sql = "UPDATE DRAWING_MAIN_TEXT SET ";
         for ($i = 1; $i <= 50; $i++) {
             if ($i == 1) {
@@ -86,22 +90,20 @@ class admin_cab_model extends model {
     }
 
     function pdm_edit() {
-        $sql = "SELECT id, model_name FROM PRODUCT";
+        $sql = "SELECT id, model_name FROM PRODUCT ORDER BY id";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         return $q->fetchAll();
     }
     
     function get_pdm_edit() {
-        $sql = "SELECT p.model_name, p.path_3d, p.description, u.login, t.type, t.id as type_id FROM PRODUCT as p LEFT JOIN
-                USERS as u on u.id = p.user_id LEFT JOIN
+        $sql = "SELECT p.model_name, p.path_3d, p.description, t.type, t.id as type_id FROM PRODUCT as p LEFT JOIN
                 product_type as t on t.id = p.type_id
                 WHERE p.id = :id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("id" => $_REQUEST["id"]));
         $Q = $q->fetchAll();
         $product = $Q[0];
-        
         $sql = "SELECT id, type FROM product_type"; 
         $q = sys::$PDO->prepare($sql);
         $q->execute();
@@ -111,7 +113,7 @@ class admin_cab_model extends model {
             $type_options.= '<option value="'.$row["id"].'" ';
             if($row["id"] == $product["type_id"])
             {
-                $user_options.="selected";
+                $type_options.='selected';
             }
             $type_options.= ' >'.$row["type"].'</option>';
         }
@@ -126,9 +128,22 @@ class admin_cab_model extends model {
                         <div class="col-3"><input class="form-control form-control-sm" id = "description" value="'.$product["description"].'"></div></div>
                         <div class="row">
                         <div class="col-2">Тип детали </div>    
-                        <div class="col-3"><select class="form-control form-control-sm" id = "type">'.$type_options.'</select></div></div>';
+                        <div class="col-3"><select class="form-control form-control-sm" id = "type">'.$type_options.'</select></div></div>
+                        <button type="submit" class="btn btn-secondary" id="pdm_save">Сохранить</button>';
         return $result;
     }
+    
+    function save_pdm_edit(){
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $sql = "UPDATE PRODUCT SET model_name = :model_name, path_3d = :path_3d, description = :description, type_id = :type_id WHERE id = :id";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("model_name" => $_POST["model_name"], "path_3d" => $_POST["path_3d"], "description" => $_POST["description"], "type_id" => $_POST["type_id"], "id" => $_POST["id"])); 
+            return array("response" => 200);
+        }else {
+            return array("response" => "NOT FOUND POST REQUEST");
+        }
+    }
+    
     function esi_edit() {
         $sql = "SELECT id, name FROM PRODUCTS_ESI ORDER BY id";
         $q = sys::$PDO->prepare($sql);
