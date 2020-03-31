@@ -10,16 +10,17 @@
 
 .chats_header{
     height: 10%;
-    width: 72%;
+    width: 66%;
     color: #343a40 !important;
     padding: 10px;
     float: right;
     margin-bottom: 2%;
+    font-size: 14px;
 }
 
 .dm_window {
     height: 85%;
-    width: 71% !important;
+    width: 64% !important;
     top: 0 !important;
     min-height: 20%;
     margin-right: 3px;
@@ -82,7 +83,7 @@
     display: block;
     float: left;
     height: 100%;
-    width: 28%;
+    width: 34%;
 }
 
 .chat_unread_messages {
