@@ -49,7 +49,7 @@ async function initTasksRoutes() {
     tasksRoutesMadeRoutes('task_routes_ended_routes', data.response.finished);
     addTaskToTable();
     generateOwnTasks('task_routes_own_routes');
-    setInterval( function () {
+    /*setInterval( function () {
         getRoutesFromDB().then(res => {
             ownTasks = [];
             tasks_routes_AddEvent('task_routes_tree');
@@ -58,7 +58,7 @@ async function initTasksRoutes() {
             generateOwnTasks('task_routes_own_routes');
 
         });
-    }, 20000);
+    }, 20000);*/
 
     $('#create_task_route_clearBtn').on('click', function () {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
