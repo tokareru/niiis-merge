@@ -1,3 +1,11 @@
 .addNewRowToProdTableButton{
     cursor: pointer;
 }
+
+#production_task_body_round_3{
+    min-height: 600px;
+}
+
+#production_task_body_round_3 .caret{
+    display: inline !important;
+}

@@ -57,6 +57,18 @@
 		margin-top: 10px;
 	}
 
+	.ui-tabs .ui-tabs-nav li.ui-tabs-active .ui-tabs-anchor, .ui-tabs .ui-tabs-nav li.ui-state-disabled .ui-tabs-anchor, .ui-tabs .ui-tabs-nav li.ui-tabs-loading .ui-tabs-anchor
+	{
+		cursor:pointer;
+		display:block;
+		width:100%
+	}
+
+	.ui-tabs-vertical .ui-tabs-nav li a
+	{
+		width:100%;
+	}
+
   </style>
 </head>
 <body>

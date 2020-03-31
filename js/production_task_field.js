@@ -24,8 +24,19 @@ function initProductionTaskField () {
 function initProductionTask_3_Rounds() {
     let $workers_drop = $("#workers_drop_area");
     let nameUsers = [];
+    let techProcess;
+
+    $.ajax({
+        url: 'json/tech_process.json',
+        type: 'GET',
+        async: false,
+        success: function (json) {
+            techProcess = json;
+        }
+    });
+
     if (Role === "production_master"){
-        initTechProcessForProductionTask();
+        initTechProcessForProductionTask(techProcess);
         AllInfo.forEach(function (user) {
             if (user.role === "worker") nameUsers.push(user)
         });
@@ -38,26 +49,87 @@ function initProductionTask_3_Rounds() {
                         login: user.login
                     },
                     success: function (json) {
-                        console.log(json);
                         $workers_drop.append(combineWorkerNode(user));
                         let lastOperations = "";
                         if (json !== null)
                             if (json.productTasks.length)
                                 json.productTasks.forEach(function (task) {
-                                    lastOperations += combineWorkerTaskNode(getTechField(task.id, 3));
+                                    //console.log(getTechOperationFromTechProcess( techProcess, json.id))
+                                    //lastOperations += combineTechOperation(getTechNameFromTechProcess( techProcess, task.id));
+                                    let _techName = getTechNameFromTechProcess(techProcess, task.id);
+                                    lastOperations += combineTechName({
+                                        id: _techName.techNameId,
+                                        lvl: _techName.techNameLvl,
+                                        name: _techName.techNameName,
+                                        operations: [_techName]
+                                    }, true);
                                 });
                         let $operationsForWorker = $workers_drop.find(".operationsForWorker").last();
                         $operationsForWorker.append(lastOperations);
 
                         setToggler("workers_drop_area");
+                        $workers_drop.find(".user-login-node-li").last().each(function () {
+                            $(this).find(".techNameDropped").each(function () {
+                                $(this).find("span.caret").not(".caret-down").first().trigger("click");
+                            })
+                        }).find("span.caret").not(".caret-down").first().trigger("click");
+
                         $workers_drop.find(".operationsForWorker").droppable({
-                            tolerance: "touch",
+                            tolerance: "pointer",
                             drop: function (e, ui) {
                                 let $draggable = $(ui.draggable);
                                 let $this = $(this);
-                                $this.append(combineWorkerTaskNode(getTechField( $draggable.attr("tech-id"), $draggable.attr("tech-lvl"))));
+
+                                let $parent = $draggable.parent().parent();
+
+                                let id = $draggable.attr("tech-id");
+                                let lvl = $draggable.attr("tech-lvl");
+
+                                let nodes = [];
+                                let $nodes = $draggable.find(".techNode");
+                                if ($nodes.length)
+                                    $nodes.each(function () {
+                                       let $node = $(this);
+                                       let fields = [];
+                                       let $fields = $node.find(".techField");
+                                       if ($fields.length)
+                                           $fields.each(function () {
+                                               let $field = $(this);
+                                               fields.push({
+                                                   id: $field.attr("tech-id"),
+                                                   lvl: $field.attr("tech-lvl"),
+                                                   name: $field.find("span.caret").first().text()
+                                               })
+
+                                           });
+                                       nodes.push({
+                                           id: $node.attr("tech-id"),
+                                           lvl: $node.attr(("tech-lvl")),
+                                           name: $node.find("span").first().text(),
+                                           fields: fields
+                                       })
+
+                                    });
+
+                                let workerNode = {
+                                    name: getTechField( id, lvl).name,
+                                    id: id,
+                                    lvl: lvl,
+                                    nodes: nodes
+                                };
+
+                                $this.append(combineTechName({
+                                    id: $parent.attr("tech-id"),
+                                    lvl: $parent.attr("tech-lvl"),
+                                    name: $parent.find("span").first().text(),
+                                    operations: [workerNode]
+                                }, true));
+
+                                //$this.append(combineTechOperation(workerNode));
                                 let userName = $this.parent().attr("user-login");
                                 let operationName = $draggable.find("span").first().text();
+                                //$draggable.remove()
+                                setToggler("workers_drop_area");
 
                                 setActionToBar({
                                     id: "addTaskForWorker",
@@ -68,11 +140,13 @@ function initProductionTask_3_Rounds() {
 
                             }
                         });
-                        $workers_drop.find("span.caret").not(".caret-down").trigger("click");
                     }
                 });
+
             });
     } else{
+        //json/production_task.json
+        //ajax/get_production_task_3
         $.ajax({
             url: "ajax/get_production_task_3",
             type: 'GET',
@@ -82,15 +156,22 @@ function initProductionTask_3_Rounds() {
             success: function (json) {
                 //$workers_drop.append(combineWorkerNode({login: login, role: Role, roleName: "Исполнитель", name: login}));
                 let lastOperations = "";
-                if (json !== null)
-                    if (json.productTasks.length)
-                        json.productTasks.forEach(function (task) {
-                            lastOperations += combineWorkerTaskNode(getTechField(task.id, 3));
-                        });
-                //let $operationsForWorker = $workers_drop.find(".operationsForWorker").last();
-                $workers_drop.append(lastOperations);
-                $workers_drop.find("li").addClass("list-style-disk");
+                //console.log(json)
 
+                if (json.productTasks.length)
+                    json.productTasks.forEach(function (task) {
+                        //console.log(getTechOperationFromTechProcess( techProcess, json.id))
+                        //lastOperations += combineTechOperation(getTechNameFromTechProcess( techProcess, task.id));
+                        let _techName = getTechNameFromTechProcess(techProcess, task.id);
+                        lastOperations += combineTechName({
+                            id: _techName.techNameId,
+                            lvl: _techName.techNameLvl,
+                            name: _techName.techNameName,
+                            operations: [_techName]
+                        }, false);
+                    });
+                //console.log(lastOperations)
+                $workers_drop.append(lastOperations);
                 setToggler("workers_drop_area");
                 $workers_drop.find("span.caret").not(".caret-down").trigger("click");
             }
@@ -105,6 +186,39 @@ function initProductionTask_3_Rounds() {
     })
 }
 
+function getTechNameFromTechProcess(techProcess, position) {
+    let techOperation = {};
+    let techOperations = [];
+    techProcess.techProcess.forEach(function (techName) {
+        if (techName.operations.length)
+            techName.operations.forEach(function (_techOperation) {
+                _techOperation.techNameId = techName.id;
+                _techOperation.techNameName = getTechName(techName.id, techName.lvl).name;
+                _techOperation.techNameLvl = techName.lvl;
+                techOperations.push(_techOperation);
+            })
+    });
+    if (techOperations.length)
+        techOperations.forEach(function (_techOperation, index) {
+            if (index === Number(position)){
+                techOperation = _techOperation;
+                techOperation.lvl = index;
+                techOperation.name = getTechField(techOperation.id, 3).name;
+                if (techOperation.nodes.length)
+                    techOperation.nodes.forEach(function (_node) {
+                        _node.name = getTechNode(_node.id, 2).name
+                    })
+            }
+
+        });
+    //console.log(techOperation)
+    return techOperation;
+}
+
+function setTechNameFromTechProcess($ul, operations) {
+
+}
+
 function combineWorkerTaskNode(data = { name: "", lvl: "", id: ""}) {
     let deleteButton = (Role === "production_master") ? `<span class="deleteNodeButtonRM"></span>` : ``;
     return `
@@ -116,7 +230,7 @@ function combineWorkerTaskNode(data = { name: "", lvl: "", id: ""}) {
 
 function combineWorkerNode(user = {name: "", login: "", role: "", roleName: ""}) {
     return `
-        <li user-login="${user.login}">
+        <li class="user-login-node-li" user-login="${user.login}">
             <span class="caret">${user.name}</span>
             <ul  style='min-height: 35px;' class='nested border-bottom pb-2 operationsForWorker'>
                 
@@ -125,7 +239,7 @@ function combineWorkerNode(user = {name: "", login: "", role: "", roleName: ""})
     `;
 }
 
-function initTechProcessForProductionTask() {
+function initTechProcessForProductionTask(techProcess) {
     /*if (Role !== "technologist"){
         $.ajax({
             url: techGuideURL,
@@ -138,32 +252,30 @@ function initTechProcessForProductionTask() {
     }else {
         setTechProcessForProductionTask();
     }*/
-    setTechProcessForProductionTask();
+    setTechProcessForProductionTask(techProcess);
 }
 
-function setTechProcessForProductionTask() {
-    //ajax/get_techproccess
-    $.ajax({
-        url: 'json/tech_process.json',
-        type: 'GET',
-        success: function (json) {
-            //console.log(json);
-            let $field = $("#product_tech_process_field_drop");
-            setAllTechProcess(json, $field, "product_tech_process_field_drop");
+function setTechProcessForProductionTask(techProcess) {
+    let $field = $("#product_tech_process_field_drop");
+    setAllTechProcess(techProcess, $field, "product_tech_process_field_drop");
 
-            if (Role === "production_master")
-                $(".techOperation").draggable({
-                    helper: 'clone',
-                    items: "li",
-                    drag: function (event, ui) {
-                        let $helper =$ (ui.helper);
-                        $helper.css("list-style-type", "none !important");
-                        $helper.find("span").first().removeClass("caret");
-                        $helper.find("ul").first().hide();
-                    }
-                })
-        }
+    $(".techNameDropped").each(function () {
+        $(this).find("span.caret").first().trigger("click");
     });
+
+    if (Role === "production_master")
+        $(".techOperation").draggable({
+            helper: 'clone',
+            items: "li",
+            cancel: ".techFieldsDropArea, .techField, .techNode",
+            drag: function (event, ui) {
+                let $helper =$ (ui.helper);
+                $helper.css("list-style-type", "none !important");
+                $helper.find("ul").first().hide();
+                $helper.css("z-index", "99999");
+                $helper.css("width", "270px");
+            }
+        })
 }
 
 function initProductionTask_1_2_Rounds() {
@@ -351,7 +463,7 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
         users.forEach(function (user = {name: "", login: "", role: "", roleName: ""}) {
             let userLi = $workers_drop.find(`li[user-login='${user.login}']`);
             let saveData = [];
-            userLi.find("ul li").each(function () {
+            userLi.find(".techOperation").each(function () {
                 saveData.push({
                     id: $(this).attr("tech-id")
                 })
@@ -359,6 +471,7 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
 
             console.log(saveData);
             console.log(user.login);
+
             $.ajax({
                 type: 'POST',
                 url: 'ajax/save_production_task_3',
@@ -381,9 +494,9 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
 }
 
 function deleteWorkerTask($span) {
-    let parent = $span.parent();
+    let parent = $span.parent().parent().parent();
     let userName = parent.parent().parent().attr("user-login");
-    let operationName = parent.find("span").first().text();
+    let operationName = $span.parent().find("span").first().text();
     setActionToBar({
         id: "deleteOperationForWorker",
         type: "delete",
