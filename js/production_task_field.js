@@ -49,6 +49,7 @@ function initProductionTask_3_Rounds() {
                         login: user.login
                     },
                     success: function (json) {
+                        //console.log(json)
                         $workers_drop.append(combineWorkerNode(user));
                         let lastOperations = "";
                         if (json !== null)
@@ -200,7 +201,7 @@ function getTechNameFromTechProcess(techProcess, position) {
     });
     if (techOperations.length)
         techOperations.forEach(function (_techOperation, index) {
-            if (index === Number(position)){
+            if ((index + 1) === Number(position)){
                 techOperation = _techOperation;
                 techOperation.lvl = index;
                 techOperation.name = getTechField(techOperation.id, 3).name;
