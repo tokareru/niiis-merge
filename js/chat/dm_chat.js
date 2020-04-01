@@ -1,6 +1,6 @@
 function initChats() {
     initAllUsersChat();
-    initDMChat(getLoginNames().length);
+    initDMChat(AllInfo.length);
     Server_count = initServerCount();
     $('#chat_text_button').hide(0);
     $('#dm_user_0').css({"height": '110%'})
@@ -157,7 +157,6 @@ function initDMChat(count_users) {
     });*/
 
     $('.chat_dm_ul').on('click', 'li', function () {
-
         let $this = $(this);
         $('.chat_dm_ul').find('.dm_tabs_links_li').each(function () {
             if ($this !== this) {
@@ -178,6 +177,7 @@ function initDMChat(count_users) {
                 '">Чат с пользователем </span>' +
                 '<span class="font-weight-bold">'
                 + $('#chat_dm').find($attr).data('name_user') + '</span>');
+            $('#chat_window').data({'name': $attr});
             $('#chat_text_button').show(0);
         }
 
@@ -192,9 +192,9 @@ function initDMChat(count_users) {
 
 function generateDMChat(count_users) {
     //count_users -= 1;
-    let loginUsers = getLoginNames();
+    /*let loginUsers = getLoginNames();
     let roleUsers = getLoginNames('fio');
-    console.log(roleUsers);
+    console.log(roleUsers);*/
     let $chat_dm = $('#chat_dm');
     let $dm_li = $chat_dm.find('.chat_dm_ul').eq(0);
 
@@ -208,7 +208,7 @@ function generateDMChat(count_users) {
         }
         $dm_li.append('<li class="dm_tabs_links_li bg-dark"></li>');
         $dm_li.find('li').eq(i).append('<div class="dm_tabs_links bg-light"><a href="#dm_user_' + i +
-            '">' + roleUsers[i - 1] + '</a></div>');
+            '">' + AllInfo[i - 1].fio + '</a></div>');
     }
     for (let i = 0; i < count_users + 1; i++) {
         if (!i) {
@@ -225,10 +225,10 @@ function generateDMChat(count_users) {
         $chat_dm.find('.chats_div').append('<div id="dm_user_' + i + '" class="dm_window bg-light">' +
             '<ul></ul></div>');
         $chat_dm.find('.chats_div').find('#dm_user_' + i).data({
-            'login_user_chat_with': loginUsers[i - 1],
+            'login_user_chat_with': AllInfo[i - 1].login,
             'count_messages': 0,
             'unread_messages': 0,
-            'name_user': roleUsers[i - 1],
+            'name_user': AllInfo[i - 1].fio,
             'scroll': false
         });
     }
@@ -239,6 +239,7 @@ function getLoginNames(loginChoice = "login") {
     let loginUsers = [];
     let nameUsers = [];
     let roleUsers = [];
+    let fioNames = [];
     //console.log('cur login: ' + login);
     $.ajax({
         url: 'chat_ajax',
@@ -260,6 +261,7 @@ function getLoginNames(loginChoice = "login") {
                     loginUsers.push(data[login].login);
                     nameUsers.push(name);
                     roleUsers.push(data[login].role);
+                    fioNames.push(`${data[login].last_name} ${data[login].first_name[0]}. ${data[login].otc[0]}.`);
 
             }
         },
@@ -281,7 +283,8 @@ function getLoginNames(loginChoice = "login") {
                     login: login,
                     role: role,
                     roleName: roleUsers[index],
-                    name: loginUsers[index]
+                    name: loginUsers[index],
+                    fio: fioNames[index]
                 })
             });
         return allInfo;
@@ -292,36 +295,4 @@ function getLoginNames(loginChoice = "login") {
     else if(loginChoice === "short_name" || loginChoice === "long_name" || loginChoice === 'fio')
         return nameUsers;
     else return roleUsers;
-}
-
-function initDMChats() {
-    $('#chat_dm').find('div').has('ul').each(function (index) {
-        console.log('load dm');
-        printComments($(this), {
-            type: 'DM',
-            current_login: login,
-            login_user_chat_with: $(this).data('login_user_chat_with'),
-            count_messages: Max_count_messages,
-            function: 'print_comment'
-        }, true);
-    });
-}
-
-function countUsers() {
-    let count = 0;
-    $.ajax({
-        type: 'POST',
-        url: 'chat_ajax',
-        async: false,
-        data: {function: 'count_users'},
-        success: function (data) {
-            count = data.count;
-            //console.log('count: ' + count);
-            console.log('count by using get logins: ' + getLoginNames().length);
-        },
-        error: function (data) {
-            console.log('error');
-        }
-    });
-    return count;
 }

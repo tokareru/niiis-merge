@@ -508,20 +508,18 @@ function addDataToTitleBlock(data) {
     let worker = '';
     let apprrov = '';
     let confirmer = '';
-    if (Round === 3 && Role === 'designer') {
-        let UserNames = getLoginNames('short_name');
-        let UserRole = getLoginNames('role');
-        UserRole.forEach(function (value, index) {
-            if (value === 'согласующий')
-                apprrov = UserNames[index];
-            if (value === 'исполнитель')
-                worker = UserNames[index];
-            if (value === 'технолог')
-                confirmer = UserNames[index];
+    /*if (Round === 3 && Role === 'designer') {
+        AllInfo.forEach(function (value, index) {
+            if (value.roleName === 'Согласующий')
+                apprrov = AllInfo[index].fio;
+            if (value.roleName === 'Исполнитель')
+                worker = AllInfo[index].fio;
+            if (value.roleName === 'Технолог')
+                confirmer = AllInfo[index].fio;
         });
         addText($table, [worker, confirmer, apprrov],
             [[1, 5], [1, 6], [1, 10]], '', false);
-    }
+    }*/
 }
 
 function addToServerTitleBlock() {

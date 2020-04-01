@@ -4,11 +4,11 @@ let UsersNames;
 let UsersLogins;
 
 function initCreate_task_route() {
-    loginLength = getLoginNames().length;
+   /* loginLength = AllInfo.length;
     UsersRoles = getLoginNames('role');
     UsersNames = getLoginNames('short_name');
     UsersLogins = getLoginNames();
-    initCreateTaskRoute();
+    initCreateTaskRoute();*/
 }
 
 function addRows(count_rows, addInputs, addRolesNames) {
