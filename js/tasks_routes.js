@@ -251,14 +251,13 @@ function delZeroCol(table_block) {
 }
 
 function addTaskToTable() {
-    let UsersNames = getLoginNames('fio');
-    console.log(UsersNames);
-    let UsersLogins = getLoginNames();
+    //let UsersNames = getLoginNames('fio');
+    //let UsersLogins = getLoginNames();
 
     let option = '<option disabled selected value>Выберите работника...</option>';
 
-    UsersNames.forEach(function (value, index) {
-        option += `<option task-user-name-id="${index}">${value}</option>`;
+    AllInfo.forEach(function (value, index) {
+        option += `<option task-user-name-id="${index}">${value.fio}</option>`;
     });
 
     $('#create_task_route_RouteListAdd').on('click', function () {
@@ -286,7 +285,7 @@ function addTaskToTable() {
         $('.create_task_route_selectNames').on('change', function () {
             let id = $(this).find('option:selected').attr('task-user-name-id');
             $(this).parents('tr').find('.create_task_route_selectSpec').text(AllInfo[id].roleName);
-            $(this).parents('tr').data({user: UsersLogins[id]});
+            $(this).parents('tr').data({user: AllInfo[id].login});
             $(this).parents('tr').removeClass('bg-danger');
         });
         recountListId();
@@ -352,7 +351,6 @@ function addTaskToDB() {
                     `${value.role.toLocaleLowerCase()}</span> -> <span class="font-italic">${value.task.toLocaleLowerCase()}</span>: ${value.textarea}`
             });
             message += '.';
-            console.log(message);
             $.ajax({
                 url: 'chat_ajax',//chat_ajax
                 type: 'POST',
