@@ -2,13 +2,16 @@
 
 class ajax_model extends model {
     function get_products_esi(){
-        $sql = "SELECT * FROM PRODUCTS_ESI ORDER BY id";
+        $sql = "SELECT p.id, p.name, p.designation, p.position, p.path_3d, p.number, e.type
+            FROM PRODUCTS_ESI p LEFT JOIN
+            ESI_TYPE e on e.id = p.type_id
+            ORDER BY id";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
         $response = array();
         foreach($Q as $row){
-            array_push($response, array("name" => $row["name"], "designation" => $row["designation"], "position" => $row["position"]));
+            array_push($response, array("id" => $row["id"], "name" => $row["name"], "designation" => $row["designation"], "position" => $row["position"], "path_3d" => $row["path_3d"], "number"=>$row["number"]));
         }
         return $response;
     }

@@ -152,12 +152,29 @@ class admin_cab_model extends model {
     }
     
     function get_esi_edit() {
-        $sql = "SELECT name, designation, position FROM PRODUCTS_ESI 
+        $sql = "SELECT id, name, designation, position, path_3d, number, type_id
+                FROM PRODUCTS_ESI
                 WHERE id = :id";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("id" => $_REQUEST["id"]));
         $Q = $q->fetchAll();
         $product = $Q[0];
+        $sql = "SELECT id, type FROM esi_type"; 
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $type = $q->fetchAll();
+        $type_options = "";
+        $dop_option = "<option selected></option>";
+        foreach ($type as $row) {
+            $type_options.= '<option value="'.$row["id"].'" ';
+            if($row["id"] == $product["type_id"])
+            {
+                $type_options.='selected';
+                $dop_option = "";
+            }
+            $type_options.= ' >'.$row["type"].'</option>';
+        }
+        $type_options .= $dop_option;
             $result = ' <div class="row">
                         <div class="col-2">Название</div> 
                         <div class="col-3"><input class="form-control form-control-sm" id = "name" value="'.$product["name"].'"></div></div>
@@ -167,14 +184,23 @@ class admin_cab_model extends model {
                         <div class="row">
                         <div class="col-2">Описание</div>    
                         <div class="col-3"><input class="form-control form-control-sm" id = "position" value="'.$product["position"].'"></div></div>
+                        <div class="row">
+                        <div class="col-2">Количество</div>    
+                        <div class="col-3"><input class="form-control form-control-sm" id = "number" value="'.$product["number"].'"></div></div>
+                        <div class="row">
+                        <div class="col-2">Тип детали </div>    
+                        <div class="col-3"><select class="form-control form-control-sm" id = "type">'.$type_options.'</select></div></div>
+                        <div class="row">
+                        <div class="col-2">Путь к 3Д моделе</div>
+                        <div class="col-3"><textarea class="form-control form-control-sm" id = "path_3d" rows = "3">'.$product["path_3d"].'</textarea></div></div>
                         <button type="submit" class="btn btn-secondary" id="esi_save">Сохранить</button>';
         return $result;
     }
     function save_esi_edit(){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "UPDATE PRODUCTS_ESI SET name = :name, designation = :designation, position = :position WHERE id = :id";
+            $sql = "UPDATE PRODUCTS_ESI SET name = :name, designation = :designation, position = :position, path_3d = :path_3d, number = :number, type_id = :type_id WHERE id = :id";
             $q = sys::$PDO->prepare($sql);
-            $q->execute(array("name" => $_POST["name"], "designation" => $_POST["designation"], "position" => $_POST["position"], "id" => $_POST["id"])); 
+            $q->execute(array("name" => $_POST["name"], "designation" => $_POST["designation"], "position" => $_POST["position"], "path_3d" => $_POST["path_3d"], "number" => $_POST["number"], "type_id" => $_POST["type_id"], "id" => $_POST["id"])); 
             return array("response" => 200);
         }else {
             return array("response" => "NOT FOUND POST REQUEST");
