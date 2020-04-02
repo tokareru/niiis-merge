@@ -1,13 +1,13 @@
 function createSpecificationTable() {
     //serializeTable();
     if(Round < 3){
-        getJsonByURL("spec_table_ajax", generateTable,
+        /*getJsonByURL("spec_table_ajax", generateTable,
             {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
-                save_url: "spec_table_ajax/save"});
+                save_url: "spec_table_ajax/save"});*/
+        getJsonByURL("spec_table_ajax", initSpecTable);
     }else {
-        getJsonByURL("spec_autoentered_table_ajax", generateTable,
-            {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
-                save_url: "spec_autoentered_table_ajax/save"});
+
+        getJsonByURL("spec_autoentered_table_ajax", initSpecTable);
 
         $("#left-accordion #pdm_field input").click(function () {
             setTableByPdmAndStd( "#specificationBlock");
@@ -18,6 +18,267 @@ function createSpecificationTable() {
         })
     }
 }
+
+function initSpecTable(json) {
+    let $tableBlock = $("#specificationBlock");
+    let $table = $("#specificationTable");
+    setSpecTable(json)
+
+    $table.on("click", ".addNewRowToSpecTableButton", function () {
+        addNewRowToSpecTable()
+        setActionToBar({
+            id: "addNewRowToSpecTable",
+            type: "addNew",
+            field: "Спецификация",
+            text: "Добавлена новая строка в таблицу"
+        })
+    });
+
+    $table.on("click", ".deleteNodeButtonRM", function () {
+        deleteSpecRow(this)
+    });
+
+    $tableBlock.on("click", "#specTableSaveButton", function () {
+        saveSpecTable();
+    });
+
+    if (Role === "designer"){
+        $tableBlock.find("#specTableSaveButton").removeClass("d-none");
+    }else {
+        $tableBlock.find("#specTableSaveButton").remove();
+    }
+}
+
+function setSpecTable(json) {
+    console.log(json);
+    let $table = $("#specificationTable");
+    let $theadTr = $table.find("thead tr");
+    let $tbody = $table.find("tbody");
+    if (Role === "designer"  && Round !== 3)
+        $theadTr.append(`<td></td>`);
+    if (json.thead.length)
+        json.thead.forEach(function (_cell) {
+            $theadTr.append(combineTheadCell(_cell))
+        });
+    if (json.tbody.length)
+        json.tbody.forEach(function (_row) {
+            $tbody.append(combineTbodyRow(_row));
+        });
+    else {
+        if (Role === "designer")
+            $tbody.append(combineTbodyRow({row: [{text: "", readonly: false}]}));
+        else
+            $tbody.append(combineTbodyRow({row: [{text: "", readonly: true}]}));
+    }
+    if (Role === "designer" && Round !== 3)
+        $tbody.append(`
+            <tr style="width: 45px;">
+                <td style="padding-left: 14px;" class="font-family-fontAwesome font-size-12-em fa-plus addNewRowToSpecTableButton"></td>
+            </tr>`
+        );
+}
+
+function combineTheadCell(cell = {text: "", readonly: false}) {
+    let disabled = (true) ? `disabled="disabled"` : ``;
+    return `
+        <td><input class="bg-transparent border-0 outline-none shadow-none font-weight-bold" ${disabled} value="${cell.text}"></td>
+    `;
+}
+
+function combineTbodyRow(row = {row: [{text: "", readonly: false}, {text: "", readonly: false}, {text: "", readonly: false}, {text: "", readonly: false}]}) {
+    let deleteButton = (Role === "designer" && Round !== 3) ? `<td><span class="font-family-fontAwesome font-size-12-em deleteNodeButtonRM"></span></td>` : ``;
+    let cells = "";
+    if (row.row.length)
+        row.row.forEach(function (_cell) {
+            cells += combineTbodyCell(_cell);
+        });
+    return `
+        <tr class="specRows">
+            ${deleteButton}
+            ${cells}
+        </tr>
+    `
+}
+
+function combineTbodyCell(cell = {text: "", readonly: false}) {
+    let disabled = ( Role !== "designer" || Round === 3) ? `disabled="disabled"` : ``;
+    return `
+        <td class="specTableCell"><input class="bg-transparent border-0 outline-none shadow-none" ${disabled} value="${cell.text}"></td>
+    `;
+}
+
+function addNewRowToSpecTable(data) {
+    let info;
+    if (data !== undefined)
+       info = {row: [{text: data[0], readonly: false}, {text: data[1], readonly: false}, {text: data[2], readonly: false}, {text: data[3], readonly: false}]};
+    let $trs = $("#specificationTable").find("tbody tr");
+    let lastTr = $trs.last();
+    $(combineTbodyRow(info)).insertBefore(lastTr);
+}
+
+function deleteSpecRow(_this) {
+    let $this = $(_this);
+    let row = $this.parent().parent();
+    row.remove();
+    setActionToBar({
+        id: "deleteRowOfSpecTable",
+        type: "delete",
+        field: "Спецификация",
+        text: "Удалена строка из таблицы"
+    });
+}
+
+function emptySpecTable() {
+    $("#specificationTable").find("tbody").find(".specRows").remove();
+}
+
+function saveSpecTable() {
+    let $rows = $("#specificationTable").find(".specRows");
+    let saveData = [];
+    if ($rows.length)
+        $rows.each(function () {
+            let cells = $(this).find(".specTableCell input");
+            saveData.push({
+                row: [
+                    { text: cells.eq(0).val(), readonly: false},
+                    { text: cells.eq(1).val(), readonly: false},
+                    { text: cells.eq(2).val(), readonly: false},
+                    { text: cells.eq(3).val(), readonly: false}
+                ]
+            })
+        });
+    console.log(saveData);
+    let saveUrl = "";
+
+    if (Round !== 3){
+        saveUrl = "spec_table_ajax/save";
+    }else{
+        saveUrl = "spec_autoentered_table_ajax";
+        $.ajax({
+            type: "POST",
+            url: "spec_autoentered_table_ajax/save_product_checked",
+            data: {
+                checked: collectDataLabels(".left-side")
+            },
+            success: function (answer) {
+                console.log(answer);
+                setActionToBar({
+                    id: "saveSpecTable",
+                    type: "save",
+                    field: "Спецификация",
+                    text: `Сохранение таблицы 'Спецификация'`
+                })
+            }
+        });
+    }
+
+    $.ajax({
+        type: "POST",
+        url: saveUrl,
+        data: {
+            tbody: saveData,
+            login: login
+        },
+        success: function (answer) {
+            console.log(answer);
+            setActionToBar({
+                id: "saveSpecTable",
+                type: "save",
+                field: "Спецификация",
+                text: `Сохранение таблицы 'Спецификация'`
+            })
+        }
+    });
+}
+
+function setTableByPdmAndStd(checked) {
+    let $table = $("#specificationTable");
+    emptySpecTable();
+
+    if (spec_table_info === null || spec_table_info === undefined || spec_table_info === [])
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "ajax/get_products_esi",
+            success: function (json) {
+                spec_table_info = json;
+                console.log(json);
+            }
+        });
+
+    if (checked === undefined){
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "spec_autoentered_table_ajax/load_product_checked",
+            success: function (data) {
+                checked = data;
+            }
+        })
+    }
+
+    let checked_info = convertPdmAndStdInfo(checked.checked);
+    //console.log(checked);
+    //console.log(checked_info);
+
+    spec_table_info.forEach(function (_detail) {
+        addNewRowToSpecTable([_detail.position, _detail.designation, _detail.name, _detail.number]);
+    });
+
+    return;
+
+    /*let length = Number($table.find("tbody tr").length);
+    $table.find("tbody").find("tr").each(function (number) {
+        if ((number < (length - 1)) && length > 1) {
+            $(this).remove();
+        }
+    });
+    let array = collectDataLabels(".left-side");
+    //console.log(array)
+
+    array.forEach(function (component_id) {
+        spec_table_info.forEach(function (comp_info) {
+            if (comp_info.id === component_id) {
+                addRowByData({
+                    position: comp_info.position,
+                    designation: comp_info.designation,
+                    name: comp_info.name,
+                    number: comp_info.number
+                }, tableBlock);
+            }
+        })
+    })*/
+}
+
+function convertPdmAndStdInfo(checkedArray) {
+    let checkedInfo = [];
+    if (spec_table_info === null || spec_table_info === undefined || spec_table_info === [])
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "ajax/get_products_esi",
+            success: function (json) {
+                spec_table_info = json;
+                console.log(json);
+            }
+        });
+    spec_table_info.forEach(function (_detail, index) {
+        /*checkedArray.forEach(function (checker, i) {
+            if (checker === ("component_" + (index + 1)) && _detail.type === "pdm")
+                checkedInfo.push(_detail);
+        });
+        checkedArray.forEach(function (checker, i) {
+            if (checker === ("std_component_" + (index + 1)) && _detail.type === "std")
+                checkedInfo.push(_detail);
+        });*/
+
+    });
+
+    return checkedInfo;
+}
+
+
+
 
 function generateTable(json, add_data) {
     //console.log(json)
@@ -162,7 +423,7 @@ function generateTable(json, add_data) {
     }
 }
 
-function postDataFromTable(table_block, save_url) {
+/*function postDataFromTable(table_block, save_url) {
     let json = {};
     let tbody = [];
     $(table_block + ".table_made").find("tbody tr").each(function (rows) {
@@ -288,9 +549,9 @@ function tableData(readonly, table_block, edit_mode_div, url, save_url) {
     if (!readonly) {
         addInputs(table_block);
         let $edit_mode_div = $(edit_mode_div);
-        /*$edit_mode_div.load('pages/edit_field', function () {
+        /!*$edit_mode_div.load('pages/edit_field', function () {
             $('.edit_div_toggle').hide();
-        });*/
+        });*!/
 
         if (url !== "") {
             let html = downloadHTML(url);
@@ -683,8 +944,8 @@ function delRow(table_block) {
 }
 
 function addToTableCol($text, number, table_block) {
-    /* let $text = $('#add_col_text');
-     let number = Number($text.val());*/
+    /!* let $text = $('#add_col_text');
+     let number = Number($text.val());*!/
     let count_cols = $(table_block + '.table_edit thead').find('th').length;
     $text.val('');
     //alert(number + ' ' + count_cols);
@@ -1001,14 +1262,14 @@ function setRowsNumber(table_block) {
 
 function highlightCol(col, table_block) {
     let $table = $(table_block + ".table_made");
-    /*$table.find("thead th").each(function (index) {
+    /!*$table.find("thead th").each(function (index) {
         console.log(index);
         if (index === Number(col) && index !== 0) {
             $(this).css({
                 "background-color": "red"
             })
         }
-    });*/
+    });*!/
 
     $table.find("tbody tr").each(function (rows) {
         $(this).find("td").each(function (cols) {
@@ -1023,7 +1284,7 @@ function highlightCol(col, table_block) {
 
 function highlightRow(row, table_block) {
     let $table = $(table_block + ".table_made");
-    /*$table.find("thead tr").each(function (index) {
+    /!*$table.find("thead tr").each(function (index) {
         if (index === Number(row)) {
             $(this).find("th").each(function (index) {
                 if (index >0)
@@ -1032,7 +1293,7 @@ function highlightRow(row, table_block) {
                 })
             })
         }
-    });*/
+    });*!/
 
     if (row > 0) {
         $table.find("tbody tr").each(function (rows) {
@@ -1086,12 +1347,13 @@ function unhighlightCol(table_block) {
 
 function emptyCells() {
 
-}
+}*/
 
 let spec_table_info = [
     {
         id: "component_1",
         position: 1,
+        type: "pdm",
         designation: "АБВГ.123456.102",
         name: "Экран В",
         number: 1
@@ -1099,6 +1361,7 @@ let spec_table_info = [
     {
         id: "component_2",
         position: 2,
+        type: "pdm",
         designation: "АБВГ.123456.103",
         name: "Модуль",
         number: 1
@@ -1106,6 +1369,7 @@ let spec_table_info = [
     {
         id: "component_3",
         position: 3,
+        type: "pdm",
         designation: "АБВГ.123456.101",
         name: "Экран Н",
         number: 1
@@ -1113,12 +1377,14 @@ let spec_table_info = [
     {
         id: "component_4",
         position: 4,
+        type: "pdm",
         designation: "АБВГ.123456.104",
         name: "Крышка",
         number: 1
     },
     {
         id: "std_component_1",
+        type: "std",
         position: 5,
         designation: "",
         name: "Винт ГОСТ Р ИСО 1207-М2x10",
@@ -1126,6 +1392,7 @@ let spec_table_info = [
     },
     {
         id: "std_component_2",
+        type: "std",
         position: 6,
         designation: "",
         name: "Винт М2x8.99 ОСТ 92-0755-72",
@@ -1133,36 +1400,13 @@ let spec_table_info = [
     },
     {
         id: "std_component_3",
+        type: "std",
         position: 7,
         designation: "",
         name: "Колодка клеммная ГОСТ 17557-88",
         number: 10
     }
-]
-
-function setTableByPdmAndStd(tableBlock) {
-    let length = Number($(tableBlock).find("tbody tr").length);
-    $(tableBlock).find("tbody").find("tr").each(function (number) {
-        if ((number < (length - 1)) && length > 1) {
-            $(this).remove();
-        }
-    });
-    let array = collectDataLabels(".left-side");
-    //console.log(array)
-
-    array.forEach(function (component_id) {
-        spec_table_info.forEach(function (comp_info) {
-            if (comp_info.id === component_id) {
-                addRowByData({
-                    position: comp_info.position,
-                    designation: comp_info.designation,
-                    name: comp_info.name,
-                    number: comp_info.number
-                }, tableBlock);
-            }
-        })
-    })
-}
+];
 
 function addRowByData(data, tableBlock) {
     let position = data.position;

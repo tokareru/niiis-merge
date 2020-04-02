@@ -420,7 +420,7 @@ function initProductionTask_1_2_Rounds() {
         let row = $this.parent().parent();
         row.remove();
         setActionToBar({
-            id: "deleteRowToProductTable",
+            id: "deleteRowOfProductTable",
             type: "delete",
             field: "Задание на производство",
             text: "Удалена строка из таблицы"
