@@ -204,12 +204,16 @@ function setTableByPdmAndStd(checked) {
 
     if (checked === undefined){
         $.ajax({
-            type: "POST",
-            async: false,
+            type: "GET",
             url: "spec_autoentered_table_ajax/load_product_checked",
-            success: function (data) {
-                checked = data.checked;
-            }
+            async: false,
+            dataType: "json",
+            success: function (json) {
+                checked = json;
+            },
+            error: function (message) {
+                //console.log("Can't load the data");
+            },
         })
     }
 
