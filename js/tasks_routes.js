@@ -1,6 +1,6 @@
 let ownTasks = [];
 
-async function initTasksRoutes() {
+function initTasksRoutes() {
     /*$.ajax({
         type: "GET",
         url: "json/tasks_routes.json",
@@ -41,38 +41,29 @@ async function initTasksRoutes() {
     })*/
 
     //$('#task_routes_add_button').hide();
-    if(Role === 'technologist' || Role === 'designer'){
+   /* if (Role === 'technologist' || Role === 'designer') {
         $('#task_routes_add_button_div')
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
-    }
-    let data;
-    await getRoutesFromDB().then(res => {
-        data = res;
-    });
+    }*/
+    /*getRoutesFromDB();
     tasks_routes_AddEvent('task_routes_tree');
     tasksRoutesMadeRoutes('task_routes_active_routes', data.response.active);
-    if(data.response.active.length > 0){
+    if (data.response.active.length > 0) {
         $('#task_routes_add_button').attr('disabled', true);
     }
     tasksRoutesMadeRoutes('task_routes_ended_routes', data.response.finished);
     addTaskToTable();
-    generateOwnTasks('task_routes_own_routes');
-   /* setInterval( async function () {
-        getRoutesFromDB().then(res => {
-            ownTasks = [];
-            tasks_routes_AddEvent('task_routes_tree');
-            setTimeout(function () {
-                tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
-            }, 100);
-            setTimeout(function () {
-                tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
-            }, 100);
-            setTimeout(function () {
-                generateOwnTasks('task_routes_own_routes');
-            }, 100);
-        });
-    }, 20000);*/
+    generateOwnTasks('task_routes_own_routes');*/
+    getRoutesFromDB();
+    tasks_routes_AddEvent('task_routes_tree');
+    if (Role === 'technologist' || Role === 'designer')
+        $('#task_routes_add_button_div')
+            .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
+                ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
+    setInterval(function () {
+        getRoutesFromDB();
+    }, 20000);
 
     $('#create_task_route_clearBtn').on('click', function () {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
@@ -382,14 +373,21 @@ function addTaskToDB() {
     })
 }
 
-async function getRoutesFromDB() {
-    let data;
-    await $.ajax({
+function getRoutesFromDB() {
+    $.ajax({
         type: 'GET',
         url: 'ajax/get_routes_by_type',
         success: function (res) {
-            data = res;
+            ownTasks = [];
+            tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
+            if (res.response.active.length > 0) {
+                $('#task_routes_add_button').attr('disabled', true);
+            }
+            else {
+                $('#task_routes_add_button').removeAttr('disabled');
+            }
+            tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
+            generateOwnTasks('task_routes_own_routes');
         }
     });
-    return data;
 }
