@@ -234,7 +234,7 @@ function makeCheckbox(fieldID, isChecked) {
         let arrayClicked = collectDataLabels(".left-side");
         showhideimage(arrayClicked, $(this));
         load3d(arrayClicked, $(this));
-        console.log(arrayClicked)
+        console.log(arrayClicked);
         setESI({details: convertPdmAndStdInfo(arrayClicked)})
     });
 

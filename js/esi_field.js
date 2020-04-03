@@ -91,7 +91,7 @@ function createNodes(children) {
             "<td>" +
             "<div>Обозначение:</div>" +
             "</td>" +
-            "<td>" + "<input " + isDisabled + " value='" + child.description + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
+            "<td>" + "<input " + isDisabled + " value='" + child.designation + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
             "</tr>" +
             "<tr>" +
             "<td>" +
@@ -193,7 +193,7 @@ function convertArray(arr) {
     arr.forEach(function (element) {
         obj.details.push({
             name: element[2],
-            description: element[1],
+            designation: element[1],
             position: element[0],
             amount: element[3],
             children: []
