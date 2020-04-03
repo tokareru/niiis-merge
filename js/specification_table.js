@@ -1,5 +1,15 @@
 function createSpecificationTable() {
     //serializeTable();
+    $.ajax({
+        type: "GET",
+        async: false,
+        url: "ajax/get_products_esi",
+        success: function (json) {
+            //spec_table_info = json;
+            console.log(json);
+        }
+    });
+
     if(Round < 3){
         /*getJsonByURL("spec_table_ajax", generateTable,
             {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",

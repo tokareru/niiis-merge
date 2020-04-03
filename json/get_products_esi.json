@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "name": "Экран B",
+    "designation": "АБВГ.123456.102",
+    "position": 1,
+    "path_3d": "test",
+    "img": "",
+    "number": 1
+  },
+  {
+    "id": 2,
+    "name": "Экран B",
+    "designation": "АБВГ.123456.102",
+    "position": 1,
+    "path_3d": "test",
+    "img": "",
+    "number": 1
+  },
+  {
+    "id": 3,
+    "name": "Экран B",
+    "designation": "АБВГ.123456.102",
+    "position": 1,
+    "path_3d": "test",
+    "img": "",
+    "number": 1
+  },
+  {
+    "id": 4,
+    "name": "Экран B",
+    "designation": "АБВГ.123456.102",
+    "position": 1,
+    "path_3d": "test",
+    "img": "",
+    "number": 1
+  }
+]
