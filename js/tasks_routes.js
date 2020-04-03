@@ -369,6 +369,7 @@ function addTaskToDB() {
                 field: "Маршруты заданий",
                 text: 'Добавлен новый маршрут заданий'
             });
+            $('#task_routes_add_button').attr('disabled', true);
         }
     })
 }
