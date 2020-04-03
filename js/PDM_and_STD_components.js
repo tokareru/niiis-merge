@@ -97,7 +97,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
     if (Round === 3)
     {
         $("#left-accordion " + fieldID + " input").last().click(function () {
-            setTableByPdmAndStd(collectDataLabels(".left-side"), true);
+            setTableByPdmAndStd(collectDataLabels(".left-side"));
             let amountOfChecked = $("#left-accordion").find("input:checked").length;
             let amountOfInputs = $("#left-accordion").find("input").length;
             let field3D = $("#field3DAll");

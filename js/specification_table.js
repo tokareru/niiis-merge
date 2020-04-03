@@ -23,7 +23,7 @@ function createSpecificationTable() {
 function initSpecTable(json) {
     let $tableBlock = $("#specificationBlock");
     let $table = $("#specificationTable");
-    setSpecTable(json)
+    setSpecTable(json);
 
     $table.on("click", ".addNewRowToSpecTableButton", function () {
         addNewRowToSpecTable()
@@ -197,7 +197,6 @@ function saveSpecTable() {
 }
 
 function setTableByPdmAndStd(checked) {
-    let $table = $("#specificationTable");
     emptySpecTable();
 
     DetailsInfo = getDetailsInfo();
@@ -216,6 +215,9 @@ function setTableByPdmAndStd(checked) {
             },
         })
     }
+
+    if (checked.checked !== undefined)
+        checked = checked.checked;
 
     let checked_info = convertPdmAndStdInfo(checked);
     //console.log(checked_info);
