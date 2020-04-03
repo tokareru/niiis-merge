@@ -165,7 +165,7 @@ function esiGetDataFromServer() {
         success: function (json) {
             let info = [];
             let checkedArray = [];
-            console.log(json)
+            //console.log(json)
             getDetailsInfo().forEach(function (_detail) {
                 json.checked.forEach(function (_detailId) {
                     if (_detailId === ("detail-" + _detail.id))

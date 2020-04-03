@@ -162,10 +162,11 @@ function combineTechName(techName = {name: "", id: "", lvl: "", operations: []},
 function combineTechOperation(field, isDeleted) {
     let deleteButton = (Role === "technologist" || (isDeleted !== undefined && isDeleted)) ? `<span class='deleteNodeButtonRM'></span>` : "";
     let innerNodes = "";
-    if(field.nodes.length)
-        field.nodes.forEach(function (_node) {
-            innerNodes += combineTechNode(_node);
-        });
+    if (field.nodes !== undefined)
+        if(field.nodes.length)
+            field.nodes.forEach(function (_node) {
+                innerNodes += combineTechNode(_node);
+            });
 
     return `
         <li class="techOperation" tech-lvl="${field.lvl}" tech-id="${field.id}">
