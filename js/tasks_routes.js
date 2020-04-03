@@ -40,12 +40,21 @@ async function initTasksRoutes() {
         }
     })*/
 
+    //$('#task_routes_add_button').hide();
+    if(Role === 'technologist' || Role === 'designer'){
+        $('#task_routes_add_button_div')
+            .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
+                ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
+    }
     let data;
     await getRoutesFromDB().then(res => {
         data = res;
     });
     tasks_routes_AddEvent('task_routes_tree');
     tasksRoutesMadeRoutes('task_routes_active_routes', data.response.active);
+    if(data.response.active.length > 0){
+        $('#task_routes_add_button').attr('disabled', true);
+    }
     tasksRoutesMadeRoutes('task_routes_ended_routes', data.response.finished);
     addTaskToTable();
     generateOwnTasks('task_routes_own_routes');

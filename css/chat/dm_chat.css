@@ -9,7 +9,7 @@
 }
 
 .chats_header{
-    height: 10%;
+    height: 5%;
     width: 66%;
     color: #343a40 !important;
     padding: 10px;
@@ -19,10 +19,10 @@
 }
 
 .dm_window {
-    height: 85%;
+    height: 94%;
     width: 64% !important;
     top: 0 !important;
-    min-height: 20%;
+    min-height: 94%;
     margin-right: 3px;
     float: left;
     overflow-y: scroll;

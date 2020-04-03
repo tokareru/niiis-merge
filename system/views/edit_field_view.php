@@ -8,7 +8,7 @@
 
 ?>
 <div class="col-12">
-     <input value="Сохранить табл. на сервер" type="button" class="btn btn-sm btn-custom post_data_button
+     <input value="Сохранить" type="button" class="btn btn-sm btn-custom post_data_button
 bg-dark">
      <input value="Очистить" type="button" class="btn btn-sm btn-custom bg-dark"id="spec_field_clear">
 </div>
