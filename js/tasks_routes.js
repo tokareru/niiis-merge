@@ -383,6 +383,9 @@ function getRoutesFromDB() {
             if (res.response.active.length > 0) {
                 $('#task_routes_add_button').attr('disabled', true);
             }
+            else {
+                $('#task_routes_add_button').removeAttr('disabled');
+            }
             tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
             generateOwnTasks('task_routes_own_routes');
         }
