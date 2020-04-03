@@ -15,23 +15,22 @@
 </head>
 <body>
 <div id="specificationBlock">
-    <!--<script src="js/specification_table.js"></script>-->
-    <div class="col-md-12 spec_main">
-        <div class="row">
-            <div class="col-md-12 spec_header">
-                Спецификация
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="table_made col-md-12 table-responsive-md">
-            </div>
-        </div>
-        <div class="row">
-            <div id="specification_edit"></div>
-        </div>
-
+    <div class="col-md-12 spec_header">
+        Спецификация
     </div>
+    <div>
+        <table id="specificationTable" class="table table-bordered table-hover">
+            <thead>
+                <tr class="font-weight-bold">
+                </tr>
+            </thead>
+            <tbody>
+
+            </tbody>
+        </table>
+        <button id="specTableSaveButton" class="btn btn-dark d-none">Сохранить</button>
+    </div>
+
 </div>
 </body>
 </html>
