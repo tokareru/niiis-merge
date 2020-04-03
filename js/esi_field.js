@@ -1,27 +1,28 @@
 function initESI() {
     esiGetDataFromServer();
+    $("#esi_branch_body_header_span").trigger("click");
 
     $('.slider_button').on('click', function (event) {
         STDLibClick($('.slider_button'), $('.slider_main'), 15, "esi");
     });
 
-   /* $('#shell').on('click', function () {
-        if ($('.slider_main').attr('style') === 'z-index: 999; right: 0px;') {
-            $('.slider_button').trigger('click');
-        }
-    });*/
+    /* $('#shell').on('click', function () {
+         if ($('.slider_main').attr('style') === 'z-index: 999; right: 0px;') {
+             $('.slider_button').trigger('click');
+         }
+     });*/
 
 
 }
 
 function setESI(data, setNewInterval = false) {
-
+    //console.log(data)
     if (data.details.length) {
         $("#esi_branch_body").empty().append(createNodes(data.details));
     }
-    esiSetBranchesNestedFunc();
+    setToggler("esi_field");
 
-    if (setNewInterval) setInterval(function () {
+    /*if (setNewInterval) setInterval(function () {
         let _data = convertArray(getDataFromSpecTable());
         _data = (_data === 'empty') ? { details: []} : _data;
         if (_data !== 'empty') {
@@ -52,7 +53,7 @@ function setESI(data, setNewInterval = false) {
 
         //$("#esi_branch_body").find(".detailChildren").trigger("click");
 
-    }, 5000)
+    }, 5000)*/
 }
 
 function esiSetBranchesNestedFunc() {
@@ -71,14 +72,14 @@ function createNodes(children) {
     let node = '';
     let isDisabled = (Role !== 'designer') ? 'disabled' : '';
     children.forEach(function (child) {
-        let _children =
+        /*let _children =
             (child.children.length > 0) ?
                 "<li>" +
                 "<span class='caret detailChildren'>Состав</span>" +
                 "<ul class='nested'>" +
                 createNodes(child.children) +
                 "</ul>" +
-                "</li>" : '';
+                "</li>" : '';*/
         node +=
             "<li>" +
             "<span class='caret detailChildren'>" + child.name + "</span>" +
@@ -101,20 +102,20 @@ function createNodes(children) {
             "</tbody>" +
             "</table>" +
             "</li>" +
-            _children +
+            //_children +
             "</ul>" +
             "</li>";
     });
     return node;
 }
 
-function esiNotifyHandler(array){
+function esiNotifyHandler(array) {
     let _data = {
         "details": []
     };
     array.forEach(function (component_id) {
-        spec_table_info.forEach(function (component) {
-            if (component_id === component.id){
+        DetailsInfo.forEach(function (component) {
+            if (component_id === ("detail" + component.id)) {
                 _data.details.push({
                     "name": component.name,
                     "description": component.designation,
@@ -158,16 +159,23 @@ function getDataFromSpecTable() {
 function esiGetDataFromServer() {
     $.ajax({
         type: "GET",
-        url: "spec_autoentered_table_ajax",
+        url: "spec_autoentered_table_ajax/load_product_checked",
         async: false,
         dataType: "json",
         success: function (json) {
-            let arr = [];
-            json.tbody.forEach(function (row) {
-                arr.push([row.row[0].text, row.row[1].text, row.row[2].text, row.row[3].text]);
+            let info = [];
+            let checkedArray = [];
+            console.log(json)
+            getDetailsInfo().forEach(function (_detail) {
+                json.checked.forEach(function (_detailId) {
+                    if (_detailId === ("detail-" + _detail.id))
+                        checkedArray.push(_detail);
+                });
             });
-            //console.log(arr)
-            setESI(convertArray(arr), true)
+            checkedArray.forEach(function (_detail) {
+                info.push([_detail.position, _detail.designation, _detail.name, _detail.number]);
+            });
+            setESI(convertArray(info), true)
         },
         error: function (message) {
             //console.log("Can't load the data");

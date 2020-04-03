@@ -1,14 +1,5 @@
 function createSpecificationTable() {
     //serializeTable();
-    $.ajax({
-        type: "GET",
-        async: false,
-        url: "ajax/get_products_esi",
-        success: function (json) {
-            //spec_table_info = json;
-            console.log(json);
-        }
-    });
 
     if(Round < 3){
         /*getJsonByURL("spec_table_ajax", generateTable,
@@ -20,11 +11,11 @@ function createSpecificationTable() {
         getJsonByURL("spec_autoentered_table_ajax", initSpecTable);
 
         $("#left-accordion #pdm_field input").click(function () {
-            setTableByPdmAndStd( "#specificationBlock");
+            setTableByPdmAndStd( collectDataLabels(".left-side"));
         });
 
         $("#left-accordion #std_field input").click(function () {
-            setTableByPdmAndStd("#specificationBlock");
+            setTableByPdmAndStd(collectDataLabels(".left-side"));
         })
     }
 }
@@ -60,7 +51,7 @@ function initSpecTable(json) {
 }
 
 function setSpecTable(json) {
-    console.log(json);
+    //console.log(json);
     let $table = $("#specificationTable");
     let $theadTr = $table.find("thead tr");
     let $tbody = $table.find("tbody");
@@ -70,22 +61,27 @@ function setSpecTable(json) {
         json.thead.forEach(function (_cell) {
             $theadTr.append(combineTheadCell(_cell))
         });
-    if (json.tbody.length)
-        json.tbody.forEach(function (_row) {
-            $tbody.append(combineTbodyRow(_row));
-        });
-    else {
-        if (Role === "designer")
-            $tbody.append(combineTbodyRow({row: [{text: "", readonly: false}]}));
-        else
-            $tbody.append(combineTbodyRow({row: [{text: "", readonly: true}]}));
-    }
-    if (Role === "designer" && Round !== 3)
-        $tbody.append(`
+    if (Round !== 3){
+        if (json.tbody.length)
+            json.tbody.forEach(function (_row) {
+                $tbody.append(combineTbodyRow(_row));
+            });
+        else {
+            if (Role === "designer")
+                $tbody.append(combineTbodyRow({row: [{text: "", readonly: false}]}));
+            else
+                $tbody.append(combineTbodyRow({row: [{text: "", readonly: true}]}));
+        }
+        if (Role === "designer" && Round !== 3)
+            $tbody.append(`
             <tr style="width: 45px;">
                 <td style="padding-left: 14px;" class="font-family-fontAwesome font-size-12-em fa-plus addNewRowToSpecTableButton"></td>
             </tr>`
-        );
+            );
+    }else {
+        setTableByPdmAndStd();
+    }
+
 }
 
 function combineTheadCell(cell = {text: "", readonly: false}) {
@@ -121,9 +117,8 @@ function addNewRowToSpecTable(data) {
     let info;
     if (data !== undefined)
        info = {row: [{text: data[0], readonly: false}, {text: data[1], readonly: false}, {text: data[2], readonly: false}, {text: data[3], readonly: false}]};
-    let $trs = $("#specificationTable").find("tbody tr");
-    let lastTr = $trs.last();
-    $(combineTbodyRow(info)).insertBefore(lastTr);
+    $("#specificationTable").find("tbody").append(combineTbodyRow(info));
+
 }
 
 function deleteSpecRow(_this) {
@@ -205,16 +200,7 @@ function setTableByPdmAndStd(checked) {
     let $table = $("#specificationTable");
     emptySpecTable();
 
-    if (spec_table_info === null || spec_table_info === undefined || spec_table_info === [])
-        $.ajax({
-            type: "GET",
-            async: false,
-            url: "ajax/get_products_esi",
-            success: function (json) {
-                spec_table_info = json;
-                console.log(json);
-            }
-        });
+    DetailsInfo = getDetailsInfo();
 
     if (checked === undefined){
         $.ajax({
@@ -222,73 +208,30 @@ function setTableByPdmAndStd(checked) {
             async: false,
             url: "spec_autoentered_table_ajax/load_product_checked",
             success: function (data) {
-                checked = data;
+                checked = data.checked;
             }
         })
     }
 
-    let checked_info = convertPdmAndStdInfo(checked.checked);
-    //console.log(checked);
-    //console.log(checked_info);
+    let checked_info = convertPdmAndStdInfo(checked);
+    console.log(checked_info);
 
-    spec_table_info.forEach(function (_detail) {
+    checked_info.forEach(function (_detail) {
         addNewRowToSpecTable([_detail.position, _detail.designation, _detail.name, _detail.number]);
     });
-
-    return;
-
-    /*let length = Number($table.find("tbody tr").length);
-    $table.find("tbody").find("tr").each(function (number) {
-        if ((number < (length - 1)) && length > 1) {
-            $(this).remove();
-        }
-    });
-    let array = collectDataLabels(".left-side");
-    //console.log(array)
-
-    array.forEach(function (component_id) {
-        spec_table_info.forEach(function (comp_info) {
-            if (comp_info.id === component_id) {
-                addRowByData({
-                    position: comp_info.position,
-                    designation: comp_info.designation,
-                    name: comp_info.name,
-                    number: comp_info.number
-                }, tableBlock);
-            }
-        })
-    })*/
 }
 
 function convertPdmAndStdInfo(checkedArray) {
     let checkedInfo = [];
-    if (spec_table_info === null || spec_table_info === undefined || spec_table_info === [])
-        $.ajax({
-            type: "GET",
-            async: false,
-            url: "ajax/get_products_esi",
-            success: function (json) {
-                spec_table_info = json;
-                console.log(json);
-            }
-        });
-    spec_table_info.forEach(function (_detail, index) {
-        /*checkedArray.forEach(function (checker, i) {
-            if (checker === ("component_" + (index + 1)) && _detail.type === "pdm")
-                checkedInfo.push(_detail);
-        });
+    DetailsInfo = getDetailsInfo();
+    DetailsInfo.forEach(function (_detail, index) {
         checkedArray.forEach(function (checker, i) {
-            if (checker === ("std_component_" + (index + 1)) && _detail.type === "std")
+            if (checker === ("detail-" + (index + 1)))
                 checkedInfo.push(_detail);
-        });*/
-
+        });
     });
-
     return checkedInfo;
 }
-
-
-
 
 function generateTable(json, add_data) {
     //console.log(json)
@@ -426,10 +369,6 @@ function generateTable(json, add_data) {
             rowToReadOnly(i, table_block + " ");
         });
         rowToReadOnly(0, table_block + " ");
-    }
-
-    if (save_url === "spec_autoentered_table_ajax/save" && $("#pdm_field").length){
-        setTableByPdmAndStd(table_block);
     }
 }
 
@@ -1358,87 +1297,3 @@ function unhighlightCol(table_block) {
 function emptyCells() {
 
 }*/
-
-let spec_table_info = [
-    {
-        id: "component_1",
-        position: 1,
-        type: "pdm",
-        designation: "АБВГ.123456.102",
-        name: "Экран В",
-        number: 1
-    },
-    {
-        id: "component_2",
-        position: 2,
-        type: "pdm",
-        designation: "АБВГ.123456.103",
-        name: "Модуль",
-        number: 1
-    },
-    {
-        id: "component_3",
-        position: 3,
-        type: "pdm",
-        designation: "АБВГ.123456.101",
-        name: "Экран Н",
-        number: 1
-    },
-    {
-        id: "component_4",
-        position: 4,
-        type: "pdm",
-        designation: "АБВГ.123456.104",
-        name: "Крышка",
-        number: 1
-    },
-    {
-        id: "std_component_1",
-        type: "std",
-        position: 5,
-        designation: "",
-        name: "Винт ГОСТ Р ИСО 1207-М2x10",
-        number: 4
-    },
-    {
-        id: "std_component_2",
-        type: "std",
-        position: 6,
-        designation: "",
-        name: "Винт М2x8.99 ОСТ 92-0755-72",
-        number: 4
-    },
-    {
-        id: "std_component_3",
-        type: "std",
-        position: 7,
-        designation: "",
-        name: "Колодка клеммная ГОСТ 17557-88",
-        number: 10
-    }
-];
-
-function addRowByData(data, tableBlock) {
-    let position = data.position;
-    let designation = data.designation;
-    let name = data.name;
-    let number = data.number;
-    let tbody_lenght = Number($(tableBlock).find("table tr").length);
-    $(".firstColPlus ").trigger("click", {firstInit: true});
-    let str =  $(tableBlock).find("tbody tr").eq(tbody_lenght-2);
-    let td = str.find("td");
-    td.eq(2).find("div").text(tbody_lenght-1);
-    td.eq(2).find("input").attr("value", tbody_lenght-1);
-    //td.eq(2).attr("col", "0");
-    td.eq(3).find("div").text(designation);
-    //td.eq(3).attr("col", "1");
-    td.eq(3).find("input").attr("value", designation);
-    td.eq(4).find("div").text(name);
-    //td.eq(4).attr("col", "2");
-    td.eq(4).find("input").attr("value", name);
-    td.eq(5).find("div").text(number);
-    //td.eq(5).attr("col", "3");
-    td.eq(5).find("input").attr("value", number);
-    //$("#progress-bar-body").find("li").last().remove();
-    //CurrentProgress.pop();
-}
