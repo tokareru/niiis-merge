@@ -47,18 +47,39 @@ class admin_cab_model extends model {
         $sql = "DELETE FROM SPEC_TABLE";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
-        $Q = $q->fetchAll();
+        
         $sql = "DELETE FROM LOGS";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
-        $Q = $q->fetchAll();
+        
         $sql = "DELETE FROM CHAT";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
-        $Q = $q->fetchAll();
+        
         $sql = "DELETE FROM ROUTE";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
+        
+        $sql = "DELETE FROM ROUTE_MAP_1_2";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        
+        $sql = "DELETE FROM ROUTE_MAP_3";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        
+        $sql = "DELETE FROM TECHPROCESS";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        
+        $sql = "DELETE FROM PRODACTION_TASK_1_2";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        
+        $sql = "DELETE FROM PRODACTION_TASK_3";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        
         $Q = $q->fetchAll();
         $sql = "UPDATE DRAWING_MAIN_TEXT SET ";
         for ($i = 1; $i <= 50; $i++) {
