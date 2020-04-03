@@ -34,19 +34,30 @@ function initProductionTask_3_Rounds() {
             techProcess = json;
         }
     });
-
-    if (Role === "production_master"){
-        initProductTaskForProductMaster($workers_drop, techProcess, nameUsers);
-    } else{
-        initProductTaskForWorker($workers_drop, techProcess);
+    if (techProcess === undefined || techProcess === null){
+        $("#product_tech_process_field_drop").append(`
+            <p class="alert-warning p-2">Невозможно создать задания на производство, так как не существует техпроцесса</p>
+        `)
     }
+    else if (techProcess.techProcess.length === 0){
+        $("#product_tech_process_field_drop").append(`
+            <p class="alert-warning p-2">Невозможно создать задания на производство, так как не существует техпроцесса</p>
+        `)
+    }
+    else {
+        if (Role === "production_master"){
+            initProductTaskForProductMaster($workers_drop, techProcess, nameUsers);
+        } else{
+            initProductTaskForWorker($workers_drop, techProcess);
+        }
 
-    $(`#production_task_body`).on("click", "#product_task_save_button", function () {
-        saveProductionTable_3_Round(nameUsers);
-    })
-        .on("click", ".deleteNodeButtonRM", function () {
-        deleteWorkerTask($(this));
-    })
+        $(`#production_task_body`).on("click", "#product_task_save_button", function () {
+            saveProductionTable_3_Round(nameUsers);
+        })
+            .on("click", ".deleteNodeButtonRM", function () {
+                deleteWorkerTask($(this));
+            })
+    }
 }
 
 function initProductTaskForProductMaster($workers_drop, techProcess, nameUsers) {
@@ -99,6 +110,11 @@ function initProductTaskForProductMaster($workers_drop, techProcess, nameUsers) 
             });
 
         });
+    else {
+        $("#workers_drop_area").append(`
+            <p class="alert-warning p-2">Невозможно создать задания на производство, так как список рабочих пуст</p>
+        `)
+    }
 }
 
 function setDropAreaForProductMaster($draggable, $this) {
@@ -188,19 +204,24 @@ function initProductTaskForWorker($workers_drop, techProcess) {
         success: function (json) {
             let lastOperations = "";
             let techOperations = [];
-            if (json.productTasks.length)
+            if (json.productTasks.length){
                 json.productTasks.forEach(function (task) {
                     let _techName = getTechNameFromTechProcess(techProcess, task.id);
                     techOperations.push(_techName);
                 });
-            let techNames = sortTechOperationsToTechName(techOperations,techProcess);
-            if (techNames.length)
-                techNames.forEach(function (_techName) {
-                    $workers_drop.append(combineTechName(_techName, false));
-                });
+                let techNames = sortTechOperationsToTechName(techOperations,techProcess);
+                if (techNames.length)
+                    techNames.forEach(function (_techName) {
+                        $workers_drop.append(combineTechName(_techName, false));
+                    });
 
-            setToggler("workers_drop_area");
-            $workers_drop.find("span.caret").not(".caret-down").trigger("click");
+                setToggler("workers_drop_area");
+                $workers_drop.find("span.caret").not(".caret-down").trigger("click");
+            }else {
+                $("#workers_drop_area").append(`
+                     <p class="alert-warning p-2">У вас нет задач, так как их не сделал мастер производства</p>
+                `)
+            }
         }
     });
 }
@@ -389,10 +410,15 @@ function initProductionTask_1_2_Rounds() {
                 login: user.login
             },
             success: function (json) {
-
-                setProductionTable_1_2_Rounds($tableBlock, `production-current-user-${index}`, json, user.login);
-                if (index)
-                    $(`#production-current-user-${index}`).hide();
+                if (json.length || Role === "production_master"){
+                    setProductionTable_1_2_Rounds($tableBlock, `production-current-user-${index}`, json, user.login);
+                    if (index)
+                        $(`#production-current-user-${index}`).hide();
+                }else {
+                    $(`#prod_task_table_container`).append(`
+                        <p class="alert-warning p-2">Заданий нет</p>
+                    `);
+                }
             },
             error: function (message) {
                 console.log("Данные не загружены");
