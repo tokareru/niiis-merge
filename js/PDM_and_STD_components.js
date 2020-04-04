@@ -21,11 +21,12 @@ function getDetailsInfo(type = "all") {
                 DetailsInfo = json;
                 DetailsInfo.forEach(function (detail) {
                     if (detail.name === null) detail.name = "";
-                    if (detail.designation === null) detail.name = "";
-                    if (detail.position === null) detail.name = "";
-                    if (detail.path_3d === null) detail.name = "";
-                    if (detail.path_picture === null) detail.name = "";
-                    if (detail.number === null) detail.name = "";
+                    if (detail.designation === null) detail.designation = "";
+                    if (detail.position === null) detail.position = "";
+                    if (detail.path_3d === null) detail.path_3d = "";
+                    if (detail.path_picture === null || detail.path_picture === "") detail.path_picture = "/images/empty.png";
+                    if (detail.number === null) detail.number = "Не указано";
+                    if (detail.type === null) detail.type = "pdm";
                 });
                 console.log(json);
             }
@@ -38,7 +39,7 @@ function getDetailsInfo(type = "all") {
         });
     else if (type === "std" && DetailsInfo.length)
         DetailsInfo.forEach(function (_detail) {
-            if (_detail.type === "std")
+            if (_detail.type === "standart")
                 details.push(_detail)
         });
     else details = DetailsInfo;
