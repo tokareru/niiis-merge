@@ -6,6 +6,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
 <head>
     <meta charset="utf-8"/>
     <title><?php echo isset($data['title']) ? $data['title'] : conf::$SITE_NAME; ?></title>
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
 
     <?php
         
