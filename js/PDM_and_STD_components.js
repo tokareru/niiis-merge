@@ -24,13 +24,13 @@ function getDetailsInfo(type = "all") {
     let details = [];
     if (type === "pdm" && DetailsInfo.length)
         DetailsInfo.forEach(function (_detail) {
-           if (_detail.type === "pdm")
-               details.push(_detail)
+            if (_detail.type === "pdm")
+                details.push(_detail)
         });
     else if (type === "std" && DetailsInfo.length)
         DetailsInfo.forEach(function (_detail) {
-           if (_detail.type === "std")
-               details.push(_detail)
+            if (_detail.type === "std")
+                details.push(_detail)
         });
     else details = DetailsInfo;
     return details;
@@ -246,6 +246,7 @@ function makeCheckbox(fieldID, isChecked) {
     $checkboxid.find("input").click(function (e) {
         let arrayClicked = collectDataLabels(".left-side");
         showhideimage(arrayClicked, $(this));
+        console.log(arrayClicked);
         load3d(arrayClicked, $(this));
         //console.log(arrayClicked);
         setESI({details: convertPdmAndStdInfo(arrayClicked)})
@@ -330,8 +331,8 @@ function showhideimage(arrayComp, obj) {
 function load3d(array, obj = {0: {"checked": "true"}}) {
     if (window.isEnded != undefined && window.isEnded == true) {
         if (obj[0].checked) {
-            for (i = 0; i < 4; i++) {
-                if (array.indexOf('component_' + (i + 1)) != -1) {
+            for (i = 0; i < 7; i++) {
+                if (array.indexOf('detail-' + (i + 1)) != -1) {
                     //meshs[stldata[i][2]].visible = true;
                     for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                         MeshsLinesScheme[stldata[i][2]][j].visible = true;
@@ -339,21 +340,21 @@ function load3d(array, obj = {0: {"checked": "true"}}) {
                 }
             }
 
-            for (i = 0; i < 3; i++) {
-                if (array.indexOf('std_component_' + (i + 1)) != -1) {
-                    //meshs[stldata[i+4][2]].visible = true;
-                    for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
-                        MeshsLinesScheme[stldata[i + 4][2]][j].visible = true;
-                    }
-                }
-            }
+            /*  for (i = 0; i < 3; i++) {
+                 if (array.indexOf('std_component_' + (i + 1)) != -1) {
+                     //meshs[stldata[i+4][2]].visible = true;
+                     for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
+                         MeshsLinesScheme[stldata[i + 4][2]][j].visible = true;
+                     }
+                 }
+             } */
             if (typeof scene != "undefined") {
                 window.renderer.render(scene, camera);
             }
             //window.renderersc.render(scenesc, camerasc);
         } else {
-            for (i = 0; i < 4; i++) {
-                if (array.indexOf('component_' + (i + 1)) == -1) {
+            for (i = 0; i < 7; i++) {
+                if (array.indexOf('detail-' + (i + 1)) == -1) {
                     //meshs[stldata[i][2]].visible = false;
                     for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                         MeshsLinesScheme[stldata[i][2]][j].visible = false;
@@ -361,14 +362,14 @@ function load3d(array, obj = {0: {"checked": "true"}}) {
                 }
             }
 
-            for (i = 0; i < 3; i++) {
+            /* for (i = 0; i < 3; i++) {
                 if (array.indexOf('std_component_' + (i + 1)) == -1) {
                     //meshs[stldata[i+4][2]].visible = false;
                     for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                         MeshsLinesScheme[stldata[i + 4][2]][j].visible = false;
                     }
                 }
-            }
+            } */
             if (typeof scene != "undefined") {
                 window.renderer.render(scene, camera);
             }

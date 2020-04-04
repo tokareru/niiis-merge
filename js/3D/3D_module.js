@@ -178,8 +178,8 @@ export function init3dField() {
                 //console.log(array)
                 firstFieldInit(array);
             }else{
-                firstFieldInit(["component_1", "component_2", "component_3",
-                    "component_4", "std_component_1", "std_component_2", "std_component_3"])
+                firstFieldInit(["detail-1", "detail-2", "detail-3",
+                    "detail-4", "detail-5", "detail-6", "detail-7"])
             }
         });
     }
@@ -188,8 +188,8 @@ export function init3dField() {
         let prev = window.isEnded;
         window.isEnded = true;
         //console.log(array)
-        for (let i = 0; i < 4; i++) {
-            if (array.indexOf('component_' + (i + 1)) != -1) {
+        for (let i = 0; i < 7; i++) {
+            if (array.indexOf('detail-' + (i + 1)) != -1) {
                 //meshs[stldata[i][2]].visible = true;
                 for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                     MeshsLinesScheme[stldata[i][2]][j].visible = true;
@@ -202,7 +202,7 @@ export function init3dField() {
             }
         }
 
-        for (let i = 0; i < 3; i++) {
+        /* for (let i = 0; i < 3; i++) {
             if (array.indexOf('std_component_' + (i + 1)) != -1) {
                 //meshs[stldata[i+4][2]].visible = true;
                 for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
@@ -214,7 +214,7 @@ export function init3dField() {
                     MeshsLinesScheme[stldata[i + 4][2]][j].visible = false;
                 }
             }
-        }
+        } */
         if (typeof scene != "undefined") {
             window.renderer.render(scene, camera);
         }
