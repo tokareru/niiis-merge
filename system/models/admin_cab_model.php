@@ -214,13 +214,16 @@ class admin_cab_model extends model {
                         <div class="row">
                         <div class="col-2">Путь к 3Д моделе</div>
                         <div class="col-3"><textarea class="form-control form-control-sm" id = "path_3d" rows = "3">'.$product["path_3d"].'</textarea></div></div>
+                        <div class="row">
+                        <div class="col-2">Путь к изображению</div>
+                        <div class="col-3"><textarea class="form-control form-control-sm" id = "path_picture" rows = "3">'.$product["path_picture"].'</textarea></div></div>                        
                         <button type="submit" class="btn btn-secondary" id="esi_save">Сохранить</button>';
         return $result;
     }
     function save_esi_edit(){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             if($_POST["number"] == "") $_POST["number"] = "null";
-            $sql = "UPDATE PRODUCTS_ESI SET name = '".$_POST["name"]."', designation = '".$_POST["designation"]."', position = ".$_POST["position"].", path_3d = '".$_POST["path_3d"]."', number = ".$_POST["number"].", type_id = ".$_POST["type_id"]." WHERE id = ".$_POST["id"];
+            $sql = "UPDATE PRODUCTS_ESI SET name = '".$_POST["name"]."', designation = '".$_POST["designation"]."', position = ".$_POST["position"].", path_3d = '".$_POST["path_3d"]."', path_picture = '".$_POST["path_picture"]."', number = ".$_POST["number"].", type_id = ".$_POST["type_id"]." WHERE id = ".$_POST["id"];
             $q = sys::$PDO->prepare($sql);
             $q->execute(); 
             echo $sql;
