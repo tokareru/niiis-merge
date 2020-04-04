@@ -17,6 +17,7 @@ $(function (){
                 var path_3d = $("#esi #path_3d").val();
                 var number = $("#esi #number").val();
                 var type_id = $("#esi #type").children("option:selected").val();
+                console.log({id:id, name:name, designation:designation, position:position, path_3d:path_3d, number:number, type_id:type_id});
                 $.ajax({
                    url: "save_esi_edit",
                    type: "POST",

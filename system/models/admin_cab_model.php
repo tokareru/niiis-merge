@@ -200,10 +200,10 @@ class admin_cab_model extends model {
                         <div class="col-2">Название</div> 
                         <div class="col-3"><input class="form-control form-control-sm" id = "name" value="'.$product["name"].'"></div></div>
                         <div class="row">
-                        <div class="col-2">Путь к 3Д моделе</div>
+                        <div class="col-2">Описание</div>
                         <div class="col-3"><input class="form-control form-control-sm" id = "designation" value="'.$product["designation"].'"></div></div>
                         <div class="row">
-                        <div class="col-2">Описание</div>    
+                        <div class="col-2">Позиция</div>    
                         <div class="col-3"><input class="form-control form-control-sm" id = "position" value="'.$product["position"].'"></div></div>
                         <div class="row">
                         <div class="col-2">Количество</div>    
@@ -219,9 +219,11 @@ class admin_cab_model extends model {
     }
     function save_esi_edit(){
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "UPDATE PRODUCTS_ESI SET name = :name, designation = :designation, position = :position, path_3d = :path_3d, number = :number, type_id = :type_id WHERE id = :id";
+            if($_POST["number"] == "") $_POST["number"] = "null";
+            $sql = "UPDATE PRODUCTS_ESI SET name = '".$_POST["name"]."', designation = '".$_POST["designation"]."', position = ".$_POST["position"].", path_3d = '".$_POST["path_3d"]."', number = ".$_POST["number"].", type_id = ".$_POST["type_id"]." WHERE id = ".$_POST["id"];
             $q = sys::$PDO->prepare($sql);
-            $q->execute(array("name" => $_POST["name"], "designation" => $_POST["designation"], "position" => $_POST["position"], "path_3d" => $_POST["path_3d"], "number" => $_POST["number"], "type_id" => $_POST["type_id"], "id" => $_POST["id"])); 
+            $q->execute(); 
+            echo $sql;
             return array("response" => 200);
         }else {
             return array("response" => "NOT FOUND POST REQUEST");
