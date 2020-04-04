@@ -15,8 +15,10 @@
 <div id="tasks_routes" class="tasks_routes_main">
     <div id="task_routes_tree">
         <h2 class="font-weight-bold">Дерево маршрутов</h2>
-        <input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"
-               data-toggle="modal" data-target="#task_routes_add_modalWindow">
+        <div id="task_routes_add_button_div">
+            <!--<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"
+                    data-toggle="modal" data-target="#task_routes_add_modalWindow">-->
+        </div>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="task_routes_add_modalWindow" aria-hidden="true">
             <div class="modal-dialog" role="document">

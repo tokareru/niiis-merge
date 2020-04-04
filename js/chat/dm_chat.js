@@ -3,7 +3,7 @@ function initChats() {
     initDMChat(AllInfo.length);
     Server_count = initServerCount();
     $('#chat_text_button').hide(0);
-    $('#dm_user_0').css({"height": '110%'})
+    $('#dm_user_0').css({"height": '117%'})
 
     //console.log('cur login: ' + login);
     /*setInterval(function () {
@@ -184,6 +184,7 @@ function initDMChat(count_users) {
         else{
             $('.chats_header').html('<span class="font-weight-bold">Системный чат</span>');
             $('#chat_window').data({'name': $attr});
+            $('#dm_user_0').height('117%');
             $('#chat_text_button').hide(0);
         }
     });

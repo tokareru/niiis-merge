@@ -1,55 +1,74 @@
+let DetailsInfo = "";
+
 function createPDM(event, json_Role_and_Round) {
-    set_PDM_or_STD("json/PDM_images.json", "#left-accordion", "#pdm_field");
+    set_PDM_or_STD(getDetailsInfo("pdm"),"#left-accordion", "#pdm_field");
     //$('#left-accordion').find('.pdm_draggable').draggable();
 }
 
 function createSTD(event, json_Role_and_Round) {
-    set_PDM_or_STD("json/stdPDM_images.json", "#left-accordion", "#std_field");
+    set_PDM_or_STD(getDetailsInfo("std"), "#left-accordion", "#std_field");
 }
 
-function set_PDM_or_STD(imagesURL, accordID, fieldID) {
-    // получем и устанавливаем картинки в поле pdm или std
-    $.ajax({
-        type: "POST",
-        url: imagesURL,
-        dataType: "json",
-        success: function (json) {
-            let div = $(accordID).find(fieldID);
-            div.append("<fieldset></fieldset>");
-            let field = $(accordID + " " + fieldID + " fieldset");
-            let array;
-            if (Round === 3) {
-                $.ajax({
-                    type: "POST",
-                    async: false,
-                    url: "spec_autoentered_table_ajax/load_product_checked",
-                    success: function (data) {
-                        array = data;
-                    }
-                })
-                //console.log(array)
+function getDetailsInfo(type = "all") {
+    // ajax/get_products_esi
+    if (DetailsInfo === "")
+        $.ajax({
+            type: "GET",
+            async: false,
+            url: "json/get_products_esi.json",
+            success: function (json) {
+                DetailsInfo = json;
+                //console.log(json);
             }
-            json.images.forEach(function (elem, i) {
-                if (Round < 3) addNewComponent(elem, accordID, fieldID, true)
-                else {
-                    //addNewComponent(elem, accordID, fieldID, true);
-                    let check = true;
-                    array.checked.forEach(function (value) {
-                        if (elem.ID == value && check){
-                            addNewComponent(elem, accordID, fieldID, true)
-                            check = false;
-                        }
-                    });
-                    if (check) addNewComponent(elem, accordID, fieldID, false);
+        });
+    let details = [];
+    if (type === "pdm" && DetailsInfo.length)
+        DetailsInfo.forEach(function (_detail) {
+            if (_detail.type === "pdm")
+                details.push(_detail)
+        });
+    else if (type === "std" && DetailsInfo.length)
+        DetailsInfo.forEach(function (_detail) {
+            if (_detail.type === "std")
+                details.push(_detail)
+        });
+    else details = DetailsInfo;
+    return details;
+}
+
+function set_PDM_or_STD(data, accordID, fieldID) {
+    // получем и устанавливаем картинки в поле pdm или std
+    let div = $(accordID).find(fieldID);
+    div.append("<fieldset></fieldset>");
+    let field = $(accordID + " " + fieldID + " fieldset");
+    let array;
+    if (Round === 3) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "spec_autoentered_table_ajax/load_product_checked",
+            success: function (data) {
+                array = data;
+            }
+        })
+        //console.log(array)
+    }
+    data.forEach(function (elem, i) {
+        if (Round < 3) addNewComponent(elem, accordID, fieldID, true)
+        else {
+            //addNewComponent(elem, accordID, fieldID, true);
+            let check = true;
+            array.checked.forEach(function (value) {
+                if (("detail-" + elem.id) === value && check){
+                    addNewComponent(elem, accordID, fieldID, true)
+                    check = false;
                 }
             });
-            //$("#left-accordion").accordion("refresh");
-            $(fieldID).trigger("endOfInitialization");
-        },
-        error: function (message) {
-            //console.log("Error");
-        },
-    })
+            if (check) addNewComponent(elem, accordID, fieldID, false);
+        }
+    });
+    //$("#left-accordion").accordion("refresh");
+    $(fieldID).trigger("endOfInitialization");
 }
 
 function addNewComponent(data, accordID, fieldID, isChecked) {
@@ -57,18 +76,17 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
     let detailType = (fieldID === "#pdm_field") ? "pdm" : "std";
     if (isChecked) {
         field.append(
-            "<p class='pdm_draggable'><label detail-type='" + detailType +"' for=\"" + data.ID + "\">" +
-            "<img src=\"" + data.IMG + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
-            " name=\"" + data.ID +
-            "\" id=\"" + data.ID + "\">" + "</p>"
+            "<p class='pdm_draggable'><label detail-type='" + detailType +"' for=\"detail-" + data.id + "\">" +
+            "<img src=\"" + data.img + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
+            " name=\"detail-" + data.id + "\" detail-id=\"detail-" + data.id + "\" id='detail-" + data.id + "'>" + "</p>"
         );
         makeCheckbox(fieldID, isChecked);
     } else {
         field.append(
-            "<p class='pdm_draggable ui-draggable ui-draggable-handle'><label detail-type='" + detailType +"' for=\"" + data.ID + "\">" +
-            "<img src=\"" + data.IMG + "\">" + data.name + "</label><input type=\"checkbox\"" +
-            " name=\"" + data.ID +
-            "\" id=\"" + data.ID + "\">" + "</p>"
+            "<p class='pdm_draggable ui-draggable ui-draggable-handle'><label detail-type='" + detailType +"' for=\"detail-" + data.id + "\">" +
+            "<img src=\"" + data.img + "\">" + data.name + "</label><input type=\"checkbox\"" +
+            " name=\"detail-" + data.id +
+            "\" detail-id=\"detail-" + data.id + "\" id='detail-"+ data.id + "'>" + "</p>"
         );
         makeCheckbox(fieldID, isChecked);
         field.find("p").last().draggable({
@@ -79,7 +97,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
     if (Round === 3)
     {
         $("#left-accordion " + fieldID + " input").last().click(function () {
-            setTableByPdmAndStd( "#specificationBlock", collectDataLabels(".left-side"), true);
+            setTableByPdmAndStd(collectDataLabels(".left-side"));
             let amountOfChecked = $("#left-accordion").find("input:checked").length;
             let amountOfInputs = $("#left-accordion").find("input").length;
             let field3D = $("#field3DAll");
@@ -117,6 +135,19 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
             }
         });
     }
+
+    $("#left-accordion " + fieldID + " input").last().click(function () {
+        $.ajax({
+            type: "POST",
+            url: "spec_autoentered_table_ajax/save_product_checked",
+            data: {
+                checked: collectDataLabels(".left-side")
+            },
+            success: function (answer) {
+                console.log(answer);
+            }
+        });
+    });
 
 }
 
@@ -156,7 +187,7 @@ function makeCheckbox(fieldID, isChecked) {
     //checkbox
     $checkboxid.find('input').on('click', function () {
         let $input = $(this);
-        let id = $(this).attr('id');
+        let id = $(this).attr('detail-id');
         $(this).parent().children().each(function (val, obj) {
             let $obj = $(obj);
             if ($obj.attr('for') === id) {
@@ -215,7 +246,10 @@ function makeCheckbox(fieldID, isChecked) {
     $checkboxid.find("input").click(function (e) {
         let arrayClicked = collectDataLabels(".left-side");
         showhideimage(arrayClicked, $(this));
+        console.log(arrayClicked);
         load3d(arrayClicked, $(this));
+        //console.log(arrayClicked);
+        setESI({details: convertPdmAndStdInfo(arrayClicked)})
     });
 
     $checkboxid.find('img').on('dragstart', function (event) {
@@ -297,8 +331,8 @@ function showhideimage(arrayComp, obj) {
 function load3d(array, obj = {0: {"checked": "true"}}) {
     if (window.isEnded != undefined && window.isEnded == true) {
         if (obj[0].checked) {
-            for (i = 0; i < 4; i++) {
-                if (array.indexOf('component_' + (i + 1)) != -1) {
+            for (i = 0; i < 7; i++) {
+                if (array.indexOf('detail-' + (i + 1)) != -1) {
                     //meshs[stldata[i][2]].visible = true;
                     for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                         MeshsLinesScheme[stldata[i][2]][j].visible = true;
@@ -306,21 +340,21 @@ function load3d(array, obj = {0: {"checked": "true"}}) {
                 }
             }
 
-            for (i = 0; i < 3; i++) {
-                if (array.indexOf('std_component_' + (i + 1)) != -1) {
-                    //meshs[stldata[i+4][2]].visible = true;
-                    for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
-                        MeshsLinesScheme[stldata[i + 4][2]][j].visible = true;
-                    }
-                }
-            }
+            /*  for (i = 0; i < 3; i++) {
+                 if (array.indexOf('std_component_' + (i + 1)) != -1) {
+                     //meshs[stldata[i+4][2]].visible = true;
+                     for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
+                         MeshsLinesScheme[stldata[i + 4][2]][j].visible = true;
+                     }
+                 }
+             } */
             if (typeof scene != "undefined") {
                 window.renderer.render(scene, camera);
             }
             //window.renderersc.render(scenesc, camerasc);
         } else {
-            for (i = 0; i < 4; i++) {
-                if (array.indexOf('component_' + (i + 1)) == -1) {
+            for (i = 0; i < 7; i++) {
+                if (array.indexOf('detail-' + (i + 1)) == -1) {
                     //meshs[stldata[i][2]].visible = false;
                     for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                         MeshsLinesScheme[stldata[i][2]][j].visible = false;
@@ -328,14 +362,14 @@ function load3d(array, obj = {0: {"checked": "true"}}) {
                 }
             }
 
-            for (i = 0; i < 3; i++) {
+            /* for (i = 0; i < 3; i++) {
                 if (array.indexOf('std_component_' + (i + 1)) == -1) {
                     //meshs[stldata[i+4][2]].visible = false;
                     for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                         MeshsLinesScheme[stldata[i + 4][2]][j].visible = false;
                     }
                 }
-            }
+            } */
             if (typeof scene != "undefined") {
                 window.renderer.render(scene, camera);
             }
