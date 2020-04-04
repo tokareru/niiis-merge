@@ -11,14 +11,23 @@ function createSTD(event, json_Role_and_Round) {
 
 function getDetailsInfo(type = "all") {
     // ajax/get_products_esi
+    // json/get_products_esi.json
     if (DetailsInfo === "")
         $.ajax({
             type: "GET",
             async: false,
-            url: "json/get_products_esi.json",
+            url: "ajax/get_products_esi",
             success: function (json) {
                 DetailsInfo = json;
-                //console.log(json);
+                DetailsInfo.forEach(function (detail) {
+                    if (detail.name === null) detail.name = "";
+                    if (detail.designation === null) detail.name = "";
+                    if (detail.position === null) detail.name = "";
+                    if (detail.path_3d === null) detail.name = "";
+                    if (detail.path_picture === null) detail.name = "";
+                    if (detail.number === null) detail.name = "";
+                });
+                console.log(json);
             }
         });
     let details = [];
@@ -77,14 +86,14 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
     if (isChecked) {
         field.append(
             "<p class='pdm_draggable'><label detail-type='" + detailType +"' for=\"detail-" + data.id + "\">" +
-            "<img src=\"" + data.img + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
+            "<img src=\"" + data.path_picture + "\">" + data.name + "</label><input checked='checked' type=\"checkbox\"" +
             " name=\"detail-" + data.id + "\" detail-id=\"detail-" + data.id + "\" id='detail-" + data.id + "'>" + "</p>"
         );
         makeCheckbox(fieldID, isChecked);
     } else {
         field.append(
             "<p class='pdm_draggable ui-draggable ui-draggable-handle'><label detail-type='" + detailType +"' for=\"detail-" + data.id + "\">" +
-            "<img src=\"" + data.img + "\">" + data.name + "</label><input type=\"checkbox\"" +
+            "<img src=\"" + data.path_picture + "\">" + data.name + "</label><input type=\"checkbox\"" +
             " name=\"detail-" + data.id +
             "\" detail-id=\"detail-" + data.id + "\" id='detail-"+ data.id + "'>" + "</p>"
         );

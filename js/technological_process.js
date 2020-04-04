@@ -113,7 +113,11 @@ function setAllTechProcess(json, $field_drop, fieldId) {
             "operations": techNodeGuideNamesArray
         };
         setTechProcess($field_drop, techProcess);
-        setToggler(fieldId)
+        setToggler(fieldId);
+        $field_drop.find(".techNameDropped ").last().find("span").first().trigger("click");
+        $field_drop.find(".techNameDropped ").last().find(".techOperation").each(function () {
+                $(this).find("span").first().trigger("click");
+        })
 
     });
 }
@@ -261,6 +265,7 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
             });
 
             setToggler(fieldId);
+            $this.find(".techNameDropped").last().find("span").first().trigger("click");
         }
     });
 
@@ -311,6 +316,7 @@ function setDropAreaForTechOperation($techOperationsDropArea, fieldId) {
             });
 
             setToggler(fieldId);
+            $this.find(".techOperation").last().find("span").first().trigger("click");
         }
     });
 
@@ -368,6 +374,7 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
             setDropAreaForTechFields($this.find(".techFieldsDropArea").last());
 
             setToggler(fieldId);
+            $this.find(".techNode").last().find("span").first().trigger("click");
 
             setActionToBar({
                 id: `addNewTechNode`,
@@ -543,6 +550,8 @@ function addNewTechProcess(fieldId) {
     });
     setDropAreaForTechOperation(tech_process_field_drop.find(".techNameDropped").last().find(".techOperationsDropArea"), fieldId);
     setToggler(fieldId);
+
+    tech_process_field_drop.find(".techNameDropped").last().find("span").first().trigger("click");
 
     setActionToBar({
         id: `addNewTechProcess`,

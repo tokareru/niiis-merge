@@ -330,9 +330,9 @@ function setTechProcessForProductionTask(techProcess) {
     let $field = $("#product_tech_process_field_drop");
     setAllTechProcess(techProcess, $field, "product_tech_process_field_drop");
 
-    $(".techNameDropped").each(function () {
+    /*$(".techNameDropped").each(function () {
         $(this).find("span.caret").first().trigger("click");
-    });
+    });*/
 
     $(".techOperation").each(function (index) {
         $(this).attr("tech-shift", (index))
