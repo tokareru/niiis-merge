@@ -1,67 +1,18 @@
 let ownTasks = [];
 
 function initTasksRoutes() {
-    /*$.ajax({
-        type: "GET",
-        url: "json/tasks_routes.json",
-        dataType: "json",
-        success: function (json) {
-            let html = downloadHTML("pages/tasks_routes_table");
-
-            $("#tasks_composition_div").append(html);
-            $("#tasks_list_div_completed").hide();
-            setTaskRoutes(json.active, "active_", "#tasks_list_div_active");
-            setTaskRoutes(json.completed, "completed_", "#tasks_list_div_completed");
-
-            $("#tasks_active_routes").trigger("click");
-
-            $(".tasks_routes_button").click(function () {
-                $("#task_routes_info").hide()
-            })
-
-            $("#tasks_active_routes").click(function () {
-                $("#tasks_completed_routes").removeAttr("disabled");
-                $(this).attr("disabled", "disabled");
-                $("#tasks_list_div_active").show();
-                $("#tasks_list_div_completed").hide();
-                $("#current_task_routes_list").empty().append("Активные")
-            })
-
-            $("#tasks_completed_routes").click(function () {
-                $("#tasks_active_routes").removeAttr("disabled")
-                $(this).attr("disabled", "disabled");
-                $("#tasks_list_div_completed").show();
-                $("#tasks_list_div_active").hide();
-                $("#current_task_routes_list").empty().append("Завершенные");
-            })
-        },
-        error: function (message) {
-            console.log("Can't load the data");
-        }
-    })*/
-
-    //$('#task_routes_add_button').hide();
-   /* if (Role === 'technologist' || Role === 'designer') {
-        $('#task_routes_add_button_div')
-            .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
-                ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
-    }*/
-    /*getRoutesFromDB();
-    tasks_routes_AddEvent('task_routes_tree');
-    tasksRoutesMadeRoutes('task_routes_active_routes', data.response.active);
-    if (data.response.active.length > 0) {
-        $('#task_routes_add_button').attr('disabled', true);
-    }
-    tasksRoutesMadeRoutes('task_routes_ended_routes', data.response.finished);
-    addTaskToTable();
-    generateOwnTasks('task_routes_own_routes');*/
     getRoutesFromDB();
+    addTaskToTable();
     tasks_routes_AddEvent('task_routes_tree');
     if (Role === 'technologist' || Role === 'designer')
         $('#task_routes_add_button_div')
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
     setInterval(function () {
+        if(TaskInfoReload){
+
+            return;
+        }
         getRoutesFromDB();
     }, 20000);
 
@@ -69,7 +20,8 @@ function initTasksRoutes() {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
     });
     $('#create_task_route_saveBtn').on('click', function () {
-        addTaskToDB();
+        //addTaskToDB();
+        serializeAllInfo();
     });
     $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
         let $id = $(this).parents('tr').data('id');
@@ -112,17 +64,30 @@ function initTasksRoutes() {
                 });
             }
         })
-    })
+    });
+    $('body').on('click', '.tasks_routes_reloadShell', function () {
+        TaskInfoReload = $(this).find('input').is(':checked');
+    });
+    setInterval(function () {
+        console.log(TaskInfoReload);
+    }, 5000);
+}
 
-    /*   $.ajax({
-           type: 'POST',
-           url: 'ajax/get_routes_by_login',
-           success: function (res) {
-               console.log("test get_routes_by_login");
-               console.log(res);
-           }
-       })*/
+function serializeAllInfo() {
+    let dataInfo = {
+        specification: undefined,
+        pdm: undefined,
+        std: undefined
+    };
+    let $spec = $('#specificationTable');
+    if ($spec.html() === undefined && Round !== 3){
+        dataInfo.specification = 'unchanged';
+    }else {
 
+    }
+    let $pdm = $('#pdm_field');
+    $pdm.find('p')
+    console.log(dataInfo);
 }
 
 function tasks_routes_AddEvent(id) {
@@ -167,7 +132,10 @@ function generateOwnTasks(selector) {
         '</tr>' +
         '</thead><tbody></tbody>');
     let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
-        '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask">Отклонить</button>';
+        '<button class="btn bg-danger text-white float-left tasks_routes_finishedTask">Отклонить</button>' +
+        '<label class="tasks_routes_reloadShell btn btn-dark float-right">' +
+        'Переключить <input type="checkbox">' +
+        '</label>';
     ownTasks.sort(function (a, b) {
         if (a.status === "nonactive" && b.status !== 'nonactive')
             return 1;
@@ -180,8 +148,8 @@ function generateOwnTasks(selector) {
         let $tr = $(
             '<tr class="' + `${value.status !== 'nonactive' ? 'bg-light' : ''}">` +
             `<td style="width: 30px">${index + 1}</td>` +
-            `<td style="width: 300px">${value.task}</td>` +
-            '<td style="width: 300px">' +
+            `<td style="width: 250px">${value.task}</td>` +
+            '<td style="width: 350px">' +
             `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? 'Принят' : 'Отклонен'}` +
             '</td>' +
             '</tr>');
@@ -383,8 +351,7 @@ function getRoutesFromDB() {
             tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
             if (res.response.active.length > 0) {
                 $('#task_routes_add_button').attr('disabled', true);
-            }
-            else {
+            } else {
                 $('#task_routes_add_button').removeAttr('disabled');
             }
             tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);

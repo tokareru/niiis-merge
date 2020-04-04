@@ -10,6 +10,8 @@ window.namerole;
 let prepareShellIsFinished = false;
 let FirstInit = true;
 let AllInfo = [];
+let TaskInfoReload = false;
+
 
 function shellInit() {
     $("#shell").data("shellInterconnection", {"availableSubscribers": []});

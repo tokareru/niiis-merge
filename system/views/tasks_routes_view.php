@@ -79,40 +79,18 @@
                 <span class="caret">
                     Мои маршруты
                 </span>
-                <ul class="nested" id="task_routes_own_routes">
-
+                <ul class="nested" >
+                    <div id="task_routes_own_routes"></div>
                 </ul>
             </li>
         </ul>
 
     </div>
-    <!--<div>
-         <div class="row">
-            <div class="col-4" id="tasks_routes_info">
-                <div class="tasks_routes_inner_div">
-                    <p class="tasks_routes_inner_header">Дерево маршрутов</p>
-                        <input type="button" disabled='disabled' id="tasks_active_routes" class="btn btn-custom btn-sm col-12" value="Активные маршруты">
-                        <input type="button" id="tasks_completed_routes" class="btn btn-custom btn-sm col-12" value="Завершенные маршруты">
-                </div>
-
-                 <div class="tasks_routes_inner_div" id="tasks_list">
-                      <p class="tasks_routes_inner_header">Список маршрутов: <span id="current_task_routes_list">Активные</span></p>
-                      <div class="task_list">
-                        <div id="tasks_list_div_active"></div>
-                        <div id="tasks_list_div_completed"></div>
-                      </div>
-                 </div>
-            </div>
-            <div class="col-8" id="route_tree">
-               <div class="tasks_routes_inner_div" id="tasks_composition">
-                   <p class="tasks_routes_inner_header">Состав маршрута</p>
-                   <div id="tasks_composition_div">
-
-                   </div>
-               </div>
-            </div>
-
-         </div>
+    <!--<div id="task_routes_my_tasks">
+        <div id="task_routes_my_tasks_button" class="float-left"></div>
+        <div id="task_routes_my_tasks_content" class="float-right">
+            <div id="task_routes_own_routes"></div>
+        </div>
     </div>-->
 </div>
 </body>

@@ -51,7 +51,7 @@ function initSpecTable(json) {
 }
 
 function setSpecTable(json) {
-    //console.log(json);
+    console.log(json);
     let $table = $("#specificationTable");
     let $theadTr = $table.find("thead tr");
     let $tbody = $table.find("tbody");
@@ -61,6 +61,13 @@ function setSpecTable(json) {
         json.thead.forEach(function (_cell) {
             $theadTr.append(combineTheadCell(_cell))
         });
+    if(json.tbody === undefined){
+        let temp = [];
+        for (let i = 0; i < json.thead.length; i++){
+            temp.push({text: "", readonly: false});
+        }
+        json.tbody = [{row: temp}];
+    }
     if (Round !== 3){
         if (json.tbody.length)
             json.tbody.forEach(function (_row) {
@@ -117,7 +124,7 @@ function addNewRowToSpecTable(data) {
     let info;
     if (data !== undefined)
        info = {row: [{text: data[0], readonly: false}, {text: data[1], readonly: false}, {text: data[2], readonly: false}, {text: data[3], readonly: false}]};
-    $("#specificationTable").find("tbody").append(combineTbodyRow(info));
+    $("#specificationTable").find("tbody").find('.addNewRowToSpecTableButton').parents('tr').before(combineTbodyRow(info));
 
 }
 
