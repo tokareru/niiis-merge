@@ -15,13 +15,14 @@ $(function (){
                 var designation = $("#esi #designation").val();
                 var position = $("#esi #position").val();
                 var path_3d = $("#esi #path_3d").val();
+                var path_picture = $("#esi #path_picture").val();
                 var number = $("#esi #number").val();
                 var type_id = $("#esi #type").children("option:selected").val();
-                console.log({id:id, name:name, designation:designation, position:position, path_3d:path_3d, number:number, type_id:type_id});
+                console.log({id:id, name:name, designation:designation, position:position, path_3d:path_3d, path_picture:path_picture, number:number, type_id:type_id});
                 $.ajax({
                    url: "save_esi_edit",
                    type: "POST",
-                   data: {id:id, name:name, designation:designation, position:position, path_3d:path_3d, number:number, type_id:type_id},
+                   data: {id:id, name:name, designation:designation, position:position, path_3d:path_3d, path_picture:path_picture, number:number, type_id:type_id},
                    success:function(answer){
                         console.log(answer);
                    }
