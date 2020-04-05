@@ -20,7 +20,7 @@ function initTasksRoutes() {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
     });
     $('#create_task_route_saveBtn').on('click', function () {
-        //addTaskToDB();
+        addTaskToDB();
         serializeAllInfo();
     });
     $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
