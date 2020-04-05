@@ -478,7 +478,6 @@ function getRoutesFromDB() {
             }
 
             console.log(ownTasks);*/
-            taskRouteDisable();
         }
     });
 }
@@ -492,4 +491,5 @@ function getRoutesFromDBInfo(res) {
         return;
     }
     console.log(ownTasks);
+    taskRouteDisable();
 }
