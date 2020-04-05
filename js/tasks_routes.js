@@ -404,6 +404,7 @@ function getRoutesFromDB() {
         type: 'GET',
         url: 'ajax/get_routes_by_type',
         success: function (res) {
+            console.log(res);
             ownTasks = [];
             tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
             /*
