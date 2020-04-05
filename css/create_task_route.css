@@ -143,7 +143,11 @@
 }
 
 .tasks_routes_routeTable{
-    width: 700px;
-    max-width: 700px;
-    min-width: 700px;
+    width: 800px;
+    max-width: 800px;
+    min-width: 800px;
+}
+
+.tasks_routes_routeTable td{
+    text-align: center;
 }
