@@ -32,6 +32,10 @@
     cursor: pointer;
 }
 
+.border-color-transparent{
+    border-color: transparent !important;
+}
+
 #tabs .nav-link.active{
     background-color: #202021;
 }

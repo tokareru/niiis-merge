@@ -303,7 +303,7 @@ function combineWorkerNode(user = {name: "", login: "", role: "", roleName: ""})
     return `
         <li class="user-login-node-li" user-login="${user.login}">
             <span class="caret">${user.name}</span>
-            <ul  style='min-height: 35px;' class='nested border-bottom pb-2 operationsForWorker'>
+            <ul style='min-height: 35px;' class='nested border-bottom pb-2 operationsForWorker border border-color-transparent rounded'>
                 
             </ul>
         </li>
@@ -349,6 +349,10 @@ function setTechProcessForProductionTask(techProcess) {
                 $helper.find("ul").first().hide();
                 $helper.css("z-index", "99999");
                 $helper.css("width", "270px");
+                $(".operationsForWorker").addClass("border-warning").removeClass('border-color-transparent')
+            },
+            stop: function (e, ui) {
+                $(".operationsForWorker").addClass("border-color-transparent").removeClass('border-warning')
             }
         })
 }
