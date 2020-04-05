@@ -112,7 +112,7 @@ function serializeAllInfo() {
         dataInfo.models = idModels;
     }
 
-    $.ajax(
+   /* $.ajax(
         {
             url: '',
             type: 'POST',
@@ -121,9 +121,10 @@ function serializeAllInfo() {
                 //console.log(res);
             }
         }
-    );
+    );*/
     console.log(btoa(JSON.stringify(dataInfo)));
     console.log(JSON.parse(atob(btoa(JSON.stringify(dataInfo)))));
+    return btoa(JSON.stringify(dataInfo));
 }
 
 function preventShellEvent() {
@@ -174,7 +175,7 @@ function generateOwnTasks(selector) {
         '</tr>' +
         '</thead><tbody></tbody>');
     let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
-        '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask">Отклонить</button>';
+        '<button class="btn bg-danger text-white float-left tasks_routes_finishedTask">Отклонить</button>';
     ownTasks.sort(function (a, b) {
         if (a.status === "nonactive" && b.status !== 'nonactive')
             return 1;
@@ -364,10 +365,12 @@ function addTaskToDB() {
     let task = serializeCreateTaskRoute();
     if (task === undefined || task.length === 0)
         return;
+    let data =  {task: task, master: login, shell: serializeAllInfo()};
+    console.log(data);
     $.ajax({
         type: 'POST',
         url: 'ajax/save_route',//ajax/save_route
-        data: {task: task, master: login, shell: serializeAllInfo()},
+        data: data,
         success: function (res) {
             let taskTA = serializeCreateTaskRoute(true);
             let message = `Пользователь <span class="font-weight-bold">${currentName}</span> создал маршрут со следующими указаниями: <br/>`;

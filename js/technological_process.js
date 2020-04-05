@@ -133,7 +133,7 @@ function setTechProcess($container, data = {name: "", operations: []}) {
     $container.append(`
         <li class='techNameDropped' tech-id='${data.id}' tech-lvl='${data.lvl}'>
             <span class='caret'>${data.name}</span>${deleteButton}
-            <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested techOperationsDropArea border border-color-transparent rounded'>
+            <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested techOperationsDropArea'>
                 ${operations}
             </ul>
         </li>
@@ -156,7 +156,7 @@ function combineTechName(techName = {name: "", id: "", lvl: "", operations: []},
     return `
         <li ${shift} class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
             <span class='caret'>${techName.name}</span>${deleteButton}
-            <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested techOperationsDropArea border border-color-transparent rounded'>
+            <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested techOperationsDropArea'>
                 ${operations}
             </ul>
         </li>
@@ -175,7 +175,7 @@ function combineTechOperation(field, isDeleted) {
     return `
         <li class="techOperation" tech-lvl="${field.lvl}" tech-id="${field.id}">
             <span class="mr-2 caret">${field.name}</span>${deleteButton}
-            <ul style='min-height: 35px;' class="nested techNodesDropArea border border-color-transparent rounded">
+            <ul style='min-height: 35px;' class="nested techNodesDropArea">
                 ${innerNodes}
             </ul>
         </li>
@@ -196,7 +196,7 @@ function combineTechNode(node) {
     let _node = `
         <li class="techNode" tech-lvl="${node.lvl}" tech-id="${node.id}">
             <span class="caret">${node.name}</span>${deleteButton}
-            <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested techFieldsDropArea border border-color-transparent rounded'>
+            <ul style='min-height: 35px;' class='nested border-bottom pb-2 myNested techFieldsDropArea'>
                 ${fields}
             </ul>
         </li>
@@ -350,6 +350,7 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
         drop: function (event, ui) {
             let $draggable = $(ui.draggable);
             if ($draggable.find("span").first().text() === "Техоперации") return;
+
             let $this = $(this);
             let fields = [];
             let parent_name = $this.parent().find("span").first().text();
