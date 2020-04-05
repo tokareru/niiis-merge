@@ -9,7 +9,7 @@ function initTasksRoutes() {
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
     setInterval(function () {
-        if(TaskInfoReload){
+        if (TaskInfoReload) {
 
             return;
         }
@@ -28,7 +28,7 @@ function initTasksRoutes() {
         let but = $(this);
         let $master = $(this).parents('tr').data('master');
         $.ajax({
-            url: 'ajax/save_route_type',//ajax/save_route_type
+            url: 'ajax/save_route_type', //ajax/save_route_type
             type: 'POST',
             data: {id: $id, status: 'active'},
             success: function (data) {
@@ -68,26 +68,50 @@ function initTasksRoutes() {
     $('body').on('click', '.tasks_routes_reloadShell', function () {
         TaskInfoReload = $(this).find('input').is(':checked');
     });
-    setInterval(function () {
-        console.log(TaskInfoReload);
-    }, 5000);
+
+    $.ajax(
+        {
+            url: '',
+            type: 'GET',
+            data: {},
+            success: function (res) {
+                //TaskInfo = JSON.parse(atob(res));
+            }
+        }
+        )
 }
 
 function serializeAllInfo() {
     let dataInfo = {
         specification: undefined,
-        pdm: undefined,
-        std: undefined
+        models: undefined
     };
     let $spec = $('#specificationTable');
-    if ($spec.html() === undefined && Round !== 3){
+    if ($spec.html() === undefined || Round === 3) {
         dataInfo.specification = 'unchanged';
-    }else {
-
+    } else {
+        dataInfo.specification = saveSpecTableData($("#specificationTable").find(".specRows"));
     }
     let $pdm = $('#pdm_field');
-    $pdm.find('p')
-    console.log(dataInfo);
+    if (Round !== 3) {
+        dataInfo.models = 'not-exist';
+    } else {
+        let idModels = collectDataLabels(".left-side");
+        dataInfo.models = idModels;
+    }
+
+    $.ajax(
+        {
+            url: '',
+            type: 'POST',
+            data: {data: btoa(JSON.stringify(dataInfo))},
+            success: function (res) {
+                //console.log(res);
+            }
+        }
+    );
+    console.log( btoa(JSON.stringify(dataInfo)));
+    console.log( JSON.parse(atob(btoa(JSON.stringify(dataInfo)))));
 }
 
 function tasks_routes_AddEvent(id) {

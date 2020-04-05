@@ -11,6 +11,7 @@ let prepareShellIsFinished = false;
 let FirstInit = true;
 let AllInfo = [];
 let TaskInfoReload = false;
+let TaskInfo;
 
 
 function shellInit() {

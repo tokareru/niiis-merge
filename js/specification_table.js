@@ -75,7 +75,9 @@ function setSpecTable(json) {
             });
         else {
             if (Role === "designer")
+            {
                 $tbody.append(combineTbodyRow({row: [{text: "", readonly: false}]}));
+            }
             else
                 $tbody.append(combineTbodyRow({row: [{text: "", readonly: true}]}));
         }
@@ -124,7 +126,12 @@ function addNewRowToSpecTable(data) {
     let info;
     if (data !== undefined)
        info = {row: [{text: data[0], readonly: false}, {text: data[1], readonly: false}, {text: data[2], readonly: false}, {text: data[3], readonly: false}]};
-    $("#specificationTable").find("tbody").find('.addNewRowToSpecTableButton').parents('tr').before(combineTbodyRow(info));
+
+    if(Round !== 3){
+        $("#specificationTable").find("tbody").find('.addNewRowToSpecTableButton').parents('tr').before(combineTbodyRow(info));
+    }else {
+        $("#specificationTable").find("tbody").append(combineTbodyRow(info));
+    }
 
 }
 
@@ -144,8 +151,7 @@ function emptySpecTable() {
     $("#specificationTable").find("tbody").find(".specRows").remove();
 }
 
-function saveSpecTable() {
-    let $rows = $("#specificationTable").find(".specRows");
+function saveSpecTableData($rows) {
     let saveData = [];
     if ($rows.length)
         $rows.each(function () {
@@ -159,6 +165,12 @@ function saveSpecTable() {
                 ]
             })
         });
+    return saveData;
+}
+
+function saveSpecTable() {
+    let $rows = $("#specificationTable").find(".specRows");
+    let saveData = saveSpecTableData($rows);
     console.log(saveData);
     let saveUrl = "";
 
