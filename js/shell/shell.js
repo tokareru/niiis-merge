@@ -12,6 +12,7 @@ let FirstInit = true;
 let AllInfo = [];
 let TaskInfoReload = false;
 let TaskInfo;
+let SpecTableInfo;
 
 
 function shellInit() {

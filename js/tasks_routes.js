@@ -158,6 +158,13 @@ function serializeAllInfo() {
     if ($spec.html() === undefined) {
         dataInfo.specification = 'unchanged';
     } else {
+        if (Round !== 3){
+            dataInfo.specification = JSON.stringify(SpecTableInfo.tbody) !== JSON.stringify(saveSpecTableData($("#specificationTable").find(".specRows")))?
+                saveSpecTableData($("#specificationTable").find(".specRows")): 'unchanged';
+            console.log(SpecTableInfo.tbody);
+            console.log(saveSpecTableData($("#specificationTable").find(".specRows")));
+            console.log(dataInfo.specification);
+        } else
         dataInfo.specification = saveSpecTableData($("#specificationTable").find(".specRows"));
     }
     let $pdm = $('#pdm_field');
