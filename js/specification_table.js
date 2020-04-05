@@ -236,7 +236,6 @@ function saveSpecTable() {
 }
 
 function setTableByPdmAndStd(checked) {
-    console.log(checked);
 
     emptySpecTable();
 
@@ -261,7 +260,6 @@ function setTableByPdmAndStd(checked) {
         checked = checked.checked;
 
     let checked_info = convertPdmAndStdInfo(checked);
-    console.log(checked_info);
 
     checked_info.forEach(function (_detail) {
         addNewRowToSpecTable([_detail.position, _detail.designation, _detail.name, _detail.number]);
@@ -269,7 +267,6 @@ function setTableByPdmAndStd(checked) {
 }
 
 function convertPdmAndStdInfo(checkedArray) {
-    console.log(checkedArray);
     let checkedInfo = [];
     DetailsInfo = getDetailsInfo();
     DetailsInfo.forEach(function (_detail, index) {

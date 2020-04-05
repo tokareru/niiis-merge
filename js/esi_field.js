@@ -1,6 +1,7 @@
 function initESI() {
     esiGetDataFromServer();
-    $("#esi_branch_body_header_span").trigger("click");
+
+    $("#esi_branch_body_header_span").not(".caret-down").trigger("click");
 
     $('.slider_button').on('click', function (event) {
         STDLibClick($('.slider_button'), $('.slider_main'), 15, "esi");

@@ -1,6 +1,7 @@
 let ownTasks = [];
 let currentTask = '';
 let tasksRoutesMadeRoutesArr;
+let tempESI;
 
 function initTasksRoutes() {
     getRoutesFromDB();
@@ -105,8 +106,11 @@ function initTasksRoutes() {
                 }
             }, 500);
 
-        } else {
-
+        }
+        console.log(shell.esi);
+        if (shell.esi !== undefined && shell.esi !== 'not-exist' && shell.esi !== 'unchanged') {
+            setESI(shell.esi);
+            $('.slider_button').removeClass('bg-dark').addClass('bg-danger');
         }
 
     });
@@ -119,8 +123,19 @@ function initTasksRoutes() {
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
         taskRouteDisable();
     });
+    if(Round === 3){
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "spec_autoentered_table_ajax/load_product_checked",
+            success: function (data) {
+                tempESI = {details: convertPdmAndStdInfo(data.checked)};
+            }
+        })
+    }
 
-    $.ajax(
+
+   /* $.ajax(
         {
             url: '',
             type: 'GET',
@@ -130,28 +145,38 @@ function initTasksRoutes() {
                 preventShellEvent();
             }
         }
-    )
+    )*/
 }
 
 function serializeAllInfo() {
     let dataInfo = {
         specification: undefined,
-        models: undefined
+        models: undefined,
+        esi: undefined
     };
     let $spec = $('#specificationTable');
     if ($spec.html() === undefined) {
         dataInfo.specification = 'unchanged';
     } else {
         dataInfo.specification = saveSpecTableData($("#specificationTable").find(".specRows"));
-        console.log(dataInfo.specification)
     }
     let $pdm = $('#pdm_field');
     if (Round !== 3) {
         dataInfo.models = 'not-exist';
+        dataInfo.esi = 'not-exist';
     } else {
         let idModels = collectDataLabels(".left-side");
         dataInfo.models = idModels;
+        if (Role === 'designer')
+        {
+            dataInfo.esi = JSON.stringify(tempESI) !== JSON.stringify({details: convertPdmAndStdInfo(collectDataLabels(".left-side"))})?
+            {details: convertPdmAndStdInfo(collectDataLabels(".left-side"))}: 'unchanged';
+            console.log(dataInfo.esi);
+        }
+        else
+            dataInfo = 'unchanged';
     }
+
 
     /* $.ajax(
          {
@@ -174,7 +199,11 @@ function taskRouteDisable() {
     $('#specificationTable').find('tbody tr').remove();
     createSpecificationTable();
     $('#main-tabs-specification').parents('li').removeClass('bg-danger');
+    $('.slider_button').removeClass('bg-danger').addClass('bg-dark');
     $('#specTableSaveButton').removeAttr('disabled');
+    console.log('-----------------------');
+    console.log(tempESI);
+    setESI(tempESI);
     //}
 }
 
@@ -255,7 +284,6 @@ function generateOwnTasks(selector) {
                 '</td>' +
                 '</tr>');
             $tr.data({'id': value.id, 'master': value.master, shell: value.shell});
-            console.log($tr.data('shell'));
             $table.find('tbody').append(
                 $tr
             )
@@ -467,7 +495,6 @@ function getRoutesFromDB() {
             if (TaskInfoReload) {
                 return;
             }
-            console.log(res);
             tasksRoutesMadeRoutesArr = res;
             /* ownTasks = [];
              tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
@@ -487,5 +514,4 @@ function getRoutesFromDBInfo(res) {
     tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
     tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
     generateOwnTasks('task_routes_own_routes');
-    console.log(ownTasks);
 }
