@@ -74,7 +74,7 @@ async function prepareShell(json_role_and_round, add_data) {
     currentName = json_role_and_round.name;
     window.namerole = currentName;
     let role = json_role_and_round.role.toString();
-    let round = Number(json_role_and_round.round);
+    let round = 3//Number(json_role_and_round.round);
     let dateChange = json_role_and_round.date_change.toString();
     let loginChange = json_role_and_round.login_change.toString();
 
@@ -134,7 +134,7 @@ async function updateShell(){
 
     //обновляем данные раунда
     $("#current_login_field").text(login);
-    $("#current_role_field").text(role);
+    $("#current_role_field").text(currentName);
     $("#current_round_number").text(round);
 
     //$("#change_role").attr("disabled", "disabled");
