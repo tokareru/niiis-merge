@@ -174,7 +174,7 @@ function generateOwnTasks(selector) {
         '</tr>' +
         '</thead><tbody></tbody>');
     let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
-        '<button class="btn bg-danger text-white float-left tasks_routes_finishedTask">Отклонить</button>';
+        '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask">Отклонить</button>';
     ownTasks.sort(function (a, b) {
         if (a.status === "nonactive" && b.status !== 'nonactive')
             return 1;
