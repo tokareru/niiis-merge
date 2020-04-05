@@ -4,7 +4,7 @@ function initTasksRoutes() {
     getRoutesFromDB();
     addTaskToTable();
     tasks_routes_AddEvent('task_routes_tree');
-    if (Role === 'technologist' || Role === 'designer')
+    if (Role === 'technologist' || Role === 'designer' || Role === 'production_master')
         $('#task_routes_add_button_div')
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
@@ -66,7 +66,18 @@ function initTasksRoutes() {
         })
     });
     $('body').on('click', '.tasks_routes_reloadShell_radio', function () {
-        TaskInfoReload = $(this).attr('value') === 'true';
+        let $this = $(this);
+        if ($(this).parents('form').find('.tasks_routes_reloadShell_radio:first').get(0) === $(this).get(0)){
+            return;
+        }
+        $('.tasks_routes_reloadShell').each(function () {
+            if($this.parents('form').get(0) !== $(this).get(0)){
+                $(this).find('.tasks_routes_reloadShell_radio:first').click();
+            }
+            if($this.parents('form').get(0) === $(this).get(0)){
+                TaskInfoReload = $this.attr('value') === 'true';
+            }
+        });
     });
 
     $.ajax(
@@ -395,11 +406,12 @@ function getRoutesFromDB() {
         success: function (res) {
             ownTasks = [];
             tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
+            /*
             if (res.response.active.length > 0) {
                 $('#task_routes_add_button').attr('disabled', true);
             } else {
                 $('#task_routes_add_button').removeAttr('disabled');
-            }
+            }*/
             tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
             generateOwnTasks('task_routes_own_routes');
         }
