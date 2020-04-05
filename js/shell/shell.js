@@ -134,7 +134,7 @@ async function updateShell(){
 
     //обновляем данные раунда
     $("#current_login_field").text(login);
-    $("#current_role_field").text(role);
+    $("#current_role_field").text(currentName);
     $("#current_round_number").text(round);
 
     //$("#change_role").attr("disabled", "disabled");
