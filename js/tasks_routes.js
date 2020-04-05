@@ -32,7 +32,7 @@ function initTasksRoutes() {
             type: 'POST',
             data: {id: $id, status: 'active'},
             success: function (data) {
-                but.parents('td').html('Принято');
+                but.parents('td').html('<span class="fa fa-2x fa-check text-success text-center w-100"></span>');
                 addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">принял</span> задание от пользователя ` +
                     `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`);
                 setActionToBar({
@@ -53,7 +53,8 @@ function initTasksRoutes() {
             type: 'POST',
             data: {id: $id, status: 'finished'},
             success: function (data) {
-                but.parents('td').html('Отклонено');
+                but.parents('td').html('<span class="fa fa-times fa-2x w-100' +
+                    ' text-danger text-center"></span>');
                 addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">отклонил</span> задание от пользователя ` +
                     `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`);
                 setActionToBar({
@@ -65,8 +66,8 @@ function initTasksRoutes() {
             }
         })
     });
-    $('body').on('click', '.tasks_routes_reloadShell', function () {
-        TaskInfoReload = $(this).find('input').is(':checked');
+    $('body').on('click', '.tasks_routes_reloadShell_radio', function () {
+        TaskInfoReload = $(this).attr('value') === 'true';
     });
 
     $.ajax(
@@ -76,6 +77,7 @@ function initTasksRoutes() {
             data: {},
             success: function (res) {
                 //TaskInfo = JSON.parse(atob(res));
+                preventShellEvent();
             }
         }
         )
@@ -114,6 +116,11 @@ function serializeAllInfo() {
     console.log( JSON.parse(atob(btoa(JSON.stringify(dataInfo)))));
 }
 
+function preventShellEvent() {
+    $('#specTableSaveButton').attr('disabled', true);
+    $('#left-accordion').find('p').attr('disabled', true);
+}
+
 function tasks_routes_AddEvent(id) {
     let toggler = document.getElementById(id).getElementsByClassName("caret");
 
@@ -150,16 +157,14 @@ function generateOwnTasks(selector) {
     let $table = $('<table class="table table-bordered tasks_routes_routeTable"></table>');
     $table.append('<thead class="thead-light">' +
         '<tr>' +
-        '<th>№</th>' +
+        '<th style="width: 60px">№</th>' +
+        '<th>Показ</th>' +
         '<th>Задание</th>' +
         '<th>Статус</th>' +
         '</tr>' +
         '</thead><tbody></tbody>');
     let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
-        '<button class="btn bg-danger text-white float-left tasks_routes_finishedTask">Отклонить</button>' +
-        '<label class="tasks_routes_reloadShell btn btn-dark float-right">' +
-        'Переключить <input type="checkbox">' +
-        '</label>';
+        '<button class="btn bg-danger text-white float-left tasks_routes_finishedTask">Отклонить</button>';
     ownTasks.sort(function (a, b) {
         if (a.status === "nonactive" && b.status !== 'nonactive')
             return 1;
@@ -171,10 +176,18 @@ function generateOwnTasks(selector) {
     ownTasks.forEach(function (value, index) {
         let $tr = $(
             '<tr class="' + `${value.status !== 'nonactive' ? 'bg-light' : ''}">` +
-            `<td style="width: 30px">${index + 1}</td>` +
+            `<td style="width: 60px">${index + 1}</td>` +
+            '<td style="width: 200px">' +
+            '<form class="tasks_routes_reloadShell text-center">' + //tasks_routes_reloadShell
+            '<input type="radio" value="false" name="own_tasks_routes" id="own_tasks_routes_show" checked><label value="false" for="own_tasks_routes_show" class="text-center tasks_routes_reloadShell_radio"' +
+            'style="width: 50px">Откл</label>' +
+            '<input type="radio" value="true" name="own_tasks_routes" id="own_tasks_routes_hide"><label value="true" for="own_tasks_routes_hide" class="text-center tasks_routes_reloadShell_radio"' +
+            'style="width: 50px">Вкл</label>' +
+            '</form></td>' +
             `<td style="width: 250px">${value.task}</td>` +
             '<td style="width: 350px">' +
-            `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? 'Принят' : 'Отклонен'}` +
+            `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? '<span class="fa fa-check text-success text-center w-100 fa-2x"></span>' : '<span class="fa fa-times' +
+                ' text-danger text-center w-100 fa-2x"></span>'}` +
             '</td>' +
             '</tr>');
         $tr.data({'id': value.id, 'master': value.master});
@@ -200,17 +213,19 @@ function generateTableForRoutes(data) {
             ownTasks.push(task);
         }
         tr += '<tr style="width: 700px">' +
-            `<td style="width: 55px">${index + 1}</td>` +
+            `<td style="width: 60px">${index + 1}</td>` +
             `<td style="width: 230px">${task.role}</td>` +
             `<td style="width: 230px">${task.name}</td>` +
             `<td style="width: 125px">${task.task}</td>` +
-            `<td style="width: 125px">${task.status === 'nonactive' ? 'В процессе' : task.status === 'active' ? 'Принято' : 'Отклонено'}</td>` +
+            `<td style="width: 125px">${task.status === 'nonactive' ? '<span class="fa fa-2x fa-spinner text-primary text-center w-100"></span>' : task.status === 'active' ? '<span class="fa ' +
+                'fa-check text-success text-center w-100 fa-2x"></span>' : 
+                '<span class="fa fa-2x fa-times text-danger w-100"></span>'}</td>` +
             '</tr>';
     });
     table = '<table class="table table-bordered tasks_routes_routeTable">' +
         '<thead class="thead-light">' +
         '<tr>' +
-        '<th style="width: 55px">№</th>' +
+        '<th style="width: 60px">№</th>' +
         '<th style="width: 230px">Должность</th>' +
         '<th style="width: 230px">Пользователь</th>' +
         '<th style="width: 125px">Задание</th>' +
