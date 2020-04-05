@@ -26,7 +26,7 @@ function initSpecTable(json) {
     setSpecTable(json);
 
     $table.on("click", ".addNewRowToSpecTableButton", function () {
-        addNewRowToSpecTable()
+        addNewRowToSpecTable();
         setActionToBar({
             id: "addNewRowToSpecTable",
             type: "addNew",

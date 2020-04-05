@@ -117,6 +117,7 @@ function initTasksRoutes() {
 
     $('#task_routes_own_routes_update').on('click', function () {
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
+        taskRouteDisable();
     });
 
     $.ajax(
@@ -138,10 +139,11 @@ function serializeAllInfo() {
         models: undefined
     };
     let $spec = $('#specificationTable');
-    if ($spec.html() === undefined || Round === 3) {
+    if ($spec.html() === undefined) {
         dataInfo.specification = 'unchanged';
     } else {
         dataInfo.specification = saveSpecTableData($("#specificationTable").find(".specRows"));
+        console.log(dataInfo.specification)
     }
     let $pdm = $('#pdm_field');
     if (Round !== 3) {
@@ -161,9 +163,7 @@ function serializeAllInfo() {
              }
          }
      );*/
-    console.log(btoa(JSON.stringify(dataInfo)));
-    console.log(JSON.parse(atob(btoa(JSON.stringify(dataInfo)))));
-    return btoa(JSON.stringify(dataInfo));
+    return JSON.stringify(dataInfo);
 }
 
 function taskRouteDisable() {
@@ -276,7 +276,7 @@ function generateTableForRoutes(data) {
                         task.master = allInfo.roleName;
                     }
                 });
-                task.shell = JSON.parse(atob(value.shell));
+                task.shell = JSON.parse(value.shell);
                 ownTasks.push(task);
             }
             tr += '<tr style="width: 700px">' +
@@ -469,15 +469,15 @@ function getRoutesFromDB() {
             }
             console.log(res);
             tasksRoutesMadeRoutesArr = res;
-           /* ownTasks = [];
-            tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
-            tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
-            if (!TaskInfoReload) {
-                generateOwnTasks('task_routes_own_routes');
-                return;
-            }
+            /* ownTasks = [];
+             tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
+             tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
+             if (!TaskInfoReload) {
+                 generateOwnTasks('task_routes_own_routes');
+                 return;
+             }
 
-            console.log(ownTasks);*/
+             console.log(ownTasks);*/
         }
     });
 }
@@ -486,10 +486,6 @@ function getRoutesFromDBInfo(res) {
     ownTasks = [];
     tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
     tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
-    if (!TaskInfoReload) {
-        generateOwnTasks('task_routes_own_routes');
-        return;
-    }
+    generateOwnTasks('task_routes_own_routes');
     console.log(ownTasks);
-    taskRouteDisable();
 }
