@@ -21,7 +21,6 @@ function initTasksRoutes() {
     });
     $('#create_task_route_saveBtn').on('click', function () {
         addTaskToDB();
-        serializeAllInfo();
     });
     $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
         let $id = $(this).parents('tr').data('id');
@@ -80,7 +79,7 @@ function initTasksRoutes() {
                 preventShellEvent();
             }
         }
-        )
+    )
 }
 
 function serializeAllInfo() {
@@ -112,8 +111,8 @@ function serializeAllInfo() {
             }
         }
     );
-    console.log( btoa(JSON.stringify(dataInfo)));
-    console.log( JSON.parse(atob(btoa(JSON.stringify(dataInfo)))));
+    console.log(btoa(JSON.stringify(dataInfo)));
+    console.log(JSON.parse(atob(btoa(JSON.stringify(dataInfo)))));
 }
 
 function preventShellEvent() {
@@ -174,27 +173,30 @@ function generateOwnTasks(selector) {
     });
     ownTasks.reverse();
     ownTasks.forEach(function (value, index) {
-        let $tr = $(
-            '<tr class="' + `${value.status !== 'nonactive' ? 'bg-light' : ''}">` +
-            `<td style="width: 60px">${index + 1}</td>` +
-            '<td style="width: 200px">' +
-            '<form class="tasks_routes_reloadShell text-center">' + //tasks_routes_reloadShell
-            '<input type="radio" value="false" name="own_tasks_routes" id="own_tasks_routes_show" checked><label value="false" for="own_tasks_routes_show" class="text-center tasks_routes_reloadShell_radio"' +
-            'style="width: 50px">Откл</label>' +
-            '<input type="radio" value="true" name="own_tasks_routes" id="own_tasks_routes_hide"><label value="true" for="own_tasks_routes_hide" class="text-center tasks_routes_reloadShell_radio"' +
-            'style="width: 50px">Вкл</label>' +
-            '</form></td>' +
-            `<td style="width: 250px">${value.task}</td>` +
-            '<td style="width: 350px">' +
-            `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? '<span class="fa fa-check text-success text-center w-100 fa-2x"></span>' : '<span class="fa fa-times' +
-                ' text-danger text-center w-100 fa-2x"></span>'}` +
-            '</td>' +
-            '</tr>');
-        $tr.data({'id': value.id, 'master': value.master});
-        $table.find('tbody').append(
-            $tr
-        )
-    });
+            let $tr = $(
+                '<tr class="' + `${value.status !== 'nonactive' ? 'bg-light' : ''}">` +
+                `<td style="width: 60px">${index + 1}</td>` +
+                '<td style="width: 200px">' +
+                '<form class="tasks_routes_reloadShell text-center">' + //tasks_routes_reloadShell
+                `<input type="radio" value="false" name="own_tasks_routes" id="own_tasks_routes_show_${index}" checked><label value="false" for="own_tasks_routes_show_${index}" ` +
+                `class="text-center tasks_routes_reloadShell_radio"` +
+                'style="width: 50px">Откл</label>' +
+                `<input type="radio" value="true" name="own_tasks_routes" id="own_tasks_routes_hide_${index}"><label value="true" for="own_tasks_routes_hide_${index}"` +
+                `class="text-center tasks_routes_reloadShell_radio"` +
+                'style="width: 50px">Вкл</label>' +
+                '</form></td>' +
+                `<td style="width: 250px">${value.task}</td>` +
+                '<td style="width: 350px">' +
+                `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? '<span class="fa fa-check text-success text-center w-100 fa-2x"></span>' : '<span class="fa fa-times' +
+                    ' text-danger text-center w-100 fa-2x"></span>'}` +
+                '</td>' +
+                '</tr>');
+            $tr.data({'id': value.id, 'master': value.master});
+            $table.find('tbody').append(
+                $tr
+            )
+        }
+    );
     $routes.append($table);
 
 }
@@ -203,25 +205,30 @@ function generateTableForRoutes(data) {
     let table = '';
     let tr = '';
     data.forEach(function (value, index) {
-        let task = value.task;
-        if (task.user === login) {
-            AllInfo.forEach(function (allInfo) {
-                if (value.master === allInfo.login) {
-                    task.master = allInfo.roleName;
-                }
-            });
-            ownTasks.push(task);
+            let task = value.task;
+            if (task.user === login) {
+                AllInfo.forEach(function (allInfo) {
+                    if (value.master === allInfo.login) {
+                        task.master = allInfo.roleName;
+                    }
+                });
+                ownTasks.push(task);
+            }
+            tr += '<tr style="width: 700px">' +
+
+                `<td style="width: 60px">${index + 1}</td>` +
+                `<td style="width: 230px">${task.role}</td>` +
+                `<td style="width: 230px">${task.name    }</td>    ` +
+                `<td style="width: 125px">${        task.task    }</td>    ` +
+                `<td style="width: 125px">${task.status === 'nonactive' ? '<span class="fa fa-2x fa-spinner text-primary text-center w-100"></span>' : task.status === 'active' ? '<span class="fa ' +
+            'fa-check text-success text-center w-100 fa-2x"></span>' :
+            '<span class="fa fa-2x fa-times text-danger w-100"></span>'
+    }
+</td>` +
+                '</tr>';
         }
-        tr += '<tr style="width: 700px">' +
-            `<td style="width: 60px">${index + 1}</td>` +
-            `<td style="width: 230px">${task.role}</td>` +
-            `<td style="width: 230px">${task.name}</td>` +
-            `<td style="width: 125px">${task.task}</td>` +
-            `<td style="width: 125px">${task.status === 'nonactive' ? '<span class="fa fa-2x fa-spinner text-primary text-center w-100"></span>' : task.status === 'active' ? '<span class="fa ' +
-                'fa-check text-success text-center w-100 fa-2x"></span>' : 
-                '<span class="fa fa-2x fa-times text-danger w-100"></span>'}</td>` +
-            '</tr>';
-    });
+    )
+    ;
     table = '<table class="table table-bordered tasks_routes_routeTable">' +
         '<thead class="thead-light">' +
         '<tr>' +
@@ -349,7 +356,7 @@ function addTaskToDB() {
     $.ajax({
         type: 'POST',
         url: 'ajax/save_route',//ajax/save_route
-        data: {task: task, master: login},
+        data: {task: task, master: login, shell: serializeAllInfo()},
         success: function (res) {
             let taskTA = serializeCreateTaskRoute(true);
             let message = `Пользователь <span class="font-weight-bold">${currentName}</span> создал маршрут со следующими указаниями: <br/>`;
