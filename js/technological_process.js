@@ -406,7 +406,7 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
                     lvl: $draggable.attr("tech-lvl")
                 };
 
-                let $techNameUl = $this.parent().parent().parent().find(".techNodesDropArea");
+                let $techNameUl = $this.parent().find(".techNodesDropArea");
                 let $techNodes = $techNameUl.find(".techNode");
                 let $placeholder;
                 let isThatNodeAlreadyThere = false;
@@ -451,6 +451,15 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
 
                 return;
             }
+
+            let $techNodes = $this.parent().parent().parent();
+            console.log($techNodes);
+            if ($techNodes.length)
+                $techNodes.each(function () {
+                   let $node = $(this);
+                   if ($node.attr("tech-id") === $draggable.attr("tech-id"))
+                       console.log()
+                });
 
             $draggable.find(".instruments_list_li").each(function () {
                 let $this = $(this);
@@ -506,6 +515,7 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
     });
     $techNodesDropArea.disableSelection();
 }
+
 
 function setDropAreaForTechFields($techFieldsDropArea) {
     $techFieldsDropArea.droppable({
