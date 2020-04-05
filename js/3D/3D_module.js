@@ -185,6 +185,7 @@ export function init3dField() {
     }
 
     function firstFieldInit(array) {
+        console.log(array);
         let prev = window.isEnded;
         window.isEnded = true;
         //console.log(array)
