@@ -123,7 +123,7 @@ function initTasksRoutes() {
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
         taskRouteDisable();
     });
-    if(Round === 3){
+    if (Round === 3) {
         $.ajax({
             type: "POST",
             async: false,
@@ -135,17 +135,17 @@ function initTasksRoutes() {
     }
 
 
-   /* $.ajax(
-        {
-            url: '',
-            type: 'GET',
-            data: {},
-            success: function (res) {
-                //TaskInfo = JSON.parse(atob(res));
-                preventShellEvent();
-            }
-        }
-    )*/
+    /* $.ajax(
+         {
+             url: '',
+             type: 'GET',
+             data: {},
+             success: function (res) {
+                 //TaskInfo = JSON.parse(atob(res));
+                 preventShellEvent();
+             }
+         }
+     )*/
 }
 
 function serializeAllInfo() {
@@ -155,17 +155,16 @@ function serializeAllInfo() {
         esi: undefined
     };
     let $spec = $('#specificationTable');
-    if ($spec.html() === undefined) {
+    if ($spec.html() === undefined && Round !== 3) {
         dataInfo.specification = 'unchanged';
     } else {
-        if (Round !== 3){
-            dataInfo.specification = JSON.stringify(SpecTableInfo.tbody) !== JSON.stringify(saveSpecTableData($("#specificationTable").find(".specRows")))?
-                saveSpecTableData($("#specificationTable").find(".specRows")): 'unchanged';
-            console.log(SpecTableInfo.tbody);
-            console.log(saveSpecTableData($("#specificationTable").find(".specRows")));
-            console.log(dataInfo.specification);
-        } else
-        dataInfo.specification = saveSpecTableData($("#specificationTable").find(".specRows"));
+        if (Round !== 3) {
+            dataInfo.specification = JSON.stringify(SpecTableInfo.tbody) !== JSON.stringify(saveSpecTableData($("#specificationTable").find(".specRows"))) ?
+                saveSpecTableData($("#specificationTable").find(".specRows")) : 'unchanged';
+        } else {
+            dataInfo.specification = saveSpecTableData($("#specificationTable").find(".specRows"));
+        }
+
     }
     let $pdm = $('#pdm_field');
     if (Round !== 3) {
@@ -174,13 +173,11 @@ function serializeAllInfo() {
     } else {
         let idModels = collectDataLabels(".left-side");
         dataInfo.models = idModels;
-        if (Role === 'designer')
-        {
-            dataInfo.esi = JSON.stringify(tempESI) !== JSON.stringify({details: convertPdmAndStdInfo(collectDataLabels(".left-side"))})?
-            {details: convertPdmAndStdInfo(collectDataLabels(".left-side"))}: 'unchanged';
+        if (Role === 'designer') {
+            dataInfo.esi = JSON.stringify(tempESI) !== JSON.stringify({details: convertPdmAndStdInfo(collectDataLabels(".left-side"))}) ?
+                {details: convertPdmAndStdInfo(collectDataLabels(".left-side"))} : 'unchanged';
             console.log(dataInfo.esi);
-        }
-        else
+        } else
             dataInfo = 'unchanged';
     }
 
@@ -208,9 +205,8 @@ function taskRouteDisable() {
     $('#main-tabs-specification').parents('li').removeClass('bg-danger');
     $('.slider_button').removeClass('bg-danger').addClass('bg-dark');
     $('#specTableSaveButton').removeAttr('disabled');
-    console.log('-----------------------');
-    console.log(tempESI);
-    setESI(tempESI);
+    if (Round === 3)
+        setESI(tempESI);
     //}
 }
 
