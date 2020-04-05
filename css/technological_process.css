@@ -160,7 +160,7 @@ ul, #myUL {
 
 .techNameDropped{
     list-style: none;
-
+    margin-bottom: 3rem;
     background-color: #fbfbfb;
 }
 
