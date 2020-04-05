@@ -175,7 +175,6 @@ class ajax_model extends model {
 
     function save_route() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//            print_r($_POST);
             $sql = "SELECT max(task_id) from ROUTE";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
@@ -187,6 +186,9 @@ class ajax_model extends model {
                 $q->execute(array("login" => $row["user"], "role" => $row["role"], "name" => $row["name"],
                     "task" => $row["task"], "master" => $_POST["master"], "task_id" => $task_id));
             }
+            $sql = "INSERT INTO shell_string (string) VALUES (:str)";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("str" => $_POST["shell"]));
             return array("response" => 200);
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
@@ -229,6 +231,11 @@ class ajax_model extends model {
                     "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
         }
+        $sql = "SELECT * FROM shell_string";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $response["shell"] = $Q[0][0];
         return array("response" => $response);
     }
 
@@ -270,7 +277,11 @@ class ajax_model extends model {
                     "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
             }
         }
-
+        $sql = "SELECT * FROM shell_string";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $response["shell"] = $Q[0][0];
         return array("response" => $response);
     }
 
