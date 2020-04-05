@@ -688,6 +688,9 @@ function setTechProcessJson(json, res, $table) {
             text: text
         });
     });*/
+    else{
+        if (Role === "technologist") setRouteMapRow();
+    }
 }
 
 function setTechProcessJsonRounds_1_2(res, $table) {
@@ -698,6 +701,8 @@ function setTechProcessJsonRounds_1_2(res, $table) {
         res.forEach(function (row) {
             $(combineRowFor_1_2Rounds({name: row.name, equipment: row.equipment, tools: row.tools})).insertBefore($lastTr);
         })
+    }else {
+        if (Role === "technologist") setTechProcessJsonRounds_1_2( [{}], $table)
     }
 }
 

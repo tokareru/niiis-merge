@@ -452,15 +452,18 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
                 return;
             }
 
-            let $techNodes = $this.parent().parent().parent();
-            console.log($techNodes);
+            let $placeholder;
+            let isThatNodeAlreadyThere = false;
+            let $techNodes = $this.parent().find(".techNode");
             if ($techNodes.length)
                 $techNodes.each(function () {
                    let $node = $(this);
                    if ($node.attr("tech-id") === $draggable.attr("tech-id"))
-                       console.log()
+                       {
+                           $placeholder = $node.find(".techFieldsDropArea");
+                           isThatNodeAlreadyThere = true;
+                       }
                 });
-
             $draggable.find(".instruments_list_li").each(function () {
                 let $this = $(this);
                 fields.push({
@@ -471,24 +474,36 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
             });
 
             let name = $draggable.find("span.caret").first().text();
-            let node = combineTechNode({
-                name: name,
-                id: $draggable.attr("tech-id"),
-                lvl: $draggable.attr("tech-lvl"),
-                fields: fields
-            });
-            $this.append(node);
-            //setDropAreaForTechFields($this.find(".techFieldsDropArea").last());
 
-            setToggler(fieldId);
-            $this.find(".techNode").last().find("span").first().trigger("click");
+            if (isThatNodeAlreadyThere){
+                if (fields.length)
+                    fields.forEach(function (_field) {
+                        $placeholder.append(combineTechField(_field));
+                    });
+                $placeholder.parent().find("span").first().each(function () {
+                    let $this = $(this);
+                    if (!$this.hasClass("caret-down")) $this.trigger("click");
+                });
+            }else {
+                let node = combineTechNode({
+                    name: name,
+                    id: $draggable.attr("tech-id"),
+                    lvl: $draggable.attr("tech-lvl"),
+                    fields: fields
+                });
+                $this.append(node);
+                //setDropAreaForTechFields($this.find(".techFieldsDropArea").last());
 
-            setActionToBar({
-                id: `addNewTechNode`,
-                type: "addNew",
-                field: "Рабочий стол. Техпроцесс",
-                text: `В техпроцесс '${parent_name}' добавлена узел '${name}'`
-            });
+                setToggler(fieldId);
+                $this.find(".techNode").last().find("span").first().trigger("click");
+
+                setActionToBar({
+                    id: `addNewTechNode`,
+                    type: "addNew",
+                    field: "Рабочий стол. Техпроцесс",
+                    text: `В техпроцесс '${parent_name}' добавлена узел '${name}'`
+                });
+            }
 
             //$container.find(".techNameDropped").last().find(".caret").first().trigger("click");
         }
