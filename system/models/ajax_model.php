@@ -175,19 +175,17 @@ class ajax_model extends model {
 
     function save_route() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//            print_r($_POST);
             $sql = "SELECT max(task_id) from ROUTE";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $task_id = ++$q->fetchAll()[0][0];
             foreach ($_POST["task"] as $row) {
-                $sql = "INSERT INTO ROUTE (login, role, name, task, master, task_id)
-                        VALUES (:login, :role, :name, :task, :master, :task_id)";
+                $sql = "INSERT INTO ROUTE (login, role, name, task, master, task_id, shell)
+                        VALUES (:login, :role, :name, :task, :master, :task_id, :shell)";
                 $q = sys::$PDO->prepare($sql);
                 $q->execute(array("login" => $row["user"], "role" => $row["role"], "name" => $row["name"],
-                    "task" => $row["task"], "master" => $_POST["master"], "task_id" => $task_id));
+                    "task" => $row["task"], "master" => $_POST["master"], "task_id" => $task_id, "shell" => $_POST["shell"]));
             }
-            return array("response" => 200);
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
         }
@@ -207,10 +205,10 @@ class ajax_model extends model {
             if ($task_id != ($row["task_id"])) {
                 $task_id = $row["task_id"];
                 $response["active"][++$i] = array(array("master" => $row["master"],
-                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
+                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
             } else {
                 array_push($response["active"][$i], array("master" => $row["master"],
-                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
+                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
             }
         }
         $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0'";
@@ -223,10 +221,10 @@ class ajax_model extends model {
             if ($task_id != ($row["task_id"])) {
                 $task_id = $row["task_id"];
                 $response["finished"][++$i] = array(array("master" => $row["master"],
-                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
+                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
             } else {
                 array_push($response["finished"][$i], array("master" => $row["master"],
-                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
+                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
             }
         }
         return array("response" => $response);
@@ -247,10 +245,10 @@ class ajax_model extends model {
             if ($task_id != ($row["task_id"])) {
                 $task_id = $row["task_id"];
                 $response["active"][++$i] = array(array("master" => $row["master"],
-                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
+                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
             } else {
                 array_push($response["active"][$i], array("master" => $row["master"],
-                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
+                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
             }
         }
         $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0' and login = :login GROUP BY task_id";
@@ -264,13 +262,12 @@ class ajax_model extends model {
             if ($task_id != ($row["task_id"])) {
                 $task_id = $row["task_id"];
                 $response["finished"][++$i] = array(array("master" => $row["master"],
-                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
+                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
             } else {
                 array_push($response["finished"][$i], array("master" => $row["master"],
-                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"])));
+                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
             }
         }
-
         return array("response" => $response);
     }
 
