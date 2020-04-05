@@ -215,8 +215,8 @@ function combineTechField(field) {
 
 function setDropAreaForTechName($techNameDropArea, fieldId) {
     $techNameDropArea.droppable({
-        tolerance: "touch",
-        accept: ".techName, .techOperationsGuide",
+        tolerance: "pointer",
+        accept: ".techName, .techOperationsGuide, .techOperationNodesGuide",
         greedy: true,
         drop: function (event, ui) {
             let $draggable = $(ui.draggable);
@@ -271,10 +271,66 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
                     text: `Добавлен техпроцесс '${techName}'`
                 });
                 setActionToBar({
-                    id: `addNewTechProcess`,
+                    id: `addNewTechOperation`,
                     type: "addNew",
                     field: "Рабочий стол. Техпроцесс",
                     text: `Добавлена техоперация '${techOperationName}'`
+                });
+
+                return;
+            }
+
+            if ($draggable.hasClass("techOperationNodesGuide")){
+                let $techName = $draggable.parent().parent();
+                let techName = $techName.find("span").first().text();
+                let techOperationName = $draggable.find("span").first().text();
+
+                setActionToBar({
+                    id: `addNewTechProcess`,
+                    type: "addNew",
+                    field: "Рабочий стол. Техпроцесс",
+                    text: `Добавлен техпроцесс '${techName}'`
+                });
+                let operations = [];
+                let $operations = $draggable.find(".techOperationsGuide");
+                if ($operations.length)
+                    $operations.each(function () {
+                        let $operation = $(this);
+                        let operationName = $operation.find("span").first().text();
+                        operations.push({
+                            name: operationName,
+                            id: $operation.attr("tech-id"),
+                            lvl: $operation.attr("tech-lvl")
+                        });
+
+                        setActionToBar({
+                            id: `addNewTechOperation`,
+                            type: "addNew",
+                            field: "Рабочий стол. Техпроцесс",
+                            text: `Добавлена техоперация '${operationName}'`
+                        });
+
+                        //setDropAreaForTechNode($this.find(".techNodesDropArea").last());
+                    });
+
+                console.log($techName)
+                setTechProcess($("#tech_process_field_drop"), {
+                    name: techName,
+                    id: $techName.attr("tech-id"),
+                    lvl: $techName.attr("tech-lvl"),
+                    operations: operations
+                });
+
+                setDropAreaForTechOperation($("#tech_process_field_drop").find(".techNameDropped").last().find("ul").first(), fieldId);
+                $("#tech_process_field_drop").find(".techNameDropped").last().find(".techOperation").each(function () {
+                   setDropAreaForTechNode($(this).find(".techNodesDropArea").first(), fieldId)
+                });
+
+                setToggler(fieldId);
+                $("#tech_process_field_drop").find(".techNameDropped").last().find("span").first().trigger("click");
+                $this.find(".techOperation").each(function () {
+                    let $operationField = $(this);
+                    if (!$operationField.find("span").first().hasClass("caret-down")) $operationField.find("span").first().trigger("click");
                 });
 
                 return;
@@ -333,13 +389,44 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
 
 function setDropAreaForTechOperation($techOperationsDropArea, fieldId) {
     $techOperationsDropArea.droppable({
-        tolerance: "touch",
-        accept: ".techOperationsGuide",
+        tolerance: "pointer",
+        accept: ".techOperationsGuide, .techOperationNodesGuide",
         greedy: true,
         drop: function (event, ui) {
             let $draggable = $(ui.draggable);
             let $this = $(this);
             let name = $draggable.find("span").first().text();
+
+            if ($draggable.hasClass("techOperationNodesGuide")){
+                let operations = [];
+                let $operations = $draggable.find(".techOperationsGuide");
+                if ($operations.length)
+                    $operations.each(function () {
+                        let $operation = $(this);
+                        let operationName = $operation.find("span").first().text();
+                        $this.append(combineTechOperation({
+                            name: operationName,
+                            id: $operation.attr("tech-id"),
+                            lvl: $operation.attr("tech-lvl")
+                        }));
+                        setActionToBar({
+                            id: `addNewTechOperation`,
+                            type: "addNew",
+                            field: "Рабочий стол. Техпроцесс",
+                            text: `Добавлена техоперация '${operationName}'`
+                        });
+                        setDropAreaForTechNode($this.find(".techNodesDropArea").last());
+                    });
+
+                setToggler(fieldId);
+                $this.find(".techOperation").each(function () {
+                   let $operationField = $(this);
+                   if (!$operationField.find("span").first().hasClass("caret-down")) $operationField.find("span").first().trigger("click");
+                });
+
+                return;
+            }
+
             $this.append(combineTechOperation({
                 id: $draggable.attr("tech-id"),
                 lvl: $draggable.attr("tech-lvl"),
@@ -350,7 +437,7 @@ function setDropAreaForTechOperation($techOperationsDropArea, fieldId) {
             setDropAreaForTechNode($this.find(".techNodesDropArea"), fieldId);
 
             setActionToBar({
-                id: `addNewTechProcess`,
+                id: `addNewTechOperation`,
                 type: "addNew",
                 field: "Рабочий стол. Техпроцесс",
                 text: `Добавлена техоперация '${name}'`
@@ -386,7 +473,7 @@ function setDropAreaForTechOperation($techOperationsDropArea, fieldId) {
 
 function setDropAreaForTechNode($techNodesDropArea, fieldId) {
     $techNodesDropArea.droppable({
-        tolerance: "touch",
+        tolerance: "pointer",
         accept: ".operationName, .instruments_list_li",
         greedy: true,
         drop: function (event, ui) {
@@ -484,6 +571,14 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
                     let $this = $(this);
                     if (!$this.hasClass("caret-down")) $this.trigger("click");
                 });
+
+                setActionToBar({
+                    id: `addNewTechNode`,
+                    type: "addNew",
+                    field: "Рабочий стол. Техпроцесс",
+                    text: `В техпроцесс '${parent_name}' добавлен узел '${name}'`
+                });
+
             }else {
                 let node = combineTechNode({
                     name: name,
@@ -501,7 +596,7 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
                     id: `addNewTechNode`,
                     type: "addNew",
                     field: "Рабочий стол. Техпроцесс",
-                    text: `В техпроцесс '${parent_name}' добавлена узел '${name}'`
+                    text: `В техпроцесс '${parent_name}' добавлен узел '${name}'`
                 });
             }
 

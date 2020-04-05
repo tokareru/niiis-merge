@@ -167,7 +167,9 @@ function setDropAreaForProductMaster($draggable, $this) {
     });
 
     if (check){
-        placeholder.append(combineTechOperation(workerNode, true))
+        placeholder.append(combineTechOperation(workerNode, true));
+        setToggler("workers_drop_area");
+        placeholder.parent().find("span").first().not(".caret-down").trigger("click")
     }else{
         placeholder.append(combineTechName({
             id: $parent.attr("tech-id"),
@@ -176,6 +178,9 @@ function setDropAreaForProductMaster($draggable, $this) {
             shift: $draggable.attr("tech-shift"),
             operations: [workerNode]
         }, true));
+        console.log(placeholder.find(".techNameDropped").last().find("span").first().not("caret-down"));
+        setToggler("workers_drop_area");
+        placeholder.find(".techNameDropped").last().find("span").first().trigger("click")
     }
 
     //$this.append(combineTechOperation(workerNode));

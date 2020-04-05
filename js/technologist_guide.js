@@ -51,11 +51,28 @@ function setTechnologistGuide(json, add_data) {
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
             $helper.find("ul").css("background-color", "#dbf4ff");
-            if ($helper.find(".techOperationsGuide").length === 0)
-                $(".techNodesDropArea").removeClass("border-color-transparent").addClass("border-warning")
+            $(".techNodesDropArea").removeClass("border-color-transparent").addClass("border-warning")
         },
         stop: function (e, ui) {
             $(".techNodesDropArea").removeClass("border-warning").addClass("border-color-transparent");
+        }
+
+    });
+
+    $(".techOperationNodesGuide").draggable({
+        helper: 'clone',
+        appendTo: ".tech_process_table",
+        drag: function (event, ui) {
+            let $helper =$ (ui.helper);
+            $helper.find("ul").hide();
+            $helper.find("span").first().css("color", "black !important");
+            $helper.find("span").css("background-color", "#dbf4ff");
+            $helper.find("li").css("background-color", "#dbf4ff");
+            $helper.find("ul").css("background-color", "#dbf4ff");
+            $(".techOperationsDropArea").removeClass("border-color-transparent").addClass("border-warning")
+        },
+        stop: function (e, ui) {
+            $(".techOperationsDropArea").removeClass("border-warning").addClass("border-color-transparent");
         }
 
     });
@@ -123,8 +140,10 @@ function createTechGuideNodes(tech) {
 
             let fields = '';
             let fieldType = "instruments_list_li";
+            let nodeType = "operationName";
             if (child.name === "Техоперации"){
                 fieldType = "techOperationsGuide";
+                nodeType = "techOperationNodesGuide"
             }
 
             child.fields.forEach(function (ins) {
@@ -136,7 +155,7 @@ function createTechGuideNodes(tech) {
             });
 
             inp +=
-                "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='operationName'>" +
+                "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='" + nodeType + "'>" +
                 "<span class='caret'>" + child.name + "</span>" +
                 "<ul class='nested pl-3 operationNameUl'>" +
                 fields +
