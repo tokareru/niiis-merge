@@ -142,6 +142,7 @@ async function updateShell(){
 
     //$("#current_round").text(Round);
 
+
     // находим id сторон и id областей, присутстующих в данном кабинете
     let available_sides_id = [];
 
