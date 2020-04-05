@@ -51,7 +51,13 @@ function setTechnologistGuide(json, add_data) {
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
             $helper.find("ul").css("background-color", "#dbf4ff");
+            if ($helper.find(".techOperationsGuide").length === 0)
+                $(".techNodesDropArea").removeClass("border-color-transparent").addClass("border-warning")
+        },
+        stop: function (e, ui) {
+            $(".techNodesDropArea").removeClass("border-warning").addClass("border-color-transparent");
         }
+
     });
     $(".techName").draggable({
         helper: 'clone',
@@ -64,7 +70,12 @@ function setTechnologistGuide(json, add_data) {
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
             $helper.find("ul").css("background-color", "#dbf4ff");
+            $("#tech_process_field_drop").removeClass("border-color-transparent").addClass("border-warning")
+        },
+        stop: function (e, ui) {
+            $("#tech_process_field_drop").removeClass("border-warning").addClass("border-color-transparent");
         }
+
     });
 
     $(".instruments_list_li").draggable({
@@ -73,7 +84,12 @@ function setTechnologistGuide(json, add_data) {
         drag: function (event, ui) {
             let $helper =$ (ui.helper);
             $helper.css("list-style-type", "none");
+            $(".techFieldsDropArea").removeClass("border-color-transparent").addClass("border-warning")
+        },
+        stop: function (e, ui) {
+            $(".techFieldsDropArea").removeClass("border-warning").addClass("border-color-transparent");
         }
+
     });
 
     $(".techOperationsGuide").draggable({
@@ -82,7 +98,12 @@ function setTechnologistGuide(json, add_data) {
         drag: function (event, ui) {
             let $helper =$ (ui.helper);
             $helper.css("list-style-type", "none");
+            $(".techOperationsDropArea").removeClass("border-color-transparent").addClass("border-warning")
+        },
+        stop: function (e, ui) {
+            $(".techOperationsDropArea").removeClass("border-warning").addClass("border-color-transparent");
         }
+
     });
 
 
