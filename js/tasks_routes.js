@@ -1,14 +1,17 @@
 let ownTasks = [];
 let currentTask = '';
+let tasksRoutesMadeRoutesArr;
 
 function initTasksRoutes() {
     getRoutesFromDB();
+    getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
     addTaskToTable();
     tasks_routes_AddEvent('task_routes_tree');
     if (Role === 'technologist' || Role === 'designer' || Role === 'production_master')
         $('#task_routes_add_button_div')
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
+
     setInterval(function () {
         console.log(TaskInfoReload);
         if (TaskInfoReload) {
@@ -17,6 +20,7 @@ function initTasksRoutes() {
         }
         getRoutesFromDB();
     }, 20000);
+
 
     $('#create_task_route_clearBtn').on('click', function () {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
@@ -75,8 +79,8 @@ function initTasksRoutes() {
         $('.tasks_routes_reloadShell').each(function () {
             if ($this.parents('form').get(0) === $(this).get(0)) {
                 TaskInfoReload = $this.attr('value') === 'true';
-                if (TaskInfoReload){
-                    if(currentTask !== ''){
+                if (TaskInfoReload) {
+                    if (currentTask !== '') {
                         currentTask.parents('form').find('.tasks_routes_reloadShell_radio_disable').click();
                     }
                     currentTask = $this;
@@ -109,6 +113,10 @@ function initTasksRoutes() {
 
     $('body').on('click', '.tasks_routes_reloadShell_radio_disable', function () {
         taskRouteDisable();
+    });
+
+    $('#task_routes_own_routes_update').on('click', function () {
+        getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
     });
 
     $.ajax(
@@ -162,11 +170,11 @@ function taskRouteDisable() {
     /*let shell = $this.parents('tr').data('shell');
     console.log(shell);*/
     /*if (shell.specification !== 'unchanged') {*/
-        $('#specificationTable').find('thead tr').children().remove();
-        $('#specificationTable').find('tbody tr').remove();
-        createSpecificationTable();
-        $('#main-tabs-specification').parents('li').removeClass('bg-danger');
-        $('#specTableSaveButton').removeAttr('disabled');
+    $('#specificationTable').find('thead tr').children().remove();
+    $('#specificationTable').find('tbody tr').remove();
+    createSpecificationTable();
+    $('#main-tabs-specification').parents('li').removeClass('bg-danger');
+    $('#specTableSaveButton').removeAttr('disabled');
     //}
 }
 
@@ -448,22 +456,40 @@ function addTaskToDB() {
 }
 
 function getRoutesFromDB() {
+    if (TaskInfoReload) {
+        return;
+    }
     $.ajax({
         type: 'GET',
+        async: false,
         url: 'ajax/get_routes_by_type',
         success: function (res) {
+            if (TaskInfoReload) {
+                return;
+            }
             console.log(res);
-            ownTasks = [];
+            tasksRoutesMadeRoutesArr = res;
+           /* ownTasks = [];
             tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
-            /*
-            if (res.response.active.length > 0) {
-                $('#task_routes_add_button').attr('disabled', true);
-            } else {
-                $('#task_routes_add_button').removeAttr('disabled');
-            }*/
             tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
-            generateOwnTasks('task_routes_own_routes');
-            console.log(ownTasks);
+            if (!TaskInfoReload) {
+                generateOwnTasks('task_routes_own_routes');
+                return;
+            }
+
+            console.log(ownTasks);*/
+            taskRouteDisable();
         }
     });
+}
+
+function getRoutesFromDBInfo(res) {
+    ownTasks = [];
+    tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
+    tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
+    if (!TaskInfoReload) {
+        generateOwnTasks('task_routes_own_routes');
+        return;
+    }
+    console.log(ownTasks);
 }
