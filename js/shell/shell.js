@@ -216,7 +216,7 @@ async function updateShell(){
     initNotifications();
     initProgressBar();
 
-    if(Role === 'designer'){
+    if(Role === 'designer' && Round === 3){
         collectionIdPdm = collectDataLabels(".left-side");
     }
 

@@ -110,7 +110,7 @@ function initTasksRoutes() {
 
         }
         console.log(shell.esi);
-        if (shell.esi !== undefined && shell.esi !== 'not-exist' && shell.esi !== 'unchanged') {
+        if (shell.esi !== undefined && shell.esi !== 'not-exist' && shell.esi !== 'unchanged' && Round === 3) {
             setESI(shell.esi);
             $('.slider_button').removeClass('bg-dark').addClass('bg-danger');
         }
@@ -118,7 +118,7 @@ function initTasksRoutes() {
         /*$('#canvas3D').find('canvas').remove();
         $('#canvas3D').find('div').append('<canvas></canvas>');*/
         //load3d(shell.models);
-        if (shell.models !== undefined && shell.models !== 'not-exist' && shell.models !== 'unchanged') {
+        if (shell.models !== undefined && shell.models !== 'not-exist' && shell.models !== 'unchanged' && Round === 3) {
             $('#main-tabs-fieldBlock').parents('li').addClass('bg-danger');
             window.kucha = shell.models;
             let interval = setInterval(function () {
