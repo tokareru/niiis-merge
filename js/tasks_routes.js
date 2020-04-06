@@ -516,6 +516,7 @@ function addTaskToDB() {
                 text: 'Добавлен новый маршрут заданий'
             });
             //$('#task_routes_add_button').attr('disabled', true);
+            $('#create_task_route_closeBtn').click();
         }
     })
 }
