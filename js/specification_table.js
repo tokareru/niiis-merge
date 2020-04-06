@@ -1,17 +1,17 @@
 function createSpecificationTable() {
     //serializeTable();
 
-    if(Round < 3){
+    if (Round < 3) {
         /*getJsonByURL("spec_table_ajax", generateTable,
             {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
                 save_url: "spec_table_ajax/save"});*/
         getJsonByURL("spec_table_ajax", initSpecTable);
-    }else {
+    } else {
 
         getJsonByURL("spec_autoentered_table_ajax", initSpecTable);
 
         $("#left-accordion #pdm_field input").click(function () {
-            setTableByPdmAndStd( collectDataLabels(".left-side"));
+            setTableByPdmAndStd(collectDataLabels(".left-side"));
         });
 
         $("#left-accordion #std_field input").click(function () {
@@ -24,9 +24,10 @@ function initSpecTable(json) {
     let $tableBlock = $("#specificationBlock");
     let $table = $("#specificationTable");
     setSpecTable(json);
+    SpecTableInfo = json;
 
     $table.on("click", ".addNewRowToSpecTableButton", function () {
-        addNewRowToSpecTable()
+        addNewRowToSpecTable();
         setActionToBar({
             id: "addNewRowToSpecTable",
             type: "addNew",
@@ -43,9 +44,9 @@ function initSpecTable(json) {
         saveSpecTable();
     });
 
-    if (Role === "designer"){
+    if (Role === "designer") {
         $tableBlock.find("#specTableSaveButton").removeClass("d-none");
-    }else {
+    } else {
         $tableBlock.find("#specTableSaveButton").remove();
     }
 }
@@ -55,41 +56,50 @@ function setSpecTable(json) {
     let $table = $("#specificationTable");
     let $theadTr = $table.find("thead tr");
     let $tbody = $table.find("tbody");
-    if (Role === "designer"  && Round !== 3)
+    if (Role === "designer" && Round !== 3)
         $theadTr.append(`<td></td>`);
     if (json.thead.length)
         json.thead.forEach(function (_cell) {
             $theadTr.append(combineTheadCell(_cell))
         });
-    if(json.tbody === undefined){
-        let temp = [];
-        for (let i = 0; i < json.thead.length; i++){
-            temp.push({text: "", readonly: false});
-        }
-        json.tbody = [{row: temp}];
-    }
-    if (Round !== 3){
-        if (json.tbody.length)
-            json.tbody.forEach(function (_row) {
-                $tbody.append(combineTbodyRow(_row));
-            });
-        else {
-            if (Role === "designer")
-            {
-                $tbody.append(combineTbodyRow({row: [{text: "", readonly: false}]}));
+    if(!TaskInfoReload){
+        if (json.tbody === undefined) {
+            let temp = [];
+            for (let i = 0; i < json.thead.length; i++) {
+                temp.push({text: "", readonly: false});
             }
-            else
-                $tbody.append(combineTbodyRow({row: [{text: "", readonly: true}]}));
+            json.tbody = [{row: temp}];
         }
-        if (Role === "designer" && Round !== 3)
-            $tbody.append(`
+
+        if (Round !== 3) {
+            if (json.tbody.length)
+                json.tbody.forEach(function (_row) {
+                    $tbody.append(combineTbodyRow(_row));
+                });
+            else {
+                if (Role === "designer") {
+                    $tbody.append(combineTbodyRow({row: [{text: "", readonly: false}]}));
+                } else
+                    $tbody.append(combineTbodyRow({row: [{text: "", readonly: true}]}));
+            }
+            if (Role === "designer" && Round !== 3)
+                $tbody.append(`
             <tr style="width: 45px;">
                 <td style="padding-left: 14px;" class="font-family-fontAwesome font-size-12-em fa-plus addNewRowToSpecTableButton"></td>
             </tr>`
-            );
-    }else {
-        setTableByPdmAndStd();
+                );
+        } else {
+            setTableByPdmAndStd();
+        }
     }
+
+}
+
+function setTableByRowDAta(data) {
+    $('#specificationTable').find('tbody tr').remove();
+    data.forEach(function (val) {
+        $('#specificationTable').find('tbody').append(combineTbodyRow(val));
+    });
 
 }
 
@@ -100,7 +110,12 @@ function combineTheadCell(cell = {text: "", readonly: false}) {
     `;
 }
 
-function combineTbodyRow(row = {row: [{text: "", readonly: false}, {text: "", readonly: false}, {text: "", readonly: false}, {text: "", readonly: false}]}) {
+function combineTbodyRow(row = {
+    row: [{text: "", readonly: false}, {text: "", readonly: false}, {
+        text: "",
+        readonly: false
+    }, {text: "", readonly: false}]
+}) {
     let deleteButton = (Role === "designer" && Round !== 3) ? `<td><span class="font-family-fontAwesome font-size-12-em deleteNodeButtonRM"></span></td>` : ``;
     let cells = "";
     if (row.row.length)
@@ -116,7 +131,7 @@ function combineTbodyRow(row = {row: [{text: "", readonly: false}, {text: "", re
 }
 
 function combineTbodyCell(cell = {text: "", readonly: false}) {
-    let disabled = ( Role !== "designer" || Round === 3) ? `disabled="disabled"` : ``;
+    let disabled = (Role !== "designer" || Round === 3) ? `disabled="disabled"` : ``;
     return `
         <td class="specTableCell"><input class="bg-transparent border-0 outline-none shadow-none" ${disabled} value="${cell.text}"></td>
     `;
@@ -125,11 +140,16 @@ function combineTbodyCell(cell = {text: "", readonly: false}) {
 function addNewRowToSpecTable(data) {
     let info;
     if (data !== undefined)
-       info = {row: [{text: data[0], readonly: false}, {text: data[1], readonly: false}, {text: data[2], readonly: false}, {text: data[3], readonly: false}]};
+        info = {
+            row: [{text: data[0], readonly: false}, {text: data[1], readonly: false}, {
+                text: data[2],
+                readonly: false
+            }, {text: data[3], readonly: false}]
+        };
 
-    if(Round !== 3){
+    if (Round !== 3) {
         $("#specificationTable").find("tbody").find('.addNewRowToSpecTableButton').parents('tr').before(combineTbodyRow(info));
-    }else {
+    } else {
         $("#specificationTable").find("tbody").append(combineTbodyRow(info));
     }
 
@@ -158,10 +178,10 @@ function saveSpecTableData($rows) {
             let cells = $(this).find(".specTableCell input");
             saveData.push({
                 row: [
-                    { text: cells.eq(0).val(), readonly: false},
-                    { text: cells.eq(1).val(), readonly: false},
-                    { text: cells.eq(2).val(), readonly: false},
-                    { text: cells.eq(3).val(), readonly: false}
+                    {text: cells.eq(0).val(), readonly: false},
+                    {text: cells.eq(1).val(), readonly: false},
+                    {text: cells.eq(2).val(), readonly: false},
+                    {text: cells.eq(3).val(), readonly: false}
                 ]
             })
         });
@@ -174,9 +194,9 @@ function saveSpecTable() {
     console.log(saveData);
     let saveUrl = "";
 
-    if (Round !== 3){
+    if (Round !== 3) {
         saveUrl = "spec_table_ajax/save";
-    }else{
+    } else {
         saveUrl = "spec_autoentered_table_ajax";
         $.ajax({
             type: "POST",
@@ -216,11 +236,12 @@ function saveSpecTable() {
 }
 
 function setTableByPdmAndStd(checked) {
+
     emptySpecTable();
 
     DetailsInfo = getDetailsInfo();
 
-    if (checked === undefined){
+    if (checked === undefined) {
         $.ajax({
             type: "GET",
             url: "spec_autoentered_table_ajax/load_product_checked",
@@ -239,7 +260,6 @@ function setTableByPdmAndStd(checked) {
         checked = checked.checked;
 
     let checked_info = convertPdmAndStdInfo(checked);
-    //console.log(checked_info);
 
     checked_info.forEach(function (_detail) {
         addNewRowToSpecTable([_detail.position, _detail.designation, _detail.name, _detail.number]);

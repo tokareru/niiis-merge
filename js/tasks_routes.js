@@ -1,20 +1,29 @@
 let ownTasks = [];
+let currentTask = '';
+let tasksRoutesMadeRoutesArr;
+let tempESI;
+
+window.kucha;
 
 function initTasksRoutes() {
     getRoutesFromDB();
+    getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
     addTaskToTable();
     tasks_routes_AddEvent('task_routes_tree');
     if (Role === 'technologist' || Role === 'designer' || Role === 'production_master')
         $('#task_routes_add_button_div')
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
+
     setInterval(function () {
+        console.log(TaskInfoReload);
         if (TaskInfoReload) {
 
             return;
         }
         getRoutesFromDB();
     }, 20000);
+
 
     $('#create_task_route_clearBtn').on('click', function () {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
@@ -67,64 +76,172 @@ function initTasksRoutes() {
     });
     $('body').on('click', '.tasks_routes_reloadShell_radio', function () {
         let $this = $(this);
-        if ($(this).parents('form').find('.tasks_routes_reloadShell_radio:first').get(0) === $(this).get(0)){
+        /*if ($(this).parents('form').find('.tasks_routes_reloadShell_radio:first').get(0) === $(this).get(0)){
             return;
-        }
+        }*/
         $('.tasks_routes_reloadShell').each(function () {
-            if($this.parents('form').get(0) !== $(this).get(0)){
-                $(this).find('.tasks_routes_reloadShell_radio:first').click();
-            }
-            if($this.parents('form').get(0) === $(this).get(0)){
+            if ($this.parents('form').get(0) === $(this).get(0)) {
                 TaskInfoReload = $this.attr('value') === 'true';
+                if (TaskInfoReload) {
+                    if (currentTask !== '') {
+                        currentTask.parents('form').find('.tasks_routes_reloadShell_radio_disable').click();
+                    }
+                    currentTask = $this;
+                }
+            }
+            if ($this.parents('form').get(0) !== $(this).get(0)) {
+                $(this).find('input:first').click();
             }
         });
     });
 
-    $.ajax(
-        {
-            url: '',
-            type: 'GET',
-            data: {},
-            success: function (res) {
-                //TaskInfo = JSON.parse(atob(res));
-                preventShellEvent();
-            }
+    $('body').on('click', '.tasks_routes_reloadShell_radio_enable', async function () {
+        let shell = $(this).parents('tr').data('shell');
+        if (shell.specification !== 'unchanged') {
+            //$('#main-tabs-specification').click();
+            $('#main-tabs-specification').parents('li').addClass('bg-danger');
+            let interval = setInterval(function () {
+                if ($('#specificationTable').html() !== undefined) {
+                    setTableByRowDAta(shell.specification);
+                    $('#specTableSaveButton').attr('disabled', true);
+                    clearInterval(interval);
+                }
+            }, 500);
+
         }
-    )
+        console.log(shell.esi);
+        if (shell.esi !== undefined && shell.esi !== 'not-exist' && shell.esi !== 'unchanged' && Round === 3) {
+            setESI(shell.esi);
+            $('.slider_button').removeClass('bg-dark').addClass('bg-danger');
+        }
+        console.log(shell);
+        /*$('#canvas3D').find('canvas').remove();
+        $('#canvas3D').find('div').append('<canvas></canvas>');*/
+        //load3d(shell.models);
+        if (shell.models !== undefined && shell.models !== 'not-exist' && shell.models !== 'unchanged' && Round === 3) {
+            $('#main-tabs-fieldBlock').parents('li').addClass('bg-danger');
+            window.kucha = shell.models;
+            let interval = setInterval(function () {
+                if ($('#canvas3D').html() !== undefined) {
+                    try {
+                        window.govnoRuslana(shell.models);
+                    } catch (e) {
+                    }
+                    clearInterval(interval);
+                }
+            }, 500);
+        }
+
+
+    });
+
+    $('body').on('click', '.tasks_routes_reloadShell_radio_disable', function () {
+        taskRouteDisable();
+    });
+
+    $('#task_routes_own_routes_update').on('click', function () {
+        getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
+        taskRouteDisable();
+    });
+    if (Round === 3) {
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "spec_autoentered_table_ajax/load_product_checked",
+            success: function (data) {
+                tempESI = {details: convertPdmAndStdInfo(data.checked)};
+            }
+        })
+    }
+
+
+    /* $.ajax(
+         {
+             url: '',
+             type: 'GET',
+             data: {},
+             success: function (res) {
+                 //TaskInfo = JSON.parse(atob(res));
+                 preventShellEvent();
+             }
+         }
+     )*/
 }
 
 function serializeAllInfo() {
     let dataInfo = {
         specification: undefined,
-        models: undefined
+        models: undefined,
+        esi: undefined
     };
     let $spec = $('#specificationTable');
-    if ($spec.html() === undefined || Round === 3) {
+    if ($spec.html() === undefined && Round !== 3) {
         dataInfo.specification = 'unchanged';
     } else {
-        dataInfo.specification = saveSpecTableData($("#specificationTable").find(".specRows"));
+        if (Round !== 3) {
+            dataInfo.specification = JSON.stringify(SpecTableInfo.tbody) !== JSON.stringify(saveSpecTableData($("#specificationTable").find(".specRows"))) ?
+                saveSpecTableData($("#specificationTable").find(".specRows")) : 'unchanged';
+        } else {
+            dataInfo.specification = saveSpecTableData($("#specificationTable").find(".specRows"));
+        }
+
     }
-    let $pdm = $('#pdm_field');
     if (Round !== 3) {
         dataInfo.models = 'not-exist';
+        dataInfo.esi = 'not-exist';
     } else {
-        let idModels = collectDataLabels(".left-side");
-        dataInfo.models = idModels;
+        if (Role === 'designer') {
+            dataInfo.esi = JSON.stringify(tempESI) !== JSON.stringify({details: convertPdmAndStdInfo(collectDataLabels(".left-side"))}) ?
+                {details: convertPdmAndStdInfo(collectDataLabels(".left-side"))} : 'unchanged';
+            console.log(dataInfo.esi);
+            let idModels = collectDataLabels(".left-side");
+            dataInfo.models = compareTwoArrays(idModels, collectionIdPdm) ? 'unchanged' : idModels;
+        } else {
+            dataInfo.models = 'unchanged';
+            dataInfo.esi = 'unchanged';
+        }
+
     }
 
-   /* $.ajax(
-        {
-            url: '',
-            type: 'POST',
-            data: {data: btoa(JSON.stringify(dataInfo))},
-            success: function (res) {
-                //console.log(res);
+
+    /* $.ajax(
+         {
+             url: '',
+             type: 'POST',
+             data: {data: btoa(JSON.stringify(dataInfo))},
+             success: function (res) {
+                 //console.log(res);
+             }
+         }
+     );*/
+    return JSON.stringify(dataInfo);
+}
+
+function taskRouteDisable() {
+    /*let shell = $this.parents('tr').data('shell');
+    console.log(shell);*/
+    /*if (shell.specification !== 'unchanged') {*/
+    $('#specificationTable').find('thead tr').children().remove();
+    $('#specificationTable').find('tbody tr').remove();
+    createSpecificationTable();
+    $('#main-tabs-specification').parents('li').removeClass('bg-danger');
+    $('.slider_button').removeClass('bg-danger').addClass('bg-dark');
+    $('#main-tabs-fieldBlock').parents('li').removeClass('bg-danger');
+    $('#specTableSaveButton').removeAttr('disabled');
+    if (Round === 3) {
+        setESI(tempESI);
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "spec_autoentered_table_ajax/load_product_checked",
+            success: function (data) {
+                if (window.govnoRuslana !== undefined) {
+                    window.govnoRuslana(data.checked);
+                }
             }
-        }
-    );*/
-    console.log(btoa(JSON.stringify(dataInfo)));
-    console.log(JSON.parse(atob(btoa(JSON.stringify(dataInfo)))));
-    return btoa(JSON.stringify(dataInfo));
+        })
+    }
+    //}
 }
 
 function preventShellEvent() {
@@ -175,7 +292,7 @@ function generateOwnTasks(selector) {
         '</tr>' +
         '</thead><tbody></tbody>');
     let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
-        '<button class="btn bg-danger text-white float-left tasks_routes_finishedTask">Отклонить</button>';
+        '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask">Отклонить</button>';
     ownTasks.sort(function (a, b) {
         if (a.status === "nonactive" && b.status !== 'nonactive')
             return 1;
@@ -191,10 +308,10 @@ function generateOwnTasks(selector) {
                 '<td style="width: 200px">' +
                 '<form class="tasks_routes_reloadShell text-center">' + //tasks_routes_reloadShell
                 `<input type="radio" value="false" name="own_tasks_routes" id="own_tasks_routes_show_${index}" checked><label value="false" for="own_tasks_routes_show_${index}" ` +
-                `class="text-center tasks_routes_reloadShell_radio"` +
+                `class="text-center tasks_routes_reloadShell_radio tasks_routes_reloadShell_radio_disable"` +
                 'style="width: 50px">Откл</label>' +
                 `<input type="radio" value="true" name="own_tasks_routes" id="own_tasks_routes_hide_${index}"><label value="true" for="own_tasks_routes_hide_${index}"` +
-                `class="text-center tasks_routes_reloadShell_radio"` +
+                `class="text-center tasks_routes_reloadShell_radio tasks_routes_reloadShell_radio_enable"` +
                 'style="width: 50px">Вкл</label>' +
                 '</form></td>' +
                 `<td style="width: 250px">${value.task}</td>` +
@@ -203,7 +320,7 @@ function generateOwnTasks(selector) {
                     ' text-danger text-center w-100 fa-2x"></span>'}` +
                 '</td>' +
                 '</tr>');
-            $tr.data({'id': value.id, 'master': value.master});
+            $tr.data({'id': value.id, 'master': value.master, shell: value.shell});
             $table.find('tbody').append(
                 $tr
             )
@@ -224,18 +341,19 @@ function generateTableForRoutes(data) {
                         task.master = allInfo.roleName;
                     }
                 });
+                task.shell = JSON.parse(value.shell);
                 ownTasks.push(task);
             }
             tr += '<tr style="width: 700px">' +
 
                 `<td style="width: 60px">${index + 1}</td>` +
                 `<td style="width: 230px">${task.role}</td>` +
-                `<td style="width: 230px">${task.name    }</td>    ` +
-                `<td style="width: 125px">${        task.task    }</td>    ` +
+                `<td style="width: 230px">${task.name}</td>    ` +
+                `<td style="width: 125px">${task.task}</td>    ` +
                 `<td style="width: 125px">${task.status === 'nonactive' ? '<span class="fa fa-2x fa-spinner text-primary text-center w-100"></span>' : task.status === 'active' ? '<span class="fa ' +
-            'fa-check text-success text-center w-100 fa-2x"></span>' :
-            '<span class="fa fa-2x fa-times text-danger w-100"></span>'
-    }
+                    'fa-check text-success text-center w-100 fa-2x"></span>' :
+                    '<span class="fa fa-2x fa-times text-danger w-100"></span>'
+                }
 </td>` +
                 '</tr>';
         }
@@ -365,7 +483,7 @@ function addTaskToDB() {
     let task = serializeCreateTaskRoute();
     if (task === undefined || task.length === 0)
         return;
-    let data =  {task: task, master: login, shell: serializeAllInfo()};
+    let data = {task: task, master: login, shell: serializeAllInfo()};
     console.log(data);
     $.ajax({
         type: 'POST',
@@ -397,27 +515,56 @@ function addTaskToDB() {
                 field: "Маршруты заданий",
                 text: 'Добавлен новый маршрут заданий'
             });
-            $('#task_routes_add_button').attr('disabled', true);
+            //$('#task_routes_add_button').attr('disabled', true);
         }
     })
 }
 
 function getRoutesFromDB() {
+    if (TaskInfoReload) {
+        return;
+    }
     $.ajax({
         type: 'GET',
+        async: false,
         url: 'ajax/get_routes_by_type',
         success: function (res) {
-            console.log(res);
-            ownTasks = [];
-            tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
-            /*
-            if (res.response.active.length > 0) {
-                $('#task_routes_add_button').attr('disabled', true);
-            } else {
-                $('#task_routes_add_button').removeAttr('disabled');
-            }*/
-            tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
-            generateOwnTasks('task_routes_own_routes');
+            if (TaskInfoReload) {
+                return;
+            }
+            tasksRoutesMadeRoutesArr = res;
+            /* ownTasks = [];
+             tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
+             tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
+             if (!TaskInfoReload) {
+                 generateOwnTasks('task_routes_own_routes');
+                 return;
+             }
+
+             console.log(ownTasks);*/
         }
     });
+}
+
+function getRoutesFromDBInfo(res) {
+    ownTasks = [];
+    tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
+    tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
+    generateOwnTasks('task_routes_own_routes');
+}
+
+function compareTwoArrays(arr1, arr2) {
+    let isSame = true;
+    if (arr1.length === arr2.length) {
+        if (arr1.length) {
+            arr1.forEach(function (_elem1, index) {
+                if (_elem1 !== arr2[index])
+                    isSame = false;
+            })
+        } else
+            isSame = true;
+    } else {
+        isSame = false;
+    }
+    return isSame;
 }

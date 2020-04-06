@@ -47,11 +47,15 @@ ul, #myUL {
     border-color: #bee5eb;
     border-bottom-style: none;
     border-right-style: none;
-    margin-bottom: -3px;
+    margin-bottom: 10px;
 }
 
 .techField{
     list-style: disc;
+}
+
+.techFieldsDropArea li{
+    margin-bottom: 3px !important;
 }
 
 .caret:hover{

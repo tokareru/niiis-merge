@@ -81,6 +81,7 @@
                 </span>
                 <ul class="nested" >
                     <div id="task_routes_own_routes"></div>
+                    <button id="task_routes_own_routes_update" class="btn bg-dark text-center text-white">Обновить</button>
                 </ul>
             </li>
         </ul>

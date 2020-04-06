@@ -275,7 +275,7 @@ function collectDataLabels(id_div) {
         arr.push(val.name);
     });
     //console.log(id_div + ":" + arr);
-    esiNotifyHandler(arr);
+    //esiNotifyHandler(arr);
 
     if (id_div === "#pdm_field") {
         sendMessage({
@@ -339,6 +339,8 @@ function showhideimage(arrayComp, obj) {
 }
 
 function load3d(array, obj = {0: {"checked": "true"}}) {
+    console.log('load3d');
+    console.log(obj);
     if (window.isEnded != undefined && window.isEnded == true) {
         if (obj[0].checked) {
             for (i = 0; i < 7; i++) {

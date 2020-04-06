@@ -3,9 +3,13 @@
 import * as THREE from './stl/three.module.js';
 /*import Stats from './stl/stats.module.js';*/
 import {STLLoader} from './stl/STLLoader.js';
-import { OrbitControls } from './OrbitControls.js';
+import {OrbitControls} from './OrbitControls.js';
+
+window.govnoRuslana;
 
 export function init3dField() {
+    window.govnoRuslana = firstFieldInit;
+    console.log(window.govnoRuslana);
     var container, stats;
 
     var cameraTarget;
@@ -102,7 +106,7 @@ export function init3dField() {
 
         container.appendChild(renderer.domElement);
 
-        window.controls = new OrbitControls( window.camera, window.renderer.domElement );
+        window.controls = new OrbitControls(window.camera, window.renderer.domElement);
         controls.enableDamping = true;
         controls.dampingFactor = 0.05;
 
@@ -160,12 +164,12 @@ export function init3dField() {
             window.MeshsLinesScheme[arrmesh].push(mesh);
             window.MeshsLinesScheme[arrmesh].push(wireframe);
             scene.add(mesh);
-            scene.add( wireframe );
+            scene.add(wireframe);
 
             //добавляем весь чертеж
-            if (Round === 3 && $("#pdm_field").length){
+            if (Round === 3 && $("#pdm_field").length) {
                 firstFieldInit(collectDataLabels(".left-side"));
-            }else if(Round === 3 && !$("#pdm_field").length){
+            } else if (Round === 3 && !$("#pdm_field").length) {
                 let array;
                 $.ajax({
                     type: "POST",
@@ -177,7 +181,7 @@ export function init3dField() {
                 })
                 //console.log(array)
                 firstFieldInit(array);
-            }else{
+            } else {
                 firstFieldInit(["detail-1", "detail-2", "detail-3",
                     "detail-4", "detail-5", "detail-6", "detail-7"])
             }
@@ -185,6 +189,10 @@ export function init3dField() {
     }
 
     function firstFieldInit(array) {
+        if (window.kucha !== undefined && TaskInfoReload) {
+            array = window.kucha;
+        }
+        console.log(array);
         let prev = window.isEnded;
         window.isEnded = true;
         //console.log(array)
@@ -194,8 +202,7 @@ export function init3dField() {
                 for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                     MeshsLinesScheme[stldata[i][2]][j].visible = true;
                 }
-            }
-            else {
+            } else {
                 for (let j = 0; j < MeshsLinesScheme[stldata[i][2]].length; j++) {
                     MeshsLinesScheme[stldata[i][2]][j].visible = false;
                 }
@@ -298,11 +305,9 @@ export function init3dField() {
 
                 let $children = ui.draggable[0]['children'][1];
                 let id = $children.id;
-                if(id.indexOf('std') !== -1)
-                {
+                if (id.indexOf('std') !== -1) {
                     $checkboxid2.find("input").click();
-                }
-                else {
+                } else {
                     $checkboxid1.find("input").click();
                 }
                 $('#' + id).click();

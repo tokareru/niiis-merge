@@ -1,6 +1,7 @@
 function initESI() {
     esiGetDataFromServer();
-    $("#esi_branch_body_header_span").trigger("click");
+
+    $("#esi_branch_body_header_span").not(".caret-down").trigger("click");
 
     $('.slider_button').on('click', function (event) {
         STDLibClick($('.slider_button'), $('.slider_main'), 15, "esi");
@@ -17,6 +18,7 @@ function initESI() {
 
 function setESI(data, setNewInterval = false) {
     //console.log(data)
+    if (Round !== 3) return;
     if (data.details.length) {
         $("#esi_branch_body").empty().append(createNodes(data.details));
     }
@@ -113,6 +115,7 @@ function esiNotifyHandler(array) {
     let _data = {
         "details": []
     };
+    getDetailsInfo();
     array.forEach(function (component_id) {
         DetailsInfo.forEach(function (component) {
             if (component_id === ("detail" + component.id)) {
