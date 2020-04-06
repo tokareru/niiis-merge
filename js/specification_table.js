@@ -138,7 +138,6 @@ function combineTbodyCell(cell = {text: "", readonly: false}) {
 }
 
 function addNewRowToSpecTable(data) {
-    console.log(data);
     let info;
     if (data !== undefined)
         info = {

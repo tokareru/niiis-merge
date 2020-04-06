@@ -3,6 +3,8 @@ let currentTask = '';
 let tasksRoutesMadeRoutesArr;
 let tempESI;
 
+window.kucha;
+
 function initTasksRoutes() {
     getRoutesFromDB();
     getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
@@ -93,7 +95,7 @@ function initTasksRoutes() {
         });
     });
 
-    $('body').on('click', '.tasks_routes_reloadShell_radio_enable', function () {
+    $('body').on('click', '.tasks_routes_reloadShell_radio_enable', async function () {
         let shell = $(this).parents('tr').data('shell');
         if (shell.specification !== 'unchanged') {
             //$('#main-tabs-specification').click();
@@ -112,6 +114,24 @@ function initTasksRoutes() {
             setESI(shell.esi);
             $('.slider_button').removeClass('bg-dark').addClass('bg-danger');
         }
+        console.log(shell);
+        /*$('#canvas3D').find('canvas').remove();
+        $('#canvas3D').find('div').append('<canvas></canvas>');*/
+        //load3d(shell.models);
+        if (shell.models !== undefined && shell.models !== 'not-exist' && shell.models !== 'unchanged') {
+            $('#main-tabs-fieldBlock').parents('li').addClass('bg-danger');
+            window.kucha = shell.models;
+            let interval = setInterval(function () {
+                if ($('#canvas3D').html() !== undefined) {
+                    try{
+                        window.govnoRuslana(shell.models);
+                    } catch (e) {
+                    }
+                    clearInterval(interval);
+                }
+            }, 500);
+        }
+
 
     });
 
@@ -166,19 +186,21 @@ function serializeAllInfo() {
         }
 
     }
-    let $pdm = $('#pdm_field');
     if (Round !== 3) {
         dataInfo.models = 'not-exist';
         dataInfo.esi = 'not-exist';
     } else {
-        let idModels = collectDataLabels(".left-side");
-        dataInfo.models = idModels;
         if (Role === 'designer') {
             dataInfo.esi = JSON.stringify(tempESI) !== JSON.stringify({details: convertPdmAndStdInfo(collectDataLabels(".left-side"))}) ?
                 {details: convertPdmAndStdInfo(collectDataLabels(".left-side"))} : 'unchanged';
             console.log(dataInfo.esi);
-        } else
-            dataInfo = 'unchanged';
+            let idModels = collectDataLabels(".left-side");
+            dataInfo.models = compareTwoArrays(idModels, collectionIdPdm) ? 'unchanged' : idModels;
+        } else {
+            dataInfo.models = 'unchanged';
+            dataInfo.esi = 'unchanged';
+        }
+
     }
 
 
@@ -204,9 +226,19 @@ function taskRouteDisable() {
     createSpecificationTable();
     $('#main-tabs-specification').parents('li').removeClass('bg-danger');
     $('.slider_button').removeClass('bg-danger').addClass('bg-dark');
+    $('#main-tabs-fieldBlock').parents('li').removeClass('bg-danger');
     $('#specTableSaveButton').removeAttr('disabled');
-    if (Round === 3)
+    if (Round === 3) {
         setESI(tempESI);
+        $.ajax({
+            type: "POST",
+            async: false,
+            url: "spec_autoentered_table_ajax/load_product_checked",
+            success: function (data) {
+                window.govnoRuslana(data.checked);
+            }
+        })
+    }
     //}
 }
 
@@ -517,4 +549,20 @@ function getRoutesFromDBInfo(res) {
     tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
     tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
     generateOwnTasks('task_routes_own_routes');
+}
+
+function compareTwoArrays(arr1, arr2) {
+    let isSame = true;
+    if (arr1.length === arr2.length) {
+        if (arr1.length) {
+            arr1.forEach(function (_elem1, index) {
+                if (_elem1 !== arr2[index])
+                    isSame = false;
+            })
+        } else
+            isSame = true;
+    } else {
+        isSame = false;
+    }
+    return isSame;
 }

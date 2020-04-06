@@ -13,6 +13,7 @@ let AllInfo = [];
 let TaskInfoReload = false;
 let TaskInfo;
 let SpecTableInfo;
+let collectionIdPdm;
 
 
 function shellInit() {
@@ -214,6 +215,10 @@ async function updateShell(){
     $("#change_role").removeAttr("disabled");
     initNotifications();
     initProgressBar();
+
+    if(Role === 'designer'){
+        collectionIdPdm = collectDataLabels(".left-side");
+    }
 
     shell.removeClass("blur-filter");
     tabs_fields_ul.removeClass("blur-filter");
