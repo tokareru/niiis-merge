@@ -18,7 +18,7 @@ function initESI() {
 
 function setESI(data, setNewInterval = false) {
     //console.log(data)
-    //if (Round !== 3) return;
+    if (Round !== 3) return;
     if (data.details.length) {
         $("#esi_branch_body").empty().append(createNodes(data.details));
     }
