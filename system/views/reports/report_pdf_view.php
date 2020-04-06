@@ -6,32 +6,69 @@ require_once conf::$ROOT.'system/etc/fpdf/fpdf.php';
 
 class PDF extends FPDF
 {
+    function TextWithRotation($x, $y, $txt, $txt_angle, $font_angle=0)
+    {
+        $font_angle+=90+$txt_angle;
+        $txt_angle*=M_PI/180;
+        $font_angle*=M_PI/180;
+
+        $txt_dx=cos($txt_angle);
+        $txt_dy=sin($txt_angle);
+        $font_dx=cos($font_angle);
+        $font_dy=sin($font_angle);
+
+        $s=sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET',$txt_dx,$txt_dy,$font_dx,$font_dy,$x*$this->k,($this->h-$y)*$this->k,$this->_escape($txt));
+        if ($this->ColorFlag)
+            $s='q '.$this->TextColor.' '.$s.' Q';
+        $this->_out($s);
+    }
+    function RotatedText($x,$y,$txt,$angle)
+     {
+      //Text rotated around its origin
+      $this->Rotate($angle,$x,$y);
+      $this->Text($x,$y,$txt);
+      $this->Rotate(0);
+     }
   //Улучшенная таблица
   function ImprovedTable($header,$data)
   {
       //Ширина колонки
-      $w=array(20,60,60,25);
+      $w=array(6,6,6,60,70,10,24);
+      $this->SetX(20);
       //Заголовок
-      for($i=0;$i<count($header);$i++)
-          $this->Cell($w[$i],7,$header[$i],1,0,'C');
-      $this->Ln();
-      //Данные
+      for($i=0;$i<count($header);$i++){
       
+      if(($i < 3)||($i == 5)){
+        $this->TextWithRotation($this->GetX()+ $w[$i],$this->GetY()+13,$header[$i],90);
+        $this->Cell($w[$i],15,"",1,0,'C');
+      }else{
+      $this->Cell($w[$i],15,$header[$i],1,0,'C');
+      }
+      }
+      $this->Ln();
+      
+      //Данные
       foreach($data as $row)
       {
-        $this->SetX(30);
-        $this->Cell($w[0],6,$this->conv($row[0]),'LRB',0,'C');
-        $this->Cell($w[1],6,$this->conv($row[1]),'LRB',0,'L');
-        $this->Cell($w[2],6,$this->conv($row[2]),'LRB',0,'L');
-        $this->Cell($w[3],6,$this->conv($row[3]),'LRB',0,'C');
+        $this->SetX(20);
+        $this->Cell($w[0],8,"",'LRB',0,'C');
+        $this->Cell($w[1],8,"",'LRB',0,'L');
+        $this->Cell($w[2],8,$this->conv($row[0]),'LRB',0,'L');
+        $this->Cell($w[3],8,$this->conv($row[1]),'LRB',0,'C');
+        $this->Cell($w[4],8,$this->conv($row[2]),'LRB',0,'C');
+        $this->Cell($w[5],8,$this->conv($row[3]),'LRB',0,'L');
+        $this->Cell($w[6],8,"",'LRB',0,'C');
         $this->Ln();
       }
-      $this->SetX(30);
+      $this->SetX(20);
       //Линия закрытия (последняя линия)
 //      $this->Cell(array_sum($w),0,'','T');
   }
 }
-
+$sql = "SELECT * FROM drawing_size";
+$q = sys::$PDO->prepare($sql);
+$q->execute();
+$size = $q->fetchAll()[0];
 $main_label = $data['content']['data'][0];
 $round = $data['content']['round'];
 $spec_table = $data['content']['spec_table'];
@@ -65,12 +102,12 @@ if($draw_finish){ // если чертеж дорисован
   $p->Image('images/report/ABR3d-1.png',30,20,-350); 
 
   // размеры на чертеже
-  $p->SetXY(26,45);
-  $p->Cell(6,5,'112',$frame,1,'C'); // размер 1
-  $p->SetXY(160,63);
-  $p->Cell(6,5,'248',$frame,1,'C'); // размер 2
-  $p->SetXY(72,136);
-  $p->Cell(6,5,'345',$frame,1,'C'); // размер 3
+  $p->SetXY(45,43);
+  $p->Cell(6,5,$size["size_1"],$frame,1,'C'); // размер 1
+  $p->SetXY(145,59);
+  $p->Cell(6,5,$size["size_2"],$frame,1,'C'); // размер 2
+  $p->SetXY(85,130);
+  $p->Cell(6,5,$size["size_3"],$frame,1,'C'); // размер 3
   // -----------------
 }
 // первая строка
@@ -467,7 +504,7 @@ $p->Cell(29,5,$p->conv("Листов 2"),$frame,1,'L'); // Листов
 
 $p->SetFont('gost', '', 14);
 $p->SetXY(30,30);
-$header=array($p->conv('Позиция'),$p->conv('Обозначение'),$p->conv('Наименование'),$p->conv('Количество'));
+$header=array($p->conv('Форм.'),$p->conv('Зона'),$p->conv('Поз.'),$p->conv('Наименование'),$p->conv('Обозначение'),$p->conv('Кол.'),$p->conv('Прим.'));
 //Загрузка данных
 $p->ImprovedTable($header, $spec_table);
 

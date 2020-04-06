@@ -21,11 +21,10 @@ class print_report_model extends model
     $draw_finish = $Q[0]['is_drawing_finished'];
 //    var_dump($draw_finish);
     
-    $sql = "SELECT round FROM system_conf";
+    $sql = "SELECT cnfval as round FROM sys_cnf WHERE cnfname = 'round'";
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $round = $q->fetchAll();
-    
     if($round[0]['round'] == 3){
       $sql = "SELECT  position,
                     name_short,
