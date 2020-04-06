@@ -15,14 +15,14 @@ function initTasksRoutes() {
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
 
-    setInterval(function () {
+   /* setInterval(function () {
         console.log(TaskInfoReload);
         if (TaskInfoReload) {
 
             return;
         }
         getRoutesFromDB();
-    }, 20000);
+    }, 10000);*/
 
 
     $('#create_task_route_clearBtn').on('click', function () {
@@ -140,6 +140,7 @@ function initTasksRoutes() {
     });
 
     $('#task_routes_own_routes_update').on('click', function () {
+        getRoutesFromDB();
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
         taskRouteDisable();
     });
@@ -522,9 +523,6 @@ function addTaskToDB() {
 }
 
 function getRoutesFromDB() {
-    if (TaskInfoReload) {
-        return;
-    }
     $.ajax({
         type: 'GET',
         async: false,
