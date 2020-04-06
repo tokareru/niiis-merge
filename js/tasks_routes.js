@@ -123,7 +123,7 @@ function initTasksRoutes() {
             window.kucha = shell.models;
             let interval = setInterval(function () {
                 if ($('#canvas3D').html() !== undefined) {
-                    try{
+                    try {
                         window.govnoRuslana(shell.models);
                     } catch (e) {
                     }
@@ -235,7 +235,9 @@ function taskRouteDisable() {
             async: false,
             url: "spec_autoentered_table_ajax/load_product_checked",
             success: function (data) {
-                window.govnoRuslana(data.checked);
+                if (window.govnoRuslana !== undefined) {
+                    window.govnoRuslana(data.checked);
+                }
             }
         })
     }
