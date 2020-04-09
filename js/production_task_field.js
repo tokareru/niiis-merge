@@ -37,27 +37,28 @@ function initProductionTask_3_Rounds() {
     if (techProcess === undefined || techProcess === null){
         $("#product_tech_process_field_drop").append(`
             <p class="alert-warning p-2">Невозможно создать задания на производство, так как не существует техпроцесса</p>
-        `)
+        `);
+        $("#product_task_save_button").attr("disabled", "true");
     }
     else if (techProcess.techProcess.length === 0){
         $("#product_tech_process_field_drop").append(`
             <p class="alert-warning p-2">Невозможно создать задания на производство, так как не существует техпроцесса</p>
-        `)
+        `);
+        $("#product_task_save_button").attr("disabled", "true");
     }
-    else {
-        if (Role === "production_master"){
-            initProductTaskForProductMaster($workers_drop, techProcess, nameUsers);
-        } else{
-            initProductTaskForWorker($workers_drop, techProcess);
-        }
+    if (Role === "production_master"){
+        initProductTaskForProductMaster($workers_drop, techProcess, nameUsers);
+    } else{
+        initProductTaskForWorker($workers_drop, techProcess);
+    }
 
-        $(`#production_task_body`).on("click", "#product_task_save_button", function () {
-            saveProductionTable_3_Round(nameUsers);
+    $(`#production_task_body`).on("click", "#product_task_save_button", function () {
+        saveProductionTable_3_Round(nameUsers);
+    })
+        .on("click", ".deleteNodeButtonRM", function () {
+            deleteWorkerTask($(this));
         })
-            .on("click", ".deleteNodeButtonRM", function () {
-                deleteWorkerTask($(this));
-            })
-    }
+
 }
 
 function initProductTaskForProductMaster($workers_drop, techProcess, nameUsers) {
@@ -113,7 +114,8 @@ function initProductTaskForProductMaster($workers_drop, techProcess, nameUsers) 
     else {
         $("#workers_drop_area").append(`
             <p class="alert-warning p-2">Невозможно создать задания на производство, так как список рабочих пуст</p>
-        `)
+        `);
+        $("#product_task_save_button").attr("disabled", "true");
     }
 }
 
