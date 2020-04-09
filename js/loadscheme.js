@@ -28,6 +28,21 @@ async function triggerschemeInit() {
         }
     }
     if (Round === 3 && Role !== 'designer'){
+        $.ajax({
+            type: "GET",
+            url: "drawing_main_text_ajax/load_is_full",
+            dataType: "json",
+            data: "json",
+            success: function (json) {
+                //console.log(json);
+                if (json.isFull === "false"){
+                    blockScheme();
+                }else {
+                    unlockScheme()
+                }
+            }
+        });
+
         setInterval(function () {
             $.ajax({
                 type: "GET",

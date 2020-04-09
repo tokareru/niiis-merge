@@ -187,6 +187,12 @@ function setDrawingStatus()
 
 function HideInputAndDrawRazmerOnScheme()
 {
+    let size1 = $("#razmNumber1").val();
+    let size2 = $("#razmNumber2").val();
+    let size3 = $("#razmNumber3").val();
+    if (size1 === undefined || (/^[\s]+$/).test(size1) || size2 === undefined || (/^[\s]+$/).test(size2) || size3 === undefined || (/^[\s]+$/).test(size3))
+        return;
+
     for (let i=1;i<4;i++)
     {
         //$("#razmNumber"+i).hide();
@@ -213,10 +219,15 @@ function HideInputAndDrawRazmerOnScheme()
 
 function addToServerRazmer()
 {
-    if ($("#razmNumber1").val() == undefined ||  $("#razmNumber1").val() == '') {var razm1 = 0;} else {var razm1 = $("#razmNumber1").val();}
-    if ($("#razmNumber2").val() == undefined ||  $("#razmNumber2").val() == '') {var razm2 = 0;} else {var razm2 = $("#razmNumber2").val();}
-    if ($("#razmNumber3").val() == undefined ||  $("#razmNumber3").val() == '') {var razm3 = 0;} else {var razm3 = $("#razmNumber3").val();}
-
+    let size1 = $("#razmNumber1").val();
+    let size2 = $("#razmNumber2").val();
+    let size3 = $("#razmNumber3").val();
+    if (size1 === undefined || (/^[\s]+$/).test(size1))
+        size1 = 0;
+    if (size2 === undefined || (/^[\s]+$/).test(size2))
+        size2 = 0;
+    if (size3 === undefined || (/^[\s]+$/).test(size3))
+        size3 = 0;
     $.ajax({
         type: "POST",
         url: "drawing_main_text_ajax/save_size",
@@ -224,9 +235,9 @@ function addToServerRazmer()
         data:
             {
                 "scheme":"scheme",
-                "razm1":razm1,
-                "razm2":razm2,
-                "razm3":razm3
+                "razm1":size1,
+                "razm2":size2,
+                "razm3":size3
             },
         success: function (answer) {
             console.log(answer);
