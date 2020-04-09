@@ -225,26 +225,7 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
         greedy: true,
         drop: function (event, ui) {
             let $draggable = $(ui.draggable);
-            let $this = $(this);
-            /*let nodes = [];*/
-            /*$draggable.find(".operationName").each(function () {
-                let $ul = $(this);
-                let fields = [];
-                $ul.find(".operationNameUl li").each(function () {
-                    let $this = $(this);
-                    fields.push({
-                        name: $this.find("span").first().text(),
-                        id: $this.attr("tech-id"),
-                        lvl: $this.attr("tech-lvl")
-                    })
-                });
-                nodes.push({
-                    name: $ul.find("span.caret").first().text(),
-                    id: $ul.attr("tech-id"),
-                    lvl: $ul.attr("tech-lvl"),
-                    fields: fields
-                })
-            });*/
+            let $this = $("#tech_process_field_drop");
 
             if ($draggable.hasClass("techOperationsGuide")){
                 let $techName = $draggable.parent().parent().parent().parent();
