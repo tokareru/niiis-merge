@@ -110,7 +110,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
                 aria-label="Toggle navigation">
             <span class="btn btn-sm shadow-none border rounded-pill bg-light fa-bell-o" tabindex="0" id="notificationBell"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarTogglerNotification">
+        <div class="collapse navbar-collapse show" id="navbarTogglerNotification">
             <div id="toast-position" class="custom-toast-position"></div>
         </div>
     </nav>
