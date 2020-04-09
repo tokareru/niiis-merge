@@ -47,6 +47,11 @@ function downloadTechProcess($container, fieldId) {
                         $(this).find(".caret").first().trigger("click");
                     });*/
                 }
+                else if (Role !== "technologist"){
+                    $("#tech_process_field_drop").append(`
+                        <p class="alert-warning p-2">Технолог еще не создал техпроцесс</p>
+                    `)
+                }
             }
             if (Role === "technologist"){
                 setDropAreaForTechName($("#tech_process_field_drop"), fieldId);
