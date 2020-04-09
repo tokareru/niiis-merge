@@ -83,7 +83,7 @@ function initNotifications() {
             });
         }
         if (Role === "designer"){
-            $.ajax({
+            /*$.ajax({
                 type: "GET",
                 url: "drawing_main_text_ajax/is_drawing_finished",
                 dataType: "json",
@@ -98,7 +98,7 @@ function initNotifications() {
                         });
                     }
                 }
-            });
+            });*/
 
             setNotificationToField("scheme", "schemeBlock", {
                 mainHeader: "Рабочий стол. Чертёж",
