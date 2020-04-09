@@ -23,6 +23,23 @@ function initNotifications() {
             });
         }
         if (Role === "designer"){
+            $.ajax({
+                type: "GET",
+                url: "drawing_main_text_ajax/is_drawing_finished",
+                dataType: "json",
+                data: "type=get",
+                async: false,
+                success: function (answer) {
+                    if (answer.is_drawing_finished == false){
+                        setNotificationToFieldInitialization("scheme", {
+                            mainHeader: "Рабочий стол. Чертёж",
+                            extraHeader:"",
+                            text: `Соедините точки, чтобы завершить чертёж.`
+                        });
+                    }
+                }
+            });
+
             setNotificationToFieldInitialization("specification", {
                 mainHeader: "Спецификация",
                 extraHeader:"",
@@ -66,6 +83,23 @@ function initNotifications() {
             });
         }
         if (Role === "designer"){
+            $.ajax({
+                type: "GET",
+                url: "drawing_main_text_ajax/is_drawing_finished",
+                dataType: "json",
+                data: "type=get",
+                async: false,
+                success: function (answer) {
+                    if (!answer.is_drawing_finished){
+                        setNotificationToFieldInitialization("scheme", {
+                            mainHeader: "Рабочий стол. Чертёж",
+                            extraHeader:"",
+                            text: `Соедините точки, чтобы завершить чертёж.`
+                        });
+                    }
+                }
+            });
+
             setNotificationToField("scheme", "schemeBlock", {
                 mainHeader: "Рабочий стол. Чертёж",
                 extraHeader: "",
@@ -139,12 +173,12 @@ function initBell() {
 
         }else {
             $notificationBell.removeClass("fa-bell-slash").removeClass("fa-bell-slash-o").addClass("fa-bell-o");
-            setActionToBar({
+            /*setActionToBar({
                 id: "openTab",
                 type: "open",
                 field: "Уведомления",
                 text: `Открыта вкладка 'Уведомления'`
-            })
+            })*/
         }
     });
 }
