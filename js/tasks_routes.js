@@ -15,14 +15,14 @@ function initTasksRoutes() {
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
 
-    setInterval(function () {
+   /* setInterval(function () {
         console.log(TaskInfoReload);
         if (TaskInfoReload) {
 
             return;
         }
         getRoutesFromDB();
-    }, 20000);
+    }, 10000);*/
 
 
     $('#create_task_route_clearBtn').on('click', function () {
@@ -123,7 +123,7 @@ function initTasksRoutes() {
             window.kucha = shell.models;
             let interval = setInterval(function () {
                 if ($('#canvas3D').html() !== undefined) {
-                    try{
+                    try {
                         window.govnoRuslana(shell.models);
                     } catch (e) {
                     }
@@ -140,6 +140,7 @@ function initTasksRoutes() {
     });
 
     $('#task_routes_own_routes_update').on('click', function () {
+        getRoutesFromDB();
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
         taskRouteDisable();
     });
@@ -235,7 +236,9 @@ function taskRouteDisable() {
             async: false,
             url: "spec_autoentered_table_ajax/load_product_checked",
             success: function (data) {
-                window.govnoRuslana(data.checked);
+                if (window.govnoRuslana !== undefined) {
+                    window.govnoRuslana(data.checked);
+                }
             }
         })
     }
@@ -514,14 +517,12 @@ function addTaskToDB() {
                 text: 'Добавлен новый маршрут заданий'
             });
             //$('#task_routes_add_button').attr('disabled', true);
+            $('#create_task_route_closeBtn').click();
         }
     })
 }
 
 function getRoutesFromDB() {
-    if (TaskInfoReload) {
-        return;
-    }
     $.ajax({
         type: 'GET',
         async: false,

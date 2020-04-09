@@ -51,7 +51,7 @@
                     </div>
                     <div class="modal-footer">
                         <button id="create_task_route_clearBtn" type="button" class="btn bg-danger text-white">Очистить</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="button" class="btn btn-secondary" id="create_task_route_closeBtn" data-dismiss="modal">Закрыть</button>
                         <button id="create_task_route_saveBtn" type="button" class="btn bg-dark text-white">Сохранить</button>
                     </div>
                 </div>
@@ -81,11 +81,10 @@
                 </span>
                 <ul class="nested" >
                     <div id="task_routes_own_routes"></div>
-                    <button id="task_routes_own_routes_update" class="btn bg-dark text-center text-white">Обновить</button>
                 </ul>
             </li>
         </ul>
-
+        <button id="task_routes_own_routes_update" class="btn bg-dark text-center text-white">Обновить</button>
     </div>
     <!--<div id="task_routes_my_tasks">
         <div id="task_routes_my_tasks_button" class="float-left"></div>
