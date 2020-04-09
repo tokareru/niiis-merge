@@ -14,35 +14,97 @@ function initNotifications() {
         }
     });
 
-    setNotificationToFieldInitialization("technological_process_field", {
-        mainHeader: "Рабочий стол. Техпроцесс",
-        extraHeader: "",
-        text: "Чтобы создать техпроцесс, перетащите узлы \"Справочника технолога\" в центр рабочего стола. Вы можете создать новый узел техпроцесса, нажав на колёсико мышки в центре экрана."
-    });
-
-    setNotificationToField("scheme", "schemeBlock", {
-        mainHeader: "Рабочий стол. Чертёж",
-        extraHeader: "",
-        text: "Область заблокирована. Необходимо полностью собрать изделие."
-    });
-
-    setNotificationToFieldInitialization("technologist_guide_field", {
-        mainHeader: "Справочник технолога",
-        extraHeader:"",
-        text: "Вы можете перетаскивать узлы \"Справочник технолога\" в \"Маршрутную карту\" или в \"Рабочий стол. Техпроцесс\"."
-    });
-
-    setNotificationToFieldInitialization("pdm_field", {
-        mainHeader: "Изделия PDM",
-        extraHeader:"",
-        text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
-    });
-
-    setNotificationToFieldInitialization("std_field", {
-        mainHeader: "Стандартные изделия",
-        extraHeader:"",
-        text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
-    })
+    if (Round !== 3){
+        if (Role === "technologist"){
+            setNotificationToFieldInitialization("route_map_field", {
+                mainHeader: "Маршрутная карта",
+                extraHeader:"",
+                text: `Чтобы создать маршрутную карту, заполните поля "Наименование и содержание операции", "Оборудование" и "Приспособление и инструмент". Не забудьте сохранить изменения!`
+            });
+        }
+        if (Role === "designer"){
+            setNotificationToFieldInitialization("specification", {
+                mainHeader: "Спецификация",
+                extraHeader:"",
+                text: `Заполните таблицу спецификации и не забудьте сохранить изменения.`
+            });
+            setNotificationToFieldInitialization("scheme", {
+                mainHeader: "Рабочий стол. Чертёж",
+                extraHeader:"",
+                text: `Два раза кликните на размер, чтобы его изменить.`
+            });
+            setNotificationToFieldInitialization("scheme", {
+                mainHeader: "Рабочий стол. Чертёж",
+                extraHeader:"",
+                text: `Заполните основную надпись чертежа, проставьте размеры и сохраните изменения.`
+            });
+        }
+        if (Role === "production_master"){
+            setNotificationToFieldInitialization("production_task_field", {
+                mainHeader: "Задание на производство",
+                extraHeader:"",
+                text: `Чтобы создать задание на производство, выберите пользователя, заполните или измените его таблицу и сохраните изменения.`
+            });
+        }
+    }
+    if (Round === 3){
+        if (Role === "technologist"){
+            setNotificationToFieldInitialization("technological_process_field", {
+                mainHeader: "Рабочий стол. Техпроцесс",
+                extraHeader: "",
+                text: "Чтобы создать техпроцесс, перетащите узлы \"Справочника технолога\" в подсвеченные поля или центр вкладки, чтобы создать следующий порядок: техпроцесс -> техоперация -> узлы техоперации -> элементы узла техоперации."
+            });
+            /*setNotificationToFieldInitialization("technologist_guide_field", {
+                mainHeader: "Справочник технолога",
+                extraHeader:"",
+                text: "Вы можете перетаскивать узлы \"Справочник технолога\" в области \"Маршрутная карта\" или \"Рабочий стол. Техпроцесс\"."
+            });*/
+            setNotificationToFieldInitialization("route_map_field", {
+                mainHeader: "Маршрутная карта",
+                extraHeader:"",
+                text: "Для создания маршрутной карты, перетащите узлы \"Справочника технолога\" в таблицу."
+            });
+        }
+        if (Role === "designer"){
+            setNotificationToField("scheme", "schemeBlock", {
+                mainHeader: "Рабочий стол. Чертёж",
+                extraHeader: "",
+                text: "Область заблокирована. Необходимо полностью собрать изделие."
+            });
+            setNotificationToFieldInitialization("pdm_field", {
+                mainHeader: "Изделия PDM/Стандартные изделия",
+                extraHeader:"",
+                text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
+            });
+            setNotificationToFieldInitialization("scheme", {
+                mainHeader: "Рабочий стол. Чертёж",
+                extraHeader:"",
+                text: `Два раза кликните на размер, чтобы его изменить.`
+            });
+            setNotificationToFieldInitialization("scheme", {
+                mainHeader: "Рабочий стол. Чертёж",
+                extraHeader:"",
+                text: `Заполните основную надпись чертежа, проставьте размеры и сохраните изменения.`
+            });
+            setNotificationToFieldInitialization("specification", {
+                mainHeader: "Спецификация",
+                extraHeader:"",
+                text: `Чтобы изменить таблицу спецификации, выберите детали во вкладках "PDM изделия" и "Стандартные изделия".`
+            });
+            setNotificationToFieldInitialization("fieldBlock", {
+                mainHeader: "Рабочий стол. 3D",
+                extraHeader:"",
+                text: `Выбирайте изделия, чтобы изменить отображпемые детали.`
+            });
+        }
+        if (Role === "production_master"){
+            setNotificationToFieldInitialization("production_task_field", {
+                mainHeader: "Задание на производство",
+                extraHeader:"",
+                text: `Для создания задания, перетащите техоперации в поле конкретного рабочего. После создания задания, сохраните изменения.`
+            });
+        }
+    }
 }
 
 function initBell() {

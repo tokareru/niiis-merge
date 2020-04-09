@@ -67,14 +67,14 @@ function downloadTechProcess($container, fieldId) {
                     setDropAreaForTechFields($(this))
                 });*/
 
-                $("#tech_process_field_add_node_button").click(function () {
+                /*$("#tech_process_field_add_node_button").click(function () {
                     addNewTechProcess(fieldId);
                 });
 
                 $container.mousedown(function (event) {
                     event.preventDefault();
                     if (event.which === 2 && Role === "technologist") addNewTechProcess(fieldId);
-                });
+                });*/
 
                 $("#tech_process_field_save_button").click(function () {
                     saveTechProcess();

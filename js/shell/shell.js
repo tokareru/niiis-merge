@@ -222,6 +222,7 @@ async function updateShell(){
 
     shell.removeClass("blur-filter");
     tabs_fields_ul.removeClass("blur-filter");
+    shell.trigger("endOfShellInit");
     /*console.log(available_sides);
     console.log(available_tabs);*/
 }

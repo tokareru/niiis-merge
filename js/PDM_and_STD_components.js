@@ -78,7 +78,10 @@ function set_PDM_or_STD(data, accordID, fieldID) {
         }
     });
     //$("#left-accordion").accordion("refresh");
-    $(fieldID).trigger("endOfInitialization");
+
+    $("#shell").one("endOfShellInit", function () {
+        $(fieldID).trigger("endOfInitialization");
+    });
 }
 
 function addNewComponent(data, accordID, fieldID, isChecked) {
