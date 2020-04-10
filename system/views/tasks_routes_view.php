@@ -58,7 +58,7 @@
             </div>
         </div>
 
-        <ul>
+        <ul class="pl-0">
             <li>
                 <span class="caret">
                     Маршруты активные

@@ -72,7 +72,7 @@ function esiSetBranchesNestedFunc() {
 
 function createNodes(children) {
     let node = '';
-    let isDisabled = (Role !== 'designer') ? 'disabled' : '';
+    let isDisabled = (Role !== 'designer') ? 'disabled' : 'disabled';
     children.forEach(function (child) {
         /*let _children =
             (child.children.length > 0) ?

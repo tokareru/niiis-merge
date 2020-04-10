@@ -206,12 +206,12 @@ function saveSpecTable() {
             },
             success: function (answer) {
                 console.log(answer);
-                setActionToBar({
+                /*setActionToBar({
                     id: "saveSpecTable",
                     type: "save",
                     field: "Спецификация",
                     text: `Сохранение таблицы 'Спецификация'`
-                })
+                })*/
             }
         });
     }
