@@ -36,11 +36,8 @@ function initSpecTable(json) {
         })
     });
 
-    $table.on("click", ".specTableCellInput", function () {
-        if (Round !== 3 && Role === "designer"){
-            let $input = $(this);
-            console.log($input)
-        }
+    $table.on("keydown", ".specTableCellInput", function (e) {
+        specTableMoveByKey(e, $table, $(this));
     });
 
     $table.on("click", ".deleteNodeButtonRM", function () {
@@ -160,6 +157,27 @@ function addNewRowToSpecTable(data) {
         $("#specificationTable").find("tbody").append(combineTbodyRow(info));
     }
 
+}
+
+function specTableMoveByKey(e, $table, $input) {
+    e.preventDefault();
+    if (Round !== 3 && Role === "designer" && e.which === 9){
+        let isNext = false;
+        let $inputs = $table.find('.specTableCellInput');
+        $inputs.each(function (index) {
+            if ($inputs.length === index + 1){
+                $(this).blur();
+            }
+            if (isNext){
+                $(this).focus();
+                isNext = false;
+                return;
+            }
+            if ($input.get(0) === $(this).get(0)){
+                isNext = true;
+            }
+        })
+    }
 }
 
 function deleteSpecRow(_this) {

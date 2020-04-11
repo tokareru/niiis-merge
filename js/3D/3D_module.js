@@ -5,11 +5,10 @@ import * as THREE from './stl/three.module.js';
 import {STLLoader} from './stl/STLLoader.js';
 import {OrbitControls} from './OrbitControls.js';
 
-window.govnoRuslana;
+window.model3dSet;
 
 export function init3dField() {
-    window.govnoRuslana = firstFieldInit;
-    console.log(window.govnoRuslana);
+    window.model3dSet = firstFieldInit;
     var container, stats;
 
     var cameraTarget;
