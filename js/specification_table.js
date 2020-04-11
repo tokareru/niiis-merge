@@ -36,6 +36,13 @@ function initSpecTable(json) {
         })
     });
 
+    $table.on("click", ".specTableCellInput", function () {
+        if (Round !== 3 && Role === "designer"){
+            let $input = $(this);
+            console.log($input)
+        }
+    });
+
     $table.on("click", ".deleteNodeButtonRM", function () {
         deleteSpecRow(this)
     });
@@ -133,7 +140,7 @@ function combineTbodyRow(row = {
 function combineTbodyCell(cell = {text: "", readonly: false}) {
     let disabled = (Role !== "designer" || Round === 3) ? `disabled="disabled"` : ``;
     return `
-        <td class="specTableCell"><input class="bg-transparent border-0 outline-none shadow-none" ${disabled} value="${cell.text}"></td>
+        <td class="specTableCell"><input class="specTableCellInput bg-transparent border-0 outline-none shadow-none" ${disabled} value="${cell.text}"></td>
     `;
 }
 

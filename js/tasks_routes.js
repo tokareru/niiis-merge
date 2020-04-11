@@ -97,6 +97,8 @@ function initTasksRoutes() {
 
     $('body').on('click', '.tasks_routes_reloadShell_radio_enable', async function () {
         let shell = $(this).parents('tr').data('shell');
+        let $body = $("body");
+        $body.addClass("blur-filter");
         if (shell.specification !== 'unchanged') {
             //$('#main-tabs-specification').click();
             $('#main-tabs-specification').parents('li').addClass('bg-danger');
@@ -131,12 +133,19 @@ function initTasksRoutes() {
                 }
             }, 500);
         }
-
+        setTimeout(function () {
+            $body.removeClass("blur-filter");
+        }, 500)
 
     });
 
     $('body').on('click', '.tasks_routes_reloadShell_radio_disable', function () {
+        let $body = $("body");
+        $body.addClass("blur-filter");
         taskRouteDisable();
+        setTimeout(function () {
+            $body.removeClass("blur-filter");
+        }, 500)
     });
 
     $('#task_routes_own_routes_update').on('click', function () {
