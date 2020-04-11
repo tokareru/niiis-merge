@@ -491,7 +491,7 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
     let emptyTd = '';
     let newButton = "";
     if (Role === "production_master"){
-       emptyTd = `<td></td>`;
+       emptyTd = `<td style="width: 20px"></td>`;
        newButton = `<tr style="width: 45px;">
                         <td style="padding-left: 14px;" class="font-family-fontAwesome font-size-12-em fa-plus addNewRowToProdTableButton"></td>
                     </tr>`
@@ -509,7 +509,36 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
                 </tbody>
             </table>
         </div>
-    `)
+    `);
+
+    let $table = $tableBlock.find("table").last();
+
+    console.log($table)
+    $table.on("keydown", ".prodRowsInput", function (e) {
+        prodTableMoveByKey(e, $table, $(this));
+    });
+
+}
+
+function prodTableMoveByKey(e, $table, $input) {
+    e.preventDefault();
+    if (Round !== 3 && Role === "production_master" && e.which === 9){
+        let isNext = false;
+        let $inputs = $table.find('.prodRowsInput');
+        $inputs.each(function (index) {
+            if ($inputs.length === index + 1){
+                $(this).blur();
+            }
+            if (isNext){
+                $(this).focus();
+                isNext = false;
+                return;
+            }
+            if ($input.get(0) === $(this).get(0)){
+                isNext = true;
+            }
+        })
+    }
 }
 
 function saveProductionTable_1_2_Rounds($table) {
@@ -606,10 +635,10 @@ function combineRowForProdTable(row = {name: "", job: "", techOperation: "", tas
     return `
         <tr class="prodRows">
             ${deleteButton}
-            <td><input ${disabled} class="bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.name}"></td>
-            <td><input ${disabled} class="bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.job}"</td>
-            <td><input ${disabled} class="bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.techOperation}"</td>
-            <td><input ${disabled} class="bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.task}"</td>
+            <td><input ${disabled} class="prodRowsInput bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.name}"></td>
+            <td><input ${disabled} class="prodRowsInput bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.job}"</td>
+            <td><input ${disabled} class="prodRowsInput bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.techOperation}"</td>
+            <td><input ${disabled} class="prodRowsInput bg-transparent border-0 outline-none shadow-none w-100 h-100" value="${row.task}"</td>
         </tr>
     `;
 }

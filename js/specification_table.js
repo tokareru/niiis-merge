@@ -61,7 +61,7 @@ function setSpecTable(json) {
     let $theadTr = $table.find("thead tr");
     let $tbody = $table.find("tbody");
     if (Role === "designer" && Round !== 3)
-        $theadTr.append(`<td></td>`);
+        $theadTr.append(`<td style="width: 20px"></td>`);
     if (json.thead.length)
         json.thead.forEach(function (_cell) {
             $theadTr.append(combineTheadCell(_cell))
