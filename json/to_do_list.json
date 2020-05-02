@@ -1,0 +1,16 @@
+{
+  "tasks": [
+    {
+      "id": 12,
+      "isFinished": true
+    },
+    {
+      "id": 13,
+      "isFinished": false
+    },
+    {
+      "id": 14,
+      "isFinished": false
+    }
+  ]
+}

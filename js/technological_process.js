@@ -831,12 +831,15 @@ function saveTechProcess() {
                     field: "Рабочий стол. Техпроцесс",
                     text: `Сохранение техпроцесса`
                 });
+
+                triggerToDoTaskEvent("saveTechProcess")
             },
             error: function (response) {
                 console.log(response)
             }
         }
     );
+
 }
 
 function setToggler(id = "tech_process_field_drop") {

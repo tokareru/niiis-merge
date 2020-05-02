@@ -1,0 +1,40 @@
+{
+  "tasks": [
+    {
+      "id": 1,
+      "text": "Сохранить маршрутную карту",
+      "isFinished": false,
+      "trigger": "saveRouteMap"
+    },
+    {
+      "id": 2,
+      "text": "Сохранить техпроцесс",
+      "isFinished": false,
+      "trigger": "saveTechProcess"
+    },
+    {
+      "id": 3,
+      "text": "Сохранить задания на производство",
+      "isFinished": false,
+      "trigger": "saveProductionTasks"
+    },
+    {
+      "id": 4,
+      "text": "Сохранить главную надпись чертежа",
+      "isFinished": false,
+      "trigger": "saveScheme"
+    },
+    {
+      "id": 5,
+      "text": "Сохранить таблицу спецификации",
+      "isFinished": false,
+      "trigger": "saveSpecTable"
+    },
+    {
+      "id": 6,
+      "text": "Выбрать все изделия",
+      "isFinished": false,
+      "trigger": "chooseAllDetails"
+    }
+  ]
+}

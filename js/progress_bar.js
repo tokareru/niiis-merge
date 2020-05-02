@@ -108,6 +108,8 @@ function setActionBar(data) {
             text: `Открыта вкладка 'Создание маршрута заданий'`
         })
     });
+
+    initToDoList();
 }
 
 function scrollToEndOfProgressBar() {

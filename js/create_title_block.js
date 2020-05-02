@@ -550,6 +550,8 @@ function addToServerTitleBlock() {
                     text: `Сохранение основной надписи чертежа`
                 });
 
+                triggerToDoTaskEvent("saveScheme");
+
                 $.ajax({
                     type: "POST",
                     url: "/start_ajax/db_change_time",

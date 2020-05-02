@@ -255,7 +255,8 @@ function saveSpecTable() {
                 type: "save",
                 field: "Спецификация",
                 text: `Сохранение таблицы 'Спецификация'`
-            })
+            });
+            triggerToDoTaskEvent("saveSpecTable");
         }
     });
 }

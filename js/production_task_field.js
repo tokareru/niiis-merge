@@ -1,4 +1,5 @@
 //production_task_field
+
 function initProductionTaskField () {
     if (Round < 3)
         initProductionTask_1_2_Rounds();
@@ -498,7 +499,7 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
     }
 
     $tableBlock.append(`
-        <div id="${id}" user-login="${userLogin}">
+        <div id="${id}" user-login="${userLogin}" data-saved="false">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr class="font-weight-bold">${emptyTd}<td>ФИО</td><td>Должность</td><td>Техоперации</td><td>Задание</td></tr>
@@ -567,6 +568,14 @@ function saveProductionTable_1_2_Rounds($table) {
         },
         success: function (res) {
             //console.log(res)
+            $table.attr("data-saved", "true");
+
+            let amountOfSavedProductionTasksSaved = $("#prod_task_table_container div[data-saved=true]").length;
+            let amountOfSavedProductionTasks = $("#prod_task_table_container table").length;
+
+            if (amountOfSavedProductionTasks === amountOfSavedProductionTasksSaved)
+                triggerToDoTaskEvent("saveProductionTasks");
+
             setActionToBar({
                 id: "saveWorkerTaskRound3",
                 type: "save",
@@ -605,6 +614,7 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
             })
 
         });
+    triggerToDoTaskEvent("saveProductionTasks");
     setActionToBar({
         id: "saveWorkerTaskRound3",
         type: "save",

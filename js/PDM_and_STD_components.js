@@ -118,6 +118,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
             if (Round === 3 && Role === 'designer'){
                 if (amountOfChecked !== amountOfInputs){
                     blockScheme();
+                    triggerToDoTaskEvent("chooseAllDetails", true);
                     $.ajax({
                         type: "POST",
                         url: "drawing_main_text_ajax/save_is_full",
@@ -132,6 +133,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
                     });
                 }else {
                     unlockScheme();
+                    triggerToDoTaskEvent("chooseAllDetails")
                     $.ajax({
                         type: "POST",
                         url: "drawing_main_text_ajax/save_is_full",

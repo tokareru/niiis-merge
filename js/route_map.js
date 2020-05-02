@@ -282,6 +282,7 @@ function saveTechProcessTableRound_1_2($table) {
         data: {data:saveObj},
         success: function (res) {
             console.log(res);
+            triggerToDoTaskEvent("saveRouteMap");
 
             setActionToBar({
                 id: "saveRouteMapTable",
@@ -370,6 +371,7 @@ function saveTechProcessTableRound3($table) {
         data: {data: saveObj},
         success: function (res) {
             console.log(res);
+            triggerToDoTaskEvent("saveRouteMap");
 
             setActionToBar({
                 id: "saveRouteMapTable",
