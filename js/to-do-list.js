@@ -20,22 +20,32 @@ function setToDoList(json) {
     if (json.tasks.length)
         json.tasks.forEach(function (_task, index) {
             $toDoListBody.append(combineToDoListTask(_task, index + 1));
-            $toDoListBody.on(`${_task.trigger}`, function () {
-                let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
-                console.log($this)
-                $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
-                $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
-                updateToDoListTaskById($this.attr("task-id"), true)
-            });
+            if (_task.trigger !== "openField"){
+                $toDoListBody.on(`${_task.trigger}`, function () {
+                    let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+                    $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
+                    $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
+                    updateToDoListTaskById($this.attr("task-id"), true)
+                });
 
-            // сделать задачу невыполненной
-            $toDoListBody.on(`${_task.trigger}Revert`, function () {
-                let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
-                console.log($this)
-                $this.find(".to-do-list-task").addClass("text-dark").removeClass("text-success");
-                $this.find(".to-do-list-task-check").addClass("fa-spinner").removeClass("fa-check");
-                updateToDoListTaskById($this.attr("task-id"), false)
-            })
+                // сделать задачу невыполненной
+                $toDoListBody.on(`${_task.trigger}Revert`, function () {
+                    let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+                    $this.find(".to-do-list-task").addClass("text-dark").removeClass("text-success");
+                    $this.find(".to-do-list-task-check").addClass("fa-spinner").removeClass("fa-check");
+                    updateToDoListTaskById($this.attr("task-id"), false)
+                })
+            }else{
+                $toDoListBody.on("openField", function (e, addInfo) {
+                    console.log(addInfo.tabId, _task.add_info)
+                    if (_task.add_info === addInfo.tabId){
+                        let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+                        $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
+                        $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
+                        updateToDoListTaskById($this.attr("task-id"), true)
+                    }
+                })
+            }
         })
 }
 
@@ -43,9 +53,9 @@ function updateToDoListTaskById(id, isFinished) {
 
 }
 
-function triggerToDoTaskEvent(eventName, isRevert = false) {
+function triggerToDoTaskEvent(eventName, isRevert = false, addInfo = {}) {
     isRevert = (isRevert) ? "Revert" : "";
-    $("#progress-bar-to-do-list").trigger(`${eventName}${isRevert}`);
+    $("#progress-bar-to-do-list").trigger(`${eventName}${isRevert}`, addInfo);
 }
 
 function combineToDoListTask(task = {id: 0, text: "", isFinished: false}, position) {
@@ -125,4 +135,5 @@ function getToDoListTasksForUser() {
     сохранение маршрутной карты saveRouteMap *
     сохранение техпроцесса saveTechProcess *
     сохранение задания на производство для ВСЕХ рабочих saveProductionTasks *
+    открыть вкладку openField
 */

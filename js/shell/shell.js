@@ -180,6 +180,8 @@ async function updateShell(){
     $("#create_task_route-side").remove();
     $("#toast-position").empty();
     let i = 0;
+    initToDoList();
+
     for (const elem of available_sides) {
         let html = await downloadHTML(elem.URL);
         //console.log(html);

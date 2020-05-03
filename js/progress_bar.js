@@ -55,9 +55,11 @@ function setActionBar(data) {
     }).dblclick(function () {
         scrollToEndOfProgressBar();
     });
-
+    
     // инициализация центральных вкладок
     $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
+        triggerToDoTaskEvent("openField", 0,
+            {tabId: e.target.getAttribute("tab-target"), name: e.target.text});
         setActionToBar({
             id: "openTab",
             type: "open",
@@ -70,6 +72,8 @@ function setActionBar(data) {
     // инициализация левых вкладок
     let accordion = $("#left-accordion");
     accordion.on('shown.bs.collapse', function (e) {
+        triggerToDoTaskEvent("openField", 0,
+            {tabId: e.target.getAttribute("id").replace("collapse-", ""), name: e.target.getAttribute("header-name")});
         setActionToBar({
             id: "openTab",
             type: "open",
@@ -81,6 +85,7 @@ function setActionBar(data) {
 
     // инициализация чата
     $("#chat_main").on("chat-opened", function () {
+        triggerToDoTaskEvent("openField", 0, {tabId: "chat", name: "Чат"});
         setActionToBar({
             id: "openTab",
             type: "open",
@@ -91,6 +96,7 @@ function setActionBar(data) {
 
     // инициализация ЭСИ
     $("#right-side").on("esi-opened", function () {
+        triggerToDoTaskEvent("openField", 0, {tabId: "esi_field", name: "ЭСИ"});
         setActionToBar({
             id: "openTab",
             type: "open",
@@ -108,8 +114,6 @@ function setActionBar(data) {
             text: `Открыта вкладка 'Создание маршрута заданий'`
         })
     });
-
-    initToDoList();
 }
 
 function scrollToEndOfProgressBar() {

@@ -17,7 +17,7 @@
 
         <div class="btn-group dropup mr-auto">
             <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="text-monospace alert-dismissible">Список задач</span>
+                <span class="text-monospace alert-dismissible">Навигатор</span>
             </button>
 
             <div id="progress-bar-to-do-list" class="dropdown-menu dropdown-menu-lg-right">

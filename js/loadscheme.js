@@ -25,7 +25,9 @@ async function triggerschemeInit() {
 
         if (amountOfChecked !== amountOfInputs) {
             blockScheme();
-        }
+            triggerToDoTaskEvent("chooseAllDetails", true);
+        }else
+            triggerToDoTaskEvent("chooseAllDetails", false);
     }
     if (Round === 3 && Role !== 'designer'){
         $.ajax({

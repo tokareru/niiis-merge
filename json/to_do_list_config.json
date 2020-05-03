@@ -35,6 +35,48 @@
       "text": "Выбрать все изделия",
       "isFinished": false,
       "trigger": "chooseAllDetails"
+    },
+    {
+      "id": 7,
+      "text": "Открыть вкладку спецификация",
+      "isFinished": false,
+      "trigger": "openField",
+      "add_info": "specification"
+    },
+    {
+      "id": 8,
+      "text": "Открыть вкладку Рабочий стол. Чертеж",
+      "isFinished": false,
+      "trigger": "openField",
+      "add_info": "scheme"
+    },
+    {
+      "id": 9,
+      "text": "Открыть вкладку ЭСИ",
+      "isFinished": false,
+      "trigger": "openField",
+      "add_info": "esi_field"
+    },
+    {
+      "id": 10,
+      "text": "Открыть вкладку Изделия PDM",
+      "isFinished": false,
+      "trigger": "openField",
+      "add_info": "pdm_field"
+    },
+    {
+      "id": 11,
+      "text": "Открыть вкладку Изделия STD",
+      "isFinished": false,
+      "trigger": "openField",
+      "add_info": "std_field"
+    },
+    {
+      "id": 12,
+      "text": "Открыть чат",
+      "isFinished": false,
+      "trigger": "openField",
+      "add_info": "chat"
     }
   ]
 }
