@@ -24,6 +24,6 @@
     position: fixed;
     right: 0rem;
     bottom: 2.5rem;
-    z-index: 1030;
+    z-index: 999;
     width: 6rem;
 }

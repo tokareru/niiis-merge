@@ -99,12 +99,6 @@ function initNotifications() {
                     }
                 }
             });*/
-
-            setNotificationToField("scheme", "schemeBlock", {
-                mainHeader: "Рабочий стол. Чертёж",
-                extraHeader: "",
-                text: "Область заблокирована. Необходимо полностью собрать изделие."
-            });
             setNotificationToFieldInitialization("pdm_field", {
                 mainHeader: "Изделия PDM/Стандартные изделия",
                 extraHeader:"",
@@ -183,13 +177,14 @@ function initBell() {
     });
 }
 
-function generateNotification(notification) {
+function generateNotification(notification, delay = 0) {
     let toast_position = $("#toast-position");
     let button = (notification.button !== undefined)
         ? `<button class="btn btn-dark btn-sm btn-toolbar ml-auto mt-2 ${notification.button.class}">${notification.button.name}</button>` : '';
-    toast_position.append(
-        `
-                <div class="toast" role="alert" data-autohide="false" aria-live="assertive"
+    let isAutoHide = false;
+    if (delay) isAutoHide = true;
+    toast_position.append(`
+                <div class="toast" role="alert" data-autohide="${isAutoHide}" data-delay="${delay}" aria-live="assertive"
                      aria-atomic="true">
                     <div class="toast-header">                        
                         <strong class="mr-auto">${notification.mainHeader}</strong>
@@ -205,6 +200,7 @@ function generateNotification(notification) {
                 </div>
         `
     );
+
     let toast = toast_position.find(".toast").last();
     toast.toast("show");
     toast.find("button.notificationCloseButton").click(function () {

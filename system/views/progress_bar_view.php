@@ -15,13 +15,11 @@
         <button id="right-scroll-button-progress-bar" data-toggle="tooltip" data-placement="top" title="Нажмите дважды, чтобы пролистать список в конец"
                 class="font-family-fontAwesome scroll-buttons fas fa-angle-right ml-4 btn-outline-dark border-0 bold btn"></button>
 
-        <div class="btn-group dropup mr-auto">
-            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="text-monospace alert-dismissible">Навигатор</span>
+        <div class="btn-group dropup mr-auto" id="progress-bar-to-do-list-body">
+            <button type="button" class="btn btn-outline-secondary ml-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="text-monospace mr-3">Навигатор</span>
             </button>
-
             <div id="progress-bar-to-do-list" class="dropdown-menu dropdown-menu-lg-right">
-
             </div>
         </div>
     </div>

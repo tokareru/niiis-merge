@@ -6,7 +6,8 @@ function initToDoList() {
         type: 'GET',
         url: 'json/to_do_list_config.json',
         data: {
-            "login": login
+            "login": login,
+            "round": Round
         },
         success: function (json) {
             console.log(json)
@@ -17,6 +18,11 @@ function initToDoList() {
 
 function setToDoList(json) {
     let $toDoListBody = $("#progress-bar-to-do-list");
+    let $button = $("#progress-bar-to-do-list-body button");
+    $button.on("click", function () {
+        $button.find(".toDoNotification").remove();
+    })
+
     if (json.tasks.length)
         json.tasks.forEach(function (_task, index) {
             $toDoListBody.append(combineToDoListTask(_task, index + 1));
@@ -25,7 +31,21 @@ function setToDoList(json) {
                     let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
                     $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
                     $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
-                    updateToDoListTaskById($this.attr("task-id"), true)
+                    updateToDoListTaskById($this.attr("task-id"), true);
+                    /*generateNotification({
+                        mainHeader: "Навигатор",
+                        extraHeader: "",
+                        text: `Вы выполнили задание "${_task.text}"`
+                    }, 3000)*/
+                    /*$button.append(`
+                        <span style="margin-right: -6%" class="toDoNotification font-family-fontAwesome text-success fa-check"></span>
+                    `);*/
+                    setActionToBar({
+                        id: "toDoTaskDone",
+                        field: `Навигатор`,
+                        type: "success",
+                        text: `Задание '${_task.text}' выполнено`
+                    })
                 });
 
                 // сделать задачу невыполненной
@@ -33,16 +53,44 @@ function setToDoList(json) {
                     let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
                     $this.find(".to-do-list-task").addClass("text-dark").removeClass("text-success");
                     $this.find(".to-do-list-task-check").addClass("fa-spinner").removeClass("fa-check");
-                    updateToDoListTaskById($this.attr("task-id"), false)
+                    updateToDoListTaskById($this.attr("task-id"), false);
+                    /*generateNotification({
+                        mainHeader: "Навигатор",
+                        extraHeader: "",
+                        text: `Задание "${_task.text}" изменило статус на "Выполняется"`
+                    }, 3000)*/
+                    /*$button.append(`
+                        <span style="margin-right: -6%" class="toDoNotification font-family-fontAwesome text-danger fa-times"></span>
+                    `);*/
+                    setActionToBar({
+                        id: "toDoTaskUnDone",
+                        field: `Навигатор`,
+                        type: "inProcess",
+                        text: `Задание '${_task.text}' изменило статус на 'Выполняется'`
+                    })
                 })
             }else{
                 $toDoListBody.on("openField", function (e, addInfo) {
-                    console.log(addInfo.tabId, _task.add_info)
+                    //console.log(addInfo.tabId, _task.add_info)
                     if (_task.add_info === addInfo.tabId){
                         let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
                         $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
                         $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
-                        updateToDoListTaskById($this.attr("task-id"), true)
+                        updateToDoListTaskById($this.attr("task-id"), true);
+                        /*generateNotification({
+                            mainHeader: "Навигатор",
+                            extraHeader: "",
+                            text: `Вы выполнили задание "${_task.text}"`
+                        }, 3000)*/
+                        /*$button.append(`
+                        <span style="margin-right: -6%" class="toDoNotification font-family-fontAwesome text-success fa-check"></span>
+                        `)*/
+                        setActionToBar({
+                            id: "toDoTaskDone",
+                            field: `Навигатор`,
+                            type: "success",
+                            text: `Задание '${_task.text}' выполнено`
+                        })
                     }
                 })
             }

@@ -570,18 +570,18 @@ function saveProductionTable_1_2_Rounds($table) {
             //console.log(res)
             $table.attr("data-saved", "true");
 
-            let amountOfSavedProductionTasksSaved = $("#prod_task_table_container div[data-saved=true]").length;
-            let amountOfSavedProductionTasks = $("#prod_task_table_container table").length;
-
-            if (amountOfSavedProductionTasks === amountOfSavedProductionTasksSaved)
-                triggerToDoTaskEvent("saveProductionTasks");
-
             setActionToBar({
                 id: "saveWorkerTaskRound3",
                 type: "save",
                 field: "Задание на производство",
                 text: "Задания сохранены"
-            })
+            });
+
+            let amountOfSavedProductionTasksSaved = $("#prod_task_table_container div[data-saved=true]").length;
+            let amountOfSavedProductionTasks = $("#prod_task_table_container table").length;
+
+            if (amountOfSavedProductionTasks === amountOfSavedProductionTasksSaved)
+                triggerToDoTaskEvent("saveProductionTasks");
         }
     })
 }
@@ -614,13 +614,13 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
             })
 
         });
-    triggerToDoTaskEvent("saveProductionTasks");
     setActionToBar({
         id: "saveWorkerTaskRound3",
         type: "save",
         field: "Задание на производство",
         text: "Задания сохранены"
-    })
+    });
+    triggerToDoTaskEvent("saveProductionTasks");
 }
 
 function deleteWorkerTask($span) {

@@ -55,7 +55,7 @@ function setActionBar(data) {
     }).dblclick(function () {
         scrollToEndOfProgressBar();
     });
-    
+
     // инициализация центральных вкладок
     $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
         triggerToDoTaskEvent("openField", 0,
@@ -72,37 +72,37 @@ function setActionBar(data) {
     // инициализация левых вкладок
     let accordion = $("#left-accordion");
     accordion.on('shown.bs.collapse', function (e) {
-        triggerToDoTaskEvent("openField", 0,
-            {tabId: e.target.getAttribute("id").replace("collapse-", ""), name: e.target.getAttribute("header-name")});
         setActionToBar({
             id: "openTab",
             type: "open",
             field: e.target.getAttribute("header-name"),
             text: `Открыта вкладка '${e.target.getAttribute("header-name")}'`
-        })
+        });
+        triggerToDoTaskEvent("openField", 0,
+            {tabId: e.target.getAttribute("id").replace("collapse-", ""), name: e.target.getAttribute("header-name")});
     });
     accordion.find(".collapse").first().addClass("show").trigger("shown.bs.collapse");
 
     // инициализация чата
     $("#chat_main").on("chat-opened", function () {
-        triggerToDoTaskEvent("openField", 0, {tabId: "chat", name: "Чат"});
         setActionToBar({
             id: "openTab",
             type: "open",
             field: "Чат",
             text: `Открыта вкладка 'Чат'`
         });
+        triggerToDoTaskEvent("openField", 0, {tabId: "chat", name: "Чат"});
     });
 
     // инициализация ЭСИ
     $("#right-side").on("esi-opened", function () {
-        triggerToDoTaskEvent("openField", 0, {tabId: "esi_field", name: "ЭСИ"});
         setActionToBar({
             id: "openTab",
             type: "open",
             field: "Электронный состав изделия",
             text: `Открыта вкладка 'Электронный состав изделия'`
-        })
+        });
+        triggerToDoTaskEvent("openField", 0, {tabId: "esi_field", name: "ЭСИ"});
     });
 
     // инициализация Создание маршрута заданий
@@ -214,6 +214,12 @@ function chooseIconClassByType(type) {
     }
     if (type === "cancel"){
         return "fa-times";
+    }
+    if (type === "success"){
+        return "fa-check-circle text-success";
+    }
+    if (type === "inProcess"){
+        return "fa-spinner";
     }
     return "fa-question"
 }

@@ -180,6 +180,7 @@ async function updateShell(){
     $("#create_task_route-side").remove();
     $("#toast-position").empty();
     let i = 0;
+    initProgressBar();
     initToDoList();
 
     for (const elem of available_sides) {
@@ -216,7 +217,6 @@ async function updateShell(){
 
     $("#change_role").removeAttr("disabled");
     initNotifications();
-    initProgressBar();
 
     if(Role === 'designer' && Round === 3){
         collectionIdPdm = collectDataLabels(".left-side");

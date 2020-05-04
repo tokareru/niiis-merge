@@ -77,6 +77,12 @@
       "isFinished": false,
       "trigger": "openField",
       "add_info": "chat"
+    },
+    {
+      "id": 13,
+      "text": "Выбрать все изделия isFinished - true",
+      "isFinished": true,
+      "trigger": "chooseAllDetails"
     }
   ]
 }

@@ -282,7 +282,6 @@ function saveTechProcessTableRound_1_2($table) {
         data: {data:saveObj},
         success: function (res) {
             console.log(res);
-            triggerToDoTaskEvent("saveRouteMap");
 
             setActionToBar({
                 id: "saveRouteMapTable",
@@ -290,6 +289,7 @@ function saveTechProcessTableRound_1_2($table) {
                 field: "Маршрутная карта",
                 text: `Сохранение маршрутной карты'`
             });
+            triggerToDoTaskEvent("saveRouteMap");
 
             $.ajax({
                 type: "POST",
