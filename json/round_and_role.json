@@ -29,10 +29,6 @@
             {
               "ID": "chat-side",
               "tabs": []
-            },
-            {
-              "ID": "create_task_route-side",
-              "tabs": []
             }
           ]
         },
@@ -62,10 +58,6 @@
             },
             {
               "ID": "chat-side",
-              "tabs": []
-            },
-            {
-              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -101,10 +93,6 @@
             {
               "ID": "chat-side",
               "tabs": []
-            },
-            {
-              "ID": "create_task_route-side",
-              "tabs": []
             }
           ]
         },
@@ -136,10 +124,6 @@
             },
             {
               "ID": "chat-side",
-              "tabs": []
-            },
-            {
-              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -233,10 +217,6 @@
             {
               "ID": "chat-side",
               "tabs": []
-            },
-            {
-              "ID": "create_task_route-side",
-              "tabs": []
             }
           ]
         },
@@ -261,10 +241,6 @@
             },
             {
               "ID": "chat-side",
-              "tabs": []
-            },
-            {
-              "ID": "create_task_route-side",
               "tabs": []
             }
           ]
@@ -396,10 +372,6 @@
             {
               "ID": "chat-side",
               "tabs": []
-            },
-            {
-              "ID": "create_task_route-side",
-              "tabs": []
             }
           ]
         }
@@ -433,13 +405,6 @@
       "URL": "pages/chat",
       "ID": "chat-side",
       "init": "initChats",
-      "parent": "body"
-    },
-    {
-      "name": "Создание маршрута заданий",
-      "URL": "pages/create_task_route",
-      "ID": "create_task_route-side",
-      "init": "initCreate_task_route",
       "parent": "body"
     }
   ],

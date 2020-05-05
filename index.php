@@ -1,5 +1,3 @@
-<?php // xx xex
+<?php
 include_once 'system/system.php';
-//Andrey Tsibrov test
-//Sergey Tsibrov test
 ?>
