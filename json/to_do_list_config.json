@@ -83,6 +83,12 @@
       "text": "Выбрать все изделия isFinished - true",
       "isFinished": true,
       "trigger": "chooseAllDetails"
+    },
+    {
+      "id": 14,
+      "text": "Закончить чертёж",
+      "isFinished": false,
+      "trigger": "finishScheme"
     }
   ]
 }
