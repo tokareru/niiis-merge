@@ -495,6 +495,21 @@ function addTaskToDB() {
         return;
     let data = {task: task, master: login, shell: serializeAllInfo()};
     console.log(data);
+    task.forEach(function (_task) {
+        addToDoTaskTOList(_task.user, 2, {
+            "text": "Проверить новое задание в 'Маршруты заданий'",
+            "isFinished": false,
+            "trigger": "openField",
+            "add_info": "tasks_routes_field"
+        });
+        addToDoTaskTOList(_task.user, 3, {
+            "text": "Проверить новое задание в 'Маршруты заданий'",
+            "isFinished": false,
+            "trigger": "openField",
+            "add_info": "tasks_routes_field"
+        });
+    })
+
     $.ajax({
         type: 'POST',
         url: 'ajax/save_route',//ajax/save_route

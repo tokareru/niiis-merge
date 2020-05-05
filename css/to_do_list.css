@@ -1,0 +1,15 @@
+
+
+@media (max-width: 970px) {
+    #progress-bar-to-do-list{
+        max-height: 500px;
+        overflow-y: auto;
+    }
+}
+
+@media (min-width: 971px) {
+    #progress-bar-to-do-list{
+        max-height: 500px;
+        overflow-y: auto;
+    }
+}

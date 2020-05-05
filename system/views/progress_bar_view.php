@@ -1,7 +1,9 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-bottom pb-1" id="progress-bar-container">
-    <button class="navbar-toggler outline-none" type="button" data-toggle="collapse" data-target="#progress-bar-collapse-div" aria-controls="progress-bar-collapse-div" aria-expanded="false" aria-label="Toggle navigation">
+<nav class="navbar navbar-expand-lg navbar-light fixed-bottom pb-1" id="progress-bar-container">
+    <button class="navbar-toggler outline-none" type="button" data-toggle="collapse" data-target="#progress-bar-collapse-div"
+            aria-controls="progress-bar-collapse-div" aria-expanded="false" aria-label="Toggle navigation" style="z-index: 10">
         <span class="font-family-fontAwesome fas fa-tasks"></span>
     </button>
+    <div class="bg-light position-absolute" id="progress-bar-body-blur"></div>
 
     <div class="collapse navbar-collapse" id="progress-bar-collapse-div">
         <div class="ml-auto text-center"><span class="navbar-brand">Прогресс</span></div>
