@@ -221,5 +221,8 @@ function chooseIconClassByType(type) {
     if (type === "inProcess"){
         return "fa-spinner";
     }
+    if (type === "check"){
+        return "fa-check";
+    }
     return "fa-question"
 }

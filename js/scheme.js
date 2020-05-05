@@ -1,5 +1,6 @@
 import * as THREE from './3D/stl/three.module.js';
 import {STLLoader} from './3D/stl/STLLoader.js';
+let amountOfFinishedViews = 0;
 
 export function initScheme() {
     initTitleBlock();
@@ -330,6 +331,7 @@ export function initScheme() {
 
                         }
                     }, 100);
+
                 }
             }
             //Round = 3;
@@ -831,7 +833,8 @@ export function initScheme() {
         }
 
 
-    }).mouseup(function (e) {
+    }).mouseup(
+        function (e) {
         window.down = false;
         let n = $(this)[0].id;
 
@@ -980,6 +983,20 @@ export function initScheme() {
                                 ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
                                     document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
                                 razmerdraw(d.toFixed());
+                                amountOfFinishedViews++;
+                                if (amountOfFinishedViews === 3) {
+                                    if (Role === "designer" && Round !== 3){
+                                        triggerToDoTaskEvent("finishScheme");
+                                        setActionToBar({
+                                            id: "finishDrawing",
+                                            type: "check",
+                                            field: "Рабочий стол. Чертёж",
+                                            text: `Рисование чертежа закончено`
+                                        })
+                                        setDrawingStatus();
+                                    }
+                                }
+
 
                             } else {
                                 /* window.arrcoor = [];
