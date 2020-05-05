@@ -18,6 +18,8 @@ $(function (){
                 var path_picture = $("#esi #path_picture").val();
                 var number = $("#esi #number").val();
                 var type_id = $("#esi #type").children("option:selected").val();
+                var files = $("#esi #file")[0].files;
+                if (files.length > 0) { let hash = ToBase64(files[0]); }
                 console.log({id:id, name:name, designation:designation, position:position, path_3d:path_3d, path_picture:path_picture, number:number, type_id:type_id});
                 $.ajax({
                    url: "save_esi_edit",
@@ -31,6 +33,19 @@ $(function (){
            }
         });
     });
+
+    function ToBase64(file) {
+        var reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = function () {
+            /*let str = reader.result;
+            str = str.substr(str.indexOf('base64')+7);*/
+            return reader.result;
+        };
+        reader.onerror = function (error) {
+            console.log('Error: ', error);
+        };
+    }
     
     
 });

@@ -212,11 +212,14 @@ class admin_cab_model extends model {
                         <div class="col-2">Тип детали </div>    
                         <div class="col-3"><select class="form-control form-control-sm" id = "type">'.$type_options.'</select></div></div>
                         <div class="row">
-                        <div class="col-2">Путь к 3Д моделе</div>
+                        <div class="col-2">Путь к 3Д модели</div>
                         <div class="col-3"><textarea class="form-control form-control-sm" id = "path_3d" rows = "3">'.$product["path_3d"].'</textarea></div></div>
                         <div class="row">
                         <div class="col-2">Путь к изображению</div>
-                        <div class="col-3"><textarea class="form-control form-control-sm" id = "path_picture" rows = "3">'.$product["path_picture"].'</textarea></div></div>                        
+                        <div class="col-3"><textarea class="form-control form-control-sm" id = "path_picture" rows = "3">'.$product["path_picture"].'</textarea></div></div>
+                        <div class="row">
+                        <div class="col-2">Выберите модель (.stl)</div>
+                        <div class="col-3"><input id="file" type="file" accept=".stl"></div></div>
                         <button type="submit" class="btn btn-secondary" id="esi_save">Сохранить</button>';
         return $result;
     }
