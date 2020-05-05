@@ -58,14 +58,14 @@ function setActionBar(data) {
 
     // инициализация центральных вкладок
     $('a[data-toggle="pill"]').on('shown.bs.tab', function (e) {
-        triggerToDoTaskEvent("openField", 0,
-            {tabId: e.target.getAttribute("tab-target"), name: e.target.text});
         setActionToBar({
             id: "openTab",
             type: "open",
             field: e.target.text,
             text: `Открыта вкладка '${e.target.text}'`
-        })
+        });
+        triggerToDoTaskEvent("openField", 0,
+            {tabId: e.target.getAttribute("tab-target"), name: e.target.text});
     });
     $("#tabs").find(".nav-item").first().children().trigger("shown.bs.tab");
 

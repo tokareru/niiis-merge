@@ -49,7 +49,6 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         sys::inc_no_cache('javascript', 'js/technologist_guide.js');
         sys::inc_no_cache('javascript', 'js/route_map.js');
         sys::inc_no_cache('javascript', 'js/technological_process.js');
-        sys::inc_no_cache('javascript', 'js/create_task_route.js');
         sys::inc_no_cache('javascript', 'js/3D/three.min.js');
         sys::inc_no_cache('javascript', 'js/3D/dat.gui.min.js');
         sys::inc_no_cache('javascript', 'js/loadscheme.js');
