@@ -180,8 +180,7 @@ async function updateShell(){
     $("#create_task_route-side").remove();
     $("#toast-position").empty();
     let i = 0;
-    initProgressBar();
-    initToDoList();
+
 
     for (const elem of available_sides) {
         let html = await downloadHTML(elem.URL);
@@ -218,6 +217,7 @@ async function updateShell(){
     $("#change_role").removeAttr("disabled");
     initNotifications();
 
+
     if(Role === 'designer' && Round === 3){
         collectionIdPdm = collectDataLabels(".left-side");
     }
@@ -225,6 +225,9 @@ async function updateShell(){
     shell.removeClass("blur-filter");
     tabs_fields_ul.removeClass("blur-filter");
     shell.trigger("endOfShellInit");
+
+    initProgressBar();
+    initToDoList();
     /*console.log(available_sides);
     console.log(available_tabs);*/
 }

@@ -29,17 +29,11 @@ function setToDoList(json) {
             if (_task.trigger !== "openField"){
                 $toDoListBody.on(`${_task.trigger}`, function () {
                     let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+                    if ($this.attr("data-is-done") == "true") return;
                     $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
                     $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
+                    $this.attr("data-is-done", "true");
                     updateToDoListTaskById($this.attr("task-id"), true);
-                    /*generateNotification({
-                        mainHeader: "Навигатор",
-                        extraHeader: "",
-                        text: `Вы выполнили задание "${_task.text}"`
-                    }, 3000)*/
-                    /*$button.append(`
-                        <span style="margin-right: -6%" class="toDoNotification font-family-fontAwesome text-success fa-check"></span>
-                    `);*/
                     setActionToBar({
                         id: "toDoTaskDone",
                         field: `Навигатор`,
@@ -51,17 +45,11 @@ function setToDoList(json) {
                 // сделать задачу невыполненной
                 $toDoListBody.on(`${_task.trigger}Revert`, function () {
                     let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+                    if ($this.attr("data-is-done") != "true") return;
                     $this.find(".to-do-list-task").addClass("text-dark").removeClass("text-success");
                     $this.find(".to-do-list-task-check").addClass("fa-spinner").removeClass("fa-check");
+                    $this.attr("data-is-done", "false");
                     updateToDoListTaskById($this.attr("task-id"), false);
-                    /*generateNotification({
-                        mainHeader: "Навигатор",
-                        extraHeader: "",
-                        text: `Задание "${_task.text}" изменило статус на "Выполняется"`
-                    }, 3000)*/
-                    /*$button.append(`
-                        <span style="margin-right: -6%" class="toDoNotification font-family-fontAwesome text-danger fa-times"></span>
-                    `);*/
                     setActionToBar({
                         id: "toDoTaskUnDone",
                         field: `Навигатор`,
@@ -74,17 +62,12 @@ function setToDoList(json) {
                     //console.log(addInfo.tabId, _task.add_info)
                     if (_task.add_info === addInfo.tabId){
                         let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+                        console.log($this.attr("data-is-done"))
+                        if ($this.attr("data-is-done") == "true") return;
                         $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
                         $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
+                        $this.attr("data-is-done", "true");
                         updateToDoListTaskById($this.attr("task-id"), true);
-                        /*generateNotification({
-                            mainHeader: "Навигатор",
-                            extraHeader: "",
-                            text: `Вы выполнили задание "${_task.text}"`
-                        }, 3000)*/
-                        /*$button.append(`
-                        <span style="margin-right: -6%" class="toDoNotification font-family-fontAwesome text-success fa-check"></span>
-                        `)*/
                         setActionToBar({
                             id: "toDoTaskDone",
                             field: `Навигатор`,
@@ -108,7 +91,7 @@ function triggerToDoTaskEvent(eventName, isRevert = false, addInfo = {}) {
 
 function combineToDoListTask(task = {id: 0, text: "", isFinished: false}, position) {
     return `
-        <li task-id="${task.id}" class="dropdown-item disabled">
+        <li task-id="${task.id}" data-is-done="${task.isFinished}" class="dropdown-item disabled">
            <span class="${(task.isFinished) ? "text-success": "text-dark"} to-do-list-task">${position}. ${task.text}</span>
            <span class="to-do-list-task-check font-family-fontAwesome fa ${(task.isFinished) ? "fa-check": "fa-spinner"}"></span>
         </li>
