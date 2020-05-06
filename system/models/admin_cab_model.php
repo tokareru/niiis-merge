@@ -34,7 +34,23 @@ class admin_cab_model extends model {
         $Q1 = $q->fetchAll();
         return array("users" => $Q, "group_users" => $Q1, "page" => "users", "page_name" => "Пользователи");
     }
-    
+
+    public function get_change_users() {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $sql = "SELECT * FROM USERS WHERE group_user_id <> 99 ORDER BY id";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $Q = $q->fetchAll();
+            $sql = "SELECT * FROM USER_GROUP WHERE group_id <> 99";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $Q1 = $q->fetchAll();
+            return array("users" => $Q);
+        } else {
+        return array("response" => "NOT FOUND GET REQUEST");
+        }
+    }
+
     function change_groups_users(){
         $sql = "SELECT * FROM USER_GROUP WHERE group_id <> 99 ORDER BY group_id";
         $q = sys::$PDO->prepare($sql);

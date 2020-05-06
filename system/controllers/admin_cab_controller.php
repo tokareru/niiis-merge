@@ -30,7 +30,12 @@ class admin_cab_controller extends Controller {
     $data = $this->model->change_users();
     $this->view->render('table_users_view.php', 'admin/admin_cab_view.php', $data);
   }
-  
+
+  function get_change_users(){
+    $data = $this->model->get_change_users();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+
   function change_groups_users(){
     $data = $this->model->change_groups_users();
     $this->view->render('change_groups_users_view.php', 'admin/admin_cab_view.php', $data);
@@ -76,7 +81,7 @@ class admin_cab_controller extends Controller {
   }
 
   function to_do_list() {
-    //$data = $this->model->to_do_list();
+    //$data = $this->model->change_users();
     $this->view->render('to_do_list.php', 'admin/admin_cab_view.php');
   }
 
