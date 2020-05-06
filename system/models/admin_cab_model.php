@@ -41,10 +41,6 @@ class admin_cab_model extends model {
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $Q = $q->fetchAll();
-            $sql = "SELECT * FROM USER_GROUP WHERE group_id <> 99";
-            $q = sys::$PDO->prepare($sql);
-            $q->execute();
-            $Q1 = $q->fetchAll();
             return array("users" => $Q);
         } else {
         return array("response" => "NOT FOUND GET REQUEST");
