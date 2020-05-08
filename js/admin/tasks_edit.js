@@ -9,15 +9,15 @@ $(function () {
     
     $("#addNewTaskButton").on("click", function () {
         addNewTaskToList();
-    })
+    }).removeClass("d-none");
     
     $("#saveTaskListButton").on("click", function () {
         saveTaskList();
-    })
+    }).removeClass("d-none");
 
     $("#task-list-body").on("click", ".taskDeleteButtonSpan", function () {
         deleteTaskFromList($(this));
-    })
+    });
 
 })
 
@@ -105,9 +105,9 @@ function combineTriggerSelection(selectedTriggerName = "") {
             <option ${(selectedTriggerName === "chooseAllDetails") ? "selected": ""} value="chooseAllDetails">Выбор всех изделий</option>
             <option ${(selectedTriggerName === "saveRouteMap") ? "selected": ""} value="saveRouteMap">Сохранение маршрутной карты</option>
             <option ${(selectedTriggerName === "saveTechProcess") ? "selected": ""} value="saveTechProcess">Сохранение техпроцесса</option>
-            <option ${(selectedTriggerName === "saveProductionTasks") ? "selected": ""} value="saveProductionTasks">сохранение задания на производство для всех рабочих</option>
+            <option ${(selectedTriggerName === "saveProductionTasks") ? "selected": ""} value="saveProductionTasks">Сохранение задания на производство для всех рабочих</option>
             <option ${(selectedTriggerName === "openField") ? "selected": ""} value="openField">Открыть вкладку</option>
-            <option ${(selectedTriggerName === "finishScheme") ? "selected": ""} value="finishScheme">завершение чертежа</option>
+            <option ${(selectedTriggerName === "finishScheme") ? "selected": ""} value="finishScheme">Завершение чертежа</option>
         </select>
     `
 }
@@ -120,7 +120,7 @@ function combineOpenFieldSelection(selectedField = "") {
             <option ${(selectedField === "fieldBlock") ? "selected": ""} value="fieldBlock">Рабочий стол. 3D</option>   
             <option ${(selectedField === "technological_process_field") ? "selected": ""} value="technological_process_field">Рабочий стол. Техпроцесс</option>   
             <option ${(selectedField === "technologist_guide_field") ? "selected": ""} value="technologist_guide_field">Справочник технолога</option>   
-            <option ${(selectedField === "esi_field") ? "selected": ""} value="esi_field">ЭСИ</option>   
+            <option ${(selectedField === "esi_field") ? "selected": ""} value="esi_field">Электронный состав изделия</option>   
             <option ${(selectedField === "std_field") ? "selected": ""} value="std_field">Стандартные изделия</option>   
             <option ${(selectedField === "pdm_field") ? "selected": ""} value="pdm_field">Изделия PDM</option>   
             <option ${(selectedField === "production_task_field") ? "selected": ""} value="production_task_field">Задание на производство</option>   

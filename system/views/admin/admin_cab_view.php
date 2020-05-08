@@ -90,13 +90,8 @@ if ($_SERVER['REQUEST_URI'] == '/') {
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link <?=($CURRENT_PAGE=='to_do_list'?'active':'')?>" href="<?php echo conf::$SITE_URL ?>admin_cab/to_do_list">
-                    <i class="fas fa-list"></i> Задачи пользователей
-                  </a>
-                </li>
-                <li class="nav-item">
                   <a class="nav-link <?=($CURRENT_PAGE=='tasks_edit'?'active':'')?>" href="<?php echo conf::$SITE_URL ?>admin_cab/tasks_edit">
-                    <i class="fas fa-list"></i> Задачи пользователей by Сергей
+                    <i class="fas fa-list"></i> Задачи пользователей
                   </a>
                 </li>
                 <li class="nav-item">

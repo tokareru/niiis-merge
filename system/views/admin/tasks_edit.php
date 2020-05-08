@@ -36,7 +36,7 @@
 
     </div>
     <div class="mb-3 mt-2">
-        <button class="btn-outline-dark btn btn-sm mr-2" id="addNewTaskButton">Добавить новую задачу</button>
-        <button class="btn-outline-dark btn btn-sm" id="saveTaskListButton">Сохранить</button>
+        <button class="btn-outline-dark btn btn-sm mr-2 d-none" id="addNewTaskButton">Добавить новую задачу</button>
+        <button class="btn-outline-dark btn btn-sm d-none" id="saveTaskListButton">Сохранить</button>
     </div>
 </div>

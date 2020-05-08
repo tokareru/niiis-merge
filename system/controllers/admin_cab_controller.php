@@ -80,11 +80,6 @@ class admin_cab_controller extends Controller {
     $this->view->render('technologist_guide_edit.php', 'admin/admin_cab_view.php', $data);
   }
 
-  function to_do_list() {
-    //$data = $this->model->change_users();
-    $this->view->render('to_do_list.php', 'admin/admin_cab_view.php');
-  }
-
   function tasks_edit() {
     $this->view->render('tasks_edit.php', 'admin/admin_cab_view.php');
   }
