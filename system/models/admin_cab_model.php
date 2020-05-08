@@ -154,7 +154,7 @@ class admin_cab_model extends model {
                         <div class="col-2">Название</div> 
                         <div class="col-3"><input class="form-control form-control-sm" id = "model_name" value="'.$product["model_name"].'"></div></div>
                         <div class="row">
-                        <div class="col-2">Путь к 3Д моделе</div>
+                        <div class="col-2">Путь к 3Д модели</div>
                         <div class="col-3"><textarea class="form-control form-control-sm" id = "path_3d" rows = "3">'.$product["path_3d"].'</textarea></div></div>
                         <div class="row">
                         <div class="col-2">Описание</div>    
@@ -185,7 +185,7 @@ class admin_cab_model extends model {
     }
     
     function get_esi_edit() {
-        $sql = "SELECT id, name, designation, position, path_3d, number, type_id
+        $sql = "SELECT id, name, designation, position, path_3d, path_picture, number, type_id
                 FROM PRODUCTS_ESI
                 WHERE id = :id";
         $q = sys::$PDO->prepare($sql);
