@@ -130,63 +130,6 @@ function addToDoTaskTOList(userLogin, round, toDoTask) {
 
 }
 
-
-/*function setToDoList(json){
-    let $toDoListBody = $("#progress-bar-to-do-list");
-    if (json.tasks.length)
-        json.tasks.forEach(function (_task, index) {
-            $toDoListBody.append(combineToDoListTask(getToDoListTaskById(_task.id), _task.isFinished, index + 1));
-        })
-}
-
-function getToDoListTaskById(id) {
-    let task = {id: 0, text: "Пусто"};
-    let userTasks = getToDoListTasksForUser();
-    if (userTasks.length)
-        userTasks.forEach(function (_task) {
-            if (_task.id === id)
-                task = _task;
-        })
-    return task;
-}
-
-function combineToDoListTask(task = {id: 0, text: ""}, isFinished, position) {
-    return `
-        <li id="to-do-task-${task.id}" class="dropdown-item disabled">
-           <span class="${(isFinished) ? "text-success": "text-dark"} to-do-list-task">${position}. ${task.text}</span>
-           <span class="to-do-list-task-check font-family-fontAwesome fa ${(isFinished) ? "fa-check": "fa-spinner"}"></span>
-        </li>
-    `
-}
-
-
-function getToDoListTasksForUser() {
-    let info;
-    if (UserToDoListTasks === ""){
-        $.ajax({
-            type: 'GET',
-            async: false,
-            url: 'json/to_do_list_tasks_set.json',
-            success: function (json) {
-                info = json;
-                console.log(info)
-            }
-        });
-        if (info.roles.length)
-            info.roles.forEach(function (_role) {
-                if (Role === _role.role){
-                    if (_role.rounds)
-                        _role.rounds.forEach(function (_round) {
-                            if (Round === _round.round)
-                                UserToDoListTasks = _round.tasks;
-                        });
-                }
-            })
-    }
-    return UserToDoListTasks;
-}*/
-
-
 /*
 список триггеров:
     сохранение главной надписи чертежа saveScheme *

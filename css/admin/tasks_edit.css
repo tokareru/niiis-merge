@@ -1,0 +1,7 @@
+.font-size-1-5-em{
+    font-size: 1.5em !important;
+}
+
+.taskDeleteButtonSpan:hover{
+    cursor: pointer;
+}

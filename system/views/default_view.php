@@ -33,6 +33,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         sys::inc_no_cache('css', 'css/notification.css');
         sys::inc_no_cache('css', 'css/progress_bar.css');
         sys::inc_no_cache('css', 'css/to_do_list.css');
+        sys::inc_no_cache('css', 'css/admin/tasks_edit.css');
 
         sys::inc_no_cache('javascript', 'js/libraries/jquery-3.4.1.js');
         sys::inc_no_cache('javascript', 'js/libraries/popper.min.js');

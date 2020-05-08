@@ -95,6 +95,11 @@ if ($_SERVER['REQUEST_URI'] == '/') {
                   </a>
                 </li>
                 <li class="nav-item">
+                  <a class="nav-link <?=($CURRENT_PAGE=='tasks_edit'?'active':'')?>" href="<?php echo conf::$SITE_URL ?>admin_cab/tasks_edit">
+                    <i class="fas fa-list"></i> Задачи пользователей by Сергей
+                  </a>
+                </li>
+                <li class="nav-item">
                   <a class="nav-link <?=($CURRENT_PAGE=='progressbar'?'active':'')?>" href="<?php echo conf::$SITE_URL ?>admin_cab/progressbar">
                     <i class="fas fa-list"></i> Прогресс пользователей
                   </a>
