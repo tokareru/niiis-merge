@@ -13,3 +13,37 @@
         overflow-y: auto;
     }
 }
+
+#contentblock div {
+    margin-bottom: 10px;
+}
+
+.taskselect {
+    margin-left:10px;
+}
+
+.userdatainput {
+    display: flex;
+    padding: 1em;
+}
+
+.task {
+    display: flex;
+    border: 2px solid #007bff;
+    padding: 1em;
+    border-radius: 1.25rem;
+}
+
+.tasknumber {
+    padding-left: 1em;
+}
+
+.task div {
+    width:100%;
+}
+
+#actionButtons {
+    margin-left: auto;
+    margin-top: auto;
+    min-width: 257px;
+}
