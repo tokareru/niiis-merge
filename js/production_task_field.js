@@ -519,6 +519,17 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
         prodTableMoveByKey(e, $table, $(this));
     });
 
+    if (Round !== 3 && Role === "production_master"){
+        $table.on("change", ".prodRowsInput", function (event) {
+            setActionToBar({
+                id: "changeProdTableCell",
+                type: "edit",
+                field: "Задание на производство",
+                text: `Изменена ячейка таблицы 'Задание на производство'`
+            })
+        });
+    }
+
 }
 
 function prodTableMoveByKey(e, $table, $input) {

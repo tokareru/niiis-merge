@@ -108,6 +108,7 @@ function combineTriggerSelection(selectedTriggerName = "") {
             <option ${(selectedTriggerName === "saveProductionTasks") ? "selected": ""} value="saveProductionTasks">Сохранение задания на производство для всех рабочих</option>
             <option ${(selectedTriggerName === "openField") ? "selected": ""} value="openField">Открыть вкладку</option>
             <option ${(selectedTriggerName === "finishScheme") ? "selected": ""} value="finishScheme">Завершение чертежа</option>
+            <option ${(selectedTriggerName === "sendToPrint") ? "selected": ""} value="sendToPrint">Отправить на печать</option>
         </select>
     `
 }

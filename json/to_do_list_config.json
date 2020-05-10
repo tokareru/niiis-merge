@@ -89,6 +89,12 @@
       "text": "Закончить чертёж",
       "isFinished": false,
       "trigger": "finishScheme"
+    },
+    {
+      "id": 15,
+      "text": "Отправить на печать",
+      "isFinished": false,
+      "trigger": "sendToPrint"
     }
   ]
 }

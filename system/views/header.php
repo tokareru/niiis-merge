@@ -18,7 +18,7 @@
             <span class="bold">Текущий раунд:</span> <span id="current_round_number" class="ml-2 font-italic"></span>
         </div>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item logoutButton d-inline-flex" href="print_report" target="_blank">
+        <a id="print_report_button" class="dropdown-item logoutButton d-inline-flex" href="print_report" target="_blank">
             <!--<input id="print_btn" type="button" value="Печать">-->
              Печать <i class="fas fa-print ml-auto"></i>
         <a/>

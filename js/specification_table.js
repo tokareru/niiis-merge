@@ -48,6 +48,17 @@ function initSpecTable(json) {
         saveSpecTable();
     });
 
+    if (Round !== 3 && Role === "designer"){
+        $tableBlock.on("change", ".specTableCellInput", function (event) {
+            setActionToBar({
+                id: "changeSpecTableCell",
+                type: "edit",
+                field: "Спецификация",
+                text: `Изменена ячейка 'Таблицы спецификации'`
+            })
+        });
+    }
+
     if (Role === "designer") {
         $tableBlock.find("#specTableSaveButton").removeClass("d-none");
     } else {
@@ -56,7 +67,7 @@ function initSpecTable(json) {
 }
 
 function setSpecTable(json) {
-    console.log(json);
+    //console.log(json);
     let $table = $("#specificationTable");
     let $theadTr = $table.find("thead tr");
     let $tbody = $table.find("tbody");

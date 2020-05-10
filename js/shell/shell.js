@@ -228,6 +228,11 @@ async function updateShell(){
 
     initProgressBar();
     initToDoList();
+
+    $("#print_report_button").on("click", function () {
+       triggerToDoTaskEvent("sendToPrint")
+    });
+
     /*console.log(available_sides);
     console.log(available_tabs);*/
 }
