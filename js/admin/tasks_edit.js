@@ -212,7 +212,7 @@ function saveTaskList() {
     let tasks = [];
     taskBody.find(".userTask").each(function () {
         let $task = $(this);
-        let text = $task.find("textarea").val();
+        let text = $task.find("textarea").val().toString();
         let trigger = $task.find(".task-trigger-selection").val();
         let add_info = $task.find(".open-field-selection").val()
         tasks.push({

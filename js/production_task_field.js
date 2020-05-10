@@ -522,8 +522,8 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
 }
 
 function prodTableMoveByKey(e, $table, $input) {
-    e.preventDefault();
     if (Round !== 3 && Role === "production_master" && e.which === 9){
+        e.preventDefault();
         let isNext = false;
         let $inputs = $table.find('.prodRowsInput');
         $inputs.each(function (index) {

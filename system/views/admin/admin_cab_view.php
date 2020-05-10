@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_URI'] == '/') {
   <head>
     <meta charset="utf-8">
     <title>Кабинет администратора</title>
-
+    <link rel="shortcut icon" href="../images/favicon.ico" type="image/x-icon">
     <?php
     sys::inc_no_cache('css', 'css/tablesorter.css');
     sys::inc_no_cache('css', 'css/bootstrap.css');

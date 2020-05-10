@@ -160,8 +160,8 @@ function addNewRowToSpecTable(data) {
 }
 
 function specTableMoveByKey(e, $table, $input) {
-    e.preventDefault();
     if (Round !== 3 && Role === "designer" && e.which === 9){
+        e.preventDefault();
         let isNext = false;
         let $inputs = $table.find('.specTableCellInput');
         $inputs.each(function (index) {
@@ -199,14 +199,15 @@ function emptySpecTable() {
 function saveSpecTableData($rows) {
     let saveData = [];
     if ($rows.length)
-        $rows.each(function () {
+        $rows.each(function (index) {
             let cells = $(this).find(".specTableCell input");
             saveData.push({
                 row: [
                     {text: cells.eq(0).val(), readonly: false},
                     {text: cells.eq(1).val(), readonly: false},
                     {text: cells.eq(2).val(), readonly: false},
-                    {text: cells.eq(3).val(), readonly: false}
+                    {text: (cells.eq(3).val() !== "Не указано") ? cells.eq(3).val() : "0", readonly: false},
+                    {product_id: index, readonly: false}
                 ]
             })
         });
@@ -218,11 +219,10 @@ function saveSpecTable() {
     let saveData = saveSpecTableData($rows);
     console.log(saveData);
     let saveUrl = "";
-
     if (Round !== 3) {
         saveUrl = "spec_table_ajax/save";
     } else {
-        saveUrl = "spec_autoentered_table_ajax";
+        saveUrl = "spec_autoentered_table_ajax/save";
         $.ajax({
             type: "POST",
             url: "spec_autoentered_table_ajax/save_product_checked",
@@ -245,6 +245,7 @@ function saveSpecTable() {
         type: "POST",
         url: saveUrl,
         data: {
+            thead: [{text:"Позиция", readonly:true},{text:"Обозначение",readonly:true},{text:"Наименование",readonly:true},{text:"Кол.",readonly:true}],
             tbody: saveData,
             login: login
         },

@@ -5,3 +5,7 @@
 .taskDeleteButtonSpan:hover{
     cursor: pointer;
 }
+
+#task-list-body textarea{
+    min-height: 62px;
+}
