@@ -2,6 +2,7 @@ let ownTasks = [];
 let currentTask = '';
 let tasksRoutesMadeRoutesArr;
 let tempESI;
+let dataCancelTask;
 
 window.kucha;
 
@@ -15,14 +16,14 @@ function initTasksRoutes() {
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
 
-   /* setInterval(function () {
-        console.log(TaskInfoReload);
-        if (TaskInfoReload) {
+    /* setInterval(function () {
+         console.log(TaskInfoReload);
+         if (TaskInfoReload) {
 
-            return;
-        }
-        getRoutesFromDB();
-    }, 10000);*/
+             return;
+         }
+         getRoutesFromDB();
+     }, 10000);*/
 
 
     $('#create_task_route_clearBtn').on('click', function () {
@@ -35,6 +36,7 @@ function initTasksRoutes() {
         let $id = $(this).parents('tr').data('id');
         let but = $(this);
         let $master = $(this).parents('tr').data('master');
+        $('#task_routes_cancelModalTextarea').html('');
         $.ajax({
             url: 'ajax/save_route_type', //ajax/save_route_type
             type: 'POST',
@@ -56,6 +58,35 @@ function initTasksRoutes() {
         let $id = $(this).parents('tr').data('id');
         let but = $(this);
         let $master = $(this).parents('tr').data('master');
+        dataCancelTask = {
+            id: $id,
+            but: but,
+            master: $master
+        }
+
+        /* $.ajax({
+             url: 'ajax/save_route_type',//ajax/save_route_type
+             type: 'POST',
+             data: {id: $id, status: 'finished'},
+             success: function (data) {
+                 but.parents('td').html('<span class="fa fa-times fa-2x w-100' +
+                     ' text-danger text-center"></span>');
+                 addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">отклонил</span> задание от пользователя ` +
+                     `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`);
+                 setActionToBar({
+                     id: 'eventCancelTask',
+                     type: "cancel",
+                     field: "Маршруты заданий",
+                     text: 'Отклонил задание'
+                 });
+             }
+         })*/
+    });
+    $('body').on('click', '#task_routes_cancelModalCancelBtn', function () {
+        let $id = dataCancelTask.id;
+        let but = dataCancelTask.but;
+        let $master = dataCancelTask.master;
+        let cancelReason = $('#task_routes_cancelModalTextarea').val();
         $.ajax({
             url: 'ajax/save_route_type',//ajax/save_route_type
             type: 'POST',
@@ -64,16 +95,20 @@ function initTasksRoutes() {
                 but.parents('td').html('<span class="fa fa-times fa-2x w-100' +
                     ' text-danger text-center"></span>');
                 addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">отклонил</span> задание от пользователя ` +
-                    `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>`);
+                    `<span class="font-weight-bold">${$master.toLocaleLowerCase()}</span>.<br/> Причина: ${cancelReason}`);
                 setActionToBar({
                     id: 'eventCancelTask',
                     type: "cancel",
                     field: "Маршруты заданий",
                     text: 'Отклонил задание'
                 });
+                dataCancelTask = {};
+                $('#task_routes_cancelModalTextarea').val('');
+                $('#task_routes_cancelModalCloseBtn').click();
             }
         })
     });
+
     $('body').on('click', '.tasks_routes_reloadShell_radio', function () {
         let $this = $(this);
         /*if ($(this).parents('form').find('.tasks_routes_reloadShell_radio:first').get(0) === $(this).get(0)){
@@ -301,8 +336,8 @@ function generateOwnTasks(selector) {
         '<th>Статус</th>' +
         '</tr>' +
         '</thead><tbody></tbody>');
-    let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Принять</button>' +
-        '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask">Отклонить</button>';
+    let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Согласовать</button>' +
+        '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask" data-toggle="modal" data-target="#task_routes_cancelModal">Отклонить</button>';
     ownTasks.sort(function (a, b) {
         if (a.status === "nonactive" && b.status !== 'nonactive')
             return 1;
