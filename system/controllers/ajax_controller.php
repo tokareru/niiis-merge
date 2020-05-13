@@ -63,6 +63,7 @@ class ajax_controller extends Controller {
     $data = $this->model->get_progressbar_actions();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
+  
   function save_progressbar_actions(){
     $data = $this->model->save_progressbar_actions();
     $this->view->render('', 'ajax_view_json.php', $data);
@@ -97,6 +98,27 @@ class ajax_controller extends Controller {
   }
   function get_pdm_standart_products(){
     $data = $this->model->get_pdm_standart_products();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  // user tasks
+  function get_user_tasks(){
+    $data = $this->model->get_user_tasks();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function get_user_tasks_by_round(){
+    $data = $this->model->get_user_tasks_by_round();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function add_user_task(){
+    $data = $this->model->add_user_task();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function update_user_task(){
+    $data = $this->model->update_user_task();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
+  function delete_user_task(){
+    $data = $this->model->delete_user_task();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
 }
