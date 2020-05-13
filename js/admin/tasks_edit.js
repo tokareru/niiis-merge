@@ -236,7 +236,7 @@ function saveTaskList() {
         data: data,
         success: function (json) {
             console.log(json)
-            //setToDoList(json)
+            setToDoList(json)
         }
     })
 }

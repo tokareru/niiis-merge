@@ -86,7 +86,7 @@ function updateToDoListTaskById(id, isFinished) {
         type: 'POST',
         url: 'ajax/add_user_task',
         data: {
-            id: 1,
+            id: id,
             login: login,
             isFinished: isFinished
         },
