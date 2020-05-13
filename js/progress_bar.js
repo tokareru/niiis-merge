@@ -121,7 +121,7 @@ function scrollToEndOfProgressBar() {
     progress_bar.scrollTo( progress_bar.scrollWidth, 0);
 }
 
-function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit = false) {
+async function setActionToBar(action = {id: "", type: "", field: "", text: ""}, isInit = false) {
     let icon = chooseIconClassByType(action.type);
     let progress_bar_body = $("#progress-bar-body");
     let isPreviousLi = (isInit) ? `previousAction bg-white`: ``;
@@ -223,6 +223,12 @@ function chooseIconClassByType(type) {
     }
     if (type === "check"){
         return "fa-check";
+    }
+    if (type === "print"){
+        return "fa-print";
+    }
+    if (type === "signOut"){
+        return "fa-sign-out";
     }
     return "fa-question"
 }

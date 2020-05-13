@@ -231,7 +231,24 @@ async function updateShell(){
 
     $("#print_report_button").on("click", function () {
        triggerToDoTaskEvent("sendToPrint")
+        setActionToBar({
+            id: "sendToPrint",
+            type: "print",
+            field: "Кабинет",
+            text: "Отчёт отправлен на печать"
+        })
     });
+
+    $("#exit_button").on("click", function () {
+        setActionToBar({
+            id: "signOut",
+            type: "signOut",
+            field: "Кабинет",
+            text: `Выход из системы. Раунд: ${Round}`
+        }).then(function () {
+            window.location.href = "logout"
+        });
+    })
 
     /*console.log(available_sides);
     console.log(available_tabs);*/
