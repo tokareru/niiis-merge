@@ -432,10 +432,10 @@ class ajax_model extends model {
             $temp = $q->fetchAll();
             $round = $temp[0]['round'];
             
-            $sql = "UPDATE users_tasks SET isFinished = :isFinished WHERE task_number = :task_number AND username = :username AND round = :round";
+            $sql = "UPDATE users_tasks SET is_finished = :is_finished WHERE task_number = :task_number AND username = :username AND round = :round";
             
             $q = sys::$PDO->prepare($sql);
-            $q->execute(array("isFinished" => $_POST["isFinished"], 
+            $q->execute(array("is_finished" => $_POST["isFinished"], 
                                 "task_number" => $_POST["id"], 
                                 "username" => $_POST["login"],
                                 "round" => $round
