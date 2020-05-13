@@ -334,7 +334,7 @@ class ajax_model extends model {
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $temp = $q->fetchAll();
-            $round = $round[0]['round'];
+            $round = $temp[0]['round'];
             
             $sql = "SELECT * FROM users_tasks WHERE username = :username AND round = :round AND active_sign = true";
             $q = sys::$PDO->prepare($sql);
