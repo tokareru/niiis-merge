@@ -92,6 +92,7 @@ function initTasksRoutes() {
             type: 'POST',
             data: {id: $id, status: 'finished', reason: cancelReason},
             success: function (data) {
+                console.log(data);
                 but.parents('td').html('<span class="fa fa-times fa-2x w-100' +
                     ' text-danger text-center"></span>');
                 addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">отклонил</span> задание от пользователя ` +
@@ -371,6 +372,7 @@ function generateOwnTasks(selector) {
             $table.find('tbody').append(
                 $tr
             )
+
         }
     );
     $routes.append($table);
@@ -402,7 +404,8 @@ function generateTableForRoutes(data, type) {
                     '<span class="fa fa-2x fa-times text-danger w-100"></span>'
                 }
 </td>` +
-                `${type === 'nonactive'? `<td>${task.reason !== null && task.reason !== ''? task.reason: '<i class="fa fa-minus"></i>'}</td>`: ''}` +
+                `${type === 'nonactive'? `<td style="min-width: 200px; max-width: 200px; word-wrap: break-word">${task.reason !== null && task.reason !== ''? task.reason: 
+                    '<i class="fa fa-minus"></i>'}</td>`: ''}` +
                 '</tr>';
         }
     )
