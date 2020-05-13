@@ -223,16 +223,16 @@ function saveTaskList() {
             add_info:(trigger === "openField") ? add_info : ""
         })
     });
-
-    console.log(tasks);
+    let data = {
+        login: login,
+        round: round,
+        tasks: tasks
+    };
+    console.log(data);
     $.ajax({
         type: 'POST',
         url: '../ajax/add_user_task',
-        data: {
-            login: login,
-            round: round,
-            tasks: tasks
-        },
+        data: data,
         success: function (json) {
             console.log(json)
             //setToDoList(json)
