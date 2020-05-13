@@ -390,16 +390,30 @@ class ajax_model extends model {
     
     function add_user_task() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "INSERT INTO users_tasks (task_number, username, trigger, add_info, text, round)
-                    VALUES (:task_number, :username, :trigger, :add_info, :text, :round)";
+            
+            $sql = "UPDATE users_tasks SET active_sign = 0 WHERE username = :username AND round = :round";
+            
             $q = sys::$PDO->prepare($sql);
-            $q->execute(array("task_number" => $_POST["id"], 
-                                "username" => $_POST["login"],
-                                "trigger" => $_POST["trigger"], 
-                                "add_info" => $_POST["add_info"], 
-                                "text" => $_POST["action"],
+            $q->execute(array("username" => $_POST["login"],
                                 "round" => $_POST["round"]
                         ));
+            
+            
+            $sql = "INSERT INTO users_tasks (task_number, username, trigger, add_info, text, round)
+                    VALUES ";
+//            (:task_number, :username, :trigger, :add_info, :text, :round)
+            
+             foreach ($_POST["tasks"] as $row) {
+                $sql .= "(".$row["id"]
+                        .",'".$_POST["login"]
+                        ."','".$row["trigger"]
+                        ."','".$row["add_info"]
+                        ."','".$row["text"]
+                        ."',".$_POST["round"]
+                        ."),";
+            }
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
             return array("response" => 200);
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
@@ -429,20 +443,20 @@ class ajax_model extends model {
         }
     }
     
-    function delete_user_task() {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "UPDATE users_tasks SET active_sign = 0 WHERE task_number = :task_number AND username = :username AND round = :round";
-            
-            $q = sys::$PDO->prepare($sql);
-            $q->execute(array("task_number" => $_POST["id"], 
-                                "username" => $_POST["login"],
-                                "round" => $_POST["round"]
-                        ));
-            return array("response" => 200);
-        } else {
-            return array("response" => "NOT FOUND POST REQUEST");
-        }
-    }
+//    function delete_user_task() {
+//        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+//            $sql = "UPDATE users_tasks SET active_sign = 0 WHERE task_number = :task_number AND username = :username AND round = :round";
+//            
+//            $q = sys::$PDO->prepare($sql);
+//            $q->execute(array("task_number" => $_POST["id"], 
+//                                "username" => $_POST["login"],
+//                                "round" => $_POST["round"]
+//                        ));
+//            return array("response" => 200);
+//        } else {
+//            return array("response" => "NOT FOUND POST REQUEST");
+//        }
+//    }
     // --------- users tasks
     
     function get_technologist_info() {
