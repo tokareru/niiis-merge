@@ -404,7 +404,7 @@ function generateTableForRoutes(data, type) {
                     '<span class="fa fa-2x fa-times text-danger w-100"></span>'
                 }
 </td>` +
-                `${type === 'nonactive'? `<td style="min-width: 200px; max-width: 200px; word-wrap: break-word">${task.reason !== null && task.reason !== ''? task.reason: 
+                `${type === 'nonactive'? `<td class="pl-1 pr-1" style="min-width: 200px; max-width: 200px; word-wrap: break-word">${task.reason !== null && task.reason !== ''? task.reason: 
                     '<i class="fa fa-minus"></i>'}</td>`: ''}` +
                 '</tr>';
         }
