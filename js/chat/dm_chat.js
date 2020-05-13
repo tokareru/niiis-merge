@@ -74,6 +74,9 @@ function initDMChat(count_users) {
             });
         $('#chat_dm').find('.chats_div').children().each(function (index) {
                 if (index !== 0) {
+                    if ($('#chat_dm').find('.chats_div').children().length > userCount) {
+                        userCount++;
+                    }else isFirstInit = false
 
                     let $this = $(this);
                     if ($('#chat_window').data('init')) {
