@@ -19,6 +19,7 @@ function initToDoList() {
 
 function setToDoList(json) {
     let $toDoListBody = $("#progress-bar-to-do-list");
+    $toDoListBody.empty();
     let $button = $("#progress-bar-to-do-list-body button");
     $button.on("click", function () {
         $button.find(".toDoNotification").remove();

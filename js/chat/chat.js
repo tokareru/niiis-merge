@@ -6,6 +6,7 @@ let userCount = 0;
 
 
 function initAllUsersChat() {
+    userCount = 0;
     let $chat_window_chat = $('#dm_user_0');
 
 /*    $('#chat_window').data({'name': '#chat_window_chat'});

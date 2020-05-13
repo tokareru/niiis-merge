@@ -120,6 +120,7 @@ function combineOpenFieldSelection(selectedField = "") {
             <option ${(selectedField === "scheme") ? "selected": ""} value="scheme">Рабочий стол. Чертёж</option>   
             <option ${(selectedField === "fieldBlock") ? "selected": ""} value="fieldBlock">Рабочий стол. 3D</option>   
             <option ${(selectedField === "technological_process_field") ? "selected": ""} value="technological_process_field">Рабочий стол. Техпроцесс</option>   
+            <option ${(selectedField === "route_map_field") ? "selected": ""} value="route_map_field">Маршрутная карта</option>   
             <option ${(selectedField === "technologist_guide_field") ? "selected": ""} value="technologist_guide_field">Справочник технолога</option>   
             <option ${(selectedField === "esi_field") ? "selected": ""} value="esi_field">Электронный состав изделия</option>   
             <option ${(selectedField === "std_field") ? "selected": ""} value="std_field">Стандартные изделия</option>   
