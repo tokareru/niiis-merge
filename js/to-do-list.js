@@ -11,8 +11,8 @@ function initToDoList() {
         },
         success: function (json) {
             console.log(json)
-            alert(json.tasks.length)
-            //setToDoList(json)
+            //alert(json.tasks.length)
+            setToDoList(json)
         }
     })
 }
