@@ -349,7 +349,7 @@ class ajax_model extends model {
                                 "global_id" => $row["task_id"],
                                 "id" => $row["task_number"],
                                 "text" => $row["text"],
-                                "isFinished" => $row["isFinished"], 
+                                "isFinished" => $row["is_finished"], 
                                 "trigger" => $row["trigger"],
                                 "add_info" => $row["add_info"]
                             ));
@@ -376,7 +376,7 @@ class ajax_model extends model {
                                 "global_id" => $row["task_id"],
                                 "id" => $row["task_number"],
                                 "text" => $row["text"],
-                                "isFinished" => $row["isFinished"], 
+                                "isFinished" => $row["is_finished"], 
                                 "trigger" => $row["trigger"],
                                 "add_info" => $row["add_info"]
                             ));
