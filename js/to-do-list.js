@@ -4,14 +4,15 @@ function initToDoList() {
     //json/to_do_list.json
     $.ajax({
         type: 'GET',
-        url: 'json/to_do_list_config.json',
+        url: 'ajax/get_user_tasks_by_round',
         data: {
-            "login": login,
-            "round": Round
+            login: login,
+            round: Round
         },
         success: function (json) {
             console.log(json)
-            setToDoList(json)
+            alert(json.tasks.length)
+            //setToDoList(json)
         }
     })
 }
@@ -81,7 +82,19 @@ function setToDoList(json) {
 }
 
 function updateToDoListTaskById(id, isFinished) {
-
+    $.ajax({
+        type: 'POST',
+        url: 'ajax/add_user_task',
+        data: {
+            id: 1,
+            login: login,
+            isFinished: isFinished
+        },
+        success: function (json) {
+            console.log(json)
+            setToDoList(json)
+        }
+    })
 }
 
 function triggerToDoTaskEvent(eventName, isRevert = false, addInfo = {}) {

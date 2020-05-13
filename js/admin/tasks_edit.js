@@ -28,7 +28,7 @@ function initUserTasks(usersData) {
             for (let round = 1; round < 4; round++){
                 $.ajax({
                     type: 'GET',
-                    url: '../json/to_do_list_config.json',
+                    url: '../ajax/get_user_tasks_by_round',
                     async: false,
                     data: {
                         login: login,
@@ -211,20 +211,33 @@ function saveTaskList() {
     let round = $("#userRoundSelection").val();
     let taskBody = $(`div[task-id="task-${login}-${round}"]`);
     let tasks = [];
-    taskBody.find(".userTask").each(function () {
+    taskBody.find(".userTask").each(function (index) {
         let $task = $(this);
         let text = $task.find("textarea").val().toString();
         let trigger = $task.find(".task-trigger-selection").val();
         let add_info = $task.find(".open-field-selection").val()
         tasks.push({
+            id: (index + 1),
             text: (text !== undefined) ? text : "",
             trigger: (trigger !== undefined) ? trigger : "",
             add_info:(trigger === "openField") ? add_info : ""
         })
     });
 
-    console.log(tasks)
-
+    console.log(tasks);
+    $.ajax({
+        type: 'POST',
+        url: '../ajax/add_user_task',
+        data: {
+            login: login,
+            round: round,
+            tasks: tasks
+        },
+        success: function (json) {
+            console.log(json)
+            //setToDoList(json)
+        }
+    })
 }
 
 function deleteTaskFromList($buttonSpan) {
