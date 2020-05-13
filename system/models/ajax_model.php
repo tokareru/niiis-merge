@@ -391,8 +391,8 @@ class ajax_model extends model {
     function add_user_task() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             
-            $sql = "UPDATE users_tasks SET active_sign = 0 WHERE username = :username AND round = :round";
-            
+//            $sql = "UPDATE users_tasks SET active_sign = 0 WHERE username = :username AND round = :round";
+            $sql = "DELETE FROM users_tasks WHERE username = :username AND round = :round";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("username" => $_POST["login"],
                                 "round" => $_POST["round"]
