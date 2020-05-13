@@ -79,6 +79,11 @@ function setToDoList(json) {
                 })
             }
         })
+    else{
+        $toDoListBody.append(`
+        <li class="text-dark m-2"><span class="font-family-fontAwesome fa-times mr-1"></span>Активных задач нет</li>
+        `)
+    }
 }
 
 function updateToDoListTaskById(id, isFinished) {
