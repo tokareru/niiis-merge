@@ -105,6 +105,10 @@ class ajax_controller extends Controller {
     $data = $this->model->get_user_tasks();
     $this->view->render('', 'ajax_view_json.php', $data);
   }
+  function get_user_tasks_by_round(){
+    $data = $this->model->get_user_tasks_by_round();
+    $this->view->render('', 'ajax_view_json.php', $data);
+  }
   function add_user_task(){
     $data = $this->model->add_user_task();
     $this->view->render('', 'ajax_view_json.php', $data);

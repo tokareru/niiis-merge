@@ -360,6 +360,34 @@ class ajax_model extends model {
         }
     }
     
+    function get_user_tasks_by_round() {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            $sql = "SELECT * FROM users_tasks WHERE username = :username AND round = :round AND active_sign = 1";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("username" => $_GET["login"], 
+                                "round" => $_GET["round"]
+                                ));
+            $Q = $q->fetchAll();
+            $response = array("tasks" => array());
+            foreach ($Q as $row) {
+                array_push($response["tasks"], 
+                            array(
+                                "global_id" => $row["task_id"],
+                                "id" => $row["task_number"],
+                                "text" => $row["text"],
+                                "isFinished" => $row["isFinished"], 
+                                "trigger" => $row["trigger"],
+                                "add_info" => $row["add_info"]
+                            ));
+            }
+            return $response;
+        } else {
+            return array("response" => "NOT FOUND GET REQUEST");
+        }
+    }
+    
+    
+    
     function add_user_task() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "INSERT INTO users_tasks (task_number, username, trigger, add_info, text, round)
