@@ -79,14 +79,19 @@ function setToDoList(json) {
                 })
             }
         })
+    else{
+        $toDoListBody.append(`
+        <li class="text-dark m-2"><span class="font-family-fontAwesome fa-times mr-1"></span>Активных задач нет</li>
+        `)
+    }
 }
 
 function updateToDoListTaskById(id, isFinished) {
     $.ajax({
         type: 'POST',
-        url: 'ajax/add_user_task',
+        url: 'ajax/update_user_task',
         data: {
-            id: 1,
+            id: id,
             login: login,
             isFinished: isFinished
         },

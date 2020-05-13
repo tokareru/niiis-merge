@@ -31,8 +31,8 @@ function initUserTasks(usersData) {
                     url: '../ajax/get_user_tasks_by_round',
                     async: false,
                     data: {
-                        login: login,
-                        round: round
+                        'login': login,
+                        'round': round
                     },
                     success: function (json) {
                         setUserTasks(json, login, round);
@@ -220,7 +220,8 @@ function saveTaskList() {
             id: (index + 1),
             text: (text !== undefined) ? text : "",
             trigger: (trigger !== undefined) ? trigger : "",
-            add_info:(trigger === "openField") ? add_info : ""
+            add_info:(trigger === "openField") ? add_info : "",
+            isFinished: false
         })
     });
     let data = {
@@ -235,7 +236,7 @@ function saveTaskList() {
         data: data,
         success: function (json) {
             console.log(json)
-            //setToDoList(json)
+            setToDoList(json)
         }
     })
 }

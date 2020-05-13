@@ -90,7 +90,7 @@ function initTasksRoutes() {
         $.ajax({
             url: 'ajax/save_route_type',//ajax/save_route_type
             type: 'POST',
-            data: {id: $id, status: 'finished'},
+            data: {id: $id, status: 'finished', reason: cancelReason},
             success: function (data) {
                 but.parents('td').html('<span class="fa fa-times fa-2x w-100' +
                     ' text-danger text-center"></span>');

@@ -334,9 +334,9 @@ class ajax_model extends model {
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $temp = $q->fetchAll();
-            $round = $round[0]['round'];
+            $round = $temp[0]['round'];
             
-            $sql = "SELECT * FROM users_tasks WHERE username = :username AND round = :round AND active_sign = 1";
+            $sql = "SELECT * FROM users_tasks WHERE username = :username AND round = :round AND active_sign = true";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("username" => $_GET["login"], 
                                 "round" => $round
@@ -349,7 +349,7 @@ class ajax_model extends model {
                                 "global_id" => $row["task_id"],
                                 "id" => $row["task_number"],
                                 "text" => $row["text"],
-                                "isFinished" => $row["isFinished"], 
+                                "isFinished" => $row["is_finished"], 
                                 "trigger" => $row["trigger"],
                                 "add_info" => $row["add_info"]
                             ));
@@ -362,7 +362,8 @@ class ajax_model extends model {
     
     function get_user_tasks_by_round() {
         if ($_SERVER["REQUEST_METHOD"] == "GET") {
-            $sql = "SELECT * FROM users_tasks WHERE username = :username AND round = :round AND active_sign = 1";
+            $sql = "SELECT * FROM users_tasks WHERE username = :username AND active_sign = true AND round = :round ";
+//            $sql = "SELECT * FROM users_tasks WHERE username = 'designer' AND round = 1 AND active_sign = true";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("username" => $_GET["login"], 
                                 "round" => $_GET["round"]
@@ -375,12 +376,13 @@ class ajax_model extends model {
                                 "global_id" => $row["task_id"],
                                 "id" => $row["task_number"],
                                 "text" => $row["text"],
-                                "isFinished" => $row["isFinished"], 
+                                "isFinished" => $row["is_finished"], 
                                 "trigger" => $row["trigger"],
                                 "add_info" => $row["add_info"]
                             ));
             }
             return $response;
+//            return $sql;
         } else {
             return array("response" => "NOT FOUND GET REQUEST");
         }
@@ -399,8 +401,7 @@ class ajax_model extends model {
                         ));
             
             
-            $sql = "INSERT INTO users_tasks (task_number, username, trigger, add_info, text, round)
-                    VALUES ";
+            $sql = "INSERT INTO users_tasks (task_number, username, trigger, add_info, text, round) VALUES ";
 //            (:task_number, :username, :trigger, :add_info, :text, :round)
             
              foreach ($_POST["tasks"] as $row) {
@@ -412,9 +413,11 @@ class ajax_model extends model {
                         ."',".$_POST["round"]
                         ."),";
             }
+            $sql = substr($sql, 0, -1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             return array("response" => 200);
+//            return $sql;
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
         }
@@ -427,12 +430,12 @@ class ajax_model extends model {
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $temp = $q->fetchAll();
-            $round = $round[0]['round'];
+            $round = $temp[0]['round'];
             
-            $sql = "UPDATE users_tasks SET isFinished = :isFinished WHERE task_number = :task_number AND username = :username AND round = :round";
+            $sql = "UPDATE users_tasks SET is_finished = :is_finished WHERE task_number = :task_number AND username = :username AND round = :round";
             
             $q = sys::$PDO->prepare($sql);
-            $q->execute(array("isFinished" => $_POST["isFinished"], 
+            $q->execute(array("is_finished" => $_POST["isFinished"], 
                                 "task_number" => $_POST["id"], 
                                 "username" => $_POST["login"],
                                 "round" => $round
