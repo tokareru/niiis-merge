@@ -205,10 +205,10 @@ class ajax_model extends model {
             if ($task_id != ($row["task_id"])) {
                 $task_id = $row["task_id"];
                 $response["active"][++$i] = array(array("master" => $row["master"],
-                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
+                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"], "reason" => $row["cancel_reason"]), "shell" => $row["shell"]));
             } else {
                 array_push($response["active"][$i], array("master" => $row["master"],
-                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
+                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"], "reason" => $row["cancel_reason"]), "shell" => $row["shell"]));
             }
         }
         $sql = "SELECT * FROM ROUTE WHERE ACTIVE_SIGN = '0'";
@@ -221,10 +221,10 @@ class ajax_model extends model {
             if ($task_id != ($row["task_id"])) {
                 $task_id = $row["task_id"];
                 $response["finished"][++$i] = array(array("master" => $row["master"],
-                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
+                        "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"], "reason" => $row["cancel_reason"]), "shell" => $row["shell"]));
             } else {
                 array_push($response["finished"][$i], array("master" => $row["master"],
-                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"]), "shell" => $row["shell"]));
+                    "task" => array("user" => $row["login"], "role" => $row["role"], "name" => $row["name"], "task" => $row["task"], "id" => $row["id"], "status" => $row["status"], "reason" => $row["cancel_reason"]), "shell" => $row["shell"]));
             }
         }
         return array("response" => $response);
@@ -290,10 +290,10 @@ class ajax_model extends model {
     
     function save_route_type() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "UPDATE ROUTE set status = '" . $_POST["status"] . "' where id = " . $_POST["id"];
+            $sql = "UPDATE ROUTE set status = '" . $_POST["status"] . "', cancel_reason =  '" . $_POST["reason"] . "' where id = " . $_POST["id"];
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql = "SELECT STATUS, TASK_ID FROM ROUTE WHERE TASK_ID = (SELECT TASK_ID FROM ROUTE WHERE id = :id)";
+            $sql = "SELECT STATUS, TASK_ID, cancel_reason FROM ROUTE WHERE TASK_ID = (SELECT TASK_ID FROM ROUTE WHERE id = :id)";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("id" => $_POST["id"]));
             $Q = $q->fetchAll();
