@@ -1,6 +1,8 @@
 let currentName = "";
 let Max_count_messages = 100;
 let Server_count;
+let isFirstInit = true;
+let userCount = 0;
 
 
 function initAllUsersChat() {
@@ -305,10 +307,12 @@ function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
 function addCommentsByData(data, $chat, init_count) {
     let $chat_ul = $chat.find('ul');
     let countMes = 0;
+    let last_key = 0;
     for (let key in data) {
         if (key !== 'response') {
             countMes++;
             let date_str = data[key].time;
+            last_key = key;
             $chat_ul.append(getMessage(date_str, data[key].login, data[key].comment ));
         }
     }
@@ -317,6 +321,14 @@ function addCommentsByData(data, $chat, init_count) {
         $chat.data({'count_messages': count});
     }
 
+    //console.log(data[last_key]);
+
+    if (!isFirstInit)
+        generateNotification({
+            mainHeader: "Чат",
+            extraHeader:`${data[last_key].login}`,
+            text: `${data[last_key].comment}`
+        })
 }
 
 //следующие функции преобразовывают дату. Проблема в том, что дата
