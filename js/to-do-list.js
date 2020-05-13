@@ -84,7 +84,7 @@ function setToDoList(json) {
 function updateToDoListTaskById(id, isFinished) {
     $.ajax({
         type: 'POST',
-        url: 'ajax/add_user_task',
+        url: 'ajax/update_user_task',
         data: {
             id: id,
             login: login,
