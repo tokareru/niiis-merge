@@ -92,6 +92,7 @@ function initTasksRoutes() {
             type: 'POST',
             data: {id: $id, status: 'finished', reason: cancelReason},
             success: function (data) {
+                console.log(data);
                 but.parents('td').html('<span class="fa fa-times fa-2x w-100' +
                     ' text-danger text-center"></span>');
                 addMessageToAllDB(`Пользователь <span class="font-weight-bold">${currentName}</span> <span class="font-italic">отклонил</span> задание от пользователя ` +
@@ -305,11 +306,11 @@ function tasks_routes_AddEvent(id) {
     }
 }
 
-function tasksRoutesMadeRoutes(id, data) {
+function tasksRoutesMadeRoutes(id, data, type) {
     let $routes = $(`#${id}`);
     $routes.find('table').remove();
     for (let i = 0; i < data.length; i++) {
-        $routes.append(generateTableForRoutes(data[i]));
+        $routes.append(generateTableForRoutes(data[i], type));
     }
     tasks_routes_AddEvent(id);
 }
@@ -334,6 +335,7 @@ function generateOwnTasks(selector) {
         '<th>Показ</th>' +
         '<th>Задание</th>' +
         '<th>Статус</th>' +
+        '<th>Комментарий</th>' +
         '</tr>' +
         '</thead><tbody></tbody>');
     let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Согласовать</button>' +
@@ -359,23 +361,25 @@ function generateOwnTasks(selector) {
                 `class="text-center tasks_routes_reloadShell_radio tasks_routes_reloadShell_radio_enable"` +
                 'style="width: 50px">Вкл</label>' +
                 '</form></td>' +
-                `<td style="width: 250px">${value.task}</td>` +
-                '<td style="width: 350px">' +
+                `<td style="width: 150px">${value.task}</td>` +
+                '<td style="width: 250px">' +
                 `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? '<span class="fa fa-check text-success text-center w-100 fa-2x"></span>' : '<span class="fa fa-times' +
                     ' text-danger text-center w-100 fa-2x"></span>'}` +
                 '</td>' +
+                `<td class="pl-1 pr-1" style="width: 250px; max-width: 250px;word-wrap: break-word; min-width: 250px">${value.reason !== null && value.reason !== '' ? value.reason: '<i class="fa fa-minus"></i>'}</td>` +
                 '</tr>');
             $tr.data({'id': value.id, 'master': value.master, shell: value.shell});
             $table.find('tbody').append(
                 $tr
             )
+
         }
     );
     $routes.append($table);
 
 }
 
-function generateTableForRoutes(data) {
+function generateTableForRoutes(data, type) {
     let table = '';
     let tr = '';
     data.forEach(function (value, index) {
@@ -389,7 +393,7 @@ function generateTableForRoutes(data) {
                 task.shell = JSON.parse(value.shell);
                 ownTasks.push(task);
             }
-            tr += '<tr style="width: 700px">' +
+        tr += '<tr style="width: 700px">' +
 
                 `<td style="width: 60px">${index + 1}</td>` +
                 `<td style="width: 230px">${task.role}</td>` +
@@ -400,6 +404,8 @@ function generateTableForRoutes(data) {
                     '<span class="fa fa-2x fa-times text-danger w-100"></span>'
                 }
 </td>` +
+                `${type === 'nonactive'? `<td class="pl-1 pr-1" style="min-width: 200px; max-width: 200px; word-wrap: break-word">${task.reason !== null && task.reason !== ''? task.reason: 
+                    '<i class="fa fa-minus"></i>'}</td>`: ''}` +
                 '</tr>';
         }
     )
@@ -412,6 +418,7 @@ function generateTableForRoutes(data) {
         '<th style="width: 230px">Пользователь</th>' +
         '<th style="width: 125px">Задание</th>' +
         '<th style="width: 125px">Статус</th>' +
+        `${type === 'nonactive'? '<th style="width: 125px">Комментарий</th>': '' }`+
         '</tr>' +
         '</thead>' +
         '<tbody>' +
@@ -606,8 +613,8 @@ function getRoutesFromDB() {
 
 function getRoutesFromDBInfo(res) {
     ownTasks = [];
-    tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
-    tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
+    tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active, 'active');
+    tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished, 'nonactive');
     generateOwnTasks('task_routes_own_routes');
 }
 
