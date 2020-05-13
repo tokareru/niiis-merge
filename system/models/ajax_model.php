@@ -287,7 +287,7 @@ class ajax_model extends model {
             return array("response" => "NOT FOUND GET REQUEST");
         }
     }
-
+    
     function save_route_type() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "UPDATE ROUTE set status = '" . $_POST["status"] . "' where id = " . $_POST["id"];
@@ -325,7 +325,98 @@ class ajax_model extends model {
             return array("response" => "NOT FOUND POST REQUEST");
         }
     }
-
+    
+    // Users Tasks
+    function get_user_tasks() {
+        if ($_SERVER["REQUEST_METHOD"] == "GET") {
+            
+            $sql = "SELECT cnfval as round FROM sys_cnf WHERE cnfname = 'round'";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $temp = $q->fetchAll();
+            $round = $round[0]['round'];
+            
+            $sql = "SELECT * FROM users_tasks WHERE username = :username AND round = :round AND active_sign = 1";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("username" => $_GET["login"], 
+                                "round" => $round
+                                ));
+            $Q = $q->fetchAll();
+            $response = array("tasks" => array());
+            foreach ($Q as $row) {
+                array_push($response["tasks"], 
+                            array(
+                                "global_id" => $row["task_id"],
+                                "id" => $row["task_number"],
+                                "text" => $row["text"],
+                                "isFinished" => $row["isFinished"], 
+                                "trigger" => $row["trigger"],
+                                "add_info" => $row["add_info"]
+                            ));
+            }
+            return $response;
+        } else {
+            return array("response" => "NOT FOUND GET REQUEST");
+        }
+    }
+    
+    function add_user_task() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $sql = "INSERT INTO users_tasks (task_number, username, trigger, add_info, text, round)
+                    VALUES (:task_number, :username, :trigger, :add_info, :text, :round)";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("task_number" => $_POST["id"], 
+                                "username" => $_POST["login"],
+                                "trigger" => $_POST["trigger"], 
+                                "add_info" => $_POST["add_info"], 
+                                "text" => $_POST["action"],
+                                "round" => $_POST["round"]
+                        ));
+            return array("response" => 200);
+        } else {
+            return array("response" => "NOT FOUND POST REQUEST");
+        }
+    }
+    
+    function update_user_task() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            
+            $sql = "SELECT cnfval as round FROM sys_cnf WHERE cnfname = 'round'";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            $temp = $q->fetchAll();
+            $round = $round[0]['round'];
+            
+            $sql = "UPDATE users_tasks SET isFinished = :isFinished WHERE task_number = :task_number AND username = :username AND round = :round";
+            
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("isFinished" => $_POST["isFinished"], 
+                                "task_number" => $_POST["id"], 
+                                "username" => $_POST["login"],
+                                "round" => $round
+                        ));
+            return array("response" => 200);
+        } else {
+            return array("response" => "NOT FOUND POST REQUEST");
+        }
+    }
+    
+    function delete_user_task() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $sql = "UPDATE users_tasks SET active_sign = 0 WHERE task_number = :task_number AND username = :username AND round = :round";
+            
+            $q = sys::$PDO->prepare($sql);
+            $q->execute(array("task_number" => $_POST["id"], 
+                                "username" => $_POST["login"],
+                                "round" => $_POST["round"]
+                        ));
+            return array("response" => 200);
+        } else {
+            return array("response" => "NOT FOUND POST REQUEST");
+        }
+    }
+    // --------- users tasks
+    
     function get_technologist_info() {
 
         function get_array_from_string($string) {
