@@ -183,19 +183,30 @@ function setOnChangeSelection() {
     });
     userLoginsSelection.trigger("change");
 
-    $("#task-list-body").on("change", ".task-trigger-selection", function () {
+    let taskListBody = $("#task-list-body");
+    taskListBody.on("change", ".task-trigger-selection", function () {
         let $selection = $(this);
         let $selectionParent = $selection.parent().parent().parent();
         let $taskTriggerSelectionBody = $selectionParent.find(".task-trigger-selection-body");
         let $taskTriggerSelectionHeader = $selectionParent.find(".task-trigger-selection-header");
+        let $textarea = $selectionParent.find("textarea");
        if ($selection.val() === "openField"){
            $taskTriggerSelectionBody.addClass("d-block").removeClass("d-none");
            $taskTriggerSelectionHeader.addClass("d-block").removeClass("d-none");
+           $textarea.val(`Открыть вкладку '${$selectionParent.find(".open-field-selection option:selected").text()}'`)
        }else{
            $taskTriggerSelectionBody.addClass("d-none").removeClass("d-block");
            $taskTriggerSelectionHeader.addClass("d-none").removeClass("d-block");
+           $textarea.val(`${$selection.find("option:selected").text()}`)
        }
-    });
+    })
+
+    taskListBody.on("change", ".open-field-selection", function () {
+        let $selection = $(this);
+        let $selectionParent = $selection.parent().parent().parent();
+        let $textarea = $selectionParent.find("textarea");
+        $textarea.val(`Открыть вкладку '${$selection.find("option:selected").text()}'`)
+    })
 }
 
 function addNewTaskToList() {
@@ -203,6 +214,7 @@ function addNewTaskToList() {
     let round = $("#userRoundSelection").val();
     let taskBody = $(`div[task-id="task-${login}-${round}"]`);
     taskBody.append(combineUserTask({text: "", trigger: "", add_info: ""}, taskBody.find(".userTask").length));
+    taskBody.find(".userTask").last().find(".task-trigger-selection").trigger("change");
     let body =  document.body;
     body.scrollTo( 0, body.scrollHeight);
 }
