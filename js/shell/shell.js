@@ -228,7 +228,6 @@ async function updateShell(){
     initToDoList();
     initProgressBar();
 
-
     shell.trigger("endOfShellInit");
 
     $("#print_report_button").on("click", function () {

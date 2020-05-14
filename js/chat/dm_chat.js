@@ -3,7 +3,7 @@ function initChats() {
     initDMChat(AllInfo.length);
     Server_count = initServerCount();
     $('#chat_text_button').hide(0);
-    $('#dm_user_0').css({"height": '117%'})
+    $('#dm_user_0').css({"height": '117%'});
 
     //console.log('cur login: ' + login);
     /*setInterval(function () {
@@ -57,13 +57,13 @@ function initDMChat(count_users) {
         .addClass("ui-corner-left");
 
     //initDMChats();
-    let speed = 5000;
+    let speed = 8000;
     setInterval(function () {
         let $chat_window_chat = $('#dm_user_0');
 
         if ($('#chat_window').data('init')) {
             //$chat_window_chat.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
-        } else speed = 5000;
+        } else speed = 8000;
         addNewComments($chat_window_chat,
             {
                 type: 'ALL',
@@ -71,13 +71,9 @@ function initDMChat(count_users) {
             },
             {
                 type: 'ALL', count_messages: 0, function: 'print_comment'
-            });
+            }, $('#chat_window').data('init'));
         $('#chat_dm').find('.chats_div').children().each(function (index) {
                 if (index !== 0) {
-                    if ($('#chat_dm').find('.chats_div').children().length > userCount) {
-                        userCount++;
-                    }else isFirstInit = false
-
                     let $this = $(this);
                     if ($('#chat_window').data('init')) {
                         //$this.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
@@ -94,7 +90,8 @@ function initDMChat(count_users) {
                             login_user_chat_with: $this.data('login_user_chat_with'),
                             count_messages: 0,
                             function: 'print_comment'
-                        }
+                        },
+                        $('#chat_window').data('init')
                     );
 
                     let count_mes = $(this).data('unread_messages');
@@ -174,17 +171,14 @@ function initDMChat(count_users) {
             $('#chat_dm').find($attr).data({'scroll': false});
             $('#chat_dm').find($attr).scrollTop($('#chat_dm').find($attr)[0].scrollHeight);
         }
-        if ($attr !== '#dm_user_0')
-        {
+        if ($attr !== '#dm_user_0') {
             $('.chats_header').html('<span class="font-italic font-weight-light" ' +
                 '">Чат с пользователем </span>' +
                 '<span class="font-weight-bold">'
                 + $('#chat_dm').find($attr).data('name_user') + '</span>');
             $('#chat_window').data({'name': $attr});
             $('#chat_text_button').show(0);
-        }
-
-        else{
+        } else {
             $('.chats_header').html('<span class="font-weight-bold">Системный чат</span>');
             $('#chat_window').data({'name': $attr});
             $('#dm_user_0').height('117%');
@@ -255,17 +249,17 @@ function getLoginNames(loginChoice = "login") {
             for (let login in data) {
                 let name = '';
                 if (loginChoice === 'long_name')
-                     name = data[login].first_name + " " + data[login].last_name + " " + data[login].otc;
-                else if(loginChoice ==='short_name' || loginChoice === "allInfo")
-                    name = data[login].first_name + " " + data[login].last_name[0] + "." + data[login].otc[0] +'.';
-                else if (loginChoice === 'fio'){
+                    name = data[login].first_name + " " + data[login].last_name + " " + data[login].otc;
+                else if (loginChoice === 'short_name' || loginChoice === "allInfo")
+                    name = data[login].first_name + " " + data[login].last_name[0] + "." + data[login].otc[0] + '.';
+                else if (loginChoice === 'fio') {
                     name = `${data[login].last_name} ${data[login].first_name[0]}. ${data[login].otc[0]}.`;
                     //console.log('fio ' + name);
                 }
-                    loginUsers.push(data[login].login);
-                    nameUsers.push(name);
-                    roleUsers.push(data[login].role);
-                    fioNames.push(`${data[login].last_name} ${data[login].first_name[0]}. ${data[login].otc[0]}.`);
+                loginUsers.push(data[login].login);
+                nameUsers.push(name);
+                roleUsers.push(data[login].role);
+                fioNames.push(`${data[login].last_name} ${data[login].first_name[0]}. ${data[login].otc[0]}.`);
 
             }
         },
@@ -273,7 +267,7 @@ function getLoginNames(loginChoice = "login") {
             console.log('error');
         }
     });
-    if (loginChoice == "allInfo"){
+    if (loginChoice == "allInfo") {
         let allInfo = [];
         if (loginUsers.length)
             loginUsers.forEach(function (login, index) {
@@ -294,9 +288,9 @@ function getLoginNames(loginChoice = "login") {
         return allInfo;
     }
 
-    if(loginChoice === "login")
-    return loginUsers;
-    else if(loginChoice === "short_name" || loginChoice === "long_name" || loginChoice === 'fio')
+    if (loginChoice === "login")
+        return loginUsers;
+    else if (loginChoice === "short_name" || loginChoice === "long_name" || loginChoice === 'fio')
         return nameUsers;
     else return roleUsers;
 }
