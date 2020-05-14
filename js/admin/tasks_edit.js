@@ -106,9 +106,9 @@ function combineTriggerSelection(selectedTriggerName = "") {
             <option ${(selectedTriggerName === "saveRouteMap") ? "selected": ""} task-description="Сохранить маршрутную карту" value="saveRouteMap">Сохранение маршрутной карты</option>
             <option ${(selectedTriggerName === "saveTechProcess") ? "selected": ""} task-description="Сохранить техпроцесс" value="saveTechProcess">Сохранение техпроцесса</option>
             <option ${(selectedTriggerName === "saveProductionTasks") ? "selected": ""} task-description="Сохранить задание на производство для всех рабочих" value="saveProductionTasks">Сохранение задания на производство для всех рабочих</option>
-            <option ${(selectedTriggerName === "openField") ? "selected": ""} task-description="Открыть вкладку" value="openField">Открыть вкладку</option>
+            <option ${(selectedTriggerName === "openField") ? "selected": ""} task-description="Открыть вкладку" value="openField">Вкладка открыта</option>
             <option ${(selectedTriggerName === "finishScheme") ? "selected": ""} task-description="Завершить чертеж" value="finishScheme">Завершение чертежа</option>
-            <option ${(selectedTriggerName === "sendToPrint") ? "selected": ""} task-description="Отправить на печать" value="sendToPrint">Отправить на печать</option>
+            <option ${(selectedTriggerName === "sendToPrint") ? "selected": ""} task-description="Отправить на печать" value="sendToPrint">На печать отправлено</option>
         </select>
     `
 }
