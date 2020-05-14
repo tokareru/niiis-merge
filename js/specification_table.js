@@ -131,6 +131,7 @@ function setSpecTable(json) {
             else {
                 if (Role === "designer") {
                     $tbody.append(combineTbodyRow({row: [{text: "", readonly: false}]}));
+                    $tbody.append(combineTbodyRow({row: [{text: "", readonly: false}]}));
                 } else
                     $tbody.append(combineTbodyRow({row: [{text: "", readonly: true}]}));
             }
@@ -166,7 +167,7 @@ function combineTbodyRow(row = {
     row: [{text: "", readonly: false}, {text: "", readonly: false}, {
         text: "",
         readonly: false
-    }, {text: "", readonly: false}]
+    }, {text: "", readonly: false}, {text: "", readonly: false}]
 }) {
     let deleteButton = (Role === "designer" && Round !== 3) ? `<td><span class="font-family-fontAwesome font-size-12-em deleteNodeButtonRM"></span></td>` : ``;
     let cells = "";
@@ -193,10 +194,10 @@ function addNewRowToSpecTable(data) {
     let info;
     if (data !== undefined)
         info = {
-            row: [{text: data[0], readonly: false}, {text: data[1], readonly: false}, {
-                text: data[2],
-                readonly: false
-            }, {text: data[3], readonly: false}]
+            row: [{text: data[0], readonly: false},
+                {text: data[1], readonly: false},
+                {text: data[2], readonly: false},
+                {text: data[3], readonly: false},]
         };
 
     if (Round !== 3) {
