@@ -3,13 +3,14 @@
     max-width: 955px;
     min-width: 955px;
     margin-left: -3px;
+    margin-top: 80px;
     //border: black solid 3px!important;
     box-sizing: border-box;
 }
 
 #table_title_block td{
     border: black solid 3px;
-    //box-sizing: content-box!important;
+    /*//box-sizing: content-box!important;*/
     padding: 0;
     padding-left: 1px;
     margin: 0;
@@ -19,10 +20,11 @@
     font-weight: 500;
     overflow-x: hidden;
     vertical-align: middle;
+    background-color: white;
 }
 
 #table_title_block td:last-child{
-    border-right: 0;
+    /*border-right: 0;*/
 }
 #table_title_block tr{
     box-sizing: content-box!important;

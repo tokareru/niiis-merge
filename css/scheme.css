@@ -84,7 +84,7 @@
     min-height: 500px;
 }
 #field3DAll{
-    border: 3px solid black;
+    /*border: 3px solid black;*/
     border-bottom: 0;
     padding: 0;
     max-width:955px;
