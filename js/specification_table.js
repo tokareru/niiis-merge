@@ -74,8 +74,9 @@ function setSpecTable(json) {
     if (Role === "designer" && Round !== 3)
         $theadTr.append(`<td style="width: 20px"></td>`);
     if (json.thead.length)
-        json.thead.forEach(function (_cell) {
-            $theadTr.append(combineTheadCell(_cell))
+        json.thead.forEach(function (_cell, index) {
+            $theadTr.append(combineTheadCell(_cell));
+            if (index === 0) $theadTr.find(".specTableTheadCell").parent().css({'width': 80, 'max-width': 80, 'min-width': 80});
         });
     if(!TaskInfoReload){
         if (json.tbody === undefined) {
@@ -121,7 +122,7 @@ function setTableByRowDAta(data) {
 function combineTheadCell(cell = {text: "", readonly: false}) {
     let disabled = (true) ? `disabled="disabled"` : ``;
     return `
-        <td><input class="bg-transparent border-0 outline-none shadow-none font-weight-bold" ${disabled} value="${cell.text}"></td>
+        <td><input class="specTableTheadCell bg-transparent border-0 outline-none shadow-none font-weight-bold" ${disabled} value="${cell.text}"></td>
     `;
 }
 
