@@ -824,7 +824,7 @@ function saveTechProcess() {
             data: json,
             success: function (data) {
                 console.log(data);
-
+                madeRouteMapByTechProcess(json);
                 setActionToBar({
                     id: "saveTechProcess",
                     type: "save",

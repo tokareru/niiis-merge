@@ -8,6 +8,7 @@ function initRouteMap() {
 function initRouteMap() {
     let tech_process_field_drop = $("#tech_process_field_drop");
     let tech_process_table = $("#tech_process_table");
+
     $("#tabs li[aria-controls='route_map_field']").on("click", function () {
         $("#tech_process_field_drop").removeClass("tech_process_table");
         //$("#tech_process_field_drop").droppable("disable");
@@ -179,6 +180,17 @@ function initRouteMap() {
             });
         });
     }
+
+    tech_process_table.on("routeMapRefresh", function () {
+        $(".newRouteMapRow").remove();
+        $.ajax({
+            url: 'ajax/get_route_map_3 ',
+            type: 'GET',
+            success: function (res) {
+                setTechProcessJson(techGuideJson, res, $table);
+            }
+        })
+    })
 
 
     // инициализация
@@ -371,14 +383,13 @@ function saveTechProcessTableRound3($table) {
         data: {data: saveObj},
         success: function (res) {
             console.log(res);
-            triggerToDoTaskEvent("saveRouteMap");
-
             setActionToBar({
                 id: "saveRouteMapTable",
                 type: "save",
                 field: "Маршрутная карта",
                 text: `Сохранение маршрутной карты'`
             });
+            triggerToDoTaskEvent("saveRouteMap");
 
             $.ajax({
                 type: "POST",
@@ -742,4 +753,80 @@ function combineRowFor_1_2Rounds(data = {name: "", equipment: "", tools: ""}) {
             <td colspan="5" class="tdBorderBlackRight"></td>
         </tr>
     `
+}
+
+function madeRouteMapByTechProcess(techProcessData) {
+    let routeMapData = {
+        data: []
+    };
+    let emptyRow = {
+        name: {
+            id: 0,
+            lvl: 0
+        },
+        equipment: [],
+        tools: []
+    }
+
+    if (techProcessData.techProcess.length){
+        techProcessData.techProcess.forEach(function (_techProcess) {
+            routeMapData.data.push({
+                // формируем заголовок техпроцесса
+                name: {
+                    id: _techProcess.id,
+                    lvl: _techProcess.lvl
+                },
+                equipment: [],
+                tools: []
+            });
+            // находим техоперации в данном техпроцессе
+            if (_techProcess.operations.length)
+                _techProcess.operations.forEach(function (_operation) {
+                    let thatOperationEquipment = [];
+                    let thatOperationToolsAndRig = [];
+                    // находим оборудование (id = 5), инструменты (id = 7) и приспособления (id = 4)
+                    if (_operation.nodes.length)
+                        _operation.nodes.forEach(function (_node) {
+                            if (_node.id === "5")
+                                thatOperationEquipment = _node.fields;
+                            if (_node.id === "7")
+                                thatOperationToolsAndRig = thatOperationToolsAndRig.concat(_node.fields);
+                            if (_node.id === "4")
+                                thatOperationToolsAndRig = thatOperationToolsAndRig.concat(_node.fields);
+
+                        });
+                    let operationObj = {
+                        name: {
+                            id: _operation.id,
+                            lvl: _operation.lvl
+                        },
+                        tools: thatOperationToolsAndRig,
+                        equipment: thatOperationEquipment
+                    };
+
+                    routeMapData.data.push(operationObj)
+                })
+            routeMapData.data.push(emptyRow);
+        })
+    }
+
+    $.ajax({
+        url: 'ajax/save_route_map_3',
+        type: 'POST',
+        data: routeMapData,
+        success: function (res) {
+            console.log(res);
+            $("#tech_process_table").trigger("routeMapRefresh");
+            $.ajax({
+                type: "POST",
+                url: "/start_ajax/db_change_time",
+                data: {
+                    login: login
+                },
+                success: function (answer) {
+                    console.log(answer);
+                }
+            })
+        }
+    })
 }

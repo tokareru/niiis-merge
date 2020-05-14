@@ -224,19 +224,20 @@ async function updateShell(){
 
     shell.removeClass("blur-filter");
     tabs_fields_ul.removeClass("blur-filter");
+
+    initToDoList();
+    initProgressBar();
+
     shell.trigger("endOfShellInit");
 
-    initProgressBar();
-    initToDoList();
-
     $("#print_report_button").on("click", function () {
-       triggerToDoTaskEvent("sendToPrint")
         setActionToBar({
             id: "sendToPrint",
             type: "print",
             field: "Кабинет",
             text: "Отчёт отправлен на печать"
-        })
+        });
+        triggerToDoTaskEvent("sendToPrint")
     });
 
     $("#exit_button").on("click", function () {

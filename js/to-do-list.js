@@ -19,11 +19,7 @@ function initToDoList() {
 
 function setToDoList(json) {
     let $toDoListBody = $("#progress-bar-to-do-list");
-    let $button = $("#progress-bar-to-do-list-body button");
-    $button.on("click", function () {
-        $button.find(".toDoNotification").remove();
-    })
-
+    $toDoListBody.empty();
     if (json.tasks.length)
         json.tasks.forEach(function (_task, index) {
             $toDoListBody.append(combineToDoListTask(_task, index + 1));
@@ -61,9 +57,8 @@ function setToDoList(json) {
             }else{
                 $toDoListBody.on("openField", function (e, addInfo) {
                     //console.log(addInfo.tabId, _task.add_info)
-                    if (_task.add_info === addInfo.tabId){
+                    if (_task.add_info == addInfo.tabId){
                         let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
-                        console.log($this.attr("data-is-done"))
                         if ($this.attr("data-is-done") == "true") return;
                         $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
                         $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
@@ -97,7 +92,6 @@ function updateToDoListTaskById(id, isFinished) {
         },
         success: function (json) {
             console.log(json)
-            setToDoList(json)
         }
     })
 }
@@ -117,35 +111,33 @@ function combineToDoListTask(task = {id: 0, text: "", isFinished: false}, positi
 }
 
 function addToDoTaskTOList(userLogin, round, toDoTask) {
-    let oldToDoTaskList;
+    let oldToDoTaskList = [];
     $.ajax({
         type: 'GET',
-        url: 'json/to_do_list_config.json',
-        async: false,
+        url: 'ajax/get_user_tasks_by_round',
         data: {
-            "login": userLogin,
-            "round": round
+            login: userLogin,
+            round: round
         },
         success: function (json) {
             oldToDoTaskList = json.tasks;
+            oldToDoTaskList.push(toDoTask);
+            let data = {
+                login: userLogin,
+                round: round,
+                tasks: oldToDoTaskList
+            };
+            //console.log(data)
+            $.ajax({
+                type: 'POST',
+                url: 'ajax/add_user_task',
+                data: data,
+                success: function (json) {
+                    console.log(json);
+                }
+            });
         }
     });
-    oldToDoTaskList.push(toDoTask);
-    let data = {
-        "login": userLogin,
-        "round": round,
-        "tasks": oldToDoTaskList
-    };
-    //console.log(data)
-    $.ajax({
-        type: 'POST',
-        url: 'json/to_do_list_config.json',
-        data: data,
-        success: function (json) {
-            console.log(json);
-        }
-    });
-
 }
 
 /*

@@ -1,8 +1,6 @@
 let currentName = "";
 let Max_count_messages = 100;
 let Server_count;
-let isFirstInit = true;
-let userCount = 0;
 
 
 function initAllUsersChat() {
@@ -208,7 +206,7 @@ function chatClick() {
 }
 
 //печать комментов из базы-данных
-function printComments($chat, dataToAjax, init_count = false, scrollDown = true) {
+function printComments($chat, dataToAjax, init_count = false, scrollDown = true, isFirstInit) {
     if (dataToAjax.count_messages <= 0) {
         return;
     }
@@ -231,7 +229,7 @@ function printComments($chat, dataToAjax, init_count = false, scrollDown = true)
                 }
             }
             console.log('______________');*/
-            addCommentsByData(data, $chat, init_count);
+            addCommentsByData(data, $chat, init_count, isFirstInit);
         },
         complete: function () {
             if (scrollDown)
@@ -267,7 +265,7 @@ function currentCountMessagesOnServer($chat, dataToAjax) {
     return count;
 }
 
-function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
+function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint, isFirstInit) {
     //console.log($chat.data('login_user_chat_with') + ' cur count: ' + $chat.data('count_messages'));
     /*console.log(dataToAjaxCount);
     console.log(dataToAjaxPrint);*/
@@ -290,7 +288,7 @@ function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
                 Server_count[login_other_user] = count;
                 dataToAjaxPrint.count_messages += count_to_ajax;
                 //console.log($chat.data('login_user_chat_with') + ' new count: ' + (count_to_ajax));
-                printComments($chat, dataToAjaxPrint);
+                printComments($chat, dataToAjaxPrint, false, true, isFirstInit);
                 $chat.data({'count_messages': count_to_ajax});
 
                 if ($chat.data("unread_messages") !== undefined) {
@@ -300,11 +298,11 @@ function addNewComments($chat, dataToAjaxCount, dataToAjaxPrint) {
             }
         }
     });
-
 }
 
 //добавляет комменты на страничку
-function addCommentsByData(data, $chat, init_count) {
+function addCommentsByData(data, $chat, init_count, isFirstInit) {
+
     let $chat_ul = $chat.find('ul');
     let countMes = 0;
     let last_key = 0;
@@ -320,15 +318,15 @@ function addCommentsByData(data, $chat, init_count) {
         let count = $chat.data('count_messages') + countMes;
         $chat.data({'count_messages': count});
     }
-
-    //console.log(data[last_key]);
-
-    if (!isFirstInit)
+    //console.log(isFirstInit);
+    if (!isFirstInit){
         generateNotification({
             mainHeader: "Чат",
             extraHeader:`${data[last_key].login}`,
             text: `${data[last_key].comment}`
-        })
+        });
+    }
+
 }
 
 //следующие функции преобразовывают дату. Проблема в том, что дата

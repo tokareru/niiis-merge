@@ -100,15 +100,15 @@ function combineUserTask(task = {text: "", trigger: "", add_info: ""}, index) {
 function combineTriggerSelection(selectedTriggerName = "") {
     return `
         <select class="form-control task-trigger-selection shadow-none">
-            <option ${(selectedTriggerName === "saveScheme") ? "selected": ""} value="saveScheme">Сохранение главной надписи чертежа</option>
-            <option ${(selectedTriggerName === "saveSpecTable") ? "selected": ""} value="saveSpecTable">Сохранение таблицы спецификации</option>
-            <option ${(selectedTriggerName === "chooseAllDetails") ? "selected": ""} value="chooseAllDetails">Выбор всех изделий</option>
-            <option ${(selectedTriggerName === "saveRouteMap") ? "selected": ""} value="saveRouteMap">Сохранение маршрутной карты</option>
-            <option ${(selectedTriggerName === "saveTechProcess") ? "selected": ""} value="saveTechProcess">Сохранение техпроцесса</option>
-            <option ${(selectedTriggerName === "saveProductionTasks") ? "selected": ""} value="saveProductionTasks">Сохранение задания на производство для всех рабочих</option>
-            <option ${(selectedTriggerName === "openField") ? "selected": ""} value="openField">Открыть вкладку</option>
-            <option ${(selectedTriggerName === "finishScheme") ? "selected": ""} value="finishScheme">Завершение чертежа</option>
-            <option ${(selectedTriggerName === "sendToPrint") ? "selected": ""} value="sendToPrint">Отправить на печать</option>
+            <option ${(selectedTriggerName === "saveScheme") ? "selected": ""} task-description="Сохранить главную надпись чертежа" value="saveScheme">Сохранение главной надписи чертежа</option>
+            <option ${(selectedTriggerName === "saveSpecTable") ? "selected": ""} task-description="Сохранить таблицу спецификации" value="saveSpecTable">Сохранение таблицы спецификации</option>
+            <option ${(selectedTriggerName === "chooseAllDetails") ? "selected": ""} task-description="Выбрать все изделия" value="chooseAllDetails">Выбор всех изделий</option>
+            <option ${(selectedTriggerName === "saveRouteMap") ? "selected": ""} task-description="Сохранить маршрутную карту" value="saveRouteMap">Сохранение маршрутной карты</option>
+            <option ${(selectedTriggerName === "saveTechProcess") ? "selected": ""} task-description="Сохранить техпроцесс" value="saveTechProcess">Сохранение техпроцесса</option>
+            <option ${(selectedTriggerName === "saveProductionTasks") ? "selected": ""} task-description="Сохранить задание на производство для всех рабочих" value="saveProductionTasks">Сохранение задания на производство для всех рабочих</option>
+            <option ${(selectedTriggerName === "openField") ? "selected": ""} task-description="Открыть вкладку" value="openField">Открыть вкладку</option>
+            <option ${(selectedTriggerName === "finishScheme") ? "selected": ""} task-description="Завершить чертеж" value="finishScheme">Завершение чертежа</option>
+            <option ${(selectedTriggerName === "sendToPrint") ? "selected": ""} task-description="Отправить на печать" value="sendToPrint">Отправить на печать</option>
         </select>
     `
 }
@@ -120,6 +120,7 @@ function combineOpenFieldSelection(selectedField = "") {
             <option ${(selectedField === "scheme") ? "selected": ""} value="scheme">Рабочий стол. Чертеж</option>   
             <option ${(selectedField === "fieldBlock") ? "selected": ""} value="fieldBlock">Рабочий стол. 3D</option>   
             <option ${(selectedField === "technological_process_field") ? "selected": ""} value="technological_process_field">Рабочий стол. Техпроцесс</option>   
+            <option ${(selectedField === "route_map_field") ? "selected": ""} value="route_map_field">Маршрутная карта</option>   
             <option ${(selectedField === "technologist_guide_field") ? "selected": ""} value="technologist_guide_field">Справочник технолога</option>   
             <option ${(selectedField === "esi_field") ? "selected": ""} value="esi_field">Электронный состав изделия</option>   
             <option ${(selectedField === "std_field") ? "selected": ""} value="std_field">Стандартные изделия</option>   
@@ -182,19 +183,30 @@ function setOnChangeSelection() {
     });
     userLoginsSelection.trigger("change");
 
-    $("#task-list-body").on("change", ".task-trigger-selection", function () {
+    let taskListBody = $("#task-list-body");
+    taskListBody.on("change", ".task-trigger-selection", function () {
         let $selection = $(this);
         let $selectionParent = $selection.parent().parent().parent();
         let $taskTriggerSelectionBody = $selectionParent.find(".task-trigger-selection-body");
         let $taskTriggerSelectionHeader = $selectionParent.find(".task-trigger-selection-header");
+        let $textarea = $selectionParent.find("textarea");
        if ($selection.val() === "openField"){
            $taskTriggerSelectionBody.addClass("d-block").removeClass("d-none");
            $taskTriggerSelectionHeader.addClass("d-block").removeClass("d-none");
+           $textarea.val(`Открыть вкладку '${$selectionParent.find(".open-field-selection option:selected").text()}'`)
        }else{
            $taskTriggerSelectionBody.addClass("d-none").removeClass("d-block");
            $taskTriggerSelectionHeader.addClass("d-none").removeClass("d-block");
+           $textarea.val(`${$selection.find("option:selected").attr("task-description")}`)
        }
-    });
+    })
+
+    taskListBody.on("change", ".open-field-selection", function () {
+        let $selection = $(this);
+        let $selectionParent = $selection.parent().parent().parent();
+        let $textarea = $selectionParent.find("textarea");
+        $textarea.val(`Открыть вкладку '${$selection.find("option:selected").text()}'`)
+    })
 }
 
 function addNewTaskToList() {
@@ -202,6 +214,7 @@ function addNewTaskToList() {
     let round = $("#userRoundSelection").val();
     let taskBody = $(`div[task-id="task-${login}-${round}"]`);
     taskBody.append(combineUserTask({text: "", trigger: "", add_info: ""}, taskBody.find(".userTask").length));
+    taskBody.find(".userTask").last().find(".task-trigger-selection").trigger("change");
     let body =  document.body;
     body.scrollTo( 0, body.scrollHeight);
 }
