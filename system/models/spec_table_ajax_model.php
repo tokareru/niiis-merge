@@ -59,7 +59,7 @@ class spec_table_ajax_model extends model {
             $Q = $_POST['tbody'];
             foreach ($Q as $row) {
                 $readonly_str = "";
-                for ($i = 0; $i < 4; $i++) {
+                for ($i = 0; $i < 5; $i++) {
                     $bool = $row["row"][$i]["readonly"];
                     if ($bool == "true") {
                         $readonly_str .= "t";
