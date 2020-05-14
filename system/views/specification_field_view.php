@@ -18,7 +18,7 @@
     <div class="col-md-12 spec_header">
         Спецификация
     </div>
-    <div>
+    <div id="specificationTableBlock">
         <table id="specificationTable" class="table table-bordered table-hover">
             <thead>
                 <tr class="font-weight-bold">

@@ -48,7 +48,7 @@ function initSpecTable(json) {
         saveSpecTable();
     });
 
-    if (Round !== 3 && Role === "designer"){
+    if (Round !== 3 && Role === "designer") {
         $tableBlock.on("change", ".specTableCellInput", function (event) {
             setActionToBar({
                 id: "changeSpecTableCell",
@@ -67,7 +67,7 @@ function initSpecTable(json) {
 }
 
 function setSpecTable(json) {
-    //console.log(json);
+    console.log(json);
     let $table = $("#specificationTable");
     let $theadTr = $table.find("thead tr");
     let $tbody = $table.find("tbody");
@@ -76,9 +76,45 @@ function setSpecTable(json) {
     if (json.thead.length)
         json.thead.forEach(function (_cell, index) {
             $theadTr.append(combineTheadCell(_cell));
-            if (index === 0) $theadTr.find(".specTableTheadCell").parent().css({'width': 80, 'max-width': 80, 'min-width': 80});
+            if (index === 0) {
+                $theadTr.find(".specTableTheadCell").eq(index).parent().css({
+                    'width': 60,
+                    'max-width': 60,
+                    'min-width': 60,
+                });
+                $theadTr.find(".specTableTheadCell").eq(index).parent().addClass('pb-0');
+            }
+            if (index === 1) {
+                $theadTr.find(".specTableTheadCell").eq(index).parent().css({
+                    'width': 315,
+                    'max-width': 315,
+                    'min-width': 315
+                });
+                $theadTr.find(".specTableTheadCell").eq(index).addClass('text-center');
+            }
+            if (index === 2) {
+                $theadTr.find(".specTableTheadCell").eq(index).parent().css({
+                    'width': 315,
+                    'max-width': 315,
+                    'min-width': 315
+                });
+                $theadTr.find(".specTableTheadCell").eq(index).addClass('text-center');
+            }
+            if (index === 3) {
+                $theadTr.find(".specTableTheadCell").eq(index).parent().css({
+                    'width': 80,
+                    'max-width': 80,
+                    'min-width': 80
+                });
+            }
+            if (index === 4) $theadTr.find(".specTableTheadCell").eq(index).parent().css({
+                'width': 130,
+                'max-width': 130,
+                'min-width': 130,
+            });
+            //else $theadTr.find(".specTableTheadCell").eq(index).parent().css({'width': 100, 'max-width': 100, 'min-width': 100});
         });
-    if(!TaskInfoReload){
+    if (!TaskInfoReload) {
         if (json.tbody === undefined) {
             let temp = [];
             for (let i = 0; i < json.thead.length; i++) {
@@ -172,20 +208,20 @@ function addNewRowToSpecTable(data) {
 }
 
 function specTableMoveByKey(e, $table, $input) {
-    if (Round !== 3 && Role === "designer" && e.which === 9){
+    if (Round !== 3 && Role === "designer" && e.which === 9) {
         e.preventDefault();
         let isNext = false;
         let $inputs = $table.find('.specTableCellInput');
         $inputs.each(function (index) {
-            if ($inputs.length === index + 1){
+            if ($inputs.length === index + 1) {
                 $(this).blur();
             }
-            if (isNext){
+            if (isNext) {
                 $(this).focus();
                 isNext = false;
                 return;
             }
-            if ($input.get(0) === $(this).get(0)){
+            if ($input.get(0) === $(this).get(0)) {
                 isNext = true;
             }
         })
@@ -219,6 +255,7 @@ function saveSpecTableData($rows) {
                     {text: cells.eq(1).val(), readonly: false},
                     {text: cells.eq(2).val(), readonly: false},
                     {text: (cells.eq(3).val() !== "Не указано") ? cells.eq(3).val() : "0", readonly: false},
+                    {text: cells.eq(4).val(), readonly: false},
                     {product_id: index, readonly: false}
                 ]
             })
@@ -257,7 +294,10 @@ function saveSpecTable() {
         type: "POST",
         url: saveUrl,
         data: {
-            thead: [{text:"Позиция", readonly:true},{text:"Обозначение",readonly:true},{text:"Наименование",readonly:true},{text:"Кол.",readonly:true}],
+            thead: [{text: "Позиция", readonly: true}, {text: "Обозначение", readonly: true}, {
+                text: "Наименование",
+                readonly: true
+            }, {text: "Кол.", readonly: true}],
             tbody: saveData,
             login: login
         },

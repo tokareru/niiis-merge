@@ -10,3 +10,17 @@
 .addNewRowToSpecTableButton{
     cursor: pointer;
 }
+
+#specificationTable{
+    width: 100%;
+    max-width: 100%;
+    min-width: 100%;
+}
+
+#specificationTableBlock{
+    margin-right: auto;
+    margin-left: auto;
+    width: 950px;
+    max-width: 950px;
+    min-width: 950px;
+}
