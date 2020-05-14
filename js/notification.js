@@ -32,9 +32,9 @@ function initNotifications() {
                 success: function (answer) {
                     if (answer.is_drawing_finished == false){
                         setNotificationToFieldInitialization("scheme", {
-                            mainHeader: "Рабочий стол. Чертёж",
+                            mainHeader: "Рабочий стол. Чертеж",
                             extraHeader:"",
-                            text: `Соедините точки, чтобы завершить чертёж.`
+                            text: `Соедините точки, чтобы завершить чертеж.`
                         });
                     }
                 }
@@ -46,12 +46,12 @@ function initNotifications() {
                 text: `Заполните таблицу спецификации и не забудьте сохранить изменения.`
             });
             setNotificationToFieldInitialization("scheme", {
-                mainHeader: "Рабочий стол. Чертёж",
+                mainHeader: "Рабочий стол. Чертеж",
                 extraHeader:"",
                 text: `Два раза кликните на размер, чтобы его изменить.`
             });
             setNotificationToFieldInitialization("scheme", {
-                mainHeader: "Рабочий стол. Чертёж",
+                mainHeader: "Рабочий стол. Чертеж",
                 extraHeader:"",
                 text: `Заполните основную надпись чертежа, проставьте размеры и сохраните изменения.`
             });
@@ -92,9 +92,9 @@ function initNotifications() {
                 success: function (answer) {
                     if (!answer.is_drawing_finished){
                         setNotificationToFieldInitialization("scheme", {
-                            mainHeader: "Рабочий стол. Чертёж",
+                            mainHeader: "Рабочий стол. Чертеж",
                             extraHeader:"",
-                            text: `Соедините точки, чтобы завершить чертёж.`
+                            text: `Соедините точки, чтобы завершить чертеж.`
                         });
                     }
                 }
@@ -105,12 +105,12 @@ function initNotifications() {
                 text: "Вы можете перетаскивать изделия в область \"Рабочий стол. 3D\"."
             });
             setNotificationToFieldInitialization("scheme", {
-                mainHeader: "Рабочий стол. Чертёж",
+                mainHeader: "Рабочий стол. Чертеж",
                 extraHeader:"",
                 text: `Два раза кликните на размер, чтобы его изменить.`
             });
             setNotificationToFieldInitialization("scheme", {
-                mainHeader: "Рабочий стол. Чертёж",
+                mainHeader: "Рабочий стол. Чертеж",
                 extraHeader:"",
                 text: `Заполните основную надпись чертежа, проставьте размеры и сохраните изменения.`
             });

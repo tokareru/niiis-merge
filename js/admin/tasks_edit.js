@@ -6,11 +6,11 @@ $(function () {
     let usersData = initUserLogins();
     initUserTasks(usersData);
     setOnChangeSelection();
-    
+
     $("#addNewTaskButton").on("click", function () {
         addNewTaskToList();
     }).removeClass("d-none");
-    
+
     $("#saveTaskListButton").on("click", function () {
         saveTaskList();
     }).removeClass("d-none");
@@ -117,7 +117,7 @@ function combineOpenFieldSelection(selectedField = "") {
     return `
         <select class="form-control shadow-none open-field-selection">
             <option ${(selectedField === "specification") ? "selected": ""} value="specification">Спецификация</option>   
-            <option ${(selectedField === "scheme") ? "selected": ""} value="scheme">Рабочий стол. Чертёж</option>   
+            <option ${(selectedField === "scheme") ? "selected": ""} value="scheme">Рабочий стол. Чертеж</option>   
             <option ${(selectedField === "fieldBlock") ? "selected": ""} value="fieldBlock">Рабочий стол. 3D</option>   
             <option ${(selectedField === "technological_process_field") ? "selected": ""} value="technological_process_field">Рабочий стол. Техпроцесс</option>   
             <option ${(selectedField === "technologist_guide_field") ? "selected": ""} value="technologist_guide_field">Справочник технолога</option>   
