@@ -69,7 +69,7 @@ class spec_table_ajax_model extends model {
                 }
                 
                 $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT, NOTE, IS_READ_ONLY, ROUND, PRODUCT_ID, USER_ID)
-                        VALUES(:position, :name_short, :name_long, :note, :count, :readonly, :round, :product_id, (SELECT ID FROM USERS WHERE login=:login))";
+                        VALUES(:position, :name_short, :name_long, :count, :note, :readonly, :round, :product_id, (SELECT ID FROM USERS WHERE login=:login))";
                 $q = sys::$PDO->prepare($sql);
                 $i = 1;
                 $pos=null;
@@ -81,8 +81,8 @@ class spec_table_ajax_model extends model {
                     $kol = $row["row"][3]["text"];
                 }
                 
-                $q->execute(array("position" =>$pos, "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
-                    "count" => $kol, "note" => $row["row"][4]["text"], "readonly" => $readonly_str,'round'=> $round, 'product_id'=>$row["row"][4]["product_id"], 'login'=> $_POST['login']));
+                $q->execute(array("position" =>$pos, "name_short" => $row["row"][1]["text"], "name_long" => $row["row"][2]["text"],
+                    "count" => $kol, "note" => $row["row"][4]["text"], "readonly" => $readonly_str,'round'=> $round, 'product_id'=>$row["row"][5]["product_id"], 'login'=> $_POST['login']));
             }
 //            return var_dump($row);
             return array("response" => 200);
