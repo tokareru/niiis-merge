@@ -57,13 +57,13 @@ function initDMChat(count_users) {
         .addClass("ui-corner-left");
 
     //initDMChats();
-    let speed = 8000;
+    let speed = 5000;
     setInterval(function () {
         let $chat_window_chat = $('#dm_user_0');
 
         if ($('#chat_window').data('init')) {
             //$chat_window_chat.find('ul').append('<li>' + 'Чат загружается...' + '</li>');
-        } else speed = 8000;
+        } else speed = 5000;
         addNewComments($chat_window_chat,
             {
                 type: 'ALL',
