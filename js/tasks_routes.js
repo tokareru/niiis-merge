@@ -527,7 +527,7 @@ function serializeCreateTaskRoute(addTextarea = false) {
     if (ret) {
         return;
     }
-    console.log(data);
+    //console.log(data);
     return data;
 }
 
@@ -536,21 +536,23 @@ function addTaskToDB() {
     if (task === undefined || task.length === 0)
         return;
     let data = {task: task, master: login, shell: serializeAllInfo()};
-    console.log(data);
+    /*console.log(data);
     task.forEach(function (_task) {
         addToDoTaskTOList(_task.user, 2, {
-            "text": "Проверить новое задание в 'Маршруты заданий'",
-            "isFinished": false,
-            "trigger": "openField",
-            "add_info": "tasks_routes_field"
+            id: 0,
+            text: `Проверить новое задание в 'Маршруты заданий'`,
+            trigger: "openField",
+            add_info: "tasks_routes_field",
+            isFinished: false
         });
         addToDoTaskTOList(_task.user, 3, {
-            "text": "Проверить новое задание в 'Маршруты заданий'",
-            "isFinished": false,
-            "trigger": "openField",
-            "add_info": "tasks_routes_field"
+            id: 0,
+            text: `Проверить новое задание в 'Маршруты заданий'`,
+            trigger: "openField",
+            add_info: "tasks_routes_field",
+            isFinished: false
         });
-    })
+    })*/
 
     $.ajax({
         type: 'POST',

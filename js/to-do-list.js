@@ -111,35 +111,33 @@ function combineToDoListTask(task = {id: 0, text: "", isFinished: false}, positi
 }
 
 function addToDoTaskTOList(userLogin, round, toDoTask) {
-    let oldToDoTaskList;
+    let oldToDoTaskList = [];
     $.ajax({
         type: 'GET',
-        url: 'json/to_do_list_config.json',
-        async: false,
+        url: 'ajax/get_user_tasks_by_round',
         data: {
-            "login": userLogin,
-            "round": round
+            login: userLogin,
+            round: round
         },
         success: function (json) {
             oldToDoTaskList = json.tasks;
+            oldToDoTaskList.push(toDoTask);
+            let data = {
+                login: userLogin,
+                round: round,
+                tasks: oldToDoTaskList
+            };
+            //console.log(data)
+            $.ajax({
+                type: 'POST',
+                url: 'ajax/add_user_task',
+                data: data,
+                success: function (json) {
+                    console.log(json);
+                }
+            });
         }
     });
-    oldToDoTaskList.push(toDoTask);
-    let data = {
-        "login": userLogin,
-        "round": round,
-        "tasks": oldToDoTaskList
-    };
-    //console.log(data)
-    $.ajax({
-        type: 'POST',
-        url: 'json/to_do_list_config.json',
-        data: data,
-        success: function (json) {
-            console.log(json);
-        }
-    });
-
 }
 
 /*
