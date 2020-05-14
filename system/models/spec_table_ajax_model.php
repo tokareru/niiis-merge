@@ -7,7 +7,7 @@ class spec_table_ajax_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
-        $result["thead"] = array(array('text' => "Поз.", 'readonly' => true), array('text' => "Обозначение", 'readonly' => true), array('text' => "Наименование", 'readonly' => true), array('text' => "Кол.", 'readonly' => true));
+        $result["thead"] = array(array('text' => "Поз.", 'readonly' => true), array('text' => "Обозначение", 'readonly' => true), array('text' => "Наименование", 'readonly' => true), array('text' => "Кол.", 'readonly' => true), array('text' => "Примечание", 'readonly' => true));
         $i = 0;
 
         foreach ($Q as $row) {
@@ -68,8 +68,8 @@ class spec_table_ajax_model extends model {
                     }
                 }
                 
-                $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT,IS_READ_ONLY, ROUND, PRODUCT_ID, USER_ID)
-                        VALUES(:position, :name_short, :name_long, :count, :readonly, :round, :product_id, (SELECT ID FROM USERS WHERE login=:login))";
+                $sql = "INSERT INTO SPEC_TABLE(POSITION,NAME_SHORT,NAME_LONG,COUNT, NOTE, IS_READ_ONLY, ROUND, PRODUCT_ID, USER_ID)
+                        VALUES(:position, :name_short, :name_long, :note, :count, :readonly, :round, :product_id, (SELECT ID FROM USERS WHERE login=:login))";
                 $q = sys::$PDO->prepare($sql);
                 $i = 1;
                 $pos=null;
@@ -82,7 +82,7 @@ class spec_table_ajax_model extends model {
                 }
                 
                 $q->execute(array("position" =>$pos, "name_short" => $row["row"][$i++]["text"], "name_long" => $row["row"][$i++]["text"],
-                    "count" => $kol, "readonly" => $readonly_str,'round'=> $round, 'product_id'=>$row["row"][4]["product_id"], 'login'=> $_POST['login']));
+                    "count" => $kol, "note" => $row["row"][$i++]["text"], "readonly" => $readonly_str,'round'=> $round, 'product_id'=>$row["row"][4]["product_id"], 'login'=> $_POST['login']));
             }
             return array("response" => 200);
         } else {
