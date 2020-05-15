@@ -46,516 +46,516 @@ class PDF extends FPDF {
   }
 
   //Улучшенная таблица
-  function ImprovedTable($header, $data) {
-    //Ширина колонки
-    $w = array(6, 6, 6, 60, 70, 10, 24);
-    $this->SetX(20);
-    //Заголовок
-    for ($i = 0; $i < count($header); $i++) {
-
-      if (($i < 3) || ($i == 5)) {
-        $this->TextWithRotation($this->GetX() + $w[$i], $this->GetY() + 13, $header[$i], 90);
-        $this->Cell($w[$i], 15, "", 1, 0, 'C');
-      } else {
-        $this->Cell($w[$i], 15, $header[$i], 1, 0, 'C');
-      }
-    }
-    $this->Ln();
-
-    //Данные
-    foreach ($data as $row) {
-      $this->SetX(20);
-      $this->Cell($w[0], 8, "", 'LRB', 0, 'C');
-      $this->Cell($w[1], 8, "", 'LRB', 0, 'L');
-      $this->Cell($w[2], 8, $this->conv($row[0]), 'LRB', 0, 'L');
-      $this->Cell($w[3], 8, $this->conv($row[1]), 'LRB', 0, 'C');
-      $this->Cell($w[4], 8, $this->conv($row[2]), 'LRB', 0, 'C');
-      $this->Cell($w[5], 8, $this->conv($row[3]), 'LRB', 0, 'L');
-      $this->Cell($w[6], 8, "", 'LRB', 0, 'C');
-      $this->Ln();
-    }
-    $this->SetX(20);
-  }
-  
-  // фунукция вывода на третьем раунде
-  function spec_table_max($main_label, $data, $x = 20, $y = 5) {
-
-    //Ширина колонки
-    $w = array(6, 6, 6, 60, 70, 10, 24);
-    $this->SetXY($x, $y);
-    $header = array($this->conv('Формат'), 
-                    $this->conv('Зона'), 
-                    $this->conv('Поз.'), 
-                    $this->conv('Обозначение'), 
-                    $this->conv('Наименование'), 
-                    $this->conv('Кол.'), 
-                    $this->conv('Примечание'));
-
-    //Заголовок
-    $this->TextWithRotation($this->GetX() + $w[0]-1, $this->GetY() + 14, $header[0], 90);
-    $this->Cell($w[0], 15, "", 1, 0, 'C');
-    
-    $this->TextWithRotation($this->GetX() + $w[1]-1, $this->GetY() + 11, $header[1], 90);
-    $this->Cell($w[1], 15, "", 1, 0, 'C');
-    
-    $this->TextWithRotation($this->GetX() + $w[2]-1, $this->GetY() + 10, $header[2], 90);
-    $this->Cell($w[2], 15, "", 1, 0, 'C');
-    
-    $this->Cell($w[3], 15, $header[3], 1, 0, 'C');
-    
-    $this->Cell($w[4], 15, $header[4], 1, 0, 'C');
-    
-    $this->TextWithRotation($this->GetX() + $w[5]-3, $this->GetY() + 11, $header[5], 90);
-    $this->Cell($w[5], 15, "", 1, 0, 'C');
-    
-    $this->Cell($w[6], 15, $header[6], 1, 0, 'C');
-
-    $this->Ln();
-    $this->SetLineWidth(0.7);
-    $this->Line(20, 20, 202, 20);
-    $this->Line(26, 5, 26, 233);
-    $this->Line(32, 5, 32, 233);
-    $this->Line(38, 5, 38, 233);
-    $this->Line(98, 5, 98, 233);
-    $this->Line(168, 5, 168, 233);
-    $this->Line(178, 5, 178, 233);
-    $this->SetLineWidth(0.1);
-    //Данные
-    
-    $height = 7.36; // высота строки
-    $row_count = 0; // снача считаем количество строк которые есть, потом добавляем оставшиеся
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, $this->conv("Документация"), 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, $this->conv($main_label['field21']. " СБ"), 'LRB', 0, 'L');
-    $this->Cell($w[4], $height, $this->conv("Сборочный чертеж"), 'LRB', 0, 'L');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, $this->conv("Детали"), 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    foreach ($data as $row) {
-      if((int)$row[4] == 1){
-        $this->SetX($x);
-        $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-        $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-        $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
-        $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
-        $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
-        $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
-        $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-        $this->Ln();
-        $row_count++;
-      }
-    }
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, $this->conv("Стандартные изделия"), 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    $this->SetX($x);
-    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
-    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-    $this->Ln();
-    $row_count++;
-    
-    foreach ($data as $row) {
-      if((int)$row[4] == 2){
-        $this->SetX($x);
-        $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-        $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-        $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
-        $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
-        $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
-        $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
-        $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-        $this->Ln();
-        $row_count++;
-      }
-    }
-    
-    for($k = 0; $k < 29 - $row_count; $k++) {
-      $this->SetX($x);
-      $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-      $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-      $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-      $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-      $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
-      $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-      $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-      $this->Ln();
-    }
-    
-    $this->SetX(20);
-  }
-  
-  // фунукция вывода для первых двух раундов
-  function spec_table_min($main_label, $data, $x = 20, $y = 5) {
-
-    //Ширина колонки
-    $w = array(6, 6, 6, 60, 70, 10, 24);
-    $this->SetXY($x, $y);
-    $header = array($this->conv('Формат'), 
-                    $this->conv('Зона'), 
-                    $this->conv('Поз.'), 
-                    $this->conv('Обозначение'), 
-                    $this->conv('Наименование'), 
-                    $this->conv('Кол.'), 
-                    $this->conv('Примечание'));
-
-    //Заголовок
-    $this->TextWithRotation($this->GetX() + $w[0]-1, $this->GetY() + 14, $header[0], 90);
-    $this->Cell($w[0], 15, "", 1, 0, 'C');
-    
-    $this->TextWithRotation($this->GetX() + $w[1]-1, $this->GetY() + 11, $header[1], 90);
-    $this->Cell($w[1], 15, "", 1, 0, 'C');
-    
-    $this->TextWithRotation($this->GetX() + $w[2]-1, $this->GetY() + 10, $header[2], 90);
-    $this->Cell($w[2], 15, "", 1, 0, 'C');
-    
-    $this->Cell($w[3], 15, $header[3], 1, 0, 'C');
-    
-    $this->Cell($w[4], 15, $header[4], 1, 0, 'C');
-    
-    $this->TextWithRotation($this->GetX() + $w[5]-3, $this->GetY() + 11, $header[5], 90);
-    $this->Cell($w[5], 15, "", 1, 0, 'C');
-    
-    $this->Cell($w[6], 15, $header[6], 1, 0, 'C');
-
-    $this->Ln();
-    
-    //вертикальные толстые линии
-    $this->SetLineWidth(0.7);
-    $this->Line(20, 20, 202, 20);
-    $this->Line(26, 5, 26, 233);
-    $this->Line(32, 5, 32, 233);
-    $this->Line(38, 5, 38, 233);
-    $this->Line(98, 5, 98, 233);
-    $this->Line(168, 5, 168, 233);
-    $this->Line(178, 5, 178, 233);
-    $this->SetLineWidth(0.1);
-    //Данные
-    
-    $height = 7.36; // высота строки
-    $row_count = 0; // снача считаем количество строк которые есть, потом добавляем оставшиеся
-    
-    foreach ($data as $row) {
-      
-        $this->SetX($x);
-        
-        $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-        $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-        $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
-        $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
-        $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
-        $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
-        $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-        $this->Ln();
-        $row_count++;
-      
-    }
-    
-    for($k = 0; $k < 29 - $row_count; $k++) {
-      $this->SetX($x);
-      $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
-      $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-      $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
-      $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
-      $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
-      $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
-      $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
-      $this->Ln();
-    }
-    
-    $this->SetX(20);
-  }
-
-  function border_page($main_label, $type = 1) {
-    $this->inc_num_page(); // инкрементируем глобальный счетчик страниц
-
-    $frame = $this->get_frame(); // показывать ли рамки (глобальный параметр)
-    $x = 20;
-    $y = 234;
-    $wstr = 4.9;
-
-    $this->SetFont('gost', '', 11);
-
-    if ($type == 1) {
-      $this->Image('images/report/frame.jpg', 0, 0, -130);
-      // верхняя надпись повернутая на 180
-      $this->SetFont('gost', '', 14);
-      $this->TextWithRotation(70, 10, $this->conv($main_label['field21']), 180);
-    } else if ($type = 2) {
-      $this->Image('images/report/frame3.jpg', 0, 0, -130);
-    }
-
-    $this->SetFont('gost', '', 11);
-
-    // первая строка
-    $this->SetXY($x, $y);
-    $this->Cell(7, 5, $this->conv($main_label['field1']), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 7, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field2']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field3']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field4']), $frame, 1, 'L'); // четвертая ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field5']), $frame, 1, 'L'); // пятая ячейка
-    // вторая строка
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(7, 5, $this->conv($main_label['field6']), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 7, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field7']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field8']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field9']), $frame, 1, 'L'); // четвертая ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field10']), $frame, 1, 'L'); // пятая ячейка
-    // третья строка
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(7, 5, $this->conv($main_label['field11']), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 7, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field12']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field13']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field14']), $frame, 1, 'L'); // четвертая ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field15']), $frame, 1, 'L'); // пятая ячейка
-    // четвертая строка
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(7, 5, $this->conv($main_label['field16']), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 7, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field17']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field18']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field19']), $frame, 1, 'L'); // четвертая ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field20']), $frame, 1, 'L'); // пятая ячейка
-    // пятая строка подписей
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(7, 5, $this->conv('Изм.'), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 7, $y);
-    $this->Cell(10, 5, $this->conv('Лист'), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv('№ докум.'), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv('Подп.'), $frame, 1, 'L'); // четвертая ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv('Дата'), $frame, 1, 'L'); // пятая ячейка
-    // шестая строка фио
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(17, 5, $this->conv('Разраб.'), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field23']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field24']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field25']), $frame, 1, 'L'); // четвертая ячейка
-    // седьмая строка фио
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(17, 5, $this->conv('Пров.'), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field26']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field27']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field28']), $frame, 1, 'L'); // четвертая ячейка
-    // восьмая строка фио
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(17, 5, $this->conv('Т.контр.'), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field29']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field30']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field31']), $frame, 1, 'L'); // четвертая ячейка
-    // девятая строка фио
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(17, 5, $this->conv($main_label['field32']), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field33']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field34']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field35']), $frame, 1, 'L'); // четвертая ячейка
-    // десятая строка фио
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(17, 5, $this->conv("Н.контр."), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field36']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field37']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field38']), $frame, 1, 'L'); // четвертая ячейка
-    // одинадцатая строка фио
-    $y += $wstr;
-    $this->SetXY($x, $y);
-    $this->Cell(17, 5, $this->conv('Утв.'), $frame, 1, 'L'); // первая ячейка
-    $this->SetXY($x + 17, $y);
-    $this->Cell(22, 5, $this->conv($main_label['field39']), $frame, 1, 'L'); // вторая ячейка
-    $this->SetXY($x + 39, $y);
-    $this->Cell(15, 5, $this->conv($main_label['field40']), $frame, 1, 'L'); // третья ячейка
-    $this->SetXY($x + 54, $y);
-    $this->Cell(10, 5, $this->conv($main_label['field41']), $frame, 1, 'L'); // четвертая ячейка
-    //----------------------------------------------
-
-    $this->SetFont('gost', '', 14);
-    $x = 84;
-    $y = 234;
-
-    $this->SetXY($x, $y);
-    $this->Cell(118, 15, $this->conv($main_label['field21']), $frame, 1, 'C'); // Название проекта
-
-    $y += 15;
-    $this->SetXY($x, $y);
-    $this->Cell(69, 25, $this->conv($main_label['field22']), $frame, 1, 'C'); // Название проекта
-
-    $y += 24;
-    $this->SetXY($x, $y);
-    $this->Cell(69, 15, $this->conv($main_label['field42']), $frame, 1, 'C'); // Название проекта
-
-    $this->SetXY($x + 69, $y);
-    $this->Cell(50, 15, $this->conv($main_label['field50']), $frame, 1, 'C'); // Название проекта
-
-    $this->SetFont('gost', '', 10);
-    $x = 153;
-    $y = 249;
-    $this->SetXY($x, $y);
-    $this->Cell(15, 5, $this->conv("Лит."), $frame, 1, 'C'); // Литерал
-
-    $this->SetXY($x + 15, $y);
-    $this->Cell(17, 5, $this->conv("Масса"), $frame, 1, 'C'); // Масса
-
-    $this->SetXY($x + 32, $y);
-    $this->Cell(17, 5, $this->conv("Масштаб"), $frame, 1, 'C'); // Масштаб
-
-    $y += 10;
-    $this->SetXY($x, $y);
-    $this->Cell(5, 5, $this->conv($main_label['field43']), $frame, 1, 'C'); // Литерал 1
-
-    $this->SetXY($x + 5, $y);
-    $this->Cell(5, 5, $this->conv($main_label['field44']), $frame, 1, 'C'); // Литерал 2
-
-    $this->SetXY($x + 10, $y);
-    $this->Cell(5, 5, $this->conv($main_label['field45']), $frame, 1, 'C'); // Литерал 3
-
-    $this->SetXY($x + 15, $y);
-    $this->Cell(17, 5, $this->conv($main_label['field46']), $frame, 1, 'C'); // Масса
-
-    $this->SetXY($x + 32, $y);
-    $this->Cell(17, 5, $this->conv($main_label['field47']), $frame, 1, 'C'); // Масштаб
-
-    $y += 10;
-    $this->SetXY($x, $y);
-    $this->Cell(20, 5, $this->conv("Лист " . $this->get_num_page()), $frame, 1, 'L'); // Лист
-
-    $this->SetXY($x + 20, $y);
-    $this->Cell(29, 5, $this->conv("Листов 2"), $frame, 1, 'L'); // Листов
-  }
+//  function ImprovedTable($header, $data) {
+//    //Ширина колонки
+//    $w = array(6, 6, 6, 60, 70, 10, 24);
+//    $this->SetX(20);
+//    //Заголовок
+//    for ($i = 0; $i < count($header); $i++) {
+//
+//      if (($i < 3) || ($i == 5)) {
+//        $this->TextWithRotation($this->GetX() + $w[$i], $this->GetY() + 13, $header[$i], 90);
+//        $this->Cell($w[$i], 15, "", 1, 0, 'C');
+//      } else {
+//        $this->Cell($w[$i], 15, $header[$i], 1, 0, 'C');
+//      }
+//    }
+//    $this->Ln();
+//
+//    //Данные
+//    foreach ($data as $row) {
+//      $this->SetX(20);
+//      $this->Cell($w[0], 8, "", 'LRB', 0, 'C');
+//      $this->Cell($w[1], 8, "", 'LRB', 0, 'L');
+//      $this->Cell($w[2], 8, $this->conv($row[0]), 'LRB', 0, 'L');
+//      $this->Cell($w[3], 8, $this->conv($row[1]), 'LRB', 0, 'C');
+//      $this->Cell($w[4], 8, $this->conv($row[2]), 'LRB', 0, 'C');
+//      $this->Cell($w[5], 8, $this->conv($row[3]), 'LRB', 0, 'L');
+//      $this->Cell($w[6], 8, "", 'LRB', 0, 'C');
+//      $this->Ln();
+//    }
+//    $this->SetX(20);
+//  }
+//  
+//  // фунукция вывода на третьем раунде
+//  function spec_table_max($main_label, $data, $x = 20, $y = 5) {
+//
+//    //Ширина колонки
+//    $w = array(6, 6, 6, 60, 70, 10, 24);
+//    $this->SetXY($x, $y);
+//    $header = array($this->conv('Формат'), 
+//                    $this->conv('Зона'), 
+//                    $this->conv('Поз.'), 
+//                    $this->conv('Обозначение'), 
+//                    $this->conv('Наименование'), 
+//                    $this->conv('Кол.'), 
+//                    $this->conv('Примечание'));
+//
+//    //Заголовок
+//    $this->TextWithRotation($this->GetX() + $w[0]-1, $this->GetY() + 14, $header[0], 90);
+//    $this->Cell($w[0], 15, "", 1, 0, 'C');
+//    
+//    $this->TextWithRotation($this->GetX() + $w[1]-1, $this->GetY() + 11, $header[1], 90);
+//    $this->Cell($w[1], 15, "", 1, 0, 'C');
+//    
+//    $this->TextWithRotation($this->GetX() + $w[2]-1, $this->GetY() + 10, $header[2], 90);
+//    $this->Cell($w[2], 15, "", 1, 0, 'C');
+//    
+//    $this->Cell($w[3], 15, $header[3], 1, 0, 'C');
+//    
+//    $this->Cell($w[4], 15, $header[4], 1, 0, 'C');
+//    
+//    $this->TextWithRotation($this->GetX() + $w[5]-3, $this->GetY() + 11, $header[5], 90);
+//    $this->Cell($w[5], 15, "", 1, 0, 'C');
+//    
+//    $this->Cell($w[6], 15, $header[6], 1, 0, 'C');
+//
+//    $this->Ln();
+//    $this->SetLineWidth(0.7);
+//    $this->Line(20, 20, 202, 20);
+//    $this->Line(26, 5, 26, 233);
+//    $this->Line(32, 5, 32, 233);
+//    $this->Line(38, 5, 38, 233);
+//    $this->Line(98, 5, 98, 233);
+//    $this->Line(168, 5, 168, 233);
+//    $this->Line(178, 5, 178, 233);
+//    $this->SetLineWidth(0.1);
+//    //Данные
+//    
+//    $height = 7.36; // высота строки
+//    $row_count = 0; // снача считаем количество строк которые есть, потом добавляем оставшиеся
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, $this->conv("Документация"), 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, $this->conv($main_label['field21']. " СБ"), 'LRB', 0, 'L');
+//    $this->Cell($w[4], $height, $this->conv("Сборочный чертеж"), 'LRB', 0, 'L');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, $this->conv("Детали"), 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    foreach ($data as $row) {
+//      if((int)$row[4] == 1){
+//        $this->SetX($x);
+//        $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//        $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//        $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
+//        $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
+//        $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
+//        $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
+//        $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//        $this->Ln();
+//        $row_count++;
+//      }
+//    }
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, $this->conv("Стандартные изделия"), 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    $this->SetX($x);
+//    $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
+//    $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//    $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//    $this->Ln();
+//    $row_count++;
+//    
+//    foreach ($data as $row) {
+//      if((int)$row[4] == 2){
+//        $this->SetX($x);
+//        $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//        $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//        $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
+//        $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
+//        $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
+//        $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
+//        $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//        $this->Ln();
+//        $row_count++;
+//      }
+//    }
+//    
+//    for($k = 0; $k < 29 - $row_count; $k++) {
+//      $this->SetX($x);
+//      $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//      $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//      $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//      $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//      $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
+//      $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//      $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//      $this->Ln();
+//    }
+//    
+//    $this->SetX(20);
+//  }
+//  
+//  // фунукция вывода для первых двух раундов
+//  function spec_table_min($main_label, $data, $x = 20, $y = 5) {
+//
+//    //Ширина колонки
+//    $w = array(6, 6, 6, 60, 70, 10, 24);
+//    $this->SetXY($x, $y);
+//    $header = array($this->conv('Формат'), 
+//                    $this->conv('Зона'), 
+//                    $this->conv('Поз.'), 
+//                    $this->conv('Обозначение'), 
+//                    $this->conv('Наименование'), 
+//                    $this->conv('Кол.'), 
+//                    $this->conv('Примечание'));
+//
+//    //Заголовок
+//    $this->TextWithRotation($this->GetX() + $w[0]-1, $this->GetY() + 14, $header[0], 90);
+//    $this->Cell($w[0], 15, "", 1, 0, 'C');
+//    
+//    $this->TextWithRotation($this->GetX() + $w[1]-1, $this->GetY() + 11, $header[1], 90);
+//    $this->Cell($w[1], 15, "", 1, 0, 'C');
+//    
+//    $this->TextWithRotation($this->GetX() + $w[2]-1, $this->GetY() + 10, $header[2], 90);
+//    $this->Cell($w[2], 15, "", 1, 0, 'C');
+//    
+//    $this->Cell($w[3], 15, $header[3], 1, 0, 'C');
+//    
+//    $this->Cell($w[4], 15, $header[4], 1, 0, 'C');
+//    
+//    $this->TextWithRotation($this->GetX() + $w[5]-3, $this->GetY() + 11, $header[5], 90);
+//    $this->Cell($w[5], 15, "", 1, 0, 'C');
+//    
+//    $this->Cell($w[6], 15, $header[6], 1, 0, 'C');
+//
+//    $this->Ln();
+//    
+//    //вертикальные толстые линии
+//    $this->SetLineWidth(0.7);
+//    $this->Line(20, 20, 202, 20);
+//    $this->Line(26, 5, 26, 233);
+//    $this->Line(32, 5, 32, 233);
+//    $this->Line(38, 5, 38, 233);
+//    $this->Line(98, 5, 98, 233);
+//    $this->Line(168, 5, 168, 233);
+//    $this->Line(178, 5, 178, 233);
+//    $this->SetLineWidth(0.1);
+//    //Данные
+//    
+//    $height = 7.36; // высота строки
+//    $row_count = 0; // снача считаем количество строк которые есть, потом добавляем оставшиеся
+//    
+//    foreach ($data as $row) {
+//      
+//        $this->SetX($x);
+//        
+//        $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//        $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//        $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
+//        $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
+//        $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
+//        $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
+//        $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//        $this->Ln();
+//        $row_count++;
+//      
+//    }
+//    
+//    for($k = 0; $k < 29 - $row_count; $k++) {
+//      $this->SetX($x);
+//      $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
+//      $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
+//      $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
+//      $this->Cell($w[3], $height, "", 'LRB', 0, 'C');
+//      $this->Cell($w[4], $height, "", 'LRB', 0, 'C');
+//      $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
+//      $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+//      $this->Ln();
+//    }
+//    
+//    $this->SetX(20);
+//  }
+//
+//  function border_page($main_label, $type = 1) {
+//    $this->inc_num_page(); // инкрементируем глобальный счетчик страниц
+//
+//    $frame = $this->get_frame(); // показывать ли рамки (глобальный параметр)
+//    $x = 20;
+//    $y = 234;
+//    $wstr = 4.9;
+//
+//    $this->SetFont('gost', '', 11);
+//
+//    if ($type == 1) {
+//      $this->Image('images/report/frame.jpg', 0, 0, -130);
+//      // верхняя надпись повернутая на 180
+//      $this->SetFont('gost', '', 14);
+//      $this->TextWithRotation(70, 10, $this->conv($main_label['field21']), 180);
+//    } else if ($type = 2) {
+//      $this->Image('images/report/frame3.jpg', 0, 0, -130);
+//    }
+//
+//    $this->SetFont('gost', '', 11);
+//
+//    // первая строка
+//    $this->SetXY($x, $y);
+//    $this->Cell(7, 5, $this->conv($main_label['field1']), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 7, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field2']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field3']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field4']), $frame, 1, 'L'); // четвертая ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field5']), $frame, 1, 'L'); // пятая ячейка
+//    // вторая строка
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(7, 5, $this->conv($main_label['field6']), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 7, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field7']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field8']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field9']), $frame, 1, 'L'); // четвертая ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field10']), $frame, 1, 'L'); // пятая ячейка
+//    // третья строка
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(7, 5, $this->conv($main_label['field11']), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 7, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field12']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field13']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field14']), $frame, 1, 'L'); // четвертая ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field15']), $frame, 1, 'L'); // пятая ячейка
+//    // четвертая строка
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(7, 5, $this->conv($main_label['field16']), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 7, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field17']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field18']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field19']), $frame, 1, 'L'); // четвертая ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field20']), $frame, 1, 'L'); // пятая ячейка
+//    // пятая строка подписей
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(7, 5, $this->conv('Изм.'), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 7, $y);
+//    $this->Cell(10, 5, $this->conv('Лист'), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv('№ докум.'), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv('Подп.'), $frame, 1, 'L'); // четвертая ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv('Дата'), $frame, 1, 'L'); // пятая ячейка
+//    // шестая строка фио
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(17, 5, $this->conv('Разраб.'), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field23']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field24']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field25']), $frame, 1, 'L'); // четвертая ячейка
+//    // седьмая строка фио
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(17, 5, $this->conv('Пров.'), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field26']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field27']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field28']), $frame, 1, 'L'); // четвертая ячейка
+//    // восьмая строка фио
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(17, 5, $this->conv('Т.контр.'), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field29']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field30']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field31']), $frame, 1, 'L'); // четвертая ячейка
+//    // девятая строка фио
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(17, 5, $this->conv($main_label['field32']), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field33']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field34']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field35']), $frame, 1, 'L'); // четвертая ячейка
+//    // десятая строка фио
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(17, 5, $this->conv("Н.контр."), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field36']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field37']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field38']), $frame, 1, 'L'); // четвертая ячейка
+//    // одинадцатая строка фио
+//    $y += $wstr;
+//    $this->SetXY($x, $y);
+//    $this->Cell(17, 5, $this->conv('Утв.'), $frame, 1, 'L'); // первая ячейка
+//    $this->SetXY($x + 17, $y);
+//    $this->Cell(22, 5, $this->conv($main_label['field39']), $frame, 1, 'L'); // вторая ячейка
+//    $this->SetXY($x + 39, $y);
+//    $this->Cell(15, 5, $this->conv($main_label['field40']), $frame, 1, 'L'); // третья ячейка
+//    $this->SetXY($x + 54, $y);
+//    $this->Cell(10, 5, $this->conv($main_label['field41']), $frame, 1, 'L'); // четвертая ячейка
+//    //----------------------------------------------
+//
+//    $this->SetFont('gost', '', 14);
+//    $x = 84;
+//    $y = 234;
+//
+//    $this->SetXY($x, $y);
+//    $this->Cell(118, 15, $this->conv($main_label['field21']), $frame, 1, 'C'); // Название проекта
+//
+//    $y += 15;
+//    $this->SetXY($x, $y);
+//    $this->Cell(69, 25, $this->conv($main_label['field22']), $frame, 1, 'C'); // Название проекта
+//
+//    $y += 24;
+//    $this->SetXY($x, $y);
+//    $this->Cell(69, 15, $this->conv($main_label['field42']), $frame, 1, 'C'); // Название проекта
+//
+//    $this->SetXY($x + 69, $y);
+//    $this->Cell(50, 15, $this->conv($main_label['field50']), $frame, 1, 'C'); // Название проекта
+//
+//    $this->SetFont('gost', '', 10);
+//    $x = 153;
+//    $y = 249;
+//    $this->SetXY($x, $y);
+//    $this->Cell(15, 5, $this->conv("Лит."), $frame, 1, 'C'); // Литерал
+//
+//    $this->SetXY($x + 15, $y);
+//    $this->Cell(17, 5, $this->conv("Масса"), $frame, 1, 'C'); // Масса
+//
+//    $this->SetXY($x + 32, $y);
+//    $this->Cell(17, 5, $this->conv("Масштаб"), $frame, 1, 'C'); // Масштаб
+//
+//    $y += 10;
+//    $this->SetXY($x, $y);
+//    $this->Cell(5, 5, $this->conv($main_label['field43']), $frame, 1, 'C'); // Литерал 1
+//
+//    $this->SetXY($x + 5, $y);
+//    $this->Cell(5, 5, $this->conv($main_label['field44']), $frame, 1, 'C'); // Литерал 2
+//
+//    $this->SetXY($x + 10, $y);
+//    $this->Cell(5, 5, $this->conv($main_label['field45']), $frame, 1, 'C'); // Литерал 3
+//
+//    $this->SetXY($x + 15, $y);
+//    $this->Cell(17, 5, $this->conv($main_label['field46']), $frame, 1, 'C'); // Масса
+//
+//    $this->SetXY($x + 32, $y);
+//    $this->Cell(17, 5, $this->conv($main_label['field47']), $frame, 1, 'C'); // Масштаб
+//
+//    $y += 10;
+//    $this->SetXY($x, $y);
+//    $this->Cell(20, 5, $this->conv("Лист " . $this->get_num_page()), $frame, 1, 'L'); // Лист
+//
+//    $this->SetXY($x + 20, $y);
+//    $this->Cell(29, 5, $this->conv("Листов 2"), $frame, 1, 'L'); // Листов
+//  }
 
 }
 
