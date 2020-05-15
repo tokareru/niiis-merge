@@ -1,4 +1,7 @@
 <?php
+ini_set('error_reporting', E_ALL);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
 
 define('FPDF_FONTPATH', conf::$ROOT . 'system/etc/fpdf/font/');
 require_once conf::$ROOT . 'system/etc/fpdf/fpdf.php';
