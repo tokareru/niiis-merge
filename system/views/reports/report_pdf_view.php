@@ -333,6 +333,7 @@ class PDF extends FPDF {
     foreach ($data as $row) {
       
         $this->SetX($x);
+        
         $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
         $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
         $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
