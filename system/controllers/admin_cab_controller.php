@@ -9,16 +9,15 @@ class admin_cab_controller extends Controller {
       $this->view = new View();
     } else {
       $this->view = new View();
+      $this->view->render('', 'admin/admin_error_view.php', '');
     }
   }
 
   function index() {
-    if ($_SESSION["niiis"]["role"] === "administrator") {
+//    if ($_SESSION["niiis"]["role"] === "administrator") {
       $data = $this->model->settings();
       $this->view->render('settings_view.php', 'admin/admin_cab_view.php', $data);
-    } else {
-      $this->view->render('', 'admin/admin_error_view.php', '');
-    }
+//    } 
   }
 
   function settings() {
