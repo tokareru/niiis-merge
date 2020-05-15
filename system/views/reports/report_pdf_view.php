@@ -589,7 +589,7 @@ $p->AddPage();
 $p->SetFont('gost', '', 10);
 
 // печать рамки страницы первого типа - для сборочного чертежа
-$p->border_page($main_label, $type = 1);
+//$p->border_page($main_label, $type = 1);
 
 if ($draw_finish) { // если чертеж дорисован
   $p->Image('images/report/ABR3d-1.png', 30, 20, -350);

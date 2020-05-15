@@ -46,7 +46,7 @@ class print_report_model extends model
     $q->execute();
     $spec_table = $q->fetchAll();
     
-    var_dump($spec_table);
+//    var_dump($spec_table);
     
     $sql = "SELECT * FROM drawing_size";
     $q = sys::$PDO->prepare($sql);
