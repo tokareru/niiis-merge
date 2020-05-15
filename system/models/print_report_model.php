@@ -59,7 +59,7 @@ class print_report_model extends model
                     "draw_finish" => $draw_finish,
                     "size" => $size
                     ); 
-//    var_dump($result);
+    var_dump($result);
    return $result;
   }
 }
