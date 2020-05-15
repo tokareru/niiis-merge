@@ -163,7 +163,7 @@ class PDF extends FPDF {
     $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
     $this->Cell($w[2], $height, "", 'LRB', 0, 'L');
     $this->Cell($w[3], $height, $this->conv($main_label['field21']. " СБ"), 'LRB', 0, 'L');
-    $this->Cell($w[4], $height, $this->conv("Сборочный чертеж"), 'LRB', 0, 'C');
+    $this->Cell($w[4], $height, $this->conv("Сборочный чертеж"), 'LRB', 0, 'L');
     $this->Cell($w[5], $height, "", 'LRB', 0, 'L');
     $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
     $this->Ln();
