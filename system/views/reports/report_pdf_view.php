@@ -619,6 +619,6 @@ if ($draw_finish) { // если чертеж дорисован
 ////Загрузка данных
 //if($round == 3) $p->spec_table_max($main_label, $spec_table);
 //else $p->spec_table_min($main_label, $spec_table);
-
+echo 'test';
 $p->Output();
 ?>
