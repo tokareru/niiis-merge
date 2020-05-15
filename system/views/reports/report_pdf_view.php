@@ -343,7 +343,7 @@ class PDF extends FPDF {
         $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
         $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
         $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
-        $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
+        $this->Cell($w[6], $height, $this->conv($row[4]), 'LRB', 0, 'L');
         $this->Ln();
         $row_count++;
       

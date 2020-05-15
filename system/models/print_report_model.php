@@ -36,7 +36,8 @@ class print_report_model extends model
       $sql = "SELECT  position,
                     name_short,
                     name_long,
-                    count
+                    count,
+                    note
             FROM    spec_table 
             WHERE   active_sign = True";
     }
