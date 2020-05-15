@@ -90,7 +90,7 @@ function combineUserTask(task = {text: "", trigger: "", add_info: ""}, index) {
     <li class="userTask p-2 mb-3 shadow-ssm">
             <div class="h6">Задача №<span class="taskNumber">${index + 1}</span>
                 <span class="font-family-fontAwesome taskDeleteButtonSpan fa-times font-size-12-em mr-1"></span>
-                <span class="font-family-fontAwesome taskHeader fa-arrows-v font-size-12-em"></span>
+                <span class="font-family-fontAwesome taskHeader fa-arrows font-size-12-em"></span>
              </div>
             
             <div class="row">
