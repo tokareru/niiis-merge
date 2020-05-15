@@ -485,6 +485,11 @@ ORDER BY third_id";
         $q->execute();
         return $q->fetchAll();
     }
+    
+    function tasks_edit(){
+        
+    }
+    
     function get_logs(){
         $sql = "SELECT operation_id, type, field, text, date_trunc('seconds',date_create) as date_create
                 FROM logs
