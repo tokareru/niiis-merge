@@ -13,3 +13,13 @@
 .userTask{
     background-color: #FFFFFF;
 }
+
+.border-yellow{
+    border-style: solid;
+    border-width: 0.15rem;
+    border-color: #d1ffbb;
+}
+
+.taskHeader{
+    cursor: move;
+}

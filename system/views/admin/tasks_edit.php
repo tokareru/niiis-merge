@@ -32,9 +32,9 @@
             </select>
         </div>
     </div>
-    <div id="task-list-body">
+    <ul id="task-list-body" class="list-unstyled">
 
-    </div>
+    </ul>
     <div class="mb-3 mt-2">
         <button class="btn-outline-dark btn btn-sm mr-2 d-none" id="addNewTaskButton">Добавить новую задачу</button>
         <button class="btn-outline-dark btn btn-sm d-none" id="saveTaskListButton">Сохранить</button>

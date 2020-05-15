@@ -43,10 +43,21 @@ function initUserTasks(usersData) {
     let taskListBody = $("#task-list-body");
     taskListBody.sortable({
         axis: "y",
-        items: "div.userTask",
-        opacity: "1",
-        stop: function () {
+        items: "li.userTask",
+        classes: {
+            "ui-sortable-helper": "border-yellow"
+        },
+        cursor: "move",
+        opacity: "0.98",
+        handle: ".taskHeader",
+        stop: function (e, ui) {
+            let $ui = $(ui);
+            $ui.removeClass("bg-success")
             recalculateTasksNumbers();
+        },
+        sort: function (e, ui) {
+            /*let $ui = $(ui);
+            $ui.addClass("bg-succes")*/
         }
     });
     taskListBody.disableSelection();
@@ -76,9 +87,10 @@ function combineUserTask(task = {text: "", trigger: "", add_info: ""}, index) {
         isOpenFieldTrigger = true;
 
     return `
-    <div class="userTask p-2 mb-3 shadow-ssm">
+    <li class="userTask p-2 mb-3 shadow-ssm">
             <div class="h6">Задача №<span class="taskNumber">${index + 1}</span>
-                <span class="font-family-fontAwesome taskDeleteButtonSpan fa-times font-size-12-em"></span>
+                <span class="font-family-fontAwesome taskDeleteButtonSpan fa-times font-size-12-em mr-1"></span>
+                <span class="font-family-fontAwesome taskHeader fa-arrows-v font-size-12-em"></span>
              </div>
             
             <div class="row">
@@ -103,7 +115,7 @@ function combineUserTask(task = {text: "", trigger: "", add_info: ""}, index) {
                     ${addSelection}
                 </div>
             </div>
-    </div>
+    </li>
     `
 }
 
