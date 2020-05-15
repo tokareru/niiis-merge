@@ -1,49 +1,49 @@
 <?php
 
-define('FPDF_FONTPATH', conf::$ROOT . 'system/etc/fpdf/font/');
-require_once conf::$ROOT . 'system/etc/fpdf/fpdf.php';
+//define('FPDF_FONTPATH', conf::$ROOT . 'system/etc/fpdf/font/');
+//require_once conf::$ROOT . 'system/etc/fpdf/fpdf.php';
 
 //require_once conf::$ROOT.'system/etc/fpdf/fpdf_extended.php';
 
-class PDF extends FPDF {
-
-  public $num_page = 0;
-  public $frame = 0;
-
-  function get_frame() {
-    return $this->$frame;
-  }
-
-  function get_num_page() {
-    return $this->num_page;
-  }
-
-  function inc_num_page() {
-    $this->num_page++;
-  }
-
-  function TextWithRotation($x, $y, $txt, $txt_angle, $font_angle = 0) {
-    $font_angle += 90 + $txt_angle;
-    $txt_angle *= M_PI / 180;
-    $font_angle *= M_PI / 180;
-
-    $txt_dx = cos($txt_angle);
-    $txt_dy = sin($txt_angle);
-    $font_dx = cos($font_angle);
-    $font_dy = sin($font_angle);
-
-    $s = sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', $txt_dx, $txt_dy, $font_dx, $font_dy, $x * $this->k, ($this->h - $y) * $this->k, $this->_escape($txt));
-    if ($this->ColorFlag)
-      $s = 'q ' . $this->TextColor . ' ' . $s . ' Q';
-    $this->_out($s);
-  }
-
-  function RotatedText($x, $y, $txt, $angle) {
-    //Text rotated around its origin
-    $this->Rotate($angle, $x, $y);
-    $this->Text($x, $y, $txt);
-    $this->Rotate(0);
-  }
+//class PDF extends FPDF {
+//
+//  public $num_page = 0;
+//  public $frame = 0;
+//
+//  function get_frame() {
+//    return $this->$frame;
+//  }
+//
+//  function get_num_page() {
+//    return $this->num_page;
+//  }
+//
+//  function inc_num_page() {
+//    $this->num_page++;
+//  }
+//
+//  function TextWithRotation($x, $y, $txt, $txt_angle, $font_angle = 0) {
+//    $font_angle += 90 + $txt_angle;
+//    $txt_angle *= M_PI / 180;
+//    $font_angle *= M_PI / 180;
+//
+//    $txt_dx = cos($txt_angle);
+//    $txt_dy = sin($txt_angle);
+//    $font_dx = cos($font_angle);
+//    $font_dy = sin($font_angle);
+//
+//    $s = sprintf('BT %.2F %.2F %.2F %.2F %.2F %.2F Tm (%s) Tj ET', $txt_dx, $txt_dy, $font_dx, $font_dy, $x * $this->k, ($this->h - $y) * $this->k, $this->_escape($txt));
+//    if ($this->ColorFlag)
+//      $s = 'q ' . $this->TextColor . ' ' . $s . ' Q';
+//    $this->_out($s);
+//  }
+//
+//  function RotatedText($x, $y, $txt, $angle) {
+//    //Text rotated around its origin
+//    $this->Rotate($angle, $x, $y);
+//    $this->Text($x, $y, $txt);
+//    $this->Rotate(0);
+//  }
 
   //Улучшенная таблица
 //  function ImprovedTable($header, $data) {
@@ -557,36 +557,36 @@ class PDF extends FPDF {
 //    $this->Cell(29, 5, $this->conv("Листов 2"), $frame, 1, 'L'); // Листов
 //  }
 
-}
-
-$size = $data['content']['size'];
-$main_label = $data['content']['data'][0];
-$round = $data['content']['round'];
-$spec_table = $data['content']['spec_table'];
-$draw_finish = $data['content']['draw_finish'];
-
-// -------------------------формирование страницы PDF---------------------------
-
-
-
-$p = new PDF('P', 'mm', 'A4');
-$p->AddFont('gost', '', 'gost-type-a.php');
-$p->AddFont('gost', 'B', 'gost_b.php');
-$p->SetAutoPageBreak(0);
-
-// метаданные
-$p->SetAuthor("NIIIS", true);
-$p->SetTitle("Report", true);
-$p->SetSubject("ID", true);
-
-// параметры страницы
-$frame = $p->get_frame();
-$x = 20;
-$y = 234;
-$w_str = 4.9;
-$p->SetMargins(0, 0, 0);
-$p->AddPage();
-$p->SetFont('gost', '', 10);
+//}
+//
+//$size = $data['content']['size'];
+//$main_label = $data['content']['data'][0];
+//$round = $data['content']['round'];
+//$spec_table = $data['content']['spec_table'];
+//$draw_finish = $data['content']['draw_finish'];
+//
+//// -------------------------формирование страницы PDF---------------------------
+//
+//
+//
+//$p = new PDF('P', 'mm', 'A4');
+//$p->AddFont('gost', '', 'gost-type-a.php');
+//$p->AddFont('gost', 'B', 'gost_b.php');
+//$p->SetAutoPageBreak(0);
+//
+//// метаданные
+//$p->SetAuthor("NIIIS", true);
+//$p->SetTitle("Report", true);
+//$p->SetSubject("ID", true);
+//
+//// параметры страницы
+//$frame = $p->get_frame();
+//$x = 20;
+//$y = 234;
+//$w_str = 4.9;
+//$p->SetMargins(0, 0, 0);
+//$p->AddPage();
+//$p->SetFont('gost', '', 10);
 
 // печать рамки страницы первого типа - для сборочного чертежа
 //$p->border_page($main_label, $type = 1);
@@ -608,17 +608,17 @@ $p->SetFont('gost', '', 10);
 //------------------Лист 2-----------------------------------------------------
 //------------------------------------------------------------------------------
 
-$p->AddPage();
+//$p->AddPage();
 
 // печать рамки страницы второго типа - для пецификации, с табличкой во всю страницу
 //$p->border_page($main_label, 2);
 
-$p->SetFont('gost', '', 14);
-$p->SetXY(30, 30);
+//$p->SetFont('gost', '', 14);
+//$p->SetXY(30, 30);
 
 //Загрузка данных
 //if($round == 3) $p->spec_table_max($main_label, $spec_table);
 //else $p->spec_table_min($main_label, $spec_table);
-
-$p->Output();
+echo 'test';
+//$p->Output();
 ?>
