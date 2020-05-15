@@ -40,6 +40,16 @@ function initUserTasks(usersData) {
                 });
             }
         });
+    let taskListBody = $("#task-list-body");
+    taskListBody.sortable({
+        axis: "y",
+        items: "div.userTask",
+        opacity: "1",
+        stop: function () {
+            recalculateTasksNumbers();
+        }
+    });
+    taskListBody.disableSelection();
 }
 
 function setUserTasks(data, login, round) {
