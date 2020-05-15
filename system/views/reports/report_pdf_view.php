@@ -14,7 +14,7 @@ class PDF extends FPDF {
   public $frame = 0;
 
   function get_frame() {
-    return $this->$frame;
+    return $this->frame;
   }
 
   function get_num_page() {
@@ -614,17 +614,17 @@ if ($draw_finish) { // если чертеж дорисован
 //------------------Лист 2-----------------------------------------------------
 //------------------------------------------------------------------------------
 
-//$p->AddPage();
-//
-//// печать рамки страницы второго типа - для пецификации, с табличкой во всю страницу
-//$p->border_page($main_label, 2);
-//
-//$p->SetFont('gost', '', 14);
-//$p->SetXY(30, 30);
-//
-////Загрузка данных
-//if($round == 3) $p->spec_table_max($main_label, $spec_table);
-//else $p->spec_table_min($main_label, $spec_table);
+$p->AddPage();
+
+// печать рамки страницы второго типа - для пецификации, с табличкой во всю страницу
+$p->border_page($main_label, 2);
+
+$p->SetFont('gost', '', 14);
+$p->SetXY(30, 30);
+
+//Загрузка данных
+if($round == 3) $p->spec_table_max($main_label, $spec_table);
+else $p->spec_table_min($main_label, $spec_table);
 
 $p->Output();
 ?>
