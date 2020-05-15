@@ -19,7 +19,6 @@ class print_report_model extends model
     $q->execute();
     $Q = $q->fetchAll();
     $draw_finish = $Q[0]['is_drawing_finished'];
-//    var_dump($draw_finish);
     
     $sql = "SELECT cnfval as round FROM sys_cnf WHERE cnfname = 'round'";
     $q = sys::$PDO->prepare($sql);
@@ -59,7 +58,7 @@ class print_report_model extends model
                     "draw_finish" => $draw_finish,
                     "size" => $size
                     ); 
-    var_dump($result);
+//    var_dump($result);
    return $result;
   }
 }
