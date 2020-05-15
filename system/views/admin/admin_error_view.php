@@ -16,7 +16,6 @@
 <div style="margin-top: 100px;">
     <p>Ваша роль <b><?=$_SESSION["niiis"]["role"]?></b>, у вас нет доступа к данной странице!</p>
     <p>Необходимо выйти из личного кабинета и зайти как администратор:</p>
-    <!--<p><button class="btn-default" href="<?php echo conf::$SITE_URL . 'logout' ?>">Выйти</button></p>-->
     <p><a class="btn btn-primary" href="<?php echo conf::$SITE_URL?>" role="button">На главную</a> <a class="btn btn-danger" href="<?php echo conf::$SITE_URL . 'logout' ?>" role="button">Выйти</a></p>
     
 </div>
