@@ -80,6 +80,7 @@ class admin_cab_controller extends Controller {
   }
 
   function tasks_edit() {
+    $data = $this->model->tasks_edit();
     $this->view->render('tasks_edit.php', 'admin/admin_cab_view.php');
   }
 
