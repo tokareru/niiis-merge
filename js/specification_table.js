@@ -121,6 +121,7 @@ function setSpecTable(json) {
                 temp.push({text: "", readonly: false});
             }
             json.tbody = [{row: temp}];
+            console.log(temp);
         }
 
         if (Round !== 3) {
@@ -173,7 +174,8 @@ function combineTbodyRow(row = {
     let cells = "";
     if (row.row.length)
         row.row.forEach(function (_cell) {
-            cells += combineTbodyCell(_cell);
+            if (_cell.text !== undefined)
+                cells += combineTbodyCell(_cell);
         });
     return `
         <tr class="specRows">
@@ -257,7 +259,6 @@ function saveSpecTableData($rows) {
                     {text: cells.eq(2).val(), readonly: false},
                     {text: (cells.eq(3).val() !== "Не указано") ? cells.eq(3).val() : "0", readonly: false},
                     {text: cells.eq(4).val(), readonly: false},
-                    {product_id: index, readonly: false}
                 ]
             })
         });

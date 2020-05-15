@@ -136,6 +136,7 @@ function initTasksRoutes() {
         let $body = $("body");
         $body.addClass("blur-filter");
         if (shell.specification !== 'unchanged') {
+            console.log(shell);
             //$('#main-tabs-specification').click();
             $('#main-tabs-specification').parents('li').addClass('bg-danger');
             let interval = setInterval(function () {
@@ -147,12 +148,12 @@ function initTasksRoutes() {
             }, 500);
 
         }
-        console.log(shell.esi);
+        //console.log(shell.esi);
         if (shell.esi !== undefined && shell.esi !== 'not-exist' && shell.esi !== 'unchanged' && Round === 3) {
             setESI(shell.esi);
             $('.slider_button').removeClass('bg-dark').addClass('bg-danger');
         }
-        console.log(shell);
+       // console.log(shell);
         /*$('#canvas3D').find('canvas').remove();
         $('#canvas3D').find('div').append('<canvas></canvas>');*/
         //load3d(shell.models);
