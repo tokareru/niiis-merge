@@ -539,20 +539,20 @@ function addTaskToDB() {
     let data = {task: task, master: login, shell: serializeAllInfo()};
     //console.log(data);
     task.forEach(function (_task) {
-        addToDoTaskTOList(_task.user, 2, {
+        addToDoTaskTOList(_task.user, Round, {
             id: 0,
             text: `Проверить новое задание в "Маршруты заданий"`,
             trigger: "openField",
             add_info: "tasks_routes_field",
             isFinished: false
         });
-        addToDoTaskTOList(_task.user, 3, {
+        /*addToDoTaskTOList(_task.user, 3, {
             id: 0,
             text: `Проверить новое задание в "Маршруты заданий"`,
             trigger: "openField",
             add_info: "tasks_routes_field",
             isFinished: false
-        });
+        });*/
     });
 
     $.ajax({
