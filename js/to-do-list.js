@@ -136,7 +136,7 @@ function addToDoTaskTOList(userLogin, round, toDoTask) {
         },
         success: function (json) {
             oldToDoTaskList = json.tasks;
-            toDoTask.id = oldToDoTaskList.length;
+            toDoTask.id = oldToDoTaskList.length + 1;
             let arrayOfRepeated = [];
             if (json.tasks.length)
                 json.tasks.forEach(function (_task, index) {
@@ -145,16 +145,16 @@ function addToDoTaskTOList(userLogin, round, toDoTask) {
                     }
                     delete _task.global_id;
                 });
-            if (arrayOfRepeated.length)
+            /*if (arrayOfRepeated.length)
                 arrayOfRepeated.forEach(function (_index) {
                     json.tasks.splice(_index, 1);
-                })
+                })*/
             oldToDoTaskList.push(toDoTask);
-            if (json.tasks.length){
+            /*if (json.tasks.length){
                 json.tasks.forEach(function (_task, index) {
                     _task.id = index + 1;
                 })
-            }
+            }*/
 
             let data = {
                 login: userLogin,
