@@ -215,7 +215,7 @@ function setOnChangeSelection() {
        if ($selection.val() === "openField"){
            $taskTriggerSelectionBody.addClass("d-block").removeClass("d-none");
            $taskTriggerSelectionHeader.addClass("d-block").removeClass("d-none");
-           $textarea.val(`Открыть вкладку '${$selectionParent.find(".open-field-selection option:selected").text()}'`)
+           $textarea.val(`Открыть вкладку "${$selectionParent.find(".open-field-selection option:selected").text()}"`)
        }else{
            $taskTriggerSelectionBody.addClass("d-none").removeClass("d-block");
            $taskTriggerSelectionHeader.addClass("d-none").removeClass("d-block");
@@ -227,7 +227,7 @@ function setOnChangeSelection() {
         let $selection = $(this);
         let $selectionParent = $selection.parent().parent().parent();
         let $textarea = $selectionParent.find("textarea");
-        $textarea.val(`Открыть вкладку '${$selection.find("option:selected").text()}'`)
+        $textarea.val(`Открыть вкладку "${$selection.find("option:selected").text()}"`)
     })
 }
 
@@ -271,7 +271,6 @@ function saveTaskList() {
         data: data,
         success: function (json) {
             console.log(json)
-            setToDoList(json)
         }
     })
 }

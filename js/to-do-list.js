@@ -121,7 +121,26 @@ function addToDoTaskTOList(userLogin, round, toDoTask) {
         },
         success: function (json) {
             oldToDoTaskList = json.tasks;
+            toDoTask.id = oldToDoTaskList.length;
+            let arrayOfRepeated = [];
+            if (json.tasks.length)
+                json.tasks.forEach(function (_task, index) {
+                    if (_task.trigger === "openField" && _task.add_info === "tasks_routes_field") {
+                       arrayOfRepeated.push(index);
+                    }
+                    delete _task.global_id;
+                });
+            if (arrayOfRepeated.length)
+                arrayOfRepeated.forEach(function (_index) {
+                    json.tasks.splice(_index, 1);
+                })
             oldToDoTaskList.push(toDoTask);
+            if (json.tasks.length){
+                json.tasks.forEach(function (_task, index) {
+                    _task.id = index + 1;
+                })
+            }
+
             let data = {
                 login: userLogin,
                 round: round,
