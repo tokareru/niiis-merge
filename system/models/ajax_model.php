@@ -401,8 +401,8 @@ class ajax_model extends model {
                         ));
             
             
-            $sql = "INSERT INTO users_tasks (task_number, username, trigger, add_info, text, round) VALUES ";
-//            (:task_number, :username, :trigger, :add_info, :text, :round)
+            $sql = "INSERT INTO users_tasks (task_number, username, trigger, add_info, text, is_finished, round) VALUES ";
+//            (:task_number, :username, :trigger, :add_info, :text, :is_finished, :round)
             
              foreach ($_POST["tasks"] as $row) {
                 $sql .= "(".$row["id"]
@@ -410,6 +410,7 @@ class ajax_model extends model {
                         ."','".$row["trigger"]
                         ."','".$row["add_info"]
                         ."','".$row["text"]
+                        ."','".$row["isFinished"]
                         ."',".$_POST["round"]
                         ."),";
             }

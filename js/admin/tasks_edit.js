@@ -80,7 +80,7 @@ function combineUserTaskList(combinedTasks, login, round) {
     `;
 }
 
-function combineUserTask(task = {text: "", trigger: "", add_info: ""}, index) {
+function combineUserTask(task = {text: "", trigger: "", add_info: "", isFinished: false}, index) {
     let isOpenFieldTrigger = false;
     let addSelection = combineOpenFieldSelection(task.add_info);
     if (task.trigger === "openField")
@@ -94,25 +94,31 @@ function combineUserTask(task = {text: "", trigger: "", add_info: ""}, index) {
              </div>
             
             <div class="row">
-                <div class="col-4  h6">
+                <div class="col-4 h6">
                     Текст задачи (описание)
                 </div>
-                <div class="col-4 h6">
+                <div class="col-3 h6">
                     Условие выполнения задачи
                 </div>
                 <div class="col-3 h6 ${(isOpenFieldTrigger) ? "": "d-none"} task-trigger-selection-header">
                     Название вкладки
+                </div>
+                <div class="col-2 h6 text-center">
+                    Выполнено?
                 </div>
             </div>
             <div class="row mb-2">
                 <div class="col-4">
                     <textarea class="form-control shadow-none">${task.text}</textarea>
                 </div>
-                <div class="col-4">
+                <div class="col-3">
                     ${combineTriggerSelection(task.trigger)}
                 </div>
                 <div class="${(isOpenFieldTrigger) ? "": "d-none"} task-trigger-selection-body col-3">
                     ${addSelection}
+                </div>
+                <div class="col-2 taskStatusDiv">
+                    <input ${(task.isFinished) ? "checked" : ""} type="checkbox" class="form-check form-control form-control-sm shadow-none">
                 </div>
             </div>
     </li>
@@ -235,7 +241,7 @@ function addNewTaskToList() {
     let login = $("#userLoginsSelection").val();
     let round = $("#userRoundSelection").val();
     let taskBody = $(`div[task-id="task-${login}-${round}"]`);
-    taskBody.append(combineUserTask({text: "", trigger: "", add_info: ""}, taskBody.find(".userTask").length));
+    taskBody.append(combineUserTask({text: "", trigger: "", add_info: "", isFinished: false}, taskBody.find(".userTask").length));
     taskBody.find(".userTask").last().find(".task-trigger-selection").trigger("change");
     let body =  document.body;
     body.scrollTo( 0, body.scrollHeight);
@@ -250,13 +256,14 @@ function saveTaskList() {
         let $task = $(this);
         let text = $task.find("textarea").val().toString();
         let trigger = $task.find(".task-trigger-selection").val();
-        let add_info = $task.find(".open-field-selection").val()
+        let add_info = $task.find(".open-field-selection").val();
+        let taskStatus = $task.find(".taskStatusDiv").find("input").prop('checked');
         tasks.push({
             id: (index + 1),
             text: (text !== undefined) ? text : "",
             trigger: (trigger !== undefined) ? trigger : "",
             add_info:(trigger === "openField") ? add_info : "",
-            isFinished: false
+            isFinished: taskStatus
         })
     });
     let data = {
