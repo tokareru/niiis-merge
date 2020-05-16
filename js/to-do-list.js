@@ -14,7 +14,22 @@ function initToDoList() {
             //alert(json.tasks.length)
             setToDoList(json)
         }
-    })
+    });
+    /*setInterval(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'ajax/get_user_tasks_by_round',
+            data: {
+                login: login,
+                round: Round
+            },
+            success: function (json) {
+                console.log(json)
+                //alert(json.tasks.length)
+                setToDoList(json)
+            }
+        });
+    }, 10000)*/
 }
 
 function setToDoList(json) {
@@ -35,7 +50,7 @@ function setToDoList(json) {
                         id: "toDoTaskDone",
                         field: `Навигатор`,
                         type: "success",
-                        text: `Задание '${_task.text}' выполнено`
+                        text: `Задание '${_task.text.replace(/"/g, "'")}' выполнено`.replace(/''/g, "'")
                     })
                 });
 
@@ -51,7 +66,7 @@ function setToDoList(json) {
                         id: "toDoTaskUnDone",
                         field: `Навигатор`,
                         type: "inProcess",
-                        text: `Задание '${_task.text}' изменило статус на 'Выполняется'`
+                        text: `Задание '${_task.text.replace(/"/g, "'")}' изменило статус на 'Выполняется'`.replace(/''/g, "'")
                     })
                 })
             }else{
@@ -68,7 +83,7 @@ function setToDoList(json) {
                             id: "toDoTaskDone",
                             field: `Навигатор`,
                             type: "success",
-                            text: `Задание '${_task.text}' выполнено`
+                            text: `Задание '${_task.text.replace(/"/g, "'")}' выполнено`.replace(/''/g, "'")
                         })
                     }
                 })
