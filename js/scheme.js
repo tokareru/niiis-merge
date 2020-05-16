@@ -12,7 +12,7 @@ export function initScheme() {
     }*/
 
     window.lines1 = []; // массив координат всех нарисованных линий (x0, y0, xn, yn)
-    window.lines2 = [];
+    window.lines2 = []; //массив нарисованных размеров
     window.lines3 = [];
     window.crivie = [];
     window.arrcoor = [];
@@ -287,6 +287,7 @@ export function initScheme() {
                     $('#topcanv').css({'display': 'block'});
                     firstFieldInit();
                     razmerdrawfull();
+                    CreateNotes();
                     $("#ready").click();
                     setDrawingStatus();
                 }
@@ -325,6 +326,7 @@ export function initScheme() {
                                 $('#topcanv').css({'display': 'block'});
                                 $('#hidedraw').css({'display': 'block'});
                                 razmerdrawfull();
+                                CreateNotes();
                                 $("#ready").click();
                                 clearInterval(inter);
                             }
@@ -1026,6 +1028,7 @@ export function initScheme() {
                                                 text: `Рисование чертежа закончено`
                                             })
                                             setDrawingStatus();
+                                            CreateNotes();
                                         }
                                     }
 
@@ -1576,118 +1579,67 @@ function createKontur() {
     }
 }
 
-/*
-CX = $("#drawcanv")[0].getContext("2d");
-for (let i=0;i<areas1.length;i++)
+function CreateNotes()
 {
-    CX.beginPath();
-    CX.moveTo(gx, gy);
-    CX.lineTo(x, y);
-    CX.stroke();
+    ctxs[0].lineWidth = 1;
+    let notesCoor = [
+        {x: 770, y: 75, note:"1", pos:"right"},
+        {x: 770, y: 100, note:"2", pos:"right"},
+        {x: 750, y: 140, x1: 820, y1: 75, note:"3", pos:"custom"},
+        {x: 260, y: 155, x1: 110, y1: 50, note:"4", pos:"custom"},
+        {x: 195, y: 122, x1: 110, y1: 75, note:"5", pos:"custom"},
+        {x: 750, y: 155, x1: 820, y1: 100, note:"6", pos:"custom"},
+        {x: 224, y: 205, x1: 110, y1: 250, note:"7", pos:"custom"}];
+
+    for (let i=0;i<notesCoor.length;i++)
+    {
+        let Dx1, Dx2, Dnote1;
+        ctxs[0].beginPath();
+        ctxs[0].moveTo(notesCoor[i].x, notesCoor[i].y);
+        ctxs[0].arc(notesCoor[i].x, notesCoor[i].y, 2, 0, 2 * Math.PI, 0);
+        ctxs[0].fill();
+        ctxs[0].moveTo(notesCoor[i].x, notesCoor[i].y);
+
+        if (notesCoor[i].pos == "right")
+        {
+            Dx1 = 50;
+            Dx2 = 70;
+            Dnote1 = 58;
+        }
+
+        if (notesCoor[i].pos == "left")
+        {
+            Dx1 = -50;
+            Dx2 = -70;
+            Dnote1 = -62;
+        }
+
+        ctxs[0].lineTo(notesCoor[i].x+Dx1, notesCoor[i].y-50);
+        ctxs[0].lineTo(notesCoor[i].x+Dx2, notesCoor[i].y-50);
+        ctxs[0].fillText(notesCoor[i].note, notesCoor[i].x+Dnote1, notesCoor[i].y-52);
+
+        if (notesCoor[i].pos == "custom")
+        {
+            let dx1, dx2;
+            ctxs[0].lineTo(notesCoor[i].x1, notesCoor[i].y1);
+
+            if (notesCoor[i].x > notesCoor[i].x1)
+            {
+                dx1 = -20;
+                dx2 = -14;
+            }
+            else
+            {
+                dx1 = 20;
+                dx2 = 8;
+            }
+
+            ctxs[0].lineTo(notesCoor[i].x1+dx1, notesCoor[i].y1);
+            ctxs[0].fillText(notesCoor[i].note, notesCoor[i].x1+dx2, notesCoor[i].y1-2);
+        }
+        ctxs[0].stroke();
+    }
+    ctxs[0].lineWidth = 2;
+
 }
-
-w=$("#drawcanv").width();
-h=$("#drawcanv").height();
-$( "#hidedraw" ).after( '<canvas width='+w+' height='+h+' id=Kontur1>' );
-
-areasCircles1 = [];
-areasCircles2 = [];
-areasCircles3 = [];
-for (let i=0;i<areas1.length-1;i++)
-{
-    if (i<9)
-    {
-        areasCircles1.push(areas1[i]);
-    }
-
-    if (i>8 && i<20)
-    {
-        areasCircles2.push(areas1[i]);
-    }
-
-    if (i>19)
-    {
-        areasCircles3.push(areas1[i]);
-    }
-}
-
-
-areasCircles1 = [];
-areasCircles2 = [];
-areasCircles3 = [];
-for (let i=0;i<areas1.length;i++)
-{
-    if (i<9)
-    {
-        areasCircles1.push(areas1[i]);
-    }
-
-    if (i>8 && i<20)
-    {
-        areasCircles2.push(areas1[i]);
-    }
-
-    if (i>19)
-    {
-        areasCircles3.push(areas1[i]);
-    }
-}
-
-w=$("#drawcanv").width();
-h=$("#drawcanv").height();
-$( "#hidedraw" ).after( '<canvas width='+w+' height='+h+' id=Kontur1>' );
-
-CX = $("#Kontur1")[0].getContext("2d");
-CX.strokeStyle = "#9aa197";
-for (let i=0;i<areasCircles1.length-1;i++)
-{
-    CX.beginPath();
-    CX.moveTo(areasCircles1[i].x, areasCircles1[i].y);
-    CX.lineTo(areasCircles1[i+1].x, areasCircles1[i+1].y);
-    CX.stroke();
-
-    if (i==areasCircles1.length-2)
-    {
-        CX.beginPath();
-        CX.moveTo(areasCircles1[i].x, areasCircles1[i].y);
-        CX.lineTo(areasCircles1[0].x, areasCircles1[0].y);
-        CX.stroke();
-    }
-}
-
-for (let i=0;i<areasCircles2.length-1;i++)
-{
-    CX.beginPath();
-    CX.moveTo(areasCircles2[i].x, areasCircles2[i].y);
-    CX.lineTo(areasCircles2[i+1].x, areasCircles2[i+1].y);
-    CX.stroke();
-
-    if (i==areasCircles2.length-2)
-    {
-        CX.beginPath();
-        CX.moveTo(areasCircles2[i].x, areasCircles2[i].y);
-        CX.lineTo(areasCircles2[0].x, areasCircles2[0].y);
-        CX.stroke();
-    }
-}
-
-for (let i=0;i<areasCircles3.length-1;i++)
-{
-    CX.beginPath();
-    CX.moveTo(areasCircles3[i].x, areasCircles3[i].y);
-    CX.lineTo(areasCircles3[i+1].x, areasCircles3[i+1].y);
-    CX.stroke();
-
-    if (i==areasCircles3.length-2)
-    {
-        CX.beginPath();
-        CX.moveTo(areasCircles3[i].x, areasCircles3[i].y);
-        CX.lineTo(areasCircles3[0].x, areasCircles3[0].y);
-        CX.stroke();
-    }
-}
-
-
-
-*/
 
