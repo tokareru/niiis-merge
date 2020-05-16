@@ -764,16 +764,7 @@ export function initScheme() {
     }
 
     $("#ready").click(function () {
-        for (let j = 0; j < 3; j++) {
-            /*   eval('canv' + (j + 1).toString()).style.display = 'none';
-             try {
-                 $(".canvimg")[0].className += 'done';
-             } catch (err) {
-                 //alert('Отрисовка уже выполнена');
-                 break;
-             } */
-            window.isEnded = true;
-        }
+        window.isEnded = true;
     });
 
     $("#drawcanv").mousedown(function (e) {
@@ -835,168 +826,130 @@ export function initScheme() {
 
     }).mouseup(
         function (e) {
-        window.down = false;
-        let n = $(this)[0].id;
+            window.down = false;
+            let n = $(this)[0].id;
 
-        let rect = e.target.getBoundingClientRect();
-        let x = e.clientX - rect.left - 1;
-        let y = e.clientY - rect.top - 1;
-        //alert(x+'; '+y);
+            let rect = e.target.getBoundingClientRect();
+            let x = e.clientX - rect.left - 1;
+            let y = e.clientY - rect.top - 1;
+            //alert(x+'; '+y);
 
-        for (let i = 0; i < 3; i++) {
-            if (n == ctxs[i].canvas.id) {
-                /*thisarrlines = eval('lines' + n[4]);
-                thisarrlines.push([gx, gy, window.endx, window.endy]);
-                drawall(ctxs[i]);*/
-                let summ = 0;
-                for (let l=0; l<window.crivie.length; l++)
-                {
-                    summ+=window.crivie[l];
-                }
-                window.crivie = [];
-                ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
-                    document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
-
-                if (isEnded == false) {circlesdraw();}
-                //#lines32
-                if (lines1.length<32)
-                {
-                    for (let k=0; k<lines1.length; k++)
+            for (let i = 0; i < 3; i++) {
+                if (n == ctxs[i].canvas.id) {
+                    /*thisarrlines = eval('lines' + n[4]);
+                    thisarrlines.push([gx, gy, window.endx, window.endy]);
+                    drawall(ctxs[i]);*/
+                    let summ = 0;
+                    for (let l=0; l<window.crivie.length; l++)
                     {
-                        ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
-                        ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
-                        ctxs[i].stroke();
+                        summ+=window.crivie[l];
                     }
-                }
+                    window.crivie = [];
+                    ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
+                        document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
 
-
-
-                if (window.clickedCircles != undefined) {
-                    for (let j = 0; j < areas1.length; j++) {
-                        let dx = x - areas1[j].x;
-                        let dy = y - areas1[j].y;
-                        if (dx * dx + dy * dy < r * r) {
-                            //console.log(window.arrcoor);
-                            let d = Math.sqrt((x-arrcoor[0][0])*(x-arrcoor[0][0])+(y-arrcoor[0][1])*(y-arrcoor[0][1]));
-                            //console.log(d+'; '+summ);
-                            if ((summ-d)/summ > 0.2) {return;}
-                            window.arrcoor = [];
-                            window.crivie = [];
-                            //info.innerText += 'up:В круге №' + (j + 1) + '\n';
-                            if (areas1[j].arr.indexOf(window.clickedCircles) == -1) {continue;}
-                            lines1.push([areas1[clickedCircles].x, areas1[clickedCircles].y, areas1[j].x, areas1[j].y]);
-                            ctxs[i].beginPath();
-
-                            ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
-                                document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
-
-
-                            if (lines1.length<32)
-                            {
-                                for (let k=0; k<lines1.length; k++)
-                                {
-                                    ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
-                                    ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
-                                    ctxs[i].stroke();
-                                }
-                            }
-
-                            if (showlines.indexOf(lines1.length+1) == -1)
-                            {
-                                if (lines1.length == 8)
-                                {
-                                    areas1[0].arr.push(lines1.length);
-                                }
-
-                                if (lines1.length == 19)
-                                {
-                                    areas1[9].arr.push(lines1.length);
-                                }
-
-                                if (lines1.length == 31)
-                                {
-                                    areas1[20].arr.push(lines1.length);
-                                }
-
-                                if (lines1.length == 9 || lines1.length == 20)
-                                {
-                                    showlines.push(lines1.length);
-                                    showlines.push(lines1.length+1);
-                                    areas1[0].arr = [];
-                                    areas1[9].arr = [];
-                                    areas1[20].arr = [];
-                                }
-                                else
-                                {
-                                    if (lines1.length != 8 && lines1.length != 19)
-                                    {
-                                        showlines.push(lines1.length+1);
-                                    }
-                                }
-                            }
-                            if (lines1.length == 32)
-                            {
-                                $("#ready").click();
-                                $("#scheme1 div canvas")[0].style.cssText += " display:block;";
-                                $("#Kontur1").hide();
-
-                            }
-                            else
-                            {
-                                if (areas1.length >= lines1.length+2) {areas1[lines1.length+1].arr.push(lines1.length)};
-                                areas1[lines1.length].arr = [];
-                                circlesdraw();
-                            }
-
-                            /* ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
-                            ctxs[i].lineTo(areas1[j].x, areas1[j].y);
-                            ctxs[i].stroke(); */
-
-                        } else {
-                            /* window.arrcoor = [];
-                            window.crivie = []; */
-                            //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
-                            //clickedCircles = undefined;
+                    if (isEnded == false) {circlesdraw();}
+                    //#lines32
+                    if (lines1.length<32)
+                    {
+                        for (let k=0; k<lines1.length; k++)
+                        {
+                            ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
+                            ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
+                            ctxs[i].stroke();
                         }
                     }
-                }
-                if (isEnded == true)
-                {
-                    CirclesRazmDraw();
 
-                    if (window.clickedCircles1 != undefined) {
-                        for (let j = 0; j < areas2.length; j++) {
-                            let dx = x - areas2[j].x;
-                            let dy = y - areas2[j].y;
+
+
+                    if (window.clickedCircles != undefined) {
+                        for (let j = 0; j < areas1.length; j++) {
+                            let dx = x - areas1[j].x;
+                            let dy = y - areas1[j].y;
                             if (dx * dx + dy * dy < r * r) {
                                 //console.log(window.arrcoor);
-                                let d = Math.sqrt((x-arrcoor1[0][0])*(x-arrcoor1[0][0])+(y-arrcoor1[0][1])*(y-arrcoor1[0][1]));
-                                console.log(d+'; '+summ);
-                                if ((summ-d)/summ > 0.2) {return;}
-                                window.arrcoor1 = [];
+                                let d = Math.sqrt((x-arrcoor[0][0])*(x-arrcoor[0][0])+(y-arrcoor[0][1])*(y-arrcoor[0][1]));
+                                //console.log(d+'; '+summ);
+                                if ((summ-d)/summ > 0.2)
+                                {
+                                    if (lines1.length>=32)
+                                    {
+                                        razmerdraw();
+                                        CirclesRazmDraw();
+                                    }
+                                    return;
+                                }
+                                window.arrcoor = [];
                                 window.crivie = [];
                                 //info.innerText += 'up:В круге №' + (j + 1) + '\n';
-                                if (areas2[j].arr.indexOf(window.clickedCircles1) == -1) {continue;}
-                                lines2.push([areas2[clickedCircles1].x, areas2[clickedCircles1].y, areas2[j].x, areas2[j].y]);
+                                if (areas1[j].arr.indexOf(window.clickedCircles) == -1) {continue;}
+                                lines1.push([areas1[clickedCircles].x, areas1[clickedCircles].y, areas1[j].x, areas1[j].y]);
                                 ctxs[i].beginPath();
 
                                 ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
                                     document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
-                                razmerdraw(d.toFixed());
-                                amountOfFinishedViews++;
-                                if (amountOfFinishedViews === 3) {
-                                    if (Role === "designer" && Round !== 3){
-                                        triggerToDoTaskEvent("finishScheme");
-                                        setActionToBar({
-                                            id: "finishDrawing",
-                                            type: "check",
-                                            field: "Рабочий стол. Чертёж",
-                                            text: `Рисование чертежа закончено`
-                                        })
-                                        setDrawingStatus();
+
+
+                                if (lines1.length<32)
+                                {
+                                    for (let k=0; k<lines1.length; k++)
+                                    {
+                                        ctxs[i].moveTo(lines1[k][0], lines1[k][1]);
+                                        ctxs[i].lineTo(lines1[k][2], lines1[k][3]);
+                                        ctxs[i].stroke();
                                     }
                                 }
 
+                                if (showlines.indexOf(lines1.length+1) == -1)
+                                {
+                                    if (lines1.length == 8)
+                                    {
+                                        areas1[0].arr.push(lines1.length);
+                                    }
+
+                                    if (lines1.length == 19)
+                                    {
+                                        areas1[9].arr.push(lines1.length);
+                                    }
+
+                                    if (lines1.length == 31)
+                                    {
+                                        areas1[20].arr.push(lines1.length);
+                                    }
+
+                                    if (lines1.length == 9 || lines1.length == 20)
+                                    {
+                                        showlines.push(lines1.length);
+                                        showlines.push(lines1.length+1);
+                                        areas1[0].arr = [];
+                                        areas1[9].arr = [];
+                                        areas1[20].arr = [];
+                                    }
+                                    else
+                                    {
+                                        if (lines1.length != 8 && lines1.length != 19)
+                                        {
+                                            showlines.push(lines1.length+1);
+                                        }
+                                    }
+                                }
+                                if (lines1.length == 32)
+                                {
+                                    $("#ready").click();
+                                    $("#scheme1 div canvas")[0].style.cssText += " display:block;";
+                                    $("#Kontur1").hide();
+
+                                }
+                                else
+                                {
+                                    if (areas1.length >= lines1.length+2) {areas1[lines1.length+1].arr.push(lines1.length)};
+                                    areas1[lines1.length].arr = [];
+                                    circlesdraw();
+                                }
+
+                                /* ctxs[i].moveTo(areas1[clickedCircles].x, areas1[clickedCircles].y);
+                                ctxs[i].lineTo(areas1[j].x, areas1[j].y);
+                                ctxs[i].stroke(); */
 
                             } else {
                                 /* window.arrcoor = [];
@@ -1006,23 +959,102 @@ export function initScheme() {
                             }
                         }
                     }
-                    razmerdraw();
-                    CirclesRazmDraw();
-                }
-                /* if (lines2.length ==3)
-                {
-                    window.increment++;
-                    if (window.increment < 2)
+                    if (isEnded == true)
                     {
-                        setDrawingStatus();
+                        CirclesRazmDraw();
+
+                        if (window.clickedCircles1 != undefined) {
+                            for (let j = 0; j < areas2.length; j++) {
+                                let dx = x - areas2[j].x;
+                                let dy = y - areas2[j].y;
+                                if (dx * dx + dy * dy < r * r) {
+                                    //console.log(window.arrcoor);
+                                    let d = Math.sqrt((x-arrcoor1[0][0])*(x-arrcoor1[0][0])+(y-arrcoor1[0][1])*(y-arrcoor1[0][1]));
+                                    console.log(d+'; '+summ);
+                                    if ((summ-d)/summ > 0.2)
+                                    {
+                                        razmerdraw();
+                                        CirclesRazmDraw();
+                                        return;
+                                    }
+                                    window.arrcoor1 = [];
+                                    window.crivie = [];
+                                    //info.innerText += 'up:В круге №' + (j + 1) + '\n';
+                                    if (areas2[j].arr.indexOf(window.clickedCircles1) == -1) {continue;}
+
+                                    let flag = false;
+                                    if (lines2.length != 0)
+                                    {
+                                        for (let l=0;l<lines2.length;l++)
+                                        {
+                                            if ((lines2[l].indexOf(areas2[j].x) != -1 && lines2[l].indexOf(areas2[j].y) != -1) || (lines2[l].indexOf(areas2[clickedCircles1].x) != -1 &&
+                                                lines2[l].indexOf(areas2[clickedCircles1].y) != -1))
+                                            {
+                                                flag = true;
+                                                break;
+                                                /* razmerdraw();
+                                                CirclesRazmDraw(); */
+                                                //continue;
+
+                                            }
+                                            else
+                                            {
+                                                flag = false;
+                                            }
+                                        }
+                                        if (flag == false) {lines2.push([areas2[clickedCircles1].x, areas2[clickedCircles1].y, areas2[j].x, areas2[j].y]);}
+                                        else {continue;}
+                                    }
+                                    else
+                                    {
+                                        lines2.push([areas2[clickedCircles1].x, areas2[clickedCircles1].y, areas2[j].x, areas2[j].y]);
+                                    }
+
+                                    ctxs[i].beginPath();
+
+                                    ctxs[i].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[i].canvas.id].width,
+                                        document.getElementsByTagName("canvas")[ctxs[i].canvas.id].height);
+                                    razmerdraw(d.toFixed());
+                                    amountOfFinishedViews++;
+                                    if (amountOfFinishedViews === 3) {
+                                        if (Role === "designer" && Round !== 3){
+                                            triggerToDoTaskEvent("finishScheme");
+                                            setActionToBar({
+                                                id: "finishDrawing",
+                                                type: "check",
+                                                field: "Рабочий стол. Чертёж",
+                                                text: `Рисование чертежа закончено`
+                                            })
+                                            setDrawingStatus();
+                                        }
+                                    }
+
+
+                                } else {
+                                    /* window.arrcoor = [];
+                                    window.crivie = []; */
+                                    //info.innerText += 'up:Не в круге №' + (j + 1) + '\n';
+                                    //clickedCircles = undefined;
+                                }
+                            }
+                        }
+                        razmerdraw();
+                        CirclesRazmDraw();
                     }
-                } */
+                    /* if (lines2.length ==3)
+                    {
+                        window.increment++;
+                        if (window.increment < 2)
+                        {
+                            setDrawingStatus();
+                        }
+                    } */
 
-                break;
+                    break;
+                }
             }
-        }
 
-    }).mouseout(function () {
+        }).mouseout(function () {
         window.down = false;
     }).mouseover(function () {
 
