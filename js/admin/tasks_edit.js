@@ -168,7 +168,7 @@ function initUserLogins() {
         type: 'GET',
         async: false,
         success: function (data) {
-            console.log(data);
+            //console.log(data);
             setUserLogins(data);
             usersData = data;
         },
@@ -183,13 +183,13 @@ function setUserLogins(data) {
     let $selection = $("#userLoginsSelection");
     if (data.users.length)
         data.users.forEach(function (_user) {
-            $selection.append(combineUserLogin(_user[0], _user[2]))
+            $selection.append(combineUserLogin(_user[0], _user[2], chooseRole(_user[2], true)))
         })
 }
 
-function combineUserLogin(login, roleId) {
+function combineUserLogin(login, roleId, roleNameRussian) {
     return `
-        <option class="userLogin" value="${login}" user-id="${roleId}">${login}</option>
+        <option class="userLogin" value="${login}" user-id="${roleId}">${login} (${roleNameRussian})</option>
     `
 }
 
@@ -353,7 +353,7 @@ function getTriggersAvailability() {
             type: 'GET',
             async: false,
             success: function (data) {
-                console.log(data);
+                //console.log(data);
                 triggers_availability = data.data;
             },
             error: function (data) {
@@ -363,19 +363,19 @@ function getTriggersAvailability() {
     return triggers_availability;
 }
 
-function chooseRole(id) {
+function chooseRole(id, isRussian = false) {
     id = Number(id);
     let role = ""
     if (id === 1)
-        role = "designer"
+        role = (!isRussian) ? "designer" : "конструктор";
     if (id === 2)
-        role = "technologist"
+        role = (!isRussian) ? "technologist" : "технолог";
     if (id === 3)
-        role = "approver"
+        role = (!isRussian) ? "approver" : "согласующий";
     if (id === 4)
-        role = "production_master"
+        role = (!isRussian) ? "production_master" : "мастер производства";
     if (id === 5)
-        role = "worker"
+        role = (!isRussian) ? "worker" : "рабочий";
     return role;
 }
 

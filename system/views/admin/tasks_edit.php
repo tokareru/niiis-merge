@@ -12,7 +12,7 @@
 <div class="pt-3 pb-2 mb-3 border-bottom">
     <h1 class="h2">Задачи пользователей</h1>
     <div class="row">
-        <div  class="col-3 h5">
+        <div  class="col-4 h5">
             Выберите пользователя
         </div>
         <div  class="col-3 h5">
@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="row mb-3">
-        <div  class="col-3">
+        <div  class="col-4">
             <select class="form-control-sm shadow-none" id="userLoginsSelection">
             </select>
         </div>
