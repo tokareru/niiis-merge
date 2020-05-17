@@ -737,13 +737,13 @@ function combineRowFor_1_2Rounds(data = {name: "", equipment: "", tools: ""}) {
             <td colspan="3" class=""></td>
             <td colspan="4" class="tdBorderBlackRight"></td>
             <td colspan="34" class="">
-                <input class="border-0 outline-none" style="font-size: 1.5em;" ${disabled} value="${data.name}">
+                <input class="border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.name}">
             </td>
             <td colspan="12" class="tdBorderBlackLeft">
-               <input class="border-0 outline-none" style="font-size: 1.5em;" ${disabled} value="${data.equipment}">
+               <input class="border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.equipment}">
             </td>
             <td colspan="12" class="">
-                <input class="border-0 outline-none" style="font-size: 1.5em;" ${disabled} value="${data.tools}">
+                <input class="border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.tools}">
             </td>
             <td colspan="6" class=""></td>
             <td colspan="5" class=""></td>

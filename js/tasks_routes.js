@@ -186,7 +186,7 @@ function initTasksRoutes() {
     });
 
     $(".myTaskRoutes").on("click", function () {
-        triggerToDoTaskEvent("checkMyTaskRoute")
+        triggerToDoTaskEvent("checkMyTaskRoutes")
     })
 
     $('#task_routes_own_routes_update').on('click', function () {
@@ -589,6 +589,7 @@ function addTaskToDB() {
                 field: "Маршруты заданий",
                 text: 'Добавлен новый маршрут заданий'
             });
+            triggerToDoTaskEvent("addNewTaskRoute");
             //$('#task_routes_add_button').attr('disabled', true);
             $('#create_task_route_closeBtn').click();
         }

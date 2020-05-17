@@ -39,8 +39,10 @@
             </tbody>
         </table>
     </div>
+    <div class="d-flex">
+        <button id='tech_process_save' class="btn bg-dark mx-auto text-white hidden">Сохранить</button>
+    </div>
 
-    <button id='tech_process_save' class="btn bg-info text-white hidden">Сохранить</button>
 </div>
 
 </body>

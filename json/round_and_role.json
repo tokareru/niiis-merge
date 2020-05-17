@@ -172,6 +172,7 @@
                 "fieldBlock",
                 "specification",
                 "route_map_field",
+                "technological_process_field",
                 "tasks_routes_field"
               ]
             },
@@ -292,75 +293,6 @@
                 "route_map_field",
                 "production_task_field",
                 "tasks_routes_field"
-              ]
-            },
-            {
-              "ID": "chat-side",
-              "tabs": []
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "role": "administrator",
-      "rounds": [
-        {
-          "round": 1,
-          "available_sides": [
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "specification",
-                "scheme",
-                "fieldBlock"
-              ]
-            }
-          ]
-        },
-        {
-          "round": 2,
-          "available_sides": [
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "scheme",
-                "fieldBlock"
-              ]
-            },
-            {
-              "ID": "right-side",
-              "tabs": [
-
-              ]
-            },
-            {
-              "ID": "chat-side",
-              "tabs": []
-            }
-          ]
-        },
-        {
-          "round": 3,
-          "available_sides": [
-            {
-              "ID": "left-side",
-              "tabs": [
-                "pdm_field",
-                "std_field",
-                "technologist_guide_field"
-              ]
-            },
-            {
-              "ID": "main-tabs",
-              "tabs": [
-                "scheme",
-                "fieldBlock",
-                "specification",
-                "route_map_field",
-                "production_task_field",
-                "tasks_routes_field",
-                "technological_process_field"
               ]
             },
             {

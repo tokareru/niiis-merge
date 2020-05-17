@@ -1,0 +1,554 @@
+{
+  "data": [
+    {
+      "role": "designer",
+      "rounds": [
+        {
+          "round": 1,
+          "triggers": [
+            {
+              "trigger": "saveScheme"
+            },
+            {
+              "trigger": "saveSpecTable"
+            },
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "finishScheme"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "triggers": [
+            {
+              "trigger": "saveScheme"
+            },
+            {
+              "trigger": "saveSpecTable"
+            },
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "finishScheme"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "chat"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "triggers": [
+            {
+              "trigger": "saveScheme"
+            },
+            {
+              "trigger": "saveSpecTable"
+            },
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "chooseAllDetails"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "chat"
+            },
+            {
+              "fieldId": "pdm_field"
+            },
+            {
+              "fieldId": "std_field"
+            },
+            {
+              "fieldId": "fieldBlock"
+            },
+            {
+              "fieldId": "esi_field"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "technologist",
+      "rounds": [
+        {
+          "round": 1,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "saveRouteMap"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "route_map_field"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "saveRouteMap"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "route_map_field"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "chat"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "saveRouteMap"
+            },
+            {
+              "trigger": "saveTechProcess"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "route_map_field"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "chat"
+            },
+            {
+              "fieldId": "technologist_guide_field"
+            },
+            {
+              "fieldId": "technological_process_field"
+            },
+            {
+              "fieldId": "fieldBlock"
+            },
+            {
+              "fieldId": "esi_field"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "approver",
+      "rounds": [
+        {
+          "round": 1,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "work_outside_the_system_field"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "route_map_field"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "chat"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "route_map_field"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "chat"
+            },
+            {
+              "fieldId": "technological_process_field"
+            },
+            {
+              "fieldId": "fieldBlock"
+            },
+            {
+              "fieldId": "esi_field"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "production_master",
+      "rounds": [
+        {
+          "round": 1,
+          "triggers": [
+            {
+              "trigger": "saveProductionTasks"
+            },
+            {
+              "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "openField"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "production_task_field"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "saveProductionTasks"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "route_map_field"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "production_task_field"
+            },
+            {
+              "fieldId": "chat"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "saveProductionTasks"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "route_map_field"
+            },
+            {
+              "fieldId": "production_task_field"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "chat"
+            },
+            {
+              "fieldId": "technological_process_field"
+            },
+            {
+              "fieldId": "fieldBlock"
+            },
+            {
+              "fieldId": "esi_field"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "role": "worker",
+      "rounds": [
+        {
+          "round": 1,
+          "triggers": [
+            {
+              "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "openField"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "work_outside_the_system_field"
+            }
+          ]
+        },
+        {
+          "round": 2,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "route_map_field"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "production_task_field"
+            },
+            {
+              "fieldId": "chat"
+            }
+          ]
+        },
+        {
+          "round": 3,
+          "triggers": [
+            {
+              "trigger": "openField"
+            },
+            {
+              "trigger": "checkMyTaskRoutes"
+            },
+            {
+              "trigger": "addNewTaskRoute"
+            },
+            {
+              "trigger": "sendToPrint"
+            }
+          ],
+          "fields": [
+            {
+              "fieldId": "scheme"
+            },
+            {
+              "fieldId": "specification"
+            },
+            {
+              "fieldId": "route_map_field"
+            },
+            {
+              "fieldId": "production_task_field"
+            },
+            {
+              "fieldId": "tasks_routes_field"
+            },
+            {
+              "fieldId": "chat"
+            },
+            {
+              "fieldId": "fieldBlock"
+            },
+            {
+              "fieldId": "esi_field"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

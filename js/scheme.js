@@ -1463,7 +1463,7 @@ function getDrawingStatus()
         success: function (answer) {
             // console.log(answer);
             window.echo = answer;
-            if (answer.is_drawing_finished === true && Role === "designer") triggerToDoTaskEvent("finishScheme");
+            if (answer.is_drawing_finished === true && Role === "designer" && Round !== 3) triggerToDoTaskEvent("finishScheme");
         }
     });
 }
