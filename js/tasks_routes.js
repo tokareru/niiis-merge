@@ -465,7 +465,7 @@ function addTaskToTable() {
         let route =
             '<td style="width: 25px; max-width: 25px; min-width: 25px" class="create_task_route_delCol text-dark">' +
             '<i class="fa fa-times"></i></td>' +
-            `<td style="width: 36px; max-width: 36px; min-width: 36px" class="">${$('#create_task_route_tbody tr').length}</td>` +
+            `<td style="width: 36px; max-width: 36px; min-width: 36px" class="create_task_route_listId">${$('#create_task_route_tbody tr').length}</td>` +
             '<td class="create_task_route_selectSpec" style="width: 210px; max-width: 210px; min-width: 210px"></td>' +
             '<td style="width: 200px; max-width: 200px; min-width: 200px">' +
             '<select class="create_task_route_selectNames form-control form-control-sm outline-none shadow-none">' +
@@ -492,6 +492,7 @@ function addTaskToTable() {
         recountListId();
         $('.create_task_route_delCol').on('click', function () {
             $(this).parents('tr').remove();
+            recountListId();
         });
     });
 }
