@@ -25,6 +25,7 @@ function initSpecTable(json) {
     let $table = $("#specificationTable");
     setSpecTable(json);
     SpecTableInfo = json;
+    $tableBlock.unbind("click").unbind("change").unbind("keydown");
 
     $table.on("click", ".addNewRowToSpecTableButton", function () {
         addNewRowToSpecTable();

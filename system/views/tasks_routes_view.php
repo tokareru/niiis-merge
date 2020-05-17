@@ -80,7 +80,7 @@
 
                 </ul>
             </li>
-            <li>
+            <li class="myTaskRoutes">
                 <span class="caret">
                     Мои маршруты
                 </span>

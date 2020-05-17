@@ -185,6 +185,10 @@ function initTasksRoutes() {
         }, 500)
     });
 
+    $(".myTaskRoutes").on("click", function () {
+        triggerToDoTaskEvent("checkMyTaskRoute")
+    })
+
     $('#task_routes_own_routes_update').on('click', function () {
         getRoutesFromDB();
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
@@ -541,9 +545,9 @@ function addTaskToDB() {
     task.forEach(function (_task) {
         addToDoTaskTOList(_task.user, Round, {
             id: 0,
-            text: `Проверить новое задание в "Маршруты заданий"`,
-            trigger: "openField",
-            add_info: "tasks_routes_field",
+            text: `Проверить "Мои маршруты" из вкладки "Маршрутах заданий"`,
+            trigger: "checkMyTaskRoute",
+            add_info: "",
             isFinished: false
         });
         /*addToDoTaskTOList(_task.user, 3, {
