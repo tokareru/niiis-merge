@@ -32,7 +32,7 @@ $(function (){
                 });
            }
         });
-    });
+    }).trigger("change");
 
     function ToBase64(file) {
         var reader = new FileReader();

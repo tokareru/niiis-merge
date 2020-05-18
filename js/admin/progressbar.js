@@ -9,7 +9,7 @@ $(function () {
                 $("#table").html(answer);
             }
         })
-    });
+    }).trigger("change");
 });
 
 

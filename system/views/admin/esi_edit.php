@@ -13,7 +13,6 @@
 <div class="mb-md-0"> 
     <div class="row">
         <select class="form-control col-3" id="change_esi">
-            <option></option>
             <?php 
             foreach ($data as $row) {
                 echo '<option value="'.$row["id"].'">'.$row["name"].'</option>';    

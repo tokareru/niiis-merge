@@ -16,7 +16,6 @@
         <div class="col-2">Выберите пользователя:</div>
         <div class="col-4">
             <select class="custom-select" id="users">
-                <option></option>
                 <?php foreach($data as $row){ 
                     echo '<option value="'.$row["login"].'">'.$row["last_name"].' '.$row["first_name"].' '.$row["otc"].'</option>';
                  } ?>
