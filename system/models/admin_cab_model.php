@@ -501,9 +501,6 @@ ORDER BY third_id";
         <thead>
         <tr>
             <th>
-                id операции
-            </th>
-            <th>
                 Тип операции
             </th>
             <th>
@@ -519,12 +516,69 @@ ORDER BY third_id";
         </thead>
         <tbody>';
         foreach($data as $row){
+        $type = $row["type"];
+        $typeClass = "fa-question";
+        if ($type == "save"){
+            $typeClass = "fa-save";
+        }
+        if ($type == "choose"){
+            $typeClass = "fa-check-square";
+        }
+        if ($type == "unselect"){
+            $typeClass = "fa-times-circle-o";
+        }
+        if ($type == "edit"){
+            $typeClass = "fa-edit";
+        }
+        if ($type == "addNew"){
+            $typeClass = "fa-plus";
+        }
+        if ($type == "delete"){
+            $typeClass = "fa-minus";
+        }
+        if ($type == "rowToEdit"){
+            $typeClass = "fa-unlock";
+        }
+        if ($type == "rowToRo"){
+            $typeClass = "fa-lock";
+        }
+        if ($type == "open"){
+            $typeClass = "fa-folder";
+        }
+        if ($type == "clear"){
+            $typeClass = "fa-trash-o";
+        }
+        if ($type == "move"){
+            $typeClass = "fa-arrows";
+        }
+        if ($type == "signIn"){
+            $typeClass = "fa-sign-in";
+        }
+        if ($type == "approve"){
+            $typeClass = "fa-check";
+        }
+        if ($type == "cancel"){
+            $typeClass = "fa-times";
+        }
+        if ($type == "success"){
+            $typeClass = "fa-check-circle text-success";
+        }
+        if ($type == "inProcess"){
+            $typeClass = "fa-spinner";
+        }
+        if ($type == "check"){
+            $typeClass = "fa-check";
+        }
+        if ($type == "print"){
+            $typeClass = "fa-print";
+        }
+        if ($type == "signOut"){
+            $typeClass = "fa-sign-out";
+        }
+
         $response .= '<tr>
             <td>
-                '.$row["operation_id"].'
-            </td>
-            <td>
-                '.$row["type"].'
+                <div class="font-family-fontAwesome '.$typeClass.'"></div>
             </td>
             <td>
                 '.$row["field"].'
