@@ -1,4 +1,5 @@
-async function trigger3dInit() {
-    let field3D = await import('./3D_module.js');
-    await field3D.init3dField();
+function trigger3dInit() {
+    let field3D = import('./3D_module.js').then(function (module) {
+        module.init3dField();
+    });
 }

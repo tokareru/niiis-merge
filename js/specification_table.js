@@ -396,6 +396,7 @@ function addTitleBlockRow() {
                 {
                     url: 'drawing_main_text_ajax',
                     type: 'POST',
+                    async: false,
                     data: {},
                     success: function (data) {
                         mainTitle = data[20];
