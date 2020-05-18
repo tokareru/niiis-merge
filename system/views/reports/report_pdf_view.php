@@ -598,15 +598,17 @@ $p->border_page($main_label, $type = 1);
   
 
 if ($draw_finish) { // если чертеж дорисован
-  $p->Image('images/report/ABR3d-1.png', 30, 20, -350);
+  $p->Image('images/report/drawing.png', 30, 20, -150);
 
   // размеры на чертеже
-  $p->SetXY(45, 43);
-  $p->Cell(6, 5, $size["size_1"], $frame, 1, 'C'); // размер 1
-  $p->SetXY(145, 59);
-  $p->Cell(6, 5, $size["size_2"], $frame, 1, 'C'); // размер 2
-  $p->SetXY(85, 130);
-  $p->Cell(6, 5, $size["size_3"], $frame, 1, 'C'); // размер 3
+  $p->SetXY(39, 41);
+//  $p->Cell(6, 5, $size["size_1"], $frame, 1, 'C'); // размер 1  
+  $p->TextWithRotation(39, 41, $size["size_1"], 90);
+  $p->SetXY(78, 116);
+  $p->Cell(6, 5, $size["size_2"], $frame, 1, 'C'); // размер 3
+  $p->SetXY(155, 51.5);
+  $p->Cell(6, 5, $size["size_3"], $frame, 1, 'C'); // размер 2
+
   // -----------------
 }
 
