@@ -41,7 +41,7 @@
 
     </tbody>
   </table>
-  <button class="btn btn-primary add_user" id="add_group_user">Добавить пользователя</button>
+  <button class="btn btn-primary add_user" id="add_group_user">Добавить группу</button>
 </div>
 
 <div class="modal fade" id="edit_group_users" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
