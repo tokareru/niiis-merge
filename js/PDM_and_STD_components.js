@@ -261,7 +261,7 @@ function makeCheckbox(fieldID, isChecked) {
     $checkboxid.find("input").click(function (e) {
         let arrayClicked = collectDataLabels(".left-side");
         showhideimage(arrayClicked, $(this));
-        console.log(arrayClicked);
+        //console.log(arrayClicked);
         load3d(arrayClicked, $(this));
         //console.log(arrayClicked);
         setESI({details: convertPdmAndStdInfo(arrayClicked)})
@@ -273,7 +273,7 @@ function makeCheckbox(fieldID, isChecked) {
 }
 
 //функция сбора данных checkbox, возвращает массив имен отмеченных input'ов
-function collectDataLabels(id_div) {
+function collectDataLabels(id_div = ".left-side") {
     let $ser = $(id_div).find("fieldset").serializeArray();
     let arr = [];
     $ser.forEach(function (val) {

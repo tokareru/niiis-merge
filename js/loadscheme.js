@@ -37,7 +37,7 @@ async function triggerschemeInit() {
             data: "json",
             success: function (json) {
                 //console.log(json);
-                if (json.isFull === "false"){
+                if (json.isFull == "false"){
                     blockScheme();
                 }else {
                     unlockScheme()
@@ -53,7 +53,7 @@ async function triggerschemeInit() {
                 data: "json",
                 success: function (json) {
                     //console.log(json);
-                    if (json.isFull === "false"){
+                    if (json.isFull == "false"){
                         blockScheme();
                     }else {
                         unlockScheme()

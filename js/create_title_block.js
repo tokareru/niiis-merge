@@ -458,6 +458,7 @@ function getDataFromServerTitleBlock() {
                         break;
                     ServerData.push(data[index++]);
                 }
+                if (Round === 3) mainTitle = data[20];
                 addDataToTitleBlock(ServerData);
             },
             error: function () {
@@ -535,6 +536,7 @@ function addDataToTitleBlock(data) {
 
 function addToServerTitleBlock() {
     let serArr = serializedTitleBlock();
+    //console.log(serArr)
     $.ajax(
         {
             url: 'drawing_main_text_ajax/save',

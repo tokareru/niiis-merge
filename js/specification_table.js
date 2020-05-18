@@ -1,3 +1,5 @@
+let mainTitle = 0;
+
 function createSpecificationTable() {
     //serializeTable();
 
@@ -245,7 +247,10 @@ function deleteSpecRow(_this) {
 }
 
 function emptySpecTable() {
-    $("#specificationTable").find("tbody").find(".specRows").remove();
+    let specTbody = $("#specificationTable").find("tbody")
+    specTbody.find(".specRows").remove();
+    specTbody.find(".mainTitleNameRow").remove();
+    specTbody.find(".detailsGroupNameRow").remove();
 }
 
 function saveSpecTableData($rows) {
@@ -259,7 +264,7 @@ function saveSpecTableData($rows) {
                     {text: cells.eq(1).val(), readonly: false},
                     {text: cells.eq(2).val(), readonly: false},
                     {text: (cells.eq(3).val() !== "Не указано") ? cells.eq(3).val() : "0", readonly: false},
-                    {text: cells.eq(4).val(), readonly: false},
+                    {text: (cells.eq(4).val() !== undefined) ? cells.eq(4).val() : "", readonly: false},
                 ]
             })
         });
@@ -322,6 +327,7 @@ function setTableByPdmAndStd(checked) {
     emptySpecTable();
 
     DetailsInfo = getDetailsInfo();
+    addTitleBlockRow();
 
     if (checked === undefined) {
         $.ajax({
@@ -342,8 +348,17 @@ function setTableByPdmAndStd(checked) {
         checked = checked.checked;
 
     let checked_info = convertPdmAndStdInfo(checked);
-
+    let isPdmGroupNameSet = false;
+    let isStdGroupNameSet = false;
     checked_info.forEach(function (_detail) {
+        if (!isPdmGroupNameSet && _detail.type === "pdm"){
+            isPdmGroupNameSet = true;
+            addDetailsGroupRow("Детали");
+        }
+        if (!isStdGroupNameSet && _detail.type === "standart"){
+            isStdGroupNameSet = true;
+            addDetailsGroupRow("Стандартные детали");
+        }
         addNewRowToSpecTable([_detail.position, _detail.designation, _detail.name, _detail.number]);
     });
 }
@@ -358,4 +373,62 @@ function convertPdmAndStdInfo(checkedArray) {
         });
     });
     return checkedInfo;
+}
+
+function addTitleBlockRow() {
+    let checkedArray = [];
+    let allDetails = getDetailsInfo();
+    if (Role !== "designer")
+        $.ajax({
+            type: "GET",
+            url: "spec_autoentered_table_ajax/load_product_checked",
+            dataType: "json",
+            async: false,
+            success: function (json) {
+                checkedArray = json.checked;
+            }
+        });
+    else checkedArray = collectDataLabels(".left-side");
+
+    if (checkedArray.length === allDetails.length){
+        if (mainTitle === 0)
+            $.ajax(
+                {
+                    url: 'drawing_main_text_ajax',
+                    type: 'POST',
+                    data: {},
+                    success: function (data) {
+                        mainTitle = data[20];
+                        //console.log(mainTitle)
+                    }
+                }
+            );
+        let $table = $("#specificationTable");
+        $table.find("tbody").prepend(`
+        <tr class="mainTitleNameRow">
+            <td></td>
+            <td></td>
+            <td class="bold">Документация</td>
+            <td></td>
+        </tr>
+        <tr class="mainTitleNameRow">
+            <td></td>
+            <td>${mainTitle}</td>
+            <td>Сборочный чертеж</td>
+            <td></td>
+        </tr>
+    `);
+    }
+}
+
+function addDetailsGroupRow(groupName) {
+    let $table = $("#specificationTable");
+    $table.find("tbody").append(`
+        <tr class="detailsGroupNameRow">
+            <td></td>
+            <td></td>
+            <td class="bold">${groupName}</td>
+            <td></td>
+        </tr>
+    `)
 }
