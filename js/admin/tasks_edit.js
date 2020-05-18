@@ -135,7 +135,7 @@ function combineTriggerSelection(selectedTriggerName = "", role, round) {
     triggers.forEach(function (_trigger) {
         if (isTriggerAvailable(role, round, _trigger.id))
             combinedTriggers += `
-                <option value="${_trigger.id}" ${(selectedTriggerName === _trigger.id) ? "selected" : ""} task-description="${_trigger.description}">${_trigger.name}</option>
+                <option value="${_trigger.id}" ${(selectedTriggerName === _trigger.id) ? "selected" : ""} task-description='${_trigger.description}'>${_trigger.name}</option>
             `
     });
     return `
@@ -418,7 +418,7 @@ let triggers = [
     {
         id: "checkMyTaskRoutes",
         name: 'Проверка "Моих маршрутов"',
-        description: 'Проверить "Мои маршруты" во вкладке "Маршруты заданий'
+        description: 'Проверить "Мои маршруты" во вкладке "Маршруты заданий"'
     },
     {
         id: "addNewTaskRoute",
