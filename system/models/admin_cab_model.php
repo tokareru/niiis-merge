@@ -500,7 +500,7 @@ ORDER BY third_id";
         $response = '<table class="table table-bordered table-condensed table-hover table-sm">
         <thead>
         <tr>
-            <th>
+            <th style="width: 60px">
                 Тип операции
             </th>
             <th>
