@@ -96,7 +96,7 @@ async function prepareShell(json_role_and_round, add_data) {
     LoginChange = loginChange;
     DateChange = dateChange;
     AllInfo = getLoginNames("allInfo");
-    console.log(AllInfo);
+    //console.log(AllInfo);
 
     if (FirstInit) $("#shell").on("updateShell", function () {
         updateShell();
@@ -135,6 +135,7 @@ async function updateShell(){
     tabs_fields_ul.addClass("blur-filter");
 
     //обновляем данные раунда
+    console.log("Раунд: " + round + ", роль: " + role);
     $("#current_login_field").text(login);
     $("#current_role_field").text(currentName);
     $("#current_round_number").text(round);

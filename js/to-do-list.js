@@ -10,8 +10,7 @@ function initToDoList() {
             round: Round
         },
         success: function (json) {
-            console.log(json)
-            //alert(json.tasks.length)
+            //console.log(json)
             setToDoList(json)
         }
     });

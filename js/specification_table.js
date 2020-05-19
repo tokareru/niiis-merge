@@ -70,7 +70,7 @@ function initSpecTable(json) {
 }
 
 function setSpecTable(json) {
-    console.log(json);
+    //console.log(json);
     let $table = $("#specificationTable");
     let $theadTr = $table.find("thead tr");
     let $tbody = $table.find("tbody");

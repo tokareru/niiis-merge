@@ -256,7 +256,7 @@ export function initScheme() {
 
             //добавляем весь чертеж
             //Round = 2;
-            console.log("Round: "+ Round);
+            //console.log("Round: "+ Round);
 
             let getStatusDraw = setInterval(function () {
                 try {

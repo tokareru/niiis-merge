@@ -649,7 +649,7 @@ function combineTechProcessCellTools(data = {name: "", lvl: "", id: ""}) {
 }
 
 function setTechProcessJson(json, res, $table) {
-    console.log(res);
+    //console.log(res);
     if (res.length)
         res.forEach(function (_row) {
             // находим название

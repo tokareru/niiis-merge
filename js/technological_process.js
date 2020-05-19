@@ -38,7 +38,7 @@ function downloadTechProcess($container, fieldId) {
         url: 'ajax/get_techproccess',
         type: 'GET',
         success: function (json) {
-            console.log(json);
+            //console.log(json);
             let $field = $("#tech_process_field_drop");
             if (json.techProcess != undefined){
                 if (json.techProcess.length){
