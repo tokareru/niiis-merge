@@ -1,6 +1,7 @@
 //тащерский топкек код // примечание: нет
 
 import * as THREE from './stl/three.module.js';
+import * as l from './js/scheme.js';
 /*import Stats from './stl/stats.module.js';*/
 import {STLLoader} from './stl/STLLoader.js';
 import {OrbitControls} from './OrbitControls.js';
