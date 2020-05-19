@@ -20,13 +20,13 @@ function getDetailsInfo(type = "all") {
             success: function (json) {
                 DetailsInfo = json;
                 DetailsInfo.forEach(function (detail) {
-                    if (detail.name === null) detail.name = "";
-                    if (detail.designation === null) detail.designation = "";
-                    if (detail.position === null) detail.position = "";
-                    if (detail.path_3d === null) detail.path_3d = "";
-                    if (detail.path_picture === null || detail.path_picture === "") detail.path_picture = "/images/empty.png";
-                    if (detail.number === null) detail.number = "Не указано";
-                    if (detail.type === null) detail.type = "pdm";
+                    if (detail.name === null || detail.name === undefined) detail.name = "";
+                    if (detail.designation === null || detail.designation === undefined) detail.designation = "";
+                    if (detail.position === null || detail.position === undefined) detail.position = "";
+                    if (detail.path_3d === null || detail.path_3d === undefined) detail.path_3d = "";
+                    if (detail.path_picture === null || detail.path_picture === undefined || detail.path_picture === "") detail.path_picture = "/images/empty.png";
+                    if (detail.number === null || detail.number === undefined) detail.number = "Не указано";
+                    if (detail.type === null || detail.type === undefined) detail.type = "pdm";
                 });
                 console.log(json);
             }
