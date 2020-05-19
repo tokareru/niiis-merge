@@ -81,7 +81,7 @@ function createNodes(children) {
                 createNodes(child.children) +
                 "</ul>" +
                 "</li>" : '';*/
-        console.log(children)
+        //console.log(child)
         node +=
             "<li>" +
             "<span class='caret detailChildren'>" + child.name + "</span>" +
