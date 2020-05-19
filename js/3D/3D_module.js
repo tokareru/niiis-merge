@@ -1,7 +1,6 @@
 //тащерский топкек код // примечание: нет
 
 import * as THREE from './stl/three.module.js';
-import * as l from './js/scheme.js';
 /*import Stats from './stl/stats.module.js';*/
 import {STLLoader} from './stl/STLLoader.js';
 import {OrbitControls} from './OrbitControls.js';
@@ -9,6 +8,7 @@ import {OrbitControls} from './OrbitControls.js';
 window.model3dSet;
 
 export function init3dField() {
+
     window.model3dSet = firstFieldInit;
     var container, stats;
 
@@ -25,6 +25,8 @@ export function init3dField() {
     window.renderer;
     window.camera;
     window.scene;
+
+    window.MeshsLinesScheme = [];
 
     window.stldata =
         [
@@ -159,6 +161,7 @@ export function init3dField() {
 
             mesh.castShadow = true;
             mesh.receiveShadow = false;
+            window.MeshsLinesScheme[arrmesh] = [];
 
             //window.meshs[arrmesh] = mesh;
             window.MeshsLinesScheme[arrmesh].push(mesh);
