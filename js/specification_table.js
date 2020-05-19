@@ -351,11 +351,11 @@ function setTableByPdmAndStd(checked) {
     let isPdmGroupNameSet = false;
     let isStdGroupNameSet = false;
     checked_info.forEach(function (_detail) {
-        if (!isPdmGroupNameSet && _detail.type === "pdm"){
+        if (!isPdmGroupNameSet && _detail.type === "pdm") {
             isPdmGroupNameSet = true;
             addDetailsGroupRow("Детали");
         }
-        if (!isStdGroupNameSet && _detail.type === "standart"){
+        if (!isStdGroupNameSet && _detail.type === "standart") {
             isStdGroupNameSet = true;
             addDetailsGroupRow("Стандартные детали");
         }
@@ -390,20 +390,8 @@ function addTitleBlockRow() {
         });
     else checkedArray = collectDataLabels(".left-side");
 
-    if (checkedArray.length === allDetails.length){
-        if (mainTitle === 0)
-            $.ajax(
-                {
-                    url: 'drawing_main_text_ajax',
-                    type: 'POST',
-                    async: false,
-                    data: {},
-                    success: function (data) {
-                        mainTitle = data[20];
-                        //console.log(mainTitle)
-                    }
-                }
-            );
+    if (checkedArray.length === allDetails.length) {
+        getMainTitle();
         let $table = $("#specificationTable");
         $table.find("tbody").prepend(`
         <tr class="mainTitleNameRow">
@@ -432,4 +420,21 @@ function addDetailsGroupRow(groupName) {
             <td></td>
         </tr>
     `)
+}
+
+function getMainTitle() {
+    if (mainTitle === 0)
+        $.ajax(
+            {
+                url: 'drawing_main_text_ajax',
+                type: 'POST',
+                async: false,
+                data: {},
+                success: function (data) {
+                    mainTitle = data[20];
+                    //console.log(mainTitle)
+                }
+            }
+        );
+    return mainTitle;
 }

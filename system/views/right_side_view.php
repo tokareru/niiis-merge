@@ -24,7 +24,7 @@
             <div class='spec_header' style="text-align: center;"><span>Электронный состав изделия</span></div>
             <div class="esi_branch_body">
                 <li style="list-style: none">
-                    <span class="caret" id="esi_branch_body_header_span">Прибор АБР</span>
+                    <span class="caret" id="esi_branch_body_header_span"></span>
                     <ul id="esi_branch_body" class="bg-light col-12 nested">
                     </ul>
                 </li>
