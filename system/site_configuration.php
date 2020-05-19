@@ -33,7 +33,7 @@ conf::$SITE_SUBDIR_INDEX=0; // например http://site.ru/level1/level2/ - 
 
 conf::$DB_SERVER_NAME='62.109.26.219';
 conf::$DB_PORT='5432';
-conf::$DB_NAME='niiis';
+conf::$DB_NAME='niiis_temp';
 conf::$DB_USER_NAME='site';
 conf::$DB_PASSWORD='123qweasd';
 
