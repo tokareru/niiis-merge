@@ -8,7 +8,6 @@ window.kucha;
 
 function initTasksRoutes() {
     getRoutesFromDB();
-    getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
     addTaskToTable();
     tasks_routes_AddEvent('task_routes_tree');
     if (Role === 'technologist' || Role === 'designer' || Role === 'production_master')
@@ -111,6 +110,7 @@ function initTasksRoutes() {
     });
 
     $('body').on('click', '.tasks_routes_reloadShell_radio', function () {
+
         let $this = $(this);
         /*if ($(this).parents('form').find('.tasks_routes_reloadShell_radio:first').get(0) === $(this).get(0)){
             return;
@@ -190,9 +190,10 @@ function initTasksRoutes() {
     })
 
     $('#task_routes_own_routes_update').on('click', function () {
+        disableOwnTask();
+        taskRouteDisable();
         getRoutesFromDB();
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
-        taskRouteDisable();
     });
     if (Round === 3) {
         $.ajax({
@@ -217,6 +218,12 @@ function initTasksRoutes() {
              }
          }
      )*/
+}
+
+function disableOwnTask() {
+    $('.tasks_routes_reloadShell').each(function (val) {
+        $(this).find('input:first').click();
+    });
 }
 
 function serializeAllInfo() {
@@ -594,10 +601,11 @@ function getRoutesFromDB() {
         async: false,
         url: 'ajax/get_routes_by_type',
         success: function (res) {
-            if (TaskInfoReload) {
-                return;
-            }
             tasksRoutesMadeRoutesArr = res;
+            ownTasks = [];
+            tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active, 'active');
+            tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished, 'nonactive');
+            generateOwnTasks('task_routes_own_routes');
             /* ownTasks = [];
              tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active);
              tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished);
@@ -612,10 +620,7 @@ function getRoutesFromDB() {
 }
 
 function getRoutesFromDBInfo(res) {
-    ownTasks = [];
-    tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active, 'active');
-    tasksRoutesMadeRoutes('task_routes_ended_routes', res.response.finished, 'nonactive');
-    generateOwnTasks('task_routes_own_routes');
+
 }
 
 function compareTwoArrays(arr1, arr2) {
