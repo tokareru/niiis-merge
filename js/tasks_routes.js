@@ -244,27 +244,16 @@ function serializeAllInfo() {
         if (Role === 'designer') {
             dataInfo.esi = JSON.stringify(tempESI) !== JSON.stringify({details: convertPdmAndStdInfo(collectDataLabels(".left-side"))}) ?
                 {details: convertPdmAndStdInfo(collectDataLabels(".left-side"))} : 'unchanged';
-            console.log(dataInfo.esi);
             let idModels = collectDataLabels(".left-side");
             dataInfo.models = compareTwoArrays(idModels, collectionIdPdm) ? 'unchanged' : idModels;
+            dataInfo.specification = compareTwoArrays(idModels, collectionIdPdm) ? 'unchanged' : convertCheckedDataToSaveData(idModels);
         } else {
             dataInfo.models = 'unchanged';
             dataInfo.esi = 'unchanged';
         }
 
     }
-
-
-    /* $.ajax(
-         {
-             url: '',
-             type: 'POST',
-             data: {data: btoa(JSON.stringify(dataInfo))},
-             success: function (res) {
-                 //console.log(res);
-             }
-         }
-     );*/
+    console.log(dataInfo);
     return JSON.stringify(dataInfo);
 }
 

@@ -440,20 +440,16 @@ function getMainTitle() {
 }
 
 function convertCheckedDataToSaveData(checked = []) {
-    let saveData = {
-        "thead": [],
-        "tbody": []
-    };
+    let saveData = [];
     let convertedDetails = convertPdmAndStdInfo(checked);
     if (convertedDetails.length)
         convertedDetails.forEach(function (_detail) {
-            saveData.tbody.push({
+            saveData.push({
                 row: [
                     {text: _detail.position, readonly: false},
                     {text: _detail.designation, readonly: false},
                     {text: _detail.name, readonly: false},
-                    {text: _detail.number, readonly: false},
-                    {text: "", readonly: false},
+                    {text: _detail.number, readonly: false}
                 ]})
         });
     return saveData;
