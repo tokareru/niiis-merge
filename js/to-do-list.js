@@ -125,7 +125,7 @@ function combineToDoListTask(task = {id: 0, text: "", isFinished: false}, positi
 }
 
 function addToDoTaskTOList(userLogin, round, toDoTask) {
-    let oldToDoTaskList = [];
+    let newToDoTasks = [];
     $.ajax({
         type: 'GET',
         url: 'ajax/get_user_tasks_by_round',
@@ -134,31 +134,24 @@ function addToDoTaskTOList(userLogin, round, toDoTask) {
             round: round
         },
         success: function (json) {
-            oldToDoTaskList = json.tasks;
-            toDoTask.id = oldToDoTaskList.length + 1;
-            let arrayOfRepeated = [];
+            toDoTask.id = json.tasks.length + 1;
             if (json.tasks.length)
-                json.tasks.forEach(function (_task, index) {
-                    if (_task.trigger === "openField" && _task.add_info === "tasks_routes_field") {
-                       arrayOfRepeated.push(index);
-                    }
+                json.tasks.forEach(function (_task, _index) {
                     delete _task.global_id;
+                    if (_task.trigger !== "checkMyTaskRoutes") {
+                        newToDoTasks.push(_task)
+                    }
                 });
-            /*if (arrayOfRepeated.length)
-                arrayOfRepeated.forEach(function (_index) {
-                    json.tasks.splice(_index, 1);
-                })*/
-            oldToDoTaskList.push(toDoTask);
-            /*if (json.tasks.length){
-                json.tasks.forEach(function (_task, index) {
+            newToDoTasks.push(toDoTask);
+            if (newToDoTasks.length){
+                newToDoTasks.forEach(function (_task, index) {
                     _task.id = index + 1;
                 })
-            }*/
-
+            }
             let data = {
                 login: userLogin,
                 round: round,
-                tasks: oldToDoTaskList
+                tasks: newToDoTasks
             };
             //console.log(data)
             $.ajax({

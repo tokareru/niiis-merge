@@ -133,8 +133,9 @@ function initTasksRoutes() {
 
     $('body').on('click', '.tasks_routes_reloadShell_radio_enable', async function () {
         let shell = $(this).parents('tr').data('shell');
-        let $body = $("body");
-        $body.addClass("blur-filter");
+
+        blurSite(true)
+
         if (shell.specification !== 'unchanged') {
             console.log(shell);
             //$('#main-tabs-specification').click();
@@ -171,17 +172,17 @@ function initTasksRoutes() {
             }, 500);
         }
         setTimeout(function () {
-            $body.removeClass("blur-filter");
+            blurSite(false)
         }, 500)
 
     });
 
     $('body').on('click', '.tasks_routes_reloadShell_radio_disable', function () {
-        let $body = $("body");
-        $body.addClass("blur-filter");
+        blurSite(true);
+
         taskRouteDisable();
         setTimeout(function () {
-            $body.removeClass("blur-filter");
+            blurSite(false);
         }, 500)
     });
 
@@ -545,7 +546,7 @@ function addTaskToDB() {
         addToDoTaskTOList(_task.user, Round, {
             id: 0,
             text: `Проверить "Мои маршруты" из вкладки "Маршрутах заданий"`,
-            trigger: "checkMyTaskRoute",
+            trigger: "checkMyTaskRoutes",
             add_info: "",
             isFinished: false
         });
@@ -637,4 +638,29 @@ function compareTwoArrays(arr1, arr2) {
         isSame = false;
     }
     return isSame;
+}
+
+
+function blurSite(isOn = true) {
+    let $tabs = $("#tabs");
+    let $shell = $("#shell");
+    let $toastSection = $("#toast-section");
+    let $progressBarContainer = $("#progress-bar-container");
+    let $chat_main = $("#chat_main");
+    let $esiSlider = $("#right-side").find(".slider_main").first();
+    if (isOn){
+        $tabs.addClass("blur-filter");
+        $shell.addClass("blur-filter");
+        $toastSection.addClass("blur-filter");
+        $progressBarContainer.addClass("blur-filter");
+        $chat_main.addClass("blur-filter");
+        $esiSlider.addClass("blur-filter");
+    }else {
+        $tabs.removeClass("blur-filter");
+        $shell.removeClass("blur-filter");
+        $toastSection.removeClass("blur-filter");
+        $progressBarContainer.removeClass("blur-filter");
+        $chat_main.removeClass("blur-filter");
+        $esiSlider.removeClass("blur-filter");
+    }
 }
