@@ -56,12 +56,12 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         sys::inc_no_cache('javascript', 'js/loadscheme.js');
         sys::inc_no_cache('javascript', 'js/3D/3D.js');
         sys::inc_no_cache('javascript', 'js/shell/shell.js');
-        sys::inc_no_cache('javascript', 'js/main.js');
         sys::inc_no_cache('javascript', 'js/flowtype.js');
         sys::inc_no_cache('javascript', 'js/create_title_block.js');
         sys::inc_no_cache('javascript', 'js/notification.js');
         sys::inc_no_cache('javascript', 'js/progress_bar.js');
         sys::inc_no_cache('javascript', 'js/to-do-list.js');
+        sys::inc_no_cache('javascript', 'js/main.js');
         ?>
 
     <script src="<?php echo conf::$SITE_URL ?>js/main.js" type="text/javascript"></script>

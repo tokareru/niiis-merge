@@ -58,7 +58,7 @@
         }
       }
     });
-      shellInit();
+    shellInit();
   });
 
   /**
