@@ -10,6 +10,7 @@
     border-right: 0 !important;
     cursor: pointer;
     user-select: none;
+    min-height: 30px;
 }
 
 #chat_main {
