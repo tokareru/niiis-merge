@@ -78,9 +78,6 @@
               "trigger": "saveScheme"
             },
             {
-              "trigger": "saveSpecTable"
-            },
-            {
               "trigger": "openField"
             },
             {
