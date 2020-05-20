@@ -246,7 +246,7 @@ function addToServerRazmerAndPos()
         url: "drawing_main_text_ajax/load_size_and_positions",
         success: function (answer) {
             var ObjectRazmer = answer;
-            //размеры
+            /* 		//размеры
             let size1 = $("#razmNumber1").val();
             let size2 = $("#razmNumber2").val();
             let size3 = $("#razmNumber3").val();
@@ -261,75 +261,75 @@ function addToServerRazmerAndPos()
 
             //если хотя бы в одной позиции написано что-то, то проверяем их
             if (size4 !== undefined || size5 !== undefined || size6 !== undefined || size7 !== undefined || size8 !== undefined || size9 !== undefined
-                || size10 !== undefined)
+            || size10 !== undefined)
             {
-                if (size4 === undefined || (/^[\s]+$/).test(size4))
-                    size4 = 0;
-                if (size5 === undefined || (/^[\s]+$/).test(size5))
-                    size5 = 0;
-                if (size6 === undefined || (/^[\s]+$/).test(size6))
-                    size6 = 0;
-                if (size7 === undefined || (/^[\s]+$/).test(size7))
-                    size7 = 0;
-                if (size8 === undefined || (/^[\s]+$/).test(size8))
-                    size8 = 0;
-                if (size9 === undefined || (/^[\s]+$/).test(size9))
-                    size9 = 0;
-                if (size10 === undefined || (/^[\s]+$/).test(size10))
-                    size10 = 0;
+            if (size4 === undefined || (/^[\s]+$/).test(size4))
+               size4 = 0;
+            if (size5 === undefined || (/^[\s]+$/).test(size5))
+               size5 = 0;
+            if (size6 === undefined || (/^[\s]+$/).test(size6))
+               size6 = 0;
+            if (size7 === undefined || (/^[\s]+$/).test(size7))
+               size7 = 0;
+            if (size8 === undefined || (/^[\s]+$/).test(size8))
+               size8 = 0;
+            if (size9 === undefined || (/^[\s]+$/).test(size9))
+               size9 = 0;
+            if (size10 === undefined || (/^[\s]+$/).test(size10))
+                size10 = 0;
 
-                //если хотя бы в одной позиции что-то написано и хотя бы в одном размере чтото написано, то отправляем все
-                if (size1 !== undefined || size2 !== undefined || size3 !== undefined)
-                {
-                    $.ajax({
-                        type: "POST",
-                        url: "drawing_main_text_ajax/save_size_and_positions",
-                        dataType: "json",
-                        data:
-                            {
-                                "scheme":"scheme",
-                                "razm1":size1,
-                                "razm2":size2,
-                                "razm3":size3,
-                                "p1":size4,
-                                "p2":size5,
-                                "p3":size6,
-                                "p4":size7,
-                                "p5":size8,
-                                "p6":size9,
-                                "p7":size10
-                            },
-                        success: function (answer) {
-                            console.log(answer);
-                        }
-                    });
+            //если хотя бы в одной позиции что-то написано и хотя бы в одном размере чтото написано, то отправляем все
+            if (size1 !== undefined || size2 !== undefined || size3 !== undefined)
+            {
+                $.ajax({
+                type: "POST",
+                url: "drawing_main_text_ajax/save_size_and_positions",
+                dataType: "json",
+                data:
+                    {
+                        "scheme":"scheme",
+                        "razm1":size1,
+                        "razm2":size2,
+                        "razm3":size3,
+                        "p1":size4,
+                        "p2":size5,
+                        "p3":size6,
+                        "p4":size7,
+                        "p5":size8,
+                        "p6":size9,
+                        "p7":size10
+                    },
+                success: function (answer) {
+                    console.log(answer);
                 }
-                //если размеры не затронуты, то отправляем только позиции
-                else
-                {
-                    $.ajax({
-                        type: "POST",
-                        url: "drawing_main_text_ajax/save_size_and_positions",
-                        dataType: "json",
-                        data:
-                            {
-                                "scheme":"scheme",
-                                "razm1":ObjectRazmer.razm1,
-                                "razm2":ObjectRazmer.razm2,
-                                "razm3":ObjectRazmer.razm3,
-                                "p1":size4,
-                                "p2":size5,
-                                "p3":size6,
-                                "p4":size7,
-                                "p5":size8,
-                                "p6":size9,
-                                "p7":size10
-                            },
-                        success: function (answer) {
-                            console.log(answer);
-                        }
-                    });
+                });
+            }
+            //если размеры не затронуты, то отправляем только позиции
+            else
+            {
+                $.ajax({
+                type: "POST",
+                url: "drawing_main_text_ajax/save_size_and_positions",
+                dataType: "json",
+                data:
+                    {
+                        "scheme":"scheme",
+                        "razm1":ObjectRazmer.razm1,
+                        "razm2":ObjectRazmer.razm2,
+                        "razm3":ObjectRazmer.razm3,
+                        "p1":size4,
+                        "p2":size5,
+                        "p3":size6,
+                        "p4":size7,
+                        "p5":size8,
+                        "p6":size9,
+                        "p7":size10
+                    },
+                success: function (answer) {
+                    console.log(answer);
                 }
+                });
+            }
 
             }
             //если позиции не затронуты, то отправляем только размеры
@@ -344,29 +344,85 @@ function addToServerRazmerAndPos()
                     size3 = 0;
 
                 $.ajax({
-                    type: "POST",
-                    url: "drawing_main_text_ajax/save_size_and_positions",
-                    dataType: "json",
-                    data:
-                        {
-                            "scheme":"scheme",
-                            "razm1":size1,
-                            "razm2":size2,
-                            "razm3":size3,
-                            "p1":ObjectRazmer.p1,
-                            "p2":ObjectRazmer.p2,
-                            "p3":ObjectRazmer.p3,
-                            "p4":ObjectRazmer.p4,
-                            "p5":ObjectRazmer.p5,
-                            "p6":ObjectRazmer.p6,
-                            "p7":ObjectRazmer.p7
-                        },
-                    success: function (answer) {
-                        console.log(answer);
-                    }
+                type: "POST",
+                url: "drawing_main_text_ajax/save_size_and_positions",
+                dataType: "json",
+                data:
+                    {
+                        "scheme":"scheme",
+                        "razm1":size1,
+                        "razm2":size2,
+                        "razm3":size3,
+                        "p1":ObjectRazmer.p1,
+                        "p2":ObjectRazmer.p2,
+                        "p3":ObjectRazmer.p3,
+                        "p4":ObjectRazmer.p4,
+                        "p5":ObjectRazmer.p5,
+                        "p6":ObjectRazmer.p6,
+                        "p7":ObjectRazmer.p7
+                    },
+                success: function (answer) {
+                    console.log(answer);
+                }
                 });
 
+            } */
+
+            var sizes = [];
+
+            for (let i=0;i<10;i++)
+            {
+                sizes.push($("#razmNumber"+(i+1)).val());
+                if (sizes[i] === undefined)
+                {
+                    if (i<=2)
+                    {
+                        sizes[i] = eval("ObjectRazmer.razm"+(i+1));
+                    }
+                    else
+                    {
+                        sizes[i] = eval("ObjectRazmer.p"+(i-2));
+                    }
+                }
             }
+            /* //размеры
+            let size1 = $("#razmNumber1").val();
+            let size2 = $("#razmNumber2").val();
+            let size3 = $("#razmNumber3").val();
+            //позиции
+            let size4 = $("#razmNumber4").val();
+            let size5 = $("#razmNumber5").val();
+            let size6 = $("#razmNumber6").val();
+            let size7 = $("#razmNumber7").val();
+            let size8 = $("#razmNumber8").val();
+            let size9 = $("#razmNumber9").val();
+            let size10 = $("#razmNumber10").val(); */
+
+            console.log(sizes);
+
+            $.ajax({
+                type: "POST",
+                url: "drawing_main_text_ajax/save_size_and_positions",
+                dataType: "json",
+                data:
+                    {
+                        "scheme":"scheme",
+                        "razm1":sizes[0],
+                        "razm2":sizes[1],
+                        "razm3":sizes[2],
+                        "p1":sizes[3],
+                        "p2":sizes[4],
+                        "p3":sizes[5],
+                        "p4":sizes[6],
+                        "p5":sizes[7],
+                        "p6":sizes[8],
+                        "p7":sizes[9]
+                    },
+                success: function (answer) {
+                    console.log(answer);
+                }
+            });
+
         }
     });
 
