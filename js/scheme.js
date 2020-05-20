@@ -465,7 +465,7 @@ export function initScheme() {
             $("#topcanv")[i].style = "";
             renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
             //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
-            window.ctxs[i].lineWidth = 2;
+            window.ctxs[i].lineWidth = 1;
             if (window.isEnded) {$("#topcanv")[0].style.cssText += " display:block;";}
         }
         ctxs[0].beginPath();
@@ -501,7 +501,7 @@ export function initScheme() {
         renderersc.setSize($("#field3D")[0].clientWidth-7, $("#field3D")[0].clientHeight);
         //$("#drawcanv")[i].style.cssText = $("#field3D div div canvas")[i].style.cssText;
         window.ctxs[i].fillStyle = "black";
-        window.ctxs[i].lineWidth = 2;
+        window.ctxs[i].lineWidth = 1;
         //console.log($("#fcheme div div canvas")[i].width +';'+ $("#fcheme div div canvas")[i].height);
     }
 
@@ -1647,7 +1647,7 @@ function CreateNotes(note1 = 5, note2 = 4, note3 = 2, note4 = 2, note5 = 2, note
         }
         ctxs[0].stroke();
     }
-    ctxs[0].lineWidth = 2;
+    ctxs[0].lineWidth = 1;
 
 }
 
