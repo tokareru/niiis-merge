@@ -287,7 +287,7 @@ export function initScheme() {
                     $('#topcanv').css({'display': 'block'});
                     firstFieldInit();
                     razmerdrawfull();
-                    CreateNotes();
+                    //CreateNotes();
                     $("#ready").click();
                     setDrawingStatus();
                 }
@@ -326,7 +326,7 @@ export function initScheme() {
                                 $('#topcanv').css({'display': 'block'});
                                 $('#hidedraw').css({'display': 'block'});
                                 razmerdrawfull();
-                                CreateNotes();
+                                //CreateNotes();
                                 $("#ready").click();
                                 clearInterval(inter);
                             }
@@ -1065,13 +1065,16 @@ export function initScheme() {
 
     $("#scheme1").dblclick(function (e) {
         //[120 102, 325 475, 680 170]
-        let CoordinatesToShowInputRazm = [{x: 120, y: 102}, {x: 325, y: 475}, {x: 680, y: 170}];
+        //828--23, 828--48, 828--73, 96--48, 96--73, 828--98, 96--248
+        let CoordinatesToShowInputRazm = [{x: 120, y: 102}, {x: 325, y: 475}, {x: 680, y: 170},
+            {x: 828, y: 23}, {x: 828, y: 48}, {x: 828, y: 73}, {x: 96, y: 48}, {x: 96, y: 73}, {x: 828, y: 98}, {x: 96, y: 248}];
         let rr = 20;
         let rect = e.target.getBoundingClientRect();
         let x = e.clientX - rect.left - 1;
         let y = e.clientY - rect.top - 1;
         for (let i=0; i<CoordinatesToShowInputRazm.length; i++)
         {
+            if (i>2) {rr=10;}
             let dx = x - CoordinatesToShowInputRazm[i].x;
             let dy = y - CoordinatesToShowInputRazm[i].y;
             if (dx * dx + dy * dy < rr * rr)
@@ -1086,11 +1089,7 @@ export function initScheme() {
                         if ( event.which == 13 )
                         {
                             event.preventDefault();
-                            //echotext = this.value;
-                            //echoarray[razmID] = echotext;
                             $( "#razmNumber"+idr ).blur();
-                            //$( "#razmNumber"+razmID ).hide();
-                            //ctxs[0].fillText(echotext, areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y+15); //echo[l]
                         }
                     });
                 }
@@ -1207,7 +1206,7 @@ function razmerdrawfull()
     let ObjectRazmer = {};
     $.ajax({
         type: "GET",
-        url: "drawing_main_text_ajax/load_size",
+        url: "drawing_main_text_ajax/load_size_and_positions",
         success: function (answer) {
             ObjectRazmer = answer;
             dlinaarr[0]=ObjectRazmer.razm1;
@@ -1305,6 +1304,8 @@ function razmerdrawfull()
                     }
                 }
             }
+
+            CreateNotes(ObjectRazmer.p1, ObjectRazmer.p2, ObjectRazmer.p3, ObjectRazmer.p4, ObjectRazmer.p5, ObjectRazmer.p6, ObjectRazmer.p7);
         }
     });
 }
@@ -1496,14 +1497,21 @@ function setRazmer(razm)
 {
     $.ajax({
         type: "POST",
-        url: "drawing_main_text_ajax/save_size",
+        url: "drawing_main_text_ajax/save_size_and_positions",
         dataType: "json",
         data:
             {
                 "scheme":"scheme",
                 "razm1":1,
                 "razm2":2,
-                "razm3":3
+                "razm3":3,
+                "p1":1,
+                "p2":2,
+                "p3":3,
+                "p4":4,
+                "p5":5,
+                "p6":6,
+                "p7":7
             },
         success: function (answer) {
             console.log(answer);
@@ -1579,17 +1587,17 @@ function createKontur() {
     }
 }
 
-function CreateNotes()
+function CreateNotes(note1 = 5, note2 = 4, note3 = 2, note4 = 2, note5 = 2, note6 = 2, note7 = 2)
 {
     ctxs[0].lineWidth = 1;
     let notesCoor = [
-        {x: 770, y: 75, note:"1", pos:"right"},
-        {x: 770, y: 100, note:"2", pos:"right"},
-        {x: 750, y: 140, x1: 820, y1: 75, note:"3", pos:"custom"},
-        {x: 260, y: 155, x1: 110, y1: 50, note:"4", pos:"custom"},
-        {x: 195, y: 122, x1: 110, y1: 75, note:"5", pos:"custom"},
-        {x: 750, y: 155, x1: 820, y1: 100, note:"6", pos:"custom"},
-        {x: 224, y: 205, x1: 110, y1: 250, note:"7", pos:"custom"}];
+        {x: 770, y: 75, note:note1, pos:"right"},
+        {x: 770, y: 100, note:note2, pos:"right"},
+        {x: 750, y: 140, x1: 820, y1: 75, note:note3, pos:"custom"},
+        {x: 260, y: 155, x1: 110, y1: 50, note:note4, pos:"custom"},
+        {x: 195, y: 122, x1: 110, y1: 75, note:note5, pos:"custom"},
+        {x: 750, y: 155, x1: 820, y1: 100, note:note6, pos:"custom"},
+        {x: 224, y: 205, x1: 110, y1: 250, note:note7, pos:"custom"}];
 
     for (let i=0;i<notesCoor.length;i++)
     {
@@ -1613,7 +1621,7 @@ function CreateNotes()
             Dx2 = -70;
             Dnote1 = -62;
         }
-
+//828--23, 828--48, 828--73, 96--48, 96--73, 828--98, 96--248
         ctxs[0].lineTo(notesCoor[i].x+Dx1, notesCoor[i].y-50);
         ctxs[0].lineTo(notesCoor[i].x+Dx2, notesCoor[i].y-50);
         ctxs[0].fillText(notesCoor[i].note, notesCoor[i].x+Dnote1, notesCoor[i].y-52);
