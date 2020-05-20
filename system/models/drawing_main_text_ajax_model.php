@@ -91,21 +91,54 @@ class drawing_main_text_ajax_model extends model {
             return array("response"=>"NOT FOUND POST REQUEST");
         }
     }
-    function save_size(){
+    function save_size_and_positions(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql = "UPDATE DRAWING_SIZE set drawing_name = :name, size_1 = :size_1, size_2 = :size_2, size_3 = :size_3";
+            $sql = "UPDATE DRAWING_SIZE set drawing_name = :name, 
+                          size_1 = :size_1,
+                          size_2 = :size_2,
+                          size_3 = :size_3,
+                          pos_1 = :p1,
+                          pos_2 = :p2,
+                          pos_3 = :p3,
+                          pos_4 = :p4,
+                          pos_5 = :p5,
+                          pos_6 = :p6,
+                          pos_7 = :p7
+                    WHERE drawing_name = 'scheme'";
             $q = sys::$PDO->prepare($sql);
-            $q->execute(array("name" => $_POST["scheme"], "size_1" => $_POST["razm1"], "size_2" => $_POST["razm2"], "size_3" => $_POST["razm3"]));
+            $q->execute(array("name" => $_POST["scheme"], 
+                "size_1" => $_POST["razm1"], 
+                "size_2" => $_POST["razm2"], 
+                "size_3" => $_POST["razm3"],
+                "p1" => $_POST["p1"],
+                "p2" => $_POST["p2"],
+                "p3" => $_POST["p3"],
+                "p4" => $_POST["p4"],
+                "p5" => $_POST["p5"],
+                "p6" => $_POST["p6"],
+                "p7" => $_POST["p7"]
+                    ));
         }else {
             return array("response"=>"NOT FOUND POST REQUEST");
         }
     }
-    function load_size(){
-        $sql = "SELECT * FROM DRAWING_SIZE";
+    function load_size_and_positions(){
+        $sql = "SELECT * FROM DRAWING_SIZE WHERE drawing_name = 'scheme'";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $Q = $q->fetchAll();
-        return array("scheme" => $Q[0]["drawing_name"], "razm1" => $Q[0]["size_1"], "razm2" => $Q[0]["size_2"], "razm3" => $Q[0]["size_3"]);
+        return array("scheme" => $Q[0]["drawing_name"], 
+            "razm1" => $Q[0]["size_1"], 
+            "razm2" => $Q[0]["size_2"],
+            "razm3" => $Q[0]["size_3"],
+            "p1" => $Q[0]["pos_1"],
+            "p2" => $Q[0]["pos_2"],
+            "p3" => $Q[0]["pos_3"],
+            "p4" => $Q[0]["pos_4"],
+            "p5" => $Q[0]["pos_5"],
+            "p6" => $Q[0]["pos_6"],
+            "p7" => $Q[0]["pos_7"]
+            );
     }
     function save_is_full(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){

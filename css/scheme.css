@@ -61,6 +61,75 @@
     z-index: 5;
 }
 
+#razmNumber4 {
+    position: absolute;
+    top: 3px;
+    width: 22px;
+    height: 20px;
+    left: 817px;
+    z-index: 5;
+    text-align: center;
+}
+#razmNumber5 {
+    position: absolute;
+    top: 28px;
+    width: 22px;
+    height: 20px;
+    left: 817px;
+    z-index: 5;
+    text-align: center;
+}
+
+#razmNumber6 {
+    position: absolute;
+    top: 53px;
+    width: 22px;
+    height: 20px;
+    left: 817px;
+    z-index: 5;
+    text-align: center;
+}
+
+#razmNumber7 {
+    position: absolute;
+    top: 28px;
+    width: 22px;
+    height: 20px;
+    left: 87px;
+    z-index: 5;
+    text-align: center;
+}
+
+#razmNumber8 {
+    position: absolute;
+    top: 53px;
+    width: 22px;
+    height: 20px;
+    left: 87px;
+    z-index: 5;
+    text-align: center;
+}
+
+#razmNumber9 {
+    position: absolute;
+    top: 78px;
+    width: 22px;
+    height: 20px;
+    left: 817px;
+    z-index: 5;
+    text-align: center;
+}
+
+#razmNumber10 {
+    position: absolute;
+    top: 228px;
+    width: 22px;
+    height: 20px;
+    left: 87px;
+    z-index: 5;
+    text-align: center;
+}
+
 #razmer1 {
     transform: rotate(-90deg);
     position: absolute;

@@ -153,7 +153,7 @@ function initTasksRoutes() {
             setESI(shell.esi);
             $('.slider_button').removeClass('bg-dark').addClass('bg-danger');
         }
-       // console.log(shell);
+        // console.log(shell);
         /*$('#canvas3D').find('canvas').remove();
         $('#canvas3D').find('div').append('<canvas></canvas>');*/
         //load3d(shell.models);
@@ -365,13 +365,15 @@ function generateOwnTasks(selector) {
                 `<input type="radio" value="true" name="own_tasks_routes" id="own_tasks_routes_hide_${index}"><label value="true" for="own_tasks_routes_hide_${index}"` +
                 `class="text-center tasks_routes_reloadShell_radio tasks_routes_reloadShell_radio_enable"` +
                 'style="width: 50px">Вкл</label>' +
-                '</form></td>' +
+                '</form>' +
+                `<button class="btn btn-sm bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report?route_id=${value.id}">Смотреть</a></button>` +
+                '</td>' +
                 `<td style="width: 150px">${value.task}</td>` +
                 '<td style="width: 250px">' +
                 `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? '<span class="fa fa-check text-success text-center w-100 fa-2x"></span>' : '<span class="fa fa-times' +
                     ' text-danger text-center w-100 fa-2x"></span>'}` +
                 '</td>' +
-                `<td class="pl-1 pr-1" style="width: 250px; max-width: 250px;word-wrap: break-word; min-width: 250px">${value.reason !== null && value.reason !== '' ? value.reason: '<i class="fa fa-minus"></i>'}</td>` +
+                `<td class="pl-1 pr-1" style="width: 250px; max-width: 250px;word-wrap: break-word; min-width: 250px">${value.reason !== null && value.reason !== '' ? value.reason : '<i class="fa fa-minus"></i>'}</td>` +
                 '</tr>');
             $tr.data({'id': value.id, 'master': value.master, shell: value.shell});
             $table.find('tbody').append(
@@ -398,7 +400,7 @@ function generateTableForRoutes(data, type) {
                 task.shell = JSON.parse(value.shell);
                 ownTasks.push(task);
             }
-        tr += '<tr style="width: 700px">' +
+            tr += '<tr style="width: 700px">' +
 
                 `<td style="width: 60px">${index + 1}</td>` +
                 `<td style="width: 230px">${task.role}</td>` +
@@ -409,8 +411,8 @@ function generateTableForRoutes(data, type) {
                     '<span class="fa fa-2x fa-times text-danger w-100"></span>'
                 }
 </td>` +
-                `${type === 'nonactive'? `<td class="pl-1 pr-1" style="min-width: 200px; max-width: 200px; word-wrap: break-word">${task.reason !== null && task.reason !== ''? task.reason: 
-                    '<i class="fa fa-minus"></i>'}</td>`: ''}` +
+                `${type === 'nonactive' ? `<td class="pl-1 pr-1" style="min-width: 200px; max-width: 200px; word-wrap: break-word">${task.reason !== null && task.reason !== '' ? task.reason :
+                    '<i class="fa fa-minus"></i>'}</td>` : ''}` +
                 '</tr>';
         }
     )
@@ -423,7 +425,7 @@ function generateTableForRoutes(data, type) {
         '<th style="width: 230px">Пользователь</th>' +
         '<th style="width: 125px">Задание</th>' +
         '<th style="width: 125px">Статус</th>' +
-        `${type === 'nonactive'? '<th style="width: 125px">Комментарий</th>': '' }`+
+        `${type === 'nonactive' ? '<th style="width: 125px">Комментарий</th>' : ''}` +
         '</tr>' +
         '</thead>' +
         '<tbody>' +

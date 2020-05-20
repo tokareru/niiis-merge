@@ -18,12 +18,12 @@ class drawing_main_text_ajax_controller extends Controller{
             $data = $this->model->is_drawing_finished();
             $this->view->render('', 'ajax_view_json.php', $data);
         }
-        function save_size(){
-            $data = $this->model->save_size();
+        function save_size_and_positions(){
+            $data = $this->model->save_size_and_positions();
             $this->view->render('', 'ajax_view_json.php', $data);
         }
-        function load_size(){
-            $data = $this->model->load_size();
+        function load_size_and_positions(){
+            $data = $this->model->load_size_and_positions();
             $this->view->render('', 'ajax_view_json.php', $data);
         }
         function save_is_full(){
