@@ -62,7 +62,7 @@ function initSpecTable(json) {
         });
     }
 
-    if (Role === "designer") {
+    if (Role === "designer" && Round !== 3) {
         $tableBlock.find("#specTableSaveButton").removeClass("d-none");
     } else {
         $tableBlock.find("#specTableSaveButton").remove();
