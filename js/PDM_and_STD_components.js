@@ -28,7 +28,7 @@ function getDetailsInfo(type = "all") {
                     if (detail.number === null || detail.number === undefined) detail.number = "Не указано";
                     if (detail.type === null || detail.type === undefined) detail.type = "pdm";
                 });
-                console.log(json);
+                //console.log(json);
             }
         });
     let details = [];
@@ -133,7 +133,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
                                 "isFull": false
                             },
                         success: function (answer) {
-                            console.log(answer);
+                            //console.log(answer);
                         }
                     });
                 }else {

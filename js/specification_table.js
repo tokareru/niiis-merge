@@ -438,3 +438,19 @@ function getMainTitle() {
         );
     return mainTitle;
 }
+
+function convertCheckedDataToSaveData(checked = []) {
+    let saveData = [];
+    let convertedDetails = convertPdmAndStdInfo(checked);
+    if (convertedDetails.length)
+        convertedDetails.forEach(function (_detail) {
+            saveData.push({
+                row: [
+                    {text: _detail.position, readonly: false},
+                    {text: _detail.designation, readonly: false},
+                    {text: _detail.name, readonly: false},
+                    {text: _detail.number, readonly: false}
+                ]})
+        });
+    return saveData;
+}
