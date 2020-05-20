@@ -28,7 +28,7 @@ function getDetailsInfo(type = "all") {
                     if (detail.number === null || detail.number === undefined) detail.number = "Не указано";
                     if (detail.type === null || detail.type === undefined) detail.type = "pdm";
                 });
-                //console.log(json);
+                console.log(json);
             }
         });
     let details = [];
@@ -40,6 +40,11 @@ function getDetailsInfo(type = "all") {
     else if (type === "std" && DetailsInfo.length)
         DetailsInfo.forEach(function (_detail) {
             if (_detail.type === "standart")
+                details.push(_detail)
+        });
+    else if (type === "prim" && DetailsInfo.length)
+        DetailsInfo.forEach(function (_detail) {
+            if (_detail.type === "prim")
                 details.push(_detail)
         });
     else details = DetailsInfo;
@@ -143,7 +148,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
                                 "isFull": true
                             },
                         success: function (answer) {
-                            console.log(answer);
+                            //console.log(answer);
                         }
                     });
                 }
@@ -159,7 +164,7 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
                 checked: collectDataLabels(".left-side")
             },
             success: function (answer) {
-                console.log(answer);
+                //console.log(answer);
             }
         });
     });
@@ -344,8 +349,8 @@ function showhideimage(arrayComp, obj) {
 }
 
 function load3d(array, obj = {0: {"checked": "true"}}) {
-    console.log('load3d');
-    console.log(obj);
+    //console.log('load3d');
+    //console.log(obj);
     if (window.isEnded != undefined && window.isEnded == true) {
         if (obj[0].checked) {
             for (i = 0; i < 7; i++) {

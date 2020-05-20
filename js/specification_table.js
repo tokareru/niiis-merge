@@ -390,7 +390,7 @@ function addTitleBlockRow() {
         });
     else checkedArray = collectDataLabels(".left-side");
 
-    if (checkedArray.length === allDetails.length) {
+    if (checkedArray.length === (getDetailsInfo("pdm").length + getDetailsInfo("std").length)) {
         getMainTitle();
         let $table = $("#specificationTable");
         $table.find("tbody").prepend(`

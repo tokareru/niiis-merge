@@ -17,44 +17,11 @@ function initESI() {
 }
 
 function setESI(data, setNewInterval = false) {
-    //console.log(data)
     if (Round !== 3) return;
     setMainTitleForESI();
+    //console.log(data)
     $("#esi_branch_body").empty().append(createNodes(data.details));
     setToggler("esi_field");
-
-    /*if (setNewInterval) setInterval(function () {
-        let _data = convertArray(getDataFromSpecTable());
-        _data = (_data === 'empty') ? { details: []} : _data;
-        if (_data !== 'empty') {
-            if (_data.details.length === 0) _data = data;
-        }
-
-        //console.log(_data);
-
-        function arraysIdentical(a, b) {
-            let i = a.length;
-            if (i != b.length) return false;
-            while (i--) {
-                if (a[i].name !== b[i].name || a[i].description !== b[i].description || a[i].position !== b[i].position
-                || a[i].amount !== b[i].amount)
-                    return false;
-            }
-            return true;
-        }
-
-        //console.log(_data)
-
-        if (arraysIdentical(_data.details, data.details)) return;
-        data = _data;
-        //alert()
-        $("#esi_branch_body").empty().append(createNodes(_data.details));
-
-        esiSetBranchesNestedFunc();
-
-        //$("#esi_branch_body").find(".detailChildren").trigger("click");
-
-    }, 5000)*/
 }
 
 function esiSetBranchesNestedFunc() {
@@ -83,36 +50,33 @@ function createNodes(children) {
                 "</li>" : '';*/
         //console.log(child)
         node +=
-            "<li>" +
-            "<span class='caret detailChildren'>" + child.name + "</span>" +
-            "<ul class='nested'>" +
-            "<li class=''>" +
-            "<table>" +
-            "<tbody>" +
-            "<tr>" +
-            "<td>" +
-            "<div>Обозначение:</div>" +
-            "</td>" +
-            "<td>" + "<input " + isDisabled + " value='" + child.designation + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
-            "</tr>" +
-            "<tr>" +
-            "<td>" +
-            "<div>Позиция:</div>" +
-            "</td>" +
-            "<td>" + "<input " + isDisabled + " value='" + child.position + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
-            "</tr>" +
-            "<tr>" +
-            "<td>" +
-            "<div>Количество:</div>" +
-            "</td>" +
-            "<td>" + "<input " + isDisabled + " value='" + child.amount + "' type='text' class='input-group-sm border-0 lastChildInput'>" + "</td>" +
-            "</tr>" +
-            "</tbody>" +
-            "</table>" +
-            "</li>" +
-            //_children +
-            "</ul>" +
-            "</li>";
+            `<li>
+                <span class='caret detailChildren'>${(child.designation.replace(/ /g, "") === "") ? "" : (child.designation + " - ")}${child.name} </span>
+                <ul class='nested'>
+                    <li class=''>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <div>Позиция:</div>
+                                    </td>
+                                    <td>
+                                        <input ${isDisabled} value='${child.position}' type='text' class='input-group-sm border-0 lastChildInput'>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div>Количество:</div>
+                                    </td>
+                                    <td>
+                                        <input ${isDisabled} value='${child.number}' type='text' class='input-group-sm border-0 lastChildInput'>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </li>
+                </ul>
+            </li>`;
     });
     return node;
 }
@@ -204,7 +168,7 @@ function convertArray(arr) {
             name: element[2],
             designation: element[1],
             position: element[0],
-            amount: element[3],
+            number: element[3],
             children: []
         })
     });
@@ -239,6 +203,7 @@ function STDLibClick($but, $main, z_index, target) {
 function setMainTitleForESI() {
     let $esi_branch_body_header_span = $("#esi_branch_body_header_span");
     $esi_branch_body_header_span.text(`
-       ${(getMainTitle().replace(/ /g, "") === "") ? "" : (mainTitle + " - ")} Прибор АБР
+       ${getDetailsInfo("prim")[0].designation} - ${getDetailsInfo("prim")[0].name}
     `)
 }
+
