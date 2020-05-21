@@ -623,8 +623,10 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                 },
                 success: function (res) {
                     saveCount++;
-                    if (saveCount === (users.length-1)) stopProcessOfSaving(thisButton);
-                    console.log(res)
+                    console.log(saveCount)
+                    if (saveCount === users.length) stopProcessOfSaving(thisButton);
+
+                    console.log(res);
                 }
             })
 
