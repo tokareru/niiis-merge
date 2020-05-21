@@ -30,13 +30,13 @@
           <div class="col-md-12 mb-3">
             <label class="font-weight-bold" for="select_round">Текущий раунд</label>
             <div class="row">
-              <select class="custom-select col-md-8" id="change_round">
+              <select class="custom-select col-md-3" id="change_round">
                 <option selected disabled>Выберите раунд...</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
               </select>
-              <div class="col-md-4">
+              <div class="col-md-5">
                 <button class="btn btn-outline-secondary btn-block" id="change_round_btn" type="button">Применить</button>
               </div>
             </div>
@@ -44,10 +44,10 @@
         </div>
 
         <div class="row">
-          <div class="col-md-8">
+          <div class="col-md-3">
             <label for="firstName" class="font-weight-bold">Сбросить геймплей</label>
           </div>
-          <div class="col-md-4">
+          <div class="col-md-5">
             <button class="btn btn-danger btn-block" id="reset" type="button">Сброс</button>
           </div>
         </div>

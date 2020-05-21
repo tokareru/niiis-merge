@@ -170,7 +170,7 @@ hr {
     background-image: url("../images/background_niiis_sm.png");
     background-repeat-x: no-repeat;
     background-repeat-y: no-repeat;
-    background-size: contain;
+    background-size: 45rem;
     background-position: center;
     filter: blur(12px);
 }
