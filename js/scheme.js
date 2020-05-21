@@ -1683,7 +1683,7 @@ export function getRazmerAndPos()
         }
         else
         {
-            val = 0;
+            /*val = 0;
             if (i<=2)
             {
                 eval("razmerAndPositions.razm"+(i+1)+"="+val);
@@ -1691,7 +1691,7 @@ export function getRazmerAndPos()
             else
             {
                 eval("razmerAndPositions.p"+(i-2)+"="+val);
-            }
+            }*/
         }
     }
     return window.razmerAndPositions;
