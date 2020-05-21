@@ -1068,37 +1068,45 @@ export function initScheme() {
     $("#scheme1").dblclick(function (e) {
         //[120 102, 325 475, 680 170]
         //828--23, 828--48, 828--73, 96--48, 96--73, 828--98, 96--248
-        let CoordinatesToShowInputRazm = [{x: 120, y: 102}, {x: 325, y: 475}, {x: 680, y: 170},
-            {x: 828, y: 23}, {x: 828, y: 48}, {x: 828, y: 73}, {x: 96, y: 48}, {x: 96, y: 73}, {x: 828, y: 98}, {x: 96, y: 248}];
-        let rr = 20;
-        let rect = e.target.getBoundingClientRect();
-        let x = e.clientX - rect.left - 1;
-        let y = e.clientY - rect.top - 1;
-        for (let i=0; i<CoordinatesToShowInputRazm.length; i++)
+        if (Role === 'designer')
         {
-            if (i>2) {rr=12;}
-            let dx = x - CoordinatesToShowInputRazm[i].x;
-            let dy = y - CoordinatesToShowInputRazm[i].y;
-            if (dx * dx + dy * dy < rr * rr)
+            let CoordinatesToShowInputRazm = [{x: 120, y: 102}, {x: 325, y: 475}, {x: 680, y: 170},
+                {x: 828, y: 23}, {x: 828, y: 48}, {x: 828, y: 73}, {x: 96, y: 48}, {x: 96, y: 73}, {x: 828, y: 98}, {x: 96, y: 248}];
+            let rr = 20;
+            let rect = e.target.getBoundingClientRect();
+            let x = e.clientX - rect.left - 1;
+            let y = e.clientY - rect.top - 1;
+            for (let i=0; i<CoordinatesToShowInputRazm.length; i++)
             {
-                let idr = i+1;
-                if (document.getElementById('razmNumber'+idr) === null)
+                if (i>2) {rr=12;}
+                let dx = x - CoordinatesToShowInputRazm[i].x;
+                let dy = y - CoordinatesToShowInputRazm[i].y;
+                if (dx * dx + dy * dy < rr * rr)
                 {
-                    $( "#scheme1" ).append( "<input id='razmNumber"+idr+"'>" );
-                    $( "#razmNumber"+idr ).focus();
-                    $( "#razmNumber"+idr).keypress(function( event )
+                    let idr = i+1;
+                    if (document.getElementById('razmNumber'+idr) === null)
                     {
-                        if ( event.which == 13 )
+                        $( "#scheme1" ).append( "<input id='razmNumber"+idr+"'>" );
+                        $( "#razmNumber"+idr ).focus();
+                        $( "#razmNumber"+idr).keypress(function( event )
                         {
-                            event.preventDefault();
-                            $( "#razmNumber"+idr ).blur();
-                        }
-                    });
-                }
-                console.log(x+"--"+y);
+                            if ( event.which == 13 )
+                            {
+                                event.preventDefault();
+                                $( "#razmNumber"+idr ).blur();
+                            }
+                        });
+                    }
+                    console.log(x+"--"+y);
 
+                }
             }
         }
+        else
+        {
+            console.log("Редактирование доступно только конструктору");
+        }
+
     });
 
 
