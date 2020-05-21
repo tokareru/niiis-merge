@@ -172,6 +172,18 @@ function initTasksRoutes() {
             }, 1000)
         }
 
+        if (shell.isSchemeOpen !== 'unchanged') {
+            $('#main-tabs-scheme').parents('li').addClass('bg-danger');
+            let interval = setInterval(async function () {
+                if ($('#field3DAll').html() !== undefined) {
+                    if (shell.isSchemeOpen) {
+                        unlockScheme();
+                    } else blockScheme();
+                    clearInterval(interval);
+                }
+            }, 1000);
+        }
+
 
         setTimeout(function () {
             blurSite(false)
@@ -236,7 +248,7 @@ async function serializeAllInfo() {
         models: 'unchanged',
         esi: 'unchanged',
         scheme: 'unchanged',
-        isSchemeOpen: true
+        isSchemeOpen: 'unchanged'
     };
     let $spec = $('#specificationTable');
     if ($spec.html() === undefined && Round !== 3) {
@@ -285,7 +297,7 @@ async function serializeAllInfo() {
     if (Round === 3) {
         if ($("#left-accordion").find("input:checked").length !== $("#left-accordion").find("input").length) {
             dataInfo.isSchemeOpen = false;
-        }
+        } else dataInfo.isSchemeOpen = true;
     }
     //console.log(dataInfo);
     return JSON.stringify(dataInfo);
