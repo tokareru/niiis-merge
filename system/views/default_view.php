@@ -117,6 +117,13 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         </div>
     </nav>
 </div>
+<div id="downloadBackgroundBody" class="d-block">
+    <div id="downloadBackgroundBLur"></div>
+    <div id="downloadBackgroundBLurBg"></div>
+    <div id="downloadBackgroundDescription">
+        <p class="text-align-center mx-auto h2 rounded bg-white shadow-lg">Идёт загрузка кабинета <span class="ml-2 h6 spinner-border"></span></p>
+    </div>
+</div>
 </body>
 <?php require_once("system/views/progress_bar_view.php"); ?>
 </html>

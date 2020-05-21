@@ -44,3 +44,14 @@
     width: 6rem;
 }
 
+@media (max-height: 600px) {
+    .custom-toast-position{
+        max-height: 332px !important;
+    }
+}
+
+@media (max-height: 400px) {
+    .custom-toast-position{
+        max-height: 150px !important;
+    }
+}

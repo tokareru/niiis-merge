@@ -128,10 +128,14 @@ async function updateShell(){
     let round = Round;
 
     console.log("Производится загрузка кабинета");
+    let downloadBackgroundBody = $("#downloadBackgroundBody");
+    downloadBackgroundBody.addClass("d-block").removeClass("d-none");
     let shell = $("#shell");
     let tabs_fields_ul = $("#tabs-fields-ul");
+    let $menuBody = $("#menuBody");
     shell.addClass("blur-filter");
     tabs_fields_ul.addClass("blur-filter");
+    $menuBody.addClass("d-none").removeClass("d-sm-table");
 
     //обновляем данные раунда
     console.log("Раунд: " + round + ", роль: " + role);
@@ -214,7 +218,7 @@ async function updateShell(){
         }
     }
 
-    $("#change_role").removeAttr("disabled");
+    $menuBody.removeClass("d-none").addClass("d-sm-table")
     initNotifications();
 
 
@@ -253,6 +257,7 @@ async function updateShell(){
 
     /*console.log(available_sides);
     console.log(available_tabs);*/
+    downloadBackgroundBody.addClass("d-none").removeClass("d-block")
 }
 
 async function getJsonByURLWithoutCallback(url) {
