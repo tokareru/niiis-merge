@@ -143,10 +143,7 @@ function initTasksRoutes() {
             setESI(shell.esi);
             $('.slider_button').removeClass('bg-dark').addClass('bg-danger');
         }
-        // console.log(shell);
-        /*$('#canvas3D').find('canvas').remove();
-        $('#canvas3D').find('div').append('<canvas></canvas>');*/
-        //load3d(shell.models);
+
         if (shell.models !== undefined && shell.models !== 'not-exist' && shell.models !== 'unchanged' && Round === 3) {
             $('#main-tabs-fieldBlock').parents('li').addClass('bg-danger');
             window.kucha = shell.models;
@@ -162,6 +159,14 @@ function initTasksRoutes() {
         }
         if (shell.scheme !== 'unchanged') {
             $('#main-tabs-scheme').parents('li').addClass('bg-danger');
+            let scheme = await import('./scheme.js');
+            let interval = setInterval(async function () {
+                if ($('#field3DAll').html() !== undefined && loadScheme !== undefined){
+                    console.log(loadScheme);
+                    await scheme.setRazmerAndPosOnScheme(shell.scheme);
+                    clearInterval(interval);
+                }
+            }, 1000)
         }
         setTimeout(function () {
             blurSite(false)
@@ -171,7 +176,7 @@ function initTasksRoutes() {
     $('body').on('click', '.tasks_routes_reloadShell_radio_disable', function () {
         blurSite(true);
 
-        taskRouteDisable();
+        taskRouteDisable().then();
         setTimeout(function () {
             blurSite(false);
         }, 500)
@@ -183,7 +188,7 @@ function initTasksRoutes() {
 
     $('#task_routes_own_routes_update').on('click', function () {
         disableOwnTask();
-        taskRouteDisable();
+        taskRouteDisable().then();
         getRoutesFromDB();
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
     });
@@ -274,7 +279,7 @@ async function serializeAllInfo() {
     return JSON.stringify(dataInfo);
 }
 
-function taskRouteDisable() {
+async function taskRouteDisable() {
     /*let shell = $this.parents('tr').data('shell');
     console.log(shell);*/
     /*if (shell.specification !== 'unchanged') {*/
@@ -286,6 +291,8 @@ function taskRouteDisable() {
     $('#main-tabs-fieldBlock').parents('li').removeClass('bg-danger');
     $('#specTableSaveButton').removeAttr('disabled');
     $('#main-tabs-scheme').parents('li').removeClass('bg-danger');
+    let scheme = await import('./scheme.js');
+    await scheme.setRazmerAndPosOnScheme(loadScheme);
     if (Round === 3) {
         setESI(tempESI);
         $.ajax({

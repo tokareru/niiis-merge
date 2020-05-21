@@ -46,20 +46,21 @@ async function triggerschemeInit() {
         });
 
         setInterval(function () {
-            $.ajax({
-                type: "GET",
-                url: "drawing_main_text_ajax/load_is_full",
-                dataType: "json",
-                data: "json",
-                success: function (json) {
-                    //console.log(json);
-                    if (json.isFull == "false"){
-                        blockScheme();
-                    }else {
-                        unlockScheme()
+            if (!TaskInfoReload){
+                $.ajax({
+                    type: "GET",
+                    url: "drawing_main_text_ajax/load_is_full",
+                    dataType: "json",
+                    data: "json",
+                    success: function (json) {
+                        if (json.isFull == "false"){
+                            blockScheme();
+                        }else {
+                            unlockScheme()
+                        }
                     }
-                }
-            });
+                });
+            }
         }, 5000)
     }
 
