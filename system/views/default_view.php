@@ -69,6 +69,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
     <link href="<?php echo conf::$SITE_URL ?>css/main.css" rel="stylesheet" type="text/css">
     <link href="<?php echo conf::$SITE_URL ?>css/menu.css" rel="stylesheet" type="text/css">
     <link href="<?php echo conf::$SITE_URL ?>css/btn_heder.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
 
 
     <script>
@@ -121,7 +122,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
     <div id="downloadBackgroundBLur"></div>
     <div id="downloadBackgroundBLurBg"></div>
     <div id="downloadBackgroundDescription">
-        <p class="text-align-center mx-auto h2 rounded bg-white shadow-lg">Идёт загрузка кабинета <span class="ml-2 h6 spinner-border"></span></p>
+        <p class="text-align-center mx-auto h2">Идёт загрузка кабинета <span class="ml-2 h6 spinner-border"></span></p>
     </div>
 </div>
 </body>
