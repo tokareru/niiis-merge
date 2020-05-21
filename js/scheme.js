@@ -1673,12 +1673,22 @@ export function getRazmerAndPos()
         {
             if (i<=2)
             {
-                if (val === ''){val = 0;}
                 eval("razmerAndPositions.razm"+(i+1)+"="+val);
             }
             else
             {
-                if (val === ''){val = 0;}
+                eval("razmerAndPositions.p"+(i-2)+"="+val);
+            }
+        }
+        else
+        {
+            val = 0;
+            if (i<=2)
+            {
+                eval("razmerAndPositions.razm"+(i+1)+"="+val);
+            }
+            else
+            {
                 eval("razmerAndPositions.p"+(i-2)+"="+val);
             }
         }
