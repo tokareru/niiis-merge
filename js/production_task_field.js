@@ -622,11 +622,11 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                     productTasks: saveData
                 },
                 success: function (res) {
-                    saveCount++;
-                    console.log(saveCount)
-                    if (saveCount === users.length) stopProcessOfSaving(thisButton);
-
                     console.log(res);
+                },
+                complete: function () {
+                    saveCount++;
+                    if (saveCount === users.length) stopProcessOfSaving(thisButton)
                 }
             })
 
