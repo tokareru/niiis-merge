@@ -161,13 +161,18 @@ function initTasksRoutes() {
             $('#main-tabs-scheme').parents('li').addClass('bg-danger');
             let scheme = await import('./scheme.js');
             let interval = setInterval(async function () {
-                if ($('#field3DAll').html() !== undefined && loadScheme !== undefined){
+                if ($('#field3DAll').html() !== undefined && loadScheme !== undefined) {
                     console.log(loadScheme);
                     await scheme.setRazmerAndPosOnScheme(shell.scheme);
                     clearInterval(interval);
+                    if (shell.isSchemeOpen) {
+                        unlockScheme();
+                    } else blockScheme()
                 }
             }, 1000)
         }
+
+
         setTimeout(function () {
             blurSite(false)
         }, 500);
@@ -230,7 +235,8 @@ async function serializeAllInfo() {
         specification: 'unchanged',
         models: 'unchanged',
         esi: 'unchanged',
-        scheme: 'unchanged'
+        scheme: 'unchanged',
+        isSchemeOpen: true
     };
     let $spec = $('#specificationTable');
     if ($spec.html() === undefined && Round !== 3) {
@@ -265,7 +271,6 @@ async function serializeAllInfo() {
         let scheme = await import('./scheme.js');
         sizes = await scheme.getRazmerAndPos();
         sizes = JSON.parse(JSON.stringify(sizes));
-        console.log(sizes);
         for (let key in sizes) {
             sizes[key] = `${sizes[key]}`;
         }
@@ -277,7 +282,12 @@ async function serializeAllInfo() {
     } else {
         dataInfo.scheme = 'unchanged';
     }
-    console.log(dataInfo);
+    if (Round === 3) {
+        if ($("#left-accordion").find("input:checked").length !== $("#left-accordion").find("input").length) {
+            dataInfo.isSchemeOpen = false;
+        }
+    }
+    //console.log(dataInfo);
     return JSON.stringify(dataInfo);
 }
 
@@ -559,8 +569,7 @@ async function addTaskToDB(thisButton) {
     let task = serializeCreateTaskRoute();
     if (task === undefined || task.length === 0)
         return;
-    let info = await  serializeAllInfo();
-    console.log(info);
+    let info = await serializeAllInfo();
     let data = {task: task, master: login, shell: info};
     //console.log(data);
     task.forEach(function (_task) {
