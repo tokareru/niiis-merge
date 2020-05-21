@@ -49,6 +49,8 @@ $(function () {
                         },
                         success: function (answer) {
                             console.log(answer);
+                        },
+                        complete: function () {
                             stopProcessOfSaving(thisButton);
                         }
                     });
