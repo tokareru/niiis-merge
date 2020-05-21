@@ -54,7 +54,7 @@ function initProductionTask_3_Rounds() {
     }
 
     $(`#production_task_body`).on("click", "#product_task_save_button", function () {
-        saveProductionTable_3_Round(nameUsers);
+        saveProductionTable_3_Round(nameUsers, this);
     })
         .on("click", ".deleteNodeButtonRM", function () {
             deleteWorkerTask($(this));
@@ -467,7 +467,7 @@ function initProductionTask_1_2_Rounds() {
     });
 
     $(`#production_task_body`).on("click", "#product_task_save_button", function () {
-        saveProductionTable_1_2_Rounds($("#prod_task_table_container").find(`#${$("#productionTaskSelectUserBody").val()}`));
+        saveProductionTable_1_2_Rounds($("#prod_task_table_container").find(`#${$("#productionTaskSelectUserBody").val()}`), this);
     })
 
     /*generateTable(tableInfo, {
@@ -553,7 +553,7 @@ function prodTableMoveByKey(e, $table, $input) {
     }
 }
 
-function saveProductionTable_1_2_Rounds($table) {
+function saveProductionTable_1_2_Rounds($table, thisButton) {
     let userLogin = $table.attr("user-login");
     let $rows = $table.find("tbody .prodRows");
     let saveData = [];
@@ -569,7 +569,7 @@ function saveProductionTable_1_2_Rounds($table) {
             })
         });
     console.log(saveData);
-
+    startProcessOfSaving(thisButton)
     $.ajax({
         type: 'POST',
         url: 'ajax/save_production_task_1_2',
@@ -580,7 +580,7 @@ function saveProductionTable_1_2_Rounds($table) {
         success: function (res) {
             //console.log(res)
             $table.attr("data-saved", "true");
-
+            stopProcessOfSaving(thisButton)
             setActionToBar({
                 id: "saveWorkerTaskRound3",
                 type: "save",
@@ -597,9 +597,11 @@ function saveProductionTable_1_2_Rounds($table) {
     })
 }
 
-function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", roleName: ""}]) {
+function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", roleName: ""}], thisButton) {
     let $workers_drop = $("#workers_drop_area");
     //console.log(users)
+    let saveCount = 0;
+    startProcessOfSaving(thisButton)
     if (users.length)
         users.forEach(function (user = {name: "", login: "", role: "", roleName: ""}) {
             let userLi = $workers_drop.find(`li[user-login='${user.login}']`);
@@ -620,7 +622,11 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                     productTasks: saveData
                 },
                 success: function (res) {
-                    console.log(res)
+                    console.log(res);
+                },
+                complete: function () {
+                    saveCount++;
+                    if (saveCount === users.length) stopProcessOfSaving(thisButton)
                 }
             })
 

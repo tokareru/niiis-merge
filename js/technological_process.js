@@ -77,7 +77,7 @@ function downloadTechProcess($container, fieldId) {
                 });*/
 
                 $("#tech_process_field_save_button").click(function () {
-                    saveTechProcess();
+                    saveTechProcess(this);
                 })
             }
 
@@ -765,7 +765,7 @@ function addNewTechProcess(fieldId) {
     });
 }
 
-function saveTechProcess() {
+function saveTechProcess(thisButton) {
     let json = {
         techProcess: []
     };
@@ -816,7 +816,7 @@ function saveTechProcess() {
         json.techProcess.push(techName);
     });
     console.log(json);
-
+    startProcessOfSaving(thisButton);
     $.ajax(
         {
             url: 'ajax/save_techproccess',
@@ -825,6 +825,7 @@ function saveTechProcess() {
             success: function (data) {
                 console.log(data);
                 madeRouteMapByTechProcess(json);
+                stopProcessOfSaving(thisButton);
                 setActionToBar({
                     id: "saveTechProcess",
                     type: "save",

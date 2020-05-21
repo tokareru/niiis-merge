@@ -42,5 +42,5 @@
     </div>
 
   </div>
-  <input type="button" class="btn-dark btn" value="Сохранить" id="product_task_save_button">
+  <button class="btn-dark btn d-block mx-auto" id="product_task_save_button">Сохранить</button>
 </div>
