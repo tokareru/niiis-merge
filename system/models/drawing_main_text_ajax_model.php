@@ -93,7 +93,7 @@ class drawing_main_text_ajax_model extends model {
     }
     function save_size_and_positions(){
         if($_SERVER["REQUEST_METHOD"]=="POST"){
-            $sql = "UPDATE DRAWING_SIZE 
+            $sql = "UPDATE DRAWING_SIZE SET
                           size_1 = :size_1,
                           size_2 = :size_2,
                           size_3 = :size_3,
@@ -104,7 +104,7 @@ class drawing_main_text_ajax_model extends model {
                           pos_5 = :p5,
                           pos_6 = :p6,
                           pos_7 = :p7
-                    WHERE drawing_name = 'scheme'";
+                    WHERE drawing_name = :name";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("name" => $_POST["scheme"], 
                 "size_1" => $_POST["razm1"], 
