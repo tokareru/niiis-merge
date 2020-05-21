@@ -29,7 +29,7 @@ function initTasksRoutes() {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
     });
     $('#create_task_route_saveBtn').on('click', function () {
-        addTaskToDB();
+        addTaskToDB(this);
     });
     $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
         let $id = $(this).parents('tr').data('id');
@@ -193,7 +193,7 @@ function initTasksRoutes() {
     $('#task_routes_own_routes_update').on('click', function () {
         disableOwnTask();
         taskRouteDisable();
-        getRoutesFromDB();
+        getRoutesFromDB(this);
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
     });
     if (Round === 3) {
@@ -536,7 +536,7 @@ function serializeCreateTaskRoute(addTextarea = false) {
     return data;
 }
 
-function addTaskToDB() {
+function addTaskToDB(thisButton) {
     let task = serializeCreateTaskRoute();
     if (task === undefined || task.length === 0)
         return;
@@ -559,11 +559,14 @@ function addTaskToDB() {
         });*/
     });
 
+    startProcessOfSaving(thisButton)
+
     $.ajax({
         type: 'POST',
         url: 'ajax/save_route',//ajax/save_route
         data: data,
         success: function (res) {
+            stopProcessOfSaving(thisButton)
             let taskTA = serializeCreateTaskRoute(true);
             let message = `Пользователь <span class="font-weight-bold">${currentName}</span> создал маршрут со следующими указаниями: <br/>`;
             taskTA.forEach(function (value, index) {
@@ -596,12 +599,16 @@ function addTaskToDB() {
     })
 }
 
-function getRoutesFromDB() {
+function getRoutesFromDB(thisButton) {
+    if (this !== undefined)
+        startProcessOfSaving(thisButton)
     $.ajax({
         type: 'GET',
         async: false,
         url: 'ajax/get_routes_by_type',
         success: function (res) {
+            if (this !== undefined)
+                stopProcessOfSaving(thisButton)
             tasksRoutesMadeRoutesArr = res;
             ownTasks = [];
             tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active, 'active');
