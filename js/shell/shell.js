@@ -14,6 +14,7 @@ let TaskInfoReload = false;
 let TaskInfo;
 let SpecTableInfo;
 let collectionIdPdm;
+let loadScheme;
 
 
 function shellInit() {

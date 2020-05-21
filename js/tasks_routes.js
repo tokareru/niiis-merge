@@ -15,21 +15,11 @@ function initTasksRoutes() {
             .append('<input type="button" id="task_routes_add_button" value="Добавить маршрут" class="btn bg-dark text-white"' +
                 ' data-toggle="modal" data-target="#task_routes_add_modalWindow">');
 
-    /* setInterval(function () {
-         console.log(TaskInfoReload);
-         if (TaskInfoReload) {
-
-             return;
-         }
-         getRoutesFromDB();
-     }, 10000);*/
-
-
     $('#create_task_route_clearBtn').on('click', function () {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
     });
     $('#create_task_route_saveBtn').on('click', function () {
-        addTaskToDB(this);
+        addTaskToDB(this).then();
     });
     $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
         let $id = $(this).parents('tr').data('id');
@@ -135,9 +125,8 @@ function initTasksRoutes() {
         let shell = $(this).parents('tr').data('shell');
 
         blurSite(true)
-
+        console.log(shell);
         if (shell.specification !== 'unchanged') {
-            console.log(shell);
             //$('#main-tabs-specification').click();
             $('#main-tabs-specification').parents('li').addClass('bg-danger');
             let interval = setInterval(function () {
@@ -171,10 +160,12 @@ function initTasksRoutes() {
                 }
             }, 500);
         }
+        if (shell.scheme !== 'unchanged') {
+            $('#main-tabs-scheme').parents('li').addClass('bg-danger');
+        }
         setTimeout(function () {
             blurSite(false)
-        }, 500)
-
+        }, 500);
     });
 
     $('body').on('click', '.tasks_routes_reloadShell_radio_disable', function () {
@@ -191,10 +182,12 @@ function initTasksRoutes() {
     })
 
     $('#task_routes_own_routes_update').on('click', function () {
+        startProcessOfSaving(this);
         disableOwnTask();
         taskRouteDisable();
-        getRoutesFromDB(this);
+        getRoutesFromDB();
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
+        stopProcessOfSaving(this);
     });
     if (Round === 3) {
         $.ajax({
@@ -227,11 +220,12 @@ function disableOwnTask() {
     });
 }
 
-function serializeAllInfo() {
+async function serializeAllInfo() {
     let dataInfo = {
-        specification: undefined,
-        models: undefined,
-        esi: undefined
+        specification: 'unchanged',
+        models: 'unchanged',
+        esi: 'unchanged',
+        scheme: 'unchanged'
     };
     let $spec = $('#specificationTable');
     if ($spec.html() === undefined && Round !== 3) {
@@ -261,6 +255,23 @@ function serializeAllInfo() {
         }
 
     }
+    if ($('#field3DAll').html() !== undefined && loadScheme !== undefined) {
+        let sizes = {};
+        let scheme = await import('./scheme.js');
+        sizes = await scheme.getRazmerAndPos();
+        sizes = JSON.parse(JSON.stringify(sizes));
+        console.log(sizes);
+        for (let key in sizes) {
+            sizes[key] = `${sizes[key]}`;
+        }
+        if (JSON.stringify(sizes) !== JSON.stringify(loadScheme)) {
+            dataInfo.scheme = JSON.parse(JSON.stringify(sizes))
+        } else {
+            dataInfo.scheme = 'unchanged';
+        }
+    } else {
+        dataInfo.scheme = 'unchanged';
+    }
     console.log(dataInfo);
     return JSON.stringify(dataInfo);
 }
@@ -276,6 +287,7 @@ function taskRouteDisable() {
     $('.slider_button').removeClass('bg-danger').addClass('bg-dark');
     $('#main-tabs-fieldBlock').parents('li').removeClass('bg-danger');
     $('#specTableSaveButton').removeAttr('disabled');
+    $('#main-tabs-scheme').parents('li').removeClass('bg-danger');
     if (Round === 3) {
         setESI(tempESI);
         $.ajax({
@@ -536,11 +548,13 @@ function serializeCreateTaskRoute(addTextarea = false) {
     return data;
 }
 
-function addTaskToDB(thisButton) {
+async function addTaskToDB(thisButton) {
     let task = serializeCreateTaskRoute();
     if (task === undefined || task.length === 0)
         return;
-    let data = {task: task, master: login, shell: serializeAllInfo()};
+    let info = await  serializeAllInfo();
+    console.log(info);
+    let data = {task: task, master: login, shell: info};
     //console.log(data);
     task.forEach(function (_task) {
         addToDoTaskTOList(_task.user, Round, {
@@ -566,7 +580,7 @@ function addTaskToDB(thisButton) {
         url: 'ajax/save_route',//ajax/save_route
         data: data,
         success: function (res) {
-            stopProcessOfSaving(thisButton)
+            stopProcessOfSaving(thisButton);
             let taskTA = serializeCreateTaskRoute(true);
             let message = `Пользователь <span class="font-weight-bold">${currentName}</span> создал маршрут со следующими указаниями: <br/>`;
             taskTA.forEach(function (value, index) {
@@ -599,16 +613,12 @@ function addTaskToDB(thisButton) {
     })
 }
 
-function getRoutesFromDB(thisButton) {
-    if (this !== undefined)
-        startProcessOfSaving(thisButton)
+function getRoutesFromDB() {
     $.ajax({
         type: 'GET',
         async: false,
         url: 'ajax/get_routes_by_type',
         success: function (res) {
-            if (this !== undefined)
-                stopProcessOfSaving(thisButton)
             tasksRoutesMadeRoutesArr = res;
             ownTasks = [];
             tasksRoutesMadeRoutes('task_routes_active_routes', res.response.active, 'active');
@@ -636,7 +646,7 @@ function compareTwoArrays(arr1, arr2) {
     if (arr1.length === arr2.length) {
         if (arr1.length) {
             arr1.forEach(function (_elem1, index) {
-                if (_elem1 !== arr2[index])
+                if (_elem1 != arr2[index])
                     isSame = false;
             })
         } else
@@ -655,14 +665,14 @@ function blurSite(isOn = true) {
     let $progressBarContainer = $("#progress-bar-container");
     let $chat_main = $("#chat_main");
     let $esiSlider = $("#right-side").find(".slider_main").first();
-    if (isOn){
+    if (isOn) {
         $tabs.addClass("blur-filter");
         $shell.addClass("blur-filter");
         $toastSection.addClass("blur-filter");
         $progressBarContainer.addClass("blur-filter");
         $chat_main.addClass("blur-filter");
         $esiSlider.addClass("blur-filter");
-    }else {
+    } else {
         $tabs.removeClass("blur-filter");
         $shell.removeClass("blur-filter");
         $toastSection.removeClass("blur-filter");

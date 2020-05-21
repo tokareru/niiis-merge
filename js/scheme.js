@@ -1658,6 +1658,7 @@ function CreateNotes(note1 = 5, note2 = 4, note3 = 2, note4 = 2, note5 = 2, note
 
 function setRazmerAndPos(objrazpos)
 {
+    loadScheme = JSON.parse(JSON.stringify(objrazpos));
     window.razmerAndPositions = objrazpos;
 }
 
