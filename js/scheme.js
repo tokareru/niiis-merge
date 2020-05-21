@@ -1697,6 +1697,120 @@ export function getRazmerAndPos()
     return window.razmerAndPositions;
 }
 
+export function setRazmerAndPosOnScheme(obj)
+{
+    var dataRazm = [];
+    if (typeof obj == 'object')
+    {
+        ctxs[0].clearRect(0, 0, document.getElementsByTagName("canvas")[ctxs[0].canvas.id].width,
+            document.getElementsByTagName("canvas")[ctxs[0].canvas.id].height);
+        $("#razmer1").remove();
+
+        dataRazm[0]=obj.razm1;
+        dataRazm[2]=obj.razm2;
+        dataRazm[4]=obj.razm3;
+        for (let j=0; j<areas3.length; j++)
+        {
+            let echo;
+            let x = areas3[j].x;
+            let y = areas3[j].y;
+            let y1, x1;
+            ctxs[0].beginPath();
+            ctxs[0].moveTo(x, y);
+
+            switch (areas3[j].rotation)
+            {
+                case "up":
+                {
+                    ctxs[0].lineTo(x-5, y+10);
+                    ctxs[0].lineTo(x+5, y+10);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x-10, y);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                        ctxs[0].font = "italic 10pt Arial";
+
+                        $( "#scheme1" ).append("<canvas id='razmer1'></canvas>");
+                        let ct = document.getElementById("razmer1").getContext("2d");
+                        ct.beginPath();
+                        ct.font = "italic 10pt Arial";
+                        ct.fillText(dataRazm[j], 110, 50);
+                        ct.stroke();
+
+                        //ctxs[0].fillText(dlinaarr[j], areas3[j].x-25, areas3[j].y + Math.abs(areas3[j].y-areas3[j+1].y)/2);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "down":
+                {
+                    ctxs[0].lineTo(x-5, y-10);
+                    ctxs[0].lineTo(x+5, y-10);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x-10, y);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "left":
+                {
+                    ctxs[0].lineTo(x+10, y-5);
+                    ctxs[0].lineTo(x+10, y+5);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x, y+10);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                        ctxs[0].font = "italic 10pt Arial";
+                        ctxs[0].fillText(dataRazm[j], areas3[j].x + Math.abs(areas3[j].x-areas3[j+1].x)/2, areas3[j].y-7);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+
+                case "right":
+                {
+                    ctxs[0].lineTo(x-10, y-5);
+                    ctxs[0].lineTo(x-10, y+5);
+                    ctxs[0].fill();
+                    ctxs[0].beginPath();
+                    ctxs[0].moveTo(areas2[j].x, areas2[j].y);
+                    ctxs[0].lineTo(x, y+10);
+                    if (j % 2 == 0)
+                    {
+                        ctxs[0].moveTo(areas3[j].x, areas3[j].y);
+                        ctxs[0].lineTo(areas3[j+1].x, areas3[j+1].y);
+                    }
+                    ctxs[0].stroke();
+                    break;
+                }
+            }
+        }
+
+        CreateNotes(obj.p1, obj.p2, obj.p3, obj.p4, obj.p5, obj.p6, obj.p7);
+
+    }
+    else
+    {
+        return "Функция должна принимать объект";
+    }
+}
+
 /* 	 $.ajax({
         type: "GET",
         url: "drawing_main_text_ajax/load_size_and_positions",
