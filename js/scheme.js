@@ -1498,7 +1498,7 @@ function setDrawingStatus()
     })*/
 }
 
-function setRazmer(razm)
+/* function setRazmer(razm)
 {
     $.ajax({
         type: "POST",
@@ -1522,7 +1522,7 @@ function setRazmer(razm)
             console.log(answer);
         }
     });
-}
+} */
 
 function createKontur() {
     let areasCircles1 = [];
