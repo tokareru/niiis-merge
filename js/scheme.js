@@ -22,6 +22,8 @@ export function initScheme() {
     window.echo;
     window.echoarray = [0,0,0,0];
 
+    window.razmerAndPositions;
+
     window.areas1 = []; // массив круглых областей в которых происходит клик
     window.areas2 = []; // координаты кругов в размерах
     window.areas3 = []; // координаты стрелок в размерах
@@ -1074,7 +1076,7 @@ export function initScheme() {
         let y = e.clientY - rect.top - 1;
         for (let i=0; i<CoordinatesToShowInputRazm.length; i++)
         {
-            if (i>2) {rr=10;}
+            if (i>2) {rr=12;}
             let dx = x - CoordinatesToShowInputRazm[i].x;
             let dy = y - CoordinatesToShowInputRazm[i].y;
             if (dx * dx + dy * dy < rr * rr)
@@ -1208,6 +1210,9 @@ function razmerdrawfull()
         type: "GET",
         url: "drawing_main_text_ajax/load_size_and_positions",
         success: function (answer) {
+
+            setRazmerAndPos(answer);
+
             ObjectRazmer = answer;
             dlinaarr[0]=ObjectRazmer.razm1;
             dlinaarr[2]=ObjectRazmer.razm2;
@@ -1650,4 +1655,70 @@ function CreateNotes(note1 = 5, note2 = 4, note3 = 2, note4 = 2, note5 = 2, note
     ctxs[0].lineWidth = 1;
 
 }
+
+function setRazmerAndPos(objrazpos)
+{
+    window.razmerAndPositions = objrazpos;
+}
+
+export function getRazmerAndPos()
+{
+    var val;
+
+    for (let i=0;i<10;i++)
+    {
+        val = parseInt($("#razmNumber"+(i+1)).val());
+
+        if (!isNaN(val))
+        {
+            if (i<=2)
+            {
+                eval("razmerAndPositions.razm"+(i+1)+"="+val);
+            }
+            else
+            {
+                eval("razmerAndPositions.p"+(i-2)+"="+val);
+            }
+        }
+        else
+        {
+            val = 0;
+            if (i<=2)
+            {
+                eval("razmerAndPositions.razm"+(i+1)+"="+val);
+            }
+            else
+            {
+                eval("razmerAndPositions.p"+(i-2)+"="+val);
+            }
+        }
+    }
+    return window.razmerAndPositions;
+}
+
+/* 	 $.ajax({
+        type: "GET",
+        url: "drawing_main_text_ajax/load_size_and_positions",
+        success: function (answer)
+		{
+            var ObjectRazmer = answer;
+
+			for (let i=0;i<10;i++)
+			{
+				razmerAndPositions.push($("#razmNumber"+(i+1)).val());
+
+				if (razmerAndPositions[i] === undefined)
+				{
+					if (i<=2)
+					{
+						razmerAndPositions[i] = eval("ObjectRazmer.razm"+(i+1));
+					}
+					else
+					{
+						razmerAndPositions[i] = eval("ObjectRazmer.p"+(i-2));
+					}
+				}
+			}
+		}
+		}); */
 
