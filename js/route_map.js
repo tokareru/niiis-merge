@@ -158,8 +158,8 @@ function initRouteMap() {
     let saveButton = $('#tech_process_save');
     if (Role === "technologist")
         saveButton.show().on('click', function () {
-            if (Round === 3) saveTechProcessTableRound3($table);
-            else saveTechProcessTableRound_1_2($table)
+            if (Round === 3) saveTechProcessTableRound3($table, this);
+            else saveTechProcessTableRound_1_2($table, this)
         });
     else saveButton.remove();
 
@@ -269,7 +269,7 @@ function addStyleTd($table, coords, style) {
     $table.find('tr').eq(coords[1]).children().eq(coords[0]).addClass(style);
 }
 
-function saveTechProcessTableRound_1_2($table) {
+function saveTechProcessTableRound_1_2($table, thisButton) {
     let saveObj = [];
     let $trs = $table.find('tr.newRouteMapRow');
     $trs.each(function () {
@@ -287,14 +287,14 @@ function saveTechProcessTableRound_1_2($table) {
     });
 
     console.log(saveObj);
-
+    startProcessOfSaving(thisButton);
     $.ajax({
         url: 'ajax/save_route_map_1_2',
         type: 'POST',
         data: {data:saveObj},
         success: function (res) {
             console.log(res);
-
+            stopProcessOfSaving(thisButton);
             setActionToBar({
                 id: "saveRouteMapTable",
                 type: "save",
@@ -318,7 +318,7 @@ function saveTechProcessTableRound_1_2($table) {
 
 }
 
-function saveTechProcessTableRound3($table) {
+function saveTechProcessTableRound3($table, thisButton) {
     let saveObj = [];
     let $trs = $table.find('tr.newRouteMapRow');
     if ($trs.length){
@@ -377,12 +377,14 @@ function saveTechProcessTableRound3($table) {
         });
     }
     console.log(saveObj);
+    startProcessOfSaving(thisButton)
     $.ajax({
         url: 'ajax/save_route_map_3',
         type: 'POST',
         data: {data: saveObj},
         success: function (res) {
             console.log(res);
+            stopProcessOfSaving(thisButton)
             setActionToBar({
                 id: "saveRouteMapTable",
                 type: "save",

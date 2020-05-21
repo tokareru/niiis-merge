@@ -48,7 +48,7 @@ function initSpecTable(json) {
     });
 
     $tableBlock.on("click", "#specTableSaveButton", function () {
-        saveSpecTable();
+        saveSpecTable(this);
     });
 
     if (Round !== 3 && Role === "designer") {
@@ -63,7 +63,7 @@ function initSpecTable(json) {
     }
 
     if (Role === "designer" && Round !== 3) {
-        $tableBlock.find("#specTableSaveButton").removeClass("d-none");
+        $tableBlock.find("#specTableSaveButton").removeClass("d-none").addClass("d-block");
     } else {
         $tableBlock.find("#specTableSaveButton").remove();
     }
@@ -271,7 +271,7 @@ function saveSpecTableData($rows) {
     return saveData;
 }
 
-function saveSpecTable() {
+function saveSpecTable(thisButton) {
     let $rows = $("#specificationTable").find(".specRows");
     let saveData = saveSpecTableData($rows);
     console.log(saveData);
@@ -298,6 +298,7 @@ function saveSpecTable() {
         });
     }
 
+    startProcessOfSaving(thisButton)
     $.ajax({
         type: "POST",
         url: saveUrl,
@@ -311,6 +312,7 @@ function saveSpecTable() {
         },
         success: function (answer) {
             console.log(answer);
+            stopProcessOfSaving(thisButton)
             setActionToBar({
                 id: "saveSpecTable",
                 type: "save",

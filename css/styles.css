@@ -119,6 +119,18 @@ hr {
     text-align: center;
 }
 
+.small-spinner-border{
+    display: inline-block;
+    width: 1.1rem;
+    height: 1.1rem;
+    vertical-align: middle;
+    border: 0.25em solid currentColor;
+    border-right-color: transparent;
+    border-radius: 50%;
+    -webkit-animation: spinner-border .75s linear infinite;
+    animation: spinner-border .75s linear infinite;
+}
+
 #downloadBackgroundBody {
 }
 
@@ -130,7 +142,7 @@ hr {
     z-index: 9999;
 }
 
-#downloadBackgroundDescription p {
+#downloadBackgroundDescription p{
     padding: 1.5rem;
     margin-top: 43vh;
     color: #613737;

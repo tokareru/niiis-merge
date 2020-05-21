@@ -154,7 +154,7 @@ function initTitleBlock() {
     $(window).trigger('resize');
 
     $('#addToServerTitleBlock').on('click', function () {
-        addToServerTitleBlock();
+        addToServerTitleBlock(this);
         addToServerRazmerAndPos();
         HideInputAndDrawRazmerOnScheme();
         setDrawingStatus();
@@ -716,9 +716,10 @@ function addDataToTitleBlock(data) {
     }*/
 }
 
-function addToServerTitleBlock() {
+function addToServerTitleBlock(thisButton) {
     let serArr = serializedTitleBlock();
     //console.log(serArr)
+    startProcessOfSaving(thisButton);
     $.ajax(
         {
             url: 'drawing_main_text_ajax/save',
@@ -726,7 +727,7 @@ function addToServerTitleBlock() {
             data: {body: serArr},
             success: function (data) {
                 console.log(data);
-
+                stopProcessOfSaving(thisButton);
                 setActionToBar({
                     id: "saveSchemeTable",
                     type: "save",

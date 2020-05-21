@@ -1,3 +1,8 @@
+<?php
+    sys::inc_no_cache('css', 'css/font-awesome.css');
+    sys::inc_no_cache('javascript', 'js/shell/shell.js');
+    sys::inc_no_cache('css', 'css/styles.css');
+    ?>
 <html lang="en">
 <head>
   <meta charset="utf-8">
@@ -53,7 +58,7 @@
 	#tabs {min-width: 453px;}
 
 	#submitTabs {
-		float: right;
+		/*float: right;*/
 		margin-top: 10px;
 	}
 
@@ -160,7 +165,6 @@
   <div id="tabs-3-9"></div>
   </div>
 </div>
-<button id="submitTabs" type="button" class="btn btn-primary">Сохранить</button>
-
+<button id="submitTabs" type="button" class="btn mx-auto d-block btn-primary">Сохранить</button>
 </body>
 </html>

@@ -28,7 +28,7 @@
 
             </tbody>
         </table>
-        <button id="specTableSaveButton" class="btn btn-dark d-none">Сохранить</button>
+        <button id="specTableSaveButton" class="btn btn-dark mx-auto d-none">Сохранить</button>
     </div>
 
 </div>

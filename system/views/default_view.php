@@ -9,7 +9,6 @@ require_once conf::$ROOT . 'system/etc/functions.php';
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
 
     <?php
-
         sys::inc_no_cache('css', 'css/bootstrap.css');
         sys::inc_no_cache('css', 'css/styles.css');
         sys::inc_no_cache('css', 'css/3D.css');
@@ -71,7 +70,6 @@ require_once conf::$ROOT . 'system/etc/functions.php';
     <link href="<?php echo conf::$SITE_URL ?>css/btn_heder.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css2?family=Comfortaa&display=swap" rel="stylesheet">
 
-
     <script>
         var SITE_URL = "<?php echo conf::$SITE_URL ?>";
     </script>
@@ -86,45 +84,13 @@ require_once conf::$ROOT . 'system/etc/functions.php';
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 </head>
 <body class='bg-white'>
-<nav id="tabs" class="navbar navbar-expand-xl navbar-dark sticky-top mb-xl-2 bg-dark opacity-98">
-    <button class="navbar-toggler outline-none" type="button" data-toggle="collapse" data-target="#navbarToggler"
-            aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarToggler">
-        <div class="ml-auto text-center d-xxl-block d-sm-none"><span
-                class="navbar-brand">Цифровая фабрика IT-процессов</span></div>
-        <ul class="nav ml-sm-to-xxl-auto nav-pills navbar-nav" id="tabs-fields-ul" role="tablist"
-            style="list-style-type: none">
-            <li><a href="#tabs-empty"></a></li>
-        </ul>
-        <?php require_once("system/views/header.php"); ?>
-    </div>
-</nav>
-
+<?php require_once("system/views/navbar.php"); ?>
 <div id="shell" class="container-fluid myContainer mb-5">
     <div class="row myRow">
     </div>
 </div>
-<div id="toast-section" class="">
-    <nav class="navbar">
-        <button class="btn shadow-none navbar-toggler ml-auto" type="button" data-toggle="collapse"
-                data-target="#navbarTogglerNotification" aria-controls="navbarTogglerNotification" aria-expanded="false"
-                aria-label="Toggle navigation">
-            <span class="btn btn-sm shadow-none border rounded-pill bg-light fa-bell-o" tabindex="0" id="notificationBell"></span>
-        </button>
-        <div class="collapse navbar-collapse show" id="navbarTogglerNotification">
-            <div id="toast-position" class="custom-toast-position"></div>
-        </div>
-    </nav>
-</div>
-<div id="downloadBackgroundBody" class="d-block">
-    <div id="downloadBackgroundBLur"></div>
-    <div id="downloadBackgroundBLurBg"></div>
-    <div id="downloadBackgroundDescription">
-        <p class="text-align-center mx-auto h2">Идёт загрузка кабинета <span class="ml-2 h6 spinner-border"></span></p>
-    </div>
-</div>
+<?php require_once("system/views/notification_section.php"); ?>
+<?php require_once("system/views/loadingMenu.php"); ?>
 </body>
 <?php require_once("system/views/progress_bar_view.php"); ?>
 </html>

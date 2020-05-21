@@ -11,7 +11,7 @@
 <html>
 <head>
 </head>
-<body>
+<button>
 <button class="btn-block btn btn-custom" id="ready">Готово</button>
 <div id='field3DAll' class="mx-auto">
     <div id="field3D" class="mx-auto">
@@ -28,7 +28,7 @@
         </tbody>
     </table>
 </div>
-<input type='button' class='btn bg-dark text-white d-flex mx-auto' id='addToServerTitleBlock' value='Сохранить'>
+<button class='btn bg-dark text-white d-flex mx-auto' id='addToServerTitleBlock'>Сохранить</button>
 
 </body>
 </html>
