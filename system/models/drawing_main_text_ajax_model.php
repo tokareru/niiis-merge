@@ -104,7 +104,7 @@ class drawing_main_text_ajax_model extends model {
                           pos_5 = :p5,
                           pos_6 = :p6,
                           pos_7 = :p7
-                    WHERE drawing_name = 'scheme'";
+                    WHERE drawing_name = :name";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("name" => $_POST["scheme"], 
                 "size_1" => $_POST["razm1"], 
