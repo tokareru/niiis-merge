@@ -19,7 +19,7 @@ function initTasksRoutes() {
         $('#create_task_route_tbody').find('tr:not(#create_task_route_RouteListAddTr)').remove();
     });
     $('#create_task_route_saveBtn').on('click', function () {
-        addTaskToDB().then();
+        addTaskToDB(this).then();
     });
     $('#tasks_routes').on('click', '.tasks_routes_activeTask', function () {
         let $id = $(this).parents('tr').data('id');
@@ -187,10 +187,12 @@ function initTasksRoutes() {
     })
 
     $('#task_routes_own_routes_update').on('click', function () {
+        startProcessOfSaving(this);
         disableOwnTask();
         taskRouteDisable().then();
         getRoutesFromDB();
         getRoutesFromDBInfo(tasksRoutesMadeRoutesArr);
+        stopProcessOfSaving(this);
     });
     if (Round === 3) {
         $.ajax({
@@ -553,7 +555,7 @@ function serializeCreateTaskRoute(addTextarea = false) {
     return data;
 }
 
-async function addTaskToDB() {
+async function addTaskToDB(thisButton) {
     let task = serializeCreateTaskRoute();
     if (task === undefined || task.length === 0)
         return;
@@ -578,11 +580,14 @@ async function addTaskToDB() {
         });*/
     });
 
+    startProcessOfSaving(thisButton)
+
     $.ajax({
         type: 'POST',
         url: 'ajax/save_route',//ajax/save_route
         data: data,
         success: function (res) {
+            stopProcessOfSaving(thisButton);
             let taskTA = serializeCreateTaskRoute(true);
             let message = `Пользователь <span class="font-weight-bold">${currentName}</span> создал маршрут со следующими указаниями: <br/>`;
             taskTA.forEach(function (value, index) {
