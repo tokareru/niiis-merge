@@ -16,7 +16,7 @@ $(function () {
     }).removeClass("d-none");
 
     $("#saveTaskListButton").on("click", function () {
-        saveTaskList();
+        saveTaskList(this);
     }).removeClass("d-none");
 
     $("#task-list-body").on("click", ".taskDeleteButtonSpan", function () {
@@ -253,7 +253,7 @@ function addNewTaskToList() {
     body.scrollTo(0, body.scrollHeight);
 }
 
-function saveTaskList() {
+function saveTaskList(thisButton) {
     let login = $("#userLoginsSelection").val();
     let round = $("#userRoundSelection").val();
     let taskBody = $(`div[task-id="task-${login}-${round}"]`);
@@ -278,11 +278,13 @@ function saveTaskList() {
         tasks: tasks
     };
     //console.log(data);
+    startProcessOfSaving(thisButton);
     $.ajax({
         type: 'POST',
         url: '../ajax/add_user_task',
         data: data,
         success: function (json) {
+            stopProcessOfSaving(thisButton)
             console.log(json)
         }
     })

@@ -103,20 +103,28 @@ $( function() {
 			let id2 = $("#tabs div div div ")[i].parentElement.id.substr(7,1);
 			arr.push({name: name, id1: parseInt(id1), id2: parseInt(id2)});
 		}
-		Send(arr);
+		Send(arr, this);
 		//save_technologist_info
 	});
 
 
 
-	function Send(data) {
+	function Send(data, thisButton) {
+		startProcessOfSaving(thisButton);
 		$.ajax({
 			type: "POST",
 			url: "save_technologist_info",
 			dataType: "json",
 			data:{data:data},
 			success: function (answer) {
+
 				console.log(answer);
+			},
+			error: function (answer) {
+				console.log(answer)
+			},
+			complete: function () {
+				stopProcessOfSaving(thisButton)
 			}
 		});
 	}
