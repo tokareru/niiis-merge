@@ -29,9 +29,12 @@ if ($_SERVER['REQUEST_URI'] == '/') {
     sys::inc_no_cache('javascript', 'js/libraries/bootstrap.min.js');
     sys::inc_no_cache('javascript', 'js/libraries/jquery-ui.js');
     sys::inc_no_cache('javascript', 'js/admin/admin.js');
-    
+    sys::inc_no_cache('javascript', 'js/shell/shell.js');
+
     sys::inc_no_cache('css', 'css/admin_cab.css');
     sys::inc_no_cache('css', 'css/icons-fontawesome.css');
+    sys::inc_no_cache('css', 'css/font-awesome.css');
+    sys::inc_no_cache('css', 'css/styles.css');
     ?>
 
   </head>
