@@ -173,7 +173,7 @@ function initTasksRoutes() {
         }
 
         if (shell.isSchemeOpen !== 'unchanged') {
-            $('#main-tabs-scheme').parents('li').addClass('bg-danger');
+            //$('#main-tabs-scheme').parents('li').addClass('bg-danger');
             let interval = setInterval(async function () {
                 if ($('#field3DAll').html() !== undefined) {
                     if (shell.isSchemeOpen) {
