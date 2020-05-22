@@ -298,5 +298,14 @@ class sys {
       echo '<script src="'.conf::$SITE_URL.$path.'?'.microtime(true).'" type="text/javascript"></script>';
     }
   }
+  
+  static function get_current_round(){
+    $sql = "SELECT cnfval as round FROM sys_cnf WHERE cnfname = 'round'";
+    $q = sys::$PDO->prepare($sql);
+    $q->execute();
+    $round = $q->fetchAll();
+        
+    return (int)$round[0]['round'];
+  }
 }
 

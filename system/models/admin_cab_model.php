@@ -246,7 +246,7 @@ class admin_cab_model extends model {
             $sql = "UPDATE PRODUCTS_ESI SET name = '".$_POST["name"]."', designation = '".$_POST["designation"]."', position = ".$_POST["position"].", path_3d = '".$_POST["path_3d"]."', path_picture = '".$_POST["path_picture"]."', number = ".$_POST["number"].", type_id = ".$_POST["type_id"]." WHERE id = ".$_POST["id"];
             $q = sys::$PDO->prepare($sql);
             $q->execute(); 
-            echo $sql;
+//            echo $sql;
             return array("response" => 200);
         }else {
             return array("response" => "NOT FOUND POST REQUEST");
@@ -301,47 +301,70 @@ class admin_cab_model extends model {
     }
     
     function get_technologist_info(){
-        function get_array_from_string($string){
-           $string = trim($string,' ');
-           $res = explode(',', $string);
-           $result = array();
-           foreach($res as $row){
-               array_push($result,array("name"=>$row));
-           }
-           return $result;
-        }
-       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.id as third_id, t.FIELDS
-FROM technologist_info_3_layout as t left join
-technologist_info_2_layout as s on s.id = t.id_2_layout left join
-technologist_info_1_layout as f on f.id = t.id_1_layout
-ORDER BY third_id"; 
-       $q = sys::$PDO->prepare($sql);
-       $q->execute();
-       $Q = $q->fetchAll();
-       $name = "";
-       $child_name = "";
-       $result = array();
-       $i = -1;
-       $j = 0;
-       foreach($Q as $row){
-           if($name != $row["name"]){
-               $j = 0;
-               $name = $row["name"];
-               array_push($result,array("name"=>$name, "lvl"=>1, "id"=>$row["first_id"], "children" => array(array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields" => array(array("name" => $row["fields"], "lvl" => 3, "id" => $row["third_id"]))))));
-               $child_name = $row["child_name"];
-               $i++;
-           }else{
-               if($child_name != $row["child_name"])
-               {
-                   $child_name = $row["child_name"];
-                   array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
-                   $j++;  
-               }
-               else{
-                   array_push($result[$i]["children"][$j]["fields"], array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]));
-               }      
-           }
-       }
+//        function get_array_from_string($string){
+//           $string = trim($string,' ');
+//           $res = explode(',', $string);
+//           $result = array();
+//           foreach($res as $row){
+//               array_push($result,array("name"=>$row));
+//           }
+//           return $result;
+//        }
+//       $sql = "SELECT f.id as first_id, s.id as second_id, f.NAME as name, s.NAME as child_name, t.id as third_id, t.FIELDS
+//FROM technologist_info_3_layout as t left join
+//technologist_info_2_layout as s on s.id = t.id_2_layout left join
+//technologist_info_1_layout as f on f.id = t.id_1_layout
+//ORDER BY third_id"; 
+//       $q = sys::$PDO->prepare($sql);
+//       $q->execute();
+//       $Q = $q->fetchAll();
+//       $name = "";
+//       $child_name = "";
+//       $result = array();
+//       $i = -1;
+//       $j = 0;
+//       foreach($Q as $row){
+//           if($name != $row["name"]){
+//               $j = 0;
+//               $name = $row["name"];
+//               array_push($result,array("name"=>$name, "lvl"=>1, "id"=>$row["first_id"], "children" => array(array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields" => array(array("name" => $row["fields"], "lvl" => 3, "id" => $row["third_id"]))))));
+//               $child_name = $row["child_name"];
+//               $i++;
+//           }else{
+//               if($child_name != $row["child_name"])
+//               {
+//                   $child_name = $row["child_name"];
+//                   array_push($result[$i]["children"], array("name" => $row["child_name"], "lvl"=>2, "id" => $row["second_id"], "fields"=>array(array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]))));
+//                   $j++;  
+//               }
+//               else{
+//                   array_push($result[$i]["children"][$j]["fields"], array("name"=>$row["fields"], "lvl" => 3, "id" => $row["third_id"]));
+//               }      
+//           }
+//       }
+      
+        $sql = "SELECT id, name
+                FROM technologist_info_1_layout where active_sign = true";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $lay_1 = $q->fetchAll();
+        
+        $sql = "SELECT id, name
+                FROM technologist_info_2_layout where active_sign = true";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $lay_2 = $q->fetchAll();
+        $sql = "SELECT id, fields, id_1_layout, id_2_layout
+                FROM technologist_info_3_layout where active_sign = true";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $lay_3 = $q->fetchAll();
+        $result["1_layout"] = $lay_1;
+        $result["2_layout"] = $lay_2;
+        $result["fields"] = $lay_3;
+        
+        
+//        return $result;
        return $result;
     }
     
@@ -351,14 +374,14 @@ ORDER BY third_id";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $i = 1;
-            echo $_POST["data"];
+//            echo $_POST["data"];
             foreach ($_POST["data"] as $row) {
-                echo "a";
+//                echo "a";
                 $sql = "INSERT INTO technologist_info_3_layout (id, id_1_layout, id_2_layout, fields)
                          VALUES (".$i++." ,:id_1, :id_2, :fields)";
                 $q = sys::$PDO->prepare($sql);
                 $q->execute(array("id_1" => $row["id1"], "id_2" => $row["id2"], "fields" => $row["name"]));
-                print($sql);
+//                print($sql);
             }
             return array("response" => 200);
         } else {

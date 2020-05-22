@@ -87,7 +87,7 @@ $p->SetAutoPageBreak(0);
 
 // метаданные
 $p->SetAuthor("NIIIS", true);
-$p->SetTitle('Задание на производство', true);
+$p->SetTitle('Маршрутная карта', true);
 $p->SetSubject("ID", true);
 
 // параметры страницы

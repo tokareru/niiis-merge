@@ -81,7 +81,7 @@ class drawing_main_text_ajax_model extends model {
                 $i++;
             }
             $sql.=") ".$str.");";
-            echo $sql;
+//            echo $sql;
             $q = sys::$PDO->prepare($sql);
             $q->execute($data);
             $Q = $q->fetchAll();

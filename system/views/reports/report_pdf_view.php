@@ -574,8 +574,6 @@ $draw_finish = $data['draw_finish'];
 
 // -------------------------формирование страницы PDF---------------------------
 
-
-
 $p = new PDF('P', 'mm', 'A4');
 $p->AddFont('gost', '', 'gost-type-a.php');
 $p->AddFont('gost', 'B', 'gost_b.php');
@@ -583,7 +581,7 @@ $p->SetAutoPageBreak(0);
 
 // метаданные
 $p->SetAuthor("NIIIS", true);
-$p->SetTitle("Report", true);
+$p->SetTitle("Отчет", true);
 $p->SetSubject("ID", true);
 
 // параметры страницы
