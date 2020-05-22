@@ -344,20 +344,20 @@ class admin_cab_model extends model {
 //       }
       
         $sql = "SELECT id, name
-                FROM technologist_info_1_layout";
+                FROM technologist_info_1_layout where active_sign = true";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $lay_1 = $q->fetchAll();
         
         $sql = "SELECT id, name
-                FROM technologist_info_2_layout where active_sign = '1'";
+                FROM technologist_info_2_layout where active_sign = true";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $lay_2 = $q->fetchAll();
         $sql = "SELECT id, fields
-                FROM technologist_info_3_layout where active_sign = '1' and id_1_layout = :id1 and id_2_layout = :id2";
+                FROM technologist_info_3_layout where active_sign = true";
         $q = sys::$PDO->prepare($sql);
-        $q->execute(array("id1"=>$Q[0]["id"], "id2" => $Q1[0]["id"]));
+        $q->execute();
         $lay_3 = $q->fetchAll();
         $result["1_layout"] = $lay_1;
         $result["2_layout"] = $lay_2;
