@@ -612,7 +612,25 @@ if ($draw_finish) { // если чертеж дорисован
   $p->Cell(6, 5, $size["size_2"], $frame, 1, 'C'); // размер 3
   $p->SetXY(155, 55);
   $p->Cell(6, 5, $size["size_3"], $frame, 1, 'C'); // размер 2
-
+  //
+  // позиции
+  $p->SetXY(187.5, 21);
+  $p->Cell(6, 5, $size["pos_1"], $frame, 1, 'C'); // позиция 1
+  $p->SetXY(187.5, 26.5);
+  $p->Cell(6, 5, $size["pos_2"], $frame, 1, 'C'); // позиция 2
+  $p->SetXY(187.5, 32);
+  $p->Cell(6, 5, $size["pos_3"], $frame, 1, 'C'); // позиция 3
+  $p->SetXY(187.5, 37);
+  $p->Cell(6, 5, $size["pos_6"], $frame, 1, 'C'); // позиция 6
+  
+  
+  $p->SetXY(31, 26);
+  $p->Cell(6, 5, $size["pos_4"], $frame, 1, 'C'); // позиция 4
+  $p->SetXY(31, 32);
+  $p->Cell(6, 5, $size["pos_5"], $frame, 1, 'C'); // позиция 5
+  $p->SetXY(31, 69);
+  $p->Cell(6, 5, $size["pos_7"], $frame, 1, 'C'); // позиция 7
+  
   // -----------------
 }
 
