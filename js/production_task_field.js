@@ -14,6 +14,9 @@ function initProductionTaskField () {
             $header.text("Список рабочих");
         }
 
+        if (Role !== "production_master")
+            $("#product_task_reload_button").addClass("ml-auto")
+
         getJsonByURL(techGuideURL, function (json) {
             techGuideJson = json;
             initProductionTask_3_Rounds();
@@ -28,7 +31,6 @@ function initProductionTask_3_Rounds() {
     let $workers_drop = $("#workers_drop_area");
     let nameUsers = [];
     let techProcess;
-
     $.ajax({
         url: 'ajax/get_techproccess',
         type: 'GET',
@@ -37,6 +39,7 @@ function initProductionTask_3_Rounds() {
             techProcess = json;
         }
     });
+
     if (techProcess === undefined || techProcess === null){
         $("#product_tech_process_field_drop").append(`
             <p class="alert-warning p-2">Невозможно создать задания на производство, так как не существует техпроцесса</p>
@@ -48,6 +51,8 @@ function initProductionTask_3_Rounds() {
             <p class="alert-warning p-2">Невозможно создать задания на производство, так как не существует техпроцесса</p>
         `);
         $("#product_task_save_button").attr("disabled", "true");
+    }else {
+        $("#product_task_save_button").removeAttr("disabled");
     }
     if (Role === "production_master"){
         initProductTaskForProductMasterFor3Round($workers_drop, techProcess, nameUsers);
@@ -65,10 +70,6 @@ function initProductionTask_3_Rounds() {
     production_task_body.on("click", "#product_task_reload_button", function () {
         reloadProductionTask_3_Round(this)
     });
-
-    if (Role !== "production_master")
-        $("#product_task_reload_button").addClass("ml-auto")
-
 }
 
 function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, nameUsers) {
