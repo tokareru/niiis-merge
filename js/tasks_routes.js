@@ -419,7 +419,7 @@ function generateOwnTasks(selector) {
                 `class="text-center tasks_routes_reloadShell_radio tasks_routes_reloadShell_radio_enable"` +
                 'style="width: 50px">Вкл</label>' +
                 '</form>' +
-                `<button class="btn btn-sm bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report?route_id=${value.id}">Смотреть</a></button>` +
+                `<button class="btn btn-sm bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report/scheme_and_spec?route_id=${value.id}">Смотреть</a></button>` +
                 '</td>' +
                 `<td style="width: 150px">${value.task}</td>` +
                 '<td style="width: 250px">' +

@@ -602,15 +602,15 @@ $p->border_page($main_label, $type = 1);
   
 
 if ($draw_finish) { // если чертеж дорисован
-  $p->Image('images/report/drawing.PNG', 30, 20, -150);
+  $p->Image('images/report/drawing.PNG', 30, 20, -130);
 
   // размеры на чертеже
-  $p->SetXY(39, 41);
+  $p->SetXY(39, 46);
 //  $p->Cell(6, 5, $size["size_1"], $frame, 1, 'C'); // размер 1  
-  $p->TextWithRotation(39, 41, $size["size_1"], 90);
-  $p->SetXY(78, 116);
+  $p->TextWithRotation(39, 44, $size["size_1"], 90);
+  $p->SetXY(78, 120);
   $p->Cell(6, 5, $size["size_2"], $frame, 1, 'C'); // размер 3
-  $p->SetXY(155, 51.5);
+  $p->SetXY(155, 55);
   $p->Cell(6, 5, $size["size_3"], $frame, 1, 'C'); // размер 2
 
   // -----------------
