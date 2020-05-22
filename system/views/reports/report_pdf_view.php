@@ -205,15 +205,19 @@ class PDF extends FPDF {
     $this->Ln();
     $row_count++;
     
+//    var_dump($data);
+    
     foreach ($data as $row) {
-      if((int)$row[4] == 1){
+      
+//      echo $row;
+      if((int)$row['type_id'] == 1){
         $this->SetX($x);
         $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
         $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-        $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
-        $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
-        $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
-        $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
+        $this->Cell($w[2], $height, $this->conv($row['position']), 'LRB', 0, 'C');
+        $this->Cell($w[3], $height, $this->conv($row['designation']), 'LRB', 0, 'L');
+        $this->Cell($w[4], $height, $this->conv($row['name']), 'LRB', 0, 'L');
+        $this->Cell($w[5], $height, $this->conv($row['number']), 'LRB', 0, 'C');
         $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
         $this->Ln();
         $row_count++;
@@ -254,14 +258,14 @@ class PDF extends FPDF {
     $row_count++;
     
     foreach ($data as $row) {
-      if((int)$row[4] == 2){
+      if((int)$row['type_id'] == 2){
         $this->SetX($x);
         $this->Cell($w[0], $height, "", 'LRB', 0, 'C');
         $this->Cell($w[1], $height, "", 'LRB', 0, 'L');
-        $this->Cell($w[2], $height, $this->conv($row[0]), 'LRB', 0, 'C');
-        $this->Cell($w[3], $height, $this->conv($row[1]), 'LRB', 0, 'L');
-        $this->Cell($w[4], $height, $this->conv($row[2]), 'LRB', 0, 'L');
-        $this->Cell($w[5], $height, $this->conv($row[3]), 'LRB', 0, 'C');
+        $this->Cell($w[2], $height, $this->conv($row['position']), 'LRB', 0, 'C');
+        $this->Cell($w[3], $height, $this->conv($row['designation']), 'LRB', 0, 'L');
+        $this->Cell($w[4], $height, $this->conv($row['name']), 'LRB', 0, 'L');
+        $this->Cell($w[5], $height, $this->conv($row['number']), 'LRB', 0, 'C');
         $this->Cell($w[6], $height, "", 'LRB', 0, 'C');
         $this->Ln();
         $row_count++;
@@ -562,11 +566,11 @@ class PDF extends FPDF {
 
 }
 
-$size = $data['content']['size'];
-$main_label = $data['content']['data'][0];
-$round = $data['content']['round'];
-$spec_table = $data['content']['spec_table'];
-$draw_finish = $data['content']['draw_finish'];
+$size = $data['size'];
+$main_label = $data['data'][0];
+$round = $data['round'];
+$spec_table = $data['spec_table'];
+$draw_finish = $data['draw_finish'];
 
 // -------------------------формирование страницы PDF---------------------------
 
@@ -598,17 +602,35 @@ $p->border_page($main_label, $type = 1);
   
 
 if ($draw_finish) { // если чертеж дорисован
-  $p->Image('images/report/drawing.PNG', 30, 20, -150);
+  $p->Image('images/report/drawing.PNG', 30, 20, -130);
 
   // размеры на чертеже
-  $p->SetXY(39, 41);
+  $p->SetXY(39, 46);
 //  $p->Cell(6, 5, $size["size_1"], $frame, 1, 'C'); // размер 1  
-  $p->TextWithRotation(39, 41, $size["size_1"], 90);
-  $p->SetXY(78, 116);
+  $p->TextWithRotation(39, 44, $size["size_1"], 90);
+  $p->SetXY(78, 120);
   $p->Cell(6, 5, $size["size_2"], $frame, 1, 'C'); // размер 3
-  $p->SetXY(155, 51.5);
+  $p->SetXY(155, 55);
   $p->Cell(6, 5, $size["size_3"], $frame, 1, 'C'); // размер 2
-
+  //
+  // позиции
+  $p->SetXY(187.5, 21);
+  $p->Cell(6, 5, $size["pos_1"], $frame, 1, 'C'); // позиция 1
+  $p->SetXY(187.5, 26.5);
+  $p->Cell(6, 5, $size["pos_2"], $frame, 1, 'C'); // позиция 2
+  $p->SetXY(187.5, 32);
+  $p->Cell(6, 5, $size["pos_3"], $frame, 1, 'C'); // позиция 3
+  $p->SetXY(187.5, 37);
+  $p->Cell(6, 5, $size["pos_6"], $frame, 1, 'C'); // позиция 6
+  
+  
+  $p->SetXY(31, 26);
+  $p->Cell(6, 5, $size["pos_4"], $frame, 1, 'C'); // позиция 4
+  $p->SetXY(31, 32);
+  $p->Cell(6, 5, $size["pos_5"], $frame, 1, 'C'); // позиция 5
+  $p->SetXY(31, 69);
+  $p->Cell(6, 5, $size["pos_7"], $frame, 1, 'C'); // позиция 7
+  
   // -----------------
 }
 

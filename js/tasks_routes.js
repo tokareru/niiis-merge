@@ -131,7 +131,22 @@ function initTasksRoutes() {
             $('#main-tabs-specification').parents('li').addClass('bg-danger');
             let interval = setInterval(function () {
                 if ($('#specificationTable').html() !== undefined) {
-                    setTableByRowDAta(shell.specification);
+                    let temp = [];
+                    if (Round === 3) {
+                        JSON.parse(JSON.stringify(shell.specification)).forEach(((value, index) => {
+                            temp.push({row: [value.row[0], value.row[1], value.row[2], value.row[3]]})
+                        }));
+                        setTableByRowDAta(temp);
+                    } else {
+                        JSON.parse(JSON.stringify(shell.specification)).forEach(((value, index) => {
+                            if (value.row[4] === undefined)
+                            temp.push({row: [value.row[0], value.row[1], value.row[2], value.row[3], {text: "", readonly: false}]})
+                            else temp.push(value);
+                        }));
+                        console.log(temp);
+                        setTableByRowDAta(temp);
+                    }
+                    //console.log(temp);
                     $('#specTableSaveButton').attr('disabled', true);
                     clearInterval(interval);
                 }
@@ -404,7 +419,7 @@ function generateOwnTasks(selector) {
                 `class="text-center tasks_routes_reloadShell_radio tasks_routes_reloadShell_radio_enable"` +
                 'style="width: 50px">Вкл</label>' +
                 '</form>' +
-                `<button class="btn btn-sm bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report?route_id=${value.id}">Смотреть</a></button>` +
+                `<button class="btn btn-sm bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report/scheme_and_spec?route_id=${value.id}">Смотреть</a></button>` +
                 '</td>' +
                 `<td style="width: 150px">${value.task}</td>` +
                 '<td style="width: 250px">' +

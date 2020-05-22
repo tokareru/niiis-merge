@@ -84,11 +84,11 @@ class admin_cab_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         
-        $sql = "DELETE FROM PRODACTION_TASK_1_2";
+        $sql = "DELETE FROM production_task_1_2";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         
-        $sql = "DELETE FROM PRODACTION_TASK_3";
+        $sql = "DELETE FROM production_task_3";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         

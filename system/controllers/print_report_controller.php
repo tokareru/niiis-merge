@@ -6,8 +6,13 @@ class print_report_controller extends Controller{
 		$this->view = new View();
 	}
 	
-	function index(){
-		$data = $this->model->get_data();
+	function scheme_and_spec(){
+		$data = $this->model->scheme_and_spec();
+		$this->view->render('', 'reports/report_pdf_view.php', $data);
+	}
+  
+  function route_map(){
+		$data = $this->model->route_map();
 		$this->view->render('', 'reports/report_pdf_view.php', $data);
 	}
 }

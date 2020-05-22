@@ -1,14 +1,13 @@
 <?php
 class print_report_model extends model 
 {
-  public function get_data() 
+  public function index() 
   {
     $data = array();
     $data['title'] = conf::$SITE_NAME;
-    $data['content'] = self::content();
     return $data;
   }
-  function content(){
+  function scheme_and_spec(){
     $sql = "SELECT * FROM drawing_main_text";
     $q = sys::$PDO->prepare($sql);
     $q->execute();
@@ -24,15 +23,42 @@ class print_report_model extends model
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $round = $q->fetchAll();
-    if($round[0]['round'] == 3){
-      $sql = "SELECT position,
+    
+    if($round[0]['round'] == 3){ // получение спецификации для третьего раунда
+      $esi_sql = "SELECT id, position,
                       designation,
                       name,
                       number,
                       type_id
               FROM products_esi
               ORDER BY id ASC, type_id ASC";
-    } else {
+      $q = sys::$PDO->prepare($esi_sql);
+      $q->execute();
+      $esi_array = $q->fetchAll();
+      
+      $products_sql = "SELECT name FROM product_checked
+                  WHERE active_sign = true";
+      $q = sys::$PDO->prepare($products_sql);
+      $q->execute();
+      $products_query = $q->fetchAll();
+      
+      // чтобы отфильтровать только установленные записи, бежим по массиву esi
+      $spec_table = array();
+      foreach($esi_array as $field=>$value1){
+        // каждый раз пробегаем по массиву с отмеченными деталями 
+        foreach ($products_query as $product=>$value2){
+          if((int)substr($value2['name'], 7) == $value1['id']){ // откусываем "detail-" от строки получая айдишник детали
+            // формируем новый массив только тех, кто входит в список отмеченных
+            array_push($spec_table, array('id'=>$value1['id'],
+                                          'position'=>$value1['position'],
+                                          'designation'=>$value1['designation'],
+                                          'name'=>$value1['name'],
+                                          'number'=>$value1['number'],
+                                          'type_id'=>$value1['type_id']));
+          }
+        }
+      }
+    } else { // получение спецификации для первого и второго раундов
       $sql = "SELECT  position,
                     name_short,
                     name_long,
@@ -40,13 +66,10 @@ class print_report_model extends model
                     note
             FROM    spec_table 
             WHERE   active_sign = True";
+      $q = sys::$PDO->prepare($sql);
+      $q->execute();
+      $spec_table = $q->fetchAll();
     }
-    
-    $q = sys::$PDO->prepare($sql);
-    $q->execute();
-    $spec_table = $q->fetchAll();
-    
-//    var_dump($spec_table);
     
     $sql = "SELECT * FROM drawing_size";
     $q = sys::$PDO->prepare($sql);
