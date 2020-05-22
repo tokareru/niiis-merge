@@ -354,7 +354,7 @@ class admin_cab_model extends model {
         $q = sys::$PDO->prepare($sql);
         $q->execute();
         $lay_2 = $q->fetchAll();
-        $sql = "SELECT id, fields
+        $sql = "SELECT id, fields, id_1_layout, id_2_layout
                 FROM technologist_info_3_layout where active_sign = true";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
