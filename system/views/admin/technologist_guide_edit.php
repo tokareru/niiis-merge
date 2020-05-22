@@ -1,6 +1,6 @@
 <?php
     sys::inc_no_cache('css', 'css/font-awesome.css');
-    sys::inc_no_cache('javascript', 'js/shell/shell.js');
+    sys::inc_no_cache('javascript', 'js/shell/saveEffect.js');
     sys::inc_no_cache('css', 'css/styles.css');
     ?>
 <html lang="en">

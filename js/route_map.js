@@ -303,7 +303,7 @@ function saveTechProcessTableRound_1_2($table, thisButton) {
             });
             triggerToDoTaskEvent("saveRouteMap");
 
-            $.ajax({
+            /*$.ajax({
                 type: "POST",
                 url: "/start_ajax/db_change_time",
                 data: {
@@ -312,7 +312,7 @@ function saveTechProcessTableRound_1_2($table, thisButton) {
                 success: function (answer) {
                     console.log(answer);
                 }
-            })
+            })*/
         }
     })
 
@@ -393,7 +393,7 @@ function saveTechProcessTableRound3($table, thisButton) {
             });
             triggerToDoTaskEvent("saveRouteMap");
 
-            $.ajax({
+            /*$.ajax({
                 type: "POST",
                 url: "/start_ajax/db_change_time",
                 data: {
@@ -402,7 +402,7 @@ function saveTechProcessTableRound3($table, thisButton) {
                 success: function (answer) {
                     console.log(answer);
                 }
-            })
+            })*/
         }
     })
 }

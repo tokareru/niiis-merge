@@ -39,6 +39,7 @@ require_once conf::$ROOT . 'system/etc/functions.php';
         sys::inc_no_cache('javascript', 'js/libraries/bootstrap.min.js');
         sys::inc_no_cache('javascript', 'js/libraries/jquery-ui.js');
         sys::inc_no_cache('javascript', 'js/mainTabs.js');
+        sys::inc_no_cache('javascript', 'js/shell/saveEffect.js');
         sys::inc_no_cache('javascript', 'js/left_accordion.js');
         sys::inc_no_cache('javascript', 'js/PDM_and_STD_components.js');
         sys::inc_no_cache('javascript', 'js/specification_table.js');
