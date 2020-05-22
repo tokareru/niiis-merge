@@ -819,7 +819,7 @@ function madeRouteMapByTechProcess(techProcessData) {
         success: function (res) {
             console.log(res);
             $("#tech_process_table").trigger("routeMapRefresh");
-            $.ajax({
+            /*$.ajax({
                 type: "POST",
                 url: "/start_ajax/db_change_time",
                 data: {
@@ -828,7 +828,7 @@ function madeRouteMapByTechProcess(techProcessData) {
                 success: function (answer) {
                     console.log(answer);
                 }
-            })
+            })*/
         }
     })
 }

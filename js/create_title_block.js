@@ -479,7 +479,7 @@ function addToServerTitleBlock() {
             data: {body: serArr},
             success: function (data) {
                 console.log(data);
-                $.ajax({
+                /*$.ajax({
                     type: "POST",
                     url: "/start_ajax/db_change_time",
                     data: {
@@ -488,7 +488,7 @@ function addToServerTitleBlock() {
                     success: function (answer) {
                         console.log(answer);
                     }
-                })
+                })*/
             },
             error: function () {
             }
@@ -609,7 +609,7 @@ function addToServerTitleBlock(thisButton) {
 
                 triggerToDoTaskEvent("saveScheme");
 
-                $.ajax({
+                /*$.ajax({
                     type: "POST",
                     url: "/start_ajax/db_change_time",
                     data: {
@@ -618,7 +618,7 @@ function addToServerTitleBlock(thisButton) {
                     success: function (answer) {
                         console.log(answer);
                     }
-                })
+                })*/
             },
             error: function () {
 
@@ -637,7 +637,7 @@ function addToServerTitleBlock(thisButton) {
         }
     });
 
-    $.ajax({
+    /*$.ajax({
         type: "POST",
         url: "start_ajax/db_change_time",
         data: {
@@ -646,5 +646,5 @@ function addToServerTitleBlock(thisButton) {
         success: function (answer) {
             console.log(answer);
         }
-    })
+    })*/
 }
