@@ -186,9 +186,9 @@ $( function() {
 						//{0: 1, 1: 2, id1: 1, id2: 2, name:"text"}
 						for (let z = 0; z < obj["fields"].length; z++)
 						{
-							if (obj["fields"][z].id1 == f && obj["fields"][z].id2 == s)
+							if (obj["fields"][z]["id_1_layout"] == f && obj["fields"][z]["id_2_layout"] == s)
 							{
-								$( "#tabs-"+f+"-"+s ).append( "<div><input disabled value='"+obj["fields"][z].name+
+								$( "#tabs-"+f+"-"+s ).append( "<div><input disabled value='"+obj["fields"][z].fields+
 									"' class='form-control'><button type='button' clickpanel='edit' class='btn btn-outline-info'>Edit</button><button clickpanel='delete' type='button' class='btn btn-outline-danger'>X</button></div>" );
 							}
 
