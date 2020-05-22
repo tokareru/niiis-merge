@@ -68,7 +68,7 @@ class ajax_model extends model {
             foreach ($_POST["productTasks"] as $row) {
                 $sql .= "('" . $_POST["login"] . "', " . $row["id"] . "),";
             }
-            echo $sql;
+//            echo $sql;
             $sql = substr($sql, 0, -1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
