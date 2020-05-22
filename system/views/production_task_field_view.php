@@ -44,7 +44,7 @@
   </div>
   <div class="d-flex">
     <button class="btn-dark btn d-inline mr-2 ml-auto" id="product_task_save_button">Сохранить</button>
-    <button class="btn-dark btn d-inline mr-auto" id="product_task_reload_button">Обновить</button>
+    <button class="btn-dark btn d-inline mr-auto font-family-fontAwesome fa-refresh" id="product_task_reload_button"></button>
   </div>
 
 </div>

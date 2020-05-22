@@ -25,7 +25,7 @@
     </div>
     <div class="d-flex">
         <button id='tech_process_save' class="btn bg-dark ml-auto mr-2 text-white hidden">Сохранить</button>
-        <button id='tech_process_reload' class="btn bg-dark mr-auto text-white hidden">Обновить</button>
+        <button id='tech_process_reload' class="btn bg-dark mr-auto text-white hidden font-family-fontAwesome fa-refresh"></button>
     </div>
 
 </div>
