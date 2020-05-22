@@ -23,7 +23,8 @@ class print_report_model extends model
     $q = sys::$PDO->prepare($sql);
     $q->execute();
     $round = $q->fetchAll();
-    if($round[0]['round'] == 3){
+    
+    if($round[0]['round'] == 3){ // получение спецификации для третьего раунда
       $esi_sql = "SELECT id, position,
                       designation,
                       name,
@@ -35,28 +36,19 @@ class print_report_model extends model
       $q->execute();
       $esi_array = $q->fetchAll();
       
-      
       $products_sql = "SELECT name FROM product_checked
                   WHERE active_sign = true";
       $q = sys::$PDO->prepare($products_sql);
       $q->execute();
       $products_query = $q->fetchAll();
       
-//      var_dump($products_query);
-//      var_dump($esi_array);
-      
+      // чтобы отфильтровать только установленные записи, бежим по массиву esi
       $spec_table = array();
-      
-//      echo substr("detail-12", 7);
-//      echo $esi_array[0]['name'];
-      
       foreach($esi_array as $field=>$value1){
-        $exist = false;
-//        echo $value1['id'].', ';
-        
+        // каждый раз пробегаем по массиву с отмеченными деталями 
         foreach ($products_query as $product=>$value2){
-          
-          if((int)substr($value2['name'], 7) == $value1['id']){
+          if((int)substr($value2['name'], 7) == $value1['id']){ // откусываем "detail-" от строки получая айдишник детали
+            // формируем новый массив только тех, кто входит в список отмеченных
             array_push($spec_table, array('id'=>$value1['id'],
                                           'position'=>$value1['position'],
                                           'designation'=>$value1['designation'],
@@ -66,9 +58,7 @@ class print_report_model extends model
           }
         }
       }
-//      var_dump($esi_array);
-//      $spec_table = 0;
-    } else {
+    } else { // получение спецификации для первого и второго раундов
       $sql = "SELECT  position,
                     name_short,
                     name_long,
@@ -80,10 +70,6 @@ class print_report_model extends model
       $q->execute();
       $spec_table = $q->fetchAll();
     }
-    
-    
-    
-//    var_dump($spec_table);
     
     $sql = "SELECT * FROM drawing_size";
     $q = sys::$PDO->prepare($sql);
