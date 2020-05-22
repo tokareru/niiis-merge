@@ -10,9 +10,13 @@ function technologicalProcessInit() {
         //$("#tech_process_table").droppable("disable");
     });
 
+    let reloadButton = $("#tech_process_field_reload_button");
+    let saveButton = $("#tech_process_field_save_button");
+
     if (Role !== "technologist"){
-        $("#tech_process_field_save_button").remove();
+        saveButton.remove();
         $("#tech_process_field_add_node_button").remove();
+        reloadButton.addClass("ml-auto");
         $.ajax({
             // ajax/get_technologist_info
             url: techGuideURL,
@@ -30,9 +34,22 @@ function technologicalProcessInit() {
         deleteKnot($(this))
     });
 
+    reloadButton.on("click", function () {
+        $(".techNameDropped").remove();
+        let thisButton = this;
+        startProcessOfSaving(thisButton);
+        downloadTechProcess($container, "tech_process_field_drop").then(function () {
+            stopProcessOfSaving(thisButton);
+        });
+    });
+
+    saveButton.click(function () {
+        saveTechProcess(this);
+    })
+
 }
 
-function downloadTechProcess($container, fieldId) {
+async function downloadTechProcess($container, fieldId) {
     // json/tech_process.json
     $.ajax({
         url: 'ajax/get_techproccess',
@@ -75,10 +92,6 @@ function downloadTechProcess($container, fieldId) {
                     event.preventDefault();
                     if (event.which === 2 && Role === "technologist") addNewTechProcess(fieldId);
                 });*/
-
-                $("#tech_process_field_save_button").click(function () {
-                    saveTechProcess(this);
-                })
             }
 
         }
@@ -815,7 +828,7 @@ function saveTechProcess(thisButton) {
 
         json.techProcess.push(techName);
     });
-    console.log(json);
+    //console.log(json);
     startProcessOfSaving(thisButton);
     $.ajax(
         {

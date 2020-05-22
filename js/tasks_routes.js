@@ -148,6 +148,7 @@ function initTasksRoutes() {
                     }
                     //console.log(temp);
                     $('#specTableSaveButton').attr('disabled', true);
+                    $('#specTableReloadButton').attr('disabled', true);
                     clearInterval(interval);
                 }
             }, 500);
@@ -329,6 +330,7 @@ async function taskRouteDisable() {
     $('.slider_button').removeClass('bg-danger').addClass('bg-dark');
     $('#main-tabs-fieldBlock').parents('li').removeClass('bg-danger');
     $('#specTableSaveButton').removeAttr('disabled');
+    $('#specTableReloadButton').removeAttr('disabled');
     $('#main-tabs-scheme').parents('li').removeClass('bg-danger');
     let scheme = await import('./scheme.js');
     await scheme.setRazmerAndPosOnScheme(loadScheme);

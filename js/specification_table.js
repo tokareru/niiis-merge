@@ -3,6 +3,8 @@ let mainTitle = 0;
 function createSpecificationTable() {
     //serializeTable();
 
+
+
     if (Round < 3) {
         /*getJsonByURL("spec_table_ajax", generateTable,
             {table_block: "#specificationBlock", edit_mode_div: "#specification_edit", url: "pages/edit_field",
@@ -12,13 +14,14 @@ function createSpecificationTable() {
 
         getJsonByURL("spec_autoentered_table_ajax", initSpecTable);
 
-        $("#left-accordion #pdm_field input").click(function () {
+
+
+        /*$("#left-accordion #pdm_field input").click(function () {
             setTableByPdmAndStd(collectDataLabels(".left-side"));
         });
-
         $("#left-accordion #std_field input").click(function () {
             setTableByPdmAndStd(collectDataLabels(".left-side"));
-        })
+        })*/
     }
 }
 
@@ -29,7 +32,7 @@ function initSpecTable(json) {
     SpecTableInfo = json;
     $tableBlock.unbind("click").unbind("change").unbind("keydown");
 
-    $table.on("click", ".addNewRowToSpecTableButton", function () {
+    $tableBlock.on("click", ".addNewRowToSpecTableButton", function () {
         addNewRowToSpecTable();
         setActionToBar({
             id: "addNewRowToSpecTable",
@@ -39,11 +42,11 @@ function initSpecTable(json) {
         })
     });
 
-    $table.on("keydown", ".specTableCellInput", function (e) {
+    $tableBlock.on("keydown", ".specTableCellInput", function (e) {
         specTableMoveByKey(e, $table, $(this));
     });
 
-    $table.on("click", ".deleteNodeButtonRM", function () {
+    $tableBlock.on("click", ".deleteNodeButtonRM", function () {
         deleteSpecRow(this)
     });
 
@@ -63,9 +66,23 @@ function initSpecTable(json) {
     }
 
     if (Role === "designer" && Round !== 3) {
-        $tableBlock.find("#specTableSaveButton").removeClass("d-none").addClass("d-block");
+        $tableBlock.find("#specTableSaveButton").removeClass("d-none").addClass("d-inline");
     } else {
         $tableBlock.find("#specTableSaveButton").remove();
+    }
+    if (Round !== 3){
+        $tableBlock.one("click", "#specTableReloadButton", function () {
+            let thisBlock = this;
+            startProcessOfSaving(thisBlock);
+            $tableBlock.find("thead tr").empty();
+            $tableBlock.find("tbody").empty();
+
+            createSpecificationTable();
+        });
+        stopProcessOfSaving(document.getElementById("specTableReloadButton"));
+        let reloadButton = $tableBlock.find("#specTableReloadButton");
+        reloadButton.removeClass("d-none").addClass("d-inline");
+        if (Role !== "designer") reloadButton.addClass("ml-auto");
     }
 }
 

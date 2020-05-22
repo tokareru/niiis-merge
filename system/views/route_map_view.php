@@ -14,22 +14,6 @@
 <body>
 
 <div id="routeMapBlock">
-    <!--<div class="col-md-12 spec_main">
-        <div class="row">
-            <div class="col-md-12 spec_header">
-                Маршрутная карта
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="table_made col-md-12 table-responsive">
-            </div>
-        </div>
-        <div class="row">
-            <div id="routeMap_edit"></div>
-        </div>
-
-    </div>-->
     <div class='spec_header'>Маршрутная карта</div>
 
     <div class="table-responsive-md">
@@ -40,7 +24,8 @@
         </table>
     </div>
     <div class="d-flex">
-        <button id='tech_process_save' class="btn bg-dark mx-auto text-white hidden">Сохранить</button>
+        <button id='tech_process_save' class="btn bg-dark ml-auto mr-2 text-white hidden">Сохранить</button>
+        <button id='tech_process_reload' class="btn bg-dark mr-auto text-white hidden">Обновить</button>
     </div>
 
 </div>

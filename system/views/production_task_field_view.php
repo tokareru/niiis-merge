@@ -42,5 +42,9 @@
     </div>
 
   </div>
-  <button class="btn-dark btn d-block mx-auto" id="product_task_save_button">Сохранить</button>
+  <div class="d-flex">
+    <button class="btn-dark btn d-inline mr-2 ml-auto" id="product_task_save_button">Сохранить</button>
+    <button class="btn-dark btn d-inline mr-auto" id="product_task_reload_button">Обновить</button>
+  </div>
+
 </div>

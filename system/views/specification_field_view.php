@@ -28,7 +28,11 @@
 
             </tbody>
         </table>
-        <button id="specTableSaveButton" class="btn btn-dark mx-auto d-none">Сохранить</button>
+        <div class="d-flex">
+            <button id="specTableSaveButton" class="btn btn-dark ml-auto mr-2 d-none">Сохранить</button>
+            <button id="specTableReloadButton" class="btn btn-dark mr-auto d-none">Обновить</button>
+        </div>
+
     </div>
 
 </div>

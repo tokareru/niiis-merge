@@ -23,6 +23,8 @@ function initProductionTaskField () {
 }
 
 function initProductionTask_3_Rounds() {
+    let production_task_body = $(`#production_task_body`);
+    production_task_body.unbind("click");
     let $workers_drop = $("#workers_drop_area");
     let nameUsers = [];
     let techProcess;
@@ -48,21 +50,28 @@ function initProductionTask_3_Rounds() {
         $("#product_task_save_button").attr("disabled", "true");
     }
     if (Role === "production_master"){
-        initProductTaskForProductMaster($workers_drop, techProcess, nameUsers);
+        initProductTaskForProductMasterFor3Round($workers_drop, techProcess, nameUsers);
     } else{
-        initProductTaskForWorker($workers_drop, techProcess);
+        initProductTaskForWorkerFor3Round($workers_drop, techProcess);
     }
 
-    $(`#production_task_body`).on("click", "#product_task_save_button", function () {
+    production_task_body.on("click", "#product_task_save_button", function () {
         saveProductionTable_3_Round(nameUsers, this);
     })
         .on("click", ".deleteNodeButtonRM", function () {
             deleteWorkerTask($(this));
-        })
+        });
+
+    production_task_body.on("click", "#product_task_reload_button", function () {
+        reloadProductionTask_3_Round(this)
+    });
+
+    if (Role !== "production_master")
+        $("#product_task_reload_button").addClass("ml-auto")
 
 }
 
-function initProductTaskForProductMaster($workers_drop, techProcess, nameUsers) {
+function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, nameUsers) {
     initTechProcessForProductionTask(techProcess);
     AllInfo.forEach(function (user) {
         if (user.role === "worker") nameUsers.push(user)
@@ -77,6 +86,7 @@ function initProductTaskForProductMaster($workers_drop, techProcess, nameUsers) 
                 },
                 success: function (json) {
                     //console.log(json);
+                    stopProcessOfSaving(document.getElementById("product_task_reload_button"))
                     $workers_drop.append(combineWorkerNode(user));
                     let lastOperations = "";
                     let techOperations = [];
@@ -181,7 +191,7 @@ function setDropAreaForProductMaster($draggable, $this) {
             shift: $draggable.attr("tech-shift"),
             operations: [workerNode]
         }, true));
-        console.log(placeholder.find(".techNameDropped").last().find("span").first().not("caret-down"));
+        //console.log(placeholder.find(".techNameDropped").last().find("span").first().not("caret-down"));
         setToggler("workers_drop_area");
         placeholder.find(".techNameDropped").last().find("span").first().trigger("click")
     }
@@ -200,7 +210,7 @@ function setDropAreaForProductMaster($draggable, $this) {
     })
 }
 
-function initProductTaskForWorker($workers_drop, techProcess) {
+function initProductTaskForWorkerFor3Round($workers_drop, techProcess) {
     //json/production_task.json
     //ajax/get_production_task_3
     $.ajax({
@@ -210,6 +220,7 @@ function initProductTaskForWorker($workers_drop, techProcess) {
             login: login
         },
         success: function (json) {
+            stopProcessOfSaving(document.getElementById("product_task_reload_button"))
             let lastOperations = "";
             let techOperations = [];
             if (json.productTasks.length){
@@ -385,6 +396,7 @@ function initProductionTask_1_2_Rounds() {
         `).insertAfter(production_task_body_round_1_2.find(".spec_header").first());
 
         $("#product_task_save_button").remove();
+        $("#product_task_reload_button").addClass("ml-auto");
         nameUsers.push({
             name: login,
             login: login,
@@ -470,11 +482,53 @@ function initProductionTask_1_2_Rounds() {
         saveProductionTable_1_2_Rounds($("#prod_task_table_container").find(`#${$("#productionTaskSelectUserBody").val()}`), this);
     })
 
+    $(`#production_task_body`).on("click", "#product_task_reload_button", function () {
+        reloadProductionTask_1_2_Rounds($tableBlock, this);
+    })
+
     /*generateTable(tableInfo, {
         table_block: "#prod_task_table_block",
         edit_mode_div: "#prod_task_table_edit",
         url: ""
     });*/
+}
+
+function reloadProductionTask_1_2_Rounds($tableBlock, thisButton) {
+    startProcessOfSaving(thisButton);
+    let $table;
+    if (Role === "production_master"){
+        $table = $("#prod_task_table_container").find(`#${$("#productionTaskSelectUserBody").val()}`);
+    }else {
+        $table = $tableBlock.find("div").first();
+    }
+
+    let index = $table.attr("id");
+    let userLogin = $table.attr("user-login");
+    $table.remove();
+    $.ajax({
+        type: "GET",
+        url: "ajax/get_production_task_1_2",
+        dataType: "json",
+        data: {
+            login: userLogin
+        },
+        success: function (json) {
+            setProductionTable_1_2_Rounds($tableBlock, index, json, userLogin);
+            stopProcessOfSaving(thisButton);
+        },
+        error: function (message) {
+            console.log("Данные не загружены");
+            setProductionTable_1_2_Rounds($tableBlock, index, [], userLogin);
+            stopProcessOfSaving(thisButton);
+        }
+    })
+}
+
+function reloadProductionTask_3_Round(thisButton) {
+    startProcessOfSaving(thisButton)
+    $("#product_tech_process_field_drop").empty();
+    $("#workers_drop_area").empty();
+    initProductionTask_3_Rounds();
 }
 
 function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: "", techOperation: "", task: ""}], userLogin) {
@@ -514,7 +568,6 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
 
     let $table = $tableBlock.find("table").last();
 
-    console.log($table)
     $table.on("keydown", ".prodRowsInput", function (e) {
         prodTableMoveByKey(e, $table, $(this));
     });
@@ -568,7 +621,7 @@ function saveProductionTable_1_2_Rounds($table, thisButton) {
                 task: $inputs.eq(3).val()
             })
         });
-    console.log(saveData);
+    //console.log(saveData);
     startProcessOfSaving(thisButton)
     $.ajax({
         type: 'POST',
@@ -612,7 +665,7 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                 })
             });
 
-            console.log(saveData);
+            //console.log(saveData);
             //console.log(user.login);
             $.ajax({
                 type: 'POST',
@@ -622,7 +675,7 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                     productTasks: saveData
                 },
                 success: function (res) {
-                    console.log(res);
+                    //console.log(res);
                 },
                 complete: function () {
                     saveCount++;

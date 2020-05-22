@@ -15,5 +15,9 @@
 <!--
     <button class="btn btn-dark mt-3" id="tech_process_field_add_node_button">Добавить новый узел</button>
 -->
-    <button class="btn btn-dark mt-3" id="tech_process_field_save_button">Сохранить</button>
+    <div class="d-flex">
+        <button class="btn btn-dark mt-3 ml-auto mr-2" id="tech_process_field_save_button">Сохранить</button>
+        <button class="btn btn-dark mt-3 mr-auto" id="tech_process_field_reload_button">Обновить</button>
+    </div>
+
 </div>

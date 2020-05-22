@@ -264,9 +264,6 @@
               "trigger": "checkMyTaskRoutes"
             },
             {
-              "trigger": "addNewTaskRoute"
-            },
-            {
               "trigger": "sendToPrint"
             }
           ],
@@ -296,9 +293,6 @@
             },
             {
               "trigger": "checkMyTaskRoutes"
-            },
-            {
-              "trigger": "addNewTaskRoute"
             },
             {
               "trigger": "sendToPrint"
@@ -475,9 +469,6 @@
               "trigger": "checkMyTaskRoutes"
             },
             {
-              "trigger": "addNewTaskRoute"
-            },
-            {
               "trigger": "sendToPrint"
             }
           ],
@@ -510,9 +501,6 @@
             },
             {
               "trigger": "checkMyTaskRoutes"
-            },
-            {
-              "trigger": "addNewTaskRoute"
             },
             {
               "trigger": "sendToPrint"

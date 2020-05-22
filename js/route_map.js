@@ -156,12 +156,17 @@ function initRouteMap() {
     $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>');
 
     let saveButton = $('#tech_process_save');
-    if (Role === "technologist")
+    let reloadButton = $("#tech_process_reload")
+    if (Role === "technologist") {
         saveButton.show().on('click', function () {
             if (Round === 3) saveTechProcessTableRound3($table, this);
-            else saveTechProcessTableRound_1_2($table, this)
+            else saveTechProcessTableRound_1_2($table, this);
         });
-    else saveButton.remove();
+    }
+    else {
+        saveButton.remove();
+        reloadButton.addClass("ml-auto")
+    }
 
     // кнопка "добавить новую строку"
     if (Role === "technologist"){
@@ -181,19 +186,61 @@ function initRouteMap() {
         });
     }
 
-    tech_process_table.on("routeMapRefresh", function () {
+    reloadButton.on("click", function () {
+        let thisButton = this;
+        startProcessOfSaving(this);
         $(".newRouteMapRow").remove();
-        $.ajax({
-            url: 'ajax/get_route_map_3 ',
-            type: 'GET',
-            success: function (res) {
-                setTechProcessJson(techGuideJson, res, $table);
-            }
-        })
+        downloadRouteMap().then(function () {
+            stopProcessOfSaving(thisButton);
+        });
+    });
+
+    tech_process_table.on("routeMapRefresh", function () {
+        let thisButton = document.getElementById("tech_process_reload");
+        startProcessOfSaving(thisButton)
+        $(".newRouteMapRow").remove();
+        downloadRouteMap().then(function () {
+            stopProcessOfSaving(thisButton);
+        });
     })
 
-
     // инициализация
+    downloadRouteMap()
+
+    $table.on('click', '.tech_proc_del_td', function () {
+        let $this = $(this);
+        let name;
+        if (Round === 3)
+            name = $this.parent().parent().find("td").eq(4).text();
+        else name = $this.parent().parent().find("td").eq(4).find("input").val();
+        let text = (name === "") ? `Из 'Маршрутной карты' удалён узел` : `Из 'Маршрутной карты' удалён узел '${name}'`;
+        $this.parents('tr').remove();
+        setActionToBar({
+            id: "deleteNodeFromRouteMap",
+            type: "delete",
+            field: "Маршрутная карта",
+            text: text
+        });
+    });
+
+    //$("#tech_process_table").find("tbody tr").last().find("td span").first().trigger("click");
+
+    $table.on("click", ".deleteNodeButtonRM", function () {
+        let $this = $(this);
+        let $td = $this.parent().parent();
+        if ($td.hasClass("techProcessCell")){
+            deleteKnot($this, true);
+            $td.append(`
+                <div style="height: 100%;" tech-lvl="0" tech-id="0"></div>
+            `)
+        }else {
+            deleteKnot($this, true);
+        }
+    })
+}
+
+async function downloadRouteMap() {
+    let $table = $('#tech_process_table');
     if (Round === 3){
         if (Role !== "technologist"){
             $.ajax({
@@ -222,47 +269,15 @@ function initRouteMap() {
         }
     }else {
         // инициализация на 1,2 раундах
-            // ajax/get_work_place_tech_process
-            $.ajax({
-                url: 'ajax/get_route_map_1_2',
-                type: 'GET',
-                success: function (res) {
-                    setTechProcessJsonRounds_1_2(res, $table);
-                }
-            })
-        }
-
-    $table.on('click', '.tech_proc_del_td', function () {
-        let $this = $(this);
-        let name;
-        if (Round === 3)
-            name = $this.parent().parent().find("td").eq(4).text();
-        else name = $this.parent().parent().find("td").eq(4).find("input").val();
-        let text = (name === "") ? `Из 'Маршрутной карты' удалён узел` : `Из 'Маршрутной карты' удалён узел '${name}'`;
-        $this.parents('tr').remove();
-        setActionToBar({
-            id: "deleteNodeFromRouteMap",
-            type: "delete",
-            field: "Маршрутная карта",
-            text: text
-        });
-    });
-
-    //$("#tech_process_table").find("tbody tr").last().find("td span").first().trigger("click");
-
-
-    $table.on("click", ".deleteNodeButtonRM", function () {
-        let $this = $(this);
-        let $td = $this.parent().parent();
-        if ($td.hasClass("techProcessCell")){
-            deleteKnot($this, true);
-            $td.append(`
-                <div style="height: 100%;" tech-lvl="0" tech-id="0"></div>
-            `)
-        }else {
-            deleteKnot($this, true);
-        }
-    })
+        // ajax/get_work_place_tech_process
+        $.ajax({
+            url: 'ajax/get_route_map_1_2',
+            type: 'GET',
+            success: function (res) {
+                setTechProcessJsonRounds_1_2(res, $table);
+            }
+        })
+    }
 }
 
 function addStyleTd($table, coords, style) {
@@ -376,7 +391,7 @@ function saveTechProcessTableRound3($table, thisButton) {
 
         });
     }
-    console.log(saveObj);
+    //console.log(saveObj);
     startProcessOfSaving(thisButton)
     $.ajax({
         url: 'ajax/save_route_map_3',
