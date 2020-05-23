@@ -505,6 +505,7 @@ function reloadProductionTask_1_2_Rounds($tableBlock, thisButton) {
 
     let index = $table.attr("id");
     let userLogin = $table.attr("user-login");
+    let isSaved = Boolean($table.attr("data-saved"));
     $table.remove();
     $.ajax({
         type: "GET",
@@ -514,12 +515,12 @@ function reloadProductionTask_1_2_Rounds($tableBlock, thisButton) {
             login: userLogin
         },
         success: function (json) {
-            setProductionTable_1_2_Rounds($tableBlock, index, json, userLogin);
+            setProductionTable_1_2_Rounds($tableBlock, index, json, userLogin, isSaved);
             stopProcessOfSaving(thisButton);
         },
         error: function (message) {
             console.log("Данные не загружены");
-            setProductionTable_1_2_Rounds($tableBlock, index, [], userLogin);
+            setProductionTable_1_2_Rounds($tableBlock, index, [], userLogin, isSaved);
             stopProcessOfSaving(thisButton);
         }
     })
@@ -532,7 +533,7 @@ function reloadProductionTask_3_Round(thisButton) {
     initProductionTask_3_Rounds();
 }
 
-function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: "", techOperation: "", task: ""}], userLogin) {
+function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: "", techOperation: "", task: ""}], userLogin, isSaved = false) {
     let trs = "";
     //console.log(data)
     if (data !== null)
@@ -554,7 +555,7 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
     }
 
     $tableBlock.append(`
-        <div id="${id}" user-login="${userLogin}" data-saved="false">
+        <div id="${id}" user-login="${userLogin}" data-saved="${isSaved}">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr class="font-weight-bold">${emptyTd}<td>ФИО</td><td>Должность</td><td>Техоперации</td><td>Задание</td></tr>
