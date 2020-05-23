@@ -15,7 +15,7 @@
 </head>
 <body>
 <!--Правая сторона-->
-<div id="right-side">
+<div id="right-side" esi-opened="false">
     <div class='slider_main'>
         <div class='slider_button border border-info bg-dark'>
             <div class='font-weight-bold transformed'>ЭСИ</div>

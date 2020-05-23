@@ -39,7 +39,7 @@
 #toast-section{
     position: fixed;
     right: 0rem;
-    bottom: 2.5rem;
+    bottom: 3.5rem;
     z-index: 999;
     width: 6rem;
 }
@@ -51,7 +51,13 @@
 }
 
 @media (max-height: 400px) {
-    .custom-toast-position{
+    .toast-section{
         max-height: 150px !important;
+    }
+}
+
+@media (max-width: 991px) {
+    #toast-section {
+        bottom: 3rem !important;
     }
 }

@@ -194,6 +194,7 @@ function chatClick() {
         chat_but.children().attr('id', 'span_icon_right');
 
         chat_main.trigger("chat-opened");
+        chat_main.attr("chat-opened", "true")
     } else {
         chat_main.animate({
                 right: css_left
@@ -202,6 +203,7 @@ function chatClick() {
         );
         chat_main.attr('style','z-index: 10');
         chat_but.children().attr('id', 'span_icon_left');
+        chat_main.attr("chat-opened", "false")
     }
 }
 

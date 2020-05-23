@@ -23,10 +23,11 @@
                 <span class="text-monospace mr-3">Навигатор</span>
             </button>
             <div id="progress-bar-to-do-list" class="dropdown-menu dropdown-menu-lg-right pr-3">
+                <span class="refreshToDoListButton font-size-12-em font-family-fontAwesome fa-refresh"></span>
             </div>
         </div>
     </div>
 </nav>
-<div id="progress-bar-line-body" class="progress position-fixed">
+<div id="progress-bar-line-body" class="progress position-fixed d-none">
     <div id="progress-bar-line" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>

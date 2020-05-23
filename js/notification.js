@@ -1,6 +1,8 @@
 function initNotifications() {
     initBell();
-    $("#shell").off("dataChanged");
+    $("#shell").off("dataChanged").off("changeToDoTask");
+    $("#progress-bar-to-do-list-body").off("changeToDoTask");
+
 
     setNotificationToField("shell", "dataChanged",{
         mainHeader: "Обновление кабинета",
@@ -11,6 +13,18 @@ function initNotifications() {
             class: "updateShellButton",
             triggeredEvent: "updateShell",
             target: "#shell"
+        }
+    });
+
+    setNotificationToField("progress-bar-to-do-list-body", "changeToDoTask",{
+        mainHeader: "Навигатор",
+        extraHeader:``,
+        text: `Задания обновились`,
+        button: {
+            name: "Обновить",
+            class: "updateToDoTaskButton",
+            triggeredEvent: "updateToDoTask",
+            target: "#progress-bar-to-do-list-body"
         }
     });
 
@@ -219,6 +233,7 @@ function generateNotification(notification, delay = 0) {
         //$(`.${notification.button.class}`).off("click", `.${notification.button.class}`);
         $(`.toast-body button`).last().on("click", function () {
             $(notification.button.target).trigger(notification.button.triggeredEvent);
+            $(this).parent().parent().remove();
         });
     }
 

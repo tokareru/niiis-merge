@@ -84,24 +84,26 @@ function setActionBar(data) {
     accordion.find(".collapse").first().addClass("show").trigger("shown.bs.collapse");
 
     // инициализация чата
-    $("#chat_main").on("chat-opened", function () {
-        setActionToBar({
-            id: "openTab",
-            type: "open",
-            field: "Чат",
-            text: `Открыта вкладка 'Чат'`
-        });
+    $("#chat_main").on("chat-opened", function (e, addInfo = {isReload: false}) {
+        if (!addInfo.isReload)
+            setActionToBar({
+                id: "openTab",
+                type: "open",
+                field: "Чат",
+                text: `Открыта вкладка 'Чат'`
+            });
         triggerToDoTaskEvent("openField", 0, {tabId: "chat", name: "Чат"});
     });
 
     // инициализация ЭСИ
-    $("#right-side").on("esi-opened", function () {
-        setActionToBar({
-            id: "openTab",
-            type: "open",
-            field: "Электронный состав изделия",
-            text: `Открыта вкладка 'Электронный состав изделия'`
-        });
+    $("#right-side").on("esi-opened", function (e, addInfo = {isReload: false}) {
+        if (!addInfo.isReload)
+            setActionToBar({
+                id: "openTab",
+                type: "open",
+                field: "Электронный состав изделия",
+                text: `Открыта вкладка 'Электронный состав изделия'`
+            });
         triggerToDoTaskEvent("openField", 0, {tabId: "esi_field", name: "ЭСИ"});
     });
 

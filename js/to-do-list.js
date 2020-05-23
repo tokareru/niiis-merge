@@ -1,109 +1,207 @@
 let amountOfTasks = 0;
 let amountOfCompletedTasks = 0;
+let oldToDoTasks = [];
+let toDoTaskInterval;
 
-function initToDoList() {
+async function initToDoList() {
+    clearInterval(toDoTaskInterval);
+    let progress_bar_to_do_list = $("#progress-bar-to-do-list");
+    let progress_bar_to_do_list_body = $("#progress-bar-to-do-list-body");
+    progress_bar_to_do_list_body.unbind("hide.bs.dropdown", preventDropDownFromHidingByClickOnOutside);
+    progress_bar_to_do_list_body.on('hide.bs.dropdown', preventDropDownFromHidingByClickOnOutside);
+    progress_bar_to_do_list_body.unbind("updateToDoTask");
+    progress_bar_to_do_list.unbind("click")
     //json/to_do_list.json
     $.ajax({
         type: 'GET',
         url: 'ajax/get_user_tasks_by_round',
+        async: false,
         data: {
             login: login,
             round: Round
         },
         success: function (json) {
             //console.log(json)
+            oldToDoTasks = json.tasks;
             setToDoList(json)
         }
     });
 
-    $("#progress-bar-to-do-list").one("click", ".refreshToDoListButton", function () {
-        let $toDoListBody = $("#progress-bar-to-do-list");
-        $toDoListBody.trigger("refreshToDoList");
-        initToDoList();
-        $("#progress-bar-to-do-list-body")
+    toDoTaskInterval = setInterval(function () {
+        $.ajax({
+            type: 'GET',
+            url: 'ajax/get_user_tasks_by_round',
+            data: {
+                login: login,
+                round: Round
+            },
+            success: function (json) {
+                if (JSON.stringify(json.tasks) !== JSON.stringify(oldToDoTasks)){
+                    $("#progress-bar-to-do-list-body").trigger("changeToDoTask");
+                    oldToDoTasks = json.tasks;
+                }else{
+                    //console.log("No changes");
+                }
+            }
+        });
+    }, 8000);
+
+    progress_bar_to_do_list.one("click", ".refreshToDoListButton", function () {
+        let thisButton = this;
+        startProcessOfSaving(thisButton)
+        reloadToDoList();
     })
+
+    progress_bar_to_do_list.on("refreshToDoList", function () {
+        progress_bar_to_do_list_body.unbind("updateToDoTask");
+        progress_bar_to_do_list.unbind("click")
+        /*$(".refreshToDoListButton").unbind("updateToDoTask").unbind("refreshToDoList");
+        progress_bar_to_do_list.unbind("updateToDoTask").unbind("refreshToDoList");*/
+    })
+
+    progress_bar_to_do_list.on("updateShell", function () {
+        progress_bar_to_do_list_body.unbind("updateToDoTask");
+        progress_bar_to_do_list.unbind("click")
+    })
+    progress_bar_to_do_list_body.on("updateToDoTask", function () {
+        $(".refreshToDoListButton").trigger("click");
+    })
+}
+
+async function reloadToDoList() {
+    let $toDoListBody = $("#progress-bar-to-do-list");
+    $toDoListBody.trigger("refreshToDoList");
+    initToDoList().then(function () {
+        stopProcessOfSaving(document.getElementsByClassName("refreshToDoListButton"))
+        let $navbarToggler = $("#navbarToggler");
+        //триггерим события для открытых вкладок
+        let activeTab = $navbarToggler.find("a.active");
+        triggerToDoTaskEvent("openField", 0, {tabId: activeTab.attr("tab-target"), name: activeTab.text()});
+        if (Round > 1){
+            let $chat_main = $("#chat_main");
+            if ($chat_main.attr("chat-opened") == "true")
+                $chat_main.trigger("chat-opened", {isReload: true});
+        }
+        if (Round === 3){
+            let $esi = $("#right-side");
+            if ($esi.attr("esi-opened") == "true")
+                $esi.trigger("esi-opened", {isReload: true});
+            let $left_accordion_collapse = $("#left-accordion-collapse");
+            if ($left_accordion_collapse.length){
+                let activePanel = $left_accordion_collapse.find("div.show").first();
+                if (activePanel.length)
+                    triggerToDoTaskEvent("openField", 0,
+                        {tabId: activePanel.attr("id").replace("collapse-", ""), name: activePanel.attr("header-name")})
+            }
+        }
+        if (Round > 1){
+            let myTaskRoutes = $(".myTaskRoutes").find("span.caret-down").first();
+            if (myTaskRoutes.length)
+                triggerToDoTaskEvent("checkMyTaskRoutes", 0)
+        }
+    });
+
+}
+
+function preventDropDownFromHidingByClickOnOutside(e) {
+    //console.log(e)
+    if (e.clickEvent) {
+        e.preventDefault();
+    }
 }
 
 function setToDoList(json) {
     amountOfCompletedTasks = 0;
     amountOfTasks = 0;
     let $toDoListBody = $("#progress-bar-to-do-list");
-    $toDoListBody.empty();
-    $toDoListBody.append(`
-        <span class="refreshToDoListButton font-size-12-em font-family-fontAwesome fa-refresh"></span>
-    `)
+    let progress_bar_line_body = $("#progress-bar-line-body");
+    $toDoListBody.find("li").remove();
 
     amountOfTasks = json.tasks.length;
-    if (json.tasks.length)
+    if (json.tasks.length) {
+        progress_bar_line_body.addClass("d-flex").removeClass("d-none")
         json.tasks.forEach(function (_task, index) {
             if (_task.isFinished === true) amountOfCompletedTasks++;
             $toDoListBody.append(combineToDoListTask(_task, index + 1));
-            if (_task.trigger !== "openField"){
-                $toDoListBody.on(`${_task.trigger}`, function () {
-                    let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
-                    if ($this.attr("data-is-done") == "true") return;
-                    amountOfCompletedTasks++;
-                    changeProgressLineWidth();
-                    $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
-                    $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
-                    $this.attr("data-is-done", "true");
-                    updateToDoListTaskById($this.attr("task-id"), true);
-                    setActionToBar({
-                        id: "toDoTaskDone",
-                        field: `Навигатор`,
-                        type: "success",
-                        text: `Задание '${_task.text.replace(/"/g, "'")}' выполнено`.replace(/''/g, "'")
-                    })
-                });
-
+            if (_task.trigger !== "openField") {
+                setTriggerForTask($toDoListBody, _task);
                 // сделать задачу невыполненной
-                $toDoListBody.on(`${_task.trigger}Revert`, function () {
-                    let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
-                    if ($this.attr("data-is-done") != "true") return;
-                    amountOfCompletedTasks--;
-                    changeProgressLineWidth();
-                    $this.find(".to-do-list-task").addClass("text-dark").removeClass("text-success");
-                    $this.find(".to-do-list-task-check").addClass("fa-spinner").removeClass("fa-check");
-                    $this.attr("data-is-done", "false");
-                    updateToDoListTaskById($this.attr("task-id"), false);
-                    setActionToBar({
-                        id: "toDoTaskUnDone",
-                        field: `Навигатор`,
-                        type: "inProcess",
-                        text: `Задание '${_task.text.replace(/"/g, "'")}' изменило статус на 'Выполняется'`.replace(/''/g, "'")
-                    })
-                })
-            }else{
-                $toDoListBody.on("openField", function (e, addInfo) {
-                    //console.log(addInfo.tabId, _task.add_info)
-                    if (_task.add_info == addInfo.tabId){
-                        let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
-                        if ($this.attr("data-is-done") == "true") return;
-                        amountOfCompletedTasks++;
-                        changeProgressLineWidth();
-                        $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
-                        $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
-                        $this.attr("data-is-done", "true");
-                        updateToDoListTaskById($this.attr("task-id"), true);
-                        setActionToBar({
-                            id: "toDoTaskDone",
-                            field: `Навигатор`,
-                            type: "success",
-                            text: `Задание '${_task.text.replace(/"/g, "'")}' выполнено`.replace(/''/g, "'")
-                        })
-                    }
-                })
+                setRevertTriggerForTask($toDoListBody, _task);
+            } else {
+                setOpenFieldTriggerForTask($toDoListBody, _task);
             }
             $toDoListBody.one("refreshToDoList", function () {
                 $toDoListBody.unbind(_task.trigger);
             });
         })
+    }
     else{
         $toDoListBody.append(`
-        <li class="text-dark m-2"><span class="font-family-fontAwesome fa-times mr-1"></span>Активных задач нет</li>
-        `)
+            <li class="text-dark m-2"><span class="font-family-fontAwesome fa-times mr-1"></span>Активных задач нет</li>
+        `);
+        progress_bar_line_body.removeClass("d-flex").addClass("d-none");
     }
     changeProgressLineWidth();
+}
+
+function setTriggerForTask($toDoListBody, _task) {
+    $toDoListBody.on(`${_task.trigger}`, function () {
+        let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+        if ($this.attr("data-is-done") == "true") return;
+        amountOfCompletedTasks++;
+        changeProgressLineWidth();
+        $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
+        $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
+        $this.attr("data-is-done", "true");
+        updateToDoListTaskById($this.attr("task-id"), true);
+        setActionToBar({
+            id: "toDoTaskDone",
+            field: `Навигатор`,
+            type: "success",
+            text: `Задание '${_task.text.replace(/"/g, "'")}' выполнено`.replace(/''/g, "'")
+        })
+    });
+}
+
+function setOpenFieldTriggerForTask($toDoListBody, _task) {
+    $toDoListBody.on("openField", function (e, addInfo) {
+        //console.log(addInfo.tabId, _task.add_info)
+        if (_task.add_info == addInfo.tabId) {
+            let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+            if ($this.attr("data-is-done") == "true") return;
+            amountOfCompletedTasks++;
+            changeProgressLineWidth();
+            $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
+            $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
+            $this.attr("data-is-done", "true");
+            updateToDoListTaskById($this.attr("task-id"), true);
+            setActionToBar({
+                id: "toDoTaskDone",
+                field: `Навигатор`,
+                type: "success",
+                text: `Задание '${_task.text.replace(/"/g, "'")}' выполнено`.replace(/''/g, "'")
+            })
+        }
+    })
+}
+
+function setRevertTriggerForTask($toDoListBody, _task) {
+    $toDoListBody.on(`${_task.trigger}Revert`, function () {
+        let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
+        if ($this.attr("data-is-done") != "true") return;
+        amountOfCompletedTasks--;
+        changeProgressLineWidth();
+        $this.find(".to-do-list-task").addClass("text-dark").removeClass("text-success");
+        $this.find(".to-do-list-task-check").addClass("fa-spinner").removeClass("fa-check");
+        $this.attr("data-is-done", "false");
+        updateToDoListTaskById($this.attr("task-id"), false);
+        setActionToBar({
+            id: "toDoTaskUnDone",
+            field: `Навигатор`,
+            type: "inProcess",
+            text: `Задание '${_task.text.replace(/"/g, "'")}' изменило статус на 'Выполняется'`.replace(/''/g, "'")
+        })
+    })
 }
 
 function updateToDoListTaskById(id, isFinished) {
@@ -116,9 +214,14 @@ function updateToDoListTaskById(id, isFinished) {
             isFinished: isFinished
         },
         success: function (json) {
-            console.log(json)
+            //console.log(json)
         }
-    })
+    });
+    if (oldToDoTasks.length)
+        oldToDoTasks.forEach(function (_task) {
+            if (_task.id == id)
+                _task.isFinished = true;
+        })
 }
 
 function triggerToDoTaskEvent(eventName, isRevert = false, addInfo = {}) {

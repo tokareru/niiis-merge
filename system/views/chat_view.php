@@ -8,7 +8,7 @@
 
 ?>
 <!--Чат-->
-<div id="chat_main">
+<div id="chat_main" chat-opened="false">
     <div class='border border-info font-weight-bold bg-dark' id="but">ЧАТ
         <div id="span_icon_left" class="icon_default"></div>
     </div>

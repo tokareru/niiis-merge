@@ -179,17 +179,21 @@ function convertArray(arr) {
 function STDLibClick($but, $main, z_index, target) {
     let css_left = -$main.width() + $but.width() + 'px';
     let css_right = '0px';
-    if ($main.attr('style') !== ('z-index: 2147483647; right: ' + css_right + ';')) {
+    let  $right_side =  $("#right-side");
+    if ($main.attr('style') !== ('z-index: 999; right: ' + css_right + ';')) {
         $main.animate({
                 right: css_right
             },
             300, 'linear'
         );
         $main.removeAttr('style');
-        $main.attr('style', 'z-index: 2147483647');
+        $main.attr('style', 'z-index: 999');
 
         if (target === "create_task_route") $("#create_task_route-side").trigger("create-task-route-opened");
-        if (target === "esi") $("#right-side").trigger("esi-opened");
+        if (target === "esi") {
+            $right_side.trigger("esi-opened");
+            $right_side.attr("esi-opened", "true")
+        }
     } else {
         $main.animate({
                 right: css_left
@@ -197,6 +201,7 @@ function STDLibClick($but, $main, z_index, target) {
             300, 'linear'
         );
         $main.attr('style', 'z-index:' + z_index);
+        $right_side.attr("esi-opened", "false")
     }
 }
 
