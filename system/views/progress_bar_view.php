@@ -18,7 +18,8 @@
                 class="font-family-fontAwesome scroll-buttons fas fa-angle-right ml-4 btn-outline-dark border-0 bold btn"></button>
 
         <div class="btn-group dropup mr-auto" id="progress-bar-to-do-list-body">
-            <button type="button" class="btn btn-outline-secondary ml-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button id="to-do-list-open-button" type="button" class="btn btn-outline-secondary ml-1 dropdown-toggle"
+                    data-trigger="click" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="text-monospace mr-3">Навигатор</span>
             </button>
             <div id="progress-bar-to-do-list" class="dropdown-menu dropdown-menu-lg-right pr-3">
@@ -26,3 +27,6 @@
         </div>
     </div>
 </nav>
+<div id="progress-bar-line-body" class="progress position-fixed">
+    <div id="progress-bar-line" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+</div>

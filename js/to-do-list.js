@@ -1,3 +1,6 @@
+let amountOfTasks = 0;
+let amountOfCompletedTasks = 0;
+
 function initToDoList() {
     //json/to_do_list.json
     $.ajax({
@@ -17,23 +20,30 @@ function initToDoList() {
         let $toDoListBody = $("#progress-bar-to-do-list");
         $toDoListBody.trigger("refreshToDoList");
         initToDoList();
+        $("#progress-bar-to-do-list-body")
     })
 }
 
 function setToDoList(json) {
+    amountOfCompletedTasks = 0;
+    amountOfTasks = 0;
     let $toDoListBody = $("#progress-bar-to-do-list");
     $toDoListBody.empty();
     $toDoListBody.append(`
         <span class="refreshToDoListButton font-size-12-em font-family-fontAwesome fa-refresh"></span>
     `)
 
+    amountOfTasks = json.tasks.length;
     if (json.tasks.length)
         json.tasks.forEach(function (_task, index) {
+            if (_task.isFinished === true) amountOfCompletedTasks++;
             $toDoListBody.append(combineToDoListTask(_task, index + 1));
             if (_task.trigger !== "openField"){
                 $toDoListBody.on(`${_task.trigger}`, function () {
                     let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
                     if ($this.attr("data-is-done") == "true") return;
+                    amountOfCompletedTasks++;
+                    changeProgressLineWidth();
                     $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
                     $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
                     $this.attr("data-is-done", "true");
@@ -50,6 +60,8 @@ function setToDoList(json) {
                 $toDoListBody.on(`${_task.trigger}Revert`, function () {
                     let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
                     if ($this.attr("data-is-done") != "true") return;
+                    amountOfCompletedTasks--;
+                    changeProgressLineWidth();
                     $this.find(".to-do-list-task").addClass("text-dark").removeClass("text-success");
                     $this.find(".to-do-list-task-check").addClass("fa-spinner").removeClass("fa-check");
                     $this.attr("data-is-done", "false");
@@ -67,6 +79,8 @@ function setToDoList(json) {
                     if (_task.add_info == addInfo.tabId){
                         let $this = $toDoListBody.find(`li[task-id=${_task.id}]`).last();
                         if ($this.attr("data-is-done") == "true") return;
+                        amountOfCompletedTasks++;
+                        changeProgressLineWidth();
                         $this.find(".to-do-list-task").addClass("text-success").removeClass("text-dark");
                         $this.find(".to-do-list-task-check").addClass("fa-check").removeClass("fa-spinner");
                         $this.attr("data-is-done", "true");
@@ -89,6 +103,7 @@ function setToDoList(json) {
         <li class="text-dark m-2"><span class="font-family-fontAwesome fa-times mr-1"></span>Активных задач нет</li>
         `)
     }
+    changeProgressLineWidth();
 }
 
 function updateToDoListTaskById(id, isFinished) {
@@ -160,6 +175,12 @@ function addToDoTaskTOList(userLogin, round, toDoTask) {
             });
         }
     });
+}
+
+function changeProgressLineWidth() {
+    let progress_bar_line = $("#progress-bar-line");
+    if (amountOfTasks !== 0)
+        progress_bar_line.css("width", `${amountOfCompletedTasks/amountOfTasks*100}%`);
 }
 
 /*
