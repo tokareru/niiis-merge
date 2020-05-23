@@ -36,7 +36,7 @@ async function initToDoList() {
                 round: Round
             },
             success: function (json) {
-                if (JSON.stringify(json.tasks) !== JSON.stringify(oldToDoTasks)){
+                if (JSON.stringify(sortToOoListById(json.tasks)) !== JSON.stringify(sortToOoListById(oldToDoTasks))){
                     $("#progress-bar-to-do-list-body").trigger("changeToDoTask");
                     oldToDoTasks = json.tasks;
                 }else{
@@ -66,6 +66,16 @@ async function initToDoList() {
     progress_bar_to_do_list_body.on("updateToDoTask", function () {
         $(".refreshToDoListButton").trigger("click");
     })
+}
+
+function sortToOoListById(array){
+    let newArray = new Array(array.length);
+    if (array.length){
+        array.forEach(function (_task, index) {
+            newArray[Number(_task.id) - 1] = _task;
+        })
+    }
+    return newArray;
 }
 
 async function reloadToDoList() {
