@@ -13,3 +13,9 @@
         overflow-y: auto;
     }
 }
+
+.refreshToDoListButton{
+    right: 3%;
+    cursor: pointer;
+    position: absolute;
+}

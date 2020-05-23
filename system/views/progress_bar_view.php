@@ -21,7 +21,7 @@
             <button type="button" class="btn btn-outline-secondary ml-1 dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <span class="text-monospace mr-3">Навигатор</span>
             </button>
-            <div id="progress-bar-to-do-list" class="dropdown-menu dropdown-menu-lg-right">
+            <div id="progress-bar-to-do-list" class="dropdown-menu dropdown-menu-lg-right pr-3">
             </div>
         </div>
     </div>

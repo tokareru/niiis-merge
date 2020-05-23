@@ -1,5 +1,3 @@
-let UserToDoListTasks = "";
-
 function initToDoList() {
     //json/to_do_list.json
     $.ajax({
@@ -14,26 +12,21 @@ function initToDoList() {
             setToDoList(json)
         }
     });
-    /*setInterval(function () {
-        $.ajax({
-            type: 'GET',
-            url: 'ajax/get_user_tasks_by_round',
-            data: {
-                login: login,
-                round: Round
-            },
-            success: function (json) {
-                console.log(json)
-                //alert(json.tasks.length)
-                setToDoList(json)
-            }
-        });
-    }, 10000)*/
+
+    $("#progress-bar-to-do-list").one("click", ".refreshToDoListButton", function () {
+        let $toDoListBody = $("#progress-bar-to-do-list");
+        $toDoListBody.trigger("refreshToDoList");
+        initToDoList();
+    })
 }
 
 function setToDoList(json) {
     let $toDoListBody = $("#progress-bar-to-do-list");
     $toDoListBody.empty();
+    $toDoListBody.append(`
+        <span class="refreshToDoListButton font-size-12-em font-family-fontAwesome fa-refresh"></span>
+    `)
+
     if (json.tasks.length)
         json.tasks.forEach(function (_task, index) {
             $toDoListBody.append(combineToDoListTask(_task, index + 1));
@@ -87,6 +80,9 @@ function setToDoList(json) {
                     }
                 })
             }
+            $toDoListBody.one("refreshToDoList", function () {
+                $toDoListBody.unbind(_task.trigger);
+            });
         })
     else{
         $toDoListBody.append(`
