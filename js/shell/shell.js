@@ -254,7 +254,7 @@ async function updateShell(){
         }).then(function () {
             window.location.href = "logout"
         });
-    })
+    });
 
     /*console.log(available_sides);
     console.log(available_tabs);*/

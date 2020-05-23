@@ -65,7 +65,7 @@ async function initToDoList() {
     })
     progress_bar_to_do_list_body.on("updateToDoTask", function () {
         $(".refreshToDoListButton").trigger("click");
-    })
+    });
 }
 
 function sortToOoListById(array){
@@ -109,6 +109,27 @@ async function reloadToDoList() {
             if (myTaskRoutes.length)
                 triggerToDoTaskEvent("checkMyTaskRoutes", 0)
         }
+        if (Round !== 3 && Role === "designer"){
+            $.ajax({
+                type: "GET",
+                url: "drawing_main_text_ajax/is_drawing_finished",
+                dataType: "json",
+                data: "type=get",
+                success: function (answer) {
+                    if (answer.is_drawing_finished === true) triggerToDoTaskEvent("finishScheme")
+                    else triggerToDoTaskEvent("finishScheme", true)
+                }
+            });
+        }
+        if (Round === 3 && Role === "designer"){
+            let amountOfChecked = $("#left-accordion").find("input:checked").length;
+            let amountOfInputs = $("#left-accordion").find("input").length;
+            if (amountOfChecked !== amountOfInputs){
+                triggerToDoTaskEvent("chooseAllDetails", true);
+            }else {
+                triggerToDoTaskEvent("chooseAllDetails");
+            }
+        }
     });
 
 }
@@ -150,6 +171,7 @@ function setToDoList(json) {
             <li class="text-dark m-2"><span class="font-family-fontAwesome fa-times mr-1"></span>Активных задач нет</li>
         `);
         progress_bar_line_body.removeClass("d-flex").addClass("d-none");
+
     }
     changeProgressLineWidth();
 }
@@ -230,7 +252,7 @@ function updateToDoListTaskById(id, isFinished) {
     if (oldToDoTasks.length)
         oldToDoTasks.forEach(function (_task) {
             if (_task.id == id)
-                _task.isFinished = true;
+                _task.isFinished = isFinished;
         })
 }
 

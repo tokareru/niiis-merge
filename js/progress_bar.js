@@ -116,6 +116,28 @@ function setActionBar(data) {
             text: `Открыта вкладка 'Создание маршрута заданий'`
         })
     });
+
+    if (Round === 3 && Role === "designer"){
+        let amountOfChecked = $("#left-accordion").find("input:checked").length;
+        let amountOfInputs = $("#left-accordion").find("input").length;
+        if (amountOfChecked !== amountOfInputs){
+            triggerToDoTaskEvent("chooseAllDetails", true);
+        }else {
+            triggerToDoTaskEvent("chooseAllDetails");
+        }
+    }
+    if (Round !== 3 && Role === "designer"){
+        $.ajax({
+            type: "GET",
+            url: "drawing_main_text_ajax/is_drawing_finished",
+            dataType: "json",
+            data: "type=get",
+            success: function (answer) {
+                if (answer.is_drawing_finished === true) triggerToDoTaskEvent("finishScheme")
+                else triggerToDoTaskEvent("finishScheme", true);
+            }
+        });
+    }
 }
 
 function scrollToEndOfProgressBar() {
