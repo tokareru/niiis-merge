@@ -92,41 +92,36 @@ class print_report_model extends model
       $q->execute();
       $Q = $q->fetchAll();
       $lvl_1 = array();
-      foreach($Q as $key=>$value){
-        array_push($lvl_1, $value['id'], $value['name']);
-      }
-      
+      foreach($Q as $key=>$value) $lvl_1[$value['id']] = $value['name'];
       
       $sql = "SELECT * FROM technologist_info_2_layout WHERE active_sign = true";
       $q = sys::$PDO->prepare($sql);
       $q->execute();
       $Q = $q->fetchAll();
       $lvl_2 = array();
-      foreach($Q as $key=>$value){
-        array_push($lvl_2, $value['id'], $value['name']);
-      }
+      foreach($Q as $key=>$value) $lvl_2[$value['id']] = $value['name'];
       
       $sql = "SELECT * FROM technologist_info_3_layout WHERE active_sign = true";
       $q = sys::$PDO->prepare($sql);
       $q->execute();
       $Q = $q->fetchAll();
       $lvl_3 = array();
-      foreach($Q as $key=>$value){
-        array_push($lvl_3, $value['id'], $value['fields']);
+      foreach($Q as $key=>$value) $lvl_3[$value['id']] = $value['fields'];
+      
+      function get_field_info($str, $lvl_1, $lvl_2, $lvl_3) {
+        $id = substr($str, 6, strlen($str));
+        $lvl = substr($str, 3, stripos($str, 'id') - 3);
+        if($lvl == 1) $name = $lvl_1[$id];
+        else if($lvl == 2) $name = $lvl_2[$id];
+        else if($lvl == 3) $name = $lvl_3[$id];
+        else $name = '';
+        
+        $result = array("id" => $id, 
+                        "lvl" => $lvl,
+                        "name" => $name
+                        );
+        return $result;
       }
-      
-      function get_lvl_id($str) {
-            $result = array("id" => substr($str, 6, strlen($str)), "lvl" => substr($str, 3, stripos($str, 'id') - 3));
-            return $result;
-      }
-      
-      function get_name($str) {
-            $q = array("id" => substr($str, 6, strlen($str)), "lvl" => substr($str, 3, stripos($str, 'id') - 3));
-            $result = $lvl_1[$q['lvl']];
-            return $result;
-      }
-      
-      
       
       $sql = "SELECT * FROM route_map_3 ORDER BY group_id";
       $q = sys::$PDO->prepare($sql);
@@ -136,45 +131,35 @@ class print_report_model extends model
       $route_map = array();
       $i = -1;
       foreach ($Q as $row) {
-//        $lvl_id = get_lvl_id($row["name"]);
-        $text = array("id" => substr($row["name"], 6, strlen($row["name"])), "lvl" => substr($row["name"], 3, stripos($row["name"], 'id') - 3));
-        $name = $lvl_1[$text['lvl']];
-//        $name = get_name($row["name"]);
-        echo $name;
+        $field_info = get_field_info($row["name"], $lvl_1, $lvl_2, $lvl_3);
+        
+//        var_dump($lvl_3);
+        
         if ($group_id != $row["group_id"]) {
           $group_id = $row["group_id"];
-          $route_map[++$i] = array("name" => $name, "equipment" => array(), "tools" => array());
+          $route_map[++$i] = array("name" => $field_info['name'], "equipment" => array(), "tools" => array());
           if ($row["dop_type"] == "equipment") {
-            array_push($route_map[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3));
+            array_push($route_map[$i]["equipment"], array("id" => $row["dop_id"], 'name'=>$lvl_3[$row["dop_id"]], "lvl" => 3));
           } elseif ($row["dop_type"] == "tools") {
-            array_push($route_map[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3));
+            array_push($route_map[$i]["tools"], array("id" => $row["dop_id"], 'name'=>$lvl_3[$row["dop_id"]], "lvl" => 3));
           }
         } else {
           if ($row["dop_type"] == "equipment") {
-            array_push($route_map[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3));
+            array_push($route_map[$i]["equipment"], array("id" => $row["dop_id"], 'name'=>$lvl_3[$row["dop_id"]], "lvl" => 3));
           } elseif ($row["dop_type"] == "tools") {
-            array_push($route_map[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3));
+            array_push($route_map[$i]["tools"], array("id" => $row["dop_id"], 'name'=>$lvl_3[$row["dop_id"]], "lvl" => 3));
           }
         }
       }
     }
     
-//    foreach($result as $key => $value){
-//      
-//    }
-    
-    
-    var_dump($route_map);
-    
-    $result1 = array("data" => 0
+    $result = array("route_map" => $route_map,
+                      "round" => $round
                     ); 
     return $result;
   }
   function production_task(){
-//    $sql = "SELECT * FROM drawing_size";
-//    $q = sys::$PDO->prepare($sql);
-//    $q->execute();
-//    $size = $q->fetchAll()[0];
+    
     $round = sys::get_current_round();
     
     
