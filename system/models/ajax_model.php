@@ -84,7 +84,12 @@ class ajax_model extends model {
         $Q = $q->fetchAll();
         $response = array();
         foreach ($Q as $row) {
-            array_push($response, array("name" => $row["name"], "equipment" => $row["equipment"], "tools" => $row["tools"]));
+            array_push($response, array("name" => $row["name"], 
+                "equipment" => $row["equipment"], 
+                "tools" => $row["tools"],
+                "num_ceh" => $row["num_ceh"],
+                "num_uch" => $row["num_uch"],
+                "num_oper" => $row["num_oper"]));
         }
         return $response;
     }
@@ -94,9 +99,9 @@ class ajax_model extends model {
             $sql = "DELETE FROM route_map_1_2";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
-            $sql = "INSERT INTO route_map_1_2 (name,equipment,tools) VALUES ";
+            $sql = "INSERT INTO route_map_1_2 (name, equipment, tools, num_ceh, num_uch, num_oper) VALUES ";
             foreach ($_POST["data"] as $row) {
-                $sql .= "('" . $row["name"] . "','" . $row["equipment"] . "','" . $row["tools"] . "'),";
+                $sql .= "('" . $row["name"] . "','" . $row["equipment"] . "','" . $row["tools"] . "','" . $row["num_ceh"] . "','" . $row["num_uch"] . "','" . $row["num_oper"] . "'),";
             }
             $sql = substr($sql, 0, -1);
             $q = sys::$PDO->prepare($sql);
