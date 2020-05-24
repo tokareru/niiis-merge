@@ -302,14 +302,14 @@ function saveTechProcessTableRound_1_2($table, thisButton) {
     });
 
     console.log(saveObj);
-    startProcessOfSaving(thisButton);
+    startProcessOfSaving(thisButton, false);
     $.ajax({
         url: 'ajax/save_route_map_1_2',
         type: 'POST',
         data: {data:saveObj},
         success: function (res) {
             console.log(res);
-            stopProcessOfSaving(thisButton);
+            stopProcessOfSaving(thisButton, false);
             setActionToBar({
                 id: "saveRouteMapTable",
                 type: "save",
@@ -392,14 +392,14 @@ function saveTechProcessTableRound3($table, thisButton) {
         });
     }
     //console.log(saveObj);
-    startProcessOfSaving(thisButton)
+    startProcessOfSaving(thisButton, false)
     $.ajax({
         url: 'ajax/save_route_map_3',
         type: 'POST',
         data: {data: saveObj},
         success: function (res) {
             console.log(res);
-            stopProcessOfSaving(thisButton)
+            stopProcessOfSaving(thisButton, false)
             setActionToBar({
                 id: "saveRouteMapTable",
                 type: "save",

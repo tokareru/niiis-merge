@@ -624,7 +624,7 @@ function saveProductionTable_1_2_Rounds($table, thisButton) {
             })
         });
     //console.log(saveData);
-    startProcessOfSaving(thisButton)
+    startProcessOfSaving(thisButton, false)
     $.ajax({
         type: 'POST',
         url: 'ajax/save_production_task_1_2',
@@ -635,7 +635,7 @@ function saveProductionTable_1_2_Rounds($table, thisButton) {
         success: function (res) {
             //console.log(res)
             $table.attr("data-saved", "true");
-            stopProcessOfSaving(thisButton)
+            stopProcessOfSaving(thisButton, false)
             setActionToBar({
                 id: "saveWorkerTaskRound3",
                 type: "save",
@@ -656,7 +656,7 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
     let $workers_drop = $("#workers_drop_area");
     //console.log(users)
     let saveCount = 0;
-    startProcessOfSaving(thisButton)
+    startProcessOfSaving(thisButton, false)
     if (users.length)
         users.forEach(function (user = {name: "", login: "", role: "", roleName: ""}) {
             let userLi = $workers_drop.find(`li[user-login='${user.login}']`);
@@ -681,7 +681,7 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
                 },
                 complete: function () {
                     saveCount++;
-                    if (saveCount === users.length) stopProcessOfSaving(thisButton)
+                    if (saveCount === users.length) stopProcessOfSaving(thisButton, false)
                 }
             })
 

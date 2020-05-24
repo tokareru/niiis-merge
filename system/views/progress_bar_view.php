@@ -28,6 +28,6 @@
         </div>
     </div>
 </nav>
-<div id="progress-bar-line-body" class="progress position-fixed d-none">
+<div id="progress-bar-line-body" class="progress position-fixed d-none" title="Задачи">
     <div id="progress-bar-line" class="progress-bar bg-success" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
 </div>

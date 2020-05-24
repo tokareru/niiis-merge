@@ -315,7 +315,7 @@ function saveSpecTable(thisButton) {
         });
     }
 
-    startProcessOfSaving(thisButton)
+    startProcessOfSaving(thisButton, false)
     $.ajax({
         type: "POST",
         url: saveUrl,
@@ -329,7 +329,7 @@ function saveSpecTable(thisButton) {
         },
         success: function (answer) {
             console.log(answer);
-            stopProcessOfSaving(thisButton)
+            stopProcessOfSaving(thisButton, false)
             setActionToBar({
                 id: "saveSpecTable",
                 type: "save",

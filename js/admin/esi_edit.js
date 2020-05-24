@@ -33,7 +33,7 @@ $(function () {
                         number: number,
                         type_id: type_id
                     });
-                    startProcessOfSaving(thisButton);
+                    startProcessOfSaving(thisButton, false);
                     $.ajax({
                         url: "save_esi_edit",
                         type: "POST",
@@ -51,7 +51,7 @@ $(function () {
                             console.log(answer);
                         },
                         complete: function () {
-                            stopProcessOfSaving(thisButton);
+                            stopProcessOfSaving(thisButton, false);
                         }
                     });
                 });

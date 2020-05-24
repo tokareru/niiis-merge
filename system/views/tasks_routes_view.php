@@ -89,7 +89,7 @@
                 </ul>
             </li>
         </ul>
-        <button id="task_routes_own_routes_update" class="btn bg-dark text-center text-white">Обновить</button>
+        <button id="task_routes_own_routes_update" class="btn bg-dark text-center text-white font-family-fontAwesome fa-refresh"></button>
 
         <!-- Modal -->
         <div class="modal fade" id="task_routes_cancelModal" tabindex="-1" role="dialog"

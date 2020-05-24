@@ -111,7 +111,7 @@ $( function() {
 
 
 		function Send(data, thisButton) {
-			startProcessOfSaving(thisButton);
+			startProcessOfSaving(thisButton, false);
 			$.ajax({
 				type: "POST",
 				url: "save_technologist_info",
@@ -125,7 +125,7 @@ $( function() {
 					console.log(answer)
 				},
 				complete: function () {
-					stopProcessOfSaving(thisButton)
+					stopProcessOfSaving(thisButton, false)
 				}
 			});
 		}

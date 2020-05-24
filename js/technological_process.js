@@ -829,7 +829,7 @@ function saveTechProcess(thisButton) {
         json.techProcess.push(techName);
     });
     //console.log(json);
-    startProcessOfSaving(thisButton);
+    startProcessOfSaving(thisButton, false);
     $.ajax(
         {
             url: 'ajax/save_techproccess',
@@ -838,7 +838,7 @@ function saveTechProcess(thisButton) {
             success: function (data) {
                 console.log(data);
                 madeRouteMapByTechProcess(json);
-                stopProcessOfSaving(thisButton);
+                stopProcessOfSaving(thisButton, false);
                 setActionToBar({
                     id: "saveTechProcess",
                     type: "save",

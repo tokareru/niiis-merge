@@ -278,13 +278,13 @@ function saveTaskList(thisButton) {
         tasks: tasks
     };
     //console.log(data);
-    startProcessOfSaving(thisButton);
+    startProcessOfSaving(thisButton,  false);
     $.ajax({
         type: 'POST',
         url: '../ajax/add_user_task',
         data: data,
         success: function (json) {
-            stopProcessOfSaving(thisButton)
+            stopProcessOfSaving(thisButton, false)
             console.log(json)
         }
     })

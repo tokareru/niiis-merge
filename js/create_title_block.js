@@ -591,7 +591,7 @@ function addDataToTitleBlock(data) {
 function addToServerTitleBlock(thisButton) {
     let serArr = serializedTitleBlock();
     //console.log(serArr)
-    startProcessOfSaving(thisButton);
+    startProcessOfSaving(thisButton, false);
     $.ajax(
         {
             url: 'drawing_main_text_ajax/save',
@@ -599,7 +599,7 @@ function addToServerTitleBlock(thisButton) {
             data: {body: serArr},
             success: function (data) {
                 console.log(data);
-                stopProcessOfSaving(thisButton);
+                stopProcessOfSaving(thisButton, false);
                 setActionToBar({
                     id: "saveSchemeTable",
                     type: "save",

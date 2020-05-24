@@ -21,7 +21,7 @@ async function initToDoList() {
             round: Round
         },
         success: function (json) {
-            //console.log(json)
+            console.log(json)
             oldToDoTasks = json.tasks;
             setToDoList(json)
         }
@@ -44,7 +44,7 @@ async function initToDoList() {
                 }
             }
         });
-    }, 8000);
+    }, 7000);
 
     progress_bar_to_do_list.one("click", ".refreshToDoListButton", function () {
         let thisButton = this;
@@ -247,13 +247,13 @@ function updateToDoListTaskById(id, isFinished) {
         },
         success: function (json) {
             //console.log(json)
+            if (oldToDoTasks.length)
+                oldToDoTasks.forEach(function (_task) {
+                    if (_task.id == id)
+                        _task.isFinished = isFinished;
+                })
         }
     });
-    if (oldToDoTasks.length)
-        oldToDoTasks.forEach(function (_task) {
-            if (_task.id == id)
-                _task.isFinished = isFinished;
-        })
 }
 
 function triggerToDoTaskEvent(eventName, isRevert = false, addInfo = {}) {
@@ -314,8 +314,10 @@ function addToDoTaskTOList(userLogin, round, toDoTask) {
 
 function changeProgressLineWidth() {
     let progress_bar_line = $("#progress-bar-line");
-    if (amountOfTasks !== 0)
-        progress_bar_line.css("width", `${amountOfCompletedTasks/amountOfTasks*100}%`);
+    if (amountOfTasks !== 0) {
+        progress_bar_line.css("width", `${amountOfCompletedTasks / amountOfTasks * 100}%`)
+    }
+    $("#progress-bar-line-body").attr("title", `${amountOfCompletedTasks} из ${amountOfTasks} задач выполнено`)
 }
 
 /*

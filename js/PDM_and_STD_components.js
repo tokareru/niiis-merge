@@ -9,10 +9,10 @@ function createSTD(event, json_Role_and_Round) {
     set_PDM_or_STD(getDetailsInfo("std"), "#left-accordion", "#std_field");
 }
 
-function getDetailsInfo(type = "all") {
+function getDetailsInfo(type = "all", isInit = false) {
     // ajax/get_products_esi
     // json/get_products_esi.json
-    if (DetailsInfo === "")
+    if (DetailsInfo === "" || isInit)
         $.ajax({
             type: "GET",
             async: false,
@@ -107,54 +107,53 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
             "\" detail-id=\"detail-" + data.id + "\" id='detail-"+ data.id + "'>" + "</p>"
         );
         makeCheckbox(fieldID, isChecked);
+        /*console.log(field)
+        console.log(field.find("p").last())*/
         field.find("p").last().draggable({
             helper: 'clone'
         });
     }
 
-    if (Round === 3)
-    {
-        $("#left-accordion " + fieldID + " input").last().click(function () {
-            setTableByPdmAndStd(collectDataLabels(".left-side"));
-            let amountOfChecked = $("#left-accordion").find("input:checked").length;
-            let amountOfInputs = $("#left-accordion").find("input").length;
-            let field3D = $("#field3DAll");
+    $("#left-accordion " + fieldID + " input").last().click(function () {
+        setTableByPdmAndStd(collectDataLabels(".left-side"));
+        let amountOfChecked = $("#left-accordion").find("input:checked").length;
+        let amountOfInputs = $("#left-accordion").find("input").length;
+        let field3D = $("#field3DAll");
 
-            if (Round === 3 && Role === 'designer'){
-                if (amountOfChecked !== amountOfInputs){
-                    blockScheme();
-                    triggerToDoTaskEvent("chooseAllDetails", true);
-                    $.ajax({
-                        type: "POST",
-                        url: "drawing_main_text_ajax/save_is_full",
-                        dataType: "json",
-                        data:
-                            {
-                                "isFull": false
-                            },
-                        success: function (answer) {
-                            //console.log(answer);
-                        }
-                    });
-                }else {
-                    unlockScheme();
-                    triggerToDoTaskEvent("chooseAllDetails")
-                    $.ajax({
-                        type: "POST",
-                        url: "drawing_main_text_ajax/save_is_full",
-                        dataType: "json",
-                        data:
-                            {
-                                "isFull": true
-                            },
-                        success: function (answer) {
-                            //console.log(answer);
-                        }
-                    });
-                }
+        if (Round === 3 && Role === 'designer'){
+            if (amountOfChecked !== amountOfInputs){
+                blockScheme();
+                triggerToDoTaskEvent("chooseAllDetails", true);
+                $.ajax({
+                    type: "POST",
+                    url: "drawing_main_text_ajax/save_is_full",
+                    dataType: "json",
+                    data:
+                        {
+                            "isFull": false
+                        },
+                    success: function (answer) {
+                        //console.log(answer);
+                    }
+                });
+            }else {
+                unlockScheme();
+                triggerToDoTaskEvent("chooseAllDetails")
+                $.ajax({
+                    type: "POST",
+                    url: "drawing_main_text_ajax/save_is_full",
+                    dataType: "json",
+                    data:
+                        {
+                            "isFull": true
+                        },
+                    success: function (answer) {
+                        //console.log(answer);
+                    }
+                });
             }
-        });
-    }
+        }
+    });
 
     $("#left-accordion " + fieldID + " input").last().click(function () {
         $.ajax({
@@ -168,7 +167,6 @@ function addNewComponent(data, accordID, fieldID, isChecked) {
             }
         });
     });
-
 }
 
 
@@ -204,15 +202,17 @@ function makeCheckbox(fieldID, isChecked) {
     //скрывает теги input
     $checkboxid.find('input').attr('style', 'visibility: hidden');
 
+    //console.log($checkboxid, fieldID)
     //checkbox
     $checkboxid.find('input').on('click', function () {
+
         let $input = $(this);
+        //console.log($checkboxid)
         let id = $(this).attr('detail-id');
         $(this).parent().children().each(function (val, obj) {
             let $obj = $(obj);
             if ($obj.attr('for') === id) {
                 if (!($obj.hasClass('check_active'))) {
-
                     let detailName = $obj.text();
                     let detailType = $obj.attr("detail-type");
                     let fieldName = (detailType === "pdm") ? "Изделия PDM" : "Стандартные изделия";

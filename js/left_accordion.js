@@ -13,25 +13,7 @@ function setAccordionPanels(json, add_data) {
     let availableSubscribers = shell.data("shellInterconnection").availableSubscribers;
     availablePanels.forEach(function (elem, index) {
         //accordion.append("<p>" + elem.name + "</p><div class='left_accord_div' id='" + elem.ID + "'></div>");
-        accordion.append(
-            `<div class="card">
-                    <div class="card-header bg-dark" id="header-${elem.ID}">
-                        <h5 class="mb-0">
-                            <button style="text-decoration: none; color: white;" class="btn btn-block btn-link collapsed" data-toggle="collapse" data-target="#collapse-${elem.ID}" aria-expanded="false" aria-controls="collapse-">
-                            ${elem.name}
-                            </button>
-                        </h5>
-                    </div>
-
-                <div id="collapse-${elem.ID}" class="collapse" aria-labelledby="header-${elem.ID}" header-name="${elem.name}" data-parent="${accord_id}">
-                    <div id="${elem.ID}" class="card-body">
-                    </div>
-                </div>
-            </div>`
-        );
-        setNotifyAndInitHandlers(elem);
-        $("#"+ elem.ID).trigger("initialization");
-        availableSubscribers.push(elem.ID);
+        setLeftPanel(accordion, accord_id, elem, availableSubscribers, true);
     });
 
     accordion.find(".collapsed").first().removeClass("collapsed").attr("aria-expanded", "true");
@@ -51,6 +33,53 @@ function setAccordionPanels(json, add_data) {
          animate: 200,
          heightStyle: "fill"
      });*/
+}
+
+function setLeftPanel(accordion, accord_id, elem, availableSubscribers, initMode = 0) {
+    let panel = `
+            <div class="card" id="accordion-card-${elem.ID}">
+                <div class="card-header bg-dark" id="header-${elem.ID}">
+                        <h5 class="mb-0 btn-group d-flex" role="group">
+                            <button type="button" style="text-decoration: none; color: white;" class="btn btn-block btn-link collapsed" data-toggle="collapse" data-target="#collapse-${elem.ID}" aria-expanded="false" aria-controls="collapse-">
+                            ${elem.name}
+                            </button>
+                            <button type="button" class="leftSideReloadButton font-family-fontAwesome btn btn-dark">
+                                <span class="font-family-fontAwesome small-spinner-border"></span>
+                            </button>
+                        </h5>
+                </div>    
+                <div id="collapse-${elem.ID}" class="collapse" aria-labelledby="header-${elem.ID}" header-name="${elem.name}" data-parent="${accord_id}">
+                    <div id="${elem.ID}" class="card-body">
+                    </div>
+                </div>
+            </div>`
+    if (elem.ID === "pdm_field"){
+        accordion.prepend(panel)
+    }else {
+        accordion.append(panel)
+    }
+    setNotifyAndInitHandlers(elem);
+    $("#"+ elem.ID).trigger("initialization");
+    availableSubscribers.push(elem.ID);
+    let thisCard = $(`#accordion-card-${elem.ID}`);
+    thisCard.on("click", ".leftSideReloadButton", function () {
+        getDetailsInfo("all", true);
+        thisCard.remove();
+        if (initMode && thisCard.find("button").first().attr("aria-expanded") == "true"){
+            setLeftPanel(accordion, accord_id, elem, availableSubscribers, 1);
+        }else{
+            setLeftPanel(accordion, accord_id, elem, availableSubscribers, 0);
+        }
+    })
+
+    setTimeout(function () {
+        stopProcessOfSaving(document.getElementsByClassName("leftSideReloadButton"))
+    }, 500)
+
+    if (initMode === 1){
+        thisCard.find("button").first().trigger("click");
+    }
+    //console.log(thisCard)
 }
 
 function chooseAvailablePanels(json) {

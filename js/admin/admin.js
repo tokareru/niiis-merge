@@ -14,7 +14,7 @@ $(function () {
 
   $("#change_round_btn").on("click", function () {
     let thisButton = this;
-    startProcessOfSaving(thisButton);
+    startProcessOfSaving(thisButton, false);
     $("#current_round").html($("#change_round").val());
     var round = $("#change_round").val();
     $.ajax({
@@ -23,7 +23,7 @@ $(function () {
       data: {round: round},
       success: function (answer)
       {
-        stopProcessOfSaving(thisButton);
+        stopProcessOfSaving(thisButton, false);
       }
     });
   });
@@ -31,11 +31,11 @@ $(function () {
   $("#reset").on("click", function () {
     let thisButton = this;
     if (confirm("Вы уверены?")) {
-      startProcessOfSaving(thisButton)
+      startProcessOfSaving(thisButton, false)
       $.ajax({
         url: "admin_cab/reset",
         success: function (data) {
-          stopProcessOfSaving(thisButton);
+          stopProcessOfSaving(thisButton, false);
           $.each(data, function (index, elem) {
             if (index == 'round') {
               $("#change_round option[value='" + elem + "']").prop('selected', true);

@@ -303,18 +303,8 @@ export function init3dField() {
     $('#canvas3D').droppable(
         {
             drop: function (event, ui) {
-                let $checkboxid1 = $('#pdm_field').find("p").last();
-                let $checkboxid2 = $('#std_field').find("p").last();
-
-                let $children = ui.draggable[0]['children'][1];
-                let id = $children.id;
-                if (id.indexOf('std') !== -1) {
-                    $checkboxid2.find("input").click();
-                } else {
-                    $checkboxid1.find("input").click();
-                }
-                $('#' + id).click();
-
+                //console.log(ui)
+                $(ui.draggable).find("input").trigger("click")
             }
         }
     );
