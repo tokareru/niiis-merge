@@ -380,7 +380,7 @@ function setTechProcessForProductionTask(techProcess) {
 
 function initProductionTask_1_2_Rounds() {
     $("#production_task_body_round_3").remove();
-
+    let production_task_body_round_1_2 = $("#production_task_body_round_1_2");
     let selectUserBody = $("#productionTaskSelectUserBody");
     let nameUsers = [];
     if (Role === "production_master"){
@@ -390,7 +390,7 @@ function initProductionTask_1_2_Rounds() {
     }
     else{
         selectUserBody.attr("disabled", "disabled");
-        let production_task_body_round_1_2 = $("#production_task_body_round_1_2");
+
         production_task_body_round_1_2.find("form").remove();
         $(`
             <div class="h4">Ваше задание</div>
@@ -410,9 +410,30 @@ function initProductionTask_1_2_Rounds() {
         selectUserBody.append(`<option value='production-current-user-${index}'>${user.login}</option>`);
     });
 
+    let productionTaskPrintLink = $("#productionTaskPrintLink");
+    productionTaskPrintLink.unbind("click");
+    productionTaskPrintLink.on("click", function (e) {
+        e.preventDefault();
+        let currentLogin = selectUserBody.find("option:selected").text();
+        if (Role === "worker") currentLogin = login;
+        setActionToBar({
+            id: "sendToPrint",
+            type: "print",
+            field: "Кабинет",
+            text: "Отчёт отправлен на печать"
+        }).then(function () {
+            let win = window.open(`print_report/production_task?user=${currentLogin}`, '_blank');
+            win.focus();
+        });
+
+    })
+
     selectUserBody.change(function (e) {
         let val = this.value;
-        $(`#${val}`).toggle();
+        let $div = $(`#${val}`);
+        //let userLogin = $div.attr("user-login");
+        $div.toggle();
+        //$("#productionTaskPrintLink").attr("href", `print_report/production_task?user=${userLogin}`)
         $("#prod_task_table_container").find("div").each(function () {
             if ($(this).attr("id") !== val) $(this).hide();
         });

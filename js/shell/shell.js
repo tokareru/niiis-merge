@@ -235,17 +235,7 @@ async function updateShell(){
 
     shell.trigger("endOfShellInit");
 
-    $("#print_report_button").on("click", function () {
-        setActionToBar({
-            id: "sendToPrint",
-            type: "print",
-            field: "Кабинет",
-            text: "Отчёт отправлен на печать"
-        });
-        triggerToDoTaskEvent("sendToPrint")
-    });
-
-    $("#exit_button").on("click", function () {
+    $("#exit_button").unbind("click").on("click", function () {
         setActionToBar({
             id: "signOut",
             type: "signOut",

@@ -42,6 +42,16 @@ function initSpecTable(json) {
         })
     });
 
+    $("#print_report_button").unbind("click").on("click", function () {
+        setActionToBar({
+            id: "sendToPrint",
+            type: "print",
+            field: "Кабинет",
+            text: "Отчёт отправлен на печать"
+        });
+        triggerToDoTaskEvent("sendToPrint")
+    });
+
     $tableBlock.on("keydown", ".specTableCellInput", function (e) {
         specTableMoveByKey(e, $table, $(this));
     });
