@@ -152,6 +152,22 @@ class print_report_model extends model
         }
       }
     }
+    else {
+      $sql = "SELECT * FROM route_map_1_2";
+      $q = sys::$PDO->prepare($sql);
+      $q->execute();
+      $Q = $q->fetchAll();
+//      var_dump($Q);
+      $route_map = array();
+      foreach ($Q as $row) {
+          array_push($route_map, array("name" => $row["name"], 
+              "equipment" => $row["equipment"], 
+              "tools" => $row["tools"],
+              "num_ceh" => $row["num_ceh"],
+              "num_uch" => $row["num_uch"],
+              "num_oper" => $row["num_oper"]));
+      }
+    }
     
     $result = array("route_map" => $route_map,
                       "round" => $round
@@ -161,9 +177,24 @@ class print_report_model extends model
   function production_task(){
     
     $round = sys::get_current_round();
+    $task = array();
+    if($round ==  3){
+      
+    } else {
     
-    
-    $result = array("data" => 0
+      $sql = "SELECT * FROM production_task_1_2 where login = :login";
+      $q = sys::$PDO->prepare($sql);
+      $q->execute(array("login" => $_REQUEST["user"]));
+  //    $q->execute(array("login" => 'worker3'));
+      $Q = $q->fetchAll();
+      $task = [];
+      foreach ($Q as $row) {
+          array_push($task, array("name" => $row["name"], "job" => $row["job"], "techOperation" => $row["techoperation"], "task" => $row["task"]));
+      }
+    }
+//    var_dump($task);
+    $result = array("task" => $task,
+                      "round" => $round
                     ); 
     return $result;
   }

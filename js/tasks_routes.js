@@ -124,7 +124,10 @@ function initTasksRoutes() {
     $('body').on('click', '.tasks_routes_reloadShell_radio_enable', async function () {
         let shell = $(this).parents('tr').data('shell');
 
-        blurSite(true)
+        blurSite(true);
+        $('button.reloadButtonToHide').each(function () {
+            $(this).attr('disabled', true);
+        })
         console.log(shell);
         if (shell.specification !== 'unchanged') {
             //$('#main-tabs-specification').click();
@@ -331,6 +334,9 @@ async function taskRouteDisable() {
     $('#main-tabs-fieldBlock').parents('li').removeClass('bg-danger');
     $('#specTableSaveButton').removeAttr('disabled');
     $('#specTableReloadButton').removeAttr('disabled');
+    $('.reloadButtonToHide').each(function () {
+        $(this).removeAttr('disabled');
+    });
     $('#main-tabs-scheme').parents('li').removeClass('bg-danger');
     let scheme = await import('./scheme.js');
     await scheme.setRazmerAndPosOnScheme(loadScheme);
@@ -431,7 +437,7 @@ function generateOwnTasks(selector) {
                 `<td class="pl-1 pr-1" style="width: 250px; max-width: 250px;word-wrap: break-word; min-width: 250px">${value.reason !== null && value.reason !== '' ? value.reason : '<i class="fa fa-minus"></i>'}</td>` +
                 '<td style="width: 100px">' +
                 `<button class="btn btn-sm bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report/scheme_and_spec?route_id=${value.id}">Смотреть</a></button>` +
-                `<button class="btn btn-sm mt-1 bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report/route_map?route_id=${value.id}">Смотреть</a></button>` +
+                `<button class="btn btn-sm mt-1 bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report/route_map?route_id=${value.id}">Маршрутная карта</a></button>` +
                 '</td>' +
                 '</tr>');
             $tr.data({'id': value.id, 'master': value.master, shell: value.shell});

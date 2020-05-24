@@ -17,7 +17,7 @@
 -->
     <div class="d-flex">
         <button class="btn btn-dark mt-3 ml-auto mr-2" id="tech_process_field_save_button">Сохранить</button>
-        <button class="btn btn-dark mt-3 mr-auto font-family-fontAwesome fa-refresh" id="tech_process_field_reload_button"></button>
+        <button class="reloadButtonToHide btn btn-dark mt-3 mr-auto font-family-fontAwesome fa-refresh" id="tech_process_field_reload_button"></button>
     </div>
 
 </div>

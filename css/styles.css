@@ -119,6 +119,10 @@ hr {
     text-align: center;
 }
 
+.w-3-1{
+    width: 3.1rem !important;
+}
+
 .small-spinner-border{
     display: inline-block;
     width: 1.1rem;

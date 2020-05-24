@@ -326,6 +326,72 @@ class PDF extends FPDF {
     $this->Cell($w[12], $heigh, "", 'LRB', 0, 'C');
     $this->Ln();
   }
+  
+  function main_table_1_2($x, $y, $data) {
+    //Ширина колонки
+    $this->SetLineWidth(0.2);
+    $w = array(4, 7, 6, 7, 58, 23, 23, 12, 9, 16, 12, 12, 7);
+    
+    $this->SetXY($x, $y);
+    $heigh_row = 6;
+    $this->SetFont('gost', '', 11);
+    $count_rows = 0;
+    
+    // пустая строка
+    $heigh = $heigh_row;
+    $this->Cell($w[0], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[1], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[2], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[3], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[4], $heigh, "", 'LRB', 0, 'L');
+    $this->Cell($w[5], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[6], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[7], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[8], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[9], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[10], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[11], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[12], $heigh, "", 'LRB', 0, 'C');
+    $this->Ln();
+    
+    $y = $this->GetY();
+//    $x = $this->GetX();
+    //Данные
+    foreach ($data as $row) {
+      
+      $this->SetX($x);
+      $this->Cell($w[0], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[1], $heigh, $this->conv($row['num_ceh']), 'LRB', 0, 'L');
+      $this->Cell($w[2], $heigh, $this->conv($row['num_uch']), 'LRB', 0, 'L');
+      $this->Cell($w[3], $heigh, $this->conv($row['num_oper']), 'LRB', 0, 'L');
+      $this->Cell($w[4], $heigh, $this->conv($row['name']), 'LRB', 0, 'L');
+      $this->Cell($w[5], $heigh, $this->conv($row['equipment']), 'LRB', 0, 'L');
+      $this->Cell($w[6], $heigh, $this->conv($row['tools']), 'LRB', 0, 'L');
+      $this->Cell($w[7], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[8], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[9], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[10], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[11], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[12], $heigh, "", 'LRB', 0, 'C');
+      $this->Ln();
+    }
+    $this->SetX($x);
+    $heigh = $heigh_row;
+    $this->Cell($w[0], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[1], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[2], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[3], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[4], $heigh, "", 'LRB', 0, 'L');
+    $this->Cell($w[5], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[6], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[7], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[8], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[9], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[10], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[11], $heigh, "", 'LRB', 0, 'C');
+    $this->Cell($w[12], $heigh, "", 'LRB', 0, 'C');
+    $this->Ln();
+  }
 }
 
 //$size = $data['size'];
@@ -376,7 +442,12 @@ $main_label = array('', $p->conv('Номер'),
                     );
 
 $p->table_header(7, 10, $main_label); // высота заголовка 27
-$p->main_table(7, 37, $route_map);
+if($round == 3){
+  $p->main_table(7, 37, $route_map);
+}
+else {
+  $p->main_table_1_2(7, 37, $route_map);
+}
 
 $p->Output();
 ?>

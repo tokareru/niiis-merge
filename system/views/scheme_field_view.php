@@ -28,7 +28,7 @@
         </tbody>
     </table>
 </div>
-<button class='btn bg-dark text-white d-flex mx-auto' id='addToServerTitleBlock'>Сохранить</button>
+<button class='reloadButtonToHide btn bg-dark text-white d-flex mx-auto' id='addToServerTitleBlock'>Сохранить</button>
 
 </body>
 </html>

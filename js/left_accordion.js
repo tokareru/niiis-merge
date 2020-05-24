@@ -43,7 +43,7 @@ function setLeftPanel(accordion, accord_id, elem, availableSubscribers, initMode
                             <button type="button" style="text-decoration: none; color: white;" class="btn btn-block btn-link collapsed" data-toggle="collapse" data-target="#collapse-${elem.ID}" aria-expanded="false" aria-controls="collapse-">
                             ${elem.name}
                             </button>
-                            <button type="button" class="leftSideReloadButton font-family-fontAwesome btn btn-dark">
+                            <button type="button" class="reloadButtonToHide leftSideReloadButton font-family-fontAwesome btn btn-dark">
                                 <span class="font-family-fontAwesome small-spinner-border"></span>
                             </button>
                         </h5>
