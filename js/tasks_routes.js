@@ -402,10 +402,11 @@ function generateOwnTasks(selector) {
         '<th>Задание</th>' +
         '<th>Статус</th>' +
         '<th>Комментарий</th>' +
+        '<th>Информация</th>' +
         '</tr>' +
         '</thead><tbody></tbody>');
-    let buttonActiveTask = '<button class="btn bg-dark text-white float-left tasks_routes_activeTask">Согласовать</button>' +
-        '<button class="btn bg-danger text-white float-right tasks_routes_finishedTask" data-toggle="modal" data-target="#task_routes_cancelModal">Отклонить</button>';
+    let buttonActiveTask = '<button class="btn btn-sm bg-dark text-white float-left tasks_routes_activeTask">Согласовать</button>' +
+        '<button class="btn btn-sm bg-danger text-white float-right tasks_routes_finishedTask" data-toggle="modal" data-target="#task_routes_cancelModal">Отклонить</button>';
     ownTasks.sort(function (a, b) {
         if (a.status === "nonactive" && b.status !== 'nonactive')
             return 1;
@@ -427,14 +428,17 @@ function generateOwnTasks(selector) {
                 `class="text-center tasks_routes_reloadShell_radio tasks_routes_reloadShell_radio_enable"` +
                 'style="width: 50px">Вкл</label>' +
                 '</form>' +
-                `<button class="btn btn-sm bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report/scheme_and_spec?route_id=${value.id}">Смотреть</a></button>` +
                 '</td>' +
                 `<td style="width: 150px">${value.task}</td>` +
-                '<td style="width: 250px">' +
+                '<td style="width: 215px">' +
                 `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? '<span class="fa fa-check text-success text-center w-100 fa-2x"></span>' : '<span class="fa fa-times' +
                     ' text-danger text-center w-100 fa-2x"></span>'}` +
                 '</td>' +
                 `<td class="pl-1 pr-1" style="width: 250px; max-width: 250px;word-wrap: break-word; min-width: 250px">${value.reason !== null && value.reason !== '' ? value.reason : '<i class="fa fa-minus"></i>'}</td>` +
+                '<td style="width: 100px">' +
+                `<button class="btn btn-sm bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report/scheme_and_spec?route_id=${value.id}">Смотреть</a></button>` +
+                `<button class="btn btn-sm mt-1 bg-dark text-white"><a target="_blank" class="text-white text-decoration-none" href="/print_report/route_map?route_id=${value.id}">Маршрутная карта</a></button>` +
+                '</td>' +
                 '</tr>');
             $tr.data({'id': value.id, 'master': value.master, shell: value.shell});
             $table.find('tbody').append(
