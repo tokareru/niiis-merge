@@ -143,9 +143,9 @@
 }
 
 .tasks_routes_routeTable{
-    width: 900px;
-    max-width: 900px;
-    min-width: 900px;
+    width: 1000px;
+    max-width: 1000px;
+    min-width: 1000px;
 }
 
 .tasks_routes_routeTable td{
