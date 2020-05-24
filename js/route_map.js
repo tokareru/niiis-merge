@@ -289,11 +289,17 @@ function saveTechProcessTableRound_1_2($table, thisButton) {
     let $trs = $table.find('tr.newRouteMapRow');
     $trs.each(function () {
         let $tr = $(this);
+        let num_ceh = $tr.find("td").eq(1).find("input").val();
+        let num_uch = $tr.find("td").eq(2).find("input").val();
+        let num_oper = $tr.find("td").eq(3).find("input").val();
         let name = $tr.find("td").eq(4).find("input").val();
         let eq = $tr.find("td").eq(5).find("input").val();
         let tools = $tr.find("td").eq(6).find("input").val();
 
         saveObj.push({
+            num_ceh: num_ceh,
+            num_uch: num_uch,
+            num_oper: num_oper,
             name: name,
             equipment: eq,
             tools: tools
@@ -729,7 +735,7 @@ function setTechProcessJsonRounds_1_2(res, $table) {
     let $lastTr = $tbody.find('tr:last');
     if (res.length){
         res.forEach(function (row) {
-            $(combineRowFor_1_2Rounds({name: row.name, equipment: row.equipment, tools: row.tools})).insertBefore($lastTr);
+            $(combineRowFor_1_2Rounds({num_ceh: row.num_ceh, num_uch: row.num_uch, num_oper: row.num_oper, name: row.name, equipment: row.equipment, tools: row.tools})).insertBefore($lastTr);
         })
     }else {
         if (Role === "technologist") setTechProcessJsonRounds_1_2( [{}], $table)
@@ -737,7 +743,7 @@ function setTechProcessJsonRounds_1_2(res, $table) {
 }
 
 
-function combineRowFor_1_2Rounds(data = {name: "", equipment: "", tools: ""}) {
+function combineRowFor_1_2Rounds(data = {num_ceh: "", num_uch: "", num_oper: "", name: "", equipment: "", tools: ""}) {
     let deleteButton = (Role === "technologist") ? `<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>`: "";
     if (data.name === null || data.name === undefined)
         data.name = "";
@@ -745,22 +751,34 @@ function combineRowFor_1_2Rounds(data = {name: "", equipment: "", tools: ""}) {
         data.equipment = "";
     if (data.tools === null || data.tools === undefined)
         data.tools = "";
+    if (data.num_ceh === null || data.num_ceh === undefined)
+        data.num_ceh = "";
+    if (data.num_uch === null || data.num_uch === undefined)
+        data.num_uch = "";
+    if (data.num_oper === null || data.num_oper === undefined)
+        data.num_oper = "";
     let disabled = (Role !== "technologist") ? "disabled" : "";
 
     return `
         <tr class="newRouteMapRow">
             <td>${deleteButton}</td>
-            <td colspan="4" class="tdBorderBlackLeft"></td>
-            <td colspan="3" class=""></td>
-            <td colspan="4" class="tdBorderBlackRight"></td>
+            <td colspan="4" class="tdBorderBlackLeft w-3-1">
+                <input class="text-align-center border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.num_ceh}">    
+            </td>
+            <td colspan="3" class="w-3-1">
+                <input class="text-align-center border-0 outline-none bg-white " style="font-size: 1.5em;" ${disabled} value="${data.num_uch}">
+            </td>
+            <td colspan="4" class="tdBorderBlackRight w-3-1">
+                <input class="text-align-center border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.num_oper}">
+            </td>
             <td colspan="34" class="">
-                <input class="border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.name}">
+                <input class="text-align-center border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.name}">
             </td>
             <td colspan="12" class="tdBorderBlackLeft">
-               <input class="border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.equipment}">
+               <input class="text-align-center border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.equipment}">
             </td>
             <td colspan="12" class="">
-                <input class="border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.tools}">
+                <input class="text-align-center border-0 outline-none bg-white" style="font-size: 1.5em;" ${disabled} value="${data.tools}">
             </td>
             <td colspan="6" class=""></td>
             <td colspan="5" class=""></td>
