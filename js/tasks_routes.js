@@ -124,7 +124,10 @@ function initTasksRoutes() {
     $('body').on('click', '.tasks_routes_reloadShell_radio_enable', async function () {
         let shell = $(this).parents('tr').data('shell');
 
-        blurSite(true)
+        blurSite(true);
+        $('button.reloadButtonToHide').each(function () {
+            $(this).attr('disabled', true);
+        })
         console.log(shell);
         if (shell.specification !== 'unchanged') {
             //$('#main-tabs-specification').click();
@@ -331,6 +334,9 @@ async function taskRouteDisable() {
     $('#main-tabs-fieldBlock').parents('li').removeClass('bg-danger');
     $('#specTableSaveButton').removeAttr('disabled');
     $('#specTableReloadButton').removeAttr('disabled');
+    $('.reloadButtonToHide').each(function () {
+        $(this).removeAttr('disabled');
+    });
     $('#main-tabs-scheme').parents('li').removeClass('bg-danger');
     let scheme = await import('./scheme.js');
     await scheme.setRazmerAndPosOnScheme(loadScheme);
