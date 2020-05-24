@@ -44,32 +44,26 @@ class PDF extends FPDF {
   }
 
   //Улучшенная таблица
-  function ImprovedTable($header, $data) {
+  function ImprovedTable($x, $y, $header, $data) {
     //Ширина колонки
-    $w = array(6, 6, 6, 60, 70, 10, 24);
-    $this->SetX(20);
+    $this->SetXY($x, $y);
+    $this->SetLineWidth(0.6);
+    $w = array(60, 30, 50, 50);
+//    $this->SetX(20);
     //Заголовок
     for ($i = 0; $i < count($header); $i++) {
-
-      if (($i < 3) || ($i == 5)) {
-        $this->TextWithRotation($this->GetX() + $w[$i], $this->GetY() + 13, $header[$i], 90);
-        $this->Cell($w[$i], 15, "", 1, 0, 'C');
-      } else {
-        $this->Cell($w[$i], 15, $header[$i], 1, 0, 'C');
-      }
+      $this->Cell($w[$i], 8, $header[$i], 1, 0, 'C');
+      
     }
     $this->Ln();
-
+    $this->SetLineWidth(0.3);
     //Данные
     foreach ($data as $row) {
-      $this->SetX(20);
-      $this->Cell($w[0], 8, "", 'LRB', 0, 'C');
-      $this->Cell($w[1], 8, "", 'LRB', 0, 'L');
-      $this->Cell($w[2], 8, $this->conv($row[0]), 'LRB', 0, 'L');
-      $this->Cell($w[3], 8, $this->conv($row[1]), 'LRB', 0, 'C');
-      $this->Cell($w[4], 8, $this->conv($row[2]), 'LRB', 0, 'C');
-      $this->Cell($w[5], 8, $this->conv($row[3]), 'LRB', 0, 'L');
-      $this->Cell($w[6], 8, "", 'LRB', 0, 'C');
+      $this->SetX($x);
+      $this->Cell($w[0], 6, $this->conv($row['name']), 'LRB', 0, 'L');
+      $this->Cell($w[1], 6, $this->conv($row['job']), 'LRB', 0, 'L');
+      $this->Cell($w[2], 6, $this->conv($row['techOperation']), 'LRB', 0, 'L');
+      $this->Cell($w[3], 6, $this->conv($row['task']), 'LRB', 0, 'L');
       $this->Ln();
     }
     $this->SetX(20);
@@ -79,6 +73,9 @@ class PDF extends FPDF {
 //$size = $data['size'];
 
 // -------------------------формирование страницы PDF---------------------------
+
+$task = $data['task'];
+$round = $data['round'];
 
 $p = new PDF('P', 'mm', 'A4');
 $p->AddFont('gost', '', 'gost-type-a.php');
@@ -92,15 +89,16 @@ $p->SetSubject("ID", true);
 
 // параметры страницы
 $frame = $p->get_frame();
-$x = 20;
-$y = 234;
+$x = 10;
+$y = 10;
 $w_str = 4.9;
 $p->SetMargins(0, 0, 0);
 $p->AddPage();
 $p->SetFont('gost', '', 10);
 
-
-
+$header = array($p->conv('ФИО'),$p->conv('Должность'),$p->conv('Техоперации'),$p->conv('Задание'),);
+$p->SetXY($x, $y);
+$p->ImprovedTable(10,10, $header, $task);
 
 
 $p->Output();
