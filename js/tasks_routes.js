@@ -143,7 +143,12 @@ function initTasksRoutes() {
                     } else {
                         JSON.parse(JSON.stringify(shell.specification)).forEach(((value, index) => {
                             if (value.row[4] === undefined)
-                            temp.push({row: [value.row[0], value.row[1], value.row[2], value.row[3], {text: "", readonly: false}]})
+                                temp.push({
+                                    row: [value.row[0], value.row[1], value.row[2], value.row[3], {
+                                        text: "",
+                                        readonly: false
+                                    }]
+                                })
                             else temp.push(value);
                         }));
                         console.log(temp);
@@ -267,7 +272,8 @@ async function serializeAllInfo() {
         models: 'unchanged',
         esi: 'unchanged',
         scheme: 'unchanged',
-        isSchemeOpen: 'unchanged'
+        isSchemeOpen: 'unchanged',
+        routeMap: 'unchanged'
     };
     let $spec = $('#specificationTable');
     if ($spec.html() === undefined && Round !== 3) {
@@ -318,7 +324,14 @@ async function serializeAllInfo() {
             dataInfo.isSchemeOpen = false;
         } else dataInfo.isSchemeOpen = true;
     }
-    //console.log(dataInfo);
+    let routeMapTable = $('#tech_process_table');
+    if (Role === 'technologist' && routeMapTable.html() !== undefined) {
+        let tempRouteMapTable = Round === 2 ? collectDataFormRouteMapRound_1_2(routeMapTable) : collectDataFromRouteMapRound3(routeMapTable);
+        if (JSON.stringify(loadRouteMap) !== JSON.stringify(tempRouteMapTable)){
+            dataInfo.routeMap = tempRouteMapTable;
+        }
+    }
+    console.log(dataInfo);
     return JSON.stringify(dataInfo);
 }
 
@@ -632,7 +645,7 @@ async function addTaskToDB(thisButton) {
 
     $.ajax({
         type: 'POST',
-        url: 'ajax/save_route',//ajax/save_route
+        url: '',//ajax/save_route
         data: data,
         success: function (res) {
             stopProcessOfSaving(thisButton);

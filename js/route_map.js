@@ -208,7 +208,7 @@ function initRouteMap() {
     })
 
     // инициализация
-    downloadRouteMap()
+    downloadRouteMap().then();
 
     $table.on('click', '.tech_proc_del_td', function () {
         let $this = $(this);
@@ -279,6 +279,7 @@ async function downloadRouteMap() {
                 url: 'ajax/get_route_map_3 ',
                 type: 'GET',
                 success: function (res) {
+                    loadRouteMap = res;
                     setTechProcessJson(techGuideJson, res, $table);
                 }
             })
@@ -290,6 +291,7 @@ async function downloadRouteMap() {
             url: 'ajax/get_route_map_1_2',
             type: 'GET',
             success: function (res) {
+                loadRouteMap = res;
                 setTechProcessJsonRounds_1_2(res, $table);
             }
         })
@@ -313,14 +315,15 @@ function collectDataFormRouteMapRound_1_2($table) {
         let tools = $tr.find("td").eq(6).find("input").val();
 
         saveObj.push({
+            name: name,
+            equipment: eq,
+            tools: tools,
             num_ceh: num_ceh,
             num_uch: num_uch,
             num_oper: num_oper,
-            name: name,
-            equipment: eq,
-            tools: tools
         })
     });
+    return saveObj;
 }
 
 function saveTechProcessTableRound_1_2($table, thisButton) {
