@@ -351,7 +351,7 @@ function getTriggersAvailability() {
     // triggers_availability.json
     if (triggers_availability === "")
         $.ajax({
-            url: '../json/triggers_availability.json',
+            url: `../json/triggers_availability.json?${randomInteger(0, 99999999)}`,
             type: 'GET',
             async: false,
             success: function (data) {
@@ -363,6 +363,13 @@ function getTriggersAvailability() {
             }
         });
     return triggers_availability;
+}
+
+
+function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
 }
 
 function chooseRole(id, isRussian = false) {
@@ -434,8 +441,23 @@ let triggers = [
     },
     {
         id: "sendToPrint",
-        name: "На печать отправлено",
-        description: 'Отправить на печать'
+        name: "На печать отправлен чертеж и спецификация",
+        description: 'Отправить на печать чертеж и спецификацию'
+    },
+    {
+        id: "sendToPrintProdTask",
+        name: "На печать отправлено задание на производство для всех пользователей",
+        description: 'Отправить на печать задание на производство для всех пользователей'
+    },
+    {
+        id: "sendToPrintProdWork",
+        name: "На печать отправлено задание на производство",
+        description: 'Отправить на печать задание на производство'
+    },
+    {
+        id: "sendToPrintRouteMap",
+        name: "На печать отправлена маршрутная карта",
+        description: 'Отправить на печать маршрутную карту'
     }
 ]
 

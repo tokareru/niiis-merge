@@ -31,9 +31,7 @@
         <div class="d-flex">
             <button id="specTableSaveButton" class="btn btn-dark ml-auto mr-2 d-none">Сохранить</button>
             <button id="specTableReloadButton" class="reloadButtonToHide btn btn-dark mr-2 d-none font-family-fontAwesome fa-refresh"></button>
-            <button class="mr-auto btn-dark">
-                <a id="print_report_button" class="logoutButton text-decoration-none text-white" href="print_report/scheme_and_spec" target="_blank">Печать</a>
-            </button>
+            <button id="print_report_button" class="mr-auto btn-dark d-none">Печать</button>
         </div>
 
     </div>

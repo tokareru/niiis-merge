@@ -417,13 +417,22 @@ function initProductionTask_1_2_Rounds() {
         let currentLogin = selectUserBody.find("option:selected").text();
         if (Role === "worker") currentLogin = login;
         setActionToBar({
-            id: "sendToPrint",
+            id: "sendToPrintProductionTask",
             type: "print",
-            field: "Кабинет",
-            text: "Отчёт отправлен на печать"
+            field: "Задание на производство",
+            text: `Задание на производство отправлено на печать для пользователя ${currentLogin}`
         }).then(function () {
             let win = window.open(`print_report/production_task?user=${currentLogin}`, '_blank');
             win.focus();
+            if (Role === "worker"){
+                triggerToDoTaskEvent("sendToPrintProdWork");
+            }else{
+                $(`.prodTaskTableBody[user-login='${currentLogin}']`).attr("data-printed", true)
+                let prodTablesLength = $(".prodTaskTableBody").length;
+                let prodPrintedTablesLength = $(".prodTaskTableBody[data-printed='true']").length;
+                if (prodTablesLength === prodPrintedTablesLength)
+                    triggerToDoTaskEvent("sendToPrintProdTask");
+            }
         });
 
     })
@@ -458,7 +467,7 @@ function initProductionTask_1_2_Rounds() {
             },
             success: function (json) {
                 if (json.length || Role === "production_master"){
-                    setProductionTable_1_2_Rounds($tableBlock, `production-current-user-${index}`, json, user.login);
+                    setProductionTable_1_2_Rounds($tableBlock, `production-current-user-${index}`, json, user.login, false, false);
                     if (index)
                         $(`#production-current-user-${index}`).hide();
                 }else {
@@ -469,7 +478,7 @@ function initProductionTask_1_2_Rounds() {
             },
             error: function (message) {
                 console.log("Данные не загружены");
-                setProductionTable_1_2_Rounds($tableBlock, `production-current-user-${index}`, [], user.login);
+                setProductionTable_1_2_Rounds($tableBlock, `production-current-user-${index}`, [], user.login, false, false);
                 if (index)
                     $(`#production-current-user-${index}`).hide();
             }
@@ -527,6 +536,7 @@ function reloadProductionTask_1_2_Rounds($tableBlock, thisButton) {
     let index = $table.attr("id");
     let userLogin = $table.attr("user-login");
     let isSaved = Boolean($table.attr("data-saved"));
+    let isPrinted = Boolean($table.attr("data-printed"));
     $table.remove();
     $.ajax({
         type: "GET",
@@ -536,12 +546,12 @@ function reloadProductionTask_1_2_Rounds($tableBlock, thisButton) {
             login: userLogin
         },
         success: function (json) {
-            setProductionTable_1_2_Rounds($tableBlock, index, json, userLogin, isSaved);
+            setProductionTable_1_2_Rounds($tableBlock, index, json, userLogin, isSaved, isPrinted);
             stopProcessOfSaving(thisButton);
         },
         error: function (message) {
             console.log("Данные не загружены");
-            setProductionTable_1_2_Rounds($tableBlock, index, [], userLogin, isSaved);
+            setProductionTable_1_2_Rounds($tableBlock, index, [], userLogin, isSaved, isPrinted);
             stopProcessOfSaving(thisButton);
         }
     })
@@ -554,7 +564,7 @@ function reloadProductionTask_3_Round(thisButton) {
     initProductionTask_3_Rounds();
 }
 
-function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: "", techOperation: "", task: ""}], userLogin, isSaved = false) {
+function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: "", techOperation: "", task: ""}], userLogin, isSaved = false, isPrinted = false) {
     let trs = "";
     //console.log(data)
     if (data !== null)
@@ -576,7 +586,7 @@ function setProductionTable_1_2_Rounds($tableBlock, id, data = [{name: "", job: 
     }
 
     $tableBlock.append(`
-        <div id="${id}" user-login="${userLogin}" data-saved="${isSaved}">
+        <div id="${id}" class="prodTaskTableBody" user-login="${userLogin}" data-saved="${isSaved}" data-printed="${isPrinted}">
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr class="font-weight-bold">${emptyTd}<td>ФИО</td><td>Должность</td><td>Техоперации</td><td>Задание</td></tr>

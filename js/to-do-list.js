@@ -130,6 +130,9 @@ async function reloadToDoList() {
                 triggerToDoTaskEvent("chooseAllDetails");
             }
         }
+        if (Round !== 3 && (Role === "production_master" || Role === "worker")){
+            $(".prodTaskTableBody").attr("data-saved", false).attr("data-printed", false);
+        }
     });
 
 }

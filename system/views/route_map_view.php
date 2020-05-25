@@ -26,9 +26,7 @@
     <div class="d-flex">
         <button id='tech_process_save' class="btn bg-dark ml-auto mr-2 text-white hidden">Сохранить</button>
         <button id='tech_process_reload' class="reloadButtonToHide btn bg-dark mr-2 text-white hidden font-family-fontAwesome fa-refresh"></button>
-        <button class="btn bg-dark mr-auto text-white">
-            <a class="text-decoration-none text-white" target="_blank" href="print_report/route_map">Печать</a>
-        </button>
+        <button id="routeMapPrintButton" class="btn bg-dark mr-auto text-white">Печать</button>
     </div>
 </div>
 

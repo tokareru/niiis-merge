@@ -237,6 +237,19 @@ function initRouteMap() {
             deleteKnot($this, true);
         }
     })
+
+    $("#routeMapPrintButton").unbind("click").on("click", function () {
+        setActionToBar({
+            id: "sendToPrintRouteMap",
+            type: "print",
+            field: "Маршрутная карта",
+            text: "Маршрутная карта отправлена на печать"
+        }).then(function () {
+            let win = window.open(`print_report/route_map`, '_blank');
+            win.focus();
+            triggerToDoTaskEvent("sendToPrintRouteMap");
+        })
+    })
 }
 
 async function downloadRouteMap() {

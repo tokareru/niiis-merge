@@ -135,7 +135,7 @@
               "trigger": "saveRouteMap"
             },
             {
-              "trigger": "sendToPrint"
+              "trigger": "sendToPrintRouteMap"
             }
           ],
           "fields": [
@@ -161,6 +161,9 @@
             },
             {
               "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "sendToPrintRouteMap"
             }
           ],
           "fields": [
@@ -201,6 +204,9 @@
             },
             {
               "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "sendToPrintRouteMap"
             }
           ],
           "fields": [
@@ -243,9 +249,6 @@
           "triggers": [
             {
               "trigger": "openField"
-            },
-            {
-              "trigger": "sendToPrint"
             }
           ],
           "fields": [
@@ -265,6 +268,9 @@
             },
             {
               "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "sendToPrintRouteMap"
             }
           ],
           "fields": [
@@ -296,6 +302,9 @@
             },
             {
               "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "sendToPrintRouteMap"
             }
           ],
           "fields": [
@@ -337,10 +346,7 @@
               "trigger": "saveProductionTasks"
             },
             {
-              "trigger": "sendToPrint"
-            },
-            {
-              "trigger": "openField"
+              "trigger": "sendToPrintProdTask"
             }
           ],
           "fields": [
@@ -366,6 +372,12 @@
             },
             {
               "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "sendToPrintRouteMap"
+            },
+            {
+              "trigger": "sendToPrintProdTask"
             }
           ],
           "fields": [
@@ -406,6 +418,12 @@
             },
             {
               "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "sendToPrintRouteMap"
+            },
+            {
+              "trigger": "sendToPrintProdTask"
             }
           ],
           "fields": [
@@ -447,9 +465,6 @@
           "round": 1,
           "triggers": [
             {
-              "trigger": "sendToPrint"
-            },
-            {
               "trigger": "openField"
             }
           ],
@@ -470,6 +485,12 @@
             },
             {
               "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "sendToPrintRouteMap"
+            },
+            {
+              "trigger": "sendToPrintProdWork"
             }
           ],
           "fields": [
@@ -504,6 +525,12 @@
             },
             {
               "trigger": "sendToPrint"
+            },
+            {
+              "trigger": "sendToPrintRouteMap"
+            },
+            {
+              "trigger": "sendToPrintProdWork"
             }
           ],
           "fields": [

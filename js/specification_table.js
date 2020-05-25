@@ -46,10 +46,13 @@ function initSpecTable(json) {
         setActionToBar({
             id: "sendToPrint",
             type: "print",
-            field: "Кабинет",
-            text: "Отчёт отправлен на печать"
+            field: "Спецификация",
+            text: "Чертеж и спецификация отправлены на печать"
+        }).then(function () {
+            let win = window.open(`print_report/scheme_and_spec`, '_blank');
+            win.focus();
+            triggerToDoTaskEvent("sendToPrint");
         });
-        triggerToDoTaskEvent("sendToPrint")
     });
 
     $tableBlock.on("keydown", ".specTableCellInput", function (e) {
@@ -75,12 +78,16 @@ function initSpecTable(json) {
         });
     }
 
+    let printButton = $tableBlock.find("#print_report_button");
+    printButton.addClass("d-inline").removeClass("d-none");
+    if (Role === "designer" && Round === 3) printButton.addClass("ml-auto")
     if (Role === "designer" && Round !== 3) {
-        $tableBlock.find("#specTableSaveButton").removeClass("d-none").addClass("d-inline");
+        $tableBlock.find("#specTableSaveButton").removeClass("d-none").addClass("d-inline").removeClass("mr-auto").addClass("mr-2");
     } else {
         $tableBlock.find("#specTableSaveButton").remove();
     }
-    if (Round !== 3){
+
+    if (Role !== "designer" || Round !== 3) {
         $tableBlock.one("click", "#specTableReloadButton", function () {
             let thisBlock = this;
             startProcessOfSaving(thisBlock);

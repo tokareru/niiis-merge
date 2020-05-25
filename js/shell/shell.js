@@ -15,6 +15,7 @@ let TaskInfo;
 let SpecTableInfo;
 let collectionIdPdm;
 let loadScheme;
+let infoRoleAndRound = "";
 
 
 function shellInit() {
@@ -145,7 +146,7 @@ async function updateShell(){
     $("#current_round_number").text(round);
 
     //$("#change_role").attr("disabled", "disabled");
-    let data = await getJsonByURLWithoutCallback("json/round_and_role.json");
+    let data = getRoleAndRoundJson();
 
     //$("#current_round").text(Round);
 
@@ -315,4 +316,28 @@ function getJsonByURL(url, callback, add_data) {
             //console.log("Can't load the data");
         },
     })
+}
+
+function randomInteger(min, max) {
+    // случайное число от min до (max+1)
+    let rand = min + Math.random() * (max + 1 - min);
+    return Math.floor(rand);
+}
+
+function getRoleAndRoundJson(isInit = false) {
+    if (infoRoleAndRound === "" || isInit){
+        $.ajax({
+            url: `json/round_and_role.json?${randomInteger(0, 99999999)}`,
+            type: 'GET',
+            async: false,
+            success: function (data) {
+                //console.log(data);
+                infoRoleAndRound = data;
+            },
+            error: function (data) {
+                console.log('error');
+            }
+        });
+    }
+    return infoRoleAndRound;
 }
