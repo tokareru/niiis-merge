@@ -17,6 +17,7 @@ ul, #myUL {
     -ms-user-select: none; /* IE 10+ */
     user-select: none;
     display: block;
+    color: black;
 }
 
 .caret::before {
@@ -206,4 +207,9 @@ ul, #myUL {
 
 #tech_process_field_drop .caret{
     display: initial !important;
+}
+
+.techOperationsGuide .caret:hover{
+    color: white !important;
+    background-color: #515356 !important;
 }

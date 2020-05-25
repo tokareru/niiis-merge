@@ -58,10 +58,10 @@
     background-color: #515356 !important;
 }
 
-.detailChildren:hover{
+/*.detailChildren:hover{
     background-color: black;
     color: white;
-}
+}*/
 
 .operationName{
     z-index: 999;
