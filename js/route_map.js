@@ -297,7 +297,7 @@ function addStyleTd($table, coords, style) {
     $table.find('tr').eq(coords[1]).children().eq(coords[0]).addClass(style);
 }
 
-function saveTechProcessTableRound_1_2($table, thisButton) {
+function collectDataFormRouteMapRound_1_2($table) {
     let saveObj = [];
     let $trs = $table.find('tr.newRouteMapRow');
     $trs.each(function () {
@@ -317,8 +317,11 @@ function saveTechProcessTableRound_1_2($table, thisButton) {
             equipment: eq,
             tools: tools
         })
-
     });
+}
+
+function saveTechProcessTableRound_1_2($table, thisButton) {
+    let saveObj = collectDataFormRouteMapRound_1_2($table);
 
     console.log(saveObj);
     startProcessOfSaving(thisButton, false);
@@ -352,8 +355,8 @@ function saveTechProcessTableRound_1_2($table, thisButton) {
 
 }
 
-function saveTechProcessTableRound3($table, thisButton) {
-    let saveObj = [];
+function collectDataFromRouteMapRound3($table) {
+let saveObj = [];
     let $trs = $table.find('tr.newRouteMapRow');
     if ($trs.length){
         $trs.each(function () {
@@ -410,6 +413,12 @@ function saveTechProcessTableRound3($table, thisButton) {
 
         });
     }
+    return saveObj;
+}
+
+function saveTechProcessTableRound3($table, thisButton) {
+    let saveObj = collectDataFromRouteMapRound3($table);
+
     //console.log(saveObj);
     startProcessOfSaving(thisButton, false)
     $.ajax({
