@@ -16,6 +16,7 @@ let SpecTableInfo;
 let collectionIdPdm;
 let loadScheme;
 let infoRoleAndRound = "";
+let loadRouteMap;
 
 
 function shellInit() {
