@@ -7,12 +7,15 @@ function initRouteMap() {
 
 function initRouteMap() {
     let tech_process_field_drop = $("#tech_process_field_drop");
+
+    $("#tech_process_field_drop").removeClass("tech_process_table");
     let tech_process_table = $("#tech_process_table");
 
+    $("#tech_process_table").addClass("tech_process_table")
     $("#tabs li[aria-controls='route_map_field']").on("click", function () {
         $("#tech_process_field_drop").removeClass("tech_process_table");
         //$("#tech_process_field_drop").droppable("disable");
-        $("#tech_process_table").addClass("tech_process_table");
+        $("#tech_process_table").addClass("tech_process_table")
         //$("#tech_process_table").droppable("enable");
     });
     tech_process_field_drop.removeClass("tech_process_table");
