@@ -13,6 +13,24 @@ function initESI() {
          }
      });*/
 
+    let $esiBody = $("#right-side");
+    $(".detailDraggable").draggable({
+        helper: 'clone',
+        appendTo: ".tech_process_table",
+        drag: function (event, ui) {
+            let $helper =$ (ui.helper);
+            console.log($helper)
+            $helper.removeClass("detailChildren").addClass("text-white")
+            $helper.css("list-style-type", "none");
+            $(".techOperationsDropArea").removeClass("border-color-transparent").addClass("border-warning");
+            $helper.addClass("bg-light")
+        },
+        stop: function (e, ui) {
+            $(".techOperationsDropArea").removeClass("border-warning").addClass("border-color-transparent");
+        }
+
+    });
+
 
 }
 
@@ -48,9 +66,8 @@ function createNodes(children) {
                 createNodes(child.children) +
                 "</ul>" +
                 "</li>" : '';*/
-        //console.log(child)
         node +=
-            `<li>
+            `<li tech-lvl="3" tech-id="${child.id + diffOfTechProcess}" class="detailDraggable">
                 <span class='caret detailChildren'>${(child.designation.replace(/ /g, "") === "") ? "" : (child.designation + " - ")}${child.name} </span>
                 <ul class='nested'>
                     <li class=''>
@@ -165,6 +182,7 @@ function convertArray(arr) {
     };
     arr.forEach(function (element) {
         obj.details.push({
+            id: element[0],
             name: element[2],
             designation: element[1],
             position: element[0],

@@ -51,6 +51,17 @@ function getDetailsInfo(type = "all", isInit = false) {
     return details;
 }
 
+function getDetailById(id) {
+    let detailInfo = {};
+    let allInfo = getDetailsInfo("all");
+    if (allInfo.length)
+        allInfo.forEach(function (_detail) {
+            if (Number(_detail.id) === Number(id))
+                detailInfo = _detail;
+        })
+    return detailInfo;
+}
+
 function set_PDM_or_STD(data, accordID, fieldID) {
     // получем и устанавливаем картинки в поле pdm или std
     let div = $(accordID).find(fieldID);
