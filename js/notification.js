@@ -83,7 +83,7 @@ function initNotifications() {
             setNotificationToFieldInitialization("technological_process_field", {
                 mainHeader: "Рабочий стол. Техпроцесс",
                 extraHeader: "",
-                text: "Чтобы создать техпроцесс, перетащите узлы \"Справочника технолога\" в подсвеченные поля или центр вкладки, чтобы создать следующий порядок: техпроцесс -> техоперация -> узлы техоперации -> элементы узла техоперации."
+                text: "Чтобы создать техпроцесс, перетащите деталь из 'ЭСИ' и перетащите узлы \"Справочника технолога\" в подсвеченные поля или центр вкладки, чтобы создать следующий порядок: деталь -> техпроцесс -> техоперация -> узлы техоперации -> элементы узла техоперации."
             });
             /*setNotificationToFieldInitialization("technologist_guide_field", {
                 mainHeader: "Справочник технолога",
@@ -191,7 +191,7 @@ function initBell() {
     });
 }
 
-function generateNotification(notification, delay = 0) {
+function generateNotification(notification, doTriggerEvent = true,delay = 0) {
     let toast_position = $("#toast-position");
     let button = (notification.button !== undefined)
         ? `<button class="btn btn-dark btn-sm btn-toolbar ml-auto mt-2 ${notification.button.class}">${notification.button.name}</button>` : '';
@@ -237,7 +237,8 @@ function generateNotification(notification, delay = 0) {
         });
     }
 
-    $("#toast-section").trigger("newNotification")
+    if (doTriggerEvent)
+        $("#toast-section").trigger("newNotification")
 
 }
 

@@ -31,8 +31,9 @@ function initProductionTask_3_Rounds() {
     let $workers_drop = $("#workers_drop_area");
     let nameUsers = [];
     let techProcess;
+    // 'ajax/get_techproccess'
     $.ajax({
-        url: 'ajax/get_techproccess',
+        url: 'json/new_techprocess.json',
         type: 'GET',
         async: false,
         success: function (json) {
@@ -46,7 +47,7 @@ function initProductionTask_3_Rounds() {
         `);
         $("#product_task_save_button").attr("disabled", "true");
     }
-    else if (techProcess.techProcess.length === 0){
+    else if (techProcess.data.length === 0){
         $("#product_tech_process_field_drop").append(`
             <p class="alert-warning p-2">Невозможно создать задания на производство, так как не существует техпроцесса</p>
         `);
@@ -332,8 +333,8 @@ function combineWorkerNode(user = {name: "", login: "", role: "", roleName: ""})
 
 function setTechProcessForProductionTask(techProcess) {
     let $field = $("#product_tech_process_field_drop");
-    setDetailsArea(techProcess, $field, "product_tech_process_field_drop");
-    setToggler("product_tech_process_field_drop")
+    setAllTechProcess(techProcess, $field, "product_tech_process_field_drop");
+    //setToggler("product_tech_process_field_drop")
 
     /*$(".techNameDropped").each(function () {
         $(this).find("span.caret").first().trigger("click");

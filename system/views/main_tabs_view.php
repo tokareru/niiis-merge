@@ -14,7 +14,7 @@
     <title>Main-tabs</title>
 </head>
 <body>
-<div class="col-xl">
+<div class="col-xl center-side" role="main">
 <!--Центральная сторона-->
     <div class="tab-content mb-4" id="tabs-content">
 

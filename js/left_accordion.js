@@ -7,6 +7,8 @@
 function setAccordionPanels(json, add_data) {
     let accord_id = "#left-accordion";
     let accordion = $(accord_id);
+
+    $(".center-side").addClass("ml-2");
     accordion.empty();
     let availablePanels = json;
     let shell =  $("#shell");

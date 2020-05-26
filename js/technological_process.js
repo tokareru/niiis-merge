@@ -37,10 +37,10 @@ function technologicalProcessInit() {
     });
 
     reloadButton.on("click", function () {
-        $(".techNameDropped").remove();
+        $(".detailDraggableDropped").remove();
         let thisButton = this;
         startProcessOfSaving(thisButton);
-        downloadTechProcess($container, "tech_process_field_drop").then(function () {
+        downloadTechProcess().then(function () {
             stopProcessOfSaving(thisButton);
         });
     });
@@ -51,7 +51,7 @@ function technologicalProcessInit() {
 
 }
 
-async function downloadTechProcess($container, fieldId) {
+async function downloadTechProcess() {
     // json/tech_process.json
     // json/new_techprocess.json
     // ajax/get_techproccess
@@ -66,7 +66,7 @@ async function downloadTechProcess($container, fieldId) {
 
 function setDetailsArea(json, $field, fieldId) {
     if (json.data != undefined){
-            if (json.data.length){
+        if (json.data.length) {
             if (json.data.length)
                 json.data.forEach(function (_detailArea) {
                     let detail = getDetailById(_detailArea.id)
@@ -90,58 +90,32 @@ function setDetailsArea(json, $field, fieldId) {
             setDropAreaForTechName($(this), fieldId);
         });
 
-        /*$(".techOperationsDropArea").each(function () {
+        $(".techOperationsDropArea").each(function () {
             setDropAreaForTechOperation($(this), fieldId)
-        });*/
+        });
 
         $(".techNodesDropArea").each(function () {
             setDropAreaForTechNode($(this), fieldId)
         })
-
-        setToggler(fieldId);
-        $(".detailDraggableDropped").find("span.caret").trigger("click")
     }
+    setToggler(fieldId);
+    $(".detailDraggableDropped").find("span.caret").trigger("click")
 }
 
 function setAllTechProcess(json, $field_drop, fieldId) {
-    json.techProcess.forEach(function (techName) {
-        let techNameGuide = getTechName(techName.id, techName.lvl).name;
-        // находим заданные для этого техпроцесса узлы
-        let techNodeGuideNamesArray = [];
-        techName.operations.forEach(function (operation) {
-            // находим заданные поля для найденных узлов
-            let innerNodes = [];
-            operation.nodes.forEach(function (_node) {
-               innerNodes.push({
-                   name: getTechNode(_node.id, _node.lvl).name,
-                   id: _node.id,
-                   lvl: _node.lvl,
-                   fields: _node.fields
-               });
+    if (json.data.length){
+        if (json.data.length)
+            json.data.forEach(function (_detailArea) {
+                let detail = getDetailById(_detailArea.id)
+                $field_drop.append(combineDetailArea({
+                    name: `${(detail.designation.replace(/ /g, "") === "") ? "" : (detail.designation + " - ")}${detail.name}`,
+                    id: _detailArea.id,
+                    lvl: 0,
+                    techProcess: _detailArea.techProcess
+                }))
             });
-            techNodeGuideNamesArray.push({
-                name: getTechField(operation.id, operation.lvl).name,
-                id: operation.id,
-                lvl: operation.lvl,
-                nodes: innerNodes
-            });
-        });
-        //console.log(techNodeGuideNamesArray);
-
-        let techProcess = {
-            "name": techNameGuide,
-            "id": techName.id,
-            "lvl": techName.lvl,
-            "operations": techNodeGuideNamesArray
-        };
-        setTechProcess($field_drop, techProcess);
-        setToggler(fieldId);
-        $field_drop.find(".techNameDropped ").last().find("span").first().trigger("click");
-        $field_drop.find(".techNameDropped ").last().find(".techOperation").each(function () {
-                $(this).find("span").first().trigger("click");
-        })
-
-    });
+    }
+    setToggler(fieldId);
 }
 
 function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, techProcess: []}) {
@@ -163,7 +137,7 @@ function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, techProcess: []})
         })
 
     return `
-        <li detail-id="${_detail.id}" class="detailDraggableDropped">
+        <li detail-id="${_detail.id}" tech-lvl="0" class="detailDraggableDropped">
             <span class="caret">${_detail.name}</span>${deleteButton}
             <ul style='min-height: 35px;' class='nested border-bottom border-bottom-color-gray pb-2
              myNested techProcessDropArea border border-color-transparent rounded'>
@@ -172,24 +146,6 @@ function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, techProcess: []})
         </li>
     `
 
-}
-
-function setTechProcess($container, data = {name: "", operations: []}) {
-    let operations = "";
-    if (data.operations.length)
-        data.operations.forEach(function (_operataion) {
-            operations += combineTechOperation(_operataion);
-        });
-
-    let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : "";
-    $container.append(`
-        <li class='techNameDropped' tech-id='${data.id}' tech-lvl='${data.lvl}'>
-            <span class='caret'>${data.name}</span>${deleteButton}
-            <ul style='min-height: 35px;' class='nested border-bottom border-bottom-color-gray pb-2 myNested techOperationsDropArea border border-color-transparent rounded'>
-                ${operations}
-            </ul>
-        </li>
-    `)
 }
 
 function combineTechName(techName = {name: "", id: "", lvl: "", operations: []}, isDeleted) {
@@ -276,7 +232,7 @@ function combineTechField(field) {
 }
 
 function setDropAreaForDetailArea($detailsDropArea, fieldId) {
-    // .detailsDropArea
+    // создаёт корневую зону droppable
     $detailsDropArea.droppable({
         tolerance: "pointer",
         accept: ".detailDraggable",
@@ -292,9 +248,17 @@ function setDropAreaForDetailArea($detailsDropArea, fieldId) {
                 lvl: thisLvl,
                 techProcess: []
             }))
-            setDropAreaForTechName($detailsDropArea.find(".techProcessDropArea").last(), fieldId)
+            setDropAreaForTechName($detailsDropArea.find(".techProcessDropArea").last(), fieldId);
             setToggler(fieldId);
-            $(".detailDraggableDropped").last().find("span.caret").trigger("click")
+            let detailDraggableDropped = $(".detailDraggableDropped");
+            detailDraggableDropped.last().find("span.caret").trigger("click");
+
+            setActionToBar({
+                id: `addNewDetailToTechProcess`,
+                type: "addNew",
+                field: "Рабочий стол. Техпроцесс",
+                text: `Добавлена новая деталь '${getDetailById(thisId).name.replace(/"/g, "")}'`
+            });
         }
     });
 
@@ -307,19 +271,21 @@ function setDropAreaForDetailArea($detailsDropArea, fieldId) {
                 //console.log("Not enough to mark sortable");
                 return;
             }
-            /*let techProcess = $(ui.item).find("span.caret").first().text();
+            let detailName = $(ui.item).find("span.caret").first().text();
             setActionToBar({
-                id: `moveTechProcess`,
+                id: `moveDetail`,
                 type: "move",
                 field: "Рабочий стол. Техпроцесс",
-                text: `Техпроцесс '${techProcess}' был перемещен`
-            });*/
+                text: `Деталь '${detailName}' была перемещена`
+            });
         }
     });
     $detailsDropArea.disableSelection();
 }
 
 function setDropAreaForTechName($techNameDropArea, fieldId) {
+    // создаёт зону droppable в узле детали
+
     $techNameDropArea.droppable({
         tolerance: "pointer",
         accept: ".techName, .techOperationsGuide, .techOperationNodesGuide",
@@ -328,6 +294,7 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
             let $draggable = $(ui.draggable);
             let $this = $techNameDropArea;
 
+            // если перенесенный узел - техоперация
             if ($draggable.hasClass("techOperationsGuide")){
                 let $techName = $draggable.parent().parent().parent().parent();
                 let thisTechNameId = $techName.attr("tech-id");
@@ -358,7 +325,7 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
                     }));
                     setDropAreaForTechNode($placeholder.find(".techNodesDropArea").last(), fieldId);
                 }else {
-                    setTechProcess($this, {
+                    $this.append(combineTechName({
                         name: techName,
                         id: thisTechNameId,
                         lvl: thisTechNameLvl,
@@ -370,8 +337,8 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
                                 nodes: []
                             }
                         ]
-                    });
-                    //setDropAreaForTechOperation($this.find(".techOperationsDropArea").last(), fieldId);
+                    }));
+                    setDropAreaForTechOperation($this.find(".techOperationsDropArea").last(), fieldId);
                     setDropAreaForTechNode($this.find(".techNodesDropArea").last(), fieldId);
                     setActionToBar({
                         id: `addNewTechProcess`,
@@ -388,8 +355,8 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
                 }else {
                     $this.find(".techNameDropped").last().find("span").first().trigger("click");
                     $this.find(".techNameDropped").last().find(".techOperation").find("span").first().trigger("click");
+                    setDropAreaForTechOperation($this.find(".techOperationsDropArea"), fieldId);
                 }
-
                 setActionToBar({
                     id: `addNewTechOperation`,
                     type: "addNew",
@@ -400,6 +367,7 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
                 return;
             }
 
+            // если перенесенный узел - группа техопераций
             if ($draggable.hasClass("techOperationNodesGuide")){
                 let $techName = $draggable.parent().parent();
                 let thisTechNameId = $techName.attr("tech-id");
@@ -450,16 +418,17 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
                     });
 
                 if (!isTechNameAlreadyHere){
-                    setTechProcess($this, {
+                    $this.append(combineTechName({
                         name: techName,
                         id: $techName.attr("tech-id"),
                         lvl: $techName.attr("tech-lvl"),
                         operations: operations
-                    });
+                    }));
                     //setDropAreaForTechName($this.find(".techOperationsDropArea").last(), fieldId);
                     $this.find(".techNodesDropArea").each(function () {
                         setDropAreaForTechNode($(this), fieldId);
                     })
+                    setDropAreaForTechOperation($this.find(".techOperationsDropArea"), fieldId);
                 }else {
                     if (operations.length)
                         operations.forEach(function (_operation) {
@@ -486,22 +455,23 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
                 return;
             }
 
+            // если перенесенный узел - тип техпроцесса
             let name = $draggable.find("span.caret").first().text();
-            setTechProcess($this, {
+            $this.append(combineTechName({
                 name: name,
                 id: $draggable.attr("tech-id"),
                 lvl: $draggable.attr("tech-lvl"),
                 operations: []
-            });
+            }));
 
-            /*let techNodesDropArea = $(".techNodesDropArea").last();
+            let techNodesDropArea = $(".techNodesDropArea").last();
             setDropAreaForTechNode(techNodesDropArea, fieldId);
 
             techNodesDropArea.find(".techFieldsDropArea").each(function () {
                 setDropAreaForTechFields($(this))
-            });*/
+            });
 
-            //setDropAreaForTechOperation($this.find(".techOperationsDropArea"), fieldId);
+            setDropAreaForTechOperation($this.find(".techOperationsDropArea"), fieldId);
 
             setActionToBar({
                 id: `addNewTechProcess`,
@@ -535,10 +505,16 @@ function setDropAreaForTechName($techNameDropArea, fieldId) {
     });
     $techNameDropArea.disableSelection();
 
+    /*$techNameDropArea.find(".techOperation").each(function () {
+        setDropAreaForTechOperation($(this), fieldId);
+    })*/
+
 }
 
 function setDropAreaForTechOperation($techOperationsDropArea, fieldId) {
-    $techOperationsDropArea.droppable({
+    // создаёт зону droppable в узле типа техоперации
+
+    /*$techOperationsDropArea.droppable({
         tolerance: "pointer",
         accept: ".techOperationsGuide, .techOperationNodesGuide",
         greedy: true,
@@ -596,12 +572,11 @@ function setDropAreaForTechOperation($techOperationsDropArea, fieldId) {
             setToggler(fieldId);
             $this.find(".techOperation").last().find("span").first().trigger("click");
         }
-    });
+    });*/
 
     $techOperationsDropArea.sortable({
         items: ".techOperation",
         axis: 'y',
-        connectWith: ".techOperationsDropArea",
         stop: function (e, ui) {
             // сортировка техпроцесса
             if ( Math.abs(Number(ui.originalPosition.top - ui.position.top)) <=  18 ){
@@ -621,6 +596,8 @@ function setDropAreaForTechOperation($techOperationsDropArea, fieldId) {
 }
 
 function setDropAreaForTechNode($techNodesDropArea, fieldId) {
+    // создаёт зону droppable в узле техоперации
+
     $techNodesDropArea.droppable({
         tolerance: "pointer",
         accept: ".operationName, .instruments_list_li",
@@ -632,10 +609,24 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
             let fields = [];
             let parent_name = $this.parent().find("span").first().text();
 
+            // если перенесенный узел - конечное поле
             if ($draggable.hasClass("instruments_list_li")){
                 let $techNode = $draggable.parent().parent();
                 let techNodeName = $techNode.find("span").first().text();
                 let techFieldName = $draggable.find("span").first().text();
+
+                // проверка на то, относится ли перенесенной узел к типу техпроцесса в который его перенесли
+                let techNameDraggableId = Number($techNode.parent().parent().attr("tech-id"));
+                let thisTechNameId = Number($techNodesDropArea.parent().parent().parent().attr("tech-id"));
+                if (thisTechNameId !== techNameDraggableId){
+                    generateNotification({
+                        mainHeader: "Рабочий стол. Техпроцесс",
+                        extraHeader:``,
+                        text: `Данный узел отностится к другому типу техпроцесса`
+                    }, false, 2000);
+                    return;
+                }
+
                 let field = {
                     name: techFieldName,
                     id: $draggable.attr("tech-id"),
@@ -673,7 +664,7 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
                         ]
                     }));
 
-                    //setDropAreaForTechFields($this.find(".techFieldsDropArea").last());
+                    setDropAreaForTechFields($this.find(".techFieldsDropArea").last());
                     setToggler(fieldId);
                     $this.find(".techNode").last().find("span").first().trigger("click");
                 }
@@ -688,6 +679,19 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
                 return;
             }
 
+            // проверка на то, относится ли перенесенная группа к типу техпроцесса в который её перенесли
+            let techNameDraggableId = Number($draggable.parent().parent().attr("tech-id"));
+            let thisTechNameId = Number($techNodesDropArea.parent().parent().parent().attr("tech-id"));
+            if (thisTechNameId !== techNameDraggableId){
+                generateNotification({
+                    mainHeader: "Рабочий стол. Техпроцесс",
+                    extraHeader:``,
+                    text: `Данный узел отностится к другому типу техпроцесса`
+                }, false, 2000);
+                return;
+            }
+
+            // находим, есть ли в techNodesDropArea techNode с таким же tech-id как и у перенесенного
             let $placeholder;
             let isThatNodeAlreadyThere = false;
             let $techNodes = $this.parent().find(".techNode");
@@ -736,7 +740,7 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
                     fields: fields
                 });
                 $this.append(node);
-                //setDropAreaForTechFields($this.find(".techFieldsDropArea").last());
+                setDropAreaForTechFields($this.find(".techFieldsDropArea").last());
 
                 setToggler(fieldId);
                 $this.find(".techNode").last().find("span").first().trigger("click");
@@ -773,10 +777,14 @@ function setDropAreaForTechNode($techNodesDropArea, fieldId) {
         }
     });
     $techNodesDropArea.disableSelection();
+
+    setDropAreaForTechFields($techNodesDropArea.find(".techFieldsDropArea"), fieldId)
 }
 
 function setDropAreaForTechFields($techFieldsDropArea) {
-    $techFieldsDropArea.droppable({
+    // создаёт зону droppable в узле группы (node)
+
+    /*$techFieldsDropArea.droppable({
         tolerance: "touch",
         accept: ".instruments_list_li",
         cancel: ".techOperationsGuide",
@@ -803,12 +811,11 @@ function setDropAreaForTechFields($techFieldsDropArea) {
             //setToggler();
             //$container.find(".techNameDropped").last().find(".caret").first().trigger("click");
         }
-    });
+    });*/
 
     $techFieldsDropArea.sortable({
         items: "li",
         axis: 'y',
-        connectWith: ".techFieldsDropArea",
         stop: function (e, ui) {
             if ( Math.abs(Number(ui.originalPosition.top - ui.position.top)) <=  15 ){
                 //console.log("Not enough to mark sortable");
@@ -893,6 +900,11 @@ function deleteKnot($this, isRouteMap = false) {
         id = "deleteTechField";
         text = `Поле '${name}' было удалено`;
     }
+    if (lvl === "0"){
+        let detailId = Number($container.attr("detail-id"));
+        id = "deleteDetailNode";
+        text = `Деталь '${getDetailById(detailId).name.replace(/"/g, "")}' была удалена`;
+    }
 
     setActionToBar({
         id: id,
@@ -908,13 +920,13 @@ function addNewTechProcess(fieldId) {
     let tech_process_field_drop = $("#tech_process_field_drop");
     let techNameDropped = tech_process_field_drop.find(".techNameDropped");
     let id = techNameDropped.length + 1;
-    setTechProcess(tech_process_field_drop, {
+    tech_process_field_drop.append(combineTechName({
         name: `Техпроцесс ${id}`,
         id: (Number(id) + diffOfTechProcess).toString(),
         lvl: "new",
         operations: []
-    });
-    setDropAreaForTechOperation(tech_process_field_drop.find(".techNameDropped").last().find(".techOperationsDropArea"), fieldId);
+    }));
+    //setDropAreaForTechOperation(tech_process_field_drop.find(".techNameDropped").last().find(".techOperationsDropArea"), fieldId);
     setToggler(fieldId);
 
     tech_process_field_drop.find(".techNameDropped").last().find("span").first().trigger("click");
@@ -927,66 +939,79 @@ function addNewTechProcess(fieldId) {
     });
 }
 
-function saveTechProcess(thisButton) {
-    let json = {
-        techProcess: []
+function collectDataFromTechProcess() {
+    let detailsJSON = {
+        data: []
     };
-    let $field = $("#tech_process_field_drop");
-    let $techNames = $field.find(".techNameDropped");
-    $techNames.each(function () {
-        let this_tech_name = $(this);
-        let techName = {
-            id: this_tech_name.attr("tech-id"),
-            lvl: this_tech_name.attr("tech-lvl"),
-            operations: []
-        };
-        let operations = this_tech_name.find(".techOperation");
-        if (operations.length)
-            operations.each(function () {
-                let this_operation = $(this);
-                let newOperation = {
-                    id: this_operation.attr("tech-id"),
-                    lvl: this_operation.attr("tech-lvl"),
-                    nodes: []
-                };
-                let nodes = this_operation.find(".techNode");
-                if (nodes.length){
-                    nodes.each(function () {
-                        let this_node = $(this);
-                        let newNode = {
-                            id: this_node.attr("tech-id"),
-                            lvl: this_node.attr("tech-lvl"),
-                            fields: []
-                        };
+    let detailsDropArea = $(".detailsDropArea ");
+    detailsDropArea.find(".detailDraggableDropped").each(function () {
+        let this_detail = $(this);
+        let detail = {
+            id: this_detail.attr("detail-id"),
+            lvl: this_detail.attr("tech-lvl"),
+            techProcess: []
+        }
+        let $techNames = this_detail.find(".techNameDropped");
+        $techNames.each(function () {
+            let this_tech_name = $(this);
+            let techName = {
+                id: this_tech_name.attr("tech-id"),
+                lvl: this_tech_name.attr("tech-lvl"),
+                operations: []
+            };
+            let operations = this_tech_name.find(".techOperation");
+            if (operations.length)
+                operations.each(function () {
+                    let this_operation = $(this);
+                    let newOperation = {
+                        id: this_operation.attr("tech-id"),
+                        lvl: this_operation.attr("tech-lvl"),
+                        nodes: []
+                    };
+                    let nodes = this_operation.find(".techNode");
+                    if (nodes.length){
+                        nodes.each(function () {
+                            let this_node = $(this);
+                            let newNode = {
+                                id: this_node.attr("tech-id"),
+                                lvl: this_node.attr("tech-lvl"),
+                                fields: []
+                            };
 
-                        let fields = this_node.find(".techField");
-                        if (fields.length)
-                            fields.each(function () {
-                                let this_field = $(this);
-                                newNode.fields.push({
-                                    id: this_field.attr("tech-id"),
-                                    lvl: this_field.attr("tech-lvl")
-                                })
-                            });
+                            let fields = this_node.find(".techField");
+                            if (fields.length)
+                                fields.each(function () {
+                                    let this_field = $(this);
+                                    newNode.fields.push({
+                                        id: this_field.attr("tech-id"),
+                                        lvl: this_field.attr("tech-lvl")
+                                    })
+                                });
 
-                        newOperation.nodes.push(newNode)
-                    })
-                }
-                techName.operations.push(newOperation);
-            });
+                            newOperation.nodes.push(newNode)
+                        })
+                    }
+                    techName.operations.push(newOperation);
+                });
 
-        json.techProcess.push(techName);
-    });
-    //console.log(json);
+            detail.techProcess.push(techName);
+        });
+        detailsJSON.data.push(detail);
+    })
+}
+
+function saveTechProcess(thisButton) {
+    let detailsJSON = collectDataFromTechProcess();
+    console.log(detailsJSON);
     startProcessOfSaving(thisButton, false);
     $.ajax(
         {
             url: 'ajax/save_techproccess',
             type: 'POST',
-            data: json,
+            data: detailsJSON,
             success: function (data) {
                 console.log(data);
-                madeRouteMapByTechProcess(json);
+                madeRouteMapByTechProcess(detailsJSON);
                 stopProcessOfSaving(thisButton, false);
                 setActionToBar({
                     id: "saveTechProcess",

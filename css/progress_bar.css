@@ -80,6 +80,7 @@
     height: 0.5rem;
     width: 100%;
     bottom: 3.3rem;
+    z-index: 101;
 }
 
 @media (max-width: 991px) {

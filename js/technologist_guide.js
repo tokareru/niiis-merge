@@ -41,6 +41,7 @@ function setTechnologistGuide(json, add_data) {
 
     $("#technologist_guide_accordion").find(".detailChildren").trigger("click");
 
+    // отвечает за группы (кроме "техоперации")
     $(".operationName").draggable({
         helper: 'clone',
         appendTo: ".tech_process_table",
@@ -51,7 +52,11 @@ function setTechnologistGuide(json, add_data) {
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
             $helper.find("ul").css("background-color", "#dbf4ff");
-            $(".techNodesDropArea").removeClass("border-color-transparent").addClass("border-warning")
+            let $techNameId = $helper.attr("tech-root-id");
+            let availableFields = $(`.techNameDropped[tech-id="${$techNameId}"]`);
+            availableFields.each(function () {
+                $(this).find(".techNodesDropArea").removeClass("border-color-transparent").addClass("border-warning");
+            })
         },
         stop: function (e, ui) {
             $(".techNodesDropArea").removeClass("border-warning").addClass("border-color-transparent");
@@ -69,6 +74,11 @@ function setTechnologistGuide(json, add_data) {
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
             $helper.find("ul").css("background-color", "#dbf4ff");
+            /*let $techNameId = $helper.attr("tech-root-id");
+            let availableFields = $(`.techNameDropped[tech-id="${$techNameId}"]`);
+            availableFields.each(function () {
+                $(this).find(".techOperationsDropArea").removeClass("border-color-transparent").addClass("border-warning");
+            });*/
             $(".techProcessDropArea").removeClass("border-color-transparent").addClass("border-warning");
         },
         stop: function (e, ui) {
@@ -87,7 +97,11 @@ function setTechnologistGuide(json, add_data) {
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
             $helper.find("ul").css("background-color", "#dbf4ff");
-            $(".techProcessDropArea").removeClass("border-color-transparent").addClass("border-warning");
+            let $techNameId = $helper.attr("tech-root-id");
+            let availableFields = $(`.techNameDropped[tech-id="${$techNameId}"]`);
+            availableFields.each(function () {
+                $(this).find(".techProcessDropArea").removeClass("border-color-transparent").addClass("border-warning");
+            });
         },
         stop: function (e, ui) {
             $(".techProcessDropArea").removeClass("border-warning").addClass("border-color-transparent");
@@ -101,10 +115,14 @@ function setTechnologistGuide(json, add_data) {
         drag: function (event, ui) {
             let $helper = $(ui.helper);
             $helper.css("list-style-type", "none");
-            $(".techFieldsDropArea").removeClass("border-color-transparent").addClass("border-warning")
+            let $techNameId = $helper.attr("tech-root-id");
+            let availableFields = $(`.techNameDropped[tech-id="${$techNameId}"]`);
+            availableFields.each(function () {
+                $(this).find(".techNodesDropArea").removeClass("border-color-transparent").addClass("border-warning");
+            });
         },
         stop: function (e, ui) {
-            $(".techFieldsDropArea").removeClass("border-warning").addClass("border-color-transparent");
+            $(".techNodesDropArea").removeClass("border-warning").addClass("border-color-transparent");
         }
 
     });
@@ -122,6 +140,9 @@ function setTechnologistGuide(json, add_data) {
         }
 
     });
+
+    $(".left-side-body").draggable()
+
     field.trigger("endOfInitialization");
 }
 
@@ -147,18 +168,16 @@ function createTechGuideNodes(tech) {
             child.fields.forEach(function (ins) {
 
                 fields +=
-                    "<li tech-lvl='" + ins.lvl + "' tech-id='" + ins.id + "' class='lastChild " + fieldType + "'>" +
-                    "<span>" + ins.name + "</span>" +
-                    "</li>";
+                    `<li tech-lvl='${ins.lvl}' tech-id='${ins.id}' class='lastChild ${fieldType}' tech-root-id="${tech.id}">
+                        <span>${ins.name}</span>
+                    </li>`;
             });
 
             inp +=
-                "<il tech-lvl='" + child.lvl + "' tech-id='" + child.id + "' class='" + nodeType + "'>" +
-                "<span class='caret'>" + child.name + "</span>" +
-                "<ul class='nested pl-3 operationNameUl'>" +
-                fields +
-                "</ul>" +
-                "</il>";
+                `<il tech-lvl='${child.lvl}' tech-id='${child.id}' class='${nodeType}' tech-root-id="${tech.id}">
+                    <span class='caret'>${child.name}</span>
+                    <ul class='nested pl-3 operationNameUl'>${fields}</ul>
+                </il>`;
         });
 
         node =

@@ -14,10 +14,10 @@
     <title>Left-side</title>
 </head>
 <body>
-<div class="col-xl-2 mb-4">
+<nav class="col-xl-2 mb-4 left-side-body">
 <!--Левая сторона-->
     <div class="left-side">
-        <nav class="mt-2 mt-xl-0 navbar-expand-xl nav navbar-light">
+        <nav class="mt-2 mt-xl-0 navbar-expand-xl nav navbar-light left-side-nav">
             <button class="navbar-toggler mb-2 outline-none" type="button" data-toggle="collapse"
                     data-target="#left-accordion-collapse" aria-controls="left-accordion-collapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -29,6 +29,6 @@
             </div>
         </nav>
     </div>
-</div>
+</nav>
 </body>
 </html>

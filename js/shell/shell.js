@@ -139,6 +139,7 @@ async function updateShell(){
     shell.addClass("blur-filter");
     tabs_fields_ul.addClass("blur-filter");
     $menuBody.addClass("d-none").removeClass("d-sm-table");
+    $(".center-side").removeClass("ml-2");
 
     //обновляем данные раунда
     console.log("Раунд: " + round + ", роль: " + role);

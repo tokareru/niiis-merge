@@ -169,3 +169,10 @@ fieldset p:hover{
 .my-bg-secondary{
     background-color: #6c757d;
 }
+
+#left-accordion{
+    /*width: 100% !important;*/
+    /*max-width: 95%;*/
+    width: 95%;
+    max-width: 255px;
+}
