@@ -213,3 +213,7 @@ ul, #myUL {
     color: white !important;
     background-color: #515356 !important;
 }
+
+.detailDraggableDropped{
+    list-style: none;
+}

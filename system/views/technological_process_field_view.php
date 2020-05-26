@@ -9,7 +9,7 @@
 
 <div class='spec_header'>Рабочий стол. Техпроцесс</div>
 <div id="tech_process_field_container">
-    <div id="tech_process_field_drop" class="tech_process_table border border-color-transparent rounded">
+    <div id="tech_process_field_drop" class="tech_process_table detailsDropArea border border-color-transparent rounded">
 
     </div>
 <!--

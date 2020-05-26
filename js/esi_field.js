@@ -19,7 +19,7 @@ function initESI() {
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
             let $helper =$ (ui.helper);
-            console.log($helper)
+            //console.log($helper)
             $helper.removeClass("detailChildren").addClass("text-white")
             $helper.css("list-style-type", "none");
             $(".techOperationsDropArea").removeClass("border-color-transparent").addClass("border-warning");
@@ -67,7 +67,7 @@ function createNodes(children) {
                 "</ul>" +
                 "</li>" : '';*/
         node +=
-            `<li tech-lvl="3" tech-id="${child.id + diffOfTechProcess}" class="detailDraggable">
+            `<li tech-lvl="3" tech-id="${child.id}" class="detailDraggable">
                 <span class='caret detailChildren'>${(child.designation.replace(/ /g, "") === "") ? "" : (child.designation + " - ")}${child.name} </span>
                 <ul class='nested'>
                     <li class=''>

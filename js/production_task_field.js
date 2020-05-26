@@ -73,7 +73,7 @@ function initProductionTask_3_Rounds() {
 }
 
 function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, nameUsers) {
-    initTechProcessForProductionTask(techProcess);
+    setTechProcessForProductionTask(techProcess);
     AllInfo.forEach(function (user) {
         if (user.role === "worker") nameUsers.push(user)
     });
@@ -330,25 +330,10 @@ function combineWorkerNode(user = {name: "", login: "", role: "", roleName: ""})
     `;
 }
 
-function initTechProcessForProductionTask(techProcess) {
-    /*if (Role !== "technologist"){
-        $.ajax({
-            url: techGuideURL,
-            type: 'GET',
-            success: function (json) {
-                techGuideJson = json;
-                setTechProcessForProductionTask();
-            }
-        });
-    }else {
-        setTechProcessForProductionTask();
-    }*/
-    setTechProcessForProductionTask(techProcess);
-}
-
 function setTechProcessForProductionTask(techProcess) {
     let $field = $("#product_tech_process_field_drop");
-    setAllTechProcess(techProcess, $field, "product_tech_process_field_drop");
+    setDetailsArea(techProcess, $field, "product_tech_process_field_drop");
+    setToggler("product_tech_process_field_drop")
 
     /*$(".techNameDropped").each(function () {
         $(this).find("span.caret").first().trigger("click");

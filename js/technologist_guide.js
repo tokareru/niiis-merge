@@ -26,7 +26,7 @@ function setTechnologistGuide(json, add_data) {
 
     $("#technologist_guide_accordion").append(
         "<ul class='col-12 pl-0 pr-0'>" +
-            techs +
+        techs +
         "</ul>"
     );
 
@@ -45,7 +45,7 @@ function setTechnologistGuide(json, add_data) {
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            let $helper =$ (ui.helper);
+            let $helper = $(ui.helper);
             $helper.find("ul").hide();
             $helper.find("span").first().css("color", "black !important");
             $helper.find("span").css("background-color", "#dbf4ff");
@@ -63,16 +63,16 @@ function setTechnologistGuide(json, add_data) {
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            let $helper =$ (ui.helper);
+            let $helper = $(ui.helper);
             $helper.find("ul").hide();
             $helper.find("span").first().css("color", "black !important");
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
             $helper.find("ul").css("background-color", "#dbf4ff");
-            $(".techOperationsDropArea").removeClass("border-color-transparent").addClass("border-warning")
+            $(".techProcessDropArea").removeClass("border-color-transparent").addClass("border-warning");
         },
         stop: function (e, ui) {
-            $(".techOperationsDropArea").removeClass("border-warning").addClass("border-color-transparent");
+            $(".techProcessDropArea").removeClass("border-warning").addClass("border-color-transparent");
         }
 
     });
@@ -80,17 +80,17 @@ function setTechnologistGuide(json, add_data) {
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            let $helper =$ (ui.helper);
+            let $helper = $(ui.helper);
             $helper.find("ul").hide();
             $helper.css("list-style-type", "none");
             $helper.find("span").css("color", "black !important");
             $helper.find("span").css("background-color", "#dbf4ff");
             $helper.find("li").css("background-color", "#dbf4ff");
             $helper.find("ul").css("background-color", "#dbf4ff");
-            $("#tech_process_field_drop").removeClass("border-color-transparent").addClass("border-warning")
+            $(".techProcessDropArea").removeClass("border-color-transparent").addClass("border-warning");
         },
         stop: function (e, ui) {
-            $("#tech_process_field_drop").removeClass("border-warning").addClass("border-color-transparent");
+            $(".techProcessDropArea").removeClass("border-warning").addClass("border-color-transparent");
         }
 
     });
@@ -99,7 +99,7 @@ function setTechnologistGuide(json, add_data) {
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            let $helper =$ (ui.helper);
+            let $helper = $(ui.helper);
             $helper.css("list-style-type", "none");
             $(".techFieldsDropArea").removeClass("border-color-transparent").addClass("border-warning")
         },
@@ -113,12 +113,12 @@ function setTechnologistGuide(json, add_data) {
         helper: 'clone',
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
-            let $helper =$ (ui.helper);
+            let $helper = $(ui.helper);
             $helper.css("list-style-type", "none");
-            $(".techOperationsDropArea").removeClass("border-color-transparent").addClass("border-warning")
+            $(".techProcessDropArea").removeClass("border-color-transparent").addClass("border-warning");
         },
         stop: function (e, ui) {
-            $(".techOperationsDropArea").removeClass("border-warning").addClass("border-color-transparent");
+            $(".techProcessDropArea").removeClass("border-warning").addClass("border-color-transparent");
         }
 
     });
@@ -132,14 +132,14 @@ function createTechGuideNodes(tech) {
 
     let inp = '';
     //console.log(tech.children.length)
-    if (tech.children.length){
+    if (tech.children.length) {
         tech.children.forEach(function (child, i) {
             //console.log(child);
 
             let fields = '';
             let fieldType = "instruments_list_li";
             let nodeType = "operationName";
-            if (child.name === "Техоперации"){
+            if (child.name === "Техоперации") {
                 fieldType = "techOperationsGuide";
                 nodeType = "techOperationNodesGuide"
             }
