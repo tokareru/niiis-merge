@@ -6,7 +6,7 @@
 
 function setAccordionPanels(json, add_data) {
     if (Role === "technologist" && Round === 3){
-        $(".left-side").addClass(".left-side-tech-guide")
+        $(".left-side").addClass("left-side-tech-guide")
     }
 
     let accord_id = "#left-accordion";

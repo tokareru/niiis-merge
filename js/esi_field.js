@@ -23,7 +23,7 @@ function initESI() {
             $helper.removeClass("detailChildren").addClass("text-white")
             $helper.css({
                 "list-style-type": "none",
-                "z-index": "1000"
+                "z-index": "1000  "
             });
             $("#tech_process_field_drop").removeClass("border-color-transparent").addClass("border-warning");
             $helper.addClass("bg-light")

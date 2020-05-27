@@ -141,8 +141,6 @@ function setTechnologistGuide(json, add_data) {
 
     });
 
-    $(".left-side-body").draggable()
-
     field.trigger("endOfInitialization");
 }
 

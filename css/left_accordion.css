@@ -173,6 +173,6 @@ fieldset p:hover{
 #left-accordion{
     /*width: 100% !important;*/
     /*max-width: 95%;*/
-    width: 95%;
-    max-width: 255px;
+    /*width: 95%;
+    max-width: 255px;*/
 }
