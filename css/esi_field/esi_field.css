@@ -216,3 +216,7 @@ overflow-y: scroll;
     height: 10%;
     max-height: 10%;
 }
+
+.reloadButtonForESI{
+    cursor: pointer;
+}

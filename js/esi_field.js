@@ -19,7 +19,6 @@ function initESI() {
         appendTo: ".tech_process_table",
         drag: function (event, ui) {
             let $helper =$ (ui.helper);
-            //console.log($helper)
             $helper.removeClass("detailChildren").addClass("text-white")
             $helper.css({
                 "list-style-type": "none",
@@ -27,15 +26,34 @@ function initESI() {
             });
             $helper.find("ul").remove()
             $("#tech_process_field_drop").removeClass("border-color-transparent").addClass("border-warning");
-            $helper.addClass("bg-light");
         },
         stop: function (e, ui) {
             $("#tech_process_field_drop").removeClass("border-warning").addClass("border-color-transparent");
         }
 
     });
+    $(".reloadButtonForESI").on("click", function () {
+        reloadESI();
+    })
 
+}
 
+function reloadESI() {
+    let reloadButtonForESI = $(".reloadButtonForESI");
+    let thisReloadButtonForESI = document.getElementsByClassName("reloadButtonForESI");
+    if (Role === 'designer') reloadButtonForESI.remove();
+    let checkedDetails = [];
+    startProcessOfSaving(thisReloadButtonForESI);
+    $.ajax({
+        type: "POST",
+        async: false,
+        url: "spec_autoentered_table_ajax/load_product_checked",
+        success: function (data) {
+            checkedDetails = data.checked;
+            stopProcessOfSaving(thisReloadButtonForESI);
+        }
+    });
+    setESI({details: convertPdmAndStdInfo(checkedDetails)});
 }
 
 function setESI(data, setNewInterval = false) {
