@@ -645,7 +645,7 @@ async function addTaskToDB(thisButton) {
 
     $.ajax({
         type: 'POST',
-        url: '',//ajax/save_route
+        url: 'ajax/save_route',//ajax/save_route
         data: data,
         success: function (res) {
             stopProcessOfSaving(thisButton);
