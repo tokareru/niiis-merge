@@ -23,10 +23,11 @@ function initESI() {
             $helper.removeClass("detailChildren").addClass("text-white")
             $helper.css({
                 "list-style-type": "none",
-                "z-index": "1000  "
+                "z-index": "1000"
             });
+            $helper.find("ul").remove()
             $("#tech_process_field_drop").removeClass("border-color-transparent").addClass("border-warning");
-            $helper.addClass("bg-light")
+            $helper.addClass("bg-light");
         },
         stop: function (e, ui) {
             $("#tech_process_field_drop").removeClass("border-warning").addClass("border-color-transparent");
@@ -231,5 +232,6 @@ function setMainTitleForESI() {
     $esi_branch_body_header_span.text(`
        ${getDetailsInfo("prim")[0].designation} - ${getDetailsInfo("prim")[0].name}
     `)
+    $esi_branch_body_header_span.parent().attr("tech-lvl", 0).attr(`tech-id`, `${getDetailsInfo("prim")[0].id}`);
 }
 
