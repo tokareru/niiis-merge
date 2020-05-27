@@ -67,7 +67,7 @@ function addAvailableTabs(data, tableID) {
     if (Role === "technologist" && Round === 3){
         let leftSideBody = $(".left-side-body")
         leftSideBody.removeClass("col-xl-2").addClass("col-xl-3").addClass("d-none");
-        $("#tabs a").on("click", function () {
+        $("#tabs a").on("shown.bs.tab", function () {
             let $a = $(this);
             let tabTarget = $a.attr("tab-target")
             if (tabTarget === "technological_process_field" || tabTarget === "route_map_field"){
