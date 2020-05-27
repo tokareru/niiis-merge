@@ -21,12 +21,15 @@ function initESI() {
             let $helper =$ (ui.helper);
             //console.log($helper)
             $helper.removeClass("detailChildren").addClass("text-white")
-            $helper.css("list-style-type", "none");
-            $(".techOperationsDropArea").removeClass("border-color-transparent").addClass("border-warning");
+            $helper.css({
+                "list-style-type": "none",
+                "z-index": "1000"
+            });
+            $("#tech_process_field_drop").removeClass("border-color-transparent").addClass("border-warning");
             $helper.addClass("bg-light")
         },
         stop: function (e, ui) {
-            $(".techOperationsDropArea").removeClass("border-warning").addClass("border-color-transparent");
+            $("#tech_process_field_drop").removeClass("border-warning").addClass("border-color-transparent");
         }
 
     });

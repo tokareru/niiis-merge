@@ -156,6 +156,7 @@ ul, #myUL {
 
 #tech_process_field_drop{
     min-height: 300px;
+    padding-bottom: 9rem;
 }
 
 .operationNameDropArea{}

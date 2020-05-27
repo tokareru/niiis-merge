@@ -7,11 +7,6 @@
    */
 
   ?>
-<!DOCTYPE html>
-<html>
-<head>
-</head>
-<body>
 <div id="tasks_routes" class="tasks_routes_main">
     <div id="task_routes_tree">
         <h2 class="font-weight-bold">Дерево маршрутов</h2>
@@ -113,12 +108,6 @@
             </div>
         </div>
     </div>
-    <!--<div id="task_routes_my_tasks">
-        <div id="task_routes_my_tasks_button" class="float-left"></div>
-        <div id="task_routes_my_tasks_content" class="float-right">
-            <div id="task_routes_own_routes"></div>
-        </div>
-    </div>-->
 </div>
 </body>
 </html>

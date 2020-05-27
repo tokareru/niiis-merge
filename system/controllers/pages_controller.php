@@ -20,20 +20,8 @@ class pages_controller extends Controller{
            $this->view->render('', 'main_tabs_view.php', '');
         }
 
-        function right_side(){
-             $this->view->render('', 'right_side_view.php', '');
-        }
-
         function scheme_field(){
             $this->view->render('', 'scheme_field_view.php', '');
-        }
-
-        function pdm(){
-            $this->view->render('', 'pdm_view.php', '');
-        }
-
-        function std(){
-            $this->view->render('', 'std_view.php', '');
         }
 
         function esi_field(){
@@ -66,10 +54,6 @@ class pages_controller extends Controller{
 
         function production_task_field(){
             $this->view->render('', 'production_task_field_view.php', '');
-        }
-
-        function create_task_route(){
-            $this->view->render('', 'create_task_route_view.php', '');
         }
 
         function production_task_field_table(){

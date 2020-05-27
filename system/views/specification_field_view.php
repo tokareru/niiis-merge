@@ -15,7 +15,7 @@
 </head>
 <body>
 <div id="specificationBlock">
-    <div class="col-md-12 spec_header">
+    <div class="col-md-12 spec_header text-align-center">
         Спецификация
     </div>
     <div id="specificationTableBlock">

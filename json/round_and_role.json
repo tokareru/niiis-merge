@@ -326,8 +326,8 @@
       "parent": ".myRow"
     },
     {
-      "name": "Правая сторона",
-      "URL": "pages/right_side",
+      "name": "ЭСИ",
+      "URL": "pages/esi_field",
       "ID": "right-side",
       "init": "initESI",
       "parent": "body"
@@ -343,7 +343,7 @@
   "available_tabs": [
     {
       "name": "Изделия PDM",
-      "URL": "pages/pdm",
+      "URL": "",
       "ID": "pdm_field",
       "location": "left-side",
       "notify": "",
@@ -351,7 +351,7 @@
     },
     {
       "name": "Стандартные изделия",
-      "URL": "pages/std",
+      "URL": "",
       "ID": "std_field",
       "location": "left-side",
       "notify": "",
@@ -372,14 +372,6 @@
       "location": "main-tabs",
       "notify": "PdmOrStdHandler",
       "init": "triggerschemeInit"
-    },
-    {
-      "name": "ЭСИ",
-      "URL": "pages/esi",
-      "ID": "esi_field",
-      "location": "right-side",
-      "notify": "",
-      "init": "setEMI"
     },
     {
       "name": "Спецификация",
@@ -412,14 +404,6 @@
       "location": "main-tabs",
       "notify": "",
       "init": "initRouteMap"
-    },
-    {
-      "name": "Создание маршрута заданий",
-      "URL": "",
-      "ID": "",
-      "location": "",
-      "notify": "",
-      "init": ""
     },
     {
       "name": "Маршруты заданий",

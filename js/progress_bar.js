@@ -81,7 +81,9 @@ function setActionBar(data) {
         triggerToDoTaskEvent("openField", 0,
             {tabId: e.target.getAttribute("id").replace("collapse-", ""), name: e.target.getAttribute("header-name")});
     });
-    accordion.find(".collapse").first().addClass("show").trigger("shown.bs.collapse");
+    if (Role === "technologist" && Round === 3){
+    }else
+        accordion.find(".collapse").first().addClass("show").trigger("shown.bs.collapse");
 
     // инициализация чата
     $("#chat_main").on("chat-opened", function (e, addInfo = {isReload: false}) {

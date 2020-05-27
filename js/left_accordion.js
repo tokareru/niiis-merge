@@ -5,10 +5,14 @@
 }*/
 
 function setAccordionPanels(json, add_data) {
+    if (Role === "technologist" && Round === 3){
+        $(".left-side").addClass(".left-side-tech-guide")
+    }
+
     let accord_id = "#left-accordion";
     let accordion = $(accord_id);
 
-    $(".center-side").addClass("ml-2");
+    //$(".center-side").addClass("ml-2");
     accordion.empty();
     let availablePanels = json;
     let shell =  $("#shell");
@@ -82,13 +86,4 @@ function setLeftPanel(accordion, accord_id, elem, availableSubscribers, initMode
         thisCard.find("button").first().trigger("click");
     }
     //console.log(thisCard)
-}
-
-function chooseAvailablePanels(json) {
-    // место для логики выбора доступных панелей аккордиона
-    let current_round = json.current_round;
-    let current_role = json.current_role;
-    let availablePanels = json.left_accordion;
-
-    return availablePanels;
 }
