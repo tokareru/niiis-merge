@@ -92,6 +92,36 @@ ul, #myUL {
     border-left-style: none;
 }
 
+.editInput{
+    font: normal normal normal 1.1em/1 FontAwesome;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    color: black;
+    border: none;
+   /* outline: none !important;*/
+    box-shadow: none;
+    background: transparent;
+    display: initial;
+    margin-right: 0.5rem;
+    min-width: 200px;
+    width: 200px;
+}
+
+.buffer{
+    position: absolute;
+    top: -1000px;
+    left: -1000px;
+    visibility: hidden;
+    white-space: nowrap;
+}
+
+.showEditInputButton{
+    cursor: pointer;
+}
+
 .emptySpan{
     font-size: 1.2em;
 }
@@ -207,7 +237,6 @@ ul, #myUL {
 }
 
 #tech_process_field_drop .caret{
-    display: initial !important;
 }
 
 .techOperationsGuide .caret:hover{

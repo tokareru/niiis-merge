@@ -36,6 +36,17 @@ function technologicalProcessInit() {
         deleteKnot($(this))
     });
 
+    $container.on("click", ".showEditInputButton", function () {
+        toggleEditNodeForTechProcess($(this))
+    })
+
+    $container.on('input', ".editInput", function() {
+        let $input = $(this);
+        let $buffer = $(".buffer");
+        $buffer.text($input.val());
+        $input.width($buffer.width());
+    });
+
     reloadButton.on("click", function () {
         $(".detailDraggableDropped").remove();
         let thisButton = this;
@@ -74,6 +85,7 @@ function setDetailsArea(json, $field, fieldId) {
                         name: `${(detail.designation.replace(/ /g, "") === "") ? "" : (detail.designation + " - ")}${detail.name}`,
                         id: _detailArea.id,
                         lvl: 0,
+                        text: _detailArea.text,
                         techProcess: _detailArea.techProcess
                     }))
                 });
@@ -118,7 +130,7 @@ function setAllTechProcess(json, $field_drop, fieldId) {
     setToggler(fieldId);
 }
 
-function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, techProcess: []}) {
+function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, text: "", techProcess: []}) {
     let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : "";
     let techNames = "";
     if (_detail.techProcess.length)
@@ -132,13 +144,20 @@ function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, techProcess: []})
                 name: getTechName(_techName.id, _techName.lvl).name,
                 id: _techName.id,
                 lvl: _techName.lvl,
+                text: _techName.text,
                 operations: _techName.operations
             });
         })
+    if (_detail.text === undefined)
+        _detail.text = _detail.name;
+    let edit = ""
+    if (Role === "technologist")
+        edit = `<input class="editInput d-none" value="${_detail.text}"><span is-active="false"
+            class="showEditInputButton mr-1 font-family-fontAwesome fa-edit"></span>`
 
     return `
         <li detail-id="${_detail.id}" tech-lvl="0" class="detailDraggableDropped">
-            <span class="caret">${_detail.name}</span>${deleteButton}
+            <span class="caret d-initial">${_detail.text}</span>${edit}${deleteButton}
             <ul style='min-height: 35px;' class='nested border-bottom border-bottom-color-gray pb-2
              myNested techProcessDropArea border border-color-transparent rounded'>
                 ${techNames}
@@ -148,7 +167,7 @@ function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, techProcess: []})
 
 }
 
-function combineTechName(techName = {name: "", id: "", lvl: "", operations: []}, isDeleted) {
+function combineTechName(techName = {name: "", id: "", lvl: "", text: "", operations: []}, isDeleted) {
     let operations = "";
     let shift = "";
     if (techName.shift !== undefined)
@@ -160,15 +179,21 @@ function combineTechName(techName = {name: "", id: "", lvl: "", operations: []},
                 name: getTechField(_operataion.id, _operataion.lvl).name,
                 id: _operataion.id,
                 lvl: _operataion.lvl,
+                text: _operataion.text,
                 nodes: _operataion.nodes
             }, isDeleted);
         });
-
+    if (techName.text === undefined)
+        techName.text = techName.name;
     let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : "";
+    let edit = ""
+    if (Role === "technologist")
+        edit = `<input class="editInput d-none" value="${techName.text}"><span is-active="false"
+            class="showEditInputButton mr-1 font-family-fontAwesome fa-edit"></span>`
 
     return `
         <li ${shift} class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
-            <span class='caret'>${techName.name}</span>${deleteButton}
+            <span class='caret d-initial'>${techName.text}</span>${edit}${deleteButton}
             <ul style='min-height: 35px;' class='nested border-bottom pb-2 border-bottom-color-gray myNested techOperationsDropArea border border-color-transparent rounded'>
                 ${operations}
             </ul>
@@ -176,7 +201,7 @@ function combineTechName(techName = {name: "", id: "", lvl: "", operations: []},
     `
 }
 
-function combineTechOperation(field, isDeleted) {
+function combineTechOperation(field = {name: "", id: "", lvl: "", text: "", nodes: []}, isDeleted) {
     let deleteButton = (Role === "technologist" || (isDeleted !== undefined && isDeleted)) ? `<span class='deleteNodeButtonRM'></span>` : "";
     let innerNodes = "";
     if (field.nodes !== undefined)
@@ -186,13 +211,20 @@ function combineTechOperation(field, isDeleted) {
                     name: getTechNode(_node.id, _node.lvl).name,
                     id: _node.id,
                     lvl: _node.lvl,
+                    text: _node.text,
                     fields: _node.fields
                 });
             });
+    if (field.text === undefined)
+        field.text = field.name;
+    let edit = ""
+    if (Role === "technologist")
+    edit = `<input class="editInput d-none" value="${field.text}"><span is-active="false"
+        class="showEditInputButton mr-1 font-family-fontAwesome fa-edit"></span>`;
 
     return `
         <li class="techOperation" tech-lvl="${field.lvl}" tech-id="${field.id}">
-            <span class="mr-2 caret">${field.name}</span>${deleteButton}
+            <span class="mr-2 caret d-initial">${field.text}</span>${edit}${deleteButton}
             <ul style='min-height: 35px;' class="nested border-bottom techNodesDropArea border border-color-transparent rounded">
                 ${innerNodes}
             </ul>
@@ -200,20 +232,31 @@ function combineTechOperation(field, isDeleted) {
     `;
 }
 
-function combineTechNode(node) {
+function combineTechNode(node = {name: "", id: "", lvl: "", text: "", fields: []}) {
     let fields = "";
     // получаем поля
     if (node.fields.length){
         node.fields.forEach(function (_field) {
-            fields += combineTechField(getTechField(_field.id, _field.lvl));
+            fields += combineTechField({
+                id: _field.id,
+                lvl: _field.lvl,
+                text: _field.text,
+                name: getTechField(_field.id, _field.lvl).name
+            });
         })
     }
+    if (node.text === undefined)
+        node.text = node.name;
 
     let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : "";
+    let edit = "";
+    if (Role === "technologist")
+        edit = `<input class="editInput d-none" value="${node.text}"><span is-active="false" 
+            class="showEditInputButton mr-1 font-family-fontAwesome fa-edit"></span>`;
 
     let _node = `
         <li class="techNode" tech-lvl="${node.lvl}" tech-id="${node.id}">
-            <span class="caret">${node.name}</span>${deleteButton}
+            <span class="caret d-initial">${node.text}</span>${edit}${deleteButton}
             <ul style='min-height: 35px;' class='nested border-bottom border-bottom-color-gray pb-2 myNested techFieldsDropArea border border-color-transparent rounded'>
                 ${fields}
             </ul>
@@ -222,11 +265,17 @@ function combineTechNode(node) {
     return _node;
 }
 
-function combineTechField(field) {
+function combineTechField(field = {name: "", id: "", lvl: "", text: ""}) {
     let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : "";
+    if (field.text === undefined)
+        field.text = field.name;
+    let edit = "";
+    if (Role === "technologist")
+        edit = `<input class="editInput d-none" value="${field.text}"><span is-active="false" 
+            class="showEditInputButton mr-1 font-family-fontAwesome fa-edit"></span>`;
     return `
         <li class="techField" tech-lvl="${field.lvl}" tech-id="${field.id}">
-            <span class="mr-2">${field.name}</span>${deleteButton}
+            <span class="mr-2">${field.text}</span>${edit}${deleteButton}
         </li>
     `;
 }
@@ -943,12 +992,13 @@ function collectDataFromTechProcess() {
     let detailsJSON = {
         data: []
     };
-    let detailsDropArea = $(".detailsDropArea ");
+    let detailsDropArea = $(".detailsDropArea");
     detailsDropArea.find(".detailDraggableDropped").each(function () {
         let this_detail = $(this);
         let detail = {
             id: this_detail.attr("detail-id"),
             lvl: this_detail.attr("tech-lvl"),
+            text: this_detail.find(".editInput").val(),
             techProcess: []
         }
         let $techNames = this_detail.find(".techNameDropped");
@@ -957,6 +1007,7 @@ function collectDataFromTechProcess() {
             let techName = {
                 id: this_tech_name.attr("tech-id"),
                 lvl: this_tech_name.attr("tech-lvl"),
+                text: this_tech_name.find(".editInput").val(),
                 operations: []
             };
             let operations = this_tech_name.find(".techOperation");
@@ -966,6 +1017,7 @@ function collectDataFromTechProcess() {
                     let newOperation = {
                         id: this_operation.attr("tech-id"),
                         lvl: this_operation.attr("tech-lvl"),
+                        text: this_operation.find(".editInput").val(),
                         nodes: []
                     };
                     let nodes = this_operation.find(".techNode");
@@ -975,6 +1027,7 @@ function collectDataFromTechProcess() {
                             let newNode = {
                                 id: this_node.attr("tech-id"),
                                 lvl: this_node.attr("tech-lvl"),
+                                text: this_node.find(".editInput").val(),
                                 fields: []
                             };
 
@@ -984,7 +1037,8 @@ function collectDataFromTechProcess() {
                                     let this_field = $(this);
                                     newNode.fields.push({
                                         id: this_field.attr("tech-id"),
-                                        lvl: this_field.attr("tech-lvl")
+                                        lvl: this_field.attr("tech-lvl"),
+                                        text: this_field.find(".editInput").val(),
                                     })
                                 });
 
@@ -997,7 +1051,8 @@ function collectDataFromTechProcess() {
             detail.techProcess.push(techName);
         });
         detailsJSON.data.push(detail);
-    })
+    });
+    return detailsJSON;
 }
 
 function saveTechProcess(thisButton) {
@@ -1027,6 +1082,25 @@ function saveTechProcess(thisButton) {
             }
         }
     );
+}
+
+function toggleEditNodeForTechProcess($this) {
+    let isActive = $this.attr("is-active").toString();
+    let $parentLi = $this.parent();
+    if (isActive !== "true"){
+        // edit
+        $parentLi.find("span").first().addClass("d-none").removeClass("d-initial")
+        $parentLi.find("input.editInput").first().removeClass("d-none").focus();
+        $this.attr("is-active", true);
+    }else{
+        // end editing
+        let $nameSpan = $parentLi.find("span").first();
+        let $input = $parentLi.find("input.editInput").first();
+        $nameSpan.removeClass("d-none").addClass("d-initial");
+        $input.addClass("d-none");
+        $nameSpan.text($input.val())
+        $this.attr("is-active", false);
+    }
 
 }
 
