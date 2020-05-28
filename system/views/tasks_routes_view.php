@@ -63,7 +63,7 @@
                 <span class="caret">
                     Маршруты активные
                 </span>
-                <ul class="nested" id="task_routes_active_routes">
+                <ul class="nested " id="task_routes_active_routes">
 
                 </ul>
             </li>
@@ -80,7 +80,7 @@
                     Мои маршруты
                 </span>
                 <ul class="nested">
-                    <div id="task_routes_own_routes"></div>
+                    <div id="task_routes_own_routes" class="table-responsive"></div>
                 </ul>
             </li>
         </ul>
