@@ -407,7 +407,7 @@ function makeRoute(info) {
 function generateOwnTasks(selector) {
     let $routes = $(`#${selector}`);
     $routes.find('table').remove();
-    let $table = $('<table class="table table-bordered tasks_routes_routeTable"></table>');
+    let $table = $('<table class="table table-bordered tasks_routes_routeTable table-responsive"></table>');
     $table.append('<thead class="thead-light">' +
         '<tr>' +
         '<th style="width: 60px">№</th>' +
@@ -418,8 +418,8 @@ function generateOwnTasks(selector) {
         '<th>Информация</th>' +
         '</tr>' +
         '</thead><tbody></tbody>');
-    let buttonActiveTask = '<button class="btn btn-sm bg-dark text-white float-left tasks_routes_activeTask">Согласовать</button>' +
-        '<button class="btn btn-sm bg-danger text-white float-right tasks_routes_finishedTask" data-toggle="modal" data-target="#task_routes_cancelModal">Отклонить</button>';
+    let buttonActiveTask = '<button class="btn btn-sm bg-dark text-white mt-1 tasks_routes_activeTask">Согласовать</button>' +
+        '<button class="btn btn-sm bg-danger text-white mt-1 tasks_routes_finishedTask" data-toggle="modal" data-target="#task_routes_cancelModal">Отклонить</button>';
     ownTasks.sort(function (a, b) {
         if (a.status === "nonactive" && b.status !== 'nonactive')
             return 1;
@@ -431,8 +431,8 @@ function generateOwnTasks(selector) {
     ownTasks.forEach(function (value, index) {
             let $tr = $(
                 '<tr class="' + `${value.status !== 'nonactive' ? 'bg-light' : ''}">` +
-                `<td style="width: 60px">${index + 1}</td>` +
-                '<td style="width: 200px">' +
+                `<td style="width: 60px; min-width: 60px; max-width: 60px">${index + 1}</td>` +
+                '<td style="width: 200px; min-width: 200px; max-width: 200px">' +
                 '<form class="tasks_routes_reloadShell text-center">' + //tasks_routes_reloadShell
                 `<input type="radio" value="false" name="own_tasks_routes" id="own_tasks_routes_show_${index}" checked><label value="false" for="own_tasks_routes_show_${index}" ` +
                 `class="text-center tasks_routes_reloadShell_radio tasks_routes_reloadShell_radio_disable"` +
@@ -442,8 +442,8 @@ function generateOwnTasks(selector) {
                 'style="width: 50px">Вкл</label>' +
                 '</form>' +
                 '</td>' +
-                `<td style="width: 150px">${value.task}</td>` +
-                '<td style="width: 215px">' +
+                `<td style="width: 150px; min-width: 150px; max-width: 150px">${value.task}</td>` +
+                '<td style="width: 215px; min-width: 215px; max-width: 215px">' +
                 `${value.status === 'nonactive' ? buttonActiveTask : value.status === 'active' ? '<span class="fa fa-check text-success text-center w-100 fa-2x"></span>' : '<span class="fa fa-times' +
                     ' text-danger text-center w-100 fa-2x"></span>'}` +
                 '</td>' +
@@ -478,13 +478,13 @@ function generateTableForRoutes(data, type) {
                 task.shell = JSON.parse(value.shell);
                 ownTasks.push(task);
             }
-            tr += '<tr style="width: 700px">' +
+            tr += '<tr>' +
 
-                `<td style="width: 60px">${index + 1}</td>` +
-                `<td style="width: 230px">${task.role}</td>` +
-                `<td style="width: 230px">${task.name}</td>    ` +
-                `<td style="width: 125px">${task.task}</td>    ` +
-                `<td style="width: 125px">${task.status === 'nonactive' ? '<span class="fa fa-2x fa-spinner text-primary text-center w-100"></span>' : task.status === 'active' ? '<span class="fa ' +
+                `<td style="width: 60px; min-width: 60px; max-width: 60px">${index + 1}</td>` +
+                `<td style="width: 230px; min-width: 230px; max-width: 230px">${task.role}</td>` +
+                `<td style="width: 230px; min-width: 230px; max-width: 230px">${task.name}</td>    ` +
+                `<td style="width: 125px; min-width: 125px; max-width: 125px">${task.task}</td>    ` +
+                `<td style="width: 125px; min-width: 125px; max-width: 125px">${task.status === 'nonactive' ? '<span class="fa fa-2x fa-spinner text-primary text-center w-100"></span>' : task.status === 'active' ? '<span class="fa ' +
                     'fa-check text-success text-center w-100 fa-2x"></span>' :
                     '<span class="fa fa-2x fa-times text-danger w-100"></span>'
                 }
@@ -495,21 +495,21 @@ function generateTableForRoutes(data, type) {
         }
     )
     ;
-    table = '<table class="table table-bordered tasks_routes_routeTable">' +
+    table = '<div class="table-responsive"><table class="table table-bordered tasks_routes_routeTable">' +
         '<thead class="thead-light">' +
         '<tr>' +
-        '<th style="width: 60px">№</th>' +
-        '<th style="width: 230px">Должность</th>' +
-        '<th style="width: 230px">Пользователь</th>' +
-        '<th style="width: 125px">Задание</th>' +
-        '<th style="width: 125px">Статус</th>' +
-        `${type === 'nonactive' ? '<th style="width: 125px">Комментарий</th>' : ''}` +
+        '<th>№</th>' +
+        '<th >Должность</th>' +
+        '<th >Пользователь</th>' +
+        '<th >Задание</th>' +
+        '<th>Статус</th>' +
+        `${type === 'nonactive' ? '<th>Комментарий</th>' : ''}` +
         '</tr>' +
         '</thead>' +
         '<tbody>' +
         tr +
         '</tbody>' +
-        '</table>';
+        '</table></div>';
     return table;
 }
 
