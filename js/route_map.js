@@ -456,7 +456,7 @@ function saveTechProcessTableRound3($table, thisButton) {
     })
 }
 
-function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools: []}) {
+function setRouteMapRow(data = {name : {id: "0", lvl: "0", text: ""}, equipment: [], tools: []}) {
     let $tbody = $("#tech_process_table tbody");
     let $lastTr = $tbody.find('tr:last');
     let name = data.name;
@@ -471,13 +471,23 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
     let equipmentStr = "";
     if (equipment.length)
         equipment.forEach(function (eq) {
-            equipmentStr += combineTechProcessCellEquipment(getTechField(eq.id, eq.lvl));
+            equipmentStr += combineTechProcessCellEquipment({
+                id: eq.id,
+                lvl: eq.lvl,
+                name: getTechField(eq.id).name,
+                text: eq.text
+            });
         });
 
     let toolsStr = "";
     if (tools.length)
         tools.forEach(function (tool) {
-            toolsStr += combineTechProcessCellTools(getTechField(tool.id, tool.lvl));
+            toolsStr += combineTechProcessCellTools({
+                id: tool.id,
+                lvl: tool.lvl,
+                name: getTechField(tool.id).name,
+                text: tool.text
+            });
         });
 
     let deleteButton = (Role === "technologist") ? `<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>`: "";
@@ -671,8 +681,10 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0"}, equipment: [], tools
 
 }
 
-function combineTechProcessCell(data = {name: "", lvl: "", id: ""}) {
+function combineTechProcessCell(data = {name: "", lvl: "", id: "", text: ""}) {
     let deleteButton = (Role === "technologist") ? `<span class="deleteNodeButtonRM"></span>` : "";
+    if (data.text !== undefined)
+        data.name = data.text;
     return `
         <div tech-id="${data.id}" tech-lvl="${data.lvl}">
            <span>${data.name}</span>
@@ -681,8 +693,11 @@ function combineTechProcessCell(data = {name: "", lvl: "", id: ""}) {
     `
 }
 
-function combineTechProcessCellEquipment(data = {name: "", lvl: "", id: ""}) {
+function combineTechProcessCellEquipment(data = {name: "", lvl: "", id: "", text: ""}) {
     let deleteButton = (Role === "technologist") ? `<span class="deleteNodeButtonRM"></span>` : "";
+    if (data.text !== undefined)
+        data.name = data.text;
+
     return `
             <li tech-id='${data.id}' tech-lvl="${data.lvl}">
                 <span class="mr-2">${data.name}</span>${deleteButton}
@@ -690,8 +705,10 @@ function combineTechProcessCellEquipment(data = {name: "", lvl: "", id: ""}) {
         `
 }
 
-function combineTechProcessCellTools(data = {name: "", lvl: "", id: ""}) {
+function combineTechProcessCellTools(data = {name: "", lvl: "", id: "", text: ""}) {
     let deleteButton = (Role === "technologist") ? `<span class="deleteNodeButtonRM"></span>` : "";
+    if (data.text !== undefined)
+        data.name = data.text;
     return `
             <li tech-id='${data.id}' tech-lvl="${data.lvl}">
                 <span class="mr-2">${data.name}</span>${deleteButton}
@@ -712,7 +729,15 @@ function setTechProcessJson(json, res, $table) {
 
             }else if (_row.name.lvl == "3"){
                 name = getTechField(_row.name.id, _row.name.lvl);
-            }else {
+            }else if (_row.name.lvl == "5"){
+                name = {
+                    id: _row.name.id,
+                    lvl: _row.name.lvl,
+                    name: _row.name.text,
+                    text: _row.name.text
+                }
+            }
+            else {
                 name = {name: "", lvl: "0", id: "0"}
             }
 
@@ -720,7 +745,12 @@ function setTechProcessJson(json, res, $table) {
             let equipment = [];
             if (_row.equipment.length){
                 _row.equipment.forEach(function (eq) {
-                    equipment.push(getTechField(eq.id, eq.lvl));
+                    equipment.push({
+                        id: eq.id,
+                        lvl: eq.lvl,
+                        name: getTechField(eq.id).name,
+                        text: eq.text
+                    });
                 });
             }
 
@@ -728,7 +758,12 @@ function setTechProcessJson(json, res, $table) {
             let tools = [];
             if (_row.tools.length){
                 _row.tools.forEach(function (tool) {
-                    tools.push(getTechField(tool.id, tool.lvl));
+                    tools.push({
+                        id: tool.id,
+                        lvl: tool.lvl,
+                        name: getTechField(tool.id).name,
+                        text: tool.text
+                    });
                 })
             }
 
@@ -769,7 +804,6 @@ function setTechProcessJsonRounds_1_2(res, $table) {
         if (Role === "technologist") setTechProcessJsonRounds_1_2( [{}], $table)
     }
 }
-
 
 function combineRowFor_1_2Rounds(data = {num_ceh: "", num_uch: "", num_oper: "", name: "", equipment: "", tools: ""}) {
     let deleteButton = (Role === "technologist") ? `<button class="tech_proc_del_td bg-white p-0 btn"><i class="fa fa-times"></i></button>`: "";
@@ -818,7 +852,7 @@ function combineRowFor_1_2Rounds(data = {num_ceh: "", num_uch: "", num_oper: "",
     `
 }
 
-function madeRouteMapByTechProcess(techProcessData) {
+function madeRouteMapByTechProcess(detailsData) {
     let routeMapData = {
         data: []
     };
@@ -833,47 +867,63 @@ function madeRouteMapByTechProcess(techProcessData) {
 
     //
 
-    if (techProcessData.techProcess.length){
-        techProcessData.techProcess.forEach(function (_techProcess) {
+    if (detailsData.data.length)
+        detailsData.data.forEach(function (_detail) {
             routeMapData.data.push({
-                // формируем заголовок техпроцесса
                 name: {
-                    id: _techProcess.id,
-                    lvl: _techProcess.lvl
+                    id: _detail.id,
+                    lvl: 5,
+                    text: _detail.text
                 },
                 equipment: [],
                 tools: []
             });
-            // находим техоперации в данном техпроцессе
-            if (_techProcess.operations.length)
-                _techProcess.operations.forEach(function (_operation) {
-                    let thatOperationEquipment = [];
-                    let thatOperationToolsAndRig = [];
-                    // находим оборудование (id = 5), инструменты (id = 7) и приспособления (id = 4)
-                    if (_operation.nodes.length)
-                        _operation.nodes.forEach(function (_node) {
-                            if (_node.id === "5")
-                                thatOperationEquipment = _node.fields;
-                            if (_node.id === "7")
-                                thatOperationToolsAndRig = thatOperationToolsAndRig.concat(_node.fields);
-                            if (_node.id === "4")
-                                thatOperationToolsAndRig = thatOperationToolsAndRig.concat(_node.fields);
-
-                        });
-                    let operationObj = {
+            if (_detail.techProcess.length){
+                _detail.techProcess.forEach(function (_techProcess) {
+                    routeMapData.data.push({
+                        // формируем заголовок техпроцесса
                         name: {
-                            id: _operation.id,
-                            lvl: _operation.lvl
+                            id: _techProcess.id,
+                            lvl: _techProcess.lvl,
+                            text: _techProcess.text
                         },
-                        tools: thatOperationToolsAndRig,
-                        equipment: thatOperationEquipment
-                    };
+                        equipment: [],
+                        tools: []
+                    });
+                    // находим техоперации в данном техпроцессе
+                    if (_techProcess.operations.length)
+                        _techProcess.operations.forEach(function (_operation) {
+                            let thatOperationEquipment = [];
+                            let thatOperationToolsAndRig = [];
+                            // находим оборудование (id = 5), инструменты (id = 7) и приспособления (id = 4)
+                            if (_operation.nodes.length)
+                                _operation.nodes.forEach(function (_node) {
+                                    if (_node.id === "5")
+                                        thatOperationEquipment = _node.fields;
+                                    if (_node.id === "7")
+                                        thatOperationToolsAndRig = thatOperationToolsAndRig.concat(_node.fields);
+                                    if (_node.id === "4")
+                                        thatOperationToolsAndRig = thatOperationToolsAndRig.concat(_node.fields);
 
-                    routeMapData.data.push(operationObj)
+                                });
+                            let operationObj = {
+                                name: {
+                                    id: _operation.id,
+                                    lvl: _operation.lvl,
+                                    text: _operation.text
+                                },
+                                tools: thatOperationToolsAndRig,
+                                equipment: thatOperationEquipment
+                            };
+
+                            routeMapData.data.push(operationObj)
+                        })
+                    routeMapData.data.push(emptyRow);
                 })
-            routeMapData.data.push(emptyRow);
+            }
         })
-    }
+
+    console.log(routeMapData)
 
     $.ajax({
         url: 'ajax/save_route_map_3',
