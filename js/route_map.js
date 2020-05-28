@@ -370,7 +370,8 @@ let saveObj = [];
             let row = {
                 name: {
                     "id": "0",
-                    "lvl": "0"
+                    "lvl": "0",
+                    "text": ""
                 },
                 equipment: [],
                 tools: []
@@ -382,6 +383,7 @@ let saveObj = [];
             let nameLvl = $name.first().attr("tech-lvl");
             row.name.lvl = nameLvl;
             row.name.id = nameId;
+            row.name.text = $name.find("span").first().text();
             //console.log(name, nameId, nameLvl)
 
             // находим оборудование
@@ -393,7 +395,8 @@ let saveObj = [];
                     let $this = $(this);
                     equipment.push({
                         id: $this.attr("tech-id"),
-                        lvl: $this.attr("tech-lvl")
+                        lvl: $this.attr("tech-lvl"),
+                        text: $this.find("span").first().text()
                     })
                 })
             }
@@ -409,7 +412,8 @@ let saveObj = [];
                     let $this = $(this);
                     tools.push({
                         id: $this.attr("tech-id"),
-                        lvl: $this.attr("tech-lvl")
+                        lvl: $this.attr("tech-lvl"),
+                        text: $this.find("span").first().text()
                     })
                 })
             }
@@ -425,7 +429,7 @@ let saveObj = [];
 function saveTechProcessTableRound3($table, thisButton) {
     let saveObj = collectDataFromRouteMapRound3($table);
 
-    //console.log(saveObj);
+    console.log(saveObj);
     startProcessOfSaving(thisButton, false)
     $.ajax({
         url: 'ajax/save_route_map_3',
