@@ -19,6 +19,10 @@
             <div id="hidedraw"></div>
             <canvas id="drawcanv"></canvas>
             <canvas id="topcanv"></canvas>
+			<img id="gostmain" src="./images/scheme/aplikacii/gostmain.jpg">
+			<img id="gost1" src="./images/scheme/aplikacii/gost1.jpg">
+			<img id="gost2" src="./images/scheme/aplikacii/gost2.jpg">
+			<img id="gost3" src="./images/scheme/aplikacii/gost3.jpg">
         </div>
 
     </div>

@@ -20,6 +20,7 @@
     width: 90%;
     height: 100%;
     position: relative;
+    margin-bottom: 70px;
     /*width: 944px;
     height: 450px;*/
 }
@@ -27,6 +28,7 @@
 #hidedraw {
     position: absolute;
     z-index: 5;
+    margin-top:100px;
 }
 
 #Kontur1 {
@@ -36,7 +38,7 @@
 
 #razmNumber1 {
     position: absolute;
-    top: 94px;
+    top: 194px;
     width: 40px;
     height: 20px;
     left: 85px;
@@ -45,7 +47,8 @@
 
 #razmNumber2 {
     position: absolute;
-    bottom: 16px;
+    top: 564px;
+    /* bottom: 16px; */
     width: 40px;
     height: 20px;
     left: 315px;
@@ -54,7 +57,7 @@
 
 #razmNumber3 {
     position: absolute;
-    top: 162px;
+    top: 262px;
     width: 40px;
     height: 20px;
     left: 662px;
@@ -63,7 +66,7 @@
 
 #razmNumber4 {
     position: absolute;
-    top: 3px;
+    top: 103px;
     width: 22px;
     height: 20px;
     left: 817px;
@@ -72,7 +75,7 @@
 }
 #razmNumber5 {
     position: absolute;
-    top: 28px;
+    top: 128px;
     width: 22px;
     height: 20px;
     left: 817px;
@@ -82,7 +85,7 @@
 
 #razmNumber6 {
     position: absolute;
-    top: 53px;
+    top: 153px;
     width: 22px;
     height: 20px;
     left: 817px;
@@ -92,7 +95,7 @@
 
 #razmNumber7 {
     position: absolute;
-    top: 28px;
+    top: 128px;
     width: 22px;
     height: 20px;
     left: 87px;
@@ -102,7 +105,7 @@
 
 #razmNumber8 {
     position: absolute;
-    top: 53px;
+    top: 153px;
     width: 22px;
     height: 20px;
     left: 87px;
@@ -112,7 +115,7 @@
 
 #razmNumber9 {
     position: absolute;
-    top: 78px;
+    top: 178px;
     width: 22px;
     height: 20px;
     left: 817px;
@@ -122,7 +125,7 @@
 
 #razmNumber10 {
     position: absolute;
-    top: 228px;
+    top: 328px;
     width: 22px;
     height: 20px;
     left: 87px;
@@ -161,7 +164,7 @@
 }
 
 #scheme1 div canvas {
-    display: none;
+    display: none !important;
 }
 
 #drawcanv:hover {
@@ -176,6 +179,8 @@
 #drawcanv {
     position:absolute;
     margin-left: -3px;
+    margin-top:100px;
+    z-index: 1;
 }
 
 .canvimgdone {
@@ -654,4 +659,29 @@ aside div {
 #check2 {
     position: absolute;
     cursor: pointer;
+}
+
+#gostmain {
+    margin-left:-20px;
+}
+
+#gost1 {
+    position: absolute;
+    top: 119px;
+    left: 152px;
+    width: 345px;
+}
+
+#gost2 {
+    top: 290px;
+    position: absolute;
+    left: 150px;
+    width: 345px;
+}
+
+#gost3 {
+    position: absolute;
+    top: 118px;
+    left: 533px;
+    width: 268px;
 }

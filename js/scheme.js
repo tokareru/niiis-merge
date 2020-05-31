@@ -1,6 +1,5 @@
 import * as THREE from './3D/stl/three.module.js';
 import {STLLoader} from './3D/stl/STLLoader.js';
-
 let amountOfFinishedViews = 0;
 
 export function initScheme() {
@@ -199,8 +198,8 @@ export function initScheme() {
             wireframe.scale.set(scale.x, scale.y, scale.z);
             wireframe.position.set(pos.x, pos.y, pos.z);
 
-            mesh.visible = true;
-            wireframe.visible = true;
+            mesh.visible = false; //true
+            wireframe.visible = false; //true
 
             mesh.position.set(pos.x, pos.y, pos.z);//-0.6
             mesh.rotation.set(rot.x, rot.y, rot.z);
@@ -941,7 +940,7 @@ export function initScheme() {
                                 if (lines1.length == 32)
                                 {
                                     $("#ready").click();
-                                    $("#scheme1 div canvas")[0].style.cssText += " display:block;";
+                                    $("#scheme1 div canvas")[0].style.cssText += " display:none;"; //display:block
                                     $("#Kontur1").hide();
 
                                 }
