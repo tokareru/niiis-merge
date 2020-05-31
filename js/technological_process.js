@@ -97,7 +97,7 @@ function setDetailsArea(json, $field, fieldId) {
         }
     }
     if (Role === "technologist"){
-        setDropAreaForDetailArea($(".detailsDropArea"), fieldId);
+        setDropAreaForDetailArea($("#tech_process_field_container").find(".detailsDropArea"), fieldId);
         $(".techProcessDropArea").each(function () {
             setDropAreaForTechName($(this), fieldId);
         });
@@ -111,7 +111,7 @@ function setDetailsArea(json, $field, fieldId) {
         })
     }
     setToggler(fieldId);
-    $(".detailDraggableDropped").find("span.caret").trigger("click")
+    $("#tech_process_field_container").find(".detailDraggableDropped").find("span.caret").trigger("click")
 }
 
 function setAllTechProcess(json, $field_drop, fieldId) {
@@ -130,8 +130,8 @@ function setAllTechProcess(json, $field_drop, fieldId) {
     setToggler(fieldId);
 }
 
-function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, text: "", techProcess: []}) {
-    let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : "";
+function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, text: "", techProcess: []}, isDeleted = false) {
+    let deleteButton = (Role === "technologist" || isDeleted) ? `<span class='deleteNodeButtonRM'></span>` : "";
     let techNames = "";
     if (_detail.techProcess.length)
         _detail.techProcess.forEach(function (_techName) {
@@ -146,7 +146,7 @@ function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, text: "", techPro
                 lvl: _techName.lvl,
                 text: _techName.text,
                 operations: _techName.operations
-            });
+            }, isDeleted);
         })
     if (_detail.text === undefined)
         _detail.text = _detail.name;
@@ -167,11 +167,8 @@ function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, text: "", techPro
 
 }
 
-function combineTechName(techName = {name: "", id: "", lvl: "", text: "", operations: []}, isDeleted) {
+function combineTechName(techName = {name: "", id: "", lvl: "", text: "", operations: []}, isDeleted = false) {
     let operations = "";
-    let shift = "";
-    if (techName.shift !== undefined)
-        shift = `tech-shift="${techName.shift}"`;
 
     if (techName.operations.length)
         techName.operations.forEach(function (_operataion) {
@@ -185,14 +182,14 @@ function combineTechName(techName = {name: "", id: "", lvl: "", text: "", operat
         });
     if (techName.text === undefined)
         techName.text = techName.name;
-    let deleteButton = (Role === "technologist") ? `<span class='deleteNodeButtonRM'></span>` : "";
+    let deleteButton = (Role === "technologist" || isDeleted) ? `<span class='deleteNodeButtonRM'></span>` : "";
     let edit = ""
     if (Role === "technologist")
         edit = `<input class="editInput d-none" value="${techName.text}"><span is-active="false"
             class="showEditInputButton mr-1 font-family-fontAwesome fa-edit"></span>`
 
     return `
-        <li ${shift} class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
+        <li class='techNameDropped' tech-id='${techName.id}' tech-lvl='${techName.lvl}'>
             <span class='caret d-initial'>${techName.text}</span>${edit}${deleteButton}
             <ul style='min-height: 35px;' class='nested border-bottom pb-2 border-bottom-color-gray myNested techOperationsDropArea border border-color-transparent rounded'>
                 ${operations}
@@ -201,8 +198,8 @@ function combineTechName(techName = {name: "", id: "", lvl: "", text: "", operat
     `
 }
 
-function combineTechOperation(field = {name: "", id: "", lvl: "", text: "", nodes: []}, isDeleted) {
-    let deleteButton = (Role === "technologist" || (isDeleted !== undefined && isDeleted)) ? `<span class='deleteNodeButtonRM'></span>` : "";
+function combineTechOperation(field = {name: "", id: "", lvl: "", text: "", nodes: []}, isDeleted = false) {
+    let deleteButton = (Role === "technologist" || isDeleted) ? `<span class='deleteNodeButtonRM'></span>` : "";
     let innerNodes = "";
     if (field.nodes !== undefined)
         if(field.nodes.length)
@@ -988,46 +985,53 @@ function addNewTechProcess(fieldId) {
     });
 }
 
-function collectDataFromTechProcess() {
+function collectDataFromTechProcess(detailsDropArea) {
     let detailsJSON = {
         data: []
     };
-    let detailsDropArea = $(".detailsDropArea");
     detailsDropArea.find(".detailDraggableDropped").each(function () {
         let this_detail = $(this);
+        let _text = this_detail.find(".editInput").val();
+        if (_text === undefined) _text = this_detail.find("span.caret").first().text();
         let detail = {
             id: this_detail.attr("detail-id"),
             lvl: this_detail.attr("tech-lvl"),
-            text: this_detail.find(".editInput").val(),
+            text: _text,
             techProcess: []
         }
         let $techNames = this_detail.find(".techNameDropped");
         $techNames.each(function () {
             let this_tech_name = $(this);
+            let _text = this_tech_name.find(".editInput").val();
+            if (_text === undefined) _text = this_tech_name.find("span.caret").first().text();
             let techName = {
                 id: this_tech_name.attr("tech-id"),
                 lvl: this_tech_name.attr("tech-lvl"),
-                text: this_tech_name.find(".editInput").val(),
+                text: _text,
                 operations: []
             };
             let operations = this_tech_name.find(".techOperation");
             if (operations.length)
                 operations.each(function () {
                     let this_operation = $(this);
+                    let _text = this_operation.find(".editInput").val();
+                    if (_text === undefined) _text = this_operation.find("span.caret").first().text();
                     let newOperation = {
                         id: this_operation.attr("tech-id"),
                         lvl: this_operation.attr("tech-lvl"),
-                        text: this_operation.find(".editInput").val(),
+                        text: _text,
                         nodes: []
                     };
                     let nodes = this_operation.find(".techNode");
                     if (nodes.length){
                         nodes.each(function () {
                             let this_node = $(this);
+                            let _text = this_node.find(".editInput").val();
+                            if (_text === undefined) _text = this_node.find("span.caret").first().text();
                             let newNode = {
                                 id: this_node.attr("tech-id"),
                                 lvl: this_node.attr("tech-lvl"),
-                                text: this_node.find(".editInput").val(),
+                                text: _text,
                                 fields: []
                             };
 
@@ -1035,10 +1039,12 @@ function collectDataFromTechProcess() {
                             if (fields.length)
                                 fields.each(function () {
                                     let this_field = $(this);
+                                    let _text = this_field.find(".editInput").val();
+                                    if (_text === undefined) _text = this_field.find("span").first().text();
                                     newNode.fields.push({
                                         id: this_field.attr("tech-id"),
                                         lvl: this_field.attr("tech-lvl"),
-                                        text: this_field.find(".editInput").val(),
+                                        text: _text
                                     })
                                 });
 
@@ -1056,7 +1062,7 @@ function collectDataFromTechProcess() {
 }
 
 function saveTechProcess(thisButton) {
-    let detailsJSON = collectDataFromTechProcess();
+    let detailsJSON = collectDataFromTechProcess($("#tech_process_field_container").find(".detailsDropArea"));
     console.log(detailsJSON);
     startProcessOfSaving(thisButton, false);
     $.ajax(

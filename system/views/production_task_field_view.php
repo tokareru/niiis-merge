@@ -23,17 +23,24 @@
     </div>
   </div>
   <div id="production_task_body_round_3">
-    <div class='spec_header'>Задание на производство</div>
+    <div class='spec_header text-align-center'>Задание на производство</div>
     <div class="row">
-      <div class="col-6">
-        <div id="product_tech_process_field_container">
-          <div class="h4">Текущий техпроцесс</div>
-          <div id="product_tech_process_field_drop" class="tech_process_table">
+      <div class="col-xl-6 techProcessCol">
+        <nav class="mt-2 ml-3 mt-xl-0 navbar-expand-xl nav navbar-light">
+          <button class="navbar-toggler mb-2 outline-none" type="button" data-toggle="collapse"
+                  data-target="#product_tech_process_field_container" aria-controls="product_tech_process_field_container"
+                  aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="product_tech_process_field_container">
+            <div class="h4">Текущий техпроцесс</div>
+            <div id="product_tech_process_field_drop" class="tech_process_table">
 
+            </div>
           </div>
-        </div>
+        </nav>
       </div>
-      <div class="col-6">
+      <div class="col-xl-6 workerAreaCol">
         <div class="h4" id="worker_product_list_header"></div>
         <div id="workers_drop_area" style="list-style: none">
 

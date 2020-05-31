@@ -9,3 +9,32 @@
 #production_task_body_round_3 .caret{
     display: inline !important;
 }
+
+#product_tech_process_field_container{
+    left: auto;
+}
+.alertMessage{
+    max-width: 46vw;
+}
+
+@media (min-width: 1200px) {
+    #product_tech_process_field_drop{
+        height: 75vmin;
+        overflow-y: auto;
+    }
+    #product_tech_process_field_container{
+        position: fixed;
+        display: block !important;
+    }
+}
+
+@media (max-width: 1200px) {
+    .alertMessage{
+        max-width: unset;
+    }
+}
+
+.techNameDropped{
+    z-index: 0 !important;
+}
+

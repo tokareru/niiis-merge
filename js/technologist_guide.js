@@ -140,7 +140,6 @@ function setTechnologistGuide(json, add_data) {
         }
 
     });
-
     field.trigger("endOfInitialization");
 }
 

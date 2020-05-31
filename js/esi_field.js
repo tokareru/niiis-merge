@@ -14,24 +14,26 @@ function initESI() {
      });*/
 
     let $esiBody = $("#right-side");
-    $(".detailDraggable").draggable({
-        helper: 'clone',
-        appendTo: ".tech_process_table",
-        drag: function (event, ui) {
-            let $helper =$ (ui.helper);
-            $helper.removeClass("detailChildren").addClass("text-white")
-            $helper.css({
-                "list-style-type": "none",
-                "z-index": "1000"
-            });
-            $helper.find("ul").remove()
-            $("#tech_process_field_drop").removeClass("border-color-transparent").addClass("border-warning");
-        },
-        stop: function (e, ui) {
-            $("#tech_process_field_drop").removeClass("border-warning").addClass("border-color-transparent");
-        }
+    if (Role === "technologist"){
+        $(".detailDraggable").draggable({
+            helper: 'clone',
+            appendTo: ".tech_process_table",
+            drag: function (event, ui) {
+                let $helper =$ (ui.helper);
+                $helper.removeClass("detailChildren").addClass("text-white")
+                $helper.css({
+                    "list-style-type": "none",
+                    "z-index": "1000"
+                });
+                $helper.find("ul").remove()
+                $("#tech_process_field_drop").removeClass("border-color-transparent").addClass("border-warning");
+            },
+            stop: function (e, ui) {
+                $("#tech_process_field_drop").removeClass("border-warning").addClass("border-color-transparent");
+            }
 
-    });
+        });
+    }
     $(".reloadButtonForESI").on("click", function () {
         reloadESI();
     })
