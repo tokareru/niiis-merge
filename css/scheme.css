@@ -20,7 +20,6 @@
     width: 90%;
     height: 100%;
     position: relative;
-    margin-bottom: 70px;
     /*width: 944px;
     height: 450px;*/
 }
@@ -28,7 +27,6 @@
 #hidedraw {
     position: absolute;
     z-index: 5;
-    margin-top:100px;
 }
 
 #Kontur1 {
@@ -38,7 +36,7 @@
 
 #razmNumber1 {
     position: absolute;
-    top: 194px;
+    top: 94px;
     width: 40px;
     height: 20px;
     left: 85px;
@@ -47,7 +45,7 @@
 
 #razmNumber2 {
     position: absolute;
-    top: 564px;
+    top: 464px;
     /* bottom: 16px; */
     width: 40px;
     height: 20px;
@@ -57,7 +55,7 @@
 
 #razmNumber3 {
     position: absolute;
-    top: 262px;
+    top: 162px;
     width: 40px;
     height: 20px;
     left: 662px;
@@ -66,7 +64,7 @@
 
 #razmNumber4 {
     position: absolute;
-    top: 103px;
+    top: 3px;
     width: 22px;
     height: 20px;
     left: 817px;
@@ -75,7 +73,7 @@
 }
 #razmNumber5 {
     position: absolute;
-    top: 128px;
+    top: 28px;
     width: 22px;
     height: 20px;
     left: 817px;
@@ -85,7 +83,7 @@
 
 #razmNumber6 {
     position: absolute;
-    top: 153px;
+    top: 53px;
     width: 22px;
     height: 20px;
     left: 817px;
@@ -95,7 +93,7 @@
 
 #razmNumber7 {
     position: absolute;
-    top: 128px;
+    top: 28px;
     width: 22px;
     height: 20px;
     left: 87px;
@@ -105,7 +103,7 @@
 
 #razmNumber8 {
     position: absolute;
-    top: 153px;
+    top: 53px;
     width: 22px;
     height: 20px;
     left: 87px;
@@ -115,7 +113,7 @@
 
 #razmNumber9 {
     position: absolute;
-    top: 178px;
+    top: 78px;
     width: 22px;
     height: 20px;
     left: 817px;
@@ -125,7 +123,7 @@
 
 #razmNumber10 {
     position: absolute;
-    top: 328px;
+    top: 228px;
     width: 22px;
     height: 20px;
     left: 87px;
@@ -164,7 +162,7 @@
 }
 
 #scheme1 div canvas {
-    display: none !important;
+    display: none;
 }
 
 #drawcanv:hover {
@@ -179,7 +177,6 @@
 #drawcanv {
     position:absolute;
     margin-left: -3px;
-    margin-top:100px;
     z-index: 1;
 }
 
@@ -667,13 +664,13 @@ aside div {
 
 #gost1 {
     position: absolute;
-    top: 119px;
+    top: 19px;
     left: 152px;
     width: 345px;
 }
 
 #gost2 {
-    top: 290px;
+    top: 190px;
     position: absolute;
     left: 150px;
     width: 345px;
@@ -681,7 +678,11 @@ aside div {
 
 #gost3 {
     position: absolute;
-    top: 118px;
+    top: 18px;
     left: 533px;
     width: 268px;
+}
+
+#vidi2d {
+    display:none;
 }

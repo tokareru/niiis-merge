@@ -327,6 +327,7 @@ export function initScheme() {
                                 $('#drawcanv').css({'display': 'block'});
                                 $('#topcanv').css({'display': 'block'});
                                 $('#hidedraw').css({'display': 'block'});
+                                $('#vidi2d').css({'display': 'block'});
                                 razmerdrawfull();
                                 //CreateNotes();
                                 $("#ready").click();
@@ -941,6 +942,7 @@ export function initScheme() {
                                 {
                                     $("#ready").click();
                                     $("#scheme1 div canvas")[0].style.cssText += " display:none;"; //display:block
+                                    $("#vidi2d").show();
                                     $("#Kontur1").hide();
 
                                 }
@@ -1600,7 +1602,7 @@ function createKontur() {
     }
 }
 
-function CreateNotes(note1 = 5, note2 = 4, note3 = 2, note4 = 2, note5 = 2, note6 = 2, note7 = 2)
+function CreateNotes(note1 = '', note2 = '', note3 = '', note4 = '', note5 = '', note6 = '', note7 = '')
 {
     ctxs[0].lineWidth = 1;
     let notesCoor = [
