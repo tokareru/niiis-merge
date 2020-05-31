@@ -1,5 +1,7 @@
 import * as THREE from './3D/stl/three.module.js';
 import {STLLoader} from './3D/stl/STLLoader.js';
+
+import {MeshLine, MeshLineMaterial, MeshLineRaycast} from './3D/index.js';
 let amountOfFinishedViews = 0;
 
 export function initScheme() {
