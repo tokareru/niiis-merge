@@ -407,6 +407,9 @@ function makeRoute(info) {
 function generateOwnTasks(selector) {
     let $routes = $(`#${selector}`);
     $routes.find('table').remove();
+    if (ownTasks.length < 1){
+        return;
+    }
     let $table = $('<table class="table table-bordered tasks_routes_routeTable"></table>');
     $table.append('<thead class="thead-light">' +
         '<tr>' +
