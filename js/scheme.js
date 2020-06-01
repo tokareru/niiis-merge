@@ -287,6 +287,7 @@ export function initScheme() {
                     //$('#drawcanv').css({'display': 'none'});
                     $('#hidedraw').css({'display': 'block'});
                     $('#topcanv').css({'display': 'block'});
+                    $('#vidi2d').css({'display': 'block'});
                     firstFieldInit();
                     razmerdrawfull();
                     //CreateNotes();
