@@ -600,7 +600,7 @@ $p->border_page($main_label, $type = 1);
   
 
 if ($draw_finish) { // если чертеж дорисован
-  $p->Image('images/report/drawing.PNG', 30, 20, -130);
+  $p->Image('images/report/drawing.PNG', 30, 22.5, -131);
 
   // размеры на чертеже
   $p->SetXY(39, 46);
