@@ -67,35 +67,37 @@ async function downloadTechProcess() {
     // json/new_techprocess.json
     // ajax/get_techproccess
     $.ajax({
-        url: 'json/new_techprocess.json',
+        url: 'ajax/get_techproccess',
         type: 'GET',
         success: function (json) {
+            console.log(json)
             setDetailsArea(json, $("#tech_process_field_drop"), "tech_process_field_drop");
         }
     });
 }
 
 function setDetailsArea(json, $field, fieldId) {
-    if (json.data != undefined){
-        if (json.data.length) {
-            if (json.data.length)
-                json.data.forEach(function (_detailArea) {
-                    let detail = getDetailById(_detailArea.id)
-                    $field.append(combineDetailArea({
-                        name: `${(detail.designation.replace(/ /g, "") === "") ? "" : (detail.designation + " - ")}${detail.name}`,
-                        id: _detailArea.id,
-                        lvl: 0,
-                        text: _detailArea.text,
-                        techProcess: _detailArea.techProcess
-                    }))
-                });
+    if (json !== null)
+        if (json.data != undefined){
+            if (json.data.length) {
+                if (json.data.length)
+                    json.data.forEach(function (_detailArea) {
+                        let detail = getDetailById(_detailArea.id)
+                        $field.append(combineDetailArea({
+                            name: `${(detail.designation.replace(/ /g, "") === "") ? "" : (detail.designation + " - ")}${detail.name}`,
+                            id: _detailArea.id,
+                            lvl: 0,
+                            text: _detailArea.text,
+                            techProcess: _detailArea.techProcess
+                        }))
+                    });
+            }
+            else if (Role !== "technologist"){
+                $field.append(`
+                    <p class="alert-warning p-2">Технолог еще не создал техпроцесс</p>
+                `)
+            }
         }
-        else if (Role !== "technologist"){
-            $field.append(`
-                <p class="alert-warning p-2">Технолог еще не создал техпроцесс</p>
-            `)
-        }
-    }
     if (Role === "technologist"){
         setDropAreaForDetailArea($("#tech_process_field_container").find(".detailsDropArea"), fieldId);
         $(".techProcessDropArea").each(function () {
