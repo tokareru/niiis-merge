@@ -513,11 +513,11 @@ ORDER BY third_id";
         return $result;
     }
 
-    function save_techproccess() {
+    function save_techproccess_old() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "DELETE FROM TECHPROCESS";
             $q = sys::$PDO->prepare($sql);
-            $q->execute();
+            $q->execute();//id_det, 
             $sql = "INSERT INTO TECHPROCESS (id, id_operations, id_parent, fields, is_new) VALUES ";
             foreach ($_POST["techProcess"] as $row) {
                 if (count($row["operations"]) > 0) {
@@ -574,7 +574,28 @@ ORDER BY third_id";
         }
     }
 
-    function get_techproccess() {
+    function save_techproccess() {
+        if ($_SERVER["REQUEST_METHOD"] == "POST") {
+            $sql = "DELETE FROM TECHPROCESS";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();//id_det, 
+            
+            // если в принятом техпроцессе есть какие-либо позиции
+            if(count($_POST["data"]) > 0) {
+              $str = json_encode($_POST["data"]);
+            }
+            
+            $sql = "INSERT INTO TECHPROCESS SET text = '$str' ";
+            $q = sys::$PDO->prepare($sql);
+            $q->execute();
+            
+            return array("response" => 200);
+        } else {
+            return array("response" => "NOT FOUND POST REQUEST");
+        }
+    }
+    
+    function get_techproccess_old() {
         $sql = "SELECT * FROM TECHPROCESS ORDER BY id_techprocess";
         $q = sys::$PDO->prepare($sql);
         $q->execute();
@@ -585,7 +606,6 @@ ORDER BY third_id";
         $j = -1;
         $k = -1;
         $children_id = 0;
-        $operation_id = 0;
         foreach ($Q as $row) {
             if ($row["id_parent"] != $id) {
                 $j = -1;
@@ -635,6 +655,17 @@ ORDER BY third_id";
             }
         }
 
+        return $response;
+    }
+    
+    function get_techproccess() {
+        $sql = "SELECT * FROM TECHPROCESS";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+//        var_dump($Q);
+        $response = json_decode($Q[0]['text']);
+        
         return $response;
     }
 
