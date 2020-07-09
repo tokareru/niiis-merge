@@ -519,13 +519,13 @@ ORDER BY third_id";
             $sql = "DELETE FROM TECHPROCESS";
             $q = sys::$PDO->prepare($sql);
             $q->execute();//id_det, 
-            
+            $str = '0';
             // если в принятом техпроцессе есть какие-либо позиции
             if(count($_POST["data"]) > 0) {
               $str = json_encode($_POST["data"]);
             }
             
-            $sql = "INSERT INTO TECHPROCESS SET text = '$str' ";
+            $sql = "INSERT INTO TECHPROCESS (text, id_techprocess) VALUES ('$str', 1) ";
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             
