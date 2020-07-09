@@ -32,8 +32,9 @@ function initProductionTask_3_Rounds() {
     let nameUsers = [];
     let techProcess;
     // 'ajax/get_techproccess'
+    // 'json/new_techprocess.json'
     $.ajax({
-        url: 'json/new_techprocess.json',
+        url: 'ajax/get_techproccess',
         type: 'GET',
         async: false,
         success: function (json) {
@@ -82,13 +83,13 @@ function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, na
     if (nameUsers.length)
         nameUsers.forEach(function (user) {
             $.ajax({
-                url: "json/new_techprocess.json",
+                url: "ajax/get_production_task_3",
                 type: 'GET',
                 data:{
                     login: user.login
                 },
                 success: function (json) {
-                    //console.log(json);
+                    console.log(json);
                     stopProcessOfSaving(document.getElementById("product_task_reload_button"))
                     $workers_drop.append(combineWorkerNode(user));
                     let $workerArea = $workers_drop.find(".operationsForWorker").last();
@@ -246,8 +247,10 @@ function setDropAreaForProductMaster($draggable, $this) {
 function initProductTaskForWorkerFor3Round($workers_drop, techProcess) {
     //json/production_task.json
     //ajax/get_production_task_3
+    // ajax/get_techproccess
+    // json/new_techprocess.json
     $.ajax({
-        url: "json/new_techprocess.json",
+        url: "ajax/get_production_task_3",
         type: 'GET',
         data:{
             login: login
@@ -713,16 +716,16 @@ function saveProductionTable_3_Round(users = [{name: "", login: "", role: "", ro
         users.forEach(function (user = {name: "", login: "", role: "", roleName: ""}) {
             let userLi = $workers_drop.find(`li[user-login='${user.login}']`);
             let saveData = collectDataFromTechProcess(userLi);
-
-            console.log(saveData);
+            let data = {
+                login: user.login,
+                productTasks: saveData.data
+            };
+            console.log(data);
             //console.log(user.login);
             $.ajax({
                 type: 'POST',
                 url: 'ajax/save_production_task_3',
-                data: {
-                    login: user.login,
-                    productTasks: saveData
-                },
+                data: data,
                 success: function (res) {
                     //console.log(res);
                 },
