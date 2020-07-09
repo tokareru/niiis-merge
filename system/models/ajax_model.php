@@ -47,7 +47,7 @@ class ajax_model extends model {
         }
     }
 
-    function get_production_task_3() {
+    function get_production_task_3_old() {
         $sql = "SELECT * FROM production_task_3 where login = :login";
         $q = sys::$PDO->prepare($sql);
         $q->execute(array("login" => $_REQUEST["login"]));
@@ -58,20 +58,37 @@ class ajax_model extends model {
         }
         return $response;
     }
+    
+    function get_production_task_3() {
+        $sql = "SELECT * FROM production_task_3";
+        $q = sys::$PDO->prepare($sql);
+        $q->execute();
+        $Q = $q->fetchAll();
+        $response = json_decode($Q[0]['json']);
+        
+//        $response = array("login" => $_REQUEST["login"], "productTasks" => array());
+//        foreach ($Q as $row) {
+//            array_push($response["productTasks"], array("id" => $row["task_id"]));
+//        }
+        return $response;
+    }
 
     function save_production_task_3() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "DELETE FROM production_task_3 where login = :login";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("login" => $_POST["login"]));
-            $sql = "INSERT INTO production_task_3 (login, task_id) VALUES ";
-            foreach ($_POST["productTasks"] as $row) {
-                $sql .= "('" . $_POST["login"] . "', " . $row["id"] . "),";
-            }
+            $sql = "INSERT INTO production_task_3 (login, json) VALUES ";
+            $sql .= $_POST["login"].", '". json_encode($_POST["productTasks"])."'";
+            
+//            foreach ($_POST["productTasks"] as $row) {
+//                $sql .= "('" . $_POST["login"] . "', " . $row["id"] . "),";
+//            }
 //            echo $sql;
-            $sql = substr($sql, 0, -1);
+//            $sql = substr($sql, 0, -1);
             $q = sys::$PDO->prepare($sql);
             $q->execute();
+//            return array("response" => 200);
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
         }
@@ -451,23 +468,7 @@ class ajax_model extends model {
             return array("response" => "NOT FOUND POST REQUEST");
         }
     }
-    
-//    function delete_user_task() {
-//        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-//            $sql = "UPDATE users_tasks SET active_sign = 0 WHERE task_number = :task_number AND username = :username AND round = :round";
-//            
-//            $q = sys::$PDO->prepare($sql);
-//            $q->execute(array("task_number" => $_POST["id"], 
-//                                "username" => $_POST["login"],
-//                                "round" => $_POST["round"]
-//                        ));
-//            return array("response" => 200);
-//        } else {
-//            return array("response" => "NOT FOUND POST REQUEST");
-//        }
-//    }
-    // --------- users tasks
-    
+
     function get_technologist_info() {
 
         function get_array_from_string($string) {
@@ -513,67 +514,6 @@ ORDER BY third_id";
         return $result;
     }
 
-    function save_techproccess_old() {
-        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-            $sql = "DELETE FROM TECHPROCESS";
-            $q = sys::$PDO->prepare($sql);
-            $q->execute();//id_det, 
-            $sql = "INSERT INTO TECHPROCESS (id, id_operations, id_parent, fields, is_new) VALUES ";
-            foreach ($_POST["techProcess"] as $row) {
-                if (count($row["operations"]) > 0) {
-                    foreach ($row["operations"] as $operation) {
-                        if (count($operation["nodes"]) > 0) {
-                            foreach ($operation["nodes"] as $node) {
-                                if (count($node["fields"]) > 0) {
-                                    foreach ($node["fields"] as $item)
-                                        if ($row["lvl"] == "new") {
-                                            $sql .= "(" . $node["id"] . ", " . $operation["id"] . ", " . $row["id"] . ", " . $item["id"] . ", '1'),";
-                                        } else {
-                                            $sql .= "(" . $node["id"] . ", " . $operation["id"] . ", " . $row["id"] . ", " . $item["id"] . ", '0'),";
-                                        }
-                                } else {
-                                    if ($row["lvl"] == "new") {
-                                        $sql .= "(" . $node["id"] . ", " . $operation["id"] . ", " . $row["id"] . ", null, '1'),";
-                                    } else {
-                                        $sql .= "(" . $node["id"] . ", " . $operation["id"] . ", " . $row["id"] . ", null , '0'),";
-                                    }
-                                }
-                            }
-                        } else {
-                            if ($row["lvl"] == "new") {
-                                $sql .= "(null, " . $operation["id"] . ", " . $row["id"] . ", null, '1'),";
-                            } else {
-                                $sql .= "(null , " . $operation["id"] . ", " . $row["id"] . ", null , '0'),";
-                            }
-                        }
-                    }
-                } else {
-                    if ($row["lvl"] == "new") {
-                        $sql .= "(null, null, " . $row["id"] . ", null, '1'),";
-                    } else {
-                        $sql .= "(null , null, " . $row["id"] . ", null , '0'),";
-                    }
-                }
-            }
-            $sql = substr($sql, 0, -1);
-            $q = sys::$PDO->prepare($sql);
-            $q->execute();
-            $sql = "SELECT login FROM USERS WHERE group_user_id = :id";
-            $q = sys::$PDO->prepare($sql);
-            $q->execute(array("id" => 5));
-            $Q = $q->fetchAll();
-            foreach ($Q as $row) {
-                $sql = "DELETE FROM production_task_3 where login = :login";
-                $q = sys::$PDO->prepare($sql);
-                $q->execute(array("login" => $row["login"]));
-            }
-
-            return array("response" => 200);
-        } else {
-            return array("response" => "NOT FOUND POST REQUEST");
-        }
-    }
-
     function save_techproccess() {
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $sql = "DELETE FROM TECHPROCESS";
@@ -593,69 +533,6 @@ ORDER BY third_id";
         } else {
             return array("response" => "NOT FOUND POST REQUEST");
         }
-    }
-    
-    function get_techproccess_old() {
-        $sql = "SELECT * FROM TECHPROCESS ORDER BY id_techprocess";
-        $q = sys::$PDO->prepare($sql);
-        $q->execute();
-        $Q = $q->fetchAll();
-        $id = 0;
-        $response = array("techProcess" => array());
-        $i = -1;
-        $j = -1;
-        $k = -1;
-        $children_id = 0;
-        foreach ($Q as $row) {
-            if ($row["id_parent"] != $id) {
-                $j = -1;
-                $k = -1;
-                $id = $row["id_parent"];
-                array_push($response["techProcess"], array("id" => $id, "lvl" => ($row["is_new"]) ? "new" : 1, "operations" => array()));
-
-                ++$i;
-                if ($row["id_operations"] != null) {
-                    array_push($response["techProcess"][$i]["operations"], array("id" => $row["id_operations"], "lvl" => 3, "nodes" => array()));
-                }
-                if ($row["id"] != null) {
-                    array_push($response["techProcess"][$i]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
-                }
-                if ($row["fields"] != null) {
-                    array_push($response["techProcess"][$i]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
-                }
-                $operations_id = $row["id_operations"];
-                $children_id = $row["id"];
-            } else {
-                if ($operations_id != $row["id_operations"]) {
-                    $k = -1;
-                    $operations_id = $row["id_operations"];
-                    array_push($response["techProcess"][$i]["operations"], array("id" => $row["id_operations"], "lvl" => 3, "nodes" => array()));
-                    if ($row["id"] != null) {
-                        array_push($response["techProcess"][$i]["operations"][++$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
-                    }
-                    if ($row["fields"] != null) {
-                        array_push($response["techProcess"][$i]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
-                    }
-                    $children_id = $row["id"];
-                } else {
-                    if ($children_id != $row["id"]) {
-                        $children_id = $row["id"];
-                        if ($row["id"] != null) {
-                            array_push($response["techProcess"][$i]["operations"][$j]["nodes"], array("id" => $row["id"], "lvl" => 2, "fields" => array()));
-                        }
-                        if ($row["fields"] != null) {
-                            array_push($response["techProcess"][$i]["operations"][$j]["nodes"][++$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
-                        }
-                    } else {
-                        if ($row["fields"] != null) {
-                            array_push($response["techProcess"][$i]["operations"][$j]["nodes"][$k]["fields"], array("id" => $row["fields"], "lvl" => 3));
-                        }
-                    }
-                }
-            }
-        }
-
-        return $response;
     }
     
     function get_techproccess() {
