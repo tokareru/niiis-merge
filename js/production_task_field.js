@@ -89,7 +89,10 @@ function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, na
                     login: user.login
                 },
                 success: function (json) {
-                    console.log(json);
+                    //console.log(json);
+                    json = {
+                        data: json
+                    }
                     stopProcessOfSaving(document.getElementById("product_task_reload_button"))
                     $workers_drop.append(combineWorkerNode(user));
                     let $workerArea = $workers_drop.find(".operationsForWorker").last();
@@ -98,8 +101,8 @@ function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, na
                             data: []
                         }
                     }
-                    if (json.length)
-                        json.forEach(function (_detailArea) {
+                    if (json.data.length)
+                        json.data.forEach(function (_detailArea) {
                             let detail = getDetailById(_detailArea.id)
                             $workerArea.append(combineDetailArea({
                                 name: `${(detail.designation.replace(/ /g, "") === "") ? "" : (detail.designation + " - ")}${detail.name}`,
@@ -262,6 +265,9 @@ function initProductTaskForWorkerFor3Round($workers_drop, techProcess) {
         },
         success: function (json) {
             console.log(json)
+            json = {
+                data: json
+            }
             stopProcessOfSaving(document.getElementById("product_task_reload_button"))
             let lastOperations = "";
             let techOperations = [];
