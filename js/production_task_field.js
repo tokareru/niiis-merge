@@ -91,7 +91,7 @@ function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, na
                 success: function (json) {
                     //console.log(json);
                     json = {
-                        data: json
+                        data: (json !== null && json !== undefined) ? json : []
                     }
                     stopProcessOfSaving(document.getElementById("product_task_reload_button"))
                     $workers_drop.append(combineWorkerNode(user));
@@ -266,7 +266,7 @@ function initProductTaskForWorkerFor3Round($workers_drop, techProcess) {
         success: function (json) {
             console.log(json)
             json = {
-                data: json
+                data: (json !== null && json !== undefined) ? json : []
             }
             stopProcessOfSaving(document.getElementById("product_task_reload_button"))
             let lastOperations = "";
