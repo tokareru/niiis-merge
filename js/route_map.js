@@ -724,25 +724,29 @@ function setTechProcessJson(json, res, $table) {
     //console.log(res);
     if (res.length)
         res.forEach(function (_row) {
+            console.log(_row)
             // находим название
             let name = "";
-            if (_row.name.lvl == "1"){
-                name = getTechName(_row.name.id, _row.name.lvl);
-            }else if (_row.name.lvl == "2"){
-                name = getTechNode(_row.name.id, _row.name.lvl);
+            if (_row.name.text === undefined || _row.name.text === "") {
+                if (_row.name.lvl == "1") {
+                    name = getTechName(_row.name.id, _row.name.lvl);
+                } else if (_row.name.lvl == "2") {
+                    name = getTechNode(_row.name.id, _row.name.lvl);
 
-            }else if (_row.name.lvl == "3"){
-                name = getTechField(_row.name.id, _row.name.lvl);
-            }else if (_row.name.lvl == "5"){
-                name = {
-                    id: _row.name.id,
-                    lvl: _row.name.lvl,
-                    name: _row.name.text,
-                    text: _row.name.text
+                } else if (_row.name.lvl == "3") {
+                    name = getTechField(_row.name.id, _row.name.lvl);
+                } else if (_row.name.lvl == "5") {
+                    name = {
+                        id: _row.name.id,
+                        lvl: _row.name.lvl,
+                        name: _row.name.text,
+                        text: _row.name.text
+                    }
+                } else {
+                    name = {name: "", lvl: "0", id: "0"}
                 }
-            }
-            else {
-                name = {name: "", lvl: "0", id: "0"}
+            }else {
+                name = _row.name;
             }
 
             // находим оборудование
