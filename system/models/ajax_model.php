@@ -149,15 +149,15 @@ class ajax_model extends model {
                 $group_id = $row["group_id"];
                 $result[++$i] = array("name" => $lvl_id, "equipment" => array(), "tools" => array());
                 if ($row["dop_type"] == "equipment") {
-                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3));
+                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["dop_id"]));
                 } elseif ($row["dop_type"] == "tools") {
-                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3));
+                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["dop_id"]));
                 }
             } else {
                 if ($row["dop_type"] == "equipment") {
-                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3));
+                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["dop_id"]));
                 } elseif ($row["dop_type"] == "tools") {
-                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3));
+                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["dop_id"]));
                 }
             }
         }
@@ -170,19 +170,19 @@ class ajax_model extends model {
             $q = sys::$PDO->prepare($sql);
             $q->execute();
             $i = 1;
-            $sql = "INSERT INTO route_map_3 (name,dop_id,dop_type, group_id) VALUES ";
+            $sql = "INSERT INTO route_map_3 (name,dop_id,dop_type, group_id, text) VALUES ";
             foreach ($_POST["data"] as $row) {
                 foreach ($row["equipment"] as $eq) {
                     $name = "lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"];
-                    $sql .= "('" . $name . "'," . $eq["id"] . ",'equipment', " . $i . "),";
+                    $sql .= "('" . $name . "'," . $eq["id"] . ",'equipment', " . $i . ", ".$eq["text"]."),";
                 }
                 foreach ($row["tools"] as $tool) {
                     $name = "'lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"] . "'";
-                    $sql .= "(" . $name . "," . $tool["id"] . ",'tools', " . $i . "),";
+                    $sql .= "(" . $name . "," . $tool["id"] . ",'tools', " . $i . ", ".$eq["text"]."),";
                 }
                 if (!$row["tools"] && !$row["equipment"]) {
                     $name = "'lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"] . "'";
-                    $sql .= "(" . $name . ",null,''," . $i . "),";
+                    $sql .= "(" . $name . ",null,''," . $i . ", ".$eq["text"]."),";
                 }
                 $i++;
             }
