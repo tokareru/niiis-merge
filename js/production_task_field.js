@@ -98,8 +98,8 @@ function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, na
                             data: []
                         }
                     }
-                    if (json.data.length)
-                        json.data.forEach(function (_detailArea) {
+                    if (json.length)
+                        json.forEach(function (_detailArea) {
                             let detail = getDetailById(_detailArea.id)
                             $workerArea.append(combineDetailArea({
                                 name: `${(detail.designation.replace(/ /g, "") === "") ? "" : (detail.designation + " - ")}${detail.name}`,
