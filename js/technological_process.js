@@ -82,13 +82,13 @@ function setDetailsArea(json, $field, fieldId) {
             if (json.data.length) {
                 if (json.data.length)
                     json.data.forEach(function (_detailArea) {
-                        let detail = getDetailById(_detailArea.id)
+                        let detail = getDetailById(_detailArea.id);
                         $field.append(combineDetailArea({
                             name: `${(detail.designation.replace(/ /g, "") === "") ? "" : (detail.designation + " - ")}${detail.name}`,
                             id: _detailArea.id,
                             lvl: 0,
                             text: _detailArea.text,
-                            techProcess: _detailArea.techProcess
+                            techProcess: (_detailArea.techProcess !== undefined) ? _detailArea.techProcess : []
                         }))
                     });
             }

@@ -93,6 +93,11 @@ function initProductTaskForProductMasterFor3Round($workers_drop, techProcess, na
                     stopProcessOfSaving(document.getElementById("product_task_reload_button"))
                     $workers_drop.append(combineWorkerNode(user));
                     let $workerArea = $workers_drop.find(".operationsForWorker").last();
+                    if (json === null || json === undefined){
+                        json = {
+                            data: []
+                        }
+                    }
                     if (json.data.length)
                         json.data.forEach(function (_detailArea) {
                             let detail = getDetailById(_detailArea.id)
