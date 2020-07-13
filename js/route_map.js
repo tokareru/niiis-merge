@@ -721,7 +721,7 @@ function combineTechProcessCellTools(data = {name: "", lvl: "", id: "", text: ""
 }
 
 function setTechProcessJson(json, res, $table) {
-    //console.log(res);
+    console.log(res);
     if (res.length)
         res.forEach(function (_row) {
             console.log(_row)

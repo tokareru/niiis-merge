@@ -147,7 +147,7 @@ function combineDetailArea(_detail = {name: "", id: 0, lvl: 0, text: "", techPro
                 id: _techName.id,
                 lvl: _techName.lvl,
                 text: _techName.text,
-                operations: _techName.operations
+                operations: (_techName.operations !== undefined) ? _techName.operations : []
             }, isDeleted);
         })
     if (_detail.text === undefined)
@@ -179,7 +179,7 @@ function combineTechName(techName = {name: "", id: "", lvl: "", text: "", operat
                 id: _operataion.id,
                 lvl: _operataion.lvl,
                 text: _operataion.text,
-                nodes: _operataion.nodes
+                nodes: (_operataion.nodes !== undefined) ? _operataion.nodes : []
             }, isDeleted);
         });
     if (techName.text === undefined)
@@ -211,7 +211,7 @@ function combineTechOperation(field = {name: "", id: "", lvl: "", text: "", node
                     id: _node.id,
                     lvl: _node.lvl,
                     text: _node.text,
-                    fields: _node.fields
+                    fields: (_node.fields !== undefined) ? _node.fields : []
                 });
             });
     if (field.text === undefined)
