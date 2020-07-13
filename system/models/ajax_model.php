@@ -172,18 +172,19 @@ class ajax_model extends model {
             $q->execute();
             $i = 1;
             $sql = "INSERT INTO route_map_3 (name,dop_id,dop_type, group_id, text) VALUES ";
+            
             foreach ($_POST["data"] as $row) {
                 foreach ($row["equipment"] as $eq) {
                     $name = "lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"];
-                    $sql .= "('" . $name . "'," . $eq["id"] . ",'equipment', " . $i . ", '".$eq["text"]."'),";
+                    $sql .= "('" . $name . "'," . $eq["id"] . ",'equipment', " . $i . ", '".$row["name"]["text"]."'),";
                 }
                 foreach ($row["tools"] as $tool) {
                     $name = "'lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"] . "'";
-                    $sql .= "(" . $name . "," . $tool["id"] . ",'tools', " . $i . ", '".$eq["text"]."'),";
+                    $sql .= "(" . $name . "," . $tool["id"] . ",'tools', " . $i . ", '".$row["name"]["text"]."'),";
                 }
                 if (!$row["tools"] && !$row["equipment"]) {
                     $name = "'lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"] . "'";
-                    $sql .= "(" . $name . ",null,''," . $i . ", '".$eq["text"]."'),";
+                    $sql .= "(" . $name . ",null,''," . $i . ", '".$row["name"]["text"]."'),";
                 }
                 $i++;
             }
