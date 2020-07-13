@@ -145,19 +145,20 @@ class ajax_model extends model {
         $i = -1;
         foreach ($Q as $row) {
             $lvl_id = get_lvl_id($row["name"]);
+            $lvl_id["text"] = $row["text"];
             if ($group_id != $row["group_id"]) {
                 $group_id = $row["group_id"];
                 $result[++$i] = array("name" => $lvl_id, "equipment" => array(), "tools" => array());
                 if ($row["dop_type"] == "equipment") {
-                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["dop_id"]));
+                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["text"]));
                 } elseif ($row["dop_type"] == "tools") {
-                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["dop_id"]));
+                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["text"]));
                 }
             } else {
                 if ($row["dop_type"] == "equipment") {
-                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["dop_id"]));
+                    array_push($result[$i]["equipment"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["text"]));
                 } elseif ($row["dop_type"] == "tools") {
-                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["dop_id"]));
+                    array_push($result[$i]["tools"], array("id" => $row["dop_id"], "lvl" => 3, "text" => $row["text"]));
                 }
             }
         }
