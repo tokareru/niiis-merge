@@ -254,14 +254,17 @@ class PDF extends FPDF {
       $count_e = count($row['equipment']);
       $count_t = count($row['tools']);
       
-      if($count_e > $count_t) {
-        $heigh = $heigh_row * $count_e;
-        $max_count = $count_e;
+      if($count_e > 0 || $count_t > 0){
+        if($count_e > $count_t) {
+          $heigh = $heigh_row * $count_e;
+          $max_count = $count_e;
+        }
+        else {
+          $heigh = $heigh_row * $count_t;
+          $max_count = $count_t;
+        }
       }
-      else {
-        $heigh = $heigh_row * $count_t;
-        $max_count = $count_t;
-      }
+      
       
       $this->SetX($x);
       $this->Cell($w[0], $heigh, "", 'LRB', 0, 'C');
