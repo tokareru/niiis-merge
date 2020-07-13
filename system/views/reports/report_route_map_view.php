@@ -75,69 +75,143 @@ class PDF extends FPDF {
     $this->SetX(20);
   }
   
-  function table_header($x, $y, $main_label) {
+  function table_header($x = 10, $y = 10) {
+    
+    $main_label = array('', $this->conv('Номер'),
+                        $this->conv('Удалить'),
+                        $this->conv('Цеха'),
+                        $this->conv('Участка'),
+                        $this->conv('Операции'),
+                        $this->conv('Наименование и содержание операции'),
+                        $this->conv('Оборудование (код, наименование, инвентарный номер)'),
+                        $this->conv('Приспособление и инструмент (код, наименование)'),
+                        array($this->conv('Коэфф.'),$this->conv('шт.'),$this->conv('вр.')),
+                        array($this->conv('Кол.'),$this->conv('раб.')),
+                        array($this->conv('Кол.'),$this->conv('одн.'),$this->conv('обраб.'),$this->conv('дет.')),
+                        array($this->conv('Код'),$this->conv('тариф'),$this->conv('сетки')),
+                        array($this->conv('Объем'),$this->conv('производственной'),$this->conv('партии')),
+                        $this->conv('Тп.3'),
+                        array($this->conv('Код'),$this->conv('профессии')),
+                        array($this->conv('Разр.'),$this->conv('раб.')),
+                        array($this->conv('Ед.'),$this->conv('нормир.')),
+                        array($this->conv('Код'),$this->conv('вида'),$this->conv('нормир.')),
+                        $this->conv('Тшт'),
+                        $this->conv('')
+                    );
+
     $this->SetFont('gost', '', 10);
-    $this->SetLineWidth(0.5);
+    $this->SetLineWidth(0.1);
     $this->inc_num_page(); // инкрементируем глобальный счетчик страниц
     
-    // Номер
-    $x+=4;
-    $y;
+    // пустая ячейка
+//    $x+=4;
+//    $y;
     $this->SetXY($x, $y);
-    $this->Cell(20, 5, $main_label[1], 1, 1, 'C'); 
+    $this->Cell(40, 20, '', 1, 1, 'C'); 
+    
+    // маршрутная карта
+    // $x+=4;
+    // $y;
+    $this->SetFont('gost', '', 20);
+    $this->SetXY($x+40, $y);
+    $this->Cell(89, 20, $this->conv('Маршрутная карта'), 1, 1, 'C'); 
+    $this->SetFont('gost', '', 12);
+    // АБВГ
+    $this->SetXY($x+129, $y);
+    $this->Cell(80, 10, '', 1, 1, 'C'); 
+    
+    // Корпус
+    $this->SetXY($x+129, $y+10);
+    $this->Cell(80, 10, '', 1, 1, 'C'); 
+    
+    // Пустая ячейка
+    $this->SetXY($x+209, $y);
+    $this->Cell(70, 10, '', 1, 1, 'C'); 
+    
+    // Литера
+    $this->SetXY($x+209, $y+10);
+    $this->Cell(20, 10, $this->conv('Литера'), 1, 1, 'C'); 
+    
+    $this->SetXY($x+229, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+234, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+239, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+244, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+249, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+254, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+259, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+264, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+269, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    $this->SetXY($x+274, $y+10);
+    $this->Cell(5, 10, '', 1, 1, 'C');
+    
+    // Номер
+    $x+=5;
+    $y+=20;
+    $this->SetXY($x, $y);
+    $this->Cell(26, 5, $main_label[1], 1, 1, 'C'); 
     
     // Удалить
-    $x-=4;
+    $x-=5;
     $y;
     $this->SetXY($x, $y);
-    $this->TextWithRotation($x+3, $y+20, $main_label[2], 90);
-    $this->Cell(4, 27, '', 1, 0, 'C'); // первая ячейка
+    $this->TextWithRotation($x+3.5, $y+20, $main_label[2], 90);
+    $this->Cell(5, 27, '', 1, 0, 'C'); // первая ячейка
     
     // Цеха
-    $x+=4;
+    $x+=5;
     $y+=5;
     $this->SetXY($x, $y);
-    $this->TextWithRotation($x+5, $y+15, $main_label[3], 90);
-    $this->Cell(7, 22, '', 1, 0, 'C');
+    $this->TextWithRotation($x+6, $y+15, $main_label[3], 90);
+    $this->Cell(9, 22, '', 1, 0, 'C');
     
     // Участка
-    $x+=7;
+    $x+=9;
     $y;
     $this->SetXY($x, $y);
-    $this->TextWithRotation($x+4, $y+16, $main_label[4], 90);
-    $this->Cell(6, 22, '', 1, 0, 'C');
+    $this->TextWithRotation($x+5, $y+16, $main_label[4], 90);
+    $this->Cell(8, 22, '', 1, 0, 'C');
     
     // Операции
-    $x+=6;
+    $x+=8;
     $y;
     $this->SetXY($x, $y);
-    $this->TextWithRotation($x+4, $y+17, $main_label[5], 90);
-    $this->Cell(7, 22, '', 1, 0, 'C');
+    $this->TextWithRotation($x+6, $y+17, $main_label[5], 90);
+    $this->Cell(9, 22, '', 1, 0, 'C');
     
     // Наименование ...
-    $this->SetFont('gost', '', 12);
-    $x+=7;
+    $this->SetFont('gost', '', 16);
+    $x+=9;
     $y-=5;
     $this->SetXY($x, $y);
-    $this->Cell(58, 27, $main_label[6], 1, 1, 'C');
+    $this->Cell(100, 27, $main_label[6], 1, 1, 'C');
     
     // оборудование ...
-    $this->SetFont('gost', '', 9);
-    $x+=58;
-    $this->SetXY($x, $y+6);
-    $this->MultiCell(23, 4, $main_label[7], 0, 'C');
+    $this->SetFont('gost', '', 12);
+    $x+=100;
+    $this->SetXY($x+3, $y+8);
+    $this->MultiCell(35, 4, $main_label[7], 0, 'C');
     $this->SetXY($x, $y);
-    $this->Cell(23, 27, '', 1, 1, 'C');
+    $this->Cell(40, 27, '', 1, 1, 'C');
     
     // приспособление ...
-    $x+=23;
-    $this->SetXY($x, $y+7);
-    $this->MultiCell(23, 4, $main_label[8], 0, 'C');
+    $x+=40;
+    $this->SetXY($x+3, $y+8);
+    $this->MultiCell(35, 4, $main_label[8], 0, 'C');
     $this->SetXY($x, $y);
-    $this->Cell(23, 27, '', 1, 1, 'C');
+    $this->Cell(40, 27, '', 1, 1, 'C');
     
     // Коэф ...
-    $x+=23;
+    $this->SetFont('gost', '', 9);
+    $x+=40;
     $this->SetXY($x, $y);
     $this->TextWithRotation($x+4, $y+10, $main_label[9][0], 90);
     $this->TextWithRotation($x+7, $y+8, $main_label[9][1], 90);
@@ -213,13 +287,542 @@ class PDF extends FPDF {
     $x+=24;
     $this->SetXY($x, $y);
     $this->Cell(7, 14, $main_label[19], 1, 1, 'C');
+    
+    
+    $x = 10;
+    $y = $y + 14 + 20*6; // вычисляем начало нижней надписи учитывая что строк умещается 20 штук
+    // в зависимости от номера страницы выводим либо первый тип либо второй
+//    $x+=24;
+    
+    $this->SetFont('gost', '', 12);
+    if($this->get_num_page() == 1){
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, '', 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      // разраб
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(18, 5, $this->conv('Разраб.'), 1, 1, 'C');
+
+      // ФИО
+      $x+=18;
+      $this->SetXY($x, $y);
+      $this->Cell(40, 5, $this->conv(''), 1, 1, 'L');
+
+      $x+=40;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+
+      $x+=20;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+
+      // 2 строка
+      $x = 10;
+      $y+=5;
+
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, '', 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      // Пров.
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(18, 5, $this->conv('Пров.'), 1, 1, 'C');
+
+      // ФИО
+      $x+=18;
+      $this->SetXY($x, $y);
+      $this->Cell(40, 5, $this->conv(''), 1, 1, 'L');
+
+      $x+=40;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+
+      $x+=20;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+
+      // третья строка
+      $x = 10;
+      $y+=5;
+
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, '', 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      // Нормир.
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(18, 5, $this->conv('Нормир.'), 1, 1, 'C');
+
+      // ФИО
+      $x+=18;
+      $this->SetXY($x, $y);
+      $this->Cell(40, 5, $this->conv(''), 1, 1, 'L');
+
+      $x+=40;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+
+      $x+=20;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+
+      // четвертая строка
+      $x = 10;
+      $y+=5;
+
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, '', 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      // Утвердил
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(18, 5, $this->conv('Утвердил'), 1, 1, 'C');
+
+      // ФИО
+      $x+=18;
+      $this->SetXY($x, $y);
+      $this->Cell(40, 5, $this->conv(''), 1, 1, 'L');
+
+      $x+=40;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+
+      $x+=20;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+
+      // пятая строка
+      $x = 10;
+      $y+=5;
+
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, $this->conv('Изм.'), 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, $this->conv('Лист'), 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('№ докум.'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Подпись'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Дата'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, $this->conv('Изм.'), 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, $this->conv('Лист'), 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('№ докум.'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Подпись'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Дата'), 1, 1, 'C');
+      // Н.Контр.
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(18, 5, $this->conv('Н.Контр.'), 1, 1, 'C');
+      // ФИО
+      $x+=18;
+      $this->SetXY($x, $y);
+      $this->Cell(40, 5, $this->conv(''), 1, 1, 'L');
+      $x+=40;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+      $x+=20;
+      $this->SetXY($x, $y);
+      $this->Cell(20, 5, '', 1, 1, 'C');
+      $this->SetFont('gost', '', 9);
+
+      $x+=20;
+      $y-=20;
+      $this->SetXY($x, $y);
+      $this->Cell(13, 5, $this->conv('Лист'), 1, 1, 'C');
+      $y+=5;
+      $this->SetXY($x, $y);
+      $this->Cell(13, 7.5, $this->conv('1'), 1, 1, 'C');
+      $y+=7.5;
+      $this->SetXY($x, $y);
+      $this->Cell(13, 5, $this->conv('Листов'), 1, 1, 'C');
+      $y+=5;
+      $this->SetXY($x, $y);
+      $this->Cell(13, 7.5, '', 1, 1, 'C');
+    } else {
+      
+      // первая строка
+      $x = 10;
+      $y+=6;
+      
+      $this->SetXY($x, $y);
+      $this->Cell(15, 15, '', 1, 1, 'C');
+      
+      $x+=15;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, '', 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+     $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, '', 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      // вторая строка
+      $x = 25;
+      $y+=5;
+
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, '', 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, '', 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, '', 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, '', 1, 1, 'C');
+
+      // третья строка
+      $x = 25;
+      $y+=5;
+
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, $this->conv('Изм.'), 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, $this->conv('Лист'), 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('№ докум.'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Подпись'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Дата'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, $this->conv('Изм.'), 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, $this->conv('Лист'), 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('№ докум.'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Подпись'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Дата'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(9, 5, $this->conv('Изм.'), 1, 1, 'C');
+
+      $x+=9;
+      $this->SetXY($x, $y);
+      $this->Cell(11, 5, $this->conv('Лист'), 1, 1, 'C');
+
+      $x+=11;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('№ докум.'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Подпись'), 1, 1, 'C');
+
+      $x+=21;
+      $this->SetXY($x, $y);
+      $this->Cell(21, 5, $this->conv('Дата'), 1, 1, 'C');
+
+      $x+=21;
+      $y-=10;
+      $this->SetXY($x, $y);
+      $this->Cell(13, 5, $this->conv('Лист'), 1, 1, 'C');
+      
+      $y+=5;
+      $this->SetXY($x, $y);
+      $this->Cell(13, 10, $this->get_num_page(), 1, 1, 'C');
+    }
+    
+    
+    
   }
   
   
   function main_table($x, $y, $data) {
+    $x_save = $x;
+    $y_save = $y;
     //Ширина колонки
     $this->SetLineWidth(0.2);
-    $w = array(4, 7, 6, 7, 58, 23, 23, 12, 9, 16, 12, 12, 7);
+    $w = array(5, 9, 8, 9, 100, 40, 40, 12, 9, 16, 12, 12, 7);
     
     $this->SetXY($x, $y);
     $heigh_row = 6;
@@ -246,13 +849,38 @@ class PDF extends FPDF {
     $y = $this->GetY();
 //    $x = $this->GetX();
     //Данные
+    $flag = true;
+    $count_global_row = 0;
     foreach ($data as $row) {
+      if($this->get_num_page() == 1) $count_max_rows = 20;
+      else $count_max_rows = 23;
+      
+      if($count_global_row == $count_max_rows) {
+        $this->AddPage();
+//        $this->inc_num_page();
+        $this->table_header();
+        $this->SetXY($x_save, $y_save);
+        $count_rows = 0;
+        $count_global_row = 0;
+      }
       $count_rows++;
 //      $this->SetX(20);
       $heigh = $heigh_row;
       
       $count_e = count($row['equipment']);
       $count_t = count($row['tools']);
+      
+      if($count_e > $count_t) {
+        $count_global_row += $count_e;
+      }
+      else 
+      {
+        $count_global_row += $count_t;
+      }
+      
+      if($count_e > 1 || $count_t > 1) $count_global_row -= 1;
+      
+      $count_global_row++;
       
       if($count_e > 0 || $count_t > 0){
         if($count_e > $count_t) {
@@ -312,28 +940,42 @@ class PDF extends FPDF {
       $this->Cell($w[12], $heigh, "", 'LRB', 0, 'C');
       $this->Ln();
     }
-    $this->SetX($x);
-    $heigh = $heigh_row;
-    $this->Cell($w[0], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[1], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[2], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[3], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[4], $heigh, "", 'LRB', 0, 'L');
-    $this->Cell($w[5], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[6], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[7], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[8], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[9], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[10], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[11], $heigh, "", 'LRB', 0, 'C');
-    $this->Cell($w[12], $heigh, "", 'LRB', 0, 'C');
-    $this->Ln();
+    
+    if($this->get_num_page() == 1) $count_max_rows = 19;
+    else $count_max_rows = 21;
+    
+//    echo $count_global_row;
+    
+    for($i = 0; $i < $count_max_rows-$count_global_row; $i++){
+      $this->SetX($x);
+      $heigh = $heigh_row;
+      $this->Cell($w[0], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[1], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[2], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[3], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[4], $heigh, "", 'LRB', 0, 'L');
+      $this->Cell($w[5], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[6], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[7], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[8], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[9], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[10], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[11], $heigh, "", 'LRB', 0, 'C');
+      $this->Cell($w[12], $heigh, "", 'LRB', 0, 'C');
+      $this->Ln();
+    }
+    
+    $y = $this->GetY();
+    $x = $this->GetX();
+    
+    
+    
   }
   
   function main_table_1_2($x, $y, $data) {
     //Ширина колонки
     $this->SetLineWidth(0.2);
-    $w = array(4, 7, 6, 7, 58, 23, 23, 12, 9, 16, 12, 12, 7);
+    $w = array(5, 9, 8, 9, 100, 40, 40, 12, 9, 16, 12, 12, 7);
     
     $this->SetXY($x, $y);
     $heigh_row = 6;
@@ -403,7 +1045,7 @@ class PDF extends FPDF {
 $route_map = $data['route_map'];
 $round = $data['round'];
 
-$p = new PDF('P', 'mm', 'A4');
+$p = new PDF('L', 'mm', 'A4');
 $p->AddFont('gost', '', 'gost-type-a.php');
 $p->AddFont('gost', 'B', 'gost_b.php');
 $p->SetAutoPageBreak(0);
@@ -422,34 +1064,14 @@ $p->SetMargins(0, 0, 0);
 $p->AddPage();
 $p->SetFont('gost', '', 10);
 
-$main_label = array('', $p->conv('Номер'),
-                        $p->conv('Удалить'),
-                        $p->conv('Цеха'),
-                        $p->conv('Участка'),
-                        $p->conv('Операции'),
-                        $p->conv('Наименование и содержание операции'),
-                        $p->conv('Оборудование (код, наименование, инвентарный номер)'),
-                        $p->conv('Приспособление и инструмент (код, наименование)'),
-                        array($p->conv('Коэфф.'),$p->conv('шт.'),$p->conv('вр.')),
-                        array($p->conv('Кол.'),$p->conv('раб.')),
-                        array($p->conv('Кол.'),$p->conv('одн.'),$p->conv('обраб.'),$p->conv('дет.')),
-                        array($p->conv('Код'),$p->conv('тариф'),$p->conv('сетки')),
-                        array($p->conv('Объем'),$p->conv('производственной'),$p->conv('партии')),
-                        $p->conv('Тп.3'),
-                        array($p->conv('Код'),$p->conv('профессии')),
-                        array($p->conv('Разр.'),$p->conv('раб.')),
-                        array($p->conv('Ед.'),$p->conv('нормир.')),
-                        array($p->conv('Код'),$p->conv('вида'),$p->conv('нормир.')),
-                        $p->conv('Тшт'),
-                        $p->conv('')
-                    );
 
-$p->table_header(7, 10, $main_label); // высота заголовка 27
+$p->table_header(10, 10); // высота заголовка 27
+
 if($round == 3){
-  $p->main_table(7, 37, $route_map);
+  $p->main_table(10, 57, $route_map);
 }
 else {
-  $p->main_table_1_2(7, 37, $route_map);
+  $p->main_table_1_2(10, 57, $route_map);
 }
 
 $p->Output();
