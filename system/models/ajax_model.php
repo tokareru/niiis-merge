@@ -60,9 +60,9 @@ class ajax_model extends model {
     }
     
     function get_production_task_3() {
-        $sql = "SELECT * FROM production_task_3";
+        $sql = "SELECT * FROM production_task_3 where login = :login";
         $q = sys::$PDO->prepare($sql);
-        $q->execute();
+        $q->execute(array("login" => $_REQUEST["login"]));
         $Q = $q->fetchAll();
         $response = json_decode($Q[0]['json']);
         
