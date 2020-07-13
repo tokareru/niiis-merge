@@ -78,8 +78,8 @@ class ajax_model extends model {
             $sql = "DELETE FROM production_task_3 where login = :login";
             $q = sys::$PDO->prepare($sql);
             $q->execute(array("login" => $_POST["login"]));
-            $sql = "INSERT INTO production_task_3 (login, json) VALUES (";
-            $sql .= $_POST["login"].", '". json_encode($_POST["productTasks"])."')";
+            $sql = "INSERT INTO production_task_3 (login, json) VALUES ('";
+            $sql .= $_POST["login"]."', '". json_encode($_POST["productTasks"])."')";
             
 //            foreach ($_POST["productTasks"] as $row) {
 //                $sql .= "('" . $_POST["login"] . "', " . $row["id"] . "),";
