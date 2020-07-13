@@ -176,11 +176,11 @@ class ajax_model extends model {
             foreach ($_POST["data"] as $row) {
                 foreach ($row["equipment"] as $eq) {
                     $name = "lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"];
-                    $sql .= "('" . $name . "'," . $eq["id"] . ",'equipment', " . $i . ", '".$row["name"]["text"]."'),";
+                    $sql .= "('" . $name . "'," . $eq["id"] . ",'equipment', " . $i . ", '".$eq["text"]."'),";
                 }
                 foreach ($row["tools"] as $tool) {
                     $name = "'lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"] . "'";
-                    $sql .= "(" . $name . "," . $tool["id"] . ",'tools', " . $i . ", '".$row["name"]["text"]."'),";
+                    $sql .= "(" . $name . "," . $tool["id"] . ",'tools', " . $i . ", '".$tool["text"]."'),";
                 }
                 if (!$row["tools"] && !$row["equipment"]) {
                     $name = "'lvl" . $row["name"]["lvl"] . "id" . $row["name"]["id"] . "'";
