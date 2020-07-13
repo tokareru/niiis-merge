@@ -93,7 +93,7 @@ function initNotifications() {
             setNotificationToFieldInitialization("route_map_field", {
                 mainHeader: "Маршрутная карта",
                 extraHeader:"",
-                text: "Для создания маршрутной карты, перетащите узлы \"Справочника технолога\" в таблицу."
+                text: "Маршрутная карта формируется автоматически на основе техпроцесса."
             });
         }
         if (Role === "designer"){

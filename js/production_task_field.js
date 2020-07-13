@@ -225,6 +225,7 @@ function setDropAreaForProductMaster($draggable, $this) {
     if (check){
         placeholderTechName.append(combineTechOperation(workerNode, true));
         setToggler("workers_drop_area");
+        placeholderTechName.parent().parent().parent().find("span.caret").first().not(".caret-down").trigger("click")
         placeholderTechName.parent().find("span").first().not(".caret-down").trigger("click")
     }else{
         placeholderTechName.append(combineTechName({
@@ -235,7 +236,8 @@ function setDropAreaForProductMaster($draggable, $this) {
         }, true));
         //console.log(placeholder.find(".techNameDropped").last().find("span").first().not("caret-down"));
         setToggler("workers_drop_area");
-        placeholderTechName.find(".techNameDropped").last().find("span").first().trigger("click")
+        placeholderTechName.parent().find("span.caret").first().not(".caret-down").trigger("click");
+        placeholderTechName.find(".techNameDropped").last().find("span").first().trigger("click");
     }
 
     //$this.append(combineTechOperation(workerNode));
