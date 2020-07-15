@@ -146,14 +146,109 @@ function initRouteMap() {
             [4, 3, 4, 34, 12, 12, 6, 5, 5, 5, 5, 5], $table, 100);
     }
 
+    const addMainTitle = (relativeWidths, width, $tr)=>{
+        function calcWidth(setting) {
+            return width * setting / 100;
+        }
+
+        relativeWidths.forEach((res)=>{
+            const td = $(`<td colspan="${res.col}" rowspan="${res.rowspan!==undefined? res.rowspan: 1}" style="width:`+
+            `${calcWidth(res.col)}px; max-width: ${calcWidth(res.col)}px"></td>`);
+            td.text(res.data);
+            td.addClass(res.styles);
+            $tr.append(td)
+        });
+    };
+
+    const widthTemp = $table.width();
+    const relativeWidthsMainTitle1 = [
+        {col: 10, data: '', rowspan: 2},
+        {col: 40, data: 'Маршрутная карта', styles: 'p-2 text-center font-size-12-em', rowspan: 2},
+        {col: 25, data: ''},
+        {col: 25, data: ''}];
+
+    $($table).find('tbody').prepend('<tr></tr>');
+    $($table).find('tbody').prepend('<tr></tr>');
+    const mainTitleTr = $($table).find('tbody').find('tr:first');
+
+    const relativeWidthsMainTitle2 = [
+        {col: 25, data: ''},
+        {col: 5, data: 'Литера', styles: 'text-center'},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        {col: 2, data: ''},
+        ];
+    const mainTitleTr2 =$($table).find('tbody').find('tr').eq(1);
+
+    addMainTitle(relativeWidthsMainTitle1, widthTemp, mainTitleTr);
+    addMainTitle(relativeWidthsMainTitle2, widthTemp, mainTitleTr2);
+
+
+
+    $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
+
+   const mainTitleDownTr1 =$($table).find('tbody').find('tr:last');
+    const mainTitleDown1 = [
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 6, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 7, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 6, data: '', styles: 'height-20 p-0'},
+    ];
+    addMainTitle(mainTitleDown1, widthTemp, $($table).find('tbody').find('tr:last'));
+    $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
+    addMainTitle(mainTitleDown1, widthTemp, $($table).find('tbody').find('tr:last'));
+    $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
+    addMainTitle(mainTitleDown1, widthTemp, $($table).find('tbody').find('tr:last'));
+    $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
+    addMainTitle(mainTitleDown1, widthTemp, $($table).find('tbody').find('tr:last'));
+    $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
+    const mainTitleDown2 = [
+        {col: 4, data: 'Изм.', styles: 'height-20 p-0 text-center'},
+        {col: 4, data: 'Лист', styles: 'height-20 p-0 text-center'},
+        {col: 5, data: '№ докум.', styles: 'height-20 p-0 text-center'},
+        {col: 9, data: 'Подпись', styles: 'height-20 p-0 text-center'},
+        {col: 9, data: 'Дата', styles: 'height-20 p-0 text-center'},
+        {col: 9, data: 'Изм.', styles: 'height-20 p-0 text-center'},
+        {col: 4, data: 'Лист', styles: 'height-20 p-0 text-center'},
+        {col: 6, data: '№ докум.', styles: 'height-20 p-0 text-center'},
+        {col: 4, data: 'Подпись', styles: 'height-20 p-0 text-center'},
+        {col: 5, data: 'Дата', styles: 'height-20 p-0 text-center'},
+        {col: 7, data: 'Н.Контр.', styles: 'height-20 p-0 text-center'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 6, data: '', styles: 'height-20 p-0'},
+    ];
+    addMainTitle(mainTitleDown2, widthTemp, $($table).find('tbody').find('tr:last'));
+
+    $($table).find('tbody').find('tr').eq(7).addClass('startPointData');
+
     // добавить кнопку удаления
-    $table.find('tr').each(function (index) {
+    $table.find('tr:not(.notDeleteButtonRM)').each(function (index) {
         let delButton = (Role === "technologist") ? `tech_proc_del_td`: "";
         let delI = (Role === "technologist") ? "fa fa-times" : "";
         if (index > 0 && index < 3)
             return;
         $(this).find('td:first').before(`<td ${index === 0 ?
-            'rowspan="3"' : ''}>${index > 4 && index + 1 !== $table.find('tr').length ? '' +
+            'rowspan="3"' : ''}>${index > 7 && index + 1 !== $table.find('tr').length ? '' +
             '<button class="' + delButton + ' bg-white p-0 btn"><i class="' + delI + '"></i></button>' : ''}</td>`);
     });
     $table.find('td:first').addClass('rotateText90').html('<div>Удалить</div>');
@@ -173,7 +268,7 @@ function initRouteMap() {
 
     // кнопка "добавить новую строку"
     if (Role === "technologist"){
-        let addNewRowButton = $("#tech_process_table").find("tbody tr").last().find("td").first();
+        let addNewRowButton = $("#tech_process_table").find("tbody .startPointData").find("td").first();
         addNewRowButton.append("<span class='route_map_new_row_button'></span>");
         addNewRowButton.find("span").click(function () {
             if (Round === 3) setRouteMapRow();
@@ -462,7 +557,7 @@ function saveTechProcessTableRound3($table, thisButton) {
 
 function setRouteMapRow(data = {name : {id: "0", lvl: "0", text: ""}, equipment: [], tools: []}) {
     let $tbody = $("#tech_process_table tbody");
-    let $lastTr = $tbody.find('tr:last');
+    let $lastTr = $tbody.find('tr.startPointData');
     let name = data.name;
     let equipment = data.equipment;
     let tools = data.tools;

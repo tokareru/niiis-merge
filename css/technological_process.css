@@ -128,6 +128,13 @@ ul, #myUL {
 
 #tech_process_table{
     width: 100%;
+    table-layout: auto;
+    max-width: 1087px!important;
+}
+
+#tech_process_table td:first-child{
+    max-width: 20px;
+    min-width: 20px;
 }
 
 #tech_process_table td{
@@ -246,4 +253,10 @@ ul, #myUL {
 
 .detailDraggableDropped{
     list-style: none;
+}
+
+.height-20{
+    height: 20px !important;
+    max-height: 20px !important;
+    padding: 0;
 }
