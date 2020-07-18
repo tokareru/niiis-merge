@@ -206,7 +206,57 @@ function initRouteMap() {
         {col: 6, data: '', styles: 'height-20 p-0'},
         {col: 4, data: '', styles: 'height-20 p-0'},
         {col: 5, data: '', styles: 'height-20 p-0'},
-        {col: 7, data: '', styles: 'height-20 p-0'},
+        {col: 7, data: 'Разраб.', styles: 'height-20 p-0 text-center'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 6, data: 'Лист', styles: 'height-20 p-0 text-center'},
+    ];
+    const mainTitleDown11 = [
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 6, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 7, data: 'Пров.', styles: 'height-20 p-0 text-center'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 6, data: '1', styles: 'height-20 p-0', rowspan: 2, styles: 'text-center font-size-12-em text-center'},
+    ];
+    const mainTitleDown12 = [
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 6, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 7, data: 'Нормир.', styles: 'height-20 p-0 text-center'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+        {col: 12, data: '', styles: 'height-20 p-0'},
+    ];
+    const mainTitleDown13 = [
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 9, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 6, data: '', styles: 'height-20 p-0'},
+        {col: 4, data: '', styles: 'height-20 p-0'},
+        {col: 5, data: '', styles: 'height-20 p-0'},
+        {col: 7, data: 'Утвердил', styles: 'height-20 p-0 text-center'},
         {col: 5, data: '', styles: 'height-20 p-0'},
         {col: 12, data: '', styles: 'height-20 p-0'},
         {col: 12, data: '', styles: 'height-20 p-0'},
@@ -214,11 +264,11 @@ function initRouteMap() {
     ];
     addMainTitle(mainTitleDown1, widthTemp, $($table).find('tbody').find('tr:last'));
     $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
-    addMainTitle(mainTitleDown1, widthTemp, $($table).find('tbody').find('tr:last'));
+    addMainTitle(mainTitleDown11, widthTemp, $($table).find('tbody').find('tr:last'));
     $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
-    addMainTitle(mainTitleDown1, widthTemp, $($table).find('tbody').find('tr:last'));
+    addMainTitle(mainTitleDown12, widthTemp, $($table).find('tbody').find('tr:last'));
     $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
-    addMainTitle(mainTitleDown1, widthTemp, $($table).find('tbody').find('tr:last'));
+    addMainTitle(mainTitleDown13, widthTemp, $($table).find('tbody').find('tr:last'));
     $($table).find('tbody').append('<tr class="notDeleteButtonRM"></tr>');
     const mainTitleDown2 = [
         {col: 4, data: 'Изм.', styles: 'height-20 p-0 text-center'},
