@@ -870,7 +870,7 @@ function setTechProcessJson(json, res, $table) {
     let techOperationNum = 10;
     if (res.length)
         res.forEach(function (_row) {
-            console.log(_row)
+            //console.log(_row)
             // находим название
             let name = "";
             if (_row.name.text === undefined || _row.name.text === "") {
@@ -888,7 +888,10 @@ function setTechProcessJson(json, res, $table) {
                         name: _row.name.text,
                         text: _row.name.text
                     }
-                } else {
+                }else if (_row.name.lvl == "6") {
+                    name = getTechField(_row.name.id, _row.name.lvl);
+                }
+                else {
                     name = {name: "", lvl: "0", id: "0"}
                 }
             }else {
@@ -1052,7 +1055,9 @@ function madeRouteMapByTechProcess(detailsData) {
                         _techProcess.operations.forEach(function (_operation) {
                             let thatOperationEquipment = [];
                             let thatOperationToolsAndRig = [];
-                            // находим оборудование (id = 5), инструменты (id = 7) и приспособления (id = 4)
+                            let transitions = [];
+                            // находим оборудование (id = 5), инструменты (id = 7) и приспособления (id = 4) и техпереходы (id = 2)
+
                             if (_operation.nodes.length)
                                 _operation.nodes.forEach(function (_node) {
                                     if (_node.id === "5")
@@ -1061,7 +1066,18 @@ function madeRouteMapByTechProcess(detailsData) {
                                         thatOperationToolsAndRig = thatOperationToolsAndRig.concat(_node.fields);
                                     if (_node.id === "4")
                                         thatOperationToolsAndRig = thatOperationToolsAndRig.concat(_node.fields);
-
+                                    if (_node.id === "2")
+                                        _node.fields.forEach(function (_transition) {
+                                            transitions.push({
+                                                name: {
+                                                    id: _transition.id,
+                                                    lvl: 6,
+                                                    text: _transition.text
+                                                },
+                                                tools: [],
+                                                equipment: []
+                                            })
+                                        })
                                 });
                             let operationObj = {
                                 name: {
@@ -1073,7 +1089,10 @@ function madeRouteMapByTechProcess(detailsData) {
                                 equipment: thatOperationEquipment
                             };
 
-                            routeMapData.data.push(operationObj)
+                            routeMapData.data.push(operationObj);
+                            transitions.forEach(function (_transition) {
+                                routeMapData.data.push(_transition)
+                            })
                         })
                     routeMapData.data.push(emptyRow);
                 })
