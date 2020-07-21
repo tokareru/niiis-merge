@@ -164,7 +164,7 @@ function initRouteMap() {
     const relativeWidthsMainTitle1 = [
         {col: 10, data: '', rowspan: 2},
         {col: 40, data: 'Маршрутная карта', styles: 'p-2 text-center font-size-12-em', rowspan: 2},
-        {col: 25, data: ''},
+        {col: 25, data: `${getDetailsInfo("prim")[0].designation}`, styles: 'p-2 text-center font-size-12-em'},
         {col: 25, data: ''}];
 
     $($table).find('tbody').prepend('<tr></tr>');
@@ -172,7 +172,7 @@ function initRouteMap() {
     const mainTitleTr = $($table).find('tbody').find('tr:first');
 
     const relativeWidthsMainTitle2 = [
-        {col: 25, data: ''},
+        {col: 25, data: `${getDetailsInfo("prim")[0].name}`, styles: 'p-2 text-center font-size-12-em'},
         {col: 5, data: 'Литера', styles: 'text-center'},
         {col: 2, data: ''},
         {col: 2, data: ''},
@@ -185,6 +185,7 @@ function initRouteMap() {
         {col: 2, data: ''},
         {col: 2, data: ''},
         ];
+    //console.log(getDetailsInfo("prim")[0]);
     const mainTitleTr2 =$($table).find('tbody').find('tr').eq(1);
 
     addMainTitle(relativeWidthsMainTitle1, widthTemp, mainTitleTr);
@@ -952,7 +953,7 @@ function setTechProcessJson(json, res, $table) {
 function setTechProcessJsonRounds_1_2(res, $table) {
     console.log(res);
     let $tbody = $("#tech_process_table tbody");
-    let $lastTr = $tbody.find('tr:last');
+    let $lastTr = $tbody.find('tr.startPointData');
     if (res.length){
         res.forEach(function (row) {
             $(combineRowFor_1_2Rounds({num_ceh: row.num_ceh, num_uch: row.num_uch, num_oper: row.num_oper, name: row.name, equipment: row.equipment, tools: row.tools})).insertBefore($lastTr);
