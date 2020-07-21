@@ -64,13 +64,15 @@ function addAvailableTabs(data, tableID) {
 /*    table.find("a").click(function (event) {
         //event.preventDefault();
     });*/
+
+    // показ справочника технолога
     if (Role === "technologist" && Round === 3){
         let leftSideBody = $(".left-side-body")
         leftSideBody.removeClass("col-xl-2").addClass("col-xl-3").addClass("d-none");
         $("#tabs a").on("shown.bs.tab", function () {
             let $a = $(this);
             let tabTarget = $a.attr("tab-target")
-            if (tabTarget === "technological_process_field" || tabTarget === "route_map_field"){
+            if (tabTarget === "technological_process_field"){
                 leftSideBody.addClass("d-block");
                 let accordion = $("#left-accordion");
                 accordion.find(".collapse").first().addClass("show").trigger("shown.bs.collapse");

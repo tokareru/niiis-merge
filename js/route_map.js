@@ -460,7 +460,7 @@ function saveTechProcessTableRound3($table, thisButton) {
     })
 }
 
-function setRouteMapRow(data = {name : {id: "0", lvl: "0", text: ""}, equipment: [], tools: []}) {
+function setRouteMapRow(data = {name : {id: "0", lvl: "0", text: ""}, equipment: [], tools: []}, techOperationNum = '') {
     let $tbody = $("#tech_process_table tbody");
     let $lastTr = $tbody.find('tr:last');
     let name = data.name;
@@ -500,7 +500,7 @@ function setRouteMapRow(data = {name : {id: "0", lvl: "0", text: ""}, equipment:
             <td>${deleteButton}</td>
             <td colspan="4" class="tdBorderBlackLeft"></td>
             <td colspan="3" class=""></td>
-            <td colspan="4" class="tdBorderBlackRight"></td>
+            <td colspan="4" class="tdBorderBlackRight" style="font-size: 1.1em; text-align: center">${(Number(techOperationNum) < 100 && data.name.lvl == 3) ? "0" : ""}${techOperationNum}</td>
             <td colspan="34" class="techProcessCell">${nameStr}</td>
             <td colspan="12" class="tdBorderBlackLeft techProcessCellEquipment">
                <ul class="horizontal-full mb-1 mt-1">
@@ -722,6 +722,7 @@ function combineTechProcessCellTools(data = {name: "", lvl: "", id: "", text: ""
 
 function setTechProcessJson(json, res, $table) {
     console.log(res);
+    let techOperationNum = 10;
     if (res.length)
         res.forEach(function (_row) {
             console.log(_row)
@@ -779,7 +780,10 @@ function setTechProcessJson(json, res, $table) {
                 name: name,
                 equipment: equipment,
                 tools: tools
-            })
+            }, (name.lvl == 3) ? techOperationNum : '')
+            if (name.lvl == 3){
+                techOperationNum += 1*10;
+            }
         });
 
     /*$table.on('click', '.tech_proc_del_td', function () {
@@ -888,7 +892,7 @@ function madeRouteMapByTechProcess(detailsData) {
             });
             if (_detail.techProcess.length){
                 _detail.techProcess.forEach(function (_techProcess) {
-                    routeMapData.data.push({
+                    /*routeMapData.data.push({
                         // формируем заголовок техпроцесса
                         name: {
                             id: _techProcess.id,
@@ -897,7 +901,7 @@ function madeRouteMapByTechProcess(detailsData) {
                         },
                         equipment: [],
                         tools: []
-                    });
+                    });*/
                     // находим техоперации в данном техпроцессе
                     if (_techProcess.operations.length)
                         _techProcess.operations.forEach(function (_operation) {
